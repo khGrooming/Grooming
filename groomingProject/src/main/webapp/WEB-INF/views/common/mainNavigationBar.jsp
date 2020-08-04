@@ -19,6 +19,18 @@ body {
 .mainNavImg {
 	height: 50px;
 }
+.main_messages_icon {
+	width:30px; 
+	height:30px;
+	position: relative;
+}
+.main_alerts_icon {
+	background:red;
+	font-size:xx-small;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
 </style>
 </head>
 <body>
@@ -41,7 +53,7 @@ body {
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
-				<c:if test="${empty sessionScope.loginUser }">
+				<c:if test="${!empty sessionScope.loginUser }">
 					<li class="nav-item">
 						<a class="nav-link" href="#">로그인</a>
 					</li>
@@ -49,15 +61,17 @@ body {
 						<a class="nav-link" href="#">회원가입</a>
 					</li>
 				</c:if>
-				<c:if test="${!empty sessionScope.loginUser }">
-					<li class="nav-item">
-						<a class="nav-link" href="#">메시지</a>
+				<c:if test="${empty sessionScope.loginUser }">
+					<li class="nav-item main_messages_icon">
+						<img alt="message" src="">
+						<div class="main_msg_txt">${msg.count }</div>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">알림</a>
+					<li class="nav-item main_alerts_icon">
+						<img alt="alerts" src="">
+						<div class="main_msg_txt">${alerts.count }</div>
 					</li>
-					<li class="nav-item">
-						<p class="navbar-text" href="#">${loginUser.userName }</p>
+					<li class="navbar-text">
+						<div onclick="mypage()">${loginUser.userName }</div>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#">로그아웃</a>
