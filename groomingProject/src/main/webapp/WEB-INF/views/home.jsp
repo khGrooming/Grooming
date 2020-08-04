@@ -15,12 +15,19 @@
   <!-- Custom styles for this css -->
 <%--   <link href="${pageContext.servletContext.contextPath }/resources/css/css-name.css" rel="stylesheet"> --%>
 
+<style>
+.main_fst_container{
+	margin-top: 100px;
+}
+	
+</style>
 </head>
 <body>
 	<jsp:include page="common/mainNavigationBar.jsp"/>
 
   <!-- Page Content -->
-  <div class="container">
+  <div class="main_fst_container container">
+  	<h3 class="">멘토 그루밍</h3>
 
     <!-- Page Features -->
     <div class="row text-center">
@@ -86,7 +93,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+      <p class="m-0 text-center text-white">Copyright &copy; Grooming 2020</p>
     </div>
     <!-- /.container -->
   </footer>
@@ -94,12 +101,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="${pageContext.servletContext.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
   <script src="${pageContext.servletContext.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	
-	
-	
-	
-	
-	
+
 <%-- <h1>
 	Hello world!  
 </h1>
