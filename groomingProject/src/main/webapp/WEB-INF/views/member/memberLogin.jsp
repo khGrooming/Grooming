@@ -13,7 +13,7 @@
 	<section>
 		<div class="container">
 			<div class="user singinBx">
-				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/20171220_1537051.png"></div>	
+				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="formBx">
 					<form>
 						<h2>Sign In</h2>
@@ -36,7 +36,7 @@
 						<p class="signup">Already have an account ? <a href="#" onclick="toggleForm()">Sign in</a></p>
 					</form>
 				</div>
-				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/9968AA3A5BACE4751C.jpg"></div>	
+				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
 			</div>
 		</div>
 	</section>

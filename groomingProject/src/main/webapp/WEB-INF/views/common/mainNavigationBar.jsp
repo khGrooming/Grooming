@@ -66,25 +66,33 @@ body {
 				alt="groominglogo"
 				src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
 			</a>
-
+			
+			<c:url var="groomingMain" value="groomingMain.do"/>
+			<c:url var="communityMain" value="communityMain.do"/>
+			<c:url var="studyCafeMain" value="studyCafeMain.do"/>
+			<c:url var="loginPage" value="loginPage.do"/>
+			<c:url var="registerPage" value="registerPage.do"/>
+			<c:url var="userPage" value="userPage.do"/>
+			<c:url var="logoutPage" value="logoutPage.do"/>
+			
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="#">그루밍</a>
+					<a class="nav-link" href="${groomingMain }">그루밍</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">커뮤니티</a>
+					<a class="nav-link" href="${communityMain }">커뮤니티</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">스터디카페</a>
+					<a class="nav-link" href="${studyCafeMain }">스터디카페</a>
 				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<c:if test="${empty sessionScope.loginUser }">
 					<li class="nav-item">
-						<a class="nav-link" href="#">로그인</a>
+						<a class="nav-link" href="${loginPage }">로그인</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">회원가입</a>
+						<a class="nav-link" href="${registerPage }">회원가입</a>
 					</li>
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
@@ -102,10 +110,10 @@ body {
 						<div class="main_alerts_txt text-center">${alerts.count }1</div>
 					</li>
 					<li class="nav-item mr-2">
-						<a class="nav-link" href="#">${loginUser.userName }아이디</a>
+						<a class="nav-link" href="${userPage }">${loginUser.userName }아이디</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#">로그아웃</a>
+						<a class="nav-link" href="${logoutPage }">로그아웃</a>
 					</li>
 				</c:if>
 			</ul>
