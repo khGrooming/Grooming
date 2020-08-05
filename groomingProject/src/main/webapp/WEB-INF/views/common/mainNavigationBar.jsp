@@ -69,7 +69,7 @@ body {
 
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="#">그루밍</a>
+					<a class="nav-link" href="groomingMain.do">그루밍</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#">커뮤니티</a>
