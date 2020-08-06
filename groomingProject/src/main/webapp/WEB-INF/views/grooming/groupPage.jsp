@@ -90,13 +90,13 @@
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
         <!--디폴트 메뉴-->
-        <input id="tab1" type="radio" name="tabs" checked>
+        <input id="tab1" type="radio" name="tabs" >
         <label for="tab1"><i class="fas fa-user-graduate"></i>메인</label>
 
         <input id="tab2" type="radio" name="tabs">
         <label for="tab2"><i class="fas fa-calendar-alt"></i>캘린더</label>
 
-        <input id="tab3" type="radio" name="tabs">
+        <input id="tab3" type="radio" name="tabs" checked>
         <label for="tab3"><i class="fas fa-icons"></i>게시판</label>
 
 
@@ -196,7 +196,8 @@
             
     
     </section>
-
+	
+	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
     <section id="content2">
        
     </section>
@@ -207,8 +208,8 @@
         <table class="table table-hover">
             <thead>
               <tr>
-                <th scope="col">글번호</th>
                 <th scope="col">글유형</th>
+                <th scope="col">글번호</th>	<!-- 공지사항/자유게시판 -->
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
@@ -298,11 +299,15 @@
               </tr>
 
             </tbody>
-            <tfoot>
-                <button>글작성</button>
-            </tfoot>  
+        
           </table>
           
+          <!-- 글작성 버튼 -->
+ 	       <div class="col-12" align="right">
+          	<button type="button"  style="margin-right:10px;" onsubmit="">글작성</button>
+          </div>
+          
+          <!-- 페이지네이션 -->
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li class="page-item disabled">
@@ -317,14 +322,6 @@
             </ul>
           </nav>
     </section>
-
-
-
-
-    <!-- 여기서 부터 탭 메뉴 아래 선택 페이지 -->
-
-
-
 
 </div>
 
