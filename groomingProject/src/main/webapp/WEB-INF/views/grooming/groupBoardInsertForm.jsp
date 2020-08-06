@@ -147,11 +147,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <th>제목: </th>
+                            <th>제목 </th>
                             <td><input type="text" placeholder="제목을 입력하세요. " name="subject" class="form-control" ></td>
                         </tr>
                         <tr >
-                            <th>내용: </th>
+                            <th>내용 </th>
                             <td><textarea cols="100" rows="10" placeholder="내용을 입력하세요. " id="summernote" name="editordata"
                                     class="form-control"></textarea></td>
                         </tr>

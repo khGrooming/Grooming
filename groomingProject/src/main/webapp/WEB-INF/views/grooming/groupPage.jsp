@@ -205,7 +205,7 @@
     <!--게시판에 들어갈 내용 -->
     <section id="content3">
         
-        <table class="table table-hover">
+        <table class="table table-hover" id="boardId">
             <thead>
               <tr>
                 <th scope="col">글유형</th>
@@ -217,7 +217,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr onclick="location.href='groupdetail.do'">
                 <th scope="row">1</th>
                 <td>공지사항</td>
                 <td>내일 예정이었던 스터디디</td>
@@ -307,7 +307,7 @@
           	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'") >글 작성</button>
           </div>
           
-
+    
           
           <!-- 페이지네이션 -->
           <nav aria-label="Page navigation example">
