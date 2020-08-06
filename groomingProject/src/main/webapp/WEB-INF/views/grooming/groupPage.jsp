@@ -304,8 +304,10 @@
           
           <!-- 글작성 버튼 -->
  	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" onsubmit="">글작성</button>
+          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'") >글 작성</button>
           </div>
+          
+
           
           <!-- 페이지네이션 -->
           <nav aria-label="Page navigation example">
