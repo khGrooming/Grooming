@@ -115,7 +115,7 @@
                         <!-- 그룹 본문 -->
                         <div class="card-body">
                             <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
+                            <h5 class="card-title"><a href="groupPage.do">정처기 실기 준비하실분 구해요</a></h5>
                             <!-- 그룹 한줄 소개  -->
                             <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
                             <p class="card-text">
@@ -129,7 +129,7 @@
                         <!-- 그룹 이미지 -->
                         <div class="top-img">
                             <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
+                            <div id="circle" style="position: absolute;">
                                 D-<span style="position: relative; ">5</span>
                             </div>
                         </div>
