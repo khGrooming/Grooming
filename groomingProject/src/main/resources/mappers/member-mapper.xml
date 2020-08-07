@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 
+	<resultMap type="Member" id="memberResultSet">
+		<id property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="gender" column="GENDER"/>
+		<result property="age" column="AGE"/>
+		<result property="phone" column="PHONE"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="enrollDate" column="ENROLL_DATE"/>
+		<result property="updateDate" column="UPDATE_DATE"/>
+		<result property="mStatus" column="M_STATUS"/>
+	</resultMap>
+
+<!-- private String memberNo;
+private String memberEmail;
+private String memberPwd;
+private String memberNickName;
+private String memberName;
+private String memberGender;
+private String memberPhone;
+private String lvlNo;
+private String memberExp;
+private String memberMemo;
+private String memberPhoto;
+private String memberAdmin;
+private String memberStatus;
+private String memberJoinDate; -->
 </mapper>

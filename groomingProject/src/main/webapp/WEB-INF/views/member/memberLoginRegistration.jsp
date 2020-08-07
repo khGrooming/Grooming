@@ -11,6 +11,7 @@
 
 	<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
+<!-- 기본 스타일 -->
 *
 {
 	margin: 0;
@@ -19,6 +20,7 @@
 }
 section
 {
+	margin-top: 50px;
 	position: relative;
 	min-height: 91vh;
 	/* background: #fee648; */
@@ -29,11 +31,12 @@ section
 }
 section .form_container
 {
-	margin-top: 62px;
+	margin-top: auto;
+	margin-bottom: auto;
 	position: relative;
 	width: 1000px;
 	height: 700px;
-	border: 1px solid black;
+	border: 1px solid lightgrey;
 	background: #fff;
 	box-shadow: 0 15px 50px rgba(0,0,0,0.1);
 	overflow: hidden;
@@ -75,6 +78,10 @@ section .form_container .user .form-group
 	align-items: center;
 	padding: 40px;
 	transition: 0.5s;
+}
+section .form_container .user .form-group form
+{
+	width: 100%;
 }
 section .form_container .user .form-group form h2
 {
@@ -128,15 +135,15 @@ section .form_container .user .form-group form .input-group span
 section .form_container .user .form-group form .input-group input:focus ~ span,
 section .form_container .user .form-group form .input-group input:valid ~ span
 {
-	top: -10px;
+	top: -7px;
 	left: 12px;
 	font-size: 13px;
 	padding: 2px 5px;
 }
-section .form_container .user .form-group form input[type="submit"]
+section .form_container .user .form-group form input[type="button"]
 {
 	max-width: 100px;
-	border: 1px solid #000;
+	border: 1px solid lightgrey;
 	background: #677eff;
 	color: #fff;
 	cursor: pointer;
@@ -144,6 +151,10 @@ section .form_container .user .form-group form input[type="submit"]
 	font-weight: 500;
 	letter-spacing: 1px;
 	transition: 0.5s;
+}
+section .form_container .user .form-group form input[type="button"]:hover
+{
+	background: green;
 }
 section .form_container .user .form-group form .signup
 {
@@ -160,6 +171,10 @@ section .form_container .user .form-group form .signup a
 	font-weight: 600;
 	text-decoration: none;
 	color: #677eff;
+}
+section .form_container .user .form-group form .signup a:hover
+{
+	color: green;
 }
 section .form_container .singupBx
 {
@@ -208,7 +223,7 @@ section .form_container.active .singinBx .imgBx
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 	<section>
-		<div class="signup form_container active"><!-- active toggle --> 
+		<div class="signup form_container"><!-- active toggle --> 
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
@@ -222,7 +237,7 @@ section .form_container.active .singinBx .imgBx
 						<input type="password" name="" required="required">
 							<span>비밀번호</span>
 						</div>
-						<input type="submit" name="" value="로그인">
+						<input type="button" name="" value="로그인">
 						<p class="signup">로그인에 문제가 있나요 ? 
 							<a href="#" onclick="findAccount();">아이디 찾기</a>
 							/
@@ -249,10 +264,14 @@ section .form_container.active .singinBx .imgBx
 							<span>비밀번호 재확인</span>
 						</div>
 						<div class="input-group">
+							<input type="text" name="" required="required">
+							<span>닉네임</span>
+						</div>
+						<div class="input-group">
 							<input type="tel" name="" required="required">
 							<span>휴대전화</span>
 						</div>
-						<input type="submit" name="" value="회원가입">
+						<input type="button" name="" value="회원가입">
 						<p class="signup">이미 회원 이신가요 ? <a href="#" onclick="toggleForm();">로그인</a></p>
 					</form>
 				</div>
@@ -261,6 +280,10 @@ section .form_container.active .singinBx .imgBx
 		</div>
 	</section>
 	<script type="text/javascript">
+		$(function() {
+			
+		});
+		
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
