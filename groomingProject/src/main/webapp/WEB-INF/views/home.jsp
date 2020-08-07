@@ -88,6 +88,9 @@
 		<!-- /.row -->
 
 	</div>
+	
+	<div class="main_lst_container container">
+	</div>
 	<!-- /.container -->
 	<jsp:include page="common/footer.jsp" />
 
