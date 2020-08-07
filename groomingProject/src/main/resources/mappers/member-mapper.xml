@@ -20,9 +20,17 @@
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO MEMBER
-		VALUES('M' || LPAD(SEQ_MEMBERNO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}, #{memberNickName}
-				, NULL, NULL, #{memberPhone}, DEFAULT, 0, NULL, DEFAULT, DEFAULT, DEFAULT, SYSDATE)
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD
+							, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_GENDER
+							, MEMBER_PHONE, LVL_NO, MEMBER_EXP
+							, MEMBER_MEMO, MEMBER_PHOTO, MEMBER_ADMIN
+							, MEMBER_STATUS, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}
+				, #{memberNickName}, #{memberName}, #{memberGender}
+				, #{memberPhone}, DEFAULT, #{memberExp}
+				, #{memberMemo}, DEFAULT, DEFAULT
+				, DEFAULT, SYSDATE)
 	</insert>
+	
 
 </mapper>

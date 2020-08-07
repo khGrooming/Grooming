@@ -22,6 +22,7 @@ public class MemberController {
 	@RequestMapping("memberInsert.do")
 	public String memberInsert(Member m) {
 		
+		System.out.println("¿Ô³Ä?" + m);
 		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		
 		m.setMemberPwd(emcPwd);

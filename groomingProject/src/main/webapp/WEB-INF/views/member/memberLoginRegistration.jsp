@@ -169,6 +169,7 @@ section .form_container .user .form-group form .signup
 }
 section .form_container .user .form-group form .signup a
 {
+	cursor: pointer;
 	font-weight: 600;
 	text-decoration: none;
 	color: #677eff;
@@ -244,13 +245,13 @@ section .form_container.active .singinBx .imgBx
 							/
 							<a href="#" onclick="findPassword();">비밀번호 찾기</a>
 						</p>
-						<p class="signup">아직 회원이 아니세요 ? <a href="#" onclick="toggleForm()">회원가입</a></p>
+						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
 					</form>
 				</div>
 			</div>
  			<div class="user singupBx">
 				<div class="form-group">
-					<form action="memberInsert.do" method="post" id="registerForm" onsubmit="return validate();">
+					<form action="memberInsert.do" method="post" id="registerForm">
 						<h2>회원가입</h2>
 						<div class="input-group">
 							<input id="memberEmail" type="email" name="memberEmail" required="required">
@@ -269,7 +270,7 @@ section .form_container.active .singinBx .imgBx
 							<span>닉네임</span>
 						</div>
 						<div class="input-group">
-							<input id="memberPhone" type="tel" name="memberPhone" required="required">
+							<input id="memberPhone" type="text" name="memberPhone" required="required">
 							<span>휴대전화</span>
 						</div>
 						<input type="button" onclick="validate();" value="회원가입">
@@ -291,7 +292,6 @@ section .form_container.active .singinBx .imgBx
 		}
 		
 		function validate(){
-			alert("!");
 /* 			if($("#memberEmail").val().trim().length() == 0){
 				alert("아이디를 입력하세요");
 				$("#memberEmail").focus();
@@ -313,8 +313,8 @@ section .form_container.active .singinBx .imgBx
 				$("#memberPhone").focus();
 				return false;
 			} */
-			return true;
-			
+			//return true;
+			$("#registerForm").submit();
 		}
 	</script>
 	
