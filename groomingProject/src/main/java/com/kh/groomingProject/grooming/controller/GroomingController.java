@@ -21,10 +21,15 @@ public class GroomingController {
 		return "grooming/groupBoardInsertForm";
 	}
 	
+	
 	@RequestMapping("groupdetail.do")	
 	public String groupBoardDetailView() {
 		return "grooming/groupBoardDetailView";
 	}
 	
+	@RequestMapping("groomingInsertForm.do")	
+	public String groomingInsertForm() {
+		return "grooming/groomingInsertForm";
+	}
 	
 }
