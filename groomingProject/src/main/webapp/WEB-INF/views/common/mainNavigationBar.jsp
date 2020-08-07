@@ -9,6 +9,7 @@
 <title>main navigation bar</title>
 	<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
 	<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>

@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>	
+<title>Insert title here</title>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+    <script src=""></script>
 
 	<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
@@ -243,36 +244,36 @@ section .form_container.active .singinBx .imgBx
 							/
 							<a href="#" onclick="findPassword();">비밀번호 찾기</a>
 						</p>
-						<p class="signup">아직 회원이 아니세요 ? <a href="#" onclick="toggleForm();">회원가입</a></p>
+						<p class="signup">아직 회원이 아니세요 ? <a href="#" onclick="toggleForm()">회원가입</a></p>
 					</form>
 				</div>
 			</div>
  			<div class="user singupBx">
 				<div class="form-group">
-					<form>
+					<form action="memberInsert.do" method="post" id="registerForm" onsubmit="return validate();">
 						<h2>회원가입</h2>
 						<div class="input-group">
-							<input type="email" name="" required="required">
+							<input id="memberEmail" type="email" name="memberEmail" required="required">
 							<span>이메일</span>
 						</div>
 						<div class="input-group">
-							<input type="password" name="" required="required">
+							<input id="memberPwd" type="password" name="memberPwd" required="required">
 							<span>비밀번호</span>
 						</div>
 						<div class="input-group">
-							<input type="password" name="" required="required">
+							<input id="memberPwdChk" type="password" name="memberPwdChk" required="required">
 							<span>비밀번호 재확인</span>
 						</div>
 						<div class="input-group">
-							<input type="text" name="" required="required">
+							<input id="memberNickName" type="text" name="memberNickName" required="required">
 							<span>닉네임</span>
 						</div>
 						<div class="input-group">
-							<input type="tel" name="" required="required">
+							<input id="memberPhone" type="tel" name="memberPhone" required="required">
 							<span>휴대전화</span>
 						</div>
-						<input type="button" name="" value="회원가입">
-						<p class="signup">이미 회원 이신가요 ? <a href="#" onclick="toggleForm();">로그인</a></p>
+						<input type="button" onclick="validate();" value="회원가입">
+						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
@@ -280,13 +281,40 @@ section .form_container.active .singinBx .imgBx
 		</div>
 	</section>
 	<script type="text/javascript">
-		$(function() {
+/* 		$(function() {
 			
-		});
+		}); */
 		
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
+		}
+		
+		function validate(){
+			alert("!");
+/* 			if($("#memberEmail").val().trim().length() == 0){
+				alert("아이디를 입력하세요");
+				$("#memberEmail").focus();
+				return false;
+			} else if($("#memberPwd").val().trim().length() == 0){
+				alert("비밀번호를 입력하세요");
+				$("#memberPwd").focus();
+				return false;
+			} else if($("#memberPwdChk").val().trim().length() == 0){
+				alert("비밀번호 확인을 입력하세요");
+				$("#memberPwdChk").focus();
+				return false;
+			} else if($("#memberNickName").val().length() == 0){
+				alert("닉네임을 입력하세요");
+				$("#memberNickName").focus();
+				return false;
+			} else if($("#memberPhone").val().length() == 0){
+				alert("휴대전화 번호를 입력하세요");
+				$("#memberPhone").focus();
+				return false;
+			} */
+			return true;
+			
 		}
 	</script>
 	
