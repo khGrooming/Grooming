@@ -229,21 +229,21 @@ section .form_container.active .singinBx .imgBx
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
-					<form>
+					<form action="memberLogin.do" method="post" id="loginForm">
 						<h2>로그인</h2>
 						<div class="input-group">
-							<input type="email" name="" required="required">
+							<input type="text" name="memberEmail" required="required">
 							<span>이메일</span>
 						</div>
 						<div class="input-group">
-						<input type="password" name="" required="required">
+						<input type="password" name="memberPwd" required="required">
 							<span>비밀번호</span>
 						</div>
-						<input type="button" name="" value="로그인">
+						<input type="button" onclick="login()" value="로그인">
 						<p class="signup">로그인에 문제가 있나요 ? 
-							<a href="#" onclick="findAccount();">아이디 찾기</a>
+							<a href="#" onclick="findAccount()">아이디 찾기</a>
 							/
-							<a href="#" onclick="findPassword();">비밀번호 찾기</a>
+							<a href="#" onclick="findPassword()">비밀번호 찾기</a>
 						</p>
 						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
 					</form>
@@ -273,7 +273,7 @@ section .form_container.active .singinBx .imgBx
 							<input id="memberPhone" type="text" name="memberPhone" required="required">
 							<span>휴대전화</span>
 						</div>
-						<input type="button" onclick="validate();" value="회원가입">
+						<input type="button" onclick="validate()" value="회원가입">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
@@ -289,6 +289,10 @@ section .form_container.active .singinBx .imgBx
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
+		}
+		
+		function login() {
+			$("#loginForm").submit();
 		}
 		
 		function validate(){

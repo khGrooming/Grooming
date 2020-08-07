@@ -3,6 +3,7 @@ package com.kh.groomingProject.member.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.groomingProject.member.model.exception.MemberException;
@@ -22,7 +23,8 @@ public class MemberController {
 	@RequestMapping("memberInsert.do")
 	public String memberInsert(Member m) {
 		
-		System.out.println("왔냐?" + m);
+		System.out.println("memberInsert : " + m);
+		
 		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		
 		m.setMemberPwd(emcPwd);
@@ -37,6 +39,21 @@ public class MemberController {
 		
 	}
 
+	@RequestMapping("memberLogin.do")
+	public String memberLogin(Member m, Model model) {
+		
+		System.out.println("memberLogin : " + m);
+		
+		Member loginUser = mService.loginMember(m);
+		
+		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			model.addAttribute("loginUser", loginUser);
+			return "home";
+		} else {
+			throw new MemberException("로그인 실패!");
+		}
+		
+	}
 	
 	
 }

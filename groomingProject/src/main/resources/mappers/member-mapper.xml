@@ -32,5 +32,12 @@
 				, DEFAULT, SYSDATE)
 	</insert>
 	
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_EMAIL=#{memberEmail}
+		AND MEMBER_STATUS='N'
+	</select>
+	
 
 </mapper>

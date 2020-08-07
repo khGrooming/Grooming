@@ -18,4 +18,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertMember(m);
 	}
 
+	@Override
+	public Member loginMember(Member m) {
+		// TODO Auto-generated method stub
+		return mDao.loginMember(m);
+	}
+
 }
