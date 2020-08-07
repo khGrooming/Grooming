@@ -3,18 +3,17 @@
 	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
 <title>Home</title>
 
-<!-- Bootstrap core CSS -->
-<link href="${pageContext.servletContext.contextPath }/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this css -->
-<link href="${pageContext.servletContext.contextPath }/resources/views/css/main.css" rel="stylesheet">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
+	<!-- Custom styles for this css -->
+	<link href="${pageContext.servletContext.contextPath }/resources/views/css/main.css" rel="stylesheet">
 
 </head>
 <body>
@@ -90,25 +89,13 @@
 
 	</div>
 	<!-- /.container -->
+	<jsp:include page="common/footer.jsp" />
 
-	<!-- Footer -->
-	<footer class="py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; Grooming 2020</p>
-		</div>
-		<!-- /.container -->
-	</footer>
+	<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
 
-	<!-- Bootstrap core JavaScript -->
-	<script
-		src="${pageContext.servletContext.contextPath }/resources/vendor/jquery/jquery.min.js"></script>
-	<script
-		src="${pageContext.servletContext.contextPath }/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<%-- <h1>
-	Hello world!  
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P> --%>
 </body>
 </html>

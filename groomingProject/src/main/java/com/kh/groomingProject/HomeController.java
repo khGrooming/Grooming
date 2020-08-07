@@ -35,5 +35,11 @@ public class HomeController {
 
 		return "home";
 	}
+	
+	@RequestMapping("loginPage.do")
+	public String loginPage() {
+		
+		return "member/memberLoginRegistration";
+	}
 
 }
