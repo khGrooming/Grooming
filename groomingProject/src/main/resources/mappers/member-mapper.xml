@@ -3,31 +3,26 @@
 <mapper namespace="memberMapper">
 
 	<resultMap type="Member" id="memberResultSet">
-		<id property="id" column="ID"/>
-		<result property="pwd" column="PWD"/>
-		<result property="name" column="NAME"/>
-		<result property="email" column="EMAIL"/>
-		<result property="gender" column="GENDER"/>
-		<result property="age" column="AGE"/>
-		<result property="phone" column="PHONE"/>
-		<result property="address" column="ADDRESS"/>
-		<result property="enrollDate" column="ENROLL_DATE"/>
-		<result property="updateDate" column="UPDATE_DATE"/>
-		<result property="mStatus" column="M_STATUS"/>
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberPwd" column="MEMBER_PASSWORD"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberGender" column="MEMBER_GENDER"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="lvlNo" column="LVL_NO"/>
+		<result property="memberExp" column="MEMBER_EXP"/>
+		<result property="memberMemo" column="MEMBER_MEMO"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberAdmin" column="MEMBER_ADMIN"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
 	</resultMap>
 
-<!-- private String memberNo;
-private String memberEmail;
-private String memberPwd;
-private String memberNickName;
-private String memberName;
-private String memberGender;
-private String memberPhone;
-private String lvlNo;
-private String memberExp;
-private String memberMemo;
-private String memberPhoto;
-private String memberAdmin;
-private String memberStatus;
-private String memberJoinDate; -->
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER
+		VALUES('M' || LPAD(SEQ_MEMBERNO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}, #{memberNickName}
+				, NULL, NULL, #{memberPhone}, DEFAULT, 0, NULL, DEFAULT, DEFAULT, DEFAULT, SYSDATE)
+	</insert>
+
 </mapper>
