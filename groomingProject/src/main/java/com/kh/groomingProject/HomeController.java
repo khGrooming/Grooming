@@ -16,26 +16,36 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class HomeController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
+
 		model.addAttribute("serverTime", formattedDate );
-		
+
 		return "home";
 	}
 	
+	@RequestMapping("loginPage.do")
+	public String loginPage() {
+		
+		return "member/memberLoginRegistration";
+	}
 	
-	
+	@RequestMapping("registerPage.do")
+	public String registerPage() {
+		//TODO 페이지 전환 시 회원 가입 페이지 뜨도록 값 넘겨야함
+		return "member/memberLoginRegistration";
+	}
+
 }
