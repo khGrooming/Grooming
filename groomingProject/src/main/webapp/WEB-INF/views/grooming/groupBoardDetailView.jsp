@@ -98,15 +98,17 @@
             vertical-align: middle;
         }
 
-        /*        @font-face {
-		   font-family: 'NanumGothic';
-		   src: url(${pageContext.servletContext.contextPath }/resources/views/font/NanumGothic.ttf)
-		      format('truetype');
-		}
-
-		body {
-		   font-family: NanumGothic;
-		} */
+      
+		
+		  @font-face { 
+			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    	    font-weight: normal; 
+    	    font-style: normal; 
+   		}
+   
+	   * {
+	      font-family:"TmoneyRoundWindExtraBold";
+	   }
     </style>
 </head>
 

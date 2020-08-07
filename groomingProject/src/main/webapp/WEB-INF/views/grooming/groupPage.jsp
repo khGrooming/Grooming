@@ -13,9 +13,16 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
-
-
+   
+   <!-- fullcalendar -->
+    <link href='${contextPath }/resources/views/css/fullcalendar-main.css' rel='stylesheet' />
+    <script src='${contextPath }/resources/js/fullcalendar/fullcalendar-main.js'></script>
+    <script src='${contextPath }/resources/js/fullcalendar/locales-all.js'></script>
+	
+	
+	<!-- jquery js -->
     <script src="http:/code.jquery.com/jquery-latest.min.js"></script>
+    
     <title>Hello, world!</title>
     <style>
         body{
@@ -39,7 +46,7 @@
             display: none;
             padding: 20px 10px 10px 10px;
             border: 3px solid #ddd;
-            height: 700px;
+            height: auto;
         }
 
         /*라디오버튼 숨김*/
@@ -76,6 +83,16 @@
         .table{
             text-align: center;
         }
+        
+        @font-face { 
+			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    	    font-weight: normal; 
+    	    font-style: normal; 
+   		}
+   
+	   * {
+	      font-family:"TmoneyRoundWindExtraBold";
+	   }
     </style>
 </head>
 
@@ -93,10 +110,10 @@
         <input id="tab1" type="radio" name="tabs" >
         <label for="tab1"><i class="fas fa-user-graduate"></i>메인</label>
 
-        <input id="tab2" type="radio" name="tabs">
+        <input id="tab2" type="radio" name="tabs" checked>
         <label for="tab2"><i class="fas fa-calendar-alt"></i>캘린더</label>
 
-        <input id="tab3" type="radio" name="tabs" checked>
+        <input id="tab3" type="radio" name="tabs" >
         <label for="tab3"><i class="fas fa-icons"></i>게시판</label>
 
 
@@ -200,6 +217,25 @@
 	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
     <section id="content2">
        
+           <div id='calendar'></div>
+       
+       
+       
+       
+      <!-- 캘린더 script -->
+     <script>
+		
+        document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth',
+       	
+        });
+        calendar.render();
+      });
+
+    </script>
+       
     </section>
 
     <!--게시판에 들어갈 내용 -->
@@ -208,8 +244,8 @@
         <table class="table table-hover" id="boardId">
             <thead>
               <tr>
-                <th scope="col">글유형</th>
-                <th scope="col">글번호</th>	<!-- 공지사항/자유게시판 -->
+                <th scope="col">글번호</th>	
+                <th scope="col">글유형</th><!-- 공지사항/자유게시판 -->
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
@@ -304,9 +340,18 @@
           
           <!-- 글작성 버튼 -->
  	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'") >글 작성</button>
+          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'" >글 작성</button>
           </div>
-          
+         <!--     <script>
+                $(function () {
+                    var td = $("#boardId tbody tr td").eq(0).text();
+                    if (td.equals("공지사항")) {
+                        $('#boardId tbody tr td').css({
+                            "background-color": "blue"
+                        });
+                    }
+                })
+            </script> -->
     
           
           <!-- 페이지네이션 -->
