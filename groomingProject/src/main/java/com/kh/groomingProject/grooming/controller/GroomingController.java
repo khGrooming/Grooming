@@ -11,4 +11,25 @@ public class GroomingController {
 		return "grooming/groomingMain";
 	}
 	
+	@RequestMapping("groupPage.do")	
+	public String groupPage() {
+		return "grooming/groupPage";
+	}
+	
+	@RequestMapping("groupBoardInsertForm.do")	
+	public String groupBoardInsertForm() {
+		return "grooming/groupBoardInsertForm";
+	}
+	
+	
+	@RequestMapping("groupdetail.do")	
+	public String groupBoardDetailView() {
+		return "grooming/groupBoardDetailView";
+	}
+	
+	@RequestMapping("groomingInsertForm.do")	
+	public String groomingInsertForm() {
+		return "grooming/groomingInsertForm";
+	}
+	
 }
