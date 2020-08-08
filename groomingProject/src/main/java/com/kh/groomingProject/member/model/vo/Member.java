@@ -10,20 +10,20 @@ public class Member implements Serializable {
 	 */
 	private static final long serialVersionUID = -7200797583466611023L;
 
-	private String memberNo;
-	private String memberEmail;
-	private String memberPwd;
-	private String memberNickName;
-	private String memberName;
-	private String memberGender;
-	private String memberPhone;
-	private String lvlNo;
-	private int memberExp;
-	private String memberMemo;
-	private String memberPhoto;
-	private String memberAdmin;
-	private String memberStatus;
-	private Date memberJoinDate;
+	private String memberNo;		// 멤버 번호
+	private String memberEmail;		// 멤버 이메일
+	private String memberPwd;		// 멤버 비밀번호
+	private String memberNickName;	// 멤버 닉네임
+	private String memberName;		// 멤버 이름
+	private String memberGender;	// 멤버 성별
+	private String memberPhone;		// 멤버 휴대전화 번호
+	private String lvlNo;			// 멤버 레벨
+	private int memberExp;			// 멤버 경험치
+	private String memberMemo;		// 멤버 한줄 소개
+	private String memberPhoto;		// 멤버 프로필 사진
+	private String memberAdmin;		// 멤버 관리자 권한
+	private String memberStatus;	// 멤버 탈퇴 상태
+	private Date memberJoinDate;	// 멤버 가입 날짜
 
 	public Member() {
 		super();

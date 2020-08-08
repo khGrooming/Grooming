@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Grooming</title>
+	<!-- JQuery -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
     <script src=""></script>
@@ -224,8 +226,12 @@ section .form_container.active .singinBx .imgBx
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
+	
 	<section>
-		<div class="signup form_container"><!-- active toggle --> 
+	<c:if test="${loginCheck == 'register'}">
+		<div class="signup form_container active"><!-- active toggle -->
+	</c:if> 
+		<div class="signup form_container"><!-- active toggle -->
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
@@ -280,11 +286,10 @@ section .form_container.active .singinBx .imgBx
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
 			</div>
 		</div>
+	pageHistory = ${pageHistory }
 	</section>
 	<script type="text/javascript">
-/* 		$(function() {
-			
-		}); */
+
 		
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
@@ -320,6 +325,7 @@ section .form_container.active .singinBx .imgBx
 			//return true;
 			$("#registerForm").submit();
 		}
+
 	</script>
 	
 		<!-- /.container -->
