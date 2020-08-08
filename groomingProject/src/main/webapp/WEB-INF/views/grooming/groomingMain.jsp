@@ -119,7 +119,7 @@
             <!-- 스터디 그룹 리스트 -->
             <div style="margin-top: 20px;">
                 <div class="card-deck cols-4">
-                    <div class="card">
+                    <div class="card" onclick="location.href='groomingDetail.do'">
                         <!-- 그룹 이미지 -->
                         <div class="top-img">
                             <!-- 그룹 d-day 태그 -->

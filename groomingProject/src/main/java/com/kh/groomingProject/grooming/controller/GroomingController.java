@@ -31,5 +31,9 @@ public class GroomingController {
 	public String groomingInsertForm() {
 		return "grooming/groomingInsertForm";
 	}
+	@RequestMapping("groomingDetail.do")	
+	public String groomingDetailView() {
+		return "grooming/groomingDetailView";
+	}
 	
 }
