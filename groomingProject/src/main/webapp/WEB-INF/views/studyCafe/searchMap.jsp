@@ -14,6 +14,10 @@
 	    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
+	<!-- 카카오맵 API -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f23df3d72e20cc3d63e0de5a303f1054"></script>
+	<script src="https://www.w3.org/TR/geolocation-API/"/></script>
 	<style>
 	section{margin-top:10%}
       
@@ -21,7 +25,7 @@
 	.subMenu{height:100px;}
 	
 	.search{text-align:center;background:greenyellow;width:280px;height:50px;float:left;border:1px solid black}
-	.searchView{width:100%;height:550px;background:lawngreen;display:inline-block;padding:10px;}
+	#map{width:100%;height:550px;padding:10px;}
 	
 	.btn{float:right;}
 	.searchName{float:right;width:200px;height:35px;}
@@ -61,7 +65,7 @@
                     </div>
                     <div class="card-body">
                         <br>
-                        <div class="searchView">
+                        <div id="map">
                             
                         </div>
                     </div>
@@ -70,8 +74,44 @@
             </div>
         </div>
         </div>
+        
 	</section>
-<footer><jsp:include page="../common/footer.jsp" /></footer>
-
+	<footer><jsp:include page="../common/footer.jsp" /></footer>
+	
+	<!-- 카카오맵을 불러오기 위한 script -->
+	<script>
+		var X = 0.0;
+		var Y = 0.0;
+		
+		function getLocation() {
+			  if (navigator.geolocation) { // GPS를 지원하면
+			    navigator.geolocation.getCurrentPosition(function(position) {
+			      alert(position.coords.latitude + ' ' + position.coords.longitude);
+			      X = position.coords.latitude;
+			      Y = position.coords.longitude;
+			    }, function(error) {
+			      console.error(error);
+			    }, {
+			      enableHighAccuracy: true,
+			      maximumAge: 1,
+			      timeout: Infinity
+			    });
+			  } else {
+			    alert('GPS를 지원하지 않습니다');
+			  }
+			}
+		getLocation();
+		
+		console.log(X);
+		console.log(Y);
+		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+		
+		var options = { //지도를 생성할 때 필요한 기본 옵션
+			center: new kakao.maps.LatLng(37.4931456, 127.0317056), //지도의 중심좌표.
+			level: 3 //지도의 레벨(확대, 축소 정도)
+		};
+	
+		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+	</script>
 </body>
 </html>

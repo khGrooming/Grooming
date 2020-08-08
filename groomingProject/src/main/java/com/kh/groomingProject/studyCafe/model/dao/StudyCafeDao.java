@@ -19,4 +19,14 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeNameList", name);
 	}
 
+	public ArrayList<StudyCafe> selectCafeLocalList(String name) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
+	}
+
+	public ArrayList<StudyCafe> selectCafeList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList");
+	}
+
 }

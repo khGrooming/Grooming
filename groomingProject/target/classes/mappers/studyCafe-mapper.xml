@@ -13,6 +13,17 @@
 	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">
 		SELECT *
 		FROM STUDYCAFE
-		WHERE CAFE_NAME LIKE #{name}
+		WHERE CAFE_NAME LIKE '%'||#{name}||'%'
+	</select>
+	
+	<select id="selectCafeLocalList" parameterType="string" resultMap="studyCafeResultSet">
+		SELECT *
+		FROM STUDYCAFE
+		WHERE CAFE_ADDRESS LIKE '%'||#{name}||'%'
+	</select>
+	
+	<select id="selectCafeList" resultMap="studyCafeResultSet">
+		SELECT *
+		FROM STUDYCAFE
 	</select>
 </mapper>

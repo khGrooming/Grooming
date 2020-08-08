@@ -20,4 +20,16 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 		return studyCafeDao.selectCafeNameList(name);
 	}
 
+	@Override
+	public ArrayList<StudyCafe> selectCafeLocalList(String name) {
+
+		return studyCafeDao.selectCafeLocalList(name);
+	}
+
+	@Override
+	public ArrayList<StudyCafe> selectCafeList() {
+		
+		return studyCafeDao.selectCafeList();
+	}
+
 }

@@ -8,4 +8,8 @@ public interface StudyCafeService {
 
 	ArrayList<StudyCafe> selectCafeNameList(String name);
 
+	ArrayList<StudyCafe> selectCafeLocalList(String name);
+
+	ArrayList<StudyCafe> selectCafeList();
+
 }

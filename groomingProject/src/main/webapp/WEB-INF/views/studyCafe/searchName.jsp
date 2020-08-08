@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +20,7 @@
 		.subMenu{height:100px;}
 		
 		.search{text-align:center;background:greenyellow;width:280px;height:50px;float:left;border:1px solid black}
-		.searchView{width:100%;height:550px;background:lawngreen;display:inline-block;padding:10px;}
+		.searchView{width:100%;background:lawngreen;display:inline-block;padding:10px;}
 		
 		.searchName{width:200px;height:35px;}
 		
@@ -40,9 +41,9 @@
 			<br><br>
 			<div class="container col-sm-3"></div>
 			    <div class="sideMenu col-sm-7">
-					<div class="cafe"><a href="searchMap.html">스터디 카페 검색</a></div>
-					<div class="cafe"><a href="reservationCheck.html">카페 신청 내역</a></div>
-					<div class="cafe"><a href="reservationHistory.html">카페 예약 내역</a></div>
+					<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
+					<div class="cafe"><a href="reservationCheck.do">카페 신청 내역</a></div>
+					<div class="cafe"><a href="reservationHistory.do">카페 예약 내역</a></div>
 	        	</div>
 	        </div>
 			<div class="col-sm-8">
@@ -72,26 +73,13 @@
 		            </div>
 		            <br>
 		            <div class="searchView">
+		                <c:forEach var="cafe" items="${cafeList}">
 		                <div class="panel panel-default">
 		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
-		                    <div class="panel-body"><p>슈퍼스타트 강남점</p></div>
-		                    <div class="panel-footer">1000원/시간</div>
-		                </div>
-		                <div class="panel panel-default">
-		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
-		                    <div class="panel-body"><p>슈퍼스타트 강남점</p></div>
-		                    <div class="panel-footer">1000원/시간</div>
-		                </div>
-		                <div class="panel panel-default">
-		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
-		                    <div class="panel-body"><p>슈퍼스타트 강남점</p></div>
-		                    <div class="panel-footer">1000원/시간</div>
-		                </div>
-		                <div class="panel panel-default">
-		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
-		                    <div class="panel-body"><p>슈퍼스타트 강남점</p></div>
-		                    <div class="panel-footer">1000원/시간</div>
-		                </div>
+		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
+		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
+		                </div>		            
+		            	</c:forEach>
 		            </div>
 		        </div>
 		        <br><br><br>
