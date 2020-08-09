@@ -23,4 +23,9 @@ public class MemberDao {
 
 	}
 
+	public int emailDuplicateChk(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.emailDuplicateChk", m);
+	}
+
 }

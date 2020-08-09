@@ -8,4 +8,6 @@ public interface MemberService {
 
 	Member loginMember(Member m);
 
+	int emailDuplicateChk(Member m);
+
 }

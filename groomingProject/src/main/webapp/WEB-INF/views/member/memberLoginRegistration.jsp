@@ -5,14 +5,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Grooming</title>
-	<!-- JQuery -->
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">
-    <script src=""></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
 <!-- 기본 스타일 -->
 *
@@ -101,13 +104,22 @@ section .form_container .user .form-group form .input-group
 {
 	font-size: 18px;
 	width: 100%;
-	/* font-weight: 600; */
-	/* text-transform: uppercase; */
-	letter-spaceing: 2px;
 	text-align: center;
-	width: 100%;
 	margin-bottom: 10px;
 	color: #555;
+}
+section .form_container .user .form-group form .input-group .chkVali
+{
+	font-size: 13px;
+	width: 100%;
+	color: red;
+	text-align: left;
+	padding: 0 5px;
+	display: none;
+}
+section .form_container .user .form-group form .input-group .chkValiComp
+{
+	color: green;
 }
 section .form_container .user .form-group form input
 {
@@ -119,10 +131,8 @@ section .form_container .user .form-group form input
 	border: 1px solid #000;
 	outline: none;
 	box-shadow: none;
-	margin: 8px 0;
+	margin: 8px 0 0;
 	font-size: 14px;
-	letter-spacing: 1px;
-	font-weight: 300;
 }
 section .form_container .user .form-group form .input-group span
 {
@@ -248,18 +258,22 @@ section .form_container.active .singinBx .imgBx
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
-					<form action="memberLogin.do" method="post" id="loginForm">
+					<!-- <form action="memberLogin.do" method="post" id="loginForm"> -->
+					<form>
 						<h2>로그인</h2>
 						<div class="input-group">
-							<input type="text" name="memberEmail" required="required">
+							<input type="text" id="loginEmail" name="memberEmail" required="required">
 							<span>이메일</span>
+							<div class="chkVali" id="loginEmailChk">올바른 이메일을 입력해주세요.</div>
 						</div>
 						<div class="input-group">
-						<input type="password" name="memberPwd" required="required">
+						<input type="password" id="loginPwd" name="memberPwd" required="required">
 							<span>비밀번호</span>
+							<div class="chkVali" id="loginPwdChk">비밀번호를 입력해주세요.</div>
 						</div>
 						<div class="input-group">
 							<input type="checkbox" name="idSaveCheck"><p>아이디 기억하기</p>
+							<div class="chkVali" id="loginError">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</div>
 						</div>
 						<input type="button" onclick="login()" value="로그인">
 						<input type="button" onclick="kakaoLogin()" class="kakaoLogin" value="">
@@ -277,26 +291,36 @@ section .form_container.active .singinBx .imgBx
 					<form action="memberInsert.do" method="post" id="registerForm">
 						<h2>회원가입</h2>
 						<div class="input-group">
-							<input id="memberEmail" type="email" name="memberEmail" required="required">
+							<input type="text" id="regiEmail" name="memberEmail" required="required">
 							<span>이메일</span>
+							<div class="chkVali" id="regiEmailChk">올바른 이메일을 입력해주세요.</div>
+							<div class="chkVali" id="regiEmailDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiEmailComp">멋진 아이디네요!</div>
 						</div>
 						<div class="input-group">
-							<input id="memberPwd" type="password" name="memberPwd" required="required">
+							<input type="password" id="regiPwd" name="memberPwd" required="required">
 							<span>비밀번호</span>
+							<div class="chkVali" id="regiPwdChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
 						</div>
 						<div class="input-group">
-							<input id="memberPwdChk" type="password" name="memberPwdChk" required="required">
+							<input type="password" id="regiPwdChk" required="required">
 							<span>비밀번호 재확인</span>
+							<div class="chkVali" id="regiPwdDupChk">비밀번호가 일치하지 않습니다.</div>
+							<div class="chkVali chkValiComp" id="regiPwdChkComp">비밀번호가 일치합니다.</div>
 						</div>
 						<div class="input-group">
-							<input id="memberNickName" type="text" name="memberNickName" required="required">
+							<input type="text" id="regiNickName" name="memberNickName" required="required">
 							<span>닉네임</span>
+							<div class="chkVali" id="regiNickNameChk">이미 사용 중 입니다.</div>
+							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
 						</div>
 						<div class="input-group">
-							<input id="memberPhone" type="text" name="memberPhone" required="required">
+							<input type="text" id="regiPhone" name="memberPhone" required="required">
 							<span>휴대전화</span>
+							<div class="chkVali" id="regiPhoneChk">이미 사용 중 입니다.</div>
+							<div class="chkVali chkValiComp" id="regiPhoneComp">상용가능 합니다.</div>
 						</div>
-						<input type="button" onclick="validate()" value="회원가입">
+						<input type="button" onclick="register()" value="회원가입">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
@@ -305,42 +329,153 @@ section .form_container.active .singinBx .imgBx
 		</div>
 	pageHistory = ${pageHistory }
 	</section>
-	<script type="text/javascript">
+	<script>
+		var loginEmailPass = 0;
 
-		
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
 		}
+
+		// 로그인 유효성 검사
+		$("#loginEmail").on("keyup change", function () {
+			var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+
+			loginEmailPass = 0;
+			
+			if (!regex.test($(this).val())) {
+				$("#loginEmailChk").css("display","block");
+			} else {
+				$("#loginEmailChk").css("display","none");
+				loginEmailPass = 1;
+			}
+		});
 		
+		$("#loginPwd").on("keyup change", function () {
+			if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwdChk").css("display","block");
+			} else {
+				$("#loginPwdChk").css("display","none");
+			}
+		});
+
 		function login() {
-			$("#loginForm").submit();
+			/* 입력여부 확인 */
+ 			if(!$("#loginEmail")[0].checkValidity() || loginEmailPass == 0){
+				$("#loginEmailChk").css("display","block");
+			} else {
+				$("#loginEmailChk").css("display","none");
+				loginEmailPass = 1;
+			}
+			if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwdChk").css("display","block");
+			} else {
+				$("#loginPwdChk").css("display","none");
+			}
+
+			/* 로그인 및 입력 없으면 포커스 */
+ 			if(!$("#loginEmail")[0].checkValidity() || loginEmailPass == 0){
+				$("#loginEmail").focus();
+			} else if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwd").focus();
+			} else{
+				/* $("#loginForm").submit(); */
+				var memberEmail = $("#loginEmail").val();
+				var memberPwd = $("#loginPwd").val();
+				
+				$.ajax({
+					url:"memberLogin.do",
+					data:{memberEmail:memberEmail, memberPwd:memberPwd},
+					success:function(data){
+						console.log(data);
+						if(data == "success"){
+							//TODO 이전 페이지 처리 해야함
+							location.href="home.do";
+						} else{
+							$("#loginError").css("display","block");
+						}
+						
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						/* alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData); */
+					}
+				});
+			}
 		}
+
+	</script>
 		
-		function validate(){
-/* 			if($("#memberEmail").val().trim().length() == 0){
-				alert("아이디를 입력하세요");
-				$("#memberEmail").focus();
-				return false;
-			} else if($("#memberPwd").val().trim().length() == 0){
-				alert("비밀번호를 입력하세요");
-				$("#memberPwd").focus();
-				return false;
-			} else if($("#memberPwdChk").val().trim().length() == 0){
-				alert("비밀번호 확인을 입력하세요");
-				$("#memberPwdChk").focus();
-				return false;
-			} else if($("#memberNickName").val().length() == 0){
-				alert("닉네임을 입력하세요");
-				$("#memberNickName").focus();
-				return false;
-			} else if($("#memberPhone").val().length() == 0){
-				alert("휴대전화 번호를 입력하세요");
-				$("#memberPhone").focus();
-				return false;
-			} */
-			//return true;
-			$("#registerForm").submit();
+	<script>
+		
+		// 회원가입 유효성 검사
+		var regiEmailPass = 0;
+
+		$("#regiEmail").on("keyup change", function () {
+			var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+
+			regiEmailPass = 0;
+			
+			if (!regex.test($(this).val())) {
+				$("#regiEmailChk").css("display","block");
+				$("#regiEmailDupl").css("display","none");
+				$("#regiEmailComp").css("display","none");
+			} else {
+				var memberEmail = $("#regiEmail").val();
+				
+				$.ajax({
+					url:"emailDuplicateChk.do",
+					data:{memberEmail:memberEmail},
+					success:function(data){
+						console.log(data);
+						if(data == "success"){
+							$("#regiEmailChk").css("display","none");
+							$("#regiEmailDupl").css("display","none");
+							$("#regiEmailComp").css("display","block");
+							loginEmailPass = 1;
+						} else {
+							$("#regiEmailChk").css("display","none");
+							$("#regiEmailDupl").css("display","block");
+							$("#regiEmailComp").css("display","none");
+						}
+						
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+				});
+			}
+		});
+		
+		$("#loginPwd").on("keyup change", function () {
+			if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwdChk").css("display","block");
+			} else {
+				$("#loginPwdChk").css("display","none");
+			}
+		});
+		
+		function register(){
+			/* 입력여부 확인 */
+ 			if(!$("#regiEmail")[0].checkValidity() || regiEmailPass == 0){
+				$("#regiEmailChk").css("display","block");
+			} else {
+				$("#loginEmailChk").css("display","none");
+				loginEmailPass = 1;
+			}
+			if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwdChk").css("display","block");
+			} else {
+				$("#loginPwdChk").css("display","none");
+			}
+			
+			
+			/* $("#registerForm").submit(); */
 		}
 		
 		function kakaoLogin(){
@@ -352,11 +487,12 @@ section .form_container.active .singinBx .imgBx
 		<!-- /.container -->
 	<jsp:include page="../common/footer.jsp" />
 
-	<!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
-
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+ -->
 </body>
 </html>

@@ -38,6 +38,12 @@
 		WHERE MEMBER_EMAIL=#{memberEmail}
 		AND MEMBER_STATUS='N'
 	</select>
+
+	<select id="emailDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL=#{memberEmail}
+	</select>
 	
 
 </mapper>

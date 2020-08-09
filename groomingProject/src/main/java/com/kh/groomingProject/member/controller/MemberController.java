@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
@@ -81,7 +82,24 @@ public class MemberController {
 		
 	}
 
+//	@RequestMapping("memberLogin.do")
+//	public String memberLogin(Member m, Model model) {
+//		
+//		System.out.println("memberLogin : " + m);
+//		
+//		Member loginUser = mService.loginMember(m);
+//		
+//		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+//			model.addAttribute("loginUser", loginUser);
+//			return "home";
+//		} else {
+//			throw new MemberException("로그인 실패!");
+//		}
+//		
+//	}
+
 	@RequestMapping("memberLogin.do")
+	@ResponseBody
 	public String memberLogin(Member m, Model model) {
 		
 		System.out.println("memberLogin : " + m);
@@ -89,10 +107,13 @@ public class MemberController {
 		Member loginUser = mService.loginMember(m);
 		
 		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+			System.out.println("비번 확인 : 성공");
 			model.addAttribute("loginUser", loginUser);
-			return "home";
+			return "success";
 		} else {
-			throw new MemberException("로그인 실패!");
+			System.out.println("비번 확인 : 실패");
+			// throw new MemberException("로그인 실패!");
+			return "fail";
 		}
 		
 	}
@@ -102,7 +123,26 @@ public class MemberController {
 		status.setComplete();
 
 		return "home";
+		
 	}
 	
+	@RequestMapping("emailDuplicateChk.do")
+	@ResponseBody
+	public String emailDuplicateChk(Member m) {
+		
+		System.out.println("이메일 중복 확인 : " + m.getMemberEmail());
+		
+		int result = mService.emailDuplicateChk(m);
+		
+		if(result == 0) {
+			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용가능 )");
+			return "success";
+		} else {
+			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용 중 )");
+			// throw new MemberException("로그인 실패!");
+			return "fail";
+		}
+
+	}
 	
 }

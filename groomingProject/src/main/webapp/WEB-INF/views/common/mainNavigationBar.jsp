@@ -7,9 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <title>main navigation bar</title>
-	<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
-	<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>
@@ -80,6 +78,15 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<script type="text/javascript">
+		window.onpageshow = function(event){
+			// 히스토리 뒤로가기로 접근시 페이지 새로 고침
+			if(performance.navigation.type == 2){
+				location.reload(true);
+			}
+		}
+	</script>
 
 </body>
 </html>
