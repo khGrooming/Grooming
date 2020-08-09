@@ -45,5 +45,19 @@
 		WHERE MEMBER_EMAIL=#{memberEmail}
 	</select>
 	
+	<select id="nickNameDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME=#{memberNickName}
+	</select>
+
+	<select id="phoneDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_PHONE=#{memberPhone}
+	</select>
+
+
+
 
 </mapper>

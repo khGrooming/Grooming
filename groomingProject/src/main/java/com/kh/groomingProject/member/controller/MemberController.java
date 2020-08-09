@@ -82,22 +82,6 @@ public class MemberController {
 		
 	}
 
-//	@RequestMapping("memberLogin.do")
-//	public String memberLogin(Member m, Model model) {
-//		
-//		System.out.println("memberLogin : " + m);
-//		
-//		Member loginUser = mService.loginMember(m);
-//		
-//		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-//			model.addAttribute("loginUser", loginUser);
-//			return "home";
-//		} else {
-//			throw new MemberException("로그인 실패!");
-//		}
-//		
-//	}
-
 	@RequestMapping("memberLogin.do")
 	@ResponseBody
 	public String memberLogin(Member m, Model model) {
@@ -112,7 +96,6 @@ public class MemberController {
 			return "success";
 		} else {
 			System.out.println("비번 확인 : 실패");
-			// throw new MemberException("로그인 실패!");
 			return "fail";
 		}
 		
@@ -139,10 +122,47 @@ public class MemberController {
 			return "success";
 		} else {
 			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용 중 )");
-			// throw new MemberException("로그인 실패!");
 			return "fail";
 		}
 
 	}
+	
+	@RequestMapping("nickNameDuplicateChk.do")
+	@ResponseBody
+	public String nickNameDuplicateChk(Member m) {
+		
+		System.out.println("닉네임 중복 확인 : " + m.getMemberNickName());
+		
+		int result = mService.nickNameDuplicateChk(m);
+		
+		if(result == 0) {
+			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용가능 )");
+			return "success";
+		} else {
+			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용 중 )");
+			return "fail";
+		}
+		
+	}
+	
+	@RequestMapping("phoneDuplicateChk.do")
+	@ResponseBody
+	public String phoneDuplicateChk(Member m) {
+		
+		System.out.println("전화번호 중복 확인 : " + m.getMemberPhone());
+		
+		int result = mService.phoneDuplicateChk(m);
+		
+		if(result == 0) {
+			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용가능 )");
+			return "success";
+		} else {
+			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용 중 )");
+			return "fail";
+		}
+		
+	}
+	
+	
 	
 }

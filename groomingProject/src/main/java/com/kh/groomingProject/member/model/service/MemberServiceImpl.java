@@ -30,4 +30,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.emailDuplicateChk(m);
 	}
 
+	@Override
+	public int nickNameDuplicateChk(Member m) {
+
+		return mDao.nickNameDuplicateChk(m);
+	}
+
+	@Override
+	public int phoneDuplicateChk(Member m) {
+
+		return mDao.phoneDuplicateChk(m);
+	}
+
 }

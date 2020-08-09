@@ -301,24 +301,27 @@ section .form_container.active .singinBx .imgBx
 							<input type="password" id="regiPwd" name="memberPwd" required="required">
 							<span>비밀번호</span>
 							<div class="chkVali" id="regiPwdChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
+							<div class="chkVali chkValiComp" id="regiPwdComp">사용 가능합니다.</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="regiPwdChk" required="required">
+							<input type="password" id="regiPwdDupl" required="required">
 							<span>비밀번호 재확인</span>
-							<div class="chkVali" id="regiPwdDupChk">비밀번호가 일치하지 않습니다.</div>
+							<div class="chkVali" id="regiPwdDuplChk">비밀번호가 일치하지 않습니다.</div>
 							<div class="chkVali chkValiComp" id="regiPwdChkComp">비밀번호가 일치합니다.</div>
 						</div>
 						<div class="input-group">
 							<input type="text" id="regiNickName" name="memberNickName" required="required">
 							<span>닉네임</span>
-							<div class="chkVali" id="regiNickNameChk">이미 사용 중 입니다.</div>
+							<div class="chkVali" id="regiNickNameChk">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
+							<div class="chkVali" id="regiNickNameDupl">이미 사용 중 입니다.</div>
 							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
 						</div>
 						<div class="input-group">
 							<input type="text" id="regiPhone" name="memberPhone" required="required">
 							<span>휴대전화</span>
-							<div class="chkVali" id="regiPhoneChk">이미 사용 중 입니다.</div>
-							<div class="chkVali chkValiComp" id="regiPhoneComp">상용가능 합니다.</div>
+							<div class="chkVali" id="regiPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
+							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiPhoneComp">사용가능 합니다.</div>
 						</div>
 						<input type="button" onclick="register()" value="회원가입">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
@@ -389,7 +392,7 @@ section .form_container.active .singinBx .imgBx
 					success:function(data){
 						console.log(data);
 						if(data == "success"){
-							//TODO 이전 페이지 처리 해야함
+							//TODO 이전 페이지로 돌아가는 처리 해야함
 							location.href="home.do";
 						} else{
 							$("#loginError").css("display","block");
@@ -409,27 +412,30 @@ section .form_container.active .singinBx .imgBx
 	</script>
 		
 	<script>
-		
 		// 회원가입 유효성 검사
 		var regiEmailPass = 0;
+		var regiPwdPass = 0;
+		var regiNickNamePass = 0;
+		var regiPhonePass = 0;
+		var regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		var regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
+		var regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
+		var regexPhone = /^\d{10,11}$/;
 
+		// 이메일 확인
 		$("#regiEmail").on("keyup change", function () {
-			var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
-
 			regiEmailPass = 0;
+			var memberEmail = $(this).val();
 			
-			if (!regex.test($(this).val())) {
+			if (!regexEmail.test(memberEmail)) {
 				$("#regiEmailChk").css("display","block");
 				$("#regiEmailDupl").css("display","none");
 				$("#regiEmailComp").css("display","none");
 			} else {
-				var memberEmail = $("#regiEmail").val();
-				
 				$.ajax({
 					url:"emailDuplicateChk.do",
 					data:{memberEmail:memberEmail},
 					success:function(data){
-						console.log(data);
 						if(data == "success"){
 							$("#regiEmailChk").css("display","none");
 							$("#regiEmailDupl").css("display","none");
@@ -440,7 +446,6 @@ section .form_container.active .singinBx .imgBx
 							$("#regiEmailDupl").css("display","block");
 							$("#regiEmailComp").css("display","none");
 						}
-						
 					},
 					error:function(request, status, errorData){
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -451,12 +456,109 @@ section .form_container.active .singinBx .imgBx
 				});
 			}
 		});
-		
-		$("#loginPwd").on("keyup change", function () {
-			if(!$("#loginPwd")[0].checkValidity()){
-				$("#loginPwdChk").css("display","block");
+
+		// 비밀번호 확인
+		$("#regiPwd").on("keyup change", function () {
+			if (!regexPwd.test($(this).val())) {
+				$("#regiPwdChk").css("display","block");
+				$("#regiPwdComp").css("display","none");
 			} else {
-				$("#loginPwdChk").css("display","none");
+				$("#regiPwdChk").css("display","none");
+				$("#regiPwdComp").css("display","block");
+			}
+			if ($("#regiPwd").val() != $("#regiPwdDupl").val()) {
+				$("#regiPwdDuplChk").css("display","block");
+				$("#regiPwdChkComp").css("display","none");
+			} else {
+				$("#regiPwdDuplChk").css("display","none");
+				$("#regiPwdChkComp").css("display","block");
+				regiPwdPass = 1;
+			}
+		});
+
+		// 비밀번호 재확인
+		$("#regiPwdDupl").on("keyup change", function () {
+			if ($("#regiPwd").val() != $("#regiPwdDupl").val()) {
+				$("#regiPwdDuplChk").css("display","block");
+				$("#regiPwdChkComp").css("display","none");
+			} else {
+				$("#regiPwdDuplChk").css("display","none");
+				$("#regiPwdChkComp").css("display","block");
+				regiPwdPass = 1;
+			}
+		});
+
+		// 닉네임 확인
+		$("#regiNickName").on("keyup change", function () {
+			regiNickNamePass = 0;
+
+			if (!regexNickName.test($(this).val())) {
+				$("#regiNickNameChk").css("display","block");
+				$("#regiNickNameDupl").css("display","none");
+				$("#regiNickNameComp").css("display","none");
+			} else {
+				var memberNickName = $("#regiNickName").val();
+
+				$.ajax({
+					url:"nickNameDuplicateChk.do",
+					data:{memberNickName:memberNickName},
+					success:function(data){
+						if(data == "success"){
+							$("#regiNickNameChk").css("display","none");
+							$("#regiNickNameDupl").css("display","none");
+							$("#regiNickNameComp").css("display","block");
+							regiNickNamePass = 1;
+						} else {
+							$("#regiNickNameChk").css("display","none");
+							$("#regiNickNameDupl").css("display","block");
+							$("#regiNickNameComp").css("display","none");
+						}
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+				});
+			}
+		});
+
+		// 휴대전화 확인
+		$("#regiPhone").on("keyup change", function () {
+			regiPhonePass = 0;
+			var memberPhone = ($(this).val()).replace(/-/gi,"");
+
+			console.log(memberPhone);
+			console.log(!regexPhone.test(memberPhone));
+			
+			if (!regexPhone.test(memberPhone)) {
+				$("#regiPhoneChk").css("display","block");
+				$("#regiPhoneDupl").css("display","none");
+				$("#regiPhoneComp").css("display","none");
+			} else {
+				$.ajax({
+					url:"phoneDuplicateChk.do",
+					data:{memberPhone:memberPhone},
+					success:function(data){
+						if(data == "success"){
+							$("#regiPhoneChk").css("display","none");
+							$("#regiPhoneDupl").css("display","none");
+							$("#regiPhoneComp").css("display","block");
+							regiPhonePass = 1;
+						} else {
+							$("#regiPhoneChk").css("display","none");
+							$("#regiPhoneDupl").css("display","block");
+							$("#regiPhoneComp").css("display","none");
+						}
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+				});
 			}
 		});
 		
