@@ -127,7 +127,7 @@ section .form_container .user .form-group form input
 section .form_container .user .form-group form .input-group span
 {
     position: absolute;
-    top: 18px;
+    top: 15px;
     left: 20px;
     padding: 0;
     transition: 0.5s;
@@ -143,9 +143,19 @@ section .form_container .user .form-group form .input-group input:valid ~ span
 	font-size: 13px;
 	padding: 2px 5px;
 }
+section .form_container .user .form-group form input[type="checkbox"]
+{
+	width: 15px;
+	margin: 3px;
+}
+section .form_container .user .form-group form .input-group p
+{
+	font-size: 12px;
+	margin: 0;
+}
 section .form_container .user .form-group form input[type="button"]
 {
-	max-width: 100px;
+	/* max-width: 100px; */
 	border: 1px solid lightgrey;
 	background: #677eff;
 	color: #fff;
@@ -155,9 +165,12 @@ section .form_container .user .form-group form input[type="button"]
 	letter-spacing: 1px;
 	transition: 0.5s;
 }
-section .form_container .user .form-group form input[type="button"]:hover
+section .form_container .user .form-group form input[class=kakaoLogin]
 {
-	background: green;
+	background-image: url("${contextPath }/resources/views/images/kakao_login_medium_wide.png");
+	background-repeat: no-repeat;
+	background-color: #FEE500;
+	background-position: center;
 }
 section .form_container .user .form-group form .signup
 {
@@ -245,7 +258,11 @@ section .form_container.active .singinBx .imgBx
 						<input type="password" name="memberPwd" required="required">
 							<span>비밀번호</span>
 						</div>
+						<div class="input-group">
+							<input type="checkbox" name="idSaveCheck"><p>아이디 기억하기</p>
+						</div>
 						<input type="button" onclick="login()" value="로그인">
+						<input type="button" onclick="kakaoLogin()" class="kakaoLogin" value="">
 						<p class="signup">로그인에 문제가 있나요 ? 
 							<a href="#" onclick="findAccount()">아이디 찾기</a>
 							/
@@ -324,6 +341,10 @@ section .form_container.active .singinBx .imgBx
 			} */
 			//return true;
 			$("#registerForm").submit();
+		}
+		
+		function kakaoLogin(){
+			
 		}
 
 	</script>
