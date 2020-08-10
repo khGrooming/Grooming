@@ -67,21 +67,7 @@
 					</div>
 					<hr>
 					<div class="row">
-						<table id="calendar" border="1" style="width:100%;text-align:center">
-							<thead>
-								<tr>
-									<th>일</th>
-									<th>월</th>
-									<th>화</th>
-									<th>수</th>
-									<th>목</th>
-									<th>금</th>
-									<th>토</th>
-								</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table>
+						<div id="calendarDiv" style="width:100%"></div>
 					</div>
 				</div>
 			</div>
@@ -94,6 +80,12 @@
 	<script>
 		$(function(){
 			$("[name='checkRoom']").on("click", function(){
+				let today = new Date();
+			    let year = today.getFullYear();
+			    let month = today.getMonth() + 1;
+			    let date = today.getDate();
+				showCalendar(year, month);
+				
 				$cPriceNo = $('input[name="checkRoom"]:checked').val();
 				console.log($cPriceNo);
 				$.ajax({
@@ -102,7 +94,7 @@
 					dataType:"json",
 					data:{cPriceNo:$cPriceNo},
 					success:function(data){
-						$table = $("#calendar tbody");
+						
 					},
 					error:function(data){
 						
@@ -110,6 +102,38 @@
 				})
 			})
 		});
+	</script>
+	
+	<!-- 달력 화면에 뿌려주기 -->
+    <script>
+    function showCalendar(y, m) {
+    	var text = '<table border="1" style="text-align:center; width:100%;"><thead>';
+        text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12:y+','+(m-1))+')"> < </th>';
+        text += '<th colspan="5">' + y + '.' + ((m < 10) ? ('0' + m) : m) + '</th>';
+        text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1:y+','+(m+1))+')"> > </th>';
+    	text += '<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>'
+        text += '</thead>';
+
+        var d1 = (y+(y-y%4)/4-(y-y%100)/100+(y-y%400)/400+m*2+(m*5-m*5%9)/9-(m<3?y%4||y%100==0&&y%400?2:3:4))%7;
+        for (i = 0; i < 42; i++) {
+            if (i%7==0) text += '</tr>\n<tr>';
+            if (i < d1 || i >= d1+(m*9-m*9%8)/8%2+(m==2?y%4||y%100==0&&y%400?28:29:30))
+                text += '<td></td>';
+            else
+                text += '<td class="'+(i+1-d1)+'" onclick="getDate();"' + (i%7 ? '' : ' style="color:red;"') + '>' + (i+1-d1) + '</td>';
+        }
+        document.getElementById('calendarDiv').innerHTML = text + '</tr>\n</table>';
+    }
+    
+    // 클릭한 날짜 구하기
+    function getDate(){
+    	$("#calendarDiv tbody tr td").on("click",function(){
+    		console.log($(this).text());
+    	})
+    }
+    
+    // 달력 색깔 바꿔주기
+    
 	</script>
 </body>
 </html>
