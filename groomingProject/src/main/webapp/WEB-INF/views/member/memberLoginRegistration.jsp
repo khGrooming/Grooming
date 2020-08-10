@@ -108,6 +108,7 @@ section .form_container .user .form-group form .input-group
 	margin-bottom: 10px;
 	color: #555;
 }
+section .form_container .user .form-group form .registerError,
 section .form_container .user .form-group form .input-group .chkVali
 {
 	font-size: 13px;
@@ -245,6 +246,12 @@ section .form_container.active .singinBx .imgBx
 {
 	left: -100%;
 }
+section .form_container .user .registerOptionSnd
+{
+	display: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -287,8 +294,8 @@ section .form_container.active .singinBx .imgBx
 				</div>
 			</div>
  			<div class="user singupBx">
-				<div class="form-group">
-					<form action="memberInsert.do" method="post" id="registerForm">
+				<div class="form-group registerOptionFst">
+					<form>
 						<h2>회원가입</h2>
 						<div class="input-group">
 							<input type="text" id="regiEmail" name="memberEmail" required="required">
@@ -323,7 +330,49 @@ section .form_container.active .singinBx .imgBx
 							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
 							<div class="chkVali chkValiComp" id="regiPhoneComp">사용가능 합니다.</div>
 						</div>
+						<div class="registerError" id="registerError">잠시 후 다시 시도해 주세요.</div>
 						<input type="button" onclick="register()" value="회원가입">
+						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
+					</form>
+				</div>
+				<div class="form-group registerOptionSnd">
+					<form>
+						<h2>회원가입</h2>
+						<div class="input-group">
+							<input type="text" id="regiName" name="memberName" required="required">
+							<span>이메일</span>
+							<div class="chkVali" id="regiEmailChk">올바른 이메일을 입력해주세요.</div>
+							<div class="chkVali" id="regiEmailDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiEmailComp">멋진 아이디네요!</div>
+						</div>
+						<div class="input-group">
+							<input type="password" id="regiPwd" name="memberPwd" required="required">
+							<span>비밀번호</span>
+							<div class="chkVali" id="regiPwdChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
+							<div class="chkVali chkValiComp" id="regiPwdComp">사용 가능합니다.</div>
+						</div>
+						<div class="input-group">
+							<input type="password" id="regiPwdDupl" required="required">
+							<span>비밀번호 재확인</span>
+							<div class="chkVali" id="regiPwdDuplChk">비밀번호가 일치하지 않습니다.</div>
+							<div class="chkVali chkValiComp" id="regiPwdChkComp">비밀번호가 일치합니다.</div>
+						</div>
+						<div class="input-group">
+							<input type="text" id="regiNickName" name="memberNickName" required="required">
+							<span>닉네임</span>
+							<div class="chkVali" id="regiNickNameChk">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
+							<div class="chkVali" id="regiNickNameDupl">이미 사용 중 입니다.</div>
+							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
+						</div>
+						<div class="input-group">
+							<input type="text" id="regiPhone" name="memberPhone" required="required">
+							<span>휴대전화</span>
+							<div class="chkVali" id="regiPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
+							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiPhoneComp">사용가능 합니다.</div>
+						</div>
+						<div class="registerError" id="registerError">잠시후 다시 시도해 주세요.</div>
+						<input type="button" onclick="registerOption()" value="다음">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
@@ -341,14 +390,30 @@ section .form_container.active .singinBx .imgBx
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
 		}
-		
+
+		// 이전 페이지 
+		let pageHistory = "${pageHistory }";
+		// 입력 값
+		let memberEmail = "";
+		let memberPwd = "";
+		let memberNickName = "";
+		let memberPhone = "";
 		// 로그인 유효성 검사
 		let loginEmailPass = false;
-		var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		// 회원가입 유효성 검사
+		let regiEmailPass = false;
+		let regiPwdPass = false;
+		let regiNickNamePass = false;
+		let regiPhonePass = false;
+		// 정규식
+		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
+		let regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
+		let regexPhone = /^\d{10,11}$/;
+		let regexPhoneNum = /^\d{3}-\d{3,4}-\d{4}$/;
 
 		function loginEmail() {
-			
-			if (!regex.test($("#loginEmail").val())) {
+			if (!regexEmail.test($("#loginEmail").val())) {
 				loginEmailPass = false;
 				$("#loginEmailChk").css("display","block");
 			} else {
@@ -379,13 +444,13 @@ section .form_container.active .singinBx .imgBx
  			loginPwd();
 
 			/* 로그인 조건이 안맞으면 포커스 이동 */
- 			if(!$("#loginEmail")[0].checkValidity() || !loginEmailPass){
+ 			if(!loginEmailPass){
 				$("#loginEmail").focus();
 			} else if(!$("#loginPwd")[0].checkValidity()){
 				$("#loginPwd").focus();
 			} else{
-				var memberEmail = $("#loginEmail").val();
-				var memberPwd = $("#loginPwd").val();
+				memberEmail = $("#loginEmail").val();
+				memberPwd = $("#loginPwd").val();
 				
 				$.ajax({
 					url:"memberLogin.do",
@@ -393,7 +458,6 @@ section .form_container.active .singinBx .imgBx
 					success:function(data){
 						console.log("로그인 결과 : " + data);
 						if(data == "success"){
-							var pageHistory = "${pageHistory }";
 							//TODO 이전 페이지로 돌아가는 처리 해야함
 							
 							location.href="home.do";
@@ -413,20 +477,9 @@ section .form_container.active .singinBx .imgBx
 	</script>
 		
 	<script>
-		// 회원가입 유효성 검사
-		let regiEmailPass = false;
-		let regiPwdPass = false;
-		let regiNickNamePass = false;
-		let regiPhonePass = false;
-		var regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
-		var regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
-		var regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
-		var regexPhone = /^\d{10,11}$/;
-		var regexPhoneNum = /^\d{3}-\d{3,4}-\d{4}$/;
-
 		// 이메일 정규화로 확인, 이메일 중복 확인(ajax)
 		function regiEmail() {
-			var memberEmail = $("#regiEmail").val();
+			memberEmail = $("#regiEmail").val();
 			
 			if (!regexEmail.test(memberEmail)) {
 				regiEmailPass = false;
@@ -515,7 +568,7 @@ section .form_container.active .singinBx .imgBx
 				$("#regiNickNameComp").css("display","none");
 				regiNickNamePass = false;
 			} else {
-				var memberNickName = $("#regiNickName").val();
+				memberNickName = $("#regiNickName").val();
 				$.ajax({
 					url:"nickNameDuplicateChk.do",
 					data:{memberNickName:memberNickName},
@@ -546,7 +599,7 @@ section .form_container.active .singinBx .imgBx
 		// 전화번호 정규화 확인, 전화번호 중복 확인(ajax)
 		function regiPhone() {
 			// 전화번호 - 제거
-			var memberPhone = ($("#regiPhone").val()).replace(/-/gi,"");
+			memberPhone = ($("#regiPhone").val()).replace(/-/gi,"");
 
 			if (!regexPhone.test(memberPhone)) {
 				regiPhonePass = false;
@@ -608,6 +661,7 @@ section .form_container.active .singinBx .imgBx
 		});
 		
 		function register(){
+			$("#registerError").css("display","none");
 			/* 입력여부 확인 */
 			regiEmail();
 			regiPwd();
@@ -631,8 +685,37 @@ section .form_container.active .singinBx .imgBx
 			} else if(!regiPhonePass){
 				$("#regiPhone").focus();
 			} else {
-				console.log("회원가입");
-				$("#registerForm").submit();
+				console.log("회원가입(필수)");
+
+				let memberEmail = $("#regiEmail").val();
+				let memberPwd = $("#regiPwd").val();
+				let memberNickName = $("#regiNickName").val();
+				let memberPhone = $("#regiPhone").val();
+				
+				$.ajax({
+					url:"memberInsert.do",
+					data:{memberEmail:memberEmail
+						, memberPwd:memberPwd
+						, memberNickName:memberNickName
+						, memberPhone:memberPhone},
+					success:function(data){
+						console.log("회원가입 결과 : " + data);
+						if(data == "success"){
+							$("#registerOptionFst").css("display","none");
+							$("#registerOptionScd").css("display","block");
+						} else{
+							$("#registerError").css("display","block");
+						}
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						/* alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData); */
+					}
+				});
+				// memberInsert.do
+				/* $("#registerForm").submit(); */
 			}
 		}
 		
