@@ -63,7 +63,7 @@
                           </li>
                       </ul>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" onclick="test();">
                         <br>
                         <div id="map">
                             
@@ -79,16 +79,20 @@
 	<footer><jsp:include page="../common/footer.jsp" /></footer>
 	
 	<!-- 카카오맵을 불러오기 위한 script -->
-	<script>
-		var X = 0.0;
-		var Y = 0.0;
-		
+	<script>		
 		function getLocation() {
 			  if (navigator.geolocation) { // GPS를 지원하면
 			    navigator.geolocation.getCurrentPosition(function(position) {
-			      alert(position.coords.latitude + ' ' + position.coords.longitude);
-			      X = position.coords.latitude;
-			      Y = position.coords.longitude;
+			      // console.log('X : '+position.coords.latitude)
+			      // console.log('Y : '+position.coords.longitude);
+			      var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+					var options = { //지도를 생성할 때 필요한 기본 옵션	
+						center: new kakao.maps.LatLng(position.coords.latitude, position.coords.longitude), //지도의 중심좌표.
+						level: 3 //지도의 레벨(확대, 축소 정도)
+					};
+					
+					var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+			      
 			    }, function(error) {
 			      console.error(error);
 			    }, {
@@ -102,15 +106,13 @@
 			}
 		getLocation();
 		
-		console.log(X);
-		console.log(Y);
+		// gps 거절시 기본 세팅
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-		
-		var options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(37.4931456, 127.0317056), //지도의 중심좌표.
+		var options = { //지도를 생성할 때 필요한 기본 옵션	
+			center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
 			level: 3 //지도의 레벨(확대, 축소 정도)
 		};
-	
+		
 		var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 	</script>
 </body>

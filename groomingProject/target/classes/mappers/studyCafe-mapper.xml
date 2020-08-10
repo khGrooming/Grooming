@@ -10,6 +10,30 @@
 		<result property="cafeAddress" column="CAFE_ADDRESS"/>
 	</resultMap>
 	
+	<resultMap type="CafeInfo" id="CafeInfoResultSet">
+		<id property="cafeNo" column="CAFE_NO"/>
+
+		<result property="cafeName" column="CAFE_NAME"/>
+		<result property="cafeContent" column="CAFE_CONTENT"/>
+		<result property="cafePhone" column="CAFE_PHONE"/>
+		<result property="cafeAddress" column="CAFE_ADDRESS"/>
+		<result property="cPriceNo" column="C_PRICE_NO"/>
+		<result property="cRoomName" column="C_ROOM_NAME"/>
+		<result property="cRoomAvailableTime" column="C_ROOM_AVAILABLE_TIME"/>
+		<result property="cRoomTime" column="C_ROOM_TIME"/>
+		<result property="cRoomPrice" column="C_ROOM_PRICE"/>
+		<result property="cRoomHeadCount" column="C_ROOM_HEAD_COUNT"/>
+	</resultMap>
+	
+	<resultMap type="CafeReservation" id="reservationResultSet">
+		<id property="cReserNo" column="C_RESER_NO"/>
+
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="cPriceNo" column="C_PRICE_NO"/>
+		<result property="cReserHeadCount" column="C_RESER_HEAD_COUNT"/>
+		<result property="cReserDate" column="C_RESER_DATE"/>
+	</resultMap>
+	
 	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">
 		SELECT *
 		FROM STUDYCAFE
@@ -25,5 +49,17 @@
 	<select id="selectCafeList" resultMap="studyCafeResultSet">
 		SELECT *
 		FROM STUDYCAFE
+	</select>
+	
+	<select id="selectCafeInfo" parameterType="string" resultMap="CafeInfoResultSet">
+		SELECT *
+		FROM CAFEINFO
+		WHERE CAFE_NO = #{cafeNo}
+	</select>
+	
+	<select id="selectCheckRoom" parameterType="string" resultMap="reservationResultSet">
+		SELECT *
+		FROM CAFERESERVATION
+		WHERE C_PRICE_NO = #{cPriceNo}
 	</select>
 </mapper>

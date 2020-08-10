@@ -8,6 +8,8 @@
 	<typeAliases>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeInfo" alias="CafeInfo"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeReservation" alias="CafeReservation"/>
 	</typeAliases>
 	
 	<mappers>

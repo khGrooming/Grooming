@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
+import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
+import com.kh.groomingProject.studyCafe.model.vo.CafeReservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Controller
@@ -82,7 +84,32 @@ public class StudtyCafeController {
 		gson.toJson(list, response.getWriter());
 	}
 	
-	// 카ㅔ 신청  내역 페이지로 이동
+	// 카페 디테일 페이지로 이동
+	@RequestMapping(value="cafeDetail.do")
+	public ModelAndView cafeDetail(ModelAndView mv, String cafeNo) {
+		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
+		
+		System.out.println(info);
+		
+		mv.addObject("info", info);
+		mv.setViewName("studyCafe/cafeDetailView");
+		
+		return mv;
+	}
+	
+	// 상세보기 들어가서 룸 선택시 일정과 시간을 불러와 예약 가능한지 확인(ajax)
+	@RequestMapping(value="checkRoom.do", method=RequestMethod.POST)
+	public void checkRoomList(String cPriceNo, HttpServletResponse response) throws JsonIOException, IOException {
+		ArrayList<CafeReservation> list = studyCafeService.selectCheckRoom(cPriceNo);
+		
+		response.setContentType("application/json;charset=UTF-8");
+		
+		Gson gson = new Gson();
+		gson.toJson(list, response.getWriter());
+	}
+	
+	
+	// 카페 신청  내역 페이지로 이동
 	@RequestMapping(value="reservationCheck.do")
 	public String reservationCheck() {
 		return "studyCafe/reservationCheck";
