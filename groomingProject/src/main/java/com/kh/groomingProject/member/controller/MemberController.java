@@ -28,23 +28,13 @@ public class MemberController {
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	//TODO 로그인 or 회원가입 전 보던 페이지 저장 하는 중...
-	public String checkPage(String pageHistory) {
-		String result = "";
-		if(pageHistory != null) {
-			result = pageHistory;
-		}
-		
-		return result;
-	}
 	@RequestMapping("loginPage.do")
-	public ModelAndView loginPage(ModelAndView mv, HttpServletRequest request) {
+	public ModelAndView loginPage(ModelAndView mv, String url) {
 		
-		System.out.println("request.getParameter(\"pageHistory\") : " + request.getParameter("pageHistory"));
+//		System.out.println("request.getParameter(\"pageHistory\") : " + request.getParameter("pageHistory"));
 		
-		String pageHistory = checkPage(request.getParameter("pageHistory"));
 		
-		mv.addObject("pageHistory", pageHistory)
+		mv.addObject("url", url)
 		.addObject("loginCheck", "login")
 		.setViewName("member/memberLoginRegistration");
 		
@@ -52,11 +42,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("registerPage.do")
-	public ModelAndView registerPage(ModelAndView mv, String pageHistory) {
+	public ModelAndView registerPage(ModelAndView mv, String url) {
 		
-		String result = checkPage(pageHistory);
-		
-		mv.addObject("pageName", result)
+		mv.addObject("url", url)
 		.addObject("loginCheck", "register")
 		.setViewName("member/memberLoginRegistration");
 		
