@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MyPageMapper">
+
+	<resultMap type="Member" id="MemberSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPwd" column="MEMBER_PASSWORD" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberGender" column="MEMBER_GENDER"/>
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="lvlNo" column="LVL_NO" />
+		<result property="memberExp" column="MEMBER_EMP" />
+		<result property="memberMemo" column="MEMBER_MEMO" />
+		<result property="memberPhoto" column="MEMBER_PHOTO" />
+		<result property="memberAdmin" column="MEMBER_ADMIN" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberJoinDate" column="MEMBER_JOIN_DATE" />
+	</resultMap>
+
+	<resultMap type="ProfileMember" id="ProfileMemberSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="lvl" column="LVL_RANK"/>
+		<result property="memberExp" column="MEMBER_EXP"/>
+		<result property="lvlMaxExp" column="LVL_MAX_EXP"/>
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberMemo" column="MEMBER_MEMO"/>
+		<result property="nowPoint" column="NOWPOINT"/>
+	</resultMap>
+	
+	<resultMap type="Spec" id="SpecSet">
+		<id property="specNo" column="SPEC_NO"/>
+		<result property="specCName" column="SPEC_C_NAME"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="specFileName" column="SPEC_FILENAME"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+
+
+	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
+		SELECT * 
+		FROM MEMBER
+		WHERE MEMBER_NO = #{mNo}
+		AND MEMBER_STATUS='N'
+	</select>
+	
+	<select id="testLoginUser2" parameterType="string" resultMap="ProfileMemberSet">
+		SELECT M.MEMBER_NO,M.MEMBER_PHOTO,M.MEMBER_NICKNAME,ML.LVL_RANK,M.MEMBER_EXP,ML.LVL_MAX_EXP,M.MEMBER_EMAIL,M.MEMBER_MEMO,P1.NOWPOINT
+		FROM (
+		SELECT MEMBER_NO,SUM(ADD_POINT) AS NOWPOINT
+		FROM POINT P
+		GROUP BY MEMBER_NO) P1
+		JOIN MEMBER M ON(M.MEMBER_NO = P1.MEMBER_NO)
+		JOIN MEMBER_LEVEL ML ON(M.LVL_NO=ML.LVL_NO)
+		WHERE P1.MEMBER_NO =#{mNo}
+	
+	</select>
+	
+	<select id="selectSpecList" parameterType="string" resultMap="SpecSet"> 
+	SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO
+	FROM SPEC S
+	JOIN SPEC_CATEGORY SC ON(S.SPEC_C_NO = SC.SPEC_C_NO)
+	WHERE MEMBER_NO=#{mNo}
+	
+	</select>
+	
+	<update id="updateProfileIMG" parameterType="ProfileMember">
+		UPDATE MEMBER
+		SET MEMBER_PHOTO=#{memberPhoto}
+		WHERE MEMBER_NO =#{memberNo}
+	</update>
+
+</mapper>
