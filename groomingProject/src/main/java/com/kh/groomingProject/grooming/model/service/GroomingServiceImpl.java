@@ -19,5 +19,11 @@ public class GroomingServiceImpl implements GroomingService{
 		// TODO Auto-generated method stub
 		return gDao.selectList();
 	}
+
+	@Override
+	public ArrayList<Grooming> selectMentorList() {
+		// TODO Auto-generated method stub
+		return gDao.selectMentorList();
+	}
 	
 }

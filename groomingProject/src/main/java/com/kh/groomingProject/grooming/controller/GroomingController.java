@@ -17,6 +17,7 @@ public class GroomingController {
 	@Autowired
 	GroomingService gService;
 	
+//	그루밍 메인 출력
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv) {
 		
@@ -30,11 +31,31 @@ public class GroomingController {
 		}
 		return mv;
 	}
+// 그루밍 메인 (멘토 타입 필터) 출력
+	@RequestMapping("groomingMe.do")
+	public ModelAndView groomingMentorList(ModelAndView mv) {
+		
+		ArrayList<Grooming> list = gService.selectMentorList();
+		
+		if(list != null) {
+			mv.addObject("list",list);
+			mv.setViewName("grooming/groomingMain");
+		}else {
+			throw new GroomingException("게시글 전체 조회 실패!");
+		}
+		return mv;
+	}
+// 그루밍 메인 (멘토 타입 필터) 출력	
+
+	
+	
 	
 	@RequestMapping("groupPage.do")	
 	public String groupPage() {
 		return "grooming/groupPage";
 	}
+	
+	
 	
 	@RequestMapping("groupBoardInsertForm.do")	
 	public String groupBoardInsertForm() {

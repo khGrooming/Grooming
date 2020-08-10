@@ -8,4 +8,6 @@ public interface GroomingService {
 
 	ArrayList<Grooming> selectList();
 
+	ArrayList<Grooming> selectMentorList();
+
 }

@@ -20,6 +20,11 @@ public class GroomingDao {
 		
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList");
 	}
+
+	public ArrayList<Grooming> selectMentorList() {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMentorList");
+	}
 	
 	
 	

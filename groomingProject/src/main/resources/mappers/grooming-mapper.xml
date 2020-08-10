@@ -4,6 +4,7 @@
  
  	<resultMap type="Grooming" id="groomingResultSet">
 		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="groomingType" column="GROOMING_TYPE"/>
 		<result property="groomingTitle" column="GROOMING_TITLE"/>
 		<result property="groomingContent" column="GROOMING_CONTENT"/>
@@ -27,6 +28,14 @@
  		SELECT * 
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
+ 		
+ 	</select>
+ 	
+ 	<select id="selectMentorList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING G
+ 		WHERE GROOMING_TYPE ='멘토'
+ 		ORDER BY GROOMING_TYPE DESC
  		
  	</select>
  

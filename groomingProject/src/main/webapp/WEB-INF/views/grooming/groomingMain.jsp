@@ -88,6 +88,12 @@
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
+	   
+	   .card-deck{
+	   	margin-right:auto;
+	   	margin-left:auto;
+	   	width: 100%;
+	   }
     </style>
 </head>
 
@@ -105,17 +111,17 @@
             <div class="row">
                 <div class="cols-3 search_filter" style="width: 20%; text-align: right;"  >
 
-                    <label><input type="checkbox" name="search_filter">&nbsp;멘토 타입</label>
-                    <label><input type="checkbox" name="search_filter">&nbsp;예치금 존재</label>
+                    <input type="checkbox" name="search_filter" id="mentor">&nbsp;<label for="mentor">멘토 타입</label>
+                    <input type="checkbox" name="search_filter" id="money">&nbsp;<label for="money">예치금 존재</label>
                 </div>
                 <div class="cols-9"  style="width: 80%; text-align: right; padding-right:5pxx">
                     <select>
-                        <option name="title">제목</option>
-                        <option name="writer">작성자</option>
-                        <option name="content">내용</option>
+                        <option name="title" id="title">제목</option>
+                        <option name="writer" id="writer">작성자</option>
+                        <option name="content" id="content">내용</option>
                     </select>
-                    <input type="text" size="30px">
-                    <button type="submit">검색</button>
+                    <input type="text" size="30px" id="keyword">
+                    <button type="button" id="search">검색</button>
                     <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
                 </div>
             </div>
@@ -124,19 +130,22 @@
             
 
           
+	<div class="container">
+			<div class="row">
 		    <c:forEach var="g" items="${list }">
 		    	<!--날짜 차이 계산을 위한 fmt  -->
-	    		<fmt:parseDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
-				<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDate"/> 
-	       		<fmt:parseDate value="${g.groomingSd }" var="startDate" pattern="yyyy-MM-dd"/>
-				<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startDate"/>
-	 			<fmt:parseDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/>
-				<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"/> 
-				
 				<%-- <c:set var="today" value="<%=new Date() %>"/>
 				<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today"/> --%>
-				
-                <div class="card-deck cols-4">
+ 	    		<fmt:parseDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
+<%-- 	    	<fmt:formatDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
+ --%>  			<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDate"/> 
+	       		<fmt:parseDate value="${g.groomingSd }" var="startDate" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startDate"/>
+<%-- 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/>
+ --%>	 		<fmt:parseDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/> 
+				<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"/> 
+ 				
+                <div class="card-deck col-lg-3">
                 
 		                    <div class="card" onclick="location.href='groomingDetail.do'">
 		                        <!-- 그룹 이미지 -->
@@ -166,18 +175,64 @@
 		                        </div>
 		                    </div>
 		           
-		                 
+	                 </div>
+					</c:forEach>
+                 </div>
                   
                    
                     <!-- 스터디 그룹 리스트 끝 -->
                 </div>
            
-            </c:forEach>
         </div>
     </section>
-
-
-
+	<script>
+		$(function(){
+			$("#mentor").click(function(){
+				
+			if($("#mentor").is(":checked")){
+			
+				location.href="groomingMe.do";
+				
+			}else {
+				console.log("멘토필터 해지됨");
+			}
+			})
+			
+			$("#money").click(function(){
+				
+			if($("#money").is(":checked")){
+				console.log("예치금필터 클릭됨");
+			}else {
+				console.log("예치금필터 해지됨");
+			}
+			})
+			
+		})
+	
+	</script>
+	<script>
+	$(function(){
+		
+		$('#search').on("click" , function(){
+			$.ajax({
+			url : 'gSearch.do',
+			type : 'post',
+			data :{ 
+				d_doctorname : $('#search').val()
+			},
+			success : function (data){
+				$('#area').html(data);
+			},error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+			
+			})
+		})
+	
+	})
+	</script>
 
 
     <footer>
