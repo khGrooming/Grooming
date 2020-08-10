@@ -330,59 +330,60 @@ section .form_container.active .singinBx .imgBx
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
 			</div>
 		</div>
+		
+	<!-- test value -->	
 	pageHistory = ${pageHistory }
+	
+	
 	</section>
 	<script>
-		var loginEmailPass = 0;
-
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
 			container.classList.toggle('active');
 		}
-
+		
 		// 로그인 유효성 검사
-		$("#loginEmail").on("keyup change", function () {
-			var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		let loginEmailPass = false;
+		var regex = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
 
-			loginEmailPass = 0;
+		function loginEmail() {
 			
-			if (!regex.test($(this).val())) {
+			if (!regex.test($("#loginEmail").val())) {
+				loginEmailPass = false;
 				$("#loginEmailChk").css("display","block");
 			} else {
+				loginEmailPass = true;
 				$("#loginEmailChk").css("display","none");
-				loginEmailPass = 1;
 			}
+		}
+		
+		function loginPwd() {
+			if(!$("#loginPwd")[0].checkValidity()){
+				$("#loginPwdChk").css("display","block");
+			} else {
+				$("#loginPwdChk").css("display","none");
+			}
+		}
+
+		$("#loginEmail").on("keyup change", function () {
+			loginEmail();
 		});
 		
 		$("#loginPwd").on("keyup change", function () {
-			if(!$("#loginPwd")[0].checkValidity()){
-				$("#loginPwdChk").css("display","block");
-			} else {
-				$("#loginPwdChk").css("display","none");
-			}
+			loginPwd();
 		});
 
 		function login() {
-			/* 입력여부 확인 */
- 			if(!$("#loginEmail")[0].checkValidity() || loginEmailPass == 0){
-				$("#loginEmailChk").css("display","block");
-			} else {
-				$("#loginEmailChk").css("display","none");
-				loginEmailPass = 1;
-			}
-			if(!$("#loginPwd")[0].checkValidity()){
-				$("#loginPwdChk").css("display","block");
-			} else {
-				$("#loginPwdChk").css("display","none");
-			}
+			/* 조건 display 확인 */
+ 			loginEmail();
+ 			loginPwd();
 
-			/* 로그인 및 입력 없으면 포커스 */
- 			if(!$("#loginEmail")[0].checkValidity() || loginEmailPass == 0){
+			/* 로그인 조건이 안맞으면 포커스 이동 */
+ 			if(!$("#loginEmail")[0].checkValidity() || !loginEmailPass){
 				$("#loginEmail").focus();
 			} else if(!$("#loginPwd")[0].checkValidity()){
 				$("#loginPwd").focus();
 			} else{
-				/* $("#loginForm").submit(); */
 				var memberEmail = $("#loginEmail").val();
 				var memberPwd = $("#loginPwd").val();
 				
@@ -390,14 +391,15 @@ section .form_container.active .singinBx .imgBx
 					url:"memberLogin.do",
 					data:{memberEmail:memberEmail, memberPwd:memberPwd},
 					success:function(data){
-						console.log(data);
+						console.log("로그인 결과 : " + data);
 						if(data == "success"){
+							var pageHistory = "${pageHistory }";
 							//TODO 이전 페이지로 돌아가는 처리 해야함
+							
 							location.href="home.do";
 						} else{
 							$("#loginError").css("display","block");
 						}
-						
 					},
 					error:function(request, status, errorData){
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -408,26 +410,26 @@ section .form_container.active .singinBx .imgBx
 				});
 			}
 		}
-
 	</script>
 		
 	<script>
 		// 회원가입 유효성 검사
-		var regiEmailPass = 0;
-		var regiPwdPass = 0;
-		var regiNickNamePass = 0;
-		var regiPhonePass = 0;
+		let regiEmailPass = false;
+		let regiPwdPass = false;
+		let regiNickNamePass = false;
+		let regiPhonePass = false;
 		var regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
 		var regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
 		var regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
 		var regexPhone = /^\d{10,11}$/;
+		var regexPhoneNum = /^\d{3}-\d{3,4}-\d{4}$/;
 
-		// 이메일 확인
-		$("#regiEmail").on("keyup change", function () {
-			regiEmailPass = 0;
-			var memberEmail = $(this).val();
+		// 이메일 정규화로 확인, 이메일 중복 확인(ajax)
+		function regiEmail() {
+			var memberEmail = $("#regiEmail").val();
 			
 			if (!regexEmail.test(memberEmail)) {
+				regiEmailPass = false;
 				$("#regiEmailChk").css("display","block");
 				$("#regiEmailDupl").css("display","none");
 				$("#regiEmailComp").css("display","none");
@@ -436,30 +438,35 @@ section .form_container.active .singinBx .imgBx
 					url:"emailDuplicateChk.do",
 					data:{memberEmail:memberEmail},
 					success:function(data){
+						console.log("회원가입 이메일 결과 : " + data)
 						if(data == "success"){
+							regiEmailPass = true;
+							console.log("regiEmailPass : "+ regiEmailPass);
 							$("#regiEmailChk").css("display","none");
 							$("#regiEmailDupl").css("display","none");
 							$("#regiEmailComp").css("display","block");
-							loginEmailPass = 1;
 						} else {
+							regiEmailPass = false;
 							$("#regiEmailChk").css("display","none");
 							$("#regiEmailDupl").css("display","block");
 							$("#regiEmailComp").css("display","none");
 						}
 					},
 					error:function(request, status, errorData){
+						regiEmailPass = false;
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						alert("error code: " + request.status + "\n"
+						/* alert("error code: " + request.status + "\n"
 								+"message: " + request.responseText
-								+"error: " + errorData);
+								+"error: " + errorData); */
 					}
 				});
 			}
-		});
+		}
 
-		// 비밀번호 확인
-		$("#regiPwd").on("keyup change", function () {
-			if (!regexPwd.test($(this).val())) {
+		// 비밀번호 정규화로 확인, 비밀번호 확인과 동일 여부 확인
+		function regiPwd() {
+			if (!regexPwd.test($("#regiPwd").val())) {
+				regiPwdPass = false;
 				$("#regiPwdChk").css("display","block");
 				$("#regiPwdComp").css("display","none");
 			} else {
@@ -469,70 +476,80 @@ section .form_container.active .singinBx .imgBx
 			if ($("#regiPwd").val() != $("#regiPwdDupl").val()) {
 				$("#regiPwdDuplChk").css("display","block");
 				$("#regiPwdChkComp").css("display","none");
+				regiPwdPass = false;
+					console.log("비밀번호 불일치");
 			} else {
 				$("#regiPwdDuplChk").css("display","none");
 				$("#regiPwdChkComp").css("display","block");
-				regiPwdPass = 1;
+				if (regexPwd.test($("#regiPwd").val())) {
+					regiPwdPass = true;
+					console.log("regiPwdPass : "+ regiPwdPass);
+					console.log("비밀번호 일치");
+				}
 			}
-		});
+		}
 
-		// 비밀번호 재확인
-		$("#regiPwdDupl").on("keyup change", function () {
+		// 비밀번호와 동일 여부 확인
+		function regiPwdDupl() {
 			if ($("#regiPwd").val() != $("#regiPwdDupl").val()) {
+				regiPwdPass = false;
 				$("#regiPwdDuplChk").css("display","block");
 				$("#regiPwdChkComp").css("display","none");
+				console.log("비밀번호 불일치");
 			} else {
 				$("#regiPwdDuplChk").css("display","none");
 				$("#regiPwdChkComp").css("display","block");
-				regiPwdPass = 1;
+				if (regexPwd.test($("#regiPwd").val())) {
+					regiPwdPass = true;
+					console.log("regiPwdPass : "+ regiPwdPass);
+					console.log("비밀번호 일치");
+				}
 			}
-		});
+		}
 
-		// 닉네임 확인
-		$("#regiNickName").on("keyup change", function () {
-			regiNickNamePass = 0;
-
-			if (!regexNickName.test($(this).val())) {
+		// 닉네임 정규화 확인, 닉네임 중복확인(ajax)
+		function regiNickName() {
+			if (!regexNickName.test($("#regiNickName").val())) {
 				$("#regiNickNameChk").css("display","block");
 				$("#regiNickNameDupl").css("display","none");
 				$("#regiNickNameComp").css("display","none");
+				regiNickNamePass = false;
 			} else {
 				var memberNickName = $("#regiNickName").val();
-
 				$.ajax({
 					url:"nickNameDuplicateChk.do",
 					data:{memberNickName:memberNickName},
 					success:function(data){
 						if(data == "success"){
+							regiNickNamePass = true;
 							$("#regiNickNameChk").css("display","none");
 							$("#regiNickNameDupl").css("display","none");
 							$("#regiNickNameComp").css("display","block");
-							regiNickNamePass = 1;
 						} else {
+							regiNickNamePass = false;
 							$("#regiNickNameChk").css("display","none");
 							$("#regiNickNameDupl").css("display","block");
 							$("#regiNickNameComp").css("display","none");
 						}
 					},
 					error:function(request, status, errorData){
+						regiNickNamePass = false;
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						alert("error code: " + request.status + "\n"
+						/* alert("error code: " + request.status + "\n"
 								+"message: " + request.responseText
-								+"error: " + errorData);
+								+"error: " + errorData); */
 					}
 				});
 			}
-		});
+		}
 
-		// 휴대전화 확인
-		$("#regiPhone").on("keyup change", function () {
-			regiPhonePass = 0;
-			var memberPhone = ($(this).val()).replace(/-/gi,"");
+		// 전화번호 정규화 확인, 전화번호 중복 확인(ajax)
+		function regiPhone() {
+			// 전화번호 - 제거
+			var memberPhone = ($("#regiPhone").val()).replace(/-/gi,"");
 
-			console.log(memberPhone);
-			console.log(!regexPhone.test(memberPhone));
-			
 			if (!regexPhone.test(memberPhone)) {
+				regiPhonePass = false;
 				$("#regiPhoneChk").css("display","block");
 				$("#regiPhoneDupl").css("display","none");
 				$("#regiPhoneComp").css("display","none");
@@ -541,43 +558,82 @@ section .form_container.active .singinBx .imgBx
 					url:"phoneDuplicateChk.do",
 					data:{memberPhone:memberPhone},
 					success:function(data){
+						console.log("회원가입 전화번호 결과 : " + data);
 						if(data == "success"){
+							regiPhonePass = true;
 							$("#regiPhoneChk").css("display","none");
 							$("#regiPhoneDupl").css("display","none");
 							$("#regiPhoneComp").css("display","block");
-							regiPhonePass = 1;
 						} else {
+							regiPhonePass = false;
 							$("#regiPhoneChk").css("display","none");
 							$("#regiPhoneDupl").css("display","block");
 							$("#regiPhoneComp").css("display","none");
 						}
 					},
 					error:function(request, status, errorData){
+						regiPhonePass = false;
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						alert("error code: " + request.status + "\n"
+						/* alert("error code: " + request.status + "\n"
 								+"message: " + request.responseText
-								+"error: " + errorData);
+								+"error: " + errorData); */
 					}
 				});
 			}
+		}
+		
+		// 이메일 확인
+		$("#regiEmail").on("keyup change", function () {
+			regiEmail();
+		});
+
+		// 비밀번호 확인
+		$("#regiPwd").on("keyup change", function () {
+			regiPwd();
+		});
+
+		// 비밀번호 재확인
+		$("#regiPwdDupl").on("keyup change", function () {
+			regiPwdDupl();
+		});
+
+		// 닉네임 확인
+		$("#regiNickName").on("keyup change", function () {
+			regiNickName();
+		});
+
+		// 휴대전화 확인
+		$("#regiPhone").on("keyup change", function () {
+			regiPhone();
 		});
 		
 		function register(){
 			/* 입력여부 확인 */
- 			if(!$("#regiEmail")[0].checkValidity() || regiEmailPass == 0){
-				$("#regiEmailChk").css("display","block");
-			} else {
-				$("#loginEmailChk").css("display","none");
-				loginEmailPass = 1;
-			}
-			if(!$("#loginPwd")[0].checkValidity()){
-				$("#loginPwdChk").css("display","block");
-			} else {
-				$("#loginPwdChk").css("display","none");
-			}
+			regiEmail();
+			regiPwd();
+			regiPwdDupl();
+			regiNickName();
+			regiPhone();
 			
+			console.log("회원가입 이메일 결과 : " + regiEmailPass);
+			console.log("회원가입 비밀번호 결과 : " + regiPwdPass);
+			console.log("회원가입 닉네임 결과 : " + regiNickNamePass);
+			console.log("회원가입 전화번호 결과 : " + regiPhonePass);
 			
-			/* $("#registerForm").submit(); */
+			if(!regiEmailPass){
+				$("#regiEmail").focus();
+			} else if(!regiPwdPass){
+				$("#regiPwd").focus();
+			} else if(!regiPwdPass){
+				$("#regiPwdDupl").focus();
+			} else if(!regiNickNamePass){
+				$("#regiNickName").focus();
+			} else if(!regiPhonePass){
+				$("#regiPhone").focus();
+			} else {
+				console.log("회원가입");
+				$("#registerForm").submit();
+			}
 		}
 		
 		function kakaoLogin(){
@@ -586,7 +642,6 @@ section .form_container.active .singinBx .imgBx
 
 	</script>
 	
-		<!-- /.container -->
 	<jsp:include page="../common/footer.jsp" />
 
 <!-- Optional JavaScript -->
