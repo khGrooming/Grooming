@@ -61,8 +61,14 @@ section
         margin-left: auto;
            margin-right:auto;  
            height:100px;
-           border-top:1px solid gray;
-           border-bottom:1px solid gray;
+           
+       }
+       #memoTextArea{
+        width: 100%;   
+        margin-left: auto;
+        margin-right:auto;  
+        height:100px;
+        font-size: 13px;
        }
        #expBox{
            width: 75%;
@@ -134,6 +140,14 @@ section
             border:1px solid lightgray;
             border-radius: 12px;
         }
+        #counter {
+          float: right;
+	      margin-bottom: 0.5em;
+		  background:rgba(255,0,0,0.5);
+		  border-radius: 0.5em;
+		  padding: 0 .5em 0 .5em;
+		  font-size: 0.75em;
+		}
 
 </style>
 </head>
@@ -141,9 +155,9 @@ section
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<section >
-	<c:if test="${!empty sessionScope.loginUser }">
+	<c:if test="${!empty profileInfo }">
 	<!-- 프로필 정보 div -->
-	<div class="signup form_container active" style="width: 100%;margin-top: 10%; margin-bottom: 10%"><!-- active toggle --> 
+	<div class="signup form_container active" style="width: 100%;margin-top: 7%; margin-bottom: 10%"><!-- active toggle --> 
 		<div class="subContent_my" style="width:25%; margin-right: 10px;text-align: center;">
 		
 		
@@ -165,7 +179,8 @@ section
 		    
 		    <!-- 닉네임/ 레벨 영역-->
 			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${profileInfo.memberNickName}</span>
-			<span style="font-size:20px; color:darkgray">Lv.${profileInfo.lvl }</span>
+			<span>&nbsp;&nbsp;</span>
+			<span style="font-size:15px; color:darkgray">Lv.${profileInfo.lvl }</span>
 			<!-- 레벨에 대한 설명을 보여줄 툴팁 추가해야함!!! -->
 		    <br>
 		    
@@ -194,61 +209,119 @@ section
             </div><!-- 경험치 div_end -->
             
             <!-- 이메일 영역-->
-            <p id="MemberEmail" style="color: gray; letter-spacing:0.1em">${profileInfo.memberEmail }</p>
+            <p id="MemberEmail" style="color: rgba(123, 123, 123, 1); letter-spacing:0.5em">${profileInfo.memberEmail }</p>
             <br>
             
             <!-- 상태메시지 -->
             <div id="memo">
-            	<textarea rows="4" cols="30">            	
-	              	<c:if test="${profileInfo.memberMemo ne 'NULL' }">
-						${profileInfo.memberMemo}
-					</c:if>            	
-            	</textarea>
-	            
+	            <span id="counter">###</span>
+            	<textarea id="memoTextArea" style="letter-spacing:0.3em" maxlength="100"><c:if test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
             </div>
+            <script>
+	            $(function() {
+	            	
+	            	var content=$("#memoTextArea").val();
+	            	
+	            	 $('#counter').html(content.length + '/100');
+	            	 
+	                $('#memoTextArea').keyup(function (e){
+	                    content = $(this).val();     
+	                   
+	                    $('#counter').html(content.length + '/100');
+	                    
+	                });
+	               
+	                $('#content').keyup();
+	                
+	                
+	                $('#memoTextArea').change(function(){
+	                	 alert(content);
+	                	var save = confirm("상태메시지를 저장하시겠습니까?");
+	                	if(save){
+	                		$.ajax({
+	                			url:"upMemo.do",
+	                			type:"post",
+	                			data:{memberMemo:$(this).val()},
+	                			success : function(data) {
+			                		alert("변경되었습니다");					            	
+					            },
+					            error : function(data) {  
+					               alert("code:"+request.status+"\n"+"error:"+error);
+					            }
+	                			
+	                		})
+	                	}else{
+	                		alert("취소하였습니다");
+	                		$('#memoTextArea').val("${profileInfo.memberMemo}");
+	                	}
+	                	
+	                })
+	                
+	                
+	         	 });
+	          
+	            
             
+            </script>
+            <br>
             <br>
             
             <!-- 포인트 div -->
-            <div style=" width: 90%; margin-left: auto;  margin-right:auto; ">
+            <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
                 <br clear="both">
-                <div class="grayBox">
-                    <p style="font-size: 28px; font-weight:bold; margin-bottom: 0; height: 50px;"> ${profileInfo.nowPoint }G</p>
+                <div class="grayBox" style="height: 85px;">
+                    <p style="font-size: 28px; font-weight:bold; margin-bottom: auto; height: 50px; margin-top: 20px; letter-spacing:0.3em;"> ${profileInfo.nowPoint } G</p>
                 </div>
 
             </div>
-               <br>
+            
+            
+            <br>
+            <br>
+
+
+			<!-- ★  -->
+			<!-- 리스트를 뿌려짐 -->
+			<!-- 리스트에서 3개이하는 '+'버튼 넣는거 해야함 -->
+			<!-- 테이블 보이는거 바꿔야함 text-align-->
+			<!-- 스펙추가하기 기능을 넣어야 함 -->
             <!-- 스펙 div -->
-             <div style=" width: 90%; margin-left: auto;  margin-right:auto; ">
+             <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">스펙</p>
                 <br clear="both">
                 <div class="grayBox" style="height: 200px;">
-                    <table >
+                    <table>
 				
-					<tr>
-						<th>학교</th>	
-						
-						<c:forEach var="s" items="${schoolList}" >
-							<td>${s}</td>
-						</c:forEach>
-						
-						
-					</tr>
-					<tr>
-						<th>자격증</th>
-						<c:forEach var="s" items="${certificateList}" >
-							<td>${s}</td>
-						</c:forEach>
-					</tr>
-					<tr>
-						<th>경력</th>
-						<c:forEach var="s" items="${careerList}" >
-							<td>${s}</td>
+						<tr>
+							<th>학교</th>	
 							
+							
+						</tr>
+				
+							<c:forEach var="s" items="${schoolList}" >
+							<tr>
+								<td></td><td>${s}</td>
+							</tr>
+							</c:forEach>
+						<tr>
+							<th>자격증</th>
+						</tr>
+						<c:forEach var="s" items="${certificateList}" >
+						<tr>
+								<td></td><td>${s}</td>
+						</tr>
+							</c:forEach>
+						<tr>
+							<th>경력</th>
+						</tr>
+						<c:forEach var="s" items="${careerList}" >
+							<tr>
+								<td></td><td>${s}</td>
+						</tr>
 						</c:forEach>
-					</tr>
-				</table>
+				
+					</table>
                 </div>
 
             </div>
@@ -315,7 +388,7 @@ section
 				
 				
 			</c:if>
-			<c:if test="${empty sessionScope.loginUser}">
+			<c:if test="${empty profileInfo}">
 				<h3>정보 없음</h3>
 			</c:if>
 		</div>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -174,6 +175,23 @@ public class MypageController {
 	}
 	
 	
+	@RequestMapping(value="upMemo.do",method=RequestMethod.POST)
+	public void updateMemo(String memberMemo
+						   ,HttpServletRequest request
+						   ) {
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		m.setMemberMemo(memberMemo);
+		
+		System.out.println(memberMemo);
+		System.out.println(m.getMemberNo());
+		int result = mpService.updateMemo(m);
+
+		if(result > 0) {
+			System.out.println("성공");
+		}
+	}
 	
 	
 	

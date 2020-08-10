@@ -32,4 +32,8 @@ public class MypageDao {
 		return sqlSessionTemplate.update("MyPageMapper.updateProfileIMG",m);
 	}
 
+	public int updateMemo(Member m) {
+		return sqlSessionTemplate.update("MyPageMapper.updateMemo",m);
+	}
+
 }
