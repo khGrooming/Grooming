@@ -29,7 +29,7 @@ import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
-@SessionAttributes("loginUser")
+
 
 @Controller
 public class MypageController {
@@ -38,7 +38,7 @@ public class MypageController {
 	private MypageService mpService; 
 	
 	@RequestMapping("myPage.do")
-	public String myPageView(Model model, HttpServletRequest request) {
+	public String myPageView(HttpServletRequest request) {
 		
 		//임시 Session값 등록
 		HttpSession session = request.getSession();
@@ -56,8 +56,7 @@ public class MypageController {
 //		Member loginUser = mpService.testLoginUser(mNo);
 		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-		
-		String[] str = {"학1","학2","학3"};
+
 		System.out.println(profileInfo);
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
@@ -78,13 +77,12 @@ public class MypageController {
 			}
 		}
 
+		session.setAttribute("profileInfo",profileInfo);
+		session.setAttribute("schoolList",schoolList);
+		session.setAttribute("certificateList",certificateList);
+		session.setAttribute("careerList",careerList);
 		
-		
-		model.addAttribute("profileInfo",profileInfo);
-		model.addAttribute("schoolList",schoolList);
-		model.addAttribute("certificateList",certificateList);
-		model.addAttribute("careerList",careerList);
-		model.addAttribute("str",str);
+	
 		return "mypage/mypageinfo";
 	}
 	
@@ -194,8 +192,10 @@ public class MypageController {
 	}
 	
 	
-	
-	
+	@RequestMapping("test1.do")
+	public String test() {
+		return "mypage/test";
+	}
 	
 	
 	

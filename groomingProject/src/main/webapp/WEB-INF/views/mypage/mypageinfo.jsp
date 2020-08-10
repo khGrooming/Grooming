@@ -42,7 +42,7 @@ section
 }
   .subContent_my{
     height: 100%;
-    /* border:1px solid black; */
+    border:1px solid black;
     float: left;
 }
         .profile_my{
@@ -167,6 +167,9 @@ section
    .submenu:hover{
    	background: gray;
      
+   }
+   .a{
+   	display: none;
    }
 }
 
@@ -397,21 +400,68 @@ section
 				<div class="subContent_my" style="width: 70%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
 					<div class="menubar">
 					  	<div class="nav">
-					  		<div class="submenu"><a href="#">개인정보</a></div>
-					  		<div class="submenu"><a href="#">스터디</a></div>
-					  		<div class="submenu"><a href="#">찜목록</a></div>
-					  		<div class="submenu"><a href=#">활동내역</a></div>
-					  		<div class="submenu"><a href="#">포인트</a></div>
+					  		<div class="submenu" id="menu1"><a>개인정보</a></div>
+					  		<div class="submenu" id="menu2"><a >스터디</a></div>
+					  		<div class="submenu" id="menu3"><a href="#">찜목록</a></div>
+					  		<div class="submenu" id="menu4"><a href="#">활동내역</a></div>
+					  		<div class="submenu" id="menu5"><a href="#">포인트</a></div>
 					  	</div>
 					  </div>
 				</div>
 				<br><br><br>
-				<div class="subContent_my" style="width: 70%;">				
-					<jsp:include page="./test.jsp" />
+				<div class="subContent_my a" id="a1" style="width: 70%; display:block;">		
+						<jsp:include page="./test.jsp" />
 				</div>
-     
-					
+				<div class="subContent_my a" id="a2" style="width: 70%;">		
+						<jsp:include page="./test2.jsp" />
+				</div>
+				<div class="subContent_my a" id="a3" style="width: 70%;">		
+						<jsp:include page="./test3.jsp" />
+				</div>
+				<div class="subContent_my a" id="a4" style="width: 70%;">		
+						<jsp:include page="./test4.jsp" />
+				</div>
+				<div class="subContent_my a" id="a5" style="width: 70%;">		
+						<jsp:include page="./test5.jsp" />
+				</div>
 				
+				<script>
+					$(".submenu").on("click",function(){
+						var clickId = $(this).attr("id");
+						$(".a").css("display","none"); 
+						
+						alert(clickId);
+						switch (clickId) {
+						  case "menu1" :
+						    alert('a1');
+						    $("#a1").css("display","block"); 
+						    break;
+						  case "menu2" :
+							    alert('a2');
+							    $("#a2").css("display","block"); 
+							    break;
+						  case "menu3" :
+							    alert('a3');
+							    $("#a3").css("display","block"); 
+							    break;
+						  case "menu4" :
+							    alert('a4');
+							    $("#a4").css("display","block"); 
+							    break;
+						  case "menu5" :
+							    alert('a5');
+							    $("#a5").css("display","block"); 
+							    break;
+							    
+						  default :
+						    alert('선택한 값이 없습니다.');
+						    break;
+						}
+						
+					})
+				</script>
+	
+	
 				
 			</c:if>
 			<c:if test="${empty profileInfo}">
