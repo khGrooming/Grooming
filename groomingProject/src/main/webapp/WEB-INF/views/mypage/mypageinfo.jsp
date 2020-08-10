@@ -61,8 +61,8 @@ section
         margin-left: auto;
            margin-right:auto;  
            height:100px;
-           border:1px solid gray;
-           border-radius:5px;
+           border-top:1px solid gray;
+           border-bottom:1px solid gray;
        }
        #expBox{
            width: 75%;
@@ -145,35 +145,38 @@ section
 	<!-- 프로필 정보 div -->
 	<div class="signup form_container active" style="width: 100%;margin-top: 10%; margin-bottom: 10%"><!-- active toggle --> 
 		<div class="subContent_my" style="width:25%; margin-right: 10px;text-align: center;">
+		
+		
 			<!-- 프로필 사진 div -->
 			<div class="profile_my" style="position: relative;">  
 				<img src="icon.png" class="profile_img" >            
-				<img src="${contextPath}/resources/upprofileFiles/${loginUser.memberPhoto }"
+				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
 				id="profileImg" class="profile_img" style="border:3px solid gray;" onclick="prpfileChange()"> 
 				
 				<form id="testForm" action="test1.do" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="memberPhoto" id="memberPhoto" value="${loginUser.memberPhoto }">
-					<input type="hidden" name="memberNo" id="memberNo" value="${loginUser.memberNo}">
+					<input type="hidden" name="memberPhoto" id="memberPhoto" value="${profileInfo.memberPhoto }">
+					<input type="hidden" name="memberNo" id="memberNo" value="${profileInfo.memberNo}">
 					<input type="file" name="profileFile" id="profileFile" style="display:none;" onchange="test2();">
 				</form>
 				
 		    </div><!-- 프로필 사진 div_end -->
+		    
 		    <br>
+		    
 		    <!-- 닉네임/ 레벨 영역-->
-			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${loginUser.memberNickName}</span>
-			<span style="font-size:20px; color:darkgray">Lv.${loginUser.lvl }</span>
+			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${profileInfo.memberNickName}</span>
+			<span style="font-size:20px; color:darkgray">Lv.${profileInfo.lvl }</span>
 			<!-- 레벨에 대한 설명을 보여줄 툴팁 추가해야함!!! -->
 		    <br>
 		    
 		    <!-- 경험치_div -->
 		     <div id="expBox" style="position: relative;">
-                <div style="font-size: 10px; position: absolute; z-index: 100;  margin-left: 45%;"> ${loginUser.memberExp } / ${loginUser.lvlMaxExp }</div>
+                <div style="font-size: 10px; position: absolute; z-index: 100;  margin-left: 45%;"> ${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
                 <div id="expBar"></div>
-                <!-- (100/${loginUser.lvlMaxExp })*${loginUser.memberExp }  -->
                 <script>
                 	$(function(){
-                		var maxExp= "${loginUser.lvlMaxExp }";
-                		var memberExp= "${loginUser.memberExp }";
+                		var maxExp= "${profileInfo.lvlMaxExp }";
+                		var memberExp= "${profileInfo.memberExp }";
                 		var empPercent=2;
                 		empPercent=(100/maxExp)*memberExp; 
                 		if(empPercent <1){
@@ -191,16 +194,17 @@ section
             </div><!-- 경험치 div_end -->
             
             <!-- 이메일 영역-->
-            <p id="MemberEmail" style="color: gray; letter-spacing:0.1em">${loginUser.memberEmail }</p>
+            <p id="MemberEmail" style="color: gray; letter-spacing:0.1em">${profileInfo.memberEmail }</p>
             <br>
             
             <!-- 상태메시지 -->
             <div id="memo">
-	            <p style="font-size: 14px; ">
-	              	<c:if test="${loginUser.memberMemo ne 'NULL' }">
-						${loginUser.memberMemo}
-					</c:if><br>
-	            </p>
+            	<textarea rows="4" cols="30">            	
+	              	<c:if test="${profileInfo.memberMemo ne 'NULL' }">
+						${profileInfo.memberMemo}
+					</c:if>            	
+            	</textarea>
+	            
             </div>
             
             <br>
@@ -210,7 +214,7 @@ section
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
                 <br clear="both">
                 <div class="grayBox">
-                    <p style="font-size: 28px; font-weight:bold; margin-bottom: 0; height: 50px;"> ${loginUser.nowPoint }G</p>
+                    <p style="font-size: 28px; font-weight:bold; margin-bottom: 0; height: 50px;"> ${profileInfo.nowPoint }G</p>
                 </div>
 
             </div>
@@ -311,7 +315,7 @@ section
 				
 				
 			</c:if>
-			<c:if test="${empty sessionScope.loginUser }">
+			<c:if test="${empty sessionScope.loginUser}">
 				<h3>정보 없음</h3>
 			</c:if>
 		</div>

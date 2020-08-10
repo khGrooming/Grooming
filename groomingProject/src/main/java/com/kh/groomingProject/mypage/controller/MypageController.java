@@ -40,9 +40,10 @@ public class MypageController {
 	public String myPageView(Model model, HttpServletRequest request) {
 		
 		//임시 Session값 등록
-		HttpSession session =request.getSession();
-		Member m=(Member)session.getAttribute("loginUser");
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
 		String mNo =m.getMemberNo();
+		System.out.println(mNo);
 		
 		int school=0;
 		String[] schoolList = new String[3];
@@ -50,11 +51,13 @@ public class MypageController {
 		String[] certificateList = new String[3];
 		int career=0;
 		String[] careerList = new String[3];
+		
 //		Member loginUser = mpService.testLoginUser(mNo);
-		ProfileMember loginUser = mpService.testLoginUser2(mNo);
+		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
+		
 		String[] str = {"학1","학2","학3"};
-		System.out.println(loginUser);
+		System.out.println(profileInfo);
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
 			case "학교":
@@ -76,7 +79,7 @@ public class MypageController {
 
 		
 		
-		model.addAttribute("loginUser",loginUser);
+		model.addAttribute("profileInfo",profileInfo);
 		model.addAttribute("schoolList",schoolList);
 		model.addAttribute("certificateList",certificateList);
 		model.addAttribute("careerList",careerList);
