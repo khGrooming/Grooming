@@ -17,15 +17,14 @@ public class CommunityController {
 	@Autowired
 	CommunityService cService;
 	
-	@RequestMapping("community.do")
+	@RequestMapping("communityMain.do")
 	public String community() {
 		return "community/mainCommunityForm";
-		// 헤더 nav-bar에서 '커뮤니티'를 클릭했을때 mainCommunityForm.jsp로 보내자
 	}
 	
 	@RequestMapping("communityNotice.do")
 	public String communityNotice() {
-			return "community/notice/communityNotice";
+			return "community/communityNotice";
 	}
 	
 	@RequestMapping("noticeInsertView.do")
@@ -36,24 +35,20 @@ public class CommunityController {
 	@RequestMapping("communityFreeBoard.do")
 	public String communityFreeBoard() {
 		return "community/communityFreeBoard";
-		// communityFreeBoard.jsp로 이동
 	}
 	
 	@RequestMapping("communityStudyPromotion.do")
 	public String communityStudyPromotion() {
 		return "community/communityStudyPromotion";
-		// communityStudyPromotion.jsp로 이동
 	}
 	
 	@RequestMapping("communityStudyConfirm.do")
 	public String communityStudyConfirm() {
 		return "community/communityStudyConfirm";
-		// communityStudyConfirm.jsp로 이동
 	}
 	
 	@RequestMapping("communityQnA.do")
 	public String communityQnA() {
 		return "community/communityQnA";
-		// communityQnA.jsp로 이동
 	}
 }

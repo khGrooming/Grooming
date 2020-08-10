@@ -33,23 +33,13 @@
 				alt="groominglogo"
 				src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
 			</a>
-<<<<<<< HEAD
 			<c:url var="community" value="community.do" />
-
-=======
-			
-			
->>>>>>> refs/remotes/origin/master
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="${groomingMain }">그루밍</a>
 				</li>
 				<li class="nav-item">
-<<<<<<< HEAD
-					<a class="nav-link" href="${community }">커뮤니티</a>
-=======
 					<a class="nav-link" href="${communityMain }">커뮤니티</a>
->>>>>>> refs/remotes/origin/master
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="${studyCafeMain }">스터디카페</a>
@@ -88,9 +78,6 @@
 			</ul>
 		</div>
 	</nav>
-	
-<<<<<<< HEAD
-=======
 	<script type="text/javascript">
 		window.onpageshow = function(event){
 			// 히스토리 뒤로가기로 접근시 페이지 새로 고침
@@ -99,7 +86,5 @@
 			}
 		}
 	</script>
-
->>>>>>> refs/remotes/origin/master
 </body>
 </html>

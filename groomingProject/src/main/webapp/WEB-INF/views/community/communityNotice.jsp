@@ -44,9 +44,9 @@
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-		<jsp:include page="../../common/mainNavigationBar.jsp"/>
+		<jsp:include page="../common/mainNavigationBar.jsp"/>
 		<div class="col-sm-2">
-			<jsp:include page="../../common/communityBar.jsp"/>
+			<jsp:include page="../common/communityBar.jsp"/>
 		</div>
 		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
 		<div class="col-sm-10">
@@ -65,13 +65,13 @@
 					</h1>
 					<br>
 				</div>	
-					<c:if test="${loginUser.id eq 'admin' }">
+					
 						<div class="col-sm-12">
 							<input type="button" value="글쓰기" class="btn btn-info" style="margin-left: 640px;"
 										onclick="location.href='noticeInsertView.do'">
 							<br><br>
 						</div>
-					</c:if>
+					
 				<table class="table table_ra">
 					<thead>
 						<tr>
@@ -85,11 +85,11 @@
 					<tbody>
 					
 							<tr>
-								<td>${n.noticeId }</td>
-								<td>${n.noticeTitle }</td>
-								<td>${n.noticeWriter }</td>
-								<td>${n.noticeCount }</td>
-								<td>${n.noticeCreateDate }</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
 							</tr>
 						
 					</tbody>

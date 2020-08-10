@@ -57,7 +57,7 @@
 </head>
 <body>
 
-	<c:url var="community" value="community.do" />
+	<c:url var="communityMain" value="communityMain.do" />
 	<c:url var="communityNotice" value="communityNotice.do" />
 	<c:url var="communityFreeBoard" value="communityFreeBoard.do" />
 	<c:url var="communityStudyPromotion" value="communityStudyPromotion.do" />
@@ -71,7 +71,7 @@
 			<div id="sidebar_ra" class="floating_ra">
 				<h1 align="center">커뮤니티</h1>
 				<hr>
-					<p><a href="${community }">All&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityMain }">All&nbsp;&nbsp;&nbsp;</a></p>
 					<p><a href="${communityNotice }">공지사항&nbsp;&nbsp;&nbsp;</a></p>
 					<p><a href="${communityFreeBoard }">자유 게시판&nbsp;&nbsp;&nbsp;</a></p>
 					<p><a href="${communityStudyPromotion }">내 스터디 홍보&nbsp;&nbsp;&nbsp;</a></p>

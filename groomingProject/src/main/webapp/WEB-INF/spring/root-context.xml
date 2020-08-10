@@ -4,9 +4,6 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-<<<<<<< HEAD
-		
-=======
 	
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource"
@@ -34,5 +31,5 @@
 		<property name="maxUploadSize" value="100000000"/>
 		<property name="maxInMemorySize" value="100000000"/>
 	</bean>
->>>>>>> refs/remotes/origin/master
+
 </beans>
