@@ -21,7 +21,7 @@
 	<c:url var="registerPage" value="registerPage.do">
 		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 	</c:url>
-	<c:url var="userPage" value="userPage.do"/>
+	<c:url var="myPage" value="myPage.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 
@@ -70,7 +70,7 @@
 						<div class="main_alerts_txt text-center">${alerts.count }</div>
 					</li>
 					<li class="nav-item mr-2">
-						<a class="nav-link" href="${userPage }">${loginUser.memberNickName }</a>
+						<a class="nav-link" href="${myPage }">${loginUser.memberNickName }</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="${logout }">로그아웃</a>
