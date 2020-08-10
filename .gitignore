@@ -2,3 +2,5 @@
 /Servers/
 /dev/
 /repository/
+/.classpath
+*.class

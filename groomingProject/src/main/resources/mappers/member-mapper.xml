@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberPwd" column="MEMBER_PASSWORD"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberGender" column="MEMBER_GENDER"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="lvlNo" column="LVL_NO"/>
+		<result property="memberExp" column="MEMBER_EXP"/>
+		<result property="memberMemo" column="MEMBER_MEMO"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberAdmin" column="MEMBER_ADMIN"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
+	</resultMap>
+
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD
+							, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_GENDER
+							, MEMBER_PHONE, LVL_NO, MEMBER_EXP
+							, MEMBER_MEMO, MEMBER_PHOTO, MEMBER_ADMIN
+							, MEMBER_STATUS, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}
+				, #{memberNickName}, #{memberName}, #{memberGender}
+				, #{memberPhone}, DEFAULT, #{memberExp}
+				, #{memberMemo}, DEFAULT, DEFAULT
+				, DEFAULT, SYSDATE)
+	</insert>
+	
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_EMAIL=#{memberEmail}
+		AND MEMBER_STATUS='N'
+	</select>
+
+	<select id="emailDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL=#{memberEmail}
+	</select>
+	
+	<select id="nickNameDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME=#{memberNickName}
+	</select>
+
+	<select id="phoneDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_PHONE=#{memberPhone}
+	</select>
+
+
+
+
+</mapper>

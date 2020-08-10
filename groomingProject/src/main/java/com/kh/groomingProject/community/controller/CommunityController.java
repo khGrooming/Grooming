@@ -25,7 +25,7 @@ public class CommunityController {
 	
 	@RequestMapping("communityNotice.do")
 	public String communityNotice() {
-			return "community/communityNotice";
+			return "community/notice/communityNotice";
 	}
 	
 	@RequestMapping("noticeInsertView.do")

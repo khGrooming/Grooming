@@ -5,8 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
 <body>
 	<jsp:forward page="home.do"/>
+<<<<<<< HEAD
+=======
+	<h1>파이널 프로젝트 화이팅!</h1>
+>>>>>>> refs/remotes/origin/master
 </body>
 </html>
