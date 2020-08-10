@@ -8,11 +8,18 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  
+	<!-- 아이콘 -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="http:/code.jquery.com/jquery-latest.min.js"></script>
+ 	 
     <title>Hello, world!</title>
     <style>
         #tab-menu li {
@@ -69,7 +76,15 @@
 		label{
 			font-size:20px;
 		}
-
+	  @font-face { 
+			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    	    font-weight: normal; 
+    	    font-style: normal; 
+   		}
+   
+	   * {
+	      font-family:"TmoneyRoundWindExtraBold";
+	   }
     </style>
 </head>
 
@@ -98,7 +113,7 @@
                     </select>
                     <input type="text" size="30px">
                     <button type="submit">search</button>
-                    <button type="button">글쓰기</button>
+                    <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
                 </div>
             </div>
             <!-- 스터디 그룹 리스트 -->
@@ -115,7 +130,7 @@
                         <!-- 그룹 본문 -->
                         <div class="card-body">
                             <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
+                            <h5 class="card-title"><a href="groupPage.do">정처기 실기 준비하실분 구해요</a></h5>
                             <!-- 그룹 한줄 소개  -->
                             <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
                             <p class="card-text">
@@ -129,7 +144,7 @@
                         <!-- 그룹 이미지 -->
                         <div class="top-img">
                             <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
+                            <div id="circle" style="position: absolute;">
                                 D-<span style="position: relative; ">5</span>
                             </div>
                         </div>
@@ -296,9 +311,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>

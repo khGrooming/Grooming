@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,10 +37,13 @@ public class MypageController {
 	private MypageService mpService; 
 	
 	@RequestMapping("myPage.do")
-	public String myPageView(Model model) {
+	public String myPageView(Model model, HttpServletRequest request) {
 		
 		//임시 Session값 등록
-		String mNo = "M00008";
+		HttpSession session =request.getSession();
+		Member m=(Member)session.getAttribute("loginUser");
+		String mNo =m.getMemberNo();
+		
 		int school=0;
 		String[] schoolList = new String[3];
 		int certificate=0;
