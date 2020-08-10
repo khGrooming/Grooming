@@ -42,7 +42,7 @@ section
 }
   .subContent_my{
     height: 100%;
-    border:1px solid black;
+    /* border:1px solid black; */
     float: left;
 }
         .profile_my{
@@ -61,8 +61,14 @@ section
         margin-left: auto;
            margin-right:auto;  
            height:100px;
-           border:1px solid gray;
-           border-radius:5px;
+           
+       }
+       #memoTextArea{
+        width: 100%;   
+        margin-left: auto;
+        margin-right:auto;  
+        height:100px;
+        font-size: 13px;
        }
        #expBox{
            width: 75%;
@@ -134,6 +140,35 @@ section
             border:1px solid lightgray;
             border-radius: 12px;
         }
+        #counter {
+          float: right;
+	      margin-bottom: 0.5em;
+		  background: rgba(224, 224, 224, 1);
+		  border-radius: 0.5em;
+		  padding: 0 .5em 0 .5em;
+		  font-size: 0.75em;
+		}
+	.submenu{
+      display:inline-block;
+      /* background:yellowgreen; */
+      font-size:20px;
+      text-align:center;
+      line-height:50px;
+      width:10%;
+      height:50px;
+      margin-left:5%;
+      margin-right:5%;
+     
+   }
+   .submenu a{
+   	color:black;
+   	text-decoration:none
+   }
+   .submenu:hover{
+   	background: gray;
+     
+   }
+}
 
 </style>
 </head>
@@ -141,39 +176,43 @@ section
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application"/>
 	<section >
-	<c:if test="${!empty sessionScope.loginUser }">
+	<c:if test="${!empty profileInfo }">
 	<!-- 프로필 정보 div -->
-	<div class="signup form_container active" style="width: 100%;margin-top: 10%; margin-bottom: 10%"><!-- active toggle --> 
+	<div class="signup form_container active" style="width: 100%;margin-top: 7%; margin-bottom: 10%"><!-- active toggle --> 
 		<div class="subContent_my" style="width:25%; margin-right: 10px;text-align: center;">
+		
+		
 			<!-- 프로필 사진 div -->
 			<div class="profile_my" style="position: relative;">  
 				<img src="icon.png" class="profile_img" >            
-				<img src="${contextPath}/resources/upprofileFiles/${loginUser.memberPhoto }"
+				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
 				id="profileImg" class="profile_img" style="border:3px solid gray;" onclick="prpfileChange()"> 
 				
 				<form id="testForm" action="test1.do" method="post" enctype="multipart/form-data">
-					<input type="hidden" name="memberPhoto" id="memberPhoto" value="${loginUser.memberPhoto }">
-					<input type="hidden" name="memberNo" id="memberNo" value="${loginUser.memberNo}">
+					<input type="hidden" name="memberPhoto" id="memberPhoto" value="${profileInfo.memberPhoto }">
+					<input type="hidden" name="memberNo" id="memberNo" value="${profileInfo.memberNo}">
 					<input type="file" name="profileFile" id="profileFile" style="display:none;" onchange="test2();">
 				</form>
 				
 		    </div><!-- 프로필 사진 div_end -->
+		    
 		    <br>
+		    
 		    <!-- 닉네임/ 레벨 영역-->
-			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${loginUser.memberNickName}</span>
-			<span style="font-size:20px; color:darkgray">Lv.${loginUser.lvl }</span>
+			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${profileInfo.memberNickName}</span>
+			<span>&nbsp;&nbsp;</span>
+			<span style="font-size:15px; color:darkgray">Lv.${profileInfo.lvl }</span>
 			<!-- 레벨에 대한 설명을 보여줄 툴팁 추가해야함!!! -->
 		    <br>
 		    
 		    <!-- 경험치_div -->
 		     <div id="expBox" style="position: relative;">
-                <div style="font-size: 10px; position: absolute; z-index: 100;  margin-left: 45%;"> ${loginUser.memberExp } / ${loginUser.lvlMaxExp }</div>
+                <div style="font-size: 10px; position: absolute; z-index: 100;  margin-left: 45%;"> ${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
                 <div id="expBar"></div>
-                <!-- (100/${loginUser.lvlMaxExp })*${loginUser.memberExp }  -->
                 <script>
                 	$(function(){
-                		var maxExp= "${loginUser.lvlMaxExp }";
-                		var memberExp= "${loginUser.memberExp }";
+                		var maxExp= "${profileInfo.lvlMaxExp }";
+                		var memberExp= "${profileInfo.memberExp }";
                 		var empPercent=2;
                 		empPercent=(100/maxExp)*memberExp; 
                 		if(empPercent <1){
@@ -191,60 +230,119 @@ section
             </div><!-- 경험치 div_end -->
             
             <!-- 이메일 영역-->
-            <p id="MemberEmail" style="color: gray; letter-spacing:0.1em">${loginUser.memberEmail }</p>
+            <p id="MemberEmail" style="color: rgba(123, 123, 123, 1); letter-spacing:0.5em">${profileInfo.memberEmail }</p>
             <br>
             
             <!-- 상태메시지 -->
             <div id="memo">
-	            <p style="font-size: 14px; ">
-	              	<c:if test="${loginUser.memberMemo ne 'NULL' }">
-						${loginUser.memberMemo}
-					</c:if><br>
-	            </p>
+	            <span id="counter">###</span>
+            	<textarea id="memoTextArea" style="letter-spacing:0.3em" maxlength="100"><c:if test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
             </div>
+            <script>
+	            $(function() {
+	            	
+	            	var content=$("#memoTextArea").val();
+	            	
+	            	 $('#counter').html(content.length + '/100');
+	            	 
+	                $('#memoTextArea').keyup(function (e){
+	                    content = $(this).val();     
+	                   
+	                    $('#counter').html(content.length + '/100');
+	                    
+	                });
+	               
+	                $('#content').keyup();
+	                
+	                
+	                $('#memoTextArea').change(function(){
+	                	 alert(content);
+	                	var save = confirm("상태메시지를 저장하시겠습니까?");
+	                	if(save){
+	                		$.ajax({
+	                			url:"upMemo.do",
+	                			type:"post",
+	                			data:{memberMemo:$(this).val()},
+	                			success : function(data) {
+			                		alert("변경되었습니다");					            	
+					            },
+					            error : function(data) {  
+					               alert("code:"+request.status+"\n"+"error:"+error);
+					            }
+	                			
+	                		})
+	                	}else{
+	                		alert("취소하였습니다");
+	                		$('#memoTextArea').val("${profileInfo.memberMemo}");
+	                	}
+	                	
+	                })
+	                
+	                
+	         	 });
+	          
+	            
             
+            </script>
+            <br>
             <br>
             
             <!-- 포인트 div -->
-            <div style=" width: 90%; margin-left: auto;  margin-right:auto; ">
+            <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
                 <br clear="both">
-                <div class="grayBox">
-                    <p style="font-size: 28px; font-weight:bold; margin-bottom: 0; height: 50px;"> ${loginUser.nowPoint }G</p>
+                <div class="grayBox" style="height: 85px;">
+                    <p style="font-size: 28px; font-weight:bold; margin-bottom: auto; height: 50px; margin-top: 20px; letter-spacing:0.3em;"> ${profileInfo.nowPoint } G</p>
                 </div>
 
             </div>
-               <br>
+            
+            
+            <br>
+            <br>
+
+
+			<!-- ★  -->
+			<!-- 리스트를 뿌려짐 -->
+			<!-- 리스트에서 3개이하는 '+'버튼 넣는거 해야함 -->
+			<!-- 테이블 보이는거 바꿔야함 text-align-->
+			<!-- 스펙추가하기 기능을 넣어야 함 -->
             <!-- 스펙 div -->
-             <div style=" width: 90%; margin-left: auto;  margin-right:auto; ">
+             <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">스펙</p>
                 <br clear="both">
                 <div class="grayBox" style="height: 200px;">
-                    <table >
+                    <table>
 				
-					<tr>
-						<th>학교</th>	
-						
-						<c:forEach var="s" items="${schoolList}" >
-							<td>${s}</td>
-						</c:forEach>
-						
-						
-					</tr>
-					<tr>
-						<th>자격증</th>
-						<c:forEach var="s" items="${certificateList}" >
-							<td>${s}</td>
-						</c:forEach>
-					</tr>
-					<tr>
-						<th>경력</th>
-						<c:forEach var="s" items="${careerList}" >
-							<td>${s}</td>
+						<tr>
+							<th>학교</th>	
 							
+							
+						</tr>
+				
+							<c:forEach var="s" items="${schoolList}" >
+							<tr>
+								<td></td><td>${s}</td>
+							</tr>
+							</c:forEach>
+						<tr>
+							<th>자격증</th>
+						</tr>
+						<c:forEach var="s" items="${certificateList}" >
+						<tr>
+								<td></td><td>${s}</td>
+						</tr>
+							</c:forEach>
+						<tr>
+							<th>경력</th>
+						</tr>
+						<c:forEach var="s" items="${careerList}" >
+							<tr>
+								<td></td><td>${s}</td>
+						</tr>
 						</c:forEach>
-					</tr>
-				</table>
+				
+					</table>
                 </div>
 
             </div>
@@ -256,19 +354,9 @@ section
             <br>
             
 		</div><!-- 프로필 정보 div_end -->
-		<div class="subContent_my" style="width: 70%; height: 50px;">
 		
-		</div>
-		<br><br><br><br>
-		<div class="subContent_my" style="width: 70%;">
-		</div>
-        <!-- --------------------------------------------------------------------------------------- -->
+		
 
-				
-				
-		
-				
-				
 				<script>
 					$(function(){
 						$("#profileImg").on("click",function(){
@@ -306,12 +394,27 @@ section
 				
 				</script>
 	
-		
+				<div class="subContent_my" style="width: 70%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
+					<div class="menubar">
+					  	<div class="nav">
+					  		<div class="submenu"><a href="#">개인정보</a></div>
+					  		<div class="submenu"><a href="#">스터디</a></div>
+					  		<div class="submenu"><a href="#">찜목록</a></div>
+					  		<div class="submenu"><a href=#">활동내역</a></div>
+					  		<div class="submenu"><a href="#">포인트</a></div>
+					  	</div>
+					  </div>
+				</div>
+				<br><br><br>
+				<div class="subContent_my" style="width: 70%;">				
+					<jsp:include page="./test.jsp" />
+				</div>
+     
 					
 				
 				
 			</c:if>
-			<c:if test="${empty sessionScope.loginUser }">
+			<c:if test="${empty profileInfo}">
 				<h3>정보 없음</h3>
 			</c:if>
 		</div>

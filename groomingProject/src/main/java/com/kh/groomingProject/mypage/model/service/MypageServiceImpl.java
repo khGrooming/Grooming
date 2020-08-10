@@ -36,4 +36,9 @@ public class MypageServiceImpl implements MypageService{
 	public int updateProfileIMG(ProfileMember m) {
 		return mpDao.updateProfileIMG(m);
 	}
+
+	@Override
+	public int updateMemo(Member m) {		
+		return mpDao.updateMemo(m);
+	}
 }

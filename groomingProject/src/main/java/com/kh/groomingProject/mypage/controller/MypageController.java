@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,21 +38,27 @@ public class MypageController {
 	private MypageService mpService; 
 	
 	@RequestMapping("myPage.do")
-	public String myPageView(Model model) {
+	public String myPageView(Model model, HttpServletRequest request) {
 		
 		//임시 Session값 등록
-		String mNo = "M00008";
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		String mNo =m.getMemberNo();
+		System.out.println(mNo);
+		
 		int school=0;
 		String[] schoolList = new String[3];
 		int certificate=0;
 		String[] certificateList = new String[3];
 		int career=0;
 		String[] careerList = new String[3];
+		
 //		Member loginUser = mpService.testLoginUser(mNo);
-		ProfileMember loginUser = mpService.testLoginUser2(mNo);
+		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
+		
 		String[] str = {"학1","학2","학3"};
-		System.out.println(loginUser);
+		System.out.println(profileInfo);
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
 			case "학교":
@@ -72,7 +80,7 @@ public class MypageController {
 
 		
 		
-		model.addAttribute("loginUser",loginUser);
+		model.addAttribute("profileInfo",profileInfo);
 		model.addAttribute("schoolList",schoolList);
 		model.addAttribute("certificateList",certificateList);
 		model.addAttribute("careerList",careerList);
@@ -167,6 +175,23 @@ public class MypageController {
 	}
 	
 	
+	@RequestMapping(value="upMemo.do",method=RequestMethod.POST)
+	public void updateMemo(String memberMemo
+						   ,HttpServletRequest request
+						   ) {
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		m.setMemberMemo(memberMemo);
+		
+		System.out.println(memberMemo);
+		System.out.println(m.getMemberNo());
+		int result = mpService.updateMemo(m);
+
+		if(result > 0) {
+			System.out.println("성공");
+		}
+	}
 	
 	
 	
