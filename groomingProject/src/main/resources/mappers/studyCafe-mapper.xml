@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cafeMapper">
+	<resultMap type="studyCafe" id="studyCafeResultSet">
+		<id property="cafeNo" column="CAFE_NO"/>
+		
+		<result property="cafeName" column="CAFE_NAME"/>
+		<result property="cafeContent" column="CAFE_CONTENT"/>
+		<result property="cafePhone" column="CAFE_PHONE"/>
+		<result property="cafeAddress" column="CAFE_ADDRESS"/>
+	</resultMap>
+	
+	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">
+		SELECT *
+		FROM STUDYCAFE
+		WHERE CAFE_NAME LIKE '%'||#{name}||'%'
+	</select>
+	
+	<select id="selectCafeLocalList" parameterType="string" resultMap="studyCafeResultSet">
+		SELECT *
+		FROM STUDYCAFE
+		WHERE CAFE_ADDRESS LIKE '%'||#{name}||'%'
+	</select>
+	
+	<select id="selectCafeList" resultMap="studyCafeResultSet">
+		SELECT *
+		FROM STUDYCAFE
+	</select>
+</mapper>

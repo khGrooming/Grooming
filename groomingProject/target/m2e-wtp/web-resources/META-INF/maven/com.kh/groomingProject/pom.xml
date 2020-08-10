@@ -197,6 +197,12 @@
 		    <version>2.6</version>
 		</dependency>
 
+		<!-- json 관련 라이브러리 -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
+		    <version>1.1.1</version>
+		</dependency>	
 		<!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib-ext-spring -->
 		<dependency>
 		    <groupId>net.sf.json-lib</groupId>
@@ -210,7 +216,6 @@
 		    <artifactId>gson</artifactId>
 		    <version>2.8.5</version>
 		</dependency>
-
 
 	</dependencies>
     <build>
