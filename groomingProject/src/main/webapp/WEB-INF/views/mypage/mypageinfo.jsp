@@ -42,7 +42,7 @@ section
 }
   .subContent_my{
     height: 100%;
-    border:1px solid black;
+    /* border:1px solid black; */
     float: left;
 }
         .profile_my{
@@ -143,11 +143,32 @@ section
         #counter {
           float: right;
 	      margin-bottom: 0.5em;
-		  background:rgba(255,0,0,0.5);
+		  background: rgba(224, 224, 224, 1);
 		  border-radius: 0.5em;
 		  padding: 0 .5em 0 .5em;
 		  font-size: 0.75em;
 		}
+	.submenu{
+      display:inline-block;
+      /* background:yellowgreen; */
+      font-size:20px;
+      text-align:center;
+      line-height:50px;
+      width:10%;
+      height:50px;
+      margin-left:5%;
+      margin-right:5%;
+     
+   }
+   .submenu a{
+   	color:black;
+   	text-decoration:none
+   }
+   .submenu:hover{
+   	background: gray;
+     
+   }
+}
 
 </style>
 </head>
@@ -333,19 +354,9 @@ section
             <br>
             
 		</div><!-- 프로필 정보 div_end -->
-		<div class="subContent_my" style="width: 70%; height: 50px;">
 		
-		</div>
-		<br><br><br><br>
-		<div class="subContent_my" style="width: 70%;">
-		</div>
-        <!-- --------------------------------------------------------------------------------------- -->
+		
 
-				
-				
-		
-				
-				
 				<script>
 					$(function(){
 						$("#profileImg").on("click",function(){
@@ -383,7 +394,22 @@ section
 				
 				</script>
 	
-		
+				<div class="subContent_my" style="width: 70%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
+					<div class="menubar">
+					  	<div class="nav">
+					  		<div class="submenu"><a href="#">개인정보</a></div>
+					  		<div class="submenu"><a href="#">스터디</a></div>
+					  		<div class="submenu"><a href="#">찜목록</a></div>
+					  		<div class="submenu"><a href=#">활동내역</a></div>
+					  		<div class="submenu"><a href="#">포인트</a></div>
+					  	</div>
+					  </div>
+				</div>
+				<br><br><br>
+				<div class="subContent_my" style="width: 70%;">				
+					<jsp:include page="./test.jsp" />
+				</div>
+     
 					
 				
 				
