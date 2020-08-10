@@ -336,49 +336,54 @@ section .form_container .user .registerOptionSnd
 					</form>
 				</div>
 				<div class="form-group registerOptionSnd">
-					<!-- <form>
+					<form>
 						<h2>회원가입</h2>
 						<div class="input-group">
-							<input type="text" id="" name="memberName" required="required">
+							<input type="text" id="regiName" name="memberName" required="required">
 							<span>이메일</span>
-							<div class="chkVali" id="">올바른 이메일을 입력해주세요.</div>
-							<div class="chkVali" id="">이미 사용 중입니다.</div>
-							<div class="chkVali chkValiComp" id="">멋진 아이디네요!</div>
+							<div class="chkVali" id="regiEmailChk">올바른 이메일을 입력해주세요.</div>
+							<div class="chkVali" id="regiEmailDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiEmailComp">멋진 아이디네요!</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="" name="memberPwd" required="required">
+							<input type="password" id="regiPwd" name="memberPwd" required="required">
 							<span>비밀번호</span>
-							<div class="chkVali" id="">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
-							<div class="chkVali chkValiComp" id="">사용 가능합니다.</div>
+							<div class="chkVali" id="regiPwdChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
+							<div class="chkVali chkValiComp" id="regiPwdComp">사용 가능합니다.</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="" required="required">
+							<input type="password" id="regiPwdDupl" required="required">
 							<span>비밀번호 재확인</span>
-							<div class="chkVali" id="">비밀번호가 일치하지 않습니다.</div>
-							<div class="chkVali chkValiComp" id="">비밀번호가 일치합니다.</div>
+							<div class="chkVali" id="regiPwdDuplChk">비밀번호가 일치하지 않습니다.</div>
+							<div class="chkVali chkValiComp" id="regiPwdChkComp">비밀번호가 일치합니다.</div>
 						</div>
 						<div class="input-group">
-							<input type="text" id="" name="memberNickName" required="required">
+							<input type="text" id="regiNickName" name="memberNickName" required="required">
 							<span>닉네임</span>
-							<div class="chkVali" id="">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
-							<div class="chkVali" id="">이미 사용 중 입니다.</div>
+							<div class="chkVali" id="regiNickNameChk">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
+							<div class="chkVali" id="regiNickNameDupl">이미 사용 중 입니다.</div>
 							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
 						</div>
 						<div class="input-group">
-							<input type="text" id="" name="memberPhone" required="required">
+							<input type="text" id="regiPhone" name="memberPhone" required="required">
 							<span>휴대전화</span>
-							<div class="chkVali" id="">올바른 휴대전화 번호를 입력해 주세요</div>
-							<div class="chkVali" id="">이미 사용 중입니다.</div>
-							<div class="chkVali chkValiComp" id="">사용가능 합니다.</div>
+							<div class="chkVali" id="regiPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
+							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
+							<div class="chkVali chkValiComp" id="regiPhoneComp">사용가능 합니다.</div>
 						</div>
-						<div class="registerError" id="">잠시후 다시 시도해 주세요.</div>
+						<div class="registerError" id="registerError">잠시후 다시 시도해 주세요.</div>
 						<input type="button" onclick="registerOption()" value="다음">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
-					</form> -->
+					</form>
 				</div>
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
 			</div>
 		</div>
+		
+	<!-- test value -->	
+	pageHistory = ${pageHistory }
+	
+	
 	</section>
 	<script>
 		function toggleForm() {
@@ -455,7 +460,7 @@ section .form_container .user .registerOptionSnd
 						if(data == "success"){
 							//TODO 이전 페이지로 돌아가는 처리 해야함
 							
-							location.href="${url}";
+							location.href="home.do";
 						} else{
 							$("#loginError").css("display","block");
 						}
