@@ -8,11 +8,13 @@
 	<typeAliases>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/grooming-mapper.xml"/>
+		<mapper resource="/mappers/studyCafe-mapper.xml"/>
 	</mappers>
 	
 </configuration>
