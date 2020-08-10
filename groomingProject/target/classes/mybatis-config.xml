@@ -7,10 +7,13 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/mypage-mapper.xml"/>
 	</mappers>
 	
 </configuration>

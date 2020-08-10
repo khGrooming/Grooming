@@ -19,6 +19,8 @@
 	<c:url var="registerPage" value="registerPage.do"/>
 	<c:url var="userPage" value="userPage.do"/>
 	<c:url var="logoutPage" value="logoutPage.do"/>
+	<!-- 임시 -->
+	<c:url var="myPage" value="myPage.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 
 	<!-- Navigation -->
@@ -46,6 +48,8 @@
 				<c:if test="${empty sessionScope.loginUser }">
 					<li class="nav-item">
 						<a class="nav-link" href="${loginPage }">로그인</a>
+						<!-- 로그인 구현 전에 마이페이지로 갈 수 있도록 임시로 하나만 만들겠습니다 -->
+						<a class="nav-link" href="${myPage }">마이페이지</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="${registerPage }">회원가입</a>
@@ -66,7 +70,7 @@
 						<div class="main_alerts_txt text-center">${alerts.count }1</div>
 					</li>
 					<li class="nav-item mr-2">
-						<a class="nav-link" href="${userPage }">${loginUser.userName }아이디</a>
+						<a class="nav-link" href="${myPage }">${loginUser.memberEmail }아이디</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="${logoutPage }">로그아웃</a>
