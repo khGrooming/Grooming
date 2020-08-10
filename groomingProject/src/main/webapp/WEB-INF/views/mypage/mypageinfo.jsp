@@ -416,13 +416,13 @@ section
 						<jsp:include page="./test2.jsp" />
 				</div>
 				<div class="subContent_my a" id="a3" style="width: 70%;">		
-						<jsp:include page="./test3.jsp" />
+						
 				</div>
 				<div class="subContent_my a" id="a4" style="width: 70%;">		
-						<jsp:include page="./test4.jsp" />
+						
 				</div>
 				<div class="subContent_my a" id="a5" style="width: 70%;">		
-						<jsp:include page="./test5.jsp" />
+						
 				</div>
 				
 				<script>
