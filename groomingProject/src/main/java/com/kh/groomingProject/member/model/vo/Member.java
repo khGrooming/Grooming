@@ -10,20 +10,20 @@ public class Member implements Serializable {
 	 */
 	private static final long serialVersionUID = -7200797583466611023L;
 
-	private String memberNo;		// ¸â¹ö ¹øÈ£
-	private String memberEmail;		// ¸â¹ö ÀÌ¸ŞÀÏ
-	private String memberPwd;		// ¸â¹ö ºñ¹Ğ¹øÈ£
-	private String memberNickName;	// ¸â¹ö ´Ğ³×ÀÓ
-	private String memberName;		// ¸â¹ö ÀÌ¸§
-	private String memberGender;	// ¸â¹ö ¼ºº°
-	private String memberPhone;		// ¸â¹ö ÈŞ´ëÀüÈ­ ¹øÈ£
-	private String lvlNo;			// ¸â¹ö ·¹º§
-	private int memberExp;			// ¸â¹ö °æÇèÄ¡
-	private String memberMemo;		// ¸â¹ö ÇÑÁÙ ¼Ò°³
-	private String memberPhoto;		// ¸â¹ö ÇÁ·ÎÇÊ »çÁø
-	private String memberAdmin;		// ¸â¹ö °ü¸®ÀÚ ±ÇÇÑ
-	private String memberStatus;	// ¸â¹ö Å»Åğ »óÅÂ
-	private Date memberJoinDate;	// ¸â¹ö °¡ÀÔ ³¯Â¥
+	private String memberNo;		// ë©¤ë²„ ë²ˆí˜¸
+	private String memberEmail;		// ë©¤ë²„ ì´ë©”ì¼
+	private String memberPwd;		// ë©¤ë²„ ë¹„ë°€ë²ˆí˜¸
+	private String memberNickName;	// ë©¤ë²„ ë‹‰ë„¤ì„
+	private String memberName;		// ë©¤ë²„ ì´ë¦„
+	private String memberGender;	// ë©¤ë²„ ì„±ë³„
+	private String memberPhone;		// ë©¤ë²„ íœ´ëŒ€ì „í™” ë²ˆí˜¸
+	private String lvlNo;			// ë©¤ë²„ ë ˆë²¨
+	private int memberExp;			// ë©¤ë²„ ê²½í—˜ì¹˜
+	private String memberMemo;		// ë©¤ë²„ í•œì¤„ ì†Œê°œ
+	private String memberPhoto;		// ë©¤ë²„ í”„ë¡œí•„ ì‚¬ì§„
+	private String memberAdmin;		// ë©¤ë²„ ê´€ë¦¬ì ê¶Œí•œ
+	private String memberStatus;	// ë©¤ë²„ íƒˆí‡´ ìƒíƒœ
+	private Date memberJoinDate;	// ë©¤ë²„ ê°€ì… ë‚ ì§œ
 
 	public Member() {
 		super();

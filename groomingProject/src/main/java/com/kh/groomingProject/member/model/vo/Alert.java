@@ -10,11 +10,11 @@ public class Alert implements Serializable{
 	 */
 	private static final long serialVersionUID = -5614251653763257702L;
 	
-	private String alertNo;			// ¾Ë¸² ¹øÈ£
-	private String memberNo;		// ¸â¹ö ¹øÈ£
-	private String alertContent;	// ¾Ë¸² ³»¿ë
-	private Date alertCreateDate;	// ¾Ë¸² »ı¼º³¯Â¥
-	private String alertConfirm;	// ¾Ë¸² È®ÀÎ À¯¹«
+	private String alertNo;			// ì•Œë¦¼ ë²ˆí˜¸
+	private String memberNo;		// ë©¤ë²„ ë²ˆí˜¸
+	private String alertContent;	// ì•Œë¦¼ ë‚´ìš©
+	private Date alertCreateDate;	// ì•Œë¦¼ ìƒì„±ë‚ ì§œ
+	private String alertConfirm;	// ì•Œë¦¼ í™•ì¸ ìœ ë¬´
 
 	public Alert() {
 		super();

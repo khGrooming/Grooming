@@ -28,7 +28,7 @@ public class MemberController {
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	//TODO ·Î±×ÀÎ or È¸¿ø°¡ÀÔ Àü º¸´ø ÆäÀÌÁö ÀúÀå ÇÏ´Â Áß...
+	//TODO ë¡œê·¸ì¸ or íšŒì›ê°€ì… ì „ ë³´ë˜ í˜ì´ì§€ ì €ì¥ í•˜ëŠ” ì¤‘...
 	public String checkPage(String pageHistory) {
 		String result = "";
 		if(pageHistory != null) {
@@ -77,7 +77,7 @@ public class MemberController {
 		if(result > 0) {
 			return "home";
 		} else {
-			throw new MemberException("È¸¿ø °¡ÀÔ ½ÇÆĞ!");
+			throw new MemberException("íšŒì› ê°€ì… ì‹¤íŒ¨!");
 		}
 		
 	}
@@ -91,11 +91,11 @@ public class MemberController {
 		Member loginUser = mService.loginMember(m);
 		
 		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			System.out.println("ºñ¹ø È®ÀÎ : ¼º°ø");
+			System.out.println("ë¹„ë²ˆ í™•ì¸ : ì„±ê³µ");
 			model.addAttribute("loginUser", loginUser);
 			return "success";
 		} else {
-			System.out.println("ºñ¹ø È®ÀÎ : ½ÇÆĞ");
+			System.out.println("ë¹„ë²ˆ í™•ì¸ : ì‹¤íŒ¨");
 			return "fail";
 		}
 		
@@ -113,15 +113,15 @@ public class MemberController {
 	@ResponseBody
 	public String emailDuplicateChk(Member m) {
 		
-		System.out.println("ÀÌ¸ŞÀÏ Áßº¹ È®ÀÎ : " + m.getMemberEmail());
+		System.out.println("ì´ë©”ì¼ ì¤‘ë³µ í™•ì¸ : " + m.getMemberEmail());
 		
 		int result = mService.emailDuplicateChk(m);
 		
 		if(result == 0) {
-			System.out.println("ÀÌ¸ŞÀÏ Áßº¹ È®ÀÎ : " + m.getMemberEmail() + "( »ç¿ë°¡´É )");
+			System.out.println("ì´ë©”ì¼ ì¤‘ë³µ í™•ì¸ : " + m.getMemberEmail() + "( ì‚¬ìš©ê°€ëŠ¥ )");
 			return "success";
 		} else {
-			System.out.println("ÀÌ¸ŞÀÏ Áßº¹ È®ÀÎ : " + m.getMemberEmail() + "( »ç¿ë Áß )");
+			System.out.println("ì´ë©”ì¼ ì¤‘ë³µ í™•ì¸ : " + m.getMemberEmail() + "( ì‚¬ìš© ì¤‘ )");
 			return "fail";
 		}
 
@@ -131,15 +131,15 @@ public class MemberController {
 	@ResponseBody
 	public String nickNameDuplicateChk(Member m) {
 		
-		System.out.println("´Ğ³×ÀÓ Áßº¹ È®ÀÎ : " + m.getMemberNickName());
+		System.out.println("ë‹‰ë„¤ì„ ì¤‘ë³µ í™•ì¸ : " + m.getMemberNickName());
 		
 		int result = mService.nickNameDuplicateChk(m);
 		
 		if(result == 0) {
-			System.out.println("´Ğ³×ÀÓ Áßº¹ È®ÀÎ : " + m.getMemberNickName() + "( »ç¿ë°¡´É )");
+			System.out.println("ë‹‰ë„¤ì„ ì¤‘ë³µ í™•ì¸ : " + m.getMemberNickName() + "( ì‚¬ìš©ê°€ëŠ¥ )");
 			return "success";
 		} else {
-			System.out.println("´Ğ³×ÀÓ Áßº¹ È®ÀÎ : " + m.getMemberNickName() + "( »ç¿ë Áß )");
+			System.out.println("ë‹‰ë„¤ì„ ì¤‘ë³µ í™•ì¸ : " + m.getMemberNickName() + "( ì‚¬ìš© ì¤‘ )");
 			return "fail";
 		}
 		
@@ -149,15 +149,15 @@ public class MemberController {
 	@ResponseBody
 	public String phoneDuplicateChk(Member m) {
 		
-		System.out.println("ÀüÈ­¹øÈ£ Áßº¹ È®ÀÎ : " + m.getMemberPhone());
+		System.out.println("ì „í™”ë²ˆí˜¸ ì¤‘ë³µ í™•ì¸ : " + m.getMemberPhone());
 		
 		int result = mService.phoneDuplicateChk(m);
 		
 		if(result == 0) {
-			System.out.println("ÀüÈ­¹øÈ£ Áßº¹ È®ÀÎ : " + m.getMemberPhone() + "( »ç¿ë°¡´É )");
+			System.out.println("ì „í™”ë²ˆí˜¸ ì¤‘ë³µ í™•ì¸ : " + m.getMemberPhone() + "( ì‚¬ìš©ê°€ëŠ¥ )");
 			return "success";
 		} else {
-			System.out.println("ÀüÈ­¹øÈ£ Áßº¹ È®ÀÎ : " + m.getMemberPhone() + "( »ç¿ë Áß )");
+			System.out.println("ì „í™”ë²ˆí˜¸ ì¤‘ë³µ í™•ì¸ : " + m.getMemberPhone() + "( ì‚¬ìš© ì¤‘ )");
 			return "fail";
 		}
 		
