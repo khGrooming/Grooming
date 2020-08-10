@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="groomingMapper">
+ 
+ 	<resultMap type="Grooming" id="groomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingContent" column="GROOMING_CONTENT"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="studySd" column="STUDY_START_DATE"/>
+		<result property="studyEd" column="STUDY_END_DATE"/>
+		<result property="groomingSd" column="GROOMING_START_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingCd" column="GROOMING_CREATE_DATE"/>
+		<result property="groomingMd" column="GROOMING_MODIFY_DATE"/>
+		<result property="status" column="GROOMING_STATUS"/>
+		<result property="count" column="GROOMING_COUNT"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+	</resultMap>
+ 
+ 
+ 	<select id="selectList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING
+ 		WHERE GROOMING_STATUS ='Y'
+ 		
+ 	</select>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+</mapper>

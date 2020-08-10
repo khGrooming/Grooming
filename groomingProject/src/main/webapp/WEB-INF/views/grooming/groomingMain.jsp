@@ -1,6 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
 <!doctype html>
 <html lang="ko">
 
@@ -112,190 +115,64 @@
                         <option name="content">내용</option>
                     </select>
                     <input type="text" size="30px">
-                    <button type="submit">search</button>
+                    <button type="submit">검색</button>
                     <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
                 </div>
             </div>
             <!-- 스터디 그룹 리스트 -->
             <div style="margin-top: 20px;">
+            
+
+          
+		    <c:forEach var="g" items="${list }">
+		    	<!--날짜 차이 계산을 위한 fmt  -->
+	    		<fmt:parseDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDate"/> 
+	       		<fmt:parseDate value="${g.groomingSd }" var="startDate" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startDate"/>
+	 			<fmt:parseDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/>
+				<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"/> 
+				
+				<%-- <c:set var="today" value="<%=new Date() %>"/>
+				<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today"/> --%>
+				
                 <div class="card-deck cols-4">
-                    <div class="card" onclick="location.href='groomingDetail.do'">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title"><a href="groupPage.do">정처기 실기 준비하실분 구해요</a></h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute;">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
+                
+		                    <div class="card" onclick="location.href='groomingDetail.do'">
+		                        <!-- 그룹 이미지 -->
+		                        <div class="top-img">
+		                            <!-- 그룹 d-day 태그 -->
+		                            <div id="circle" style="position: absolute; ">
+		                            <c:if test="${endDate gt startDate }">
+		                                D-<span style="position: relative; ">${endDate-startDate }</span>
+		                            </c:if>
+		                            <c:if test="${endDate lt startDate }">
+		                               <span style="position: relative; ">마감</span>
+		                            </c:if>
+		                          
+		                            </div>
+		                        </div>
+		                        <!-- 그룹 본문 -->
+		                        <div class="card-body">
+		                            <!-- 그룹 제목 -->
+		                            <h5 class="card-title"><a href="groupPage.do">${g.groomingTitle }</a></h5>
+		                            <!-- 그룹 한줄 소개  -->
+		                            <p class="card-text">${g.groomingIntroduce }</p>
+		                            <p class="card-text">
+		                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>${g.groomingP }</span></small>
+		                                <small><span class="groupType">${g.groomingType}</span></small>
+		                            </p>
+		
+		                        </div>
+		                    </div>
+		           
+		                 
+                  
                    
                     <!-- 스터디 그룹 리스트 끝 -->
                 </div>
-                <div class="card-deck cols-4">
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                    <div class="card">
-                        <!-- 그룹 이미지 -->
-                        <div class="top-img">
-                            <!-- 그룹 d-day 태그 -->
-                            <div id="circle" style="position: absolute; ">
-                                D-<span style="position: relative; ">5</span>
-                            </div>
-                        </div>
-                        <!-- 그룹 본문 -->
-                        <div class="card-body">
-                            <!-- 그룹 제목 -->
-                            <h5 class="card-title">정처기 실기 준비하실분 구해요</h5>
-                            <!-- 그룹 한줄 소개  -->
-                            <p class="card-text">정보처리기사 실기 스터디원들을 합격의 길로 80%이상 보장합니다.</p>
-                            <p class="card-text">
-                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>6</span></small>
-                                <small><span class="groupType">멘토</span></small>
-                            </p>
-
-                        </div>
-                    </div>
-                   
-                </div>
-                <!-- 스터디 그룹 리스트 끝 -->
-            </div>
-            
+           
+            </c:forEach>
         </div>
     </section>
 
