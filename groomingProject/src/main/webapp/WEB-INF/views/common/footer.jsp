@@ -14,7 +14,7 @@
 </head>
 <body>
 	<footer>
-		<div class="container-fulid bg-dark fixed-bottom">
+		<div class="container-fulid bg-dark">
 			<div class="navbar navbar-dark">
 				<a class="ml-auto nav-link text-white">Copyright &copy; Grooming 2020</a>
 				<a class="footer_question mr-auto nav-link" href="#">문의 하기</a>

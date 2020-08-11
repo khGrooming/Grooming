@@ -12,8 +12,12 @@
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
+
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
+<link href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css" rel="stylesheet">
 
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
@@ -122,18 +126,27 @@ section .form_container .user .form-group form .input-group .chkValiComp
 {
 	color: green;
 }
-section .form_container .user .form-group form input
+section .form_container .user .form-group form input,
+section .form_container .user .form-group form .divRadio
 {
 	position: relative;
 	width: 100%;
 	padding: 10px;
-	/* background: #f5f5f5; */
+	border-radius: 4px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 	color: #333;
-	border: 1px solid #000;
 	outline: none;
 	box-shadow: none;
 	margin: 8px 0 0;
 	font-size: 14px;
+}
+section .form_container .user .form-group form .input-group .divRadio
+{
+	padding: 6px 10px 10px 20px;
+	text-align: left;
+	height: 43px;
 }
 section .form_container .user .form-group form .input-group span
 {
@@ -159,6 +172,15 @@ section .form_container .user .form-group form input[type="checkbox"]
 	width: 15px;
 	margin: 3px;
 }
+section .form_container .user .tagP
+{
+	margin: 0 0 3px;
+	padding-left: 10px;
+}
+section .form_container .user .bootstrap-tagsinput .badge
+{
+	margin: 0 3px;
+}
 section .form_container .user .form-group form .input-group p
 {
 	font-size: 12px;
@@ -175,6 +197,15 @@ section .form_container .user .form-group form input[type="button"]
 	font-weight: 500;
 	letter-spacing: 1px;
 	transition: 0.5s;
+}
+section .form_container .user .form-group form .input-group .divRadio .pRadio
+{
+	font-size: 18px;
+}
+section .form_container .user .form-group form input[type="radio"]
+{
+	width: 30px;
+	margin: 0;
 }
 section .form_container .user .form-group form input[class=kakaoLogin]
 {
@@ -246,12 +277,14 @@ section .form_container.active .singinBx .imgBx
 {
 	left: -100%;
 }
-section .form_container .user .registerOptionSnd
+section .form_container .user #regiFst
+{
+	display: block;
+}
+section .form_container .user #regiSnd
 {
 	display: none;
 }
-
-
 </style>
 </head>
 <body>
@@ -269,12 +302,12 @@ section .form_container .user .registerOptionSnd
 					<form>
 						<h2>로그인</h2>
 						<div class="input-group">
-							<input type="text" id="loginEmail" name="memberEmail" required="required">
+							<input type="text" id="loginEmail" name="memberEmail" required>
 							<span>이메일</span>
 							<div class="chkVali" id="loginEmailChk">올바른 이메일을 입력해주세요.</div>
 						</div>
 						<div class="input-group">
-						<input type="password" id="loginPwd" name="memberPwd" required="required">
+						<input type="password" id="loginPwd" autocomplete="off" name="memberPwd" required>
 							<span>비밀번호</span>
 							<div class="chkVali" id="loginPwdChk">비밀번호를 입력해주세요.</div>
 						</div>
@@ -287,44 +320,45 @@ section .form_container .user .registerOptionSnd
 						<p class="signup">로그인에 문제가 있나요 ? 
 							<a href="#" onclick="findAccount()">아이디 찾기</a>
 							/
-							<a href="#" onclick="findPassword()">비밀번호 찾기</a>
+							<!-- <a href="#" onclick="findPassword()">비밀번호 찾기</a> -->
+							<a href="#" onclick="goBackPage()">비밀번호 찾기</a>
 						</p>
 						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
 					</form>
 				</div>
 			</div>
  			<div class="user singupBx">
-				<div class="form-group registerOptionFst">
+				<div class="form-group" id="regiFst">
 					<form>
 						<h2>회원가입</h2>
 						<div class="input-group">
-							<input type="text" id="regiEmail" name="memberEmail" required="required">
+							<input type="text" id="regiEmail" name="memberEmail" required>
 							<span>이메일</span>
 							<div class="chkVali" id="regiEmailChk">올바른 이메일을 입력해주세요.</div>
 							<div class="chkVali" id="regiEmailDupl">이미 사용 중입니다.</div>
 							<div class="chkVali chkValiComp" id="regiEmailComp">멋진 아이디네요!</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="regiPwd" name="memberPwd" required="required">
+							<input type="password" id="regiPwd" autocomplete="off" name="memberPwd" required>
 							<span>비밀번호</span>
 							<div class="chkVali" id="regiPwdChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
 							<div class="chkVali chkValiComp" id="regiPwdComp">사용 가능합니다.</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="regiPwdDupl" required="required">
+							<input type="password" id="regiPwdDupl" autocomplete="off" required>
 							<span>비밀번호 재확인</span>
 							<div class="chkVali" id="regiPwdDuplChk">비밀번호가 일치하지 않습니다.</div>
 							<div class="chkVali chkValiComp" id="regiPwdChkComp">비밀번호가 일치합니다.</div>
 						</div>
 						<div class="input-group">
-							<input type="text" id="regiNickName" name="memberNickName" required="required">
+							<input type="text" id="regiNickName" name="memberNickName" required>
 							<span>닉네임</span>
 							<div class="chkVali" id="regiNickNameChk">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
 							<div class="chkVali" id="regiNickNameDupl">이미 사용 중 입니다.</div>
 							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
 						</div>
 						<div class="input-group">
-							<input type="text" id="regiPhone" name="memberPhone" required="required">
+							<input type="text" id="regiPhone" name="memberPhone" required>
 							<span>휴대전화</span>
 							<div class="chkVali" id="regiPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
 							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
@@ -335,51 +369,45 @@ section .form_container .user .registerOptionSnd
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
-				<div class="form-group registerOptionSnd">
-					<!-- <form>
-						<h2>회원가입</h2>
+				<div class="form-group" id="regiSnd">
+					<form>
+						<h2>추가 입력</h2>
 						<div class="input-group">
-							<input type="text" id="" name="memberName" required="required">
-							<span>이메일</span>
-							<div class="chkVali" id="">올바른 이메일을 입력해주세요.</div>
-							<div class="chkVali" id="">이미 사용 중입니다.</div>
-							<div class="chkVali chkValiComp" id="">멋진 아이디네요!</div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="" name="memberPwd" required="required">
-							<span>비밀번호</span>
-							<div class="chkVali" id="">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
-							<div class="chkVali chkValiComp" id="">사용 가능합니다.</div>
+							<input type="text" id="optionName" name="memberName" required width="50%">
+							<span>이름</span>
+							<div class="chkVali chkValiComp" id="optionNameChk"></div>
 						</div>
 						<div class="input-group">
-							<input type="password" id="" required="required">
-							<span>비밀번호 재확인</span>
-							<div class="chkVali" id="">비밀번호가 일치하지 않습니다.</div>
-							<div class="chkVali chkValiComp" id="">비밀번호가 일치합니다.</div>
+							<div class="divRadio">
+								<p class="pRadio">성별
+								<input type="radio" class="inputRadio" name="memberGender" value="M">남성
+								<input type="radio" class="inputRadio" name="memberGender" value="F">여성
+								</p>
+							</div>
 						</div>
 						<div class="input-group">
-							<input type="text" id="" name="memberNickName" required="required">
-							<span>닉네임</span>
-							<div class="chkVali" id="">최대 10자 한글, 영어, 숫자를 사용하세요.</div>
-							<div class="chkVali" id="">이미 사용 중 입니다.</div>
-							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
+							<input type="text" id="optionMemo" name="memberMemo" maxlength="30" required>
+							<span>한줄 소개</span>
 						</div>
-						<div class="input-group">
-							<input type="text" id="" name="memberPhone" required="required">
-							<span>휴대전화</span>
-							<div class="chkVali" id="">올바른 휴대전화 번호를 입력해 주세요</div>
-							<div class="chkVali" id="">이미 사용 중입니다.</div>
-							<div class="chkVali chkValiComp" id="">사용가능 합니다.</div>
+						<div>
+							<p class="tagP">관심있는 태그를 남겨주세요.</p>
+						</div>
+						<div>
+							<input type="text" name="tagString" value="" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagString" style="display: none;">
 						</div>
 						<div class="registerError" id="">잠시후 다시 시도해 주세요.</div>
-						<input type="button" onclick="registerOption()" value="다음">
-						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
-					</form> -->
+						<input type="button" onclick="registerComp()" value="완료">
+						<p class="signup">마이페이지에서 하겠습니다. <a onclick="goBackPage()">Skip</a></p>
+					</form>
 				</div>
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/Sign_Up.jpg"></div>	
 			</div>
 		</div>
 	</section>
+	
+	<!-- 로그인 -->
 	<script>
 		function toggleForm() {
 			var container = document.querySelector('.form_container');
@@ -453,9 +481,7 @@ section .form_container .user .registerOptionSnd
 					success:function(data){
 						console.log("로그인 결과 : " + data);
 						if(data == "success"){
-							//TODO 이전 페이지로 돌아가는 처리 해야함
-							
-							location.href="${url}";
+							goBackPage();
 						} else{
 							$("#loginError").css("display","block");
 						}
@@ -470,7 +496,15 @@ section .form_container .user .registerOptionSnd
 			}
 		}
 	</script>
-		
+
+	<!-- 카카오 로그인 -->	
+	<script>
+		function kakaoLogin(){
+			
+		}
+	</script>
+
+	<!-- 회원가입 -->
 	<script>
 		// 이메일 정규화로 확인, 이메일 중복 확인(ajax)
 		function regiEmail() {
@@ -656,8 +690,9 @@ section .form_container .user .registerOptionSnd
 		});
 		
 		function register(){
-			$("#registerError").css("display","none");
-			/* 입력여부 확인 */
+			registerOption();
+			/* $("#registerError").css("display","none");
+			// 입력여부 확인
 			regiEmail();
 			regiPwd();
 			regiPwdDupl();
@@ -696,28 +731,54 @@ section .form_container .user .registerOptionSnd
 					success:function(data){
 						console.log("회원가입 결과 : " + data);
 						if(data == "success"){
-							$("#registerOptionFst").css("display","none");
-							$("#registerOptionScd").css("display","block");
+							registerOption();
 						} else{
 							$("#registerError").css("display","block");
 						}
 					},
 					error:function(request, status, errorData){
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						/* alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData); */
+						// alert("error code: " + request.status + "\n"
+						//		+"message: " + request.responseText
+						//		+"error: " + errorData);
 					}
 				});
-				// memberInsert.do
-				/* $("#registerForm").submit(); */
-			}
+			} */
+		}
+	</script>
+
+	<!-- 회원가입 옵션 입력 -->
+	<script>
+		function registerOption() {
+			$("#regiFst").css("display","none");
+			$("#regiSnd").css("display","block");
+		};
+		
+		function optionSkip(){
+			goBackPage();
 		}
 		
-		function kakaoLogin(){
-			
+		function registerComp() {
+			console.log("태그들 : " + $("#tagString").val());
 		}
-
+	</script>
+	
+	<script>
+		$(function() {
+			console.log("이전페이지 : ${url}");
+		});
+		
+		// 돌아갈 페이지가 로그인or회원가입이라면 홈으로
+		function goBackPage() {
+			let url = "${url}";
+			if(url.indexOf("login") != -1){
+				location.href="home.do";
+			} else if(url.indexOf("register") != -1) {
+				location.href="home.do";
+			} else {
+				location.href="${url}";
+			}
+		}
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />

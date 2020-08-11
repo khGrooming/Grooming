@@ -29,12 +29,10 @@
 	<nav
 		class="main_navbar navbar navbar-expand-sm navbar-dark bg-success font-weight-bold h5 fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="${mainPage }"> <img class="mainNavImg"
-				alt="groominglogo"
+			<a class="navbar-brand" href="${mainPage }">
+				<img class="mainNavImg" alt="groominglogo"
 				src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
 			</a>
-			
-			
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item">
 					<a class="nav-link" href="${groomingMain }">그루밍</a>
