@@ -79,12 +79,12 @@
 	</nav>
 	
 	<script type="text/javascript">
-		window.onpageshow = function(event){
+		/* window.onpageshow = function(event){
 			// 히스토리 뒤로가기로 접근시 페이지 새로 고침
 			if(performance.navigation.type == 2){
 				location.reload(true);
 			}
-		}
+		} */
 	</script>
 
 </body>

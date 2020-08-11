@@ -818,6 +818,8 @@ section .form_container .user #regiSnd
 				location.href="home.do";
 			} else if(url.indexOf("register") != -1) {
 				location.href="home.do";
+			} else if(url.indexOf("logout") != -1) {
+				location.href="home.do";
 			} else {
 				location.href="${url}";
 			}
