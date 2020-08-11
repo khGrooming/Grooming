@@ -42,19 +42,12 @@ section
 }
   .subContent_my{
     height: 100%;
-    border:1px solid black;
     float: left;
 }
         .profile_my{
             margin-top: 10%;
-            height: 160px; 
-/*             
-            margin-left: auto;
-            margin-right: auto;
-            width: 150px;
-            border-radius: 50%;
-            border:2px solid gray;
-            z-index: 10; */
+            height: 110px; 
+
         }
        #memo{
         width: 75%;   
@@ -87,53 +80,13 @@ section
         background-color: yellow; 
         position: absolute;
        }
-               section1 {
-            display: none;
-            padding: 20px 10px 10px 10px;
-            border: 3px solid #ddd;
-            height: 500px;
-            }
-
-        /*라디오버튼 숨김*/
-          input {
-              display: none;}
-
-        label {
-            display: inline-block;
-            margin: 0 0 -3px;
-            padding: 15px 25px;
-            font-weight: 600;
-            text-align: center;
-            color: #bbb;
-            border: 1px solid #ddd;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-
-            }
-
-        label:hover {
-            color: #2e9cdf;
-            cursor: pointer;}
-
-        /*input 클릭시, label 스타일*/
-        input:checked + label {
-              color: #555;
-              border: 3px solid #ddd;
-              /* border-top: 2px solid #2e9cdf; */
-              border-bottom: 3px solid #ffffff;
-              }
-
-        #tab1:checked ~ #content1,
-        #tab2:checked ~ #content2,
-        #tab3:checked ~ #content3,
-        #tab4:checked ~ #content4 {
-            display: block;}
 
         .profile_img{
-            width: 150px; transform:translate(-50%);
-                height: 150px; 
-                border-radius: 50%; 
-                position: absolute;
+            width: 100px; 
+            transform:translate(-50%);
+            height: 100px; 
+            border-radius: 50%; 
+            position: absolute;
         }
         .grayBox{
             height: 50px;
@@ -165,7 +118,7 @@ section
    	text-decoration:none
    }
    .submenu:hover{
-   	background: gray;
+   	font-size:23px;
      
    }
    .a{
@@ -199,8 +152,7 @@ section
 				
 		    </div><!-- 프로필 사진 div_end -->
 		    
-		    <br>
-		    
+		
 		    <!-- 닉네임/ 레벨 영역-->
 			<span style="font-size: 25px;font-weight: 800;margin-right: 2%;">${profileInfo.memberNickName}</span>
 			<span>&nbsp;&nbsp;</span>
@@ -233,8 +185,7 @@ section
             </div><!-- 경험치 div_end -->
             
             <!-- 이메일 영역-->
-            <p id="MemberEmail" style="color: rgba(123, 123, 123, 1); letter-spacing:0.5em">${profileInfo.memberEmail }</p>
-            <br>
+            <p id="MemberEmail" style="color: rgba(120,120,120, 1); letter-spacing:0.3em">${profileInfo.memberEmail }</p>
             
             <!-- 상태메시지 -->
             <div id="memo">
@@ -293,17 +244,13 @@ section
             <!-- 포인트 div -->
             <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
-                <br clear="both">
-                <div class="grayBox" style="height: 85px;">
-                    <p style="font-size: 28px; font-weight:bold; margin-bottom: auto; height: 50px; margin-top: 20px; letter-spacing:0.3em;"> ${profileInfo.nowPoint } G</p>
-                </div>
+               
+               
+                    <p style="font-size: 18px; font-weight:bold; margin-bottom: auto; height: 50px;  letter-spacing:0.3em;"> ${profileInfo.nowPoint } G</p>
+              
 
             </div>
             
-            
-            <br>
-            <br>
-
 
 			<!-- ★  -->
 			<!-- 리스트를 뿌려짐 -->
@@ -314,7 +261,7 @@ section
              <div style=" width: 75%; margin-left: auto;  margin-right:auto; ">
                 <p style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">스펙</p>
                 <br clear="both">
-                <div class="grayBox" style="height: 200px;">
+                <div class="grayBox" style="height: 150px;">
                     <table>
 				
 						<tr>
@@ -349,12 +296,7 @@ section
                 </div>
 
             </div>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+        
             
 		</div><!-- 프로필 정보 div_end -->
 		
@@ -400,17 +342,18 @@ section
 				<div class="subContent_my" style="width: 70%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
 					<div class="menubar">
 					  	<div class="nav">
-					  		<div class="submenu" id="menu1"><a>개인정보</a></div>
-					  		<div class="submenu" id="menu2"><a >스터디</a></div>
-					  		<div class="submenu" id="menu3"><a href="#">찜목록</a></div>
-					  		<div class="submenu" id="menu4"><a href="#">활동내역</a></div>
-					  		<div class="submenu" id="menu5"><a href="#">포인트</a></div>
+					  		<div class="submenu s" id="menu1"><a>개인정보</a></div>
+					  		<div class="submenu s" id="menu2"><a >스터디</a></div>
+					  		<div class="submenu s" id="menu3"><a href="#">찜목록</a></div>
+					  		<div class="submenu s" id="menu4"><a href="#">활동내역</a></div>
+					  		<div class="submenu s" id="menu5"><a href="#">포인트</a></div>
 					  	</div>
 					  </div>
 				</div>
 				<br><br><br>
-				<div class="subContent_my a" id="a1" style="width: 70%; display:block;">		
-						<jsp:include page="./test.jsp" />
+				<div class="subContent_my a" id="a1" style="width: 70%; display:block;">	
+						
+						<jsp:include page="./mypage_member.jsp" />
 				</div>
 				<div class="subContent_my a" id="a2" style="width: 70%;">		
 						<jsp:include page="./test2.jsp" />
@@ -429,27 +372,27 @@ section
 					$(".submenu").on("click",function(){
 						var clickId = $(this).attr("id");
 						$(".a").css("display","none"); 
-						
-						alert(clickId);
+						$(".s").css("background","white");
+					
 						switch (clickId) {
 						  case "menu1" :
-						    alert('a1');
+						    $("#menu1").css("background","gray");
 						    $("#a1").css("display","block"); 
 						    break;
 						  case "menu2" :
-							    alert('a2');
+							  $("#menu2").css("background","gray");
 							    $("#a2").css("display","block"); 
 							    break;
 						  case "menu3" :
-							    alert('a3');
+							  $("#menu3").css("background","gray");
 							    $("#a3").css("display","block"); 
 							    break;
 						  case "menu4" :
-							    alert('a4');
+							  $("#menu4").css("background","gray");
 							    $("#a4").css("display","block"); 
 							    break;
 						  case "menu5" :
-							    alert('a5');
+							  $("#menu5").css("background","gray");
 							    $("#a5").css("display","block"); 
 							    break;
 							    

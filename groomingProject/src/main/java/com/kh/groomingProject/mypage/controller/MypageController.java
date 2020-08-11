@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -36,6 +38,11 @@ public class MypageController {
 	
 	@Autowired
 	private MypageService mpService; 
+	
+	@Autowired 
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
 	
 	@RequestMapping("myPage.do")
 	public String myPageView(HttpServletRequest request) {
@@ -199,9 +206,49 @@ public class MypageController {
 	
 	
 	
+	@RequestMapping(value="pwdCheck.do",method=RequestMethod.POST)
+	public void pwdCheck(HttpServletResponse response
+						,HttpServletRequest request
+						,String inputPwd) throws IOException {
+
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		PrintWriter out = response.getWriter(); 
+		System.out.println(m.getMemberPwd());
+		if(bcryptPasswordEncoder.matches(inputPwd,m.getMemberPwd())) {
+			System.out.println("비번 확인 : 성공");
+			out.append("Y");
+		} else {
+			System.out.println("비번 확인 : 실패");
+			out.append("N");
+		}
+		
+
+		
+		out.flush();
+		out.close();
+	}
 	
 	
-	
+	@RequestMapping("memberDel.do")
+	public String memberDel(SessionStatus status, HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int result = mpService.memberDelete(m);
+		
+		if(result > 0) {
+			
+			session.invalidate();
+		}else {
+			System.out.println("탈퇴실패");
+		}
+
+		System.out.println("퇄퇴");
+		return "home";
+	}
 	
 	
 	

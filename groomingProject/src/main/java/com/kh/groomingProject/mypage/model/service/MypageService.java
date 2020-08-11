@@ -18,5 +18,7 @@ public interface MypageService {
 
 	int updateMemo(Member m);
 
+	int memberDelete(Member m);
+
 
 }
