@@ -382,6 +382,9 @@ section .form_container .user #regiSnd
 						<h2>추가 입력</h2>
 						<input type="hidden" id="optionEmail" name="memberEmail" value="">
 						<div class="input-group">
+						
+						</div>
+						<div class="input-group">
 							<input type="text" id="optionName" name="memberName" required width="50%">
 							<span>이름</span>
 							<div class="chkVali chkValiComp" id="optionNameChk"></div>
@@ -811,7 +814,7 @@ section .form_container .user #regiSnd
 			console.log("이전페이지 : ${url}");
 		});
 		
-		// 돌아갈 페이지가 로그인 or 회원가입이라면 홈으로
+		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
 		function goBackPage() {
 			let url = "${url}";
 			if(url.indexOf("login") != -1){
