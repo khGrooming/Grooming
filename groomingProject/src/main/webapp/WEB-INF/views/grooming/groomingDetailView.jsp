@@ -46,7 +46,6 @@
        .groomingImage{
        	width:450px;
        	height:550px;
-        background-image:url("${contextPath }/resources/views/images/book.png");
         background-size:cover;
         border:1px solid lightgreen;
        }
@@ -83,8 +82,8 @@
                 <div class="col-9">
                     <table>
                     	<tr><td><br></td></tr>
-                        <tr><td><h3>초보 JAVA스터디</h3></td></tr>
-                        <tr><td><span>모집 기간 : </span><span>2020/08/01 ~ 2020/08/25</span></td></tr>
+                        <tr><td><h3>${grooming.groomingTitle }</h3></td></tr>
+                        <tr><td><span>모집 기간 : </span><span>${grooming.groomingSd } ~ ${grooming.groomingEd }</span></td></tr>
                         
                     </table>
                 </div>
@@ -102,12 +101,12 @@
                     	</tr>
                     	<tr>
                     		<td>
-                    			<span>작성일 :2020/08/01</span>
+                    			<span>작성일 :${grooming.groomingCd }</span>
                     		</td> 
                     	</tr>
                     	<tr>
 							<td>
-                    			<span>조회수 : </span><span>40</span>
+                    			<span>조회수 : </span><span>${grooming.count}</span>
                     		</td>
                     	</tr>	
                     </table>
@@ -327,7 +326,7 @@
 	      handle: ".modal-header"
 	  });
 	</script>
-    <footer> </footer>
+    <footer><jsp:include page="../common/footer.jsp" /> </footer>
 
 
     <!-- Optional JavaScript -->

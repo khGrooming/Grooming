@@ -25,6 +25,26 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMentorList");
 	}
+
+	public ArrayList<Grooming> gSearch(Grooming g) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.gSearch",g);
+	}
+
+	public ArrayList<Grooming> gSearchTitle(String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.gSearchTitle",keyword);
+	}
+
+	public ArrayList<Grooming> gSearchWriter(String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.gSearchWriter",keyword);
+	}
+
+	public ArrayList<Grooming> gSearchContent(String keyword) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.gSearchContent",keyword);
+	}
 	
 	
 	

@@ -10,4 +10,8 @@ public interface GroomingService {
 
 	ArrayList<Grooming> selectMentorList();
 
+	ArrayList<Grooming> gSearchTitle(String keyword);
+	ArrayList<Grooming> gSearchWriter(String keyword);
+	ArrayList<Grooming> gSearchContent(String keyword);
+
 }

@@ -318,7 +318,7 @@
     </section>
 
 
-    <footer> </footer>
+    <footer><jsp:include page="../common/footer.jsp" /> </footer>
 
 
     <!-- Optional JavaScript -->

@@ -115,24 +115,24 @@
                     <input type="checkbox" name="search_filter" id="money">&nbsp;<label for="money">예치금 존재</label>
                 </div>
                 <div class="cols-9"  style="width: 80%; text-align: right; padding-right:5pxx">
-                    <select>
-                        <option name="title" id="title">제목</option>
-                        <option name="writer" id="writer">작성자</option>
-                        <option name="content" id="content">내용</option>
+                    <select id="search">
+                        <option value="title" id="title">제목</option>
+                        <option value="writer" id="writer">작성자</option>
+                        <option value="content" id="content">내용</option>
                     </select>
                     <input type="text" size="30px" id="keyword">
-                    <button type="button" id="search">검색</button>
+                    <button type="submit" id="find">검색</button>
                     <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
                 </div>
             </div>
             <!-- 스터디 그룹 리스트 -->
-            <div style="margin-top: 20px;">
+   <div style="margin-top: 20px;">
             
 
           
-	<div class="container">
+		<div class="container">
 			<div class="row">
-		    <c:forEach var="g" items="${list }">
+		    <c:forEach var="g" items="${glist }">
 		    	<!--날짜 차이 계산을 위한 fmt  -->
 				<%-- <c:set var="today" value="<%=new Date() %>"/>
 				<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today"/> --%>
@@ -182,16 +182,57 @@
                    
                     <!-- 스터디 그룹 리스트 끝 -->
                 </div>
-           
+    <table style="margin-bottom:100px;">
+           <!-- 페이징 처리 부분 -->
+		<tr align="center" height="20">	
+			<td colspan="6">
+		<!-- [이전] -->
+				<c:if test="${pi.currentPage eq 1 }">
+					[이전]&nbsp;
+				</c:if>			
+				<c:if test="${pi.currentPage gt 1 }">
+				<c:url var="blistBack" value="groomingMain.do">
+					<c:param name="page" value="${pi.currentPage - 1 }"/>
+				</c:url>
+					<a href="${blistBack }">[이전]</a>
+				</c:if>	
+		<!-- [번호들] -->
+				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+					<c:if test="${p eq pi.currentPage }">
+						<font color="red" size="4">
+							<b>[${p}]</b>
+						</font>
+					</c:if>
+					
+					<c:if test="${p ne pi.currentPage }">
+						<c:url var="blistCheck" value="groomingMain.do">
+							<c:param name="page" value="${p}"/>
+						</c:url>
+						<a href="${ blistCheck}">${p }</a>
+					</c:if>
+				</c:forEach>
+		<!-- [이후] -->
+				<c:if test="${pi.currentPage eq pi.maxPage }">
+					&nbsp;[이후]
+				</c:if>			
+				<c:if test="${pi.currentPage lt pi.maxPage }">
+				<c:url var="blistAfter" value="groomingMain.do">
+					<c:param name="page" value="${pi.currentPage + 1 }"/>
+				</c:url>
+					<a href="${blistAfter }">[이후]</a>
+				</c:if>	
+			</td>
+		</tr>
+		</table>
         </div>
     </section>
 	<script>
 		$(function(){
 			$("#mentor").click(function(){
-				
+				console.log("멘토필터 클릭됨");
 			if($("#mentor").is(":checked")){
-			
-				location.href="groomingMe.do";
+		/* 	
+				location.href="groomingMe.do"; */
 				
 			}else {
 				console.log("멘토필터 해지됨");
@@ -212,23 +253,33 @@
 	</script>
 	<script>
 	$(function(){
-		
-		$('#search').on("click" , function(){
-			$.ajax({
-			url : 'gSearch.do',
-			type : 'post',
-			data :{ 
-				d_doctorname : $('#search').val()
-			},
-			success : function (data){
-				$('#area').html(data);
-			},error:function(request, status, errorData){
-				alert("error code: " + request.status + "\n"
+		$('#find').on("click" , function(){
+			
+			var search = $('#search').val();
+			var keyword = $('#keyword').val();
+			
+			/* if(search == null || keyword == null){
+				alert("빈칸없이 검색해주세요!");
+			}else{
+				location.href="search.do";
+			}
+			 */
+		 	 $.ajax({
+				url : 'search.do',
+				type : 'post',
+				data :{search:search, keyword:keyword},
+				success : function (data){
+				
+					$('#keyword').val("");
+				
+				},error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
 						+"message: " + request.responseText
 						+"error: " + errorData);
 			}
 			
-			})
+			})  
+		
 		})
 	
 	})
@@ -236,7 +287,7 @@
 
 
     <footer>
-
+		<jsp:include page="../common/footer.jsp" />
 
     </footer>
 

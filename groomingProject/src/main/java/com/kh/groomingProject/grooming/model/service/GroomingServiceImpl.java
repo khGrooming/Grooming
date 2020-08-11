@@ -25,5 +25,26 @@ public class GroomingServiceImpl implements GroomingService{
 		// TODO Auto-generated method stub
 		return gDao.selectMentorList();
 	}
+
+	@Override
+	public ArrayList<Grooming> gSearchTitle(String keyword) {
+		// TODO Auto-generated method stub
+		return gDao.gSearchTitle(keyword);
+	}
+
+	@Override
+	public ArrayList<Grooming> gSearchWriter(String keyword) {
+		// TODO Auto-generated method stub
+		return gDao.gSearchWriter(keyword);
+	}
+
+	@Override
+	public ArrayList<Grooming> gSearchContent(String keyword) {
+		// TODO Auto-generated method stub
+		return gDao.gSearchContent(keyword);
+	}
+
+	
+
 	
 }

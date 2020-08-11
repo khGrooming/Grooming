@@ -5,6 +5,7 @@
  	<resultMap type="Grooming" id="groomingResultSet">
 		<id property="groomingNo" column="GROOMING_NO"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
 		<result property="groomingType" column="GROOMING_TYPE"/>
 		<result property="groomingTitle" column="GROOMING_TITLE"/>
 		<result property="groomingContent" column="GROOMING_CONTENT"/>
@@ -33,13 +34,43 @@
  	
  	<select id="selectMentorList" resultMap="groomingResultSet">
  		SELECT * 
- 		FROM GROOMING G
+ 		FROM GROOMING 
  		WHERE GROOMING_TYPE ='멘토'
  		ORDER BY GROOMING_TYPE DESC
  		
  	</select>
  
- 
+ 	<select id="gSearchTitle" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND GROOMING_TITLE LIKE '%' || #{groomingTitle} || '%'
+		ORDER BY GROOMING_NO DESC	
+		
+			
+ 	
+ 	</select>
+ 	<select id="gSearchWriter" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND MEMBER_NICKNAME =#{memberNickName}
+		ORDER BY GROOMING_NO DESC	
+		
+			
+ 	
+ 	</select>
+ 	<select id="gSearchContent" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND GROOMING_CONTENT LIKE '%' || #{groomingContent} || '%'
+		ORDER BY GROOMING_NO DESC	
+	
+ 	</select>
  
  
  
