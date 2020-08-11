@@ -70,9 +70,12 @@ public class MemberController {
 	@RequestMapping("memberOptionUpdate.do")
 	@ResponseBody
 	public String memberOptionUpdate(Member m, String tagName) {
-		
-		
 		int result = 0;
+		
+		System.out.println("Tag : " + tagName);
+		
+		
+		
 
 		if(result > 0) {
 			System.out.println("회원가입 추가정보 업데이트 : 성공");

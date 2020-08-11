@@ -112,6 +112,11 @@ section .form_container .user .form-group form .input-group
 	margin-bottom: 10px;
 	color: #555;
 }
+section .form_container .user .form-group form .imgArea
+{
+    display: flex;
+    justify-content: center;
+}
 section .form_container .user .form-group form .registerError,
 section .form_container .user .form-group form .input-group .chkVali
 {
@@ -125,6 +130,19 @@ section .form_container .user .form-group form .input-group .chkVali
 section .form_container .user .form-group form .input-group .chkValiComp
 {
 	color: green;
+}
+section .form_container .user .form-group form .input-group .profileImgArea
+{
+	border-radius: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+section .form_container .user .form-group form .input-group .profileImgArea .profileImg
+{
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
 }
 section .form_container .user .form-group form input,
 section .form_container .user .form-group form .divRadio
@@ -186,6 +204,7 @@ section .form_container .user .form-group form .input-group p
 	font-size: 12px;
 	margin: 0;
 }
+section .form_container .imgBtn,
 section .form_container .user .form-group form input[type="button"]
 {
 	/* max-width: 100px; */
@@ -197,6 +216,10 @@ section .form_container .user .form-group form input[type="button"]
 	font-weight: 500;
 	letter-spacing: 1px;
 	transition: 0.5s;
+}
+section .form_container .imgBtn
+{
+	margin: 0 5px 0 0;
 }
 section .form_container .user .form-group form .input-group .divRadio .pRadio
 {
@@ -282,6 +305,10 @@ section .form_container .user #regiFst
 	display: flex;
 }
 section .form_container .user #regiSnd
+{
+	display: none;
+}
+section .form_container .hideItem
 {
 	display: none;
 }
@@ -377,15 +404,19 @@ section .form_container .user #regiSnd
 				
 				<!-- 회원가입(추가 입력) -->
 				<div class="form-group" id="regiSnd">
-					<!-- <form action="memberOptionUpdate.do" method="post" id="optionUpdateForm"> -->
-					<form>
+					<form action="memberOptionUpdate.do" method="post" id="optionUpdateForm" enctype="multipart/form-data">
 						<h2>추가 입력</h2>
-						<input type="hidden" id="optionEmail" name="memberEmail" value="">
-						<div class="input-group">
-						
+						<input type="hidden" id="optionEmail" name="memberEmail">
+						<div class="input-group imgArea">
+							<div class="profileImgArea">
+								<img class="profileImg" src="${contextPath }/resources/views/images/MEMBER_SAMPLE_IMG.png">
+							</div>
+							<button type="button" class="imgBtn inputImg">사진 등록</button>
+							<button type="button" class="imgBtn deleteImg" disabled="disabled">삭제</button>
+							<input type="file" id="profileImgInput" class="hideItem" name="uploadFile">
 						</div>
 						<div class="input-group">
-							<input type="text" id="optionName" name="memberName" required width="50%">
+							<input type="text" id="optionName" name="memberName" required>
 							<span>이름</span>
 							<div class="chkVali chkValiComp" id="optionNameChk"></div>
 						</div>
@@ -417,13 +448,8 @@ section .form_container .user #regiSnd
 		</div>
 	</section>
 	
-	<!-- 로그인 -->
+	<!-- 공용 스크립트 -->
 	<script>
-		function toggleForm() {
-			var container = document.querySelector('.form_container');
-			container.classList.toggle('active');
-		}
-
 		// 이전 페이지 
 		let pageHistory = "${pageHistory }";
 		// 입력 값
@@ -431,6 +457,10 @@ section .form_container .user #regiSnd
 		let memberPwd = "";
 		let memberNickName = "";
 		let memberPhone = "";
+		let memberName = "";
+		let memberGender = "";
+		let memberMemo = "";
+		let memberPhoto = "";
 		// 로그인 유효성 검사
 		let loginEmailPass = false;
 		// 회원가입 유효성 검사
@@ -444,7 +474,36 @@ section .form_container .user #regiSnd
 		let regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
 		let regexPhone = /^\d{10,11}$/;
 		let regexPhoneNum = /^\d{3}-\d{3,4}-\d{4}$/;
+		
+		function toggleForm() {
+			var container = document.querySelector('.form_container');
+			container.classList.toggle('active');
+		}
 
+		$(function() {
+			// 이전페이지 출력
+			console.log("이전페이지 : ${url}");
+		});
+		
+		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
+		function goBackPage() {
+			let url = "${url}";
+			if(url.indexOf("login") != -1){
+				location.href="home.do";
+			} else if(url.indexOf("register") != -1) {
+				location.href="home.do";
+			} else if(url.indexOf("logout") != -1) {
+				location.href="home.do";
+			} else {
+				location.href="${url}";
+			}
+		}
+		
+	</script>
+
+	<!-- 로그인 -->
+	<script>
+		// 로그인 이메일 검사
 		function loginEmail() {
 			if (!regexEmail.test($("#loginEmail").val())) {
 				loginEmailPass = false;
@@ -454,7 +513,12 @@ section .form_container .user #regiSnd
 				$("#loginEmailChk").css("display","none");
 			}
 		}
+
+		$("#loginEmail").on("keyup change", function () {
+			loginEmail();
+		});
 		
+		// 로그인 비밀번호 검사
 		function loginPwd() {
 			if(!$("#loginPwd")[0].checkValidity()){
 				$("#loginPwdChk").css("display","block");
@@ -462,15 +526,12 @@ section .form_container .user #regiSnd
 				$("#loginPwdChk").css("display","none");
 			}
 		}
-
-		$("#loginEmail").on("keyup change", function () {
-			loginEmail();
-		});
 		
 		$("#loginPwd").on("keyup change", function () {
 			loginPwd();
 		});
 
+		// 로그인
 		function login() {
 			/* 조건 display 확인 */
  			loginEmail();
@@ -554,6 +615,10 @@ section .form_container .user #regiSnd
 				});
 			}
 		}
+		// 키이벤트 이메일 확인
+		$("#regiEmail").on("keyup change", function () {
+			regiEmail();
+		});
 
 		// 비밀번호 정규화로 확인, 비밀번호 확인과 동일 여부 확인
 		function regiPwd() {
@@ -580,6 +645,10 @@ section .form_container .user #regiSnd
 				}
 			}
 		}
+		// 키이벤트 비밀번호 확인
+		$("#regiPwd").on("keyup change", function () {
+			regiPwd();
+		});
 
 		// 비밀번호와 동일 여부 확인
 		function regiPwdDupl() {
@@ -598,6 +667,10 @@ section .form_container .user #regiSnd
 				}
 			}
 		}
+		// 키이벤트 비밀번호 재확인
+		$("#regiPwdDupl").on("keyup change", function () {
+			regiPwdDupl();
+		});
 
 		// 닉네임 정규화 확인, 닉네임 중복확인(ajax)
 		function regiNickName() {
@@ -634,6 +707,10 @@ section .form_container .user #regiSnd
 				});
 			}
 		}
+		// 키이벤트 닉네임 확인
+		$("#regiNickName").on("keyup change", function () {
+			regiNickName();
+		});
 
 		// 전화번호 정규화 확인, 전화번호 중복 확인(ajax)
 		function regiPhone() {
@@ -673,32 +750,12 @@ section .form_container .user #regiSnd
 				});
 			}
 		}
-		
-		// 이메일 확인
-		$("#regiEmail").on("keyup change", function () {
-			regiEmail();
-		});
-
-		// 비밀번호 확인
-		$("#regiPwd").on("keyup change", function () {
-			regiPwd();
-		});
-
-		// 비밀번호 재확인
-		$("#regiPwdDupl").on("keyup change", function () {
-			regiPwdDupl();
-		});
-
-		// 닉네임 확인
-		$("#regiNickName").on("keyup change", function () {
-			regiNickName();
-		});
-
-		// 휴대전화 확인
+		// 키이벤트 휴대전화 확인
 		$("#regiPhone").on("keyup change", function () {
 			regiPhone();
 		});
-		
+
+		// 회원가입(필수)
 		function register(){
 			// 추가 입력 테스트 용
 			registerOption();
@@ -759,76 +816,38 @@ section .form_container .user #regiSnd
 		}
 	</script>
 
-	<!-- 회원가입 옵션 입력 -->
+	<!-- 회원가입(추가입력) -->
 	<script>
+		//TODO 파일첨부
+		
+		//TODO 파일 삭제
+	
 		// 회원가입(추가입력) 페이지로 변경
 		function registerOption() {
 			$("#regiFst").css("display","none");
 			$("#regiSnd").css("display","flex");
 		};
 		
-		// 입력 안하고 뒤로가기
+		// 추가입력 취소
 		function optionSkip(){
 			goBackPage();
 		}
-		
-		function registerComp() {
-			// 회원 이메일 정보 히든 태그 저장
-			$("#optionEmail").val(memberEmail);
 
+		// 회원가입(추가입력)
+		function registerComp() {
+			$("#optionEmail").val(memberEmail);
 			//TODO 옵션 등록 가야함
-			console.log("이멜 : " + $("#optionEmail").val());
+			console.log("이멜 : " + memberEmail);
 			console.log("이름 : " + $("#optionName").val());
 			console.log("성별 : " + $("input[name=memberGender]").val());
 			console.log("메모 : " + $("#optionMemo").val());
 			console.log("태그 : " + $("#tagName").val());
 
-			$.ajax({
-				url:"memberInsert.do",
-				data:{memberEmail:memberEmail
-					, memberPwd:memberPwd
-					, memberNickName:memberNickName
-					, memberPhone:memberPhone},
-				success:function(data){
-					console.log("회원가입 결과 : " + data);
-					if(data == "success"){
-						registerOption();
-					} else {
-						$("#registerError").css("display","block");
-					}
-				},
-				error:function(request, status, errorData){
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-					// alert("error code: " + request.status + "\n"
-					//		+"message: " + request.responseText
-					//		+"error: " + errorData);
-				}
-			});
+			//TODO 추가입력 완료
 			//$("#optionUpdateForm").submit();
 		}
 	</script>
-	
-	<script>
-		$(function() {
-			// 이전페이지 출력
-			console.log("이전페이지 : ${url}");
-		});
-		
-		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
-		function goBackPage() {
-			let url = "${url}";
-			if(url.indexOf("login") != -1){
-				location.href="home.do";
-			} else if(url.indexOf("register") != -1) {
-				location.href="home.do";
-			} else if(url.indexOf("logout") != -1) {
-				location.href="home.do";
-			} else {
-				location.href="${url}";
-			}
-		}
-	</script>
-	
+
 	<jsp:include page="../common/footer.jsp" />
 
 <!-- Optional JavaScript -->

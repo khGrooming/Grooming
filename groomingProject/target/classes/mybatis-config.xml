@@ -7,6 +7,8 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.Alert" alias="Alert"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 	</typeAliases>
