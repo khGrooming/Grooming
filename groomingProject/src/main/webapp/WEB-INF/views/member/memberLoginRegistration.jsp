@@ -279,7 +279,7 @@ section .form_container.active .singinBx .imgBx
 }
 section .form_container .user #regiFst
 {
-	display: block;
+	display: flex;
 }
 section .form_container .user #regiSnd
 {
@@ -291,10 +291,13 @@ section .form_container .user #regiSnd
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 	
 	<section>
-	<c:if test="${loginCheck == 'register'}">
-		<div class="signup form_container active"><!-- active toggle -->
-	</c:if> 
-		<div class="signup form_container"><!-- active toggle -->
+		<c:if test="${loginCheck == 'register'}">
+			<div class="signup form_container active"><!-- active toggle -->
+		</c:if>
+
+		<div class="signup form_container">
+
+			<!-- 로그인 -->
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
@@ -327,6 +330,8 @@ section .form_container .user #regiSnd
 					</form>
 				</div>
 			</div>
+			
+			<!-- 회원가입(필수) -->
  			<div class="user singupBx">
 				<div class="form-group" id="regiFst">
 					<form>
@@ -369,11 +374,13 @@ section .form_container .user #regiSnd
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
+				
+				<!-- 회원가입(추가 입력) -->
 				<div class="form-group" id="regiSnd">
+					<!-- <form action="memberOptionUpdate.do" method="post" id="optionUpdateForm"> -->
 					<form>
 						<h2>추가 입력</h2>
-						<div class="input-group">
-						</div>
+						<input type="hidden" id="optionEmail" name="memberEmail" value="">
 						<div class="input-group">
 							<input type="text" id="optionName" name="memberName" required width="50%">
 							<span>이름</span>
@@ -382,8 +389,8 @@ section .form_container .user #regiSnd
 						<div class="input-group">
 							<div class="divRadio">
 								<p class="pRadio">성별
-								<input type="radio" class="inputRadio" name="memberGender" value="M">남성
-								<input type="radio" class="inputRadio" name="memberGender" value="F">여성
+								<input type="radio" id="genderM" class="inputRadio" name="memberGender" value="M"><label for="genderM">남성</label>
+								<input type="radio" id="genderF" class="inputRadio" name="memberGender" value="F"><label for="genderF">여성</label>
 								</p>
 							</div>
 						</div>
@@ -395,7 +402,7 @@ section .form_container .user #regiSnd
 							<p class="tagP">관심있는 태그를 남겨주세요.</p>
 						</div>
 						<div>
-							<input type="text" name="tagString" value="" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagString" style="display: none;">
+							<input type="text" name="tagName" value="" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
 						</div>
 						<div class="registerError" id="">잠시후 다시 시도해 주세요.</div>
 						<input type="button" onclick="registerComp()" value="완료">
@@ -690,7 +697,9 @@ section .form_container .user #regiSnd
 		});
 		
 		function register(){
+			// 추가 입력 테스트 용
 			registerOption();
+			
 			/* $("#registerError").css("display","none");
 			// 입력여부 확인
 			regiEmail();
@@ -717,10 +726,10 @@ section .form_container .user #regiSnd
 			} else {
 				console.log("회원가입(필수)");
 
-				let memberEmail = $("#regiEmail").val();
-				let memberPwd = $("#regiPwd").val();
-				let memberNickName = $("#regiNickName").val();
-				let memberPhone = $("#regiPhone").val();
+				memberEmail = $("#regiEmail").val();
+				memberPwd = $("#regiPwd").val();
+				memberNickName = $("#regiNickName").val();
+				memberPhone = $("#regiPhone").val();
 				
 				$.ajax({
 					url:"memberInsert.do",
@@ -732,7 +741,7 @@ section .form_container .user #regiSnd
 						console.log("회원가입 결과 : " + data);
 						if(data == "success"){
 							registerOption();
-						} else{
+						} else {
 							$("#registerError").css("display","block");
 						}
 					},
@@ -749,26 +758,60 @@ section .form_container .user #regiSnd
 
 	<!-- 회원가입 옵션 입력 -->
 	<script>
+		// 회원가입(추가입력) 페이지로 변경
 		function registerOption() {
 			$("#regiFst").css("display","none");
-			$("#regiSnd").css("display","block");
+			$("#regiSnd").css("display","flex");
 		};
 		
+		// 입력 안하고 뒤로가기
 		function optionSkip(){
 			goBackPage();
 		}
 		
 		function registerComp() {
-			console.log("태그들 : " + $("#tagString").val());
+			// 회원 이메일 정보 히든 태그 저장
+			$("#optionEmail").val(memberEmail);
+
+			//TODO 옵션 등록 가야함
+			console.log("이멜 : " + $("#optionEmail").val());
+			console.log("이름 : " + $("#optionName").val());
+			console.log("성별 : " + $("input[name=memberGender]").val());
+			console.log("메모 : " + $("#optionMemo").val());
+			console.log("태그 : " + $("#tagName").val());
+
+			$.ajax({
+				url:"memberInsert.do",
+				data:{memberEmail:memberEmail
+					, memberPwd:memberPwd
+					, memberNickName:memberNickName
+					, memberPhone:memberPhone},
+				success:function(data){
+					console.log("회원가입 결과 : " + data);
+					if(data == "success"){
+						registerOption();
+					} else {
+						$("#registerError").css("display","block");
+					}
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+					// alert("error code: " + request.status + "\n"
+					//		+"message: " + request.responseText
+					//		+"error: " + errorData);
+				}
+			});
+			//$("#optionUpdateForm").submit();
 		}
 	</script>
 	
 	<script>
 		$(function() {
+			// 이전페이지 출력
 			console.log("이전페이지 : ${url}");
 		});
 		
-		// 돌아갈 페이지가 로그인or회원가입이라면 홈으로
+		// 돌아갈 페이지가 로그인 or 회원가입이라면 홈으로
 		function goBackPage() {
 			let url = "${url}";
 			if(url.indexOf("login") != -1){

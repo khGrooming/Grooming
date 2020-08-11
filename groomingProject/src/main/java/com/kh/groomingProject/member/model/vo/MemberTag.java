@@ -1,5 +1,7 @@
 package com.kh.groomingProject.member.model.vo;
 
-public class MemberTag {
+import java.io.Serializable;
+
+public class MemberTag implements Serializable{
 
 }
