@@ -66,7 +66,14 @@
             <label class="Mlabel" for="Mtab3">탈퇴 하기</label>
      
             <div class="MsectionDiv"  id="Mcontent1">
-                <p></p>
+            	<label>이메일</label>  <input type="text">             
+				<label>비밀번호</label>
+				<label>변경할 비밀번호</label>
+				<label>변경할 비밀번호 확인</label>
+				<label>닉네임</label> <input type="text"> 
+				<label>이름</label> <input type="text"> 
+				<label>성별</label> <input type="text"> 
+				<label>휴대전화 번호</label> <input type="text"> 
              </div>
         
             <div class="MsectionDiv"  id="Mcontent2">
@@ -159,3 +166,7 @@
 
 </body>
 </html>
+
+
+
+
