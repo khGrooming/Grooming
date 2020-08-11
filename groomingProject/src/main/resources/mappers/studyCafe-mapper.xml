@@ -25,13 +25,15 @@
 		<result property="cRoomHeadCount" column="C_ROOM_HEAD_COUNT"/>
 	</resultMap>
 	
-	<resultMap type="CafeReservation" id="reservationResultSet">
+	<resultMap type="Reservation" id="reservationResultSet">
 		<id property="cReserNo" column="C_RESER_NO"/>
 
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="cPriceNo" column="C_PRICE_NO"/>
 		<result property="cReserHeadCount" column="C_RESER_HEAD_COUNT"/>
 		<result property="cReserDate" column="C_RESER_DATE"/>
+		<result property="cReserSTime" column="C_RESER_S_TIME"/>
+		<result property="cReserETime" column="C_RESER_E_TIME"/>
 	</resultMap>
 	
 	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">

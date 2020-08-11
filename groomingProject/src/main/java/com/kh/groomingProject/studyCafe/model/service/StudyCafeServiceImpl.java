@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.studyCafe.model.dao.StudyCafeDao;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
-import com.kh.groomingProject.studyCafe.model.vo.CafeReservation;
+import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Service
@@ -41,7 +41,7 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<CafeReservation> selectCheckRoom(String cPriceNo) {
+	public ArrayList<Reservation> selectCheckRoom(String cPriceNo) {
 
 		return studyCafeDao.selectCheckRoom(cPriceNo);
 	}

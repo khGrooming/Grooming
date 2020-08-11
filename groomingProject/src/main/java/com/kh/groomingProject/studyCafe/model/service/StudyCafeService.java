@@ -3,7 +3,7 @@ package com.kh.groomingProject.studyCafe.model.service;
 import java.util.ArrayList;
 
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
-import com.kh.groomingProject.studyCafe.model.vo.CafeReservation;
+import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 public interface StudyCafeService {
@@ -16,6 +16,6 @@ public interface StudyCafeService {
 
 	ArrayList<CafeInfo> selectCafeInfo(String cafeNo);
 
-	ArrayList<CafeReservation> selectCheckRoom(String cPriceNo);
+	ArrayList<Reservation> selectCheckRoom(String cPriceNo);
 
 }

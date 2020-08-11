@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
-import com.kh.groomingProject.studyCafe.model.vo.CafeReservation;
+import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Controller
@@ -89,8 +90,6 @@ public class StudtyCafeController {
 	public ModelAndView cafeDetail(ModelAndView mv, String cafeNo) {
 		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
 		
-		System.out.println(info);
-		
 		mv.addObject("info", info);
 		mv.setViewName("studyCafe/cafeDetailView");
 		
@@ -100,12 +99,18 @@ public class StudtyCafeController {
 	// 상세보기 들어가서 룸 선택시 일정과 시간을 불러와 예약 가능한지 확인(ajax)
 	@RequestMapping(value="checkRoom.do", method=RequestMethod.POST)
 	public void checkRoomList(String cPriceNo, HttpServletResponse response) throws JsonIOException, IOException {
-		ArrayList<CafeReservation> list = studyCafeService.selectCheckRoom(cPriceNo);
+		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(cPriceNo);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
 		gson.toJson(list, response.getWriter());
+	}
+	
+	@RequestMapping(value="searchTime.do", method=RequestMethod.POST)
+	public void searchTime(String cPriceNo, int sDate, HttpServletResponse response ) {
+		
+		
 	}
 	
 	
