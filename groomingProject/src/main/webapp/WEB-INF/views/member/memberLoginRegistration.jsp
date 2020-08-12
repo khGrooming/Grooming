@@ -419,7 +419,7 @@ section .form_container .hideItem
 							</div>
 							<button type="button" id="inputImg" class="imgBtn inputImg">사진 등록</button>
 							<button type="button" id="deleteImg" class="imgBtn deleteImg" disabled="disabled">삭제</button>
-							<input type="file" id="profileImgInput" class="hideItem" name="uploadFile" onchange="loadImg(this)">
+							<input type="file" id="profileImgInput" class="hideItem" name="profileFile" onchange="loadImg(this)">
 						</div>
 						<div class="input-group">
 							<input type="text" id="optionName" name="memberName" required>

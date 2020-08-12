@@ -57,7 +57,11 @@
 		WHERE MEMBER_PHONE=#{memberPhone}
 	</select>
 
-
+	<update id="updateMemberOption" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_NAME=#{memberName}, MEMBER_GENDER=#{memberGender}, MEMBER_MEMO=#{memberMemo}, MEMBER_PHOTO=#{memberPhoto}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
 
 
 </mapper>
