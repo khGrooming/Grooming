@@ -33,7 +33,6 @@ section
 	margin-top: 50px;
 	position: relative;
 	min-height: 91vh;
-	/* background: #fee648; */
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -133,6 +132,7 @@ section .form_container .user .form-group form .input-group .chkValiComp
 }
 section .form_container .user .form-group form .input-group .profileImgArea
 {
+	position: relative;
 	border-radius: 100px;
     width: 100%;
     display: flex;
@@ -140,8 +140,9 @@ section .form_container .user .form-group form .input-group .profileImgArea
 }
 section .form_container .user .form-group form .input-group .profileImgArea .profileImg
 {
-	width: 200px;
-	height: 200px;
+	border: 1px solid #ccc;
+	width: 150px;
+	height: 150px;
 	border-radius: 50%;
 }
 section .form_container .user .form-group form input,
@@ -207,7 +208,7 @@ section .form_container .user .form-group form .input-group p
 section .form_container .imgBtn,
 section .form_container .user .form-group form input[type="button"]
 {
-	/* max-width: 100px; */
+	outline: none;
 	border: 1px solid lightgrey;
 	background: #677eff;
 	color: #fff;
@@ -219,8 +220,13 @@ section .form_container .user .form-group form input[type="button"]
 }
 section .form_container .imgBtn
 {
-	margin: 0 5px 0 0;
+	margin-top: 5px;
 }
+section .form_container .imgBtn.deleteImg
+{
+	margin-left: 5px;
+	background: grey;
+} 
 section .form_container .user .form-group form .input-group .divRadio .pRadio
 {
 	font-size: 18px;
@@ -409,11 +415,11 @@ section .form_container .hideItem
 						<input type="hidden" id="optionEmail" name="memberEmail">
 						<div class="input-group imgArea">
 							<div class="profileImgArea">
-								<img class="profileImg" src="${contextPath }/resources/views/images/MEMBER_SAMPLE_IMG.png">
+								<img id="profileImg" class="profileImg" src="${contextPath }/resources/views/images/MEMBER_SAMPLE_IMG.png">
 							</div>
-							<button type="button" class="imgBtn inputImg">사진 등록</button>
-							<button type="button" class="imgBtn deleteImg" disabled="disabled">삭제</button>
-							<input type="file" id="profileImgInput" class="hideItem" name="uploadFile">
+							<button type="button" id="inputImg" class="imgBtn inputImg">사진 등록</button>
+							<button type="button" id="deleteImg" class="imgBtn deleteImg" disabled="disabled">삭제</button>
+							<input type="file" id="profileImgInput" class="hideItem" name="uploadFile" onchange="loadImg(this)">
 						</div>
 						<div class="input-group">
 							<input type="text" id="optionName" name="memberName" required>
@@ -818,9 +824,43 @@ section .form_container .hideItem
 
 	<!-- 회원가입(추가입력) -->
 	<script>
-		//TODO 파일첨부
+		// 파일첨부 열기
+		$("#inputImg").on("click", function() {
+			$("#profileImgInput").click();
+		});
+		// 파일 섬네일, 파일이 이미지가 아니면 삭제
+		function loadImg(value){
+			console.log(!value.files[0].type.match("image.*"));
+
+			if(!value.files[0].type.match("image.*")) {
+				console.log("업로드는 이미지만 가능합니다.");
+				deleteImg();
+				return;
+			}
+
+			console.log("업로드 파일명 : " + value.files[0].name);
+
+			if(value.files && value.files[0]){
+				var reader = new FileReader();
+				
+				reader.onload = function(e){
+					$("#profileImg").prop("src",e.target.result);
+				}
+				reader.readAsDataURL(value.files[0]);
+				$("#deleteImg").prop("disabled","");
+				$("#deleteImg").css("background","#677eff");
+			}
+		}
 		
+		function deleteImg() {
+			$("#profileImg").prop("src","${contextPath }/resources/views/images/MEMBER_SAMPLE_IMG.png");
+			$("#deleteImg").css("disabled","disabled");
+			$("#deleteImg").css("background","grey");
+		}
 		//TODO 파일 삭제
+		$("#deleteImg").on("click", function(){
+			deleteImg();
+		});
 	
 		// 회원가입(추가입력) 페이지로 변경
 		function registerOption() {
