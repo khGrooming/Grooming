@@ -16,22 +16,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- -------------- style 부분------------- -->
 <style type="text/css">
-/* font start */
-	@font-face { 
-		font-family: 'TmoneyRoundWindExtraBold'; 
-		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') 
-			format('woff');
-		font-weight: normal; 
-		font-style: normal; 
-	}
-	
-	* {
-		font-family:"TmoneyRoundWindExtraBold";
-	}
-/* font end */
-</style>
-
-<style type="text/css">
 	.Img_ra{
 		width:40px;
 		height:40px;

@@ -26,5 +26,33 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.noticeInsert(b);
 	}
 
+	@Override
+	public Board selectOne(String boardNo) {
+		
+		return cDao.selectOne(boardNo);
+	}
+
+	@Override
+	public int noticeUpdate(Board b) {
+		
+		return cDao.noticeUpdate(b);
+	}
+
+	@Override
+	public int noticeDelete(String boardNo) {
+		
+		return cDao.noticeDelete(boardNo);
+	}
+
+	@Override
+	public int addViewCount(String boardNo) {
+		
+		return cDao.addViewCount(boardNo);
+	}
+
+
+
+
+
 	
 }

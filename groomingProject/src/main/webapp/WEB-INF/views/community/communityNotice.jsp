@@ -71,7 +71,17 @@
 						<c:forEach var="n" items="${list }">
 							<tr>
 								<td>${n.boardNo }</td>
-								<td>${n.boardTitle }</td>
+								<td>															
+									<c:if test="${!empty loginUser }">
+										<c:url var="noticeDetail" value="noticeDetail.do">
+											<c:param name="boardNo" value="${n.boardNo }" />
+										</c:url>
+										<a href="${noticeDetail }">${n.boardTitle }</a>
+									</c:if>
+									<c:if test="${empty loginUser }">
+										${n.boardTitle }
+									</c:if>
+								</td>
 								<td>${n.memberNickName }</td>
 								<td>${n.boardVcount }</td>
 								<td>${n.boardCreateDate }</td>

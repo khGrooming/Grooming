@@ -35,7 +35,7 @@
 		</div>
 		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
 		<div class="col-sm-10">
-			<!-- ------------------ 공지사항 작성 ------------------- -->
+			<!-- ------------------ 공지사항 수정 ------------------- -->
 			<div class="col-sm-1"></div>
 			<div class="col-sm-8">
 				<div align="center">
@@ -55,11 +55,12 @@
 					<br><br>
 				</div>
 				
-				<form id="fm-notice" action="noticeInsert.do" method="post" enctype="Multipart/form-data">
+				<form id="fm-notice" action="noticeUpdate.do" method="post" enctype="Multipart/form-data">
 					<table align="center">
+						<input type="hidden" name="boardNo" value="${board.boardNo }">
 						<tr>
 							<td>제목</td>
-							<td><input type="text" class="form-control" size="50" name="boardTitle" placeholder="제목을 입력해 주세요"></td>
+							<td><input type="text" class="form-control" size="50" name="boardTitle" value="${board.boardTitle }" placeholder="제목을 입력해 주세요"></td>
 						</tr>
 						<tr>
 							<td>작성자</td>
@@ -67,20 +68,20 @@
 						</tr>
 						<tr>
 							<td>작성내용</td>
-							<td><textarea name="boardContent" id="boardContent" rows="10" cols="80"></textarea></td>
+							<td><textarea name="boardContent" id="boardContent" rows="10" cols="80">${board.boardContent }</textarea></td>
 							<td><input type="hidden" name="memberNo" value="${loginUser.memberNo }"></td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
-								<input type="submit" value="등록 하기">&nbsp;
-								<input type="reset" value="등록 취소">
+								<input type="submit" value="수정 하기">&nbsp;
+								<input type="reset" value="리셋 하기">
 							</td>
 						</tr>
 					</table>	
 				</form>
 			</div>
 			<div class="col-sm-3"></div>
-			<!-- ------------------ 공지사항 작성 ------------------- -->
+			<!-- ------------------ 공지사항 수정 ------------------- -->
 		</div>
 		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
 		<jsp:include page="../common/footer.jsp" />

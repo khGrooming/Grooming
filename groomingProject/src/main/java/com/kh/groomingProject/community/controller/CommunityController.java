@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,6 +56,51 @@ public class CommunityController {
 			throw new CommunityException("공지사항 등록 실패!");
 		}
 	}
+	
+	@RequestMapping("noticeDetail.do")
+	public String noticeDetail(Model model, String boardNo, Board b) {
+		b = cService.selectOne(boardNo);
+		int result = cService.addViewCount(boardNo);
+		
+		if(b != null) {
+			model.addAttribute("board", b);
+		}else {
+			throw new CommunityException("공지사항 상세 보기 실패!");
+		}
+		return "community/noticeDetailView";
+	}
+	
+	@RequestMapping("noticeUpdateView.do")
+	public String noticeUpdateView(String boardNo, Model model) {
+		model.addAttribute("board", cService.selectOne(boardNo));
+		
+		return "community/noticeUpdateView";
+	}
+	
+	@RequestMapping(value="noticeUpdate.do", method=RequestMethod.POST)
+	public String noticeUpdate(HttpServletRequest request, Board b) {
+		int result = cService.noticeUpdate(b);
+		
+		if(result > 0) {
+			return "redirect:communityNotice.do";
+		}else {
+			throw new CommunityException("공지사항 수정 실패!");
+		}
+	}
+	
+	@RequestMapping("noticeDelete.do")
+	public String noticeDelete(String boardNo, HttpServletRequest request) {
+		Board b = cService.selectOne(boardNo);
+		
+		int result = cService.noticeDelete(boardNo);
+		
+		if(result > 0) {
+			return "redirect:communityNotice.do";
+		}else {
+			throw new CommunityException("공지사항 삭제 실패!");
+		}
+	}
+	
 	
 	//////////////////////////////////공지 사항
 	

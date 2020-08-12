@@ -26,6 +26,30 @@ public class CommunityDao {
 
 		return sqlSessionTemplate.insert("communityMapper.noticeInsert", b);
 	}
+
+	public Board selectOne(String boardNo) {
+		
+		return sqlSessionTemplate.selectOne("communityMapper.selectOne", boardNo);
+	}
+
+	public int noticeUpdate(Board b) {
+		
+		return sqlSessionTemplate.update("communityMapper.noticeUpdate", b);
+	}
+
+	public int noticeDelete(String boardNo) {
+		
+		return sqlSessionTemplate.delete("communityMapper.noticeDelete", boardNo);
+	}
+
+	public int addViewCount(String boardNo) {
+		
+		return sqlSessionTemplate.update("communityMapper.addViewCount", boardNo);
+	}
+
+
+
+
 	
 	
 }

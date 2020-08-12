@@ -22,14 +22,15 @@
  		SELECT * FROM BOARD
 		JOIN MEMBER USING (MEMBER_NO)
         WHERE B_CATEGORY_NO = 'BC00001'
+        ORDER BY BOARD_NO DESC
 	</select>
 	
 	<insert id="noticeInsert" parameterType="Board">
 		INSERT INTO BOARD (BOARD_NO, MEMBER_NO, B_CATEGORY_NO, BOARD_TITLE, BOARD_CONTENT,
 							BOARD_CREATE_DATE, BOARD_MODIFY_DATE, BOARD_VCOUNT, BOARD_GCOUNT, BOARD_STATUS,
 							BOARD_REPLY_STATUS, BOARD_SELEC_STATUS)
-		VALUES(SEQ_BOARD_NO.NEXTVAL
-			,'M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0)
+		VALUES('B' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
+			, #{memberNo}
 			, 'BC00001'
 			, #{boardTitle}
 			, #{boardContent}
@@ -42,11 +43,30 @@
 			, 'N'
 		)
 	</insert>
+	
+	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
+		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO=#{boardNo}
+	</select>
 
+	<update id="noticeUpdate" parameterType="Board">
+		UPDATE BOARD
+		SET BOARD_TITLE=#{boardTitle}
+			, BOARD_CONTENT=#{boardContent}
+			, BOARD_MODIFY_DATE=SYSDATE
+		WHERE BOARD_NO=#{boardNo}
+	</update>
 
+	<delete id="noticeDelete" parameterType="string">
+		DELETE FROM BOARD
+		WHERE BOARD_NO=#{boardNo}
+	</delete>
 
-
-
-
-
+	<update id="addViewCount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_VCOUNT = BOARD_VCOUNT + 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
 </mapper>
