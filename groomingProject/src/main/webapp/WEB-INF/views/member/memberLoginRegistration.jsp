@@ -767,7 +767,7 @@ section .form_container .hideItem
 			// 추가 입력 테스트 용
 			registerOption();
 			
-			/* $("#registerError").css("display","none");
+			$("#registerError").css("display","none");
 			// 입력여부 확인
 			regiEmail();
 			regiPwd();
@@ -819,7 +819,7 @@ section .form_container .hideItem
 						//		+"error: " + errorData);
 					}
 				});
-			} */
+			}
 		}
 	</script>
 
