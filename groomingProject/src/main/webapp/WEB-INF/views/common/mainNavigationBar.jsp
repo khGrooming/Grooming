@@ -6,9 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width" initial-scale="1">
+
 <title>main navigation bar</title>
+
+<!-- 폰트 (https://fonts.google.com/specimen/Jua?subset=korean&sidebar.open=true&selection.family=Jua) -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
+<!-- style -->
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
+
 <style type="text/css">
 /* font start */
 * {
