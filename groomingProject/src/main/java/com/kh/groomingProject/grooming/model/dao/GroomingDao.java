@@ -21,7 +21,7 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList");
 	}
 
-	public ArrayList<Grooming> selectMentorList() {
+	public ArrayList<Grooming> selectMentorList( ) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMentorList");
 	}
@@ -44,6 +44,25 @@ public class GroomingDao {
 	public ArrayList<Grooming> gSearchContent(String keyword) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.gSearchContent",keyword);
+	}
+
+	public int addReadCount(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateCount",groomingNo);
+	}
+
+//	public Grooming selectGrooming(String groomingNo) {
+//		// TODO Auto-generated method stub
+//		return sqlSessionTemplate.selectOne("groomingMapper.selectOne",groomingNo);
+//	}
+	public ArrayList<Grooming> selectGrooming(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectDetailList",groomingNo);
+	}
+
+	public ArrayList<Grooming> selectMoneyList() {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMoneyList");
 	}
 	
 	

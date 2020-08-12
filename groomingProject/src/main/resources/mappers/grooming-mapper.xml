@@ -22,6 +22,10 @@
 		<result property="status" column="GROOMING_STATUS"/>
 		<result property="count" column="GROOMING_COUNT"/>
 		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		
 	</resultMap>
  
  
@@ -36,7 +40,7 @@
  		SELECT * 
  		FROM GROOMING 
  		WHERE GROOMING_TYPE ='멘토'
- 		ORDER BY GROOMING_TYPE DESC
+ 		ORDER BY GROOMING_NO DESC
  		
  	</select>
  
@@ -45,7 +49,7 @@
 		FROM GROOMING G
 		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
 		WHERE GROOMING_STATUS ='Y'
-		AND GROOMING_TITLE LIKE '%' || #{groomingTitle} || '%'
+		AND GROOMING_TITLE LIKE '%' || #{title} || '%'
 		ORDER BY GROOMING_NO DESC	
 		
 			
@@ -56,7 +60,7 @@
 		FROM GROOMING G
 		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
 		WHERE GROOMING_STATUS ='Y'
-		AND MEMBER_NICKNAME =#{memberNickName}
+		AND MEMBER_NICKNAME LIKE '%' || #{writer} || '%'
 		ORDER BY GROOMING_NO DESC	
 		
 			
@@ -67,16 +71,35 @@
 		FROM GROOMING G
 		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
 		WHERE GROOMING_STATUS ='Y'
-		AND GROOMING_CONTENT LIKE '%' || #{groomingContent} || '%'
+		AND GROOMING_CONTENT LIKE '%' || #{content} || '%'
 		ORDER BY GROOMING_NO DESC	
 	
  	</select>
  
+ 	<update id="updateCount" parameterType="string">
+ 		UPDATE GROOMING
+ 		SET GROOMING_COUNT = GROOMING_COUNT +1
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	</update>
  
+ 	<select id="selectDetailList" parameterType="string" resultMap="groomingResultSet">
+		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON M.MEMBER_NO = G.MEMBER_NO
+		JOIN SPEC S ON S.MEMBER_NO = G.MEMBER_NO
+		WHERE GROOMING_NO=#{groomingNo}
+		AND GROOMING_STATUS ='Y'
+		
+	</select>
  
- 
- 
- 
+ 	<select id="selectMoneyList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING 
+ 		WHERE DEPOSIT_MONEY > 0
+ 		ORDER BY GROOMING_NO DESC
+ 	
+ 	</select>
  
  
  

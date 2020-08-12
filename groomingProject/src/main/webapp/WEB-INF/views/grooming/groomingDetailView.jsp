@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
 <html lang="ko">
@@ -134,9 +135,11 @@
 	
                               	<tr>
                               		<td style="padding-right:20px;"><div class="pimg" ></div></td>
-                              		<td>호스트 : <span>박재범</span><br>
-                              			<span style="color:lightblue;">#AOMG#좋아#자바</span><br>
-                              		경력 : <span>서울대학교 전기전자공학부 석사 / 정보처리기사 , Cad, 한국사 1급</span>
+                              		<td>호스트 : <span>${grooming.memberNickName }</span><br>
+                              		<%--  <c:forEach var="t" items="${taglist }"> 
+                              		</c:forEach> --%>
+                              			<span style="color:lightblue;">${grooming.tagName }</span><br>
+                              		경력 : <span>${grooming.specName }</span>
                               		</td>
                               		
                               	</tr>
@@ -147,46 +150,27 @@
                         <br>
                     <table>	
                     		<tr>
-                    			<td><span>그룹 타입 : </span><span>호스트</span>
+                    			<td><span>그룹 타입 : </span><span>${grooming.groomingType }</span>
                     		</tr>
                     		<tr>
-    	                          	<td><span>스터디 기간 :</span><span>2020/08/25~2020/10/24</span></td>
+    	                          	<td><span>스터디 기간 :</span><span>${grooming.studySd } ~ ${grooming.studyEd }</span></td>
                               	</tr>
                               	
                               	<tr>
                               		
-                              		<td><span>예치금 : </span>1000원</td>
+                              		<td><span>예치금 : </span>${grooming.money }</td>
                               	</tr>
                               	<tr>
-                              		<td><span>모집인원  : 2/6명</span></td>
+                              		<td><span>모집인원  : 2/${grooming.groomingP }명</span></td>
                               	</tr>	
                               
                               <tr>
-                              	<td><br><h4>모두의 합격을 도와드리겠습니다~ 같이 스터디 해요!</h4></td>
+                              	<td><br><h4>${grooming.groomingIntroduce }</h4></td>
                               </tr>
                               
                               <tr>
                               <td>
-                              	<p>
-                              	비밀모임 소개<br>
-								2차 모임 운영기간 : ~6/15<br>
-								이 모임은 특별히 인증해야하는 미션이 없습니다.<br>
-								자신이 원하는 정보와 자료를 마음껏 얻어가실 수 있는 모임입니다.<br>
-								<hr>
-								단기합격자가의 공부기록들을 보면서 단기합격과 고득점에 효율적인 공부 방법을 배워가실 수 있습니다.<br>
-								이런분께 도움이 됩니다.<br>
-								* 합격하고 싶으나, 공부방법에 대해 확신이 안 서시는 분<br>
-								*10개월 단기 합격 공부방법의 모든 것을 알고싶으신 분<br>
-								*필기합격에 관한 공부 자료, 정보를 얻고 싶으신 분<br>
-								*면접에 관한 공부 자료, 정보를 얻고 싶으신 분<br>
-								<hr>
-								비밀모임 커리큘럼<br>
-								*과목별 공부법 공개<br>
-								*시기별 공부법 공개<br>
-								*학습 스케줄러 공개<br>
-								*필기합격수기 공개<br>
-								*면접 후기 공개<br>
-                              	</p>
+                              	<p>${grooming.groomingContent }</p>
                               	</td>
                               </tr>
                     </table>
@@ -326,6 +310,8 @@
 	      handle: ".modal-header"
 	  });
 	</script>
+	
+	
     <footer><jsp:include page="../common/footer.jsp" /> </footer>
 
 

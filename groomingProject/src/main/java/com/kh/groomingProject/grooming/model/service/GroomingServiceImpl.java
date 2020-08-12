@@ -44,7 +44,29 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.gSearchContent(keyword);
 	}
 
-	
+	@Override
+	public int addReadCount(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.addReadCount(groomingNo);
+	}
+
+	@Override
+	public ArrayList<Grooming> selectGrooming(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGrooming(groomingNo) ;
+	}
+
+	@Override
+	public ArrayList<Grooming> selectMoneyList() {
+		// TODO Auto-generated method stub
+		return gDao.selectMoneyList();
+	}
+
+//	@Override
+//	public Grooming selectGrooming(String groomingNo) {
+//		// TODO Auto-generated method stub
+//		return gDao.selectGrooming(groomingNo) ;
+//	}
 
 	
 }

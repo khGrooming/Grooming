@@ -55,10 +55,15 @@
             display:table-cell;
             vertical-align:middle;
             line-height: 50px;
+            position:absolute;
+        }
+        
+        #day{
+        	position:relative;
         }
 
         .top-img{
-            background-image:url("${contextPath }/resources/views/images/book.png");
+          
             background-size: cover;
             height: 200px;
             border: 2px solid skyblue;
@@ -111,8 +116,8 @@
             <div class="row">
                 <div class="cols-3 search_filter" style="width: 20%; text-align: right;"  >
 
-                    <input type="checkbox" name="search_filter" id="mentor">&nbsp;<label for="mentor">멘토 타입</label>
-                    <input type="checkbox" name="search_filter" id="money">&nbsp;<label for="money">예치금 존재</label>
+                    <input type="radio" name="search_filter" id="mentor">&nbsp;<label for="mentor">멘토 타입</label>
+                    <input type="radio" name="search_filter" id="money">&nbsp;<label for="money">예치금 존재</label>
                 </div>
                 <div class="cols-9"  style="width: 80%; text-align: right; padding-right:5pxx">
                     <select id="search">
@@ -121,7 +126,7 @@
                         <option value="content" id="content">내용</option>
                     </select>
                     <input type="text" size="30px" id="keyword">
-                    <button type="submit" id="find">검색</button>
+                    <button id="find">검색</button>
                     <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
                 </div>
             </div>
@@ -131,32 +136,36 @@
 
           
 		<div class="container">
-			<div class="row">
+			<div id="row"class="row">
 		    <c:forEach var="g" items="${glist }">
 		    	<!--날짜 차이 계산을 위한 fmt  -->
-				<%-- <c:set var="today" value="<%=new Date() %>"/>
-				<fmt:formatDate value="${today}" pattern="yyyy-MM-dd" var="today"/> --%>
- 	    		<fmt:parseDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
-<%-- 	    	<fmt:formatDate value="${g.groomingNd }" var="nowDate" pattern="yyyy-MM-dd"/>
- --%>  			<fmt:parseNumber value="${nowDate.time / (1000*60*60*24)}" integerOnly="true" var="nowDate"/> 
-	       		<fmt:parseDate value="${g.groomingSd }" var="startDate" pattern="yyyy-MM-dd"/>
-				<fmt:parseNumber value="${startDate.time / (1000*60*60*24)}" integerOnly="true" var="startDate"/>
-<%-- 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/>
- --%>	 		<fmt:parseDate value="${g.groomingEd }" var="endDate" pattern="yyyy-MM-dd"/> 
-				<fmt:parseNumber value="${endDate.time / (1000*60*60*24)}" integerOnly="true" var="endDate"/> 
+		
+	    	<fmt:formatDate value="${g.groomingNd }" var="nowDate1" pattern="yyyyMMdd" />
+ 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate1" pattern="yyyyMMdd" />
+ 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
+ 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />
+ 	 		
+	    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/>
+	    	
+  		<%-- 	<fmt:parseDate value="${nowDate.time}" integerOnly="true" var="nowDate"/> 
+  			<fmt:parseNumber value="${nowDate.time}" integerOnly="true" var="nowDate"/> 
+	       	
+			<fmt:parseNumber value="${endDate.time}" integerOnly="true" var="endDate"/>   --%>
  				
                 <div class="card-deck col-lg-3">
                 
-		                    <div class="card" onclick="location.href='groomingDetail.do'">
+		                    <div class="card">
 		                        <!-- 그룹 이미지 -->
 		                        <div class="top-img">
+		                            <img src="${contextPath }/resources/views/images/${g.groomingImg}">
 		                            <!-- 그룹 d-day 태그 -->
-		                            <div id="circle" style="position: absolute; ">
-		                            <c:if test="${endDate gt startDate }">
-		                                D-<span style="position: relative; ">${endDate-startDate }</span>
+		                            
+		                            <div id="circle" >
+		                            <c:if test="${g.groomingEd gt g.groomingNd }">
+		                                <span id="d-day">D-</span><span id="day" >${difDate }</span>
 		                            </c:if>
-		                            <c:if test="${endDate lt startDate }">
-		                               <span style="position: relative; ">마감</span>
+		                            <c:if test="${g.groomingEd lt g.groomingNd }">
+		                               <span id="day">마감</span>
 		                            </c:if>
 		                          
 		                            </div>
@@ -164,11 +173,16 @@
 		                        <!-- 그룹 본문 -->
 		                        <div class="card-body">
 		                            <!-- 그룹 제목 -->
-		                            <h5 class="card-title"><a href="groupPage.do">${g.groomingTitle }</a></h5>
+		                            <c:url var="gdetail" value="groomingDetail.do">
+										<c:param name="groomingNo" value="${g.groomingNo }"/>
+										<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
+										<!-- 현재 보던 페이지 정보도 넘기자 -->
+									</c:url>
+		                            <h5 class="card-title"><a href="${gdetail }">${g.groomingTitle }</a></h5>
 		                            <!-- 그룹 한줄 소개  -->
 		                            <p class="card-text">${g.groomingIntroduce }</p>
 		                            <p class="card-text">
-		                                <small class="text-muted">참여인원</small>&nbsp;<small><span>1</span>/<span>${g.groomingP }</span></small>
+		                                <small class="text-muted">참여인원</small>&nbsp;<small><span>${g.currentP }/</span><span>${g.groomingP }</span></small>
 		                                <small><span class="groupType">${g.groomingType}</span></small>
 		                            </p>
 		
@@ -182,7 +196,7 @@
                    
                     <!-- 스터디 그룹 리스트 끝 -->
                 </div>
-    <table style="margin-bottom:100px;">
+  <%--   <table style="margin-bottom:100px;">
            <!-- 페이징 처리 부분 -->
 		<tr align="center" height="20">	
 			<td colspan="6">
@@ -223,35 +237,228 @@
 				</c:if>	
 			</td>
 		</tr>
-		</table>
+		</table> --%>
         </div>
     </section>
+    <!-- 필터 -->
 	<script>
 		$(function(){
+			
 			$("#mentor").click(function(){
-				console.log("멘토필터 클릭됨");
-			if($("#mentor").is(":checked")){
-		/* 	
-				location.href="groomingMe.do"; */
+			
+				$.ajax({
+					url : 'groomingMe.do',
+					type : 'post',
+					dataType:"json",
+					success : function (data){
+						console.log(data[0]);
+							<fmt:formatDate value="${g.groomingNd }" var="nowDate1" pattern="yyyyMMdd" />
+				 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate1" pattern="yyyyMMdd" />
+				 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
+				 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />
+				 	 		
+					    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/>
+						
+						var $fmtDn;
+						var $fmtDe;
+						var $fmtPn;
+						var $fmtPe;
+						var $fmtN;
+						
+					    $divRow = $("#row");
+					    $divRow.html("");
+						var $divCardDeck ;
+						var $divCard;
+						var $divTopImg ;
+						var $divCircle ;
+						var $dDay;
+						var $day ;
+						var $cardBody;
+						var $cardTitle;
+						var $gDetail;
+						var $cardText1;
+						var $cardText2 ;
+						var $small1 ;
+						var $small2;
+						var $span1;
+						var $span2 ;
+						var $small3 ;
+						var $span3;
+						var $img;
+								 console.log(data[0].groomingImg);
+						if(data.length >0){ 
+							for(var i in data){
+								console.log(data[i].groomingNo);
+								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
+								 $divCard = $("<div class='card'>");
+								 $divTopImg = $("<div class='top-img'>");
+								 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								 $divCircle = $("<div id='circle'>");
+								 if(data[i].groomingEd > data[i].groomingNd){
+									 $dDay = $("<span id='d-day'>").text("D-");
+									 $day = $("<span id='day'>").text(difDate);
+									 $divCircle.append($dDay);
+									 $divCircle.append($day);
+								 }else{
+									 $day = $("<span id='day'>").text("마감");
+									 $divCircle.append($day);
+
+								}
+								
+								 $cardBody = $("<div class='card-body'>");
+								 $cardTitle = $("<h5 class='card-title'>");
+								 $gDetail =$("<a href='groomingDetail.do?groomingNo="+data[i].groomingNo+"'>").text(data[i].groomingTitle);
+								 $cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
+								 $cardText2 = $("<p class='card-text'>");
+								 $small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
+								 $small2 = $("<small>");
+								 $span1 = $("<span>").text(data[i].currentP+"/");
+								 $span2 = $("<span>").text(data[i].groomingP);
+								 $small3 = $("<small class='text-muted'>");
+								 $span3 = $("<span class='groupType'>").text(data[i].groomingType);
+								
+								 
+								 $divTopImg.append($divCircle);
+								 $divTopImg.append($img);
+								 
+								 $cardTitle.append($gDetail);
+								 
+								 $small2.append($span1);
+								 $small2.append($span2);
+								 $small3.append($span3);
+								 $cardText2.append($small2);
+								 $cardText2.append($small3);
+								 
+								 $cardBody.append($cardTitle);
+								 $cardBody.append($cardText1);
+								 $cardBody.append($cardText2);
+								 
+								 $divCard.append($divTopImg);
+								 $divCard.append($cardBody);
+								 
+								 $divCardDeck.append($divCard);
+								 $divRow.append($divCardDeck);
+							}
+						}
+
+					
+					
+					
+					
+					
+					
+			
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
 				
-			}else {
-				console.log("멘토필터 해지됨");
-			}
+				})  
+				
 			})
+			
+			
+			
+			
 			
 			$("#money").click(function(){
-				
-			if($("#money").is(":checked")){
-				console.log("예치금필터 클릭됨");
-			}else {
-				console.log("예치금필터 해지됨");
-			}
-			})
 			
+				$.ajax({
+					url : 'groomingMo.do',
+					type : 'post',
+					dataType:"json",
+					success : function (data){
+						console.log(data[0]);
+					    $divRow = $("#row");
+					    $divRow.html("");
+						var $divCardDeck ;
+						var $divCard;
+						var $divTopImg ;
+						var $divCircle ;
+						var $dDay;
+						var $day ;
+						var $cardBody;
+						var $cardTitle;
+						var $gDetail;
+						var $cardText1;
+						var $cardText2 ;
+						var $small1 ;
+						var $small2;
+						var $span1;
+						var $span2 ;
+						var $small3 ;
+						var $span3;
+						var $img;
+								 console.log(data[0].groomingImg);
+						if(data.length >0){ 
+							for(var i in data){
+								console.log(data[i].groomingNo);
+								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
+								 $divCard = $("<div class='card'>");
+								 $divTopImg = $("<div class='top-img'>");
+								 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								 $divCircle = $("<div id='circle'>");
+								 if(data[i].groomingEd > data[i].groomingNd){
+									 $dDay = $("<span id='d-day'>").text("D-");
+									 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									 $divCircle.append($dDay);
+									 $divCircle.append($day);
+								 }else{
+									 $day = $("<span id='day'>").text("마감");
+									 $divCircle.append($day);
+
+								}
+								
+								 $cardBody = $("<div class='card-body'>");
+								 $cardTitle = $("<h5 class='card-title'>");
+								 $gDetail =$("<a href='groomingDetail.do?groomingNo="+data[i].groomingNo+"'>").text(data[i].groomingTitle);
+								 $cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
+								 $cardText2 = $("<p class='card-text'>");
+								 $small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
+								 $small2 = $("<small>");
+								 $span1 = $("<span>").text(data[i].currentP+"/");
+								 $span2 = $("<span>").text(data[i].groomingP);
+								 $small3 = $("<small class='text-muted'>");
+								 $span3 = $("<span class='groupType'>").text(data[i].groomingType);
+								
+								 
+								 $divTopImg.append($divCircle);
+								 $divTopImg.append($img);
+								 
+								 $cardTitle.append($gDetail);
+								 
+								 $small2.append($span1);
+								 $small2.append($span2);
+								 $small3.append($span3);
+								 $cardText2.append($small2);
+								 $cardText2.append($small3);
+								 
+								 $cardBody.append($cardTitle);
+								 $cardBody.append($cardText1);
+								 $cardBody.append($cardText2);
+								 
+								 $divCard.append($divTopImg);
+								 $divCard.append($cardBody);
+								 
+								 $divCardDeck.append($divCard);
+								 $divRow.append($divCardDeck);
+							}
+						}
+
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+				
+				})  
+				
+			})
 		})
 	
 	</script>
-	<script>
+	 <script>
 	$(function(){
 		$('#find').on("click" , function(){
 			
@@ -268,10 +475,92 @@
 				url : 'search.do',
 				type : 'post',
 				data :{search:search, keyword:keyword},
+				dataType:"json",
 				success : function (data){
-				
 					$('#keyword').val("");
+				    $divRow = $("#row");
+				    $divRow.html("");
+					var $divCardDeck ;
+					var $divCard;
+					var $divTopImg ;
+					var $divCircle ;
+					var $dDay;
+					var $day ;
+					var $cardBody;
+					var $cardTitle;
+					var $gDetail;
+					var $cardText1;
+					var $cardText2 ;
+					var $small1 ;
+					var $small2;
+					var $span1;
+					var $span2 ;
+					var $small3 ;
+					var $span3;
+					var $img;
+							 console.log(data[0].groomingImg);
+					if(data.length >0){ 
+						for(var i in data){
+							console.log(data[i].groomingNo);
+							 $divCardDeck = $("<div class='card-deck col-lg-3'>");
+							 $divCard = $("<div class='card'>");
+							 $divTopImg = $("<div class='top-img'>");
+							 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+							 $divCircle = $("<div id='circle'>");
+							 if(data[i].groomingEd > data[i].groomingNd){
+								 $dDay = $("<span id='d-day'>").text("D-");
+								 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+								 $divCircle.append($dDay);
+								 $divCircle.append($day);
+							 }else{
+								 $day = $("<span id='day'>").text("마감");
+								 $divCircle.append($day);
+
+							}
+							
+							 $cardBody = $("<div class='card-body'>");
+							 $cardTitle = $("<h5 class='card-title'>");
+							 $gDetail =$("<a href='groomingDetail.do?groomingNo="+data[i].groomingNo+"'>").text(data[i].groomingTitle);
+							 $cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
+							 $cardText2 = $("<p class='card-text'>");
+							 $small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
+							 $small2 = $("<small>");
+							 $span1 = $("<span>").text(data[i].currentP+"/");
+							 $span2 = $("<span>").text(data[i].groomingP);
+							 $small3 = $("<small class='text-muted'>");
+							 $span3 = $("<span class='groupType'>").text(data[i].groomingType);
+							
+							 
+							 $divTopImg.append($divCircle);
+							 $divTopImg.append($img);
+							 
+							 $cardTitle.append($gDetail);
+							 
+							 $small2.append($span1);
+							 $small2.append($span2);
+							 $small3.append($span3);
+							 $cardText2.append($small2);
+							 $cardText2.append($small3);
+							 
+							 $cardBody.append($cardTitle);
+							 $cardBody.append($cardText1);
+							 $cardBody.append($cardText2);
+							 
+							 $divCard.append($divTopImg);
+							 $divCard.append($cardBody);
+							 
+							 $divCardDeck.append($divCard);
+							 $divRow.append($divCardDeck);
+						}
+					}
+
 				
+				
+				
+				
+				
+				
+		
 				},error:function(request, status, errorData){
 					alert("error code: " + request.status + "\n"
 						+"message: " + request.responseText
@@ -283,7 +572,7 @@
 		})
 	
 	})
-	</script>
+	</script> 
 
 
     <footer>

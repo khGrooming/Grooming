@@ -1,13 +1,19 @@
 package com.kh.groomingProject.grooming.controller;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -22,10 +28,11 @@ public class GroomingController {
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv) {
 		
-		ArrayList<Grooming> list = gService.selectList();
+		ArrayList<Grooming> glist = gService.selectList();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		
-		if(list != null) {
-			mv.addObject("list",list);
+		if(glist != null) {
+			mv.addObject("glist",glist);
 			mv.setViewName("grooming/groomingMain");
 		}else {
 			throw new GroomingException("게시글 전체 조회 실패!");
@@ -34,23 +41,34 @@ public class GroomingController {
 	}
 // 그루밍 메인 (멘토 타입 필터) 출력
 	@RequestMapping("groomingMe.do")
-	public ModelAndView groomingMentorList(ModelAndView mv) {
+	public void groomingMentorList(HttpServletResponse response) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+
+		ArrayList<Grooming> glist = gService.selectMentorList();
 		
-		ArrayList<Grooming> list = gService.selectMentorList();
-		
-		if(list != null) {
-			mv.addObject("list",list);
-			mv.setViewName("grooming/groomingMain");
-		}else {
-			throw new GroomingException("게시글 전체 조회 실패!");
-		}
-		return mv;
+	
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(glist,response.getWriter());
 	}
-// 그루밍 메인 (멘토 타입 필터) 출력	
+	
+// 그루밍 메인 (예치금 타입 필터) 출력	
+	@RequestMapping("groomingMo.do")
+	public void groomingMoneyList(HttpServletResponse response)throws JsonIOException, IOException {
+	
+		response.setContentType("application/json; charset=utf-8");
+
+		ArrayList<Grooming> glist = gService.selectMoneyList();
+		
+	
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(glist,response.getWriter());
+	}
 
 	// 검색
 	@RequestMapping("search.do")	
-	public ModelAndView gSearchWriter(ModelAndView mv, String search, String keyword) {
+	public void gSearchWriter(HttpServletResponse response, String search, String keyword) throws JsonIOException, IOException {
+		response.setContentType("application/json; charset=utf-8");
+
 		ArrayList<Grooming> glist =  new ArrayList();
 		if(search.equals("title")) {
 			ArrayList<Grooming> list = gService.gSearchTitle(keyword);
@@ -65,27 +83,10 @@ public class GroomingController {
 		System.out.println("검색 유형 : " +search);
 		System.out.println("검색 내용 : " +keyword);
 		System.out.println("검색된 리스트 : " +glist);
-	
-		if(glist != null) {
-		mv.addObject("glist",glist);
-		mv.setViewName("grooming/groomingMain");
-		}else {
-			throw new GroomingException("작성자 검색 실패!");
-		}
-		
-		
-		return mv;
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(glist,response.getWriter());
 	}
 	
-	
-	/*
-	 * @RequestMapping("searchContent.do") public Model gSearchContent() { return
-	 * "grooming/groupPage"; }
-	 * 
-	 * 
-	 * @RequestMapping("searchTitle.do") public Model gSearchTitle() { return
-	 * "grooming/groupPage"; }
-	 */
 	
 	
 	@RequestMapping("groupPage.do")	
@@ -110,9 +111,50 @@ public class GroomingController {
 	public String groomingInsertForm() {
 		return "grooming/groomingInsertForm";
 	}
+	
 	@RequestMapping("groomingDetail.do")	
-	public String groomingDetailView() {
-		return "grooming/groomingDetailView";
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo) {
+		
+		int result = gService.addReadCount(groomingNo);
+		System.out.println(result);
+		if(result >0) {
+			ArrayList<Grooming> grooming = gService.selectGrooming(groomingNo);
+//			Grooming grooming = gService.selectGrooming(groomingNo);
+			if(grooming != null) {
+				mv.addObject("grooming",grooming)
+				.setViewName("grooming/groomingDetailView");
+			}else {
+				throw new GroomingException("그루밍 게시글 조회 실패!");
+			}
+			
+			
+			
+			
+		}else {
+			throw new GroomingException("그루밍 게시글 조회수 증가 실패!");
+		}
+		
+		
+		
+		return mv;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
+
+
+
+
+
+
