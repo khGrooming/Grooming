@@ -46,7 +46,7 @@
 		WHERE MEMBER_NO = #{mNo}
 		AND MEMBER_STATUS='N'
 	</select>
-	
+
 	<select id="testLoginUser2" parameterType="string" resultMap="ProfileMemberSet">
 		SELECT M.MEMBER_NO,M.MEMBER_PHOTO,M.MEMBER_NICKNAME,ML.LVL_RANK,M.MEMBER_EXP,ML.LVL_MAX_EXP,M.MEMBER_EMAIL,M.MEMBER_MEMO,P1.NOWPOINT
 		FROM (

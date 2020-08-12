@@ -22,6 +22,7 @@ import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 import com.kh.groomingProject.tag.model.service.TagService;
+import com.kh.groomingProject.tag.model.vo.Tag;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -141,10 +142,9 @@ public class MemberController {
 		}
 		
 		System.out.println("member update data : " + m);
-		
-		//TODO 쿼리문 데이터 없는 경우 넣어야 함?!
+
 		int result = mService.updateMemberOption(m);
-		
+
 		System.out.println("member update result : " + result);
 
 		if(result > 0) {
@@ -154,13 +154,24 @@ public class MemberController {
 		}
 
 		// 태그 테이블 업데이트
-		String[] tag = tagName.split(",");
-
-		for(int i = 0 ; i < tag.length; i++) {
-			String tagTemp = tag[i];
-			result = tagService.mergeTags(tagTemp);
+		if(!tagName.isEmpty()) {
+			String[] tag = tagName.split(",");
+	
+			for(int i = 0 ; i < tag.length; i++) {
+				String tagTemp = tag[i];
+				result = tagService.mergeTags(tagTemp);
+			}
+		}
+		
+		if(result > 0) {
+			System.out.println("TAG 업데이트 : 성공");
+		} else {
+			System.out.println("TAG 업데이트 : 실패");
 		}
 
+		// 멤버태그 테이블 추가
+//		ArrayList<Tag> tag = tagService.selectList()
+		
 //		ArrayList<MemberTag> memberTag = new ArrayList<MemberTag>();
 //		System.out.println("memberTag : " + memberTag);
 		
