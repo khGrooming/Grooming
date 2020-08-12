@@ -29,18 +29,18 @@
 }
 section
 {
-	margin-top: 50px;
+	margin-top: 76px;
 	position: relative;
-	min-height: 91vh;
+	min-height: 86.3vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 20px;
+	padding: 0;
 }
 section .form_container
 {
-	margin-top: auto;
-	margin-bottom: auto;
+	/* margin-top: auto;
+	margin-bottom: auto; */
 	position: relative;
 	width: 1000px;
 	height: 700px;
@@ -407,7 +407,7 @@ section .form_container .hideItem
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
 					</form>
 				</div>
-				
+
 				<!-- 회원가입(추가 입력) -->
 				<div class="form-group" id="regiSnd">
 					<form action="memberOptionUpdate.do" method="post" id="optionUpdateForm" enctype="multipart/form-data">
@@ -500,11 +500,12 @@ section .form_container .hideItem
 				location.href="home.do";
 			} else if(url.indexOf("logout") != -1) {
 				location.href="home.do";
+			} else if(url == "") {
+				location.href="home.do";
 			} else {
 				location.href="${url}";
 			}
 		}
-		
 	</script>
 
 	<!-- 로그인 -->
