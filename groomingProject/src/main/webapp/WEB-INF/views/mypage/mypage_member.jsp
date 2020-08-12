@@ -138,7 +138,8 @@
               					data:{inputPwd:inputPwd},
               					success : function(data) {
               						if(data == "Y"){
-        	      						alert("비밀번호 맞음");
+        	      						$("#pwdRevised").attr("readonly",false);
+        	      						$("#pwdRevisedCheck").attr("readonly",false);
               						}else{
               							alert("비밀번호가 틀립니다")
               						}

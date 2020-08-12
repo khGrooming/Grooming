@@ -104,7 +104,7 @@ section
 	.submenu{
       display:inline-block;
       /* background:yellowgreen; */
-      font-size:20px;
+      font-size:15px;
       text-align:center;
       line-height:50px;
       width:10%;
@@ -117,10 +117,7 @@ section
    	color:black;
    	text-decoration:none
    }
-   .submenu:hover{
-   	font-size:23px;
-     
-   }
+   
    .a{
    	display: none;
    }
@@ -134,8 +131,8 @@ section
 	<section >
 	<c:if test="${!empty profileInfo }">
 	<!-- 프로필 정보 div -->
-	<div class="signup form_container active" style="width: 100%;margin-top: 7%; margin-bottom: 10%"><!-- active toggle --> 
-		<div class="subContent_my" style="width:25%; margin-right: 10px;text-align: center;">
+	<div class="signup form_container active" style="width: 100%;margin-top: 10%; margin-bottom: 10%"><!-- active toggle --> 
+		<div class="subContent_my" style="width:25%; margin-right: 1%;text-align: center;">
 		
 		
 			<!-- 프로필 사진 div -->
@@ -339,7 +336,7 @@ section
 				
 				</script>
 	
-				<div class="subContent_my" style="width: 70%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
+				<div class="subContent_my" style="width: 60%; height: 50px; border:1px solid rgba(229, 229, 229, 1);   border-radius:10px; ">
 					<div class="menubar">
 					  	<div class="nav">
 					  		<div class="submenu s" id="menu1"><a>개인정보</a></div>
