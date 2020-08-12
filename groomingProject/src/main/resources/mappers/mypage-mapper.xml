@@ -72,5 +72,17 @@
 		SET MEMBER_PHOTO=#{memberPhoto}
 		WHERE MEMBER_NO =#{memberNo}
 	</update>
+	
+	<update id="updateMemo" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_MEMO=#{memberMemo}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+	
+	<update id="memberDelete" parameterType="Member">
+		UPDATE MEMBER 
+		SET MEMBER_STATUS='Y'
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
 
 </mapper>
