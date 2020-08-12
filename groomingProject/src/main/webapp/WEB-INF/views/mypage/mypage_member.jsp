@@ -25,7 +25,7 @@
 
         .Mlabel {
             display: inline-block;
-            margin: 0 0 -3px;
+            margin: 0 0 -4px;
             padding: 15px 25px;
             font-weight: 600;
             text-align: center;
@@ -53,6 +53,11 @@
         #Mtab2:checked ~ #Mcontent2,
         #Mtab3:checked ~ #Mcontent3 {
             display: block;}
+       #member_tb th label{
+       		    width: 200px;
+       	 padding-right: 10%;
+       }
+       
 </style>
 </head>
 <body>
@@ -64,17 +69,65 @@
         
             <input class="MinputBar" id="Mtab3" type="radio" name="Mtabs">
             <label class="Mlabel" for="Mtab3">탈퇴 하기</label>
-     
-            <div class="MsectionDiv"  id="Mcontent1">
-            	<label>이메일</label>  <input type="text">             
-				<label>비밀번호</label>
-				<label>변경할 비밀번호</label>
-				<label>변경할 비밀번호 확인</label>
-				<label>닉네임</label> <input type="text"> 
-				<label>이름</label> <input type="text"> 
-				<label>성별</label> <input type="text"> 
-				<label>휴대전화 번호</label> <input type="text"> 
+     		
+            <div class="MsectionDiv"  id="Mcontent1" style="text-align: center;">
+            	<div style="display: inline-block; text-align: right;">
+            	<table id="member_tb">
+            		<tr>
+            			<th style="margin-right: 10px;"><label>이메일</label></th>
+            			<td><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"></td>
+            		</tr>
+            		<tr>
+            			<th><label>비밀번호</label></th>
+            			<td><input type="password" id="memberPwd" name="memberPwd"></td>
+            		</tr>
+            		<tr>
+            			<th><label>변경할 비밀번호</label> </th>
+            			<td><input type="password" id="pwdRevised" name="pwdRevised"></td>
+            		</tr>
+            		<tr>
+            			<th><label>변경할 비밀번호 확인</label></th>
+            			<td><input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck"></td>
+            		</tr>
+            		<tr>
+            			<th><label>닉네임</label> </th>
+            			<td><input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }"></td>
+            		</tr>
+            		<tr>
+            			<th><label>이름</label></th>
+            			<td><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"></td>
+            		</tr>
+            		<tr>
+            			<th><label>성별</label></th>
+            			<td><input type="radio" id="genderM" name="gender" value="M"><label for="genderM">남</label>
+								   <input type="radio" id="genderF" name="gender" value="F"><label for="genderF">여</label></td>
+								   
+            		</tr>
+            		<tr>
+            			<th><label>휴대전화 번호</label> </th>
+            			<td><input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }"></td>
+            		</tr>
+            		
+            	
+            	
+            	
+            	</table>
+            	
+				<button>수정하기</button> 
+				</div>
              </div>
+             <script>
+             	$(function(){
+             		var genderChecked = "${loginUser.memberGender}"
+             		
+             		if(genderChecked == "M"){
+             			$("#genderM").attr("checked",true);
+             		}else{
+             			$("#genderF").attr("checked",true);             			
+             		}
+             	})
+             </script>
+             
         
             <div class="MsectionDiv"  id="Mcontent2">
                 <span style="font-size: 25px;font-weight: 800;margin-right: 5%;">바난나킥</span><span>Lv.25</span>
@@ -139,7 +192,7 @@
 			            error : function(data) {  
 			               alert("code:"+request.status+"\n"+"error:"+error);
 			            }
-      				}) 
+      				})
       				
       			/* 	if(inputPwd == "qwe"){
       					$("#pwdCheckDiv").css("display","none");

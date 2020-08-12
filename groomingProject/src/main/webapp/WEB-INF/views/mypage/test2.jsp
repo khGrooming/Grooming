@@ -25,7 +25,7 @@
 
         .Slabel {
             display: inline-block;
-            margin: 0 0 -3px;
+            margin: 0 0 -4px;
             padding: 15px 25px;
             font-weight: 600;
             text-align: center;
