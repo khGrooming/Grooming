@@ -3,6 +3,9 @@ package com.kh.groomingProject.grooming.model.service;
 import java.util.ArrayList;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.member.model.vo.Member;
 
 public interface GroomingService {
 
@@ -16,9 +19,14 @@ public interface GroomingService {
 
 	int addReadCount(String groomingNo);
 
-	ArrayList<Grooming> selectGrooming(String groomingNo);
-//	Grooming selectGrooming(String groomingNo);
+	Grooming selectGrooming(String groomingNo);
 
 	ArrayList<Grooming> selectMoneyList();
+
+	ArrayList<GroomingTag> selectTag(String groomingNo);
+
+	ArrayList<GroomingSpec> selectSpec(String groomingNo);
+
+	Member selectMember(String groomingNo);
 
 }

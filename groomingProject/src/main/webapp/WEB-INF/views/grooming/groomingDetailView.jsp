@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
@@ -30,7 +30,7 @@
             max-width: 100%;
             max-height: 100%;
         }
-        /*∆˘∆Æ º≥¡§ */
+        /*Ìè∞Ìä∏ ÏÑ§Ï†ï */
         @font-face {
             font-family: 'TmoneyRoundWindExtraBold';
             src:
@@ -61,7 +61,7 @@
 			margin-bottom:20px;
 		}
 		.pimg{
-			   background-image:url("${contextPath }/resources/views/images/π⁄¿Áπ¸.jpg");
+			
 			  background-size:cover;
 			  width:100px; height:90px;
 		}
@@ -77,6 +77,9 @@
 
 
     <section>
+    
+    
+	    	 
         <div class="container" style="margin-top:150px;">
         	
             <div class="row">
@@ -84,30 +87,39 @@
                     <table>
                     	<tr><td><br></td></tr>
                         <tr><td><h3>${grooming.groomingTitle }</h3></td></tr>
-                        <tr><td><span>∏¡˝ ±‚∞£ : </span><span>${grooming.groomingSd } ~ ${grooming.groomingEd }</span></td></tr>
+                        <tr><td><span>Î™®Ïßë Í∏∞Í∞Ñ : </span><span>${grooming.groomingSd } ~ ${grooming.groomingEd }</span></td></tr>
                         
                     </table>
                 </div>
                 <div  style="text-align:right; margin-left:70px;">
                     <table >
 						<tr>
-							<td align="right"><div class="status" ><h4>∏¡˝¡ﬂ</h4></div></td>
+							<td align="right">
+								<div class="status" >
+								<c:if test="${grooming.groomingEd gt grooming.groomingNd }">
+								<c:out value="<h4>Î™®ÏßëÏ§ë</h4>"  escapeXml="false" />
+								</c:if>
+								<c:if test="${grooming.groomingEd lt grooming.groomingNd }">
+								<c:out value="<h4>ÎßàÍ∞ê</h4>"  escapeXml="false" />
+								</c:if>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<td>
 								&nbsp;<i class="far fa-bookmark"></i>&nbsp;&nbsp;
-								<a href="#" onclick="">Ω≈∞Ì</a>
+								<a href="#" onclick="">Ïã†Í≥†</a>
 							</td>
 						
                     	</tr>
                     	<tr>
                     		<td>
-                    			<span>¿€º∫¿œ :${grooming.groomingCd }</span>
+                    			<span>ÏûëÏÑ±Ïùº :${grooming.groomingCd }</span>
                     		</td> 
                     	</tr>
                     	<tr>
 							<td>
-                    			<span>¡∂»∏ºˆ : </span><span>${grooming.count}</span>
+                    			<span>Ï°∞ÌöåÏàò : </span><span>${grooming.count}</span>
                     		</td>
                     	</tr>	
                     </table>
@@ -121,25 +133,33 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><div class="groomingImage"></div></td>
+                                    <td>
+                                    	<div class="groomingImage">
+                                    		<img src="${contextPath }/resources/views/images/${grooming.groomingImg}">
+                                    	</div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
             
                 </div>
 
-                <!-- ƒ¡≈◊¿Ã≥  øÏ√¯ -->
+                <!-- Ïª®ÌÖåÏù¥ÎÑà Ïö∞Ï∏° -->
                  <div class="col-7">
                    <table>
                             <tbody>
 	
                               	<tr>
-                              		<td style="padding-right:20px;"><div class="pimg" ></div></td>
-                              		<td>»£Ω∫∆Æ : <span>${grooming.memberNickName }</span><br>
-                              		<%--  <c:forEach var="t" items="${taglist }"> 
-                              		</c:forEach> --%>
-                              			<span style="color:lightblue;">${grooming.tagName }</span><br>
-                              		∞Ê∑¬ : <span>${grooming.specName }</span>
+                              		<td style="padding-right:20px;">
+                              			<div class="pimg">
+                              				<img src="${contextPath }/resources/views/images/${member.memberPhoto}">
+                              			</div>
+                              		</td>
+                              		<td>Ìò∏Ïä§Ìä∏ : <span>${member.memberNickName }</span><br>
+                              		 <c:forEach var="t" items="${tag }"> 
+                              			<span style="color:lightblue;">${t.tagName }</span>
+                              		</c:forEach> 
+                              		Í≤ΩÎ†• : <c:forEach var="s" items="${spec }"> <span>${s.specName }</span></c:forEach>
                               		</td>
                               		
                               	</tr>
@@ -150,18 +170,18 @@
                         <br>
                     <table>	
                     		<tr>
-                    			<td><span>±◊∑Ï ≈∏¿‘ : </span><span>${grooming.groomingType }</span>
+                    			<td><span>Í∑∏Î£π ÌÉÄÏûÖ : </span><span>${grooming.groomingType }</span>
                     		</tr>
                     		<tr>
-    	                          	<td><span>Ω∫≈Õµ ±‚∞£ :</span><span>${grooming.studySd } ~ ${grooming.studyEd }</span></td>
+    	                          	<td><span>Ïä§ÌÑ∞Îîî Í∏∞Í∞Ñ :</span><span>${grooming.studySd } ~ ${grooming.studyEd }</span></td>
                               	</tr>
                               	
                               	<tr>
                               		
-                              		<td><span>øπƒ°±› : </span>${grooming.money }</td>
+                              		<td><span>ÏòàÏπòÍ∏à : </span>${grooming.money }</td>
                               	</tr>
                               	<tr>
-                              		<td><span>∏¡˝¿Œø¯  : 2/${grooming.groomingP }∏Ì</span></td>
+                              		<td><span>Î™®ÏßëÏù∏Ïõê  : ${grooming.currentP }/${grooming.groomingP }Î™Ö</span></td>
                               	</tr>	
                               
                               <tr>
@@ -181,57 +201,57 @@
       	<div class="container">
 			<div class="row">
 				<div class="col-3">
-				<!-- Ω≈√ª¿⁄ ∏ÆΩ∫∆Æ  »Æ¿Œ πˆ∆∞ -->
-				<button data-toggle="modal" data-target="#applicant">Ω≈√ª¿⁄ ∏ÆΩ∫∆Æ</button>
-				<!-- ∏ÆΩ∫∆Æ ∏¥ﬁ -->
+				<!-- Ïã†Ï≤≠Ïûê Î¶¨Ïä§Ìä∏  ÌôïÏù∏ Î≤ÑÌäº -->
+				<button data-toggle="modal" data-target="#applicant">Ïã†Ï≤≠Ïûê Î¶¨Ïä§Ìä∏</button>
+				<!-- Î¶¨Ïä§Ìä∏ Î™®Îã¨ -->
 				  <div class="modal fade" id="applicant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			        aria-hidden="true">
 			        
 			        <div class="modal-dialog" >
 			        
 			            <div class="modal-content" style="width: 800px; height: auto;">
-			            	<!-- ∏¥ﬁ ¡¶∏Ò -->
+			            	<!-- Î™®Îã¨ Ï†úÎ™© -->
 			                <div class="modal-header">
-			                    <h5 class="modal-title" id="exampleModalLabel">Ω≈√ª¿⁄ ∏ÆΩ∫∆Æ</h5>
+			                    <h5 class="modal-title" id="exampleModalLabel">Ïã†Ï≤≠Ïûê Î¶¨Ïä§Ìä∏</h5>
 			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			                     <span aria-hidden="true">&times;</span>
 			                    </button>
 			                </div>
-			                <!-- ∏¥ﬁ ∫ªπÆ ≥ªøÎ -->
+			                <!-- Î™®Îã¨ Î≥∏Î¨∏ ÎÇ¥Ïö© -->
 			                <div class="modal-body">
 			                   <table class="table"  style="text-align:center">
                           		  <thead>
-		                                <!-- ∏‚πˆ ¡§∫∏ ∏Ò∑œ -->
+		                                <!-- Î©§Î≤Ñ Ï†ïÎ≥¥ Î™©Î°ù -->
 		                                <tr>
-		                                    <th scope="col" style="width: 100px;">«¡∑Œ« </th> 
-		                                    <th scope="col" style="width: 100px;">¥–≥◊¿”</th>
-		                                    <th scope="col" style="width: 300px;">∞Ê∑¬</th>
-		                                    <th scope="col">Ω≈√ª ≥ªøÎ</th>
-		                                    <th scope="col" stype="width: 200px">ºˆ∂Ù/∞≈¿˝</th>
+		                                    <th scope="col" style="width: 100px;">ÌîÑÎ°úÌïÑ</th> 
+		                                    <th scope="col" style="width: 100px;">ÎãâÎÑ§ÏûÑ</th>
+		                                    <th scope="col" style="width: 300px;">Í≤ΩÎ†•</th>
+		                                    <th scope="col">Ïã†Ï≤≠ ÎÇ¥Ïö©</th>
+		                                    <th scope="col" style="width: 200px">ÏàòÎùΩ/Í±∞Ï†à</th>
 		                                </tr>
 		                           </thead>
 		                           <tbody>
 		                                <tr>
 		                                    <td>
-		                                        <div class="pimg" style="width:50px; height:50px; "><img src="${contextPath }/resources/views/images/π⁄¿Áπ¸.jpg"></div>
+		                                        <div class="pimg" style="width:50px; height:50px; "><img src="${contextPath }/resources/views/images/Î∞ïÏû¨Î≤î.jpg"></div>
 		                                    </td>
-		                                    <td>æ∆¿Ã¿Ø</td>
-		                                    <td>ƒƒ«ª≈Õ»∞øÎ¥…∑¬1±ﬁ, «—±πªÁ 1±ﬁ, ¿¸±‚±‚ªÁ</td>
-		                                    <td><button  data-toggle="modal" data-target="#open">Ω≈√ªº≠ ø≠∂˜</button>
+		                                    <td>ÏïÑÏù¥Ïú†</td>
+		                                    <td>Ïª¥Ìì®ÌÑ∞ÌôúÏö©Îä•Î†•1Í∏â, ÌïúÍµ≠ÏÇ¨ 1Í∏â, Ï†ÑÍ∏∞Í∏∞ÏÇ¨</td>
+		                                    <td><button  data-toggle="modal" data-target="#open">Ïã†Ï≤≠ÏÑú Ïó¥Îûå</button>
 		                                    	<div class="modal modal-xl fade" id="open" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 											        aria-hidden="true" >
 											        
 											        <div class="modal-dialog" >
 											        
 											            <div class="modal-content" style="width: 800px; height: auto;">
-											            	<!-- ∏¥ﬁ ¡¶∏Ò -->
+											            	<!-- Î™®Îã¨ Ï†úÎ™© -->
 											                <div class="modal-header">
-											                    <h5 class="modal-title" id="exampleModalLabel">Ω≈√ª¿⁄ ∏ÆΩ∫∆Æ</h5>
+											                    <h5 class="modal-title" id="exampleModalLabel">Ïã†Ï≤≠Ïûê Î¶¨Ïä§Ìä∏</h5>
 											                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 											                     <span aria-hidden="true">&times;</span>
 											                    </button>
 											                </div>
-											                <!-- ∏¥ﬁ ∫ªπÆ ≥ªøÎ -->
+											                <!-- Î™®Îã¨ Î≥∏Î¨∏ ÎÇ¥Ïö© -->
 											               <div class="modal-body">
 											               
 											               </div>
@@ -239,7 +259,7 @@
 											         </div>
 											      </div>
 		                                    </td>
-		                                    <td><button>ºˆ∂Ù</button>&nbsp;&nbsp;<button>∞≈¿˝</button></td>
+		                                    <td><button>ÏàòÎùΩ</button>&nbsp;&nbsp;<button>Í±∞Ï†à</button></td>
 		                                  
 		                                </tr>
 		                               
@@ -252,20 +272,20 @@
 			        </div>
 			        
 			  	  </div>
-			  	  <!-- Ω≈√ª¿⁄ ∏ÆΩ∫∆Æ ∏¥ﬁ ≥° -->
+			  	  <!-- Ïã†Ï≤≠Ïûê Î¶¨Ïä§Ìä∏ Î™®Îã¨ ÎÅù -->
 				</div>
 				
-				<!-- ±€¿« ªÛ≈¬ πˆ∆∞ -->
+				<!-- Í∏ÄÏùò ÏÉÅÌÉú Î≤ÑÌäº -->
 				<div class="col-6" style="text-align:center">
-					<button>ºˆ¡§</button>
-					<button>ªË¡¶</button>
-					<button>∏∂∞®</button>
+					<button>ÏàòÏ†ï</button>
+					<button>ÏÇ≠Ï†ú</button>
+					<button>ÎßàÍ∞ê</button>
 				</div>
 				
 				<div class="col-3">
-				<!-- Ω≈√ª«œ±‚ πˆ∆∞ -->
-				<button data-toggle="modal" data-target="#applyForm">Ω≈√ª«œ±‚</button>
-				<!-- Ω≈√ª∆˚ ∏¥ﬁ -->
+				<!-- Ïã†Ï≤≠ÌïòÍ∏∞ Î≤ÑÌäº -->
+				<button data-toggle="modal" data-target="#applyForm">Ïã†Ï≤≠ÌïòÍ∏∞</button>
+				<!-- Ïã†Ï≤≠Ìèº Î™®Îã¨ -->
 				  <div class="modal fade" id="applyForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			        aria-hidden="true">
 			        
@@ -273,14 +293,14 @@
 			        
 			            <div class="modal-content" style="width: auto; height: auto;">
 			            
-			                <!-- ∏¥ﬁ ¡¶∏Ò -->
+			                <!-- Î™®Îã¨ Ï†úÎ™© -->
 			                <div class="modal-header">
-			                    <h5 class="modal-title" id="exampleModalLabel">Ω≈√ªº≠</h5>
+			                    <h5 class="modal-title" id="exampleModalLabel">Ïã†Ï≤≠ÏÑú</h5>
 			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			                     <span aria-hidden="true">&times;</span>
 			                    </button>
 			                </div>
-			                <!-- ∏¥ﬁ ∫ªπÆ ≥ªøÎ -->
+			                <!-- Î™®Îã¨ Î≥∏Î¨∏ ÎÇ¥Ïö© -->
 			                <div class="modal-body container">
 			                    <div class="row">
 			                    	<div cols="6">
@@ -290,7 +310,7 @@
 			                    	
 			                    	</div>
 			                    </div>
-			                    <textarea cols="100" rows="10" placeholder="≥ªøÎ¿ª ¿‘∑¬«œººø‰. " id="summernote" name="editordata"
+			                    <textarea cols="100" rows="10" placeholder="ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî. " id="summernote" name="editordata"
                                     class="form-control"></textarea></td>
 			                </div>
 			
@@ -299,7 +319,7 @@
 			        </div>
 			        
 			  	  </div>
-			  	  <!-- Ω≈√ª ∆˚ ∏¥ﬁ ≥° -->
+			  	  <!-- Ïã†Ï≤≠ Ìèº Î™®Îã¨ ÎÅù -->
 				</div>
 				
 			</div>      	

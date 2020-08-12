@@ -84,15 +84,7 @@
 		label{
 			font-size:20px;
 		}
-	  @font-face { 
-			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
-    	    font-weight: normal; 
-    	    font-style: normal; 
-   		}
-   
-	   * {
-	      font-family:"TmoneyRoundWindExtraBold";
-	   }
+	
 	   
 	   .card-deck{
 	   	margin-right:auto;
@@ -131,7 +123,7 @@
                 </div>
             </div>
             <!-- 스터디 그룹 리스트 -->
-   <div style="margin-top: 20px;">
+  		 <div style="margin-top: 20px;">
             
 
           
@@ -140,17 +132,16 @@
 		    <c:forEach var="g" items="${glist }">
 		    	<!--날짜 차이 계산을 위한 fmt  -->
 		
-	    	<fmt:formatDate value="${g.groomingNd }" var="nowDate1" pattern="yyyyMMdd" />
- 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate1" pattern="yyyyMMdd" />
+	    	 <fmt:formatDate value="${g.groomingNd }" var="nowDate1" pattern="yyyyMMdd"/>
+	    	
+ 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate1" pattern="yyyyMMdd"/>
+ 	 		
  	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
  	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />
  	 		
-	    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/>
+	    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
 	    	
-  		<%-- 	<fmt:parseDate value="${nowDate.time}" integerOnly="true" var="nowDate"/> 
-  			<fmt:parseNumber value="${nowDate.time}" integerOnly="true" var="nowDate"/> 
-	       	
-			<fmt:parseNumber value="${endDate.time}" integerOnly="true" var="endDate"/>   --%>
+  			
  				
                 <div class="card-deck col-lg-3">
                 
@@ -193,52 +184,12 @@
 					</c:forEach>
                  </div>
                   
+             
                    
-                    <!-- 스터디 그룹 리스트 끝 -->
                 </div>
-  <%--   <table style="margin-bottom:100px;">
-           <!-- 페이징 처리 부분 -->
-		<tr align="center" height="20">	
-			<td colspan="6">
-		<!-- [이전] -->
-				<c:if test="${pi.currentPage eq 1 }">
-					[이전]&nbsp;
-				</c:if>			
-				<c:if test="${pi.currentPage gt 1 }">
-				<c:url var="blistBack" value="groomingMain.do">
-					<c:param name="page" value="${pi.currentPage - 1 }"/>
-				</c:url>
-					<a href="${blistBack }">[이전]</a>
-				</c:if>	
-		<!-- [번호들] -->
-				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
-					<c:if test="${p eq pi.currentPage }">
-						<font color="red" size="4">
-							<b>[${p}]</b>
-						</font>
-					</c:if>
-					
-					<c:if test="${p ne pi.currentPage }">
-						<c:url var="blistCheck" value="groomingMain.do">
-							<c:param name="page" value="${p}"/>
-						</c:url>
-						<a href="${ blistCheck}">${p }</a>
-					</c:if>
-				</c:forEach>
-		<!-- [이후] -->
-				<c:if test="${pi.currentPage eq pi.maxPage }">
-					&nbsp;[이후]
-				</c:if>			
-				<c:if test="${pi.currentPage lt pi.maxPage }">
-				<c:url var="blistAfter" value="groomingMain.do">
-					<c:param name="page" value="${pi.currentPage + 1 }"/>
-				</c:url>
-					<a href="${blistAfter }">[이후]</a>
-				</c:if>	
-			</td>
-		</tr>
-		</table> --%>
+  
         </div>
+       </div>
     </section>
     <!-- 필터 -->
 	<script>
@@ -251,20 +202,7 @@
 					type : 'post',
 					dataType:"json",
 					success : function (data){
-						console.log(data[0]);
-							<fmt:formatDate value="${g.groomingNd }" var="nowDate1" pattern="yyyyMMdd" />
-				 	 		<fmt:formatDate value="${g.groomingEd }" var="endDate1" pattern="yyyyMMdd" />
-				 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
-				 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />
-				 	 		
-					    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/>
-						
-						var $fmtDn;
-						var $fmtDe;
-						var $fmtPn;
-						var $fmtPe;
-						var $fmtN;
-						
+				
 					    $divRow = $("#row");
 					    $divRow.html("");
 						var $divCardDeck ;
@@ -285,24 +223,21 @@
 						var $small3 ;
 						var $span3;
 						var $img;
-								 console.log(data[0].groomingImg);
 						if(data.length >0){ 
 							for(var i in data){
-								console.log(data[i].groomingNo);
+						
 								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
 								 $divCard = $("<div class='card'>");
 								 $divTopImg = $("<div class='top-img'>");
 								 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
 								 $divCircle = $("<div id='circle'>");
 								 if(data[i].groomingEd > data[i].groomingNd){
-									 $dDay = $("<span id='d-day'>").text("D-");
-									 $day = $("<span id='day'>").text(difDate);
+									 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
 									 $divCircle.append($dDay);
 									 $divCircle.append($day);
 								 }else{
 									 $day = $("<span id='day'>").text("마감");
 									 $divCircle.append($day);
-
 								}
 								
 								 $cardBody = $("<div class='card-body'>");
@@ -338,6 +273,7 @@
 								 
 								 $divCardDeck.append($divCard);
 								 $divRow.append($divCardDeck);
+						
 							}
 						}
 

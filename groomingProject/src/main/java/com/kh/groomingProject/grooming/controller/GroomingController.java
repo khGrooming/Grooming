@@ -1,7 +1,6 @@
 package com.kh.groomingProject.grooming.controller;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,10 @@ import com.google.gson.JsonIOException;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.member.model.service.MemberService;
+import com.kh.groomingProject.member.model.vo.Member;
 
 @Controller
 public class GroomingController {
@@ -24,22 +27,24 @@ public class GroomingController {
 	@Autowired
 	GroomingService gService;
 	
-//	±×·ç¹Ö ¸ŞÀÎ Ãâ·Â
+
+//	ë©”ì¸ìœ¼ë¡œ ê°€ê¸°
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv) {
 		
 		ArrayList<Grooming> glist = gService.selectList();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		
 		
 		if(glist != null) {
 			mv.addObject("glist",glist);
 			mv.setViewName("grooming/groomingMain");
 		}else {
-			throw new GroomingException("°Ô½Ã±Û ÀüÃ¼ Á¶È¸ ½ÇÆĞ!");
+			throw new GroomingException("ë¦¬ìŠ¤íŠ¸ ë¶ˆëŸ¬ì˜¤ê¸° ì‹¤íŒ¨!");
 		}
 		return mv;
 	}
-// ±×·ç¹Ö ¸ŞÀÎ (¸àÅä Å¸ÀÔ ÇÊÅÍ) Ãâ·Â
+	
+// ë©˜í†  í•„í„° ì ìš©
 	@RequestMapping("groomingMe.do")
 	public void groomingMentorList(HttpServletResponse response) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
@@ -51,7 +56,7 @@ public class GroomingController {
 		gson.toJson(glist,response.getWriter());
 	}
 	
-// ±×·ç¹Ö ¸ŞÀÎ (¿¹Ä¡±İ Å¸ÀÔ ÇÊÅÍ) Ãâ·Â	
+// ì˜ˆì¹˜ê¸ˆ í•„í„° ì ìš©
 	@RequestMapping("groomingMo.do")
 	public void groomingMoneyList(HttpServletResponse response)throws JsonIOException, IOException {
 	
@@ -64,7 +69,7 @@ public class GroomingController {
 		gson.toJson(glist,response.getWriter());
 	}
 
-	// °Ë»ö
+	// ê²€ìƒ‰
 	@RequestMapping("search.do")	
 	public void gSearchWriter(HttpServletResponse response, String search, String keyword) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
@@ -80,9 +85,9 @@ public class GroomingController {
 			ArrayList<Grooming> list = gService.gSearchContent(keyword);
 			glist = list;
 		}
-		System.out.println("°Ë»ö À¯Çü : " +search);
-		System.out.println("°Ë»ö ³»¿ë : " +keyword);
-		System.out.println("°Ë»öµÈ ¸®½ºÆ® : " +glist);
+		System.out.println("ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½ : " +search);
+		System.out.println("ï¿½Ë»ï¿½ ï¿½ï¿½ï¿½ï¿½ : " +keyword);
+		System.out.println("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® : " +glist);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(glist,response.getWriter());
 	}
@@ -112,26 +117,34 @@ public class GroomingController {
 		return "grooming/groomingInsertForm";
 	}
 	
+	// ê·¸ë£¨ë° ìƒì„¸ë³´ê¸°
 	@RequestMapping("groomingDetail.do")	
 	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo) {
 		
 		int result = gService.addReadCount(groomingNo);
 		System.out.println(result);
 		if(result >0) {
-			ArrayList<Grooming> grooming = gService.selectGrooming(groomingNo);
-//			Grooming grooming = gService.selectGrooming(groomingNo);
-			if(grooming != null) {
+			Grooming grooming = gService.selectGrooming(groomingNo);
+
+			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+			Member member = gService.selectMember(groomingNo);
+			System.out.println(member);
+			if(grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming",grooming)
+				.addObject("tag",tag)
+				.addObject("spec",spec)
+				.addObject("member",member)
 				.setViewName("grooming/groomingDetailView");
 			}else {
-				throw new GroomingException("±×·ç¹Ö °Ô½Ã±Û Á¶È¸ ½ÇÆĞ!");
+				throw new GroomingException("ì¡°íšŒì‹¤íŒ¨!");
 			}
 			
 			
 			
 			
 		}else {
-			throw new GroomingException("±×·ç¹Ö °Ô½Ã±Û Á¶È¸¼ö Áõ°¡ ½ÇÆĞ!");
+			throw new GroomingException("ê²Œì‹œê¸€ ì¡°íšŒìˆ˜ ì¦ê°€ ì‹¤íŒ¨!");
 		}
 		
 		

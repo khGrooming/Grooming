@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("gDao")
 
@@ -51,18 +54,33 @@ public class GroomingDao {
 		return sqlSessionTemplate.update("groomingMapper.updateCount",groomingNo);
 	}
 
-//	public Grooming selectGrooming(String groomingNo) {
-//		// TODO Auto-generated method stub
-//		return sqlSessionTemplate.selectOne("groomingMapper.selectOne",groomingNo);
-//	}
-	public ArrayList<Grooming> selectGrooming(String groomingNo) {
+	public Grooming selectGrooming(String groomingNo) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectDetailList",groomingNo);
+		return sqlSessionTemplate.selectOne("groomingMapper.selectOne",groomingNo);
 	}
+//	public ArrayList<Grooming> selectGrooming(String groomingNo) {
+//		// TODO Auto-generated method stub
+//		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectDetailList",groomingNo);
+//	}
 
 	public ArrayList<Grooming> selectMoneyList() {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMoneyList");
+	}
+
+	public ArrayList<GroomingTag> selectTag(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectTag",groomingNo);
+	}
+
+	public ArrayList<GroomingSpec> selectSpec(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectSpec",groomingNo);
+	}
+
+	public Member selectMember(String groomingNo) {
+		
+		return sqlSessionTemplate.selectOne("memberMapper.selectHost",groomingNo);
 	}
 	
 	

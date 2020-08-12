@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("gService")
 public class GroomingServiceImpl implements GroomingService{
@@ -50,11 +53,11 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.addReadCount(groomingNo);
 	}
 
-	@Override
-	public ArrayList<Grooming> selectGrooming(String groomingNo) {
-		// TODO Auto-generated method stub
-		return gDao.selectGrooming(groomingNo) ;
-	}
+//	@Override
+//	public ArrayList<Grooming> selectGrooming(String groomingNo) {
+//		// TODO Auto-generated method stub
+//		return gDao.selectGrooming(groomingNo) ;
+//	}
 
 	@Override
 	public ArrayList<Grooming> selectMoneyList() {
@@ -62,11 +65,28 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectMoneyList();
 	}
 
-//	@Override
-//	public Grooming selectGrooming(String groomingNo) {
-//		// TODO Auto-generated method stub
-//		return gDao.selectGrooming(groomingNo) ;
-//	}
+	@Override
+	public ArrayList<GroomingTag> selectTag(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectTag(groomingNo);
+	}
+
+	@Override
+	public ArrayList<GroomingSpec> selectSpec(String groomingNo) {
+		return gDao.selectSpec(groomingNo);
+	}
+
+	@Override
+	public Grooming selectGrooming(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGrooming(groomingNo) ;
+	}
+
+	@Override
+	public Member selectMember(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectMember(groomingNo);
+	}
 
 	
 }
