@@ -17,6 +17,7 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<style>
 		section{margin-top:10%}
+		p{margin:0px;}
 		
 		.sideMenu{height:300px;background-color:blue;border-radius:10%;}
 		.subMenu{height:100px;}
@@ -73,10 +74,12 @@
 					<div class="row">
 						<div id="calendarDiv" style="width:100%"></div>
 					</div>
+					<hr>
 					<div id="reservation" class="row timeScroll">
 					<hr>
 						
 					</div>
+					<hr>
 				</div>
 			</div>
 		</div>
@@ -94,35 +97,34 @@
     let year = today.getFullYear();
     let month = today.getMonth() + 1;
     let day = today.getDate();
+    
+ 	// 넘어갈 정보들
+    var cPriceNo = '';
+    var selectDay = day;
+    var cPriceNo = '';
+    
+	
 	
 		$(function(){
 			// 예약할 룸 클릭시 ajax로 데이터 가져와 예약불가 날짜 뿌려주기
 			$("[name='checkRoom']").on("click", function(){
-				$cPriceNo = $('input[name="checkRoom"]:checked').val();
-				console.log($cPriceNo);
-				
-				$reservation = $("#reservation");
-				$reservation.css("display","block");
+				cPriceNo = $('input[name="checkRoom"]:checked').val();
+
+
 				
 				$.ajax({
 					url:"checkRoom.do",
 					type:"post",
 					dataType:"json",
-					data:{cPriceNo:$cPriceNo},
+					data:{cPriceNo:cPriceNo, day:day},
 					success:function(data){
 						showCalendar(year, month, day);
+						
+						changeTime(data);
+						
+						click1=0;
+						click2=0;
 
-						// 모든 시간 뿌리기
-						for(var i=0; i <= 10; i++){
-							$timeDiv = $("<div class='time'>");
-							$timeDiv.append(i+10);
-							
-							$timespan = $("<span class='timeSelect' style='background:yellow;'><br>");
-							$timespan.append("1000");
-							$timeDiv.append($timespan);
-							
-							$reservation.append($timeDiv);
-						}
 					},
 					error:function(data){
 						
@@ -130,14 +132,11 @@
 				})
 			})
 		});
-	</script>
-	
-	
-    <script>
+
  	//달력 화면에 뿌려주기
     function showCalendar(y, m, day) {
- 		var text = '<p align="left" float="left">시간 선택</p>';
- 		text += '<p align="right">'+y+'년' +m+'일'+day+'일 </p>';
+ 		var text = '<p align="left" style="width:50%; display:inline-block;">시간 선택</p>';
+ 		text += '<p align="right" style="width:50%; display:inline-block;">'+y+'년' +m+'일'+day+'일 </p>';
     	text += '<table border="1" style="text-align:center; width:100%;"><thead>';
         text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12:y+','+(m-1))+')"> < </th>';
         text += '<th colspan="5">' + y + '.' + ((m < 10) ? ('0' + m) : m) + '</th>';
@@ -161,8 +160,8 @@
     }
     
     // 클릭한 날짜 구하고 색깔 바꾸기
-    $(document).on("click",".calTd",function(){
-    	console.log($(this).text());
+    $(document).off("click").on("click",".calTd",function(){
+
     	$(this).css("background","yellow");
     	
     	for(var i in $("#calendarDiv tbody tr td").text()){
@@ -176,7 +175,24 @@
 	    	}
     	}
     	// 여기에 시간 바뀌는 메소드를 만들어 적용하자
-    	timeChange();
+    	selectDay = $(this).text();
+    	
+    	$.ajax({
+    		url:"checkTime.do",
+    		type:"post",
+    		dataType:"json",
+    		data:{date:selectDay, cPriceNo:cPriceNo},
+    		success:function(data){
+    			changeTime(data);
+    			click1=0;
+    			click2=0;
+
+    		},
+    		error:function(data){
+    			
+    		}
+    		
+    	});
     }).on("mouseenter", ".calTd", function(){
     	$(".calTd").css("cursor","pointer");
     })
@@ -194,13 +210,112 @@
 	    	}
     	}
     }
-	</script>
-	<script>
-		// 예약 시간 관련 스크립트
-		function timeChange(s, e){
-			console.log("메소드 실행 : "+$(".time").text());
+
+		// 룸 클릭이나 달력 날짜 클릭시 예약 시간 바뀌는 함수
+		function changeTime(data){
+
+			$reservation = $("#reservation");
+			$reservation.css("display","block");
+			$reservation.html("");
 			
+			// 모든 시간 뿌리기
+			for(var i=10; i <= 20; i++){
+				$timeDiv = $("<div class='time'>");
+				$timeDiv.append(i);
+				
+				$timespan = $("<span class='timeSelect' style='background:yellow'><br>");
+				$timespan.append("1000");
+				
+				for(var j in data){
+					if(data[j].cReserSTime <= i && data[j].cReserETime >= i){
+						$timespan.css("background","grey");
+						$timespan.prop("class","none");
+					}
+				}
+				$timeDiv.append($timespan);
+
+				$reservation.append($timeDiv);
+			}
 		}
+		
+		var click1=0;
+		var click2=0;
+		
+		// 예약 가능한 시간 마우스 호버시 마우스 모양 변화
+		$(document).on("mouseenter", ".timeSelect", function(){
+	    	$(".timeSelect").css("cursor","pointer");
+	    }).on("click",".timeSelect", function(){
+			$(this).css("background","blue");
+			
+			clickArea(parseInt($(this).parents(".time").text()));
+		})
+		
+	    // 예약 가능한 시간 클릭시 이벤트 처리
+		function clickArea(str){
+
+			if(click1 == 0){
+				click1 = str;
+				return click1;
+			}else{
+				if(click2 != 0){
+					click1 = str;
+					click2 = 0;
+					
+					// 색칠한거 다 지우고 click1의 색깔만 파란색
+					$.ajax({
+						url:"checkTime.do",
+			    		type:"post",
+			    		dataType:"json",
+			    		data:{date:selectDay, cPriceNo:cPriceNo},
+			    		success:function(data){
+							
+							changeTime(data);
+							
+							for(var i=0; i<=10; i++){
+								if($(".time").eq(i).text() == click1){
+									$(".time").eq(i).children(".timeSelect").css("background","blue");
+								}
+							}
+						},
+						error:function(data){
+							
+						}
+					});
+			    	
+			    	return click1, click2;
+				}else{
+					click2 = str;
+					// 가운데 색깔 채우기 & 예약 못하는 경우 추가
+					$.ajax({
+						url:"checkTime.do",
+			    		type:"post",
+			    		dataType:"json",
+			    		data:{date:selectDay, cPriceNo:cPriceNo},
+			    		success:function(data){
+							for(var i=0; i<=10; i++){
+								if($(".time").eq(i).text() > click1 && $(".time").eq(i).text() < click2 || $(".time").eq(i).text() < click1 && $(".time").eq(i).text() > click2){
+									$(".time").eq(i).children(".timeSelect").css("background","blue");			
+									
+									for(var j in data){
+										console.log((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10));
+										if((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10)){
+											alert("예약할 수 없는 시간이 포함되어 있습니다.");
+											changeTime(data);
+										}
+									}
+								}
+							}
+			    		},
+						error:function(data){	
+						}
+					});
+
+					return click2;				
+				}
+			}
+		}
+
 	</script>
+	
 </body>
 </html>

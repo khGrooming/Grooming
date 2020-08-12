@@ -63,5 +63,13 @@
 		SELECT *
 		FROM CAFERESERVATION
 		WHERE C_PRICE_NO = #{cPriceNo}
+		  AND TO_CHAR(C_RESER_DATE,'DD') = #{day}
+	</select>
+	
+	<select id="selectCheckTime" parameterType="string" resultMap="reservationResultSet">
+		SELECT *
+		FROM CAFERESERVATION
+		WHERE TO_CHAR(C_RESER_DATE,'DD') = #{date}
+		  AND C_PRICE_NO = #{cPriceNo}
 	</select>
 </mapper>

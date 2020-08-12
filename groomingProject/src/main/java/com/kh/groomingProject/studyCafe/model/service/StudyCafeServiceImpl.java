@@ -1,6 +1,7 @@
 package com.kh.groomingProject.studyCafe.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,15 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<Reservation> selectCheckRoom(String cPriceNo) {
+	public ArrayList<Reservation> selectCheckRoom(Map str) {
 
-		return studyCafeDao.selectCheckRoom(cPriceNo);
+		return studyCafeDao.selectCheckRoom(str);
+	}
+
+	@Override
+	public ArrayList<Reservation> selectCheckTime(Map str) {
+		
+		return studyCafeDao.selectCheckTime(str);
 	}
 
 }

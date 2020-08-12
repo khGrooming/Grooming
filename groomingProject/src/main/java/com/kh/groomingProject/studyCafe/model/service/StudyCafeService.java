@@ -1,6 +1,7 @@
 package com.kh.groomingProject.studyCafe.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
@@ -16,6 +17,8 @@ public interface StudyCafeService {
 
 	ArrayList<CafeInfo> selectCafeInfo(String cafeNo);
 
-	ArrayList<Reservation> selectCheckRoom(String cPriceNo);
+	ArrayList<Reservation> selectCheckRoom(Map str);
+
+	ArrayList<Reservation> selectCheckTime(Map str);
 
 }

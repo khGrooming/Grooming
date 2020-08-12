@@ -1,6 +1,7 @@
 package com.kh.groomingProject.studyCafe.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,14 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeInfo", cafeNo);
 	}
 
-	public ArrayList<Reservation> selectCheckRoom(String cPriceNo) {
+	public ArrayList<Reservation> selectCheckRoom(Map str) {
 
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCheckRoom", cPriceNo);
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCheckRoom", str);
+	}
+
+	public ArrayList<Reservation> selectCheckTime(Map str) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCheckTime", str);
 	}
 
 }

@@ -2,6 +2,8 @@ package com.kh.groomingProject.studyCafe.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -98,8 +100,11 @@ public class StudtyCafeController {
 	
 	// 상세보기 들어가서 룸 선택시 일정과 시간을 불러와 예약 가능한지 확인(ajax)
 	@RequestMapping(value="checkRoom.do", method=RequestMethod.POST)
-	public void checkRoomList(String cPriceNo, HttpServletResponse response) throws JsonIOException, IOException {
-		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(cPriceNo);
+	public void checkRoomList(String cPriceNo, String day, HttpServletResponse response) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("day", day);
+		str.put("cPriceNo", cPriceNo);
+		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(str);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -107,10 +112,16 @@ public class StudtyCafeController {
 		gson.toJson(list, response.getWriter());
 	}
 	
-	@RequestMapping(value="searchTime.do", method=RequestMethod.POST)
-	public void searchTime(String cPriceNo, int sDate, HttpServletResponse response ) {
+	@RequestMapping(value="checkTime.do", method=RequestMethod.POST)
+	public void searchTime(String date, String cPriceNo, HttpServletResponse response ) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("date", date);
+		str.put("cPriceNo", cPriceNo);
 		
-		
+		ArrayList<Reservation> list = studyCafeService.selectCheckTime(str);
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
+		gson.toJson(list, response.getWriter());
 	}
 	
 	
