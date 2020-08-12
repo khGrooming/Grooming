@@ -10,54 +10,66 @@
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-
-        .MsectionDiv {
-            display: none;
-            padding: 20px 10px 10px 10px;
-            border: 3px solid rgba(167, 167, 167, 1);
-            height: 500px;
-            background: rgba(175, 202, 202, 1); /* 변경 */
-            }
-
-        /*라디오버튼 숨김*/
-          .MinputBar {
-              display: none;}
-
-        .Mlabel {
-            display: inline-block;
-            margin: 0 0 -4px;
-            padding: 15px 25px;
-            font-weight: 600;
-            text-align: center;
-            color: rgba(160, 160, 160, 1);
-            border: 1px solid rgba(167, 167, 167, 1);
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-           	background: rgba(175, 202, 202, 1); /* 변경 */
-
-            }
-
-        .Mlabel:hover {
-            color: rgba(59, 117, 117, 1); /* 변경 */
-            cursor: pointer;}
-
-        /*input 클릭시, label 스타일*/
-        .MinputBar:checked + .Mlabel {
-              color: #555;
-              border: 3px solid rgba(167, 167, 167, 1);
-              /* border-top: 2px solid #2e9cdf; */
-              border-bottom: 3px solid rgba(175, 202, 202, 1);  /* 변경 */
-              }
-
-        #Mtab1:checked ~ #Mcontent1,
-        #Mtab2:checked ~ #Mcontent2,
-        #Mtab3:checked ~ #Mcontent3 {
-            display: block;}
-       #member_tb th label{
-       		    width: 200px;
-       	 padding-right: 10%;
-       }
-       
+	
+	.MsectionDiv {
+		display: none;
+		padding: 20px 10px 10px 10px;
+		border: 3px solid rgba(167, 167, 167, 1);
+		height: 500px;
+		background: rgba(175, 202, 202, 1); /* 변경 */
+	}
+	
+	 /*라디오버튼 숨김*/
+	.MinputBar {
+		display: none;
+	}
+	
+	.Mlabel {
+		display: inline-block;
+		margin: 0 0 -4px;
+		padding: 15px 25px;
+		font-weight: 600;
+		text-align: center;
+		color: rgba(160, 160, 160, 1);
+		border: 1px solid rgba(167, 167, 167, 1);
+		border-top-left-radius: 6px;
+		border-top-right-radius: 6px;
+		background: rgba(175, 202, 202, 1); /* 변경 */
+	
+	}
+	
+	.Mlabel:hover {
+	    color: rgba(59, 117, 117, 1); /* 변경 */
+	    cursor: pointer;}
+	
+	/*input 클릭시, label 스타일*/
+	.MinputBar:checked + .Mlabel {
+		color: #555;
+		border: 3px solid rgba(167, 167, 167, 1);
+		/* border-top: 2px solid #2e9cdf; */
+		border-bottom: 3px solid rgba(175, 202, 202, 1);  /* 변경 */
+	}
+	
+	#Mtab1:checked ~ #Mcontent1,
+	#Mtab2:checked ~ #Mcontent2,
+	#Mtab3:checked ~ #Mcontent3 {
+	    display: block;
+	}
+	
+	
+	#member_tb{
+		height: 330px;
+	}
+	#member_tb th label{
+		width: 180px;
+		padding-right: 10%;
+	}
+	#member_tb th{
+		text-align: right;	
+	}
+	#member_tb tr {
+		margin-bottom: 10px;	
+	}
 </style>
 </head>
 <body>
@@ -71,50 +83,32 @@
             <label class="Mlabel" for="Mtab3">탈퇴 하기</label>
      		
             <div class="MsectionDiv"  id="Mcontent1" style="text-align: center;">
-            	<div style="display: inline-block; text-align: right;">
-            	<table id="member_tb">
-            		<tr>
-            			<th style="margin-right: 10px;"><label>이메일</label></th>
-            			<td><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"></td>
-            		</tr>
-            		<tr>
-            			<th><label>비밀번호</label></th>
-            			<td><input type="password" id="memberPwd" name="memberPwd"></td>
-            		</tr>
-            		<tr>
-            			<th><label>변경할 비밀번호</label> </th>
-            			<td><input type="password" id="pwdRevised" name="pwdRevised"></td>
-            		</tr>
-            		<tr>
-            			<th><label>변경할 비밀번호 확인</label></th>
-            			<td><input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck"></td>
-            		</tr>
-            		<tr>
-            			<th><label>닉네임</label> </th>
-            			<td><input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }"></td>
-            		</tr>
-            		<tr>
-            			<th><label>이름</label></th>
-            			<td><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"></td>
-            		</tr>
-            		<tr>
-            			<th><label>성별</label></th>
-            			<td><input type="radio" id="genderM" name="gender" value="M"><label for="genderM">남</label>
-								   <input type="radio" id="genderF" name="gender" value="F"><label for="genderF">여</label></td>
-								   
-            		</tr>
-            		<tr>
-            			<th><label>휴대전화 번호</label> </th>
-            			<td><input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }"></td>
-            		</tr>
-            		
-            	
-            	
-            	
-            	</table>
-            	
-				<button>수정하기</button> 
+            	<div style="margin-right:50px; width: 60%; margin-left: auto; margin-right: auto;">
+            	<form>
+	            	<label>이메일</label>
+	            			<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
+	            		<label id="pwdlabel">비밀번호</label>
+	            				<input type="password" id="memberPwd" name="memberPwd"><br>           				
+	            			
+	            		<label id="pwdchecklabel">변경할 비밀번호</label>
+	            			<input type="password" id="pwdRevised" name="pwdRevised" readonly><br>
+	            		
+	            			<label id="pwdchecklabel2">변경할 비밀번호 확인</label>
+	            			<input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck" readonly><br>
+	            			
+	            		<label>닉네임</label> <input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }"><br>
+	            		
+	            		<label>이름</label><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
+	            		
+	            		<label>성별</label><input type="radio" id="genderM" name="gender" value="M"><label for="genderM">남</label>
+									   <input type="radio" id="genderF" name="gender" value="F"><label for="genderF">여</label><br>
+									   
+	            		<label>휴대전화 번호</label> 
+	            			<input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }">
+	            		
+            	</form><br>            	
 				</div>
+				<button>수정하기</button> 
              </div>
              <script>
              	$(function(){
@@ -126,8 +120,59 @@
              			$("#genderF").attr("checked",true);             			
              		}
              	})
-             </script>
-             
+             	
+             	
+
+             	$(function(){
+             		
+             		$("#memberPwd").keyup(function(){
+             			var inputPwd = $(this).val();
+             			alert(inputPwd);
+             			/* if (!regexPwd.test(inputPwd)) {
+             				alert("비밀번호를 정확히 입력하세요");
+             			}else{
+             				 */
+             				$.ajax({
+              					url:"pwdCheck.do",
+              					type:"post",
+              					data:{inputPwd:inputPwd},
+              					success : function(data) {
+              						if(data == "Y"){
+        	      						alert("비밀번호 맞음");
+              						}else{
+              							alert("비밀번호가 틀립니다")
+              						}
+        			            },
+        			            error : function(data) {  
+        			               alert("code:"+request.status+"\n"+"error:"+error);
+        			            }
+              				})
+             				
+             			/* } */
+             		})
+             	/* 비밀번호 정규식 */
+             		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
+             		$("#pwdRevised").keyup(function(){
+             			var pwd = $("#pwdRevised").val();
+             			
+             			if (!regexPwd.test($("#pwdRevised").val())) {
+             					$("#pwdchecklabel").css("color","red");
+             			}else{
+             				$("#pwdchecklabel").css("color","green");
+             				
+             			}
+             		})
+             		$("#pwdRevisedCheck").keyup(function(){
+             			
+             			
+             			if($("#pwdRevised").val() == $("#pwdRevisedCheck").val()){
+             				$("#pwdchecklabel2").css("color","green");
+             			}else{
+             				$("#pwdchecklabel2").css("color","red");
+             			}
+             		})      		
+             	})
+             	</script>
         
             <div class="MsectionDiv"  id="Mcontent2">
                 <span style="font-size: 25px;font-weight: 800;margin-right: 5%;">바난나킥</span><span>Lv.25</span>
