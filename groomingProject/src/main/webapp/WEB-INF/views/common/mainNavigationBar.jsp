@@ -7,7 +7,48 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width" initial-scale="1">
 <title>main navigation bar</title>
-<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
+<style type="text/css">
+/* font start */
+* {
+	font-family: 'Jua', sans-serif;
+}
+/* font end */
+
+.main_navbar {
+	
+}
+
+.mainNavImg {
+	height: 50px;
+}
+
+.main_messages_icon, .main_alerts_icon {
+	cursor: pointer;
+	padding: 0 15px 0 15px;
+	position: relative;
+}
+
+.main_messages_icon svg, .main_alerts_icon svg {
+	width: 38px;
+	height: 38px;
+	fill: #fff;
+}
+
+.main_messages_txt, .main_alerts_txt {
+	color: white;
+	width: 25px;
+	height: 25px;
+	background: darkorange;
+	border-radius: 50%;
+	border: 1px solid;
+	font-size: 18px;
+	position: absolute;
+	top: -2px;
+	left: 38px;
+}
+</style>
 </head>
 <body>
 	<!-- url -->

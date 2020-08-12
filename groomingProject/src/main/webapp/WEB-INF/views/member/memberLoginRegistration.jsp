@@ -158,7 +158,7 @@ section .form_container .user .form-group form .divRadio
 	color: #333;
 	outline: none;
 	box-shadow: none;
-	margin: 8px 0 0;
+	margin: 5px 0 0;
 	font-size: 14px;
 }
 section .form_container .user .form-group form .input-group .divRadio
@@ -214,7 +214,7 @@ section .form_container .user .form-group form input[type="button"]
 	color: #fff;
 	cursor: pointer;
 	font-size: 14px;
-	font-weight: 500;
+	font-weight: 400;
 	letter-spacing: 1px;
 	transition: 0.5s;
 }
