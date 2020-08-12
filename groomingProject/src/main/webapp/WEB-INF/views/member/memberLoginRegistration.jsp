@@ -93,7 +93,7 @@ section .form_container .user .form-group form
 }
 section .form_container .user .form-group form h2
 {
-	font-size: 18px;
+	/* font-size: 18px; */
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spaceing: 2px;
@@ -198,6 +198,7 @@ section .form_container .user .tagP
 section .form_container .user .bootstrap-tagsinput .badge
 {
 	margin: 0 3px;
+    font-weight: lighter;
 }
 section .form_container .user .form-group form .input-group p
 {
@@ -435,7 +436,7 @@ section .form_container .hideItem
 						</div>
 						<div class="input-group">
 							<input type="text" id="optionMemo" name="memberMemo" maxlength="30" required>
-							<span>한줄 소개</span>
+							<span>상태 메시지</span>
 						</div>
 						<div>
 							<p class="tagP">관심있는 태그를 남겨주세요.</p>
@@ -822,7 +823,11 @@ section .form_container .hideItem
 	</script>
 
 	<!-- 회원가입(추가입력) -->
-	<script>
+	<script>		
+		// 추가입력 취소
+		function optionSkip(){
+			goBackPage();
+		}
 		// 파일첨부 열기
 		$("#inputImg").on("click", function() {
 			$("#profileImgInput").click();
@@ -836,8 +841,9 @@ section .form_container .hideItem
 				deleteImg();
 				return;
 			}
-
-			console.log("업로드 파일명 : " + value.files[0].name);
+			
+			memberPhoto = value.files[0].name;
+			console.log("업로드 파일명 : " + memberPhoto);
 
 			if(value.files && value.files[0]){
 				var reader = new FileReader();
@@ -850,13 +856,14 @@ section .form_container .hideItem
 				$("#deleteImg").css("background","#677eff");
 			}
 		}
-		
+
+		// 프로필 이미지 삭제
 		function deleteImg() {
 			$("#profileImg").prop("src","${contextPath }/resources/views/images/MEMBER_SAMPLE_IMG.png");
 			$("#deleteImg").css("disabled","disabled");
 			$("#deleteImg").css("background","grey");
 		}
-		//TODO 파일 삭제
+		// 프로필 이미지 삭제 버튼 엑션
 		$("#deleteImg").on("click", function(){
 			deleteImg();
 		});
@@ -866,24 +873,20 @@ section .form_container .hideItem
 			$("#regiFst").css("display","none");
 			$("#regiSnd").css("display","flex");
 		};
-		
-		// 추가입력 취소
-		function optionSkip(){
-			goBackPage();
-		}
 
 		// 회원가입(추가입력)
 		function registerComp() {
 			$("#optionEmail").val(memberEmail);
 			//TODO 옵션 등록 가야함
 			console.log("이멜 : " + memberEmail);
+			console.log("사진 : " + memberPhoto);
 			console.log("이름 : " + $("#optionName").val());
 			console.log("성별 : " + $("input[name=memberGender]").val());
 			console.log("메모 : " + $("#optionMemo").val());
 			console.log("태그 : " + $("#tagName").val());
 
-			//TODO 추가입력 완료
-			//$("#optionUpdateForm").submit();
+			// 추가입력 완료
+			$("#optionUpdateForm").submit();
 		}
 	</script>
 

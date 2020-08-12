@@ -1,5 +1,7 @@
 package com.kh.groomingProject.member.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -70,9 +73,14 @@ public class MemberController {
 	@RequestMapping("memberOptionUpdate.do")
 	@ResponseBody
 	public String memberOptionUpdate(Member m, String tagName) {
-		int result = 0;
-		
+		System.out.println("회원가입 추가 정보  : " + m);
 		System.out.println("Tag : " + tagName);
+		
+		int result = 0;
+		ArrayList<MemberTag> memberTag = new ArrayList<MemberTag>();
+		/*
+		 * String[] tag for(ta)
+		 */
 		
 		
 		
