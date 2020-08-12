@@ -6,6 +6,10 @@ import com.kh.groomingProject.community.model.vo.Board;
 
 public interface CommunityService {
 
+	ArrayList<Board> selectList();
+
+	int noticeInsert(Board b);
+
 
 
 }

@@ -6,31 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-<title>Insert title here</title>
-<!-- Bootstrap core CSS -->
-<link href="${pageContext.servletContext.contextPath }/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<!-- -------------- style 부분------------- -->
-<style type="text/css">
-/* font start */
-	@font-face { 
-		font-family: 'TmoneyRoundWindExtraBold'; 
-		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') 
-			format('woff');
-		font-weight: normal; 
-		font-style: normal; 
-	}
-	
-	* {
-		font-family:"TmoneyRoundWindExtraBold";
-	}
-/* font end */
-</style>
 
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+<!-- -------------- style 부분------------- -->
 <style type="text/css">
 	.table_ra>tbody>tr>td, .table_ra>tbody>tr>th, .table_ra>tfoot>tr>td, .table_ra>tfoot>tr>th, .table_ra>thead>tr>td, .table_ra>thead>tr>th {
     	vertical-align: middle;
@@ -65,13 +50,13 @@
 					</h1>
 					<br>
 				</div>	
-					
+					<c:if test="${ loginUser.memberAdmin eq 'Y' }">
 						<div class="col-sm-12">
 							<input type="button" value="글쓰기" class="btn btn-info" style="margin-left: 640px;"
 										onclick="location.href='noticeInsertView.do'">
 							<br><br>
 						</div>
-					
+					</c:if>
 				<table class="table table_ra">
 					<thead>
 						<tr>
@@ -83,15 +68,15 @@
 						</tr>
 					</thead>
 					<tbody>
-					
+						<c:forEach var="n" items="${list }">
 							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td>${n.boardNo }</td>
+								<td>${n.boardTitle }</td>
+								<td>${n.memberNickName }</td>
+								<td>${n.boardVcount }</td>
+								<td>${n.boardCreateDate }</td>
 							</tr>
-						
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
@@ -99,5 +84,6 @@
 			<!-- ------------------ 공지사항 ------------------- -->
 		</div>
 		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
+		<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

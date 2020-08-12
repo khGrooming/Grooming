@@ -2,13 +2,29 @@ package com.kh.groomingProject.community.model.service;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.community.model.dao.CommunityDao;
 import com.kh.groomingProject.community.model.vo.Board;
 
 @Service("cService")
 public class CommunityServiceImpl implements CommunityService {
+	
+	@Autowired
+	CommunityDao cDao;
 
+	@Override
+	public ArrayList<Board> selectList() {
+		
+		return cDao.selectList();
+	}
 
+	@Override
+	public int noticeInsert(Board b) {
+		
+		return cDao.noticeInsert(b);
+	}
 
+	
 }

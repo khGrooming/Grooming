@@ -12,22 +12,16 @@
 <!-- Bootstrap core CSS -->
 <link href="${pageContext.servletContext.contextPath }/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<!-- 폰트 (https://fonts.google.com/specimen/Jua?subset=korean&sidebar.open=true&selection.family=Jua) -->
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- -------------- style 부분------------- -->
 <style type="text/css">
 /* font start */
-	@font-face { 
-		font-family: 'TmoneyRoundWindExtraBold'; 
-		src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') 
-			format('woff');
-		font-weight: normal; 
-		font-style: normal; 
-	}
-	
-	* {
-		font-family:"TmoneyRoundWindExtraBold";
-	}
+* {
+   font-family: 'Jua', sans-serif;
+}
 /* font end */
 </style>
 
