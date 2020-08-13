@@ -8,4 +8,14 @@ public interface MemberService {
 
 	Member loginMember(Member m);
 
+	int emailDuplicateChk(Member m);
+
+	int nickNameDuplicateChk(Member m);
+
+	int phoneDuplicateChk(Member m);
+
+	int updateMemberOption(Member m);
+
+	int welcomePoint(String memberNo);
+
 }

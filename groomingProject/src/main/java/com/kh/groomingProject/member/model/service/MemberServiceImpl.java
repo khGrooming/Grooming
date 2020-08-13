@@ -20,8 +20,38 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member loginMember(Member m) {
-		// TODO Auto-generated method stub
+		
 		return mDao.loginMember(m);
+	}
+
+	@Override
+	public int emailDuplicateChk(Member m) {
+
+		return mDao.emailDuplicateChk(m);
+	}
+
+	@Override
+	public int nickNameDuplicateChk(Member m) {
+
+		return mDao.nickNameDuplicateChk(m);
+	}
+
+	@Override
+	public int phoneDuplicateChk(Member m) {
+
+		return mDao.phoneDuplicateChk(m);
+	}
+
+	@Override
+	public int updateMemberOption(Member m) {
+
+		return mDao.updateMemberOption(m);
+	}
+
+	@Override
+	public int welcomePoint(String memberNo) {
+
+		return mDao.welcomePoint(memberNo);
 	}
 
 }

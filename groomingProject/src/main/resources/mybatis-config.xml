@@ -6,7 +6,13 @@
 	</settings>
 	
 	<typeAliases>
+		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
+		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberAlert" alias="MemberAlert"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
@@ -14,9 +20,13 @@
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="/mappers/alert-mapper.xml"/>
+		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/mypage-mapper.xml"/>
 		<mapper resource="/mappers/grooming-mapper.xml"/>
 		<mapper resource="/mappers/studyCafe-mapper.xml"/>
+		<mapper resource="/mappers/point-mapper.xml"/>
 	</mappers>
 	
 </configuration>

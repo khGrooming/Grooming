@@ -85,9 +85,10 @@ public class GroomingController {
 			ArrayList<Grooming> list = gService.gSearchContent(keyword);
 			glist = list;
 		}
-		System.out.println("�˻� ���� : " +search);
-		System.out.println("�˻� ���� : " +keyword);
-		System.out.println("�˻��� ����Ʈ : " +glist);
+
+		System.out.println("gSearchWriter // search : " + search);
+		System.out.println("gSearchWriter // keyword : " + keyword);
+		System.out.println("gSearchWriter // glist : " + glist);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(glist,response.getWriter());
 	}
@@ -165,9 +166,4 @@ public class GroomingController {
 	
 	
 }
-
-
-
-
-
 

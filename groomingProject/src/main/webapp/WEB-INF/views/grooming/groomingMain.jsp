@@ -12,8 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
   
   <!-- 아이콘 -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
@@ -395,62 +394,93 @@
 	
 	</script>
 	 <script>
-	$(function(){
-		$('#find').on("click" , function(){
-			
-			var search = $('#search').val();
-			var keyword = $('#keyword').val();
-			
-			/* if(search == null || keyword == null){
-				alert("빈칸없이 검색해주세요!");
-			}else{
-				location.href="search.do";
-			}
-			 */
-		 	 $.ajax({
-				url : 'search.do',
-				type : 'post',
-				data :{search:search, keyword:keyword},
-				dataType:"json",
-				success : function (data){
-					$('#keyword').val("");
-				    $divRow = $("#row");
-				    $divRow.html("");
-					var $divCardDeck ;
-					var $divCard;
-					var $divTopImg ;
-					var $divCircle ;
-					var $dDay;
-					var $day ;
-					var $cardBody;
-					var $cardTitle;
-					var $gDetail;
-					var $cardText1;
-					var $cardText2 ;
-					var $small1 ;
-					var $small2;
-					var $span1;
-					var $span2 ;
-					var $small3 ;
-					var $span3;
-					var $img;
-							 console.log(data[0].groomingImg);
-					if(data.length >0){ 
-						for(var i in data){
-							console.log(data[i].groomingNo);
-							 $divCardDeck = $("<div class='card-deck col-lg-3'>");
-							 $divCard = $("<div class='card'>");
-							 $divTopImg = $("<div class='top-img'>");
-							 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
-							 $divCircle = $("<div id='circle'>");
-							 if(data[i].groomingEd > data[i].groomingNd){
-								 $dDay = $("<span id='d-day'>").text("D-");
-								 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
-								 $divCircle.append($dDay);
-								 $divCircle.append($day);
-							 }else{
-								 $day = $("<span id='day'>").text("마감");
-								 $divCircle.append($day);
+		$(function() {
+			$('#find').on("click", function() {
+	
+				var search = $('#search').val();
+				var keyword = $('#keyword').val();
+	
+				/* if(search == null || keyword == null){
+					alert("빈칸없이 검색해주세요!");
+				}else{
+					location.href="search.do";
+				}
+				 */
+				$.ajax({
+					url:'search.do',
+					type:'post',
+					data:{search : search, keyword : keyword},
+					dataType:"json",
+					success:function(data) {
+						$('#keyword').val("");
+						$divRow = $("#row");
+						$divRow.html("");
+						var $divCardDeck;
+						var $divCard;
+						var $divTopImg;
+						var $divCircle;
+						var $dDay;
+						var $day;
+						var $cardBody;
+						var $cardTitle;
+						var $gDetail;
+						var $cardText1;
+						var $cardText2;
+						var $small1;
+						var $small2;
+						var $span1;
+						var $span2;
+						var $small3;
+						var $span3;
+						var $img;
+						console.log(data[0].groomingImg);
+						if(data.length > 0) {
+							for(var i in data) {
+								console.log(data[i].groomingNo);
+								$divCardDeck = $("<div class='card-deck col-lg-3'>");
+								$divCard = $("<div class='card'>");
+								$divTopImg = $("<div class='top-img'>");
+								$img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								$divCircle = $("<div id='circle'>");
+								if (data[i].groomingEd > data[i].groomingNd) {
+									$dDay = $("<span id='d-day'>").text("D-");
+									$day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									$divCircle.append($dDay);
+									$divCircle.append($day);
+								} else {
+									$day = $("<span id='day'>").text("마감");
+									$divCircle.append($day);
+								}
+
+								$cardBody = $("<div class='card-body'>");
+								$cardTitle = $("<h5 class='card-title'>");
+								$gDetail = $("<a href='groomingDetail.do?groomingNo=" + data[i].groomingNo + "'>").text(data[i].groomingTitle);
+								$cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
+								$cardText2 = $("<p class='card-text'>");
+								$small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
+								$small2 = $("<small>");
+								$span1 = $("<span>").text(data[i].currentP + "/");
+								$span2 = $("<span>").text(data[i].groomingP);
+								$small3 = $("<small class='text-muted'>");
+								$span3 = $("<span class='groupType'>").text(data[i].groomingType);
+
+								$divTopImg.append($divCircle);
+								$divTopImg.append($img);
+
+								$cardTitle.append($gDetail);
+
+								$small2.append($span1);
+								$small2.append($span2);
+								$small3.append($span3);
+								$cardText2.append($small2);
+								$cardText2.append($small3);
+
+								$cardBody.append($cardTitle);
+								$cardBody.append($cardText1);
+								$cardBody.append($cardText2);
+
+								$divCard.append($divTopImg);
+								$divCard.append($cardBody);
 
 							}
 							
@@ -488,26 +518,19 @@
 							 $divCardDeck.append($divCard);
 							 $divRow.append($divCardDeck);
 						}
+
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+							+ "message: " + request.responseText
+							+ "error: " + errorData);
 					}
 
-				
-				
-				
-				
-				
-				
-		
-				},error:function(request, status, errorData){
-					alert("error code: " + request.status + "\n"
-						+"message: " + request.responseText
-						+"error: " + errorData);
-			}
-			
-			})  
-		
-		})
+				}); // ajax end
 	
-	})
+			}); // click end
+	
+		});
 	</script> 
 
 
