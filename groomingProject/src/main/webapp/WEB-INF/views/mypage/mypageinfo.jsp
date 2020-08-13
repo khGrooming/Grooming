@@ -341,9 +341,9 @@ section
 					  	<div class="nav">
 					  		<div class="submenu s" id="menu1"><a>개인정보</a></div>
 					  		<div class="submenu s" id="menu2"><a >스터디</a></div>
-					  		<div class="submenu s" id="menu3"><a href="#">찜목록</a></div>
-					  		<div class="submenu s" id="menu4"><a href="#">활동내역</a></div>
-					  		<div class="submenu s" id="menu5"><a href="#">포인트</a></div>
+					  		<div class="submenu s" id="menu3"><a >찜목록</a></div>
+					  		<div class="submenu s" id="menu4"><a >활동내역</a></div>
+					  		<div class="submenu s" id="menu5"><a >포인트</a></div>
 					  	</div>
 					  </div>
 				</div>

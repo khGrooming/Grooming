@@ -14,9 +14,12 @@
 	.MsectionDiv {
 		display: none;
 		padding: 20px 10px 10px 10px;
-		border: 3px solid rgba(167, 167, 167, 1);
+		border: 3px solid rgba(175, 202, 202, 1);
 		height: 500px;
-		background: rgba(175, 202, 202, 1); /* 변경 */
+		
+		/* 변경 */
+		background:white; 
+/* 		background: rgba(175, 202, 202, 1);  */
 	}
 	
 	 /*라디오버튼 숨김*/
@@ -31,23 +34,30 @@
 		font-weight: 600;
 		text-align: center;
 		color: rgba(160, 160, 160, 1);
-		border: 1px solid rgba(167, 167, 167, 1);
+		border: 1px solid rgba(175, 202, 202, 1);
 		border-top-left-radius: 6px;
 		border-top-right-radius: 6px;
-		background: rgba(175, 202, 202, 1); /* 변경 */
+		
+		/* 변경 */
+		background: white; 
+/* 		background: rgba(175, 202, 202, 1);  */
 	
 	}
 	
 	.Mlabel:hover {
-	    color: rgba(59, 117, 117, 1); /* 변경 */
+		/* 변경 */
+	    color: rgba(59, 117, 117, 1); 
 	    cursor: pointer;}
 	
 	/*input 클릭시, label 스타일*/
 	.MinputBar:checked + .Mlabel {
 		color: #555;
-		border: 3px solid rgba(167, 167, 167, 1);
+		border: 3px solid rgba(175, 202, 202, 1);
 		/* border-top: 2px solid #2e9cdf; */
-		border-bottom: 3px solid rgba(175, 202, 202, 1);  /* 변경 */
+		
+		 /* 변경 */
+		border-bottom: 3px solid white;
+/* 		border-bottom: 3px solid rgba(175, 202, 202, 1);  */
 	}
 	
 	#Mtab1:checked ~ #Mcontent1,
@@ -70,6 +80,15 @@
 	#member_tb tr {
 		margin-bottom: 10px;	
 	}
+	#memberupForm input{
+		width: 58%;
+		
+	}
+	.mLabel{
+		text-align:right;
+		width: 35%;
+		margin-right: 2%;
+	}
 </style>
 </head>
 <body>
@@ -83,51 +102,75 @@
             <label class="Mlabel" for="Mtab3">탈퇴 하기</label>
      		
             <div class="MsectionDiv"  id="Mcontent1" style="text-align: center;">
-            	<div style="margin-right:50px; width: 60%; margin-left: auto; margin-right: auto;">
-            	<form>
-	            	<label>이메일</label>
-	            			<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
-	            		<label id="pwdlabel">비밀번호</label>
-	            				<input type="password" id="memberPwd" name="memberPwd"><br>           				
+            	<div style="margin-right:50px; width: 70%; margin-left: 5%; margin-right: auto;">
+            	
+            	<form id="memberupForm" action="memberup.do" method="post"  >
+            			<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
+		            	<label class="mLabel">이메일</label>
+		            	<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
+	            	
+	            	<label class="mLabel" id="pwdlabel">비밀번호</label>
+	            	<input type="password" id="memberPwd" name="memberPwd"><br>  
+	            	<div style="width: 60%; float: right; text-align: left; height: 10%;">
+	            		<p id="pwderror" style="font-size:10px; margin: 0;">※비밀번호를 변경하기 위하여 현재 비밀번호를 입력해주세요.</p>
+	            	</div><br clear="both">
+	            	
+	            	<label class="mLabel" id="pwdchecklabel">변경할 비밀번호</label>
+	            	<input type="password" id="pwdRevised" name="pwdRevised" readonly><br>
+	            	<div id="pwdCheckErrorDiv"style="width: 60%; float: right; text-align: left; display: none;">
+	            		<p id="pwdCheckerror" style="font-size:10px;"></p>
+	            	</div><br id="pwdCheckBr"style="width: 0; margin:0; display: none;"  clear="both" >
+	            		
+           			<label class="mLabel" id="pwdchecklabel2">변경할 비밀번호 확인</label>
+           			<input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck" readonly><br>
+           			<div id="pwdCheckErrorDiv2"style="width: 60%; float: right; text-align: left; display: none;">
+	            		<p id="pwdCheckerror2" style="font-size:10px;"></p>
+	            	</div><br id="pwdCheckBr2"style="width: 0; margin:0; display: none;"  clear="both" >
 	            			
-	            		<label id="pwdchecklabel">변경할 비밀번호</label>
-	            			<input type="password" id="pwdRevised" name="pwdRevised" readonly><br>
+            		<label class="mLabel">닉네임</label> 
+            		<input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }" required><br>
 	            		
-	            			<label id="pwdchecklabel2">변경할 비밀번호 확인</label>
-	            			<input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck" readonly><br>
-	            			
-	            		<label>닉네임</label> <input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }"><br>
+            		<label class="mLabel">이름</label>
+            		<input type="text" id="memberName" name="memberName" readonly value="${loginUser.memberName }"><br>
 	            		
-	            		<label>이름</label><input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
-	            		
-	            		<label>성별</label><input type="radio" id="genderM" name="gender" value="M"><label for="genderM">남</label>
-									   <input type="radio" id="genderF" name="gender" value="F"><label for="genderF">여</label><br>
-									   
-	            		<label>휴대전화 번호</label> 
-	            			<input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }">
+            		<label class="mLabel">성별</label>
+	            		<div style="width: 58%; margin:0; float: right;  text-align: left;">
+		            		<input type="radio" id="genderM" name="gender" value="M" style="width: 5%;"><label for="genderM">남</label>
+							<input type="radio" id="genderF" name="gender" value="F" style="width: 5%; margin-left: 20%;"><label for="genderF">여</label><br>
+						</div>		<br><br>   
+            		<label class="mLabel">휴대전화 번호</label> 
+           			<input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }">
+
+					<button onclick="testtest1();" >수정하기</button> 
 	            		
             	</form><br>            	
 				</div>
-				<button>수정하기</button> 
              </div>
              <script>
              	$(function(){
-             		var genderChecked = "${loginUser.memberGender}"
+             		var genderChecked = "${loginUser.memberGender}";
              		
              		if(genderChecked == "M"){
              			$("#genderM").attr("checked",true);
              		}else{
              			$("#genderF").attr("checked",true);             			
              		}
+             		
+             		if($("#pwdRevised").prop("readonly")){
+             			
+             			$("#pwdRevised").css("background","lightgray");
+             			$("#pwdRevisedCheck").css("background","lightgray");
+             		}
              	})
              	
-             	
+             	function testtest1(){
+             		$("#memberupForm").submit();
+             	}
 
              	$(function(){
              		
              		$("#memberPwd").keyup(function(){
              			var inputPwd = $(this).val();
-             			alert(inputPwd);
              			/* if (!regexPwd.test(inputPwd)) {
              				alert("비밀번호를 정확히 입력하세요");
              			}else{
@@ -138,10 +181,14 @@
               					data:{inputPwd:inputPwd},
               					success : function(data) {
               						if(data == "Y"){
+              							$("#pwderror").text("비밀번호가 일치합니다").css("color","green");
         	      						$("#pwdRevised").attr("readonly",false);
-        	      						$("#pwdRevisedCheck").attr("readonly",false);
+        	      						$("#pwdRevised").css("background"," white");
+        	      						
               						}else{
-              							alert("비밀번호가 틀립니다")
+              							$("#pwderror").text("비밀번호가 다릅니다").css("color","red");
+              							
+              							
               						}
         			            },
         			            error : function(data) {  
@@ -153,26 +200,99 @@
              		})
              	/* 비밀번호 정규식 */
              		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
+       
              		$("#pwdRevised").keyup(function(){
              			var pwd = $("#pwdRevised").val();
              			
              			if (!regexPwd.test($("#pwdRevised").val())) {
-             					$("#pwdchecklabel").css("color","red");
-             			}else{
-             				$("#pwdchecklabel").css("color","green");
+             					$("#pwdCheckBr").css("display","block");
+             					$("#pwdCheckErrorDiv").css("display","block");             					
+             					$("#pwdCheckerror").text("사용할 수 없는 비밀번호 입니다").css("color","red");
+             			}
+             			else if($("#memberPwd").val() == $("#pwdRevised").val()){
+             				alert("입력하신 비밀번호는 사용하시는 비밀번호와 같습니다");
+             				$("#pwdRevised").val("");
+             			}
+             			else{
+             				$("#pwdCheckBr").css("display","none");
+         					$("#pwdCheckErrorDiv").css("display","none");   
+      						$("#pwdRevisedCheck").attr("readonly",false);
+      						$("#pwdRevisedCheck").css("background"," white");
+      						
              				
              			}
              		})
-             		$("#pwdRevisedCheck").keyup(function(){
-             			
-             			
+             		
+             		$("#pwdRevisedCheck").keyup(function(){      
              			if($("#pwdRevised").val() == $("#pwdRevisedCheck").val()){
-             				$("#pwdchecklabel2").css("color","green");
+             				$("#pwdCheckBr2").css("display","none");
+         					$("#pwdCheckErrorDiv2").css("display","none");  
              			}else{
-             				$("#pwdchecklabel2").css("color","red");
+             				$("#pwdCheckBr2").css("display","block");
+         					$("#pwdCheckErrorDiv2").css("display","block");             					
+         					$("#pwdCheckerror2").text("변경할 비밀번호와 일치하지 않습니다").css("color","red");
              			}
              		})      		
              	})
+             	
+             	
+             	/* 닉네임 정규식 */
+             	let regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
+             	$("#memberNickName").keyup(function(){
+             		var memberNickName = $(this).val();
+             		if (!regexNickName.test($("#memberNickName").val())) {
+             				$("#memberNickName").css("color","red");
+             		}else{
+             			
+             			$.ajax({
+             				url:"nickNameDuplicateChk.do",
+             				data:{memberNickName:memberNickName},
+             			success:function(data){
+    						if(data == "success"){
+    							$("#memberNickName").css("color","green");
+    						} else {
+    							$("#memberNickName").css("color","red");
+    						}
+             			},
+    					error:function(request, status, errorData){
+    						regiNickNamePass = false;
+    						alert("error code: " + request.status + "\n"
+    								+"message: " + request.responseText
+    								+"error: " + errorData);
+    					}
+             				
+             			})
+             			
+             		}
+             	})
+             	let regexPhone = /^\d{10,11}$/;
+             	$("#memberPhone").keyup(function(){
+             	// 전화번호 - 제거
+        			memberPhone = ($("#memberPhone").val()).replace(/-/gi,"");
+
+        			if (!regexPhone.test(memberPhone)) {
+        				$("#memberPhone").css("color","red");
+        			} else {
+        				$.ajax({
+        					url:"phoneDuplicateChk.do",
+        					data:{memberPhone:memberPhone},
+        					success:function(data){
+        						console.log("회원가입 전화번호 결과 : " + data);
+        						if(data == "success"){
+        							$("#memberPhone").css("color","green");
+        						} else {
+        							$("#memberPhone").css("color","red");
+        						}
+        					},
+        					error:function(request, status, errorData){
+        						alert("error code: " + request.status + "\n"
+        								+"message: " + request.responseText
+        								+"error: " + errorData);
+        					}
+        				});
+        			}
+             	})
+             	
              	</script>
         
             <div class="MsectionDiv"  id="Mcontent2">

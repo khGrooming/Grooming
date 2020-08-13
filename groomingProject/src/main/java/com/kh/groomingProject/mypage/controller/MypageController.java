@@ -250,6 +250,12 @@ public class MypageController {
 		return "home";
 	}
 	
-	
+
+	@RequestMapping("memberup.do")
+	public String memberUpdate(Member m) {
+		System.out.println("memberup.do"+m);
+		
+		return "mypage/mypageinfo";
+	}
 	
 }
