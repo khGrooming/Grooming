@@ -74,7 +74,7 @@ public class GroomingController {
 	public void gSearchWriter(HttpServletResponse response, String search, String keyword) throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 
-		ArrayList<Grooming> glist =  new ArrayList();
+		ArrayList<Grooming> glist =  new ArrayList<>();
 		if(search.equals("title")) {
 			ArrayList<Grooming> list = gService.gSearchTitle(keyword);
 			glist = list;

@@ -28,19 +28,15 @@
             width: 100px;
             font-size: large;
             font-weight: bold;
-
         }
-
         #tab-menu li a {
             text-align: center;
             color: black;
         }
-
         img {
             max-width: 100%;
             max-height: 100%;
         }
-
         #circle {
             width: 50px;
             height: 50px;
@@ -60,7 +56,6 @@
         #day{
         	position:relative;
         }
-
         .top-img{
           
             background-size: cover;
@@ -69,14 +64,12 @@
             border-radius: 15px 15px 0px 0px;
         }
         .groupType{
-
             margin-left: 100px;
         }
         .card{
             border: 2px solid skyblue;
             border-radius: 15px;
         }
-
         .card-deck{
             margin-top: 30px;
         }
@@ -275,7 +268,6 @@
 						
 							}
 						}
-
 					
 					
 					
@@ -342,7 +334,6 @@
 								 }else{
 									 $day = $("<span id='day'>").text("마감");
 									 $divCircle.append($day);
-
 								}
 								
 								 $cardBody = $("<div class='card-body'>");
@@ -380,7 +371,6 @@
 								 $divRow.append($divCardDeck);
 							}
 						}
-
 					},error:function(request, status, errorData){
 						alert("error code: " + request.status + "\n"
 							+"message: " + request.responseText
@@ -482,41 +472,9 @@
 								$divCard.append($divTopImg);
 								$divCard.append($cardBody);
 
-							}
-							
-							 $cardBody = $("<div class='card-body'>");
-							 $cardTitle = $("<h5 class='card-title'>");
-							 $gDetail =$("<a href='groomingDetail.do?groomingNo="+data[i].groomingNo+"'>").text(data[i].groomingTitle);
-							 $cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
-							 $cardText2 = $("<p class='card-text'>");
-							 $small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
-							 $small2 = $("<small>");
-							 $span1 = $("<span>").text(data[i].currentP+"/");
-							 $span2 = $("<span>").text(data[i].groomingP);
-							 $small3 = $("<small class='text-muted'>");
-							 $span3 = $("<span class='groupType'>").text(data[i].groomingType);
-							
-							 
-							 $divTopImg.append($divCircle);
-							 $divTopImg.append($img);
-							 
-							 $cardTitle.append($gDetail);
-							 
-							 $small2.append($span1);
-							 $small2.append($span2);
-							 $small3.append($span3);
-							 $cardText2.append($small2);
-							 $cardText2.append($small3);
-							 
-							 $cardBody.append($cardTitle);
-							 $cardBody.append($cardText1);
-							 $cardBody.append($cardText2);
-							 
-							 $divCard.append($divTopImg);
-							 $divCard.append($cardBody);
-							 
-							 $divCardDeck.append($divCard);
-							 $divRow.append($divCardDeck);
+								$divCardDeck.append($divCard);
+								$divRow.append($divCardDeck);
+							} //for end
 						}
 
 					},

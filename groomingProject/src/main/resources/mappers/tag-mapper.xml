@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="tagMapper">
+
+	<resultMap type="Tag" id="tagResultSet">
+		<id property="tagNo" column="TAG_NO"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="tagCount" column="TAG_COUNT"/>
+		<result property="tagDate" column="TAG_DATE"/>
+	</resultMap>
+	
+	<update id="mergeTags" parameterType="string">
+		MERGE INTO TAG
+		USING DUAL
+		   ON (TRIM(TAG_NAME)=#{tagTemp})
+		WHEN MATCHED THEN
+		    UPDATE SET TAG_COUNT = TAG_COUNT+1
+		WHEN NOT MATCHED THEN
+		    INSERT (TAG_NO, TAG_NAME, TAG_COUNT, TAG_DATE) 
+		    VALUES ('TAG' || LPAD(SEQ_TAG_NO.NEXTVAL,5,0), #{tagTemp}, 1, SYSDATE)
+	</update>
+
+</mapper>
