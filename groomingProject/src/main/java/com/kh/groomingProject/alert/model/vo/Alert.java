@@ -1,4 +1,4 @@
-package com.kh.groomingProject.member.model.vo;
+package com.kh.groomingProject.alert.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;

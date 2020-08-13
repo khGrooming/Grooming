@@ -18,8 +18,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.groomingProject.alert.model.service.AlertService;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 import com.kh.groomingProject.tag.model.service.TagService;
 import com.kh.groomingProject.tag.model.vo.Tag;
@@ -33,6 +35,9 @@ public class MemberController {
 
 	@Autowired
 	private TagService tagService;
+	
+	@Autowired
+	private AlertService alertService;
 
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -62,23 +67,60 @@ public class MemberController {
 	@RequestMapping("memberInsert.do")
 	@ResponseBody
 	public String memberInsert(Member m) {
-
-		System.out.println("memberInsert : " + m);
+		String message = "";
+		System.out.println("회원가입 (프론트정보): " + m);
 
 		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 
 		m.setMemberPwd(emcPwd);
 
-		int result = mService.insertMember(m);
+		// 회원가입 (insert)
+		int resultInsertMember = mService.insertMember(m);
+		
+		// 회원가입 (select)
+		Member member = mService.loginMember(m);
+		System.out.println("회원가입 정보 : " + m);
 
-		if(result > 0) {
+		message = "신규가입을 환영합니다.";
+		
+		MemberAlert memberAlert = new MemberAlert(member.getMemberNo(), message);
+		System.out.println("회원가입 (신규 가입 알림 추가) : " + memberAlert);
+		
+		// 회원가입 (신규 가입 알림 추가)
+		int resultAlertJoin = alertService.insertAlert(memberAlert);
+
+		// 회원가입 (신규포인트 지급)
+		int resultWelcomePoint = mService.welcomePoint(member.getMemberNo());
+		
+		message = "신규가입 감사 포인트가 지급 되었습니다.";
+		
+		memberAlert.setAlertContent(message);
+		System.out.println("회원가입 (신규포인트 지급) : " + memberAlert);
+		
+		// 회원가입 (신규 가입 감사 포인트 알림 추가)
+		int resultAlertPoint = alertService.insertAlert(memberAlert);
+
+		if(resultInsertMember == 0) {
+			System.out.println("회원가입 (insert): 실패");
+
+		} else if(member.getMemberNo() == null) {
+			System.out.println("회원가입 (select): 실패");
+
+		} else if(resultAlertJoin == 0) {
+			System.out.println("회원가입 (신규 가입 알림 추가): 실패");
+			
+		} else if(resultWelcomePoint == 0) {
+			System.out.println("회원가입 (신규포인트 지급): 실패");
+			
+		} else if(resultAlertPoint == 0) {
+			System.out.println("회원가입 (신규 가입 감사 포인트 알림 추가): 실패");
+			
+		} else {
 			System.out.println("회원가입 확인 : 성공");
 			return "success";
-		} else {
-			System.out.println("회원가입 확인 : 실패");
-			return "fail";
 		}
-		
+		return "fail";
+
 	}
 	
 	private String saveFile(String memberNo,MultipartFile file,HttpServletRequest request) {

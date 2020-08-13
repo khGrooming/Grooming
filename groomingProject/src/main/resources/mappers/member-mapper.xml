@@ -44,7 +44,7 @@
 		FROM MEMBER
 		WHERE MEMBER_EMAIL=#{memberEmail}
 	</select>
-	
+
 	<select id="nickNameDuplicateChk" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
@@ -63,5 +63,12 @@
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
+	<select id="selectHost" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER M
+		JOIN GROOMING G ON M.MEMBER_NO = G.MEMBER_NO
+		WHERE GROOMING_NO = #{groomingNo}
+		AND MEMBER_STATUS='N'
+	</select>
 
 </mapper>

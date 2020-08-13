@@ -43,4 +43,9 @@ public class MemberDao {
 		return sqlSessionTemplate.update("memberMapper.updateMemberOption", m);
 	}
 
+	public int welcomePoint(String memberNo) {
+
+		return sqlSessionTemplate.insert("pointMapper.welcomePoint", memberNo);
+	}
+
 }

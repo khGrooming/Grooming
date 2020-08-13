@@ -20,9 +20,6 @@
     <script src='${contextPath }/resources/js/fullcalendar/locales-all.js'></script>
 	
 	
-	<!-- jquery js -->
-    <script src="http:/code.jquery.com/jquery-latest.min.js"></script>
-    
     <title>Hello, world!</title>
     <style>
         body{
@@ -377,7 +374,7 @@
 
     <footer>
 
-
+		<jsp:include page="../common/footer.jsp" />
     </footer>
 
 
