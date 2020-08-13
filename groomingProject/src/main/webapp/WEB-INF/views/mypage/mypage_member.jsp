@@ -104,13 +104,13 @@
             <div class="MsectionDiv"  id="Mcontent1" style="text-align: center;">
             	<div style="margin-right:50px; width: 70%; margin-left: 5%; margin-right: auto;">
             	
-            	<form id="memberupForm" action="memberup.do" method="post"  >
+            	<form id="memberupForm" action="memberup.do" method="post" onsubmit="return memberInfoSubmit()" >
             			<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
 		            	<label class="mLabel">이메일</label>
 		            	<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
 	            	
 	            	<label class="mLabel" id="pwdlabel">비밀번호</label>
-	            	<input type="password" id="memberPwd" name="memberPwd"><br>  
+	            	<input type="password" id="memberPwdBefor" name="memberPwdBefor"><br>  
 	            	<div style="width: 60%; float: right; text-align: left; height: 10%;">
 	            		<p id="pwderror" style="font-size:10px; margin: 0;">※비밀번호를 변경하기 위하여 현재 비밀번호를 입력해주세요.</p>
 	            	</div><br clear="both">
@@ -122,7 +122,7 @@
 	            	</div><br id="pwdCheckBr"style="width: 0; margin:0; display: none;"  clear="both" >
 	            		
            			<label class="mLabel" id="pwdchecklabel2">변경할 비밀번호 확인</label>
-           			<input type="password" id="pwdRevisedCheck" name="pwdRevisedCheck" readonly><br>
+           			<input type="password" id="memberPwd" name="memberPwd" readonly><br>
            			<div id="pwdCheckErrorDiv2"style="width: 60%; float: right; text-align: left; display: none;">
 	            		<p id="pwdCheckerror2" style="font-size:10px;"></p>
 	            	</div><br id="pwdCheckBr2"style="width: 0; margin:0; display: none;"  clear="both" >
@@ -135,18 +135,19 @@
 	            		
             		<label class="mLabel">성별</label>
 	            		<div style="width: 58%; margin:0; float: right;  text-align: left;">
-		            		<input type="radio" id="genderM" name="gender" value="M" style="width: 5%;"><label for="genderM">남</label>
-							<input type="radio" id="genderF" name="gender" value="F" style="width: 5%; margin-left: 20%;"><label for="genderF">여</label><br>
+		            		<input type="radio" id="genderM" name="memberGender" value="M" style="width: 5%;"><label for="genderM">남</label>
+							<input type="radio" id="genderF" name="memberGender" value="F" style="width: 5%; margin-left: 20%;"><label for="genderF">여</label><br>
 						</div>		<br><br>   
             		<label class="mLabel">휴대전화 번호</label> 
            			<input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }">
 
-					<button onclick="testtest1();" >수정하기</button> 
+					<button>수정하기</button> 
 	            		
             	</form><br>            	
 				</div>
              </div>
              <script>
+             		var changeinfo="N";
              	$(function(){
              		var genderChecked = "${loginUser.memberGender}";
              		
@@ -159,17 +160,36 @@
              		if($("#pwdRevised").prop("readonly")){
              			
              			$("#pwdRevised").css("background","lightgray");
-             			$("#pwdRevisedCheck").css("background","lightgray");
+             			$("#memberPwd").css("background","lightgray");
              		}
              	})
              	
-             	function testtest1(){
-             		$("#memberupForm").submit();
+             	function memberInfoSubmit(){
+             		var memberGender = $("input[name=memberGender]:checked").val();
+             		if(memberGender != "${loginUser.memberGender}"){
+             			changeinfo="Y";
+             		}
+         			alert(memberGender);
+             		if(changeinfo =="Y"){
+             			var updateCheck = confirm("수정된 내용을 변경하겠습니까?");
+             			if(updateCheck){             				
+	             			
+	             			changeinfo = "N"
+	             			return true;
+             			}else{
+             				alert("변경을 취소하였습니다");
+             				changeinfo = "N"
+             				return false;
+             			}
+             		}else{
+             			alert("수정된 내용이 없습니다.");
+             			return false;
+             		}
              	}
 
              	$(function(){
              		
-             		$("#memberPwd").keyup(function(){
+             		$("#memberPwdBefor").keyup(function(){
              			var inputPwd = $(this).val();
              			/* if (!regexPwd.test(inputPwd)) {
              				alert("비밀번호를 정확히 입력하세요");
@@ -196,7 +216,12 @@
         			            }
               				})
              				
-             			/* } */
+             			/* } *//* 이전 비밀번호 정규화 지켰는지 확인해줌 */
+             			
+             			$("input[name=memberGender]").change(function(){
+             				
+             			})
+             			
              		})
              	/* 비밀번호 정규식 */
              		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
@@ -209,36 +234,45 @@
              					$("#pwdCheckErrorDiv").css("display","block");             					
              					$("#pwdCheckerror").text("사용할 수 없는 비밀번호 입니다").css("color","red");
              			}
-             			else if($("#memberPwd").val() == $("#pwdRevised").val()){
+             			else if($("#memberPwdBefor").val() == $("#pwdRevised").val()){
              				alert("입력하신 비밀번호는 사용하시는 비밀번호와 같습니다");
              				$("#pwdRevised").val("");
              			}
              			else{
              				$("#pwdCheckBr").css("display","none");
          					$("#pwdCheckErrorDiv").css("display","none");   
-      						$("#pwdRevisedCheck").attr("readonly",false);
-      						$("#pwdRevisedCheck").css("background"," white");
+      						$("#memberPwd").attr("readonly",false);
+      						$("#memberPwd").css("background"," white");
       						
              				
              			}
              		})
              		
-             		$("#pwdRevisedCheck").keyup(function(){      
-             			if($("#pwdRevised").val() == $("#pwdRevisedCheck").val()){
+             		$("#memberPwd").keyup(function(){      
+             			if($("#pwdRevised").val() == $("#memberPwd").val()){
              				$("#pwdCheckBr2").css("display","none");
          					$("#pwdCheckErrorDiv2").css("display","none");  
+         					if($("#memberPwd").val() != $("#memberPwdBefor").val()){
+                 				changeinfo="Y";
+                 				alert("비번 변경됨"+changeinfo);
+                 			}
              			}else{
              				$("#pwdCheckBr2").css("display","block");
          					$("#pwdCheckErrorDiv2").css("display","block");             					
          					$("#pwdCheckerror2").text("변경할 비밀번호와 일치하지 않습니다").css("color","red");
              			}
-             		})      		
+             			
+	             	
+             		})  
+             		
+             	
              	})
              	
              	
              	/* 닉네임 정규식 */
              	let regexNickName = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|\*].{1,10}$/;
              	$("#memberNickName").keyup(function(){
+             		
              		var memberNickName = $(this).val();
              		if (!regexNickName.test($("#memberNickName").val())) {
              				$("#memberNickName").css("color","red");
@@ -250,6 +284,9 @@
              			success:function(data){
     						if(data == "success"){
     							$("#memberNickName").css("color","green");
+    							if($("#memberNickName").val() != "${loginUser.memberNickName}"){
+    								changeinfo="Y";
+    							}
     						} else {
     							$("#memberNickName").css("color","red");
     						}
@@ -264,7 +301,10 @@
              			})
              			
              		}
+             		
              	})
+             	
+             	
              	let regexPhone = /^\d{10,11}$/;
              	$("#memberPhone").keyup(function(){
              	// 전화번호 - 제거
@@ -280,6 +320,9 @@
         						console.log("회원가입 전화번호 결과 : " + data);
         						if(data == "success"){
         							$("#memberPhone").css("color","green");
+        							if($("#memberPhone").val() != "${loginUser.memberPhone}"){
+        								changeinfo="Y";
+        							}
         						} else {
         							$("#memberPhone").css("color","red");
         						}
@@ -292,6 +335,9 @@
         				});
         			}
              	})
+             	
+             	
+             	
              	
              	</script>
         

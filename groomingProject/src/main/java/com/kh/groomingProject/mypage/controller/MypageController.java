@@ -252,7 +252,13 @@ public class MypageController {
 	
 
 	@RequestMapping("memberup.do")
-	public String memberUpdate(Member m) {
+	public String memberUpdate(Member m,HttpServletRequest request) {
+		
+		if(m.getMemberPwd().equals("")) {
+			HttpSession session = request.getSession();
+			Member pwdM = (Member)session.getAttribute("loginUser");
+			m.setMemberPwd(pwdM.getMemberPwd());
+		}
 		System.out.println("memberup.do"+m);
 		
 		return "mypage/mypageinfo";
