@@ -69,7 +69,7 @@
 		JOIN GROOMING G ON M.MEMBER_NO = G.MEMBER_NO
 		WHERE GROOMING_NO = #{groomingNo}
 		AND MEMBER_STATUS='N'
+	
 	</select>
-
 
 </mapper>

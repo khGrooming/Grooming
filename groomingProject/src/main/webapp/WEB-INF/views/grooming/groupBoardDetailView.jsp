@@ -260,7 +260,7 @@
 
     <footer>
 
-
+		<jsp:include page="../common/footer.jsp" />
     </footer>
 
 
