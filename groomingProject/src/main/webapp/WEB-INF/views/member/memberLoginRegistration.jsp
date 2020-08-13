@@ -375,8 +375,7 @@ section .form_container .hideItem
 						<input type="button" onclick="login()" value="로그인">
 						<input type="button" onclick="kakaoLogin()" class="kakaoLogin" value="">
 						<p class="signup">로그인에 문제가 있나요 ? 
-							<a href="#" onclick="findAccount()">아이디 찾기 / 비밀번호 찾기</a>
-							<a href="#" onclick="goBackPage()">비밀번호 찾기</a>
+							<a href="#" onclick="findAccount()">아이디 /비밀번호 찾기</a>
 						</p>
 						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
 					</form>
