@@ -24,6 +24,7 @@
 		.cafe{height:80px;text-align:center;padding:30px;}
 		
 		#reservation{display:none;}
+		#headCount{display:none;}
 		.timeScroll{overflow-x:scroll;overflow-y:hidden;white-space: nowrap;}
 		.time, .impossible{width:50px;display:inline-block;}
 	</style>
@@ -80,6 +81,15 @@
 						
 					</div>
 					<hr>
+					<div class="row">
+						<div id="reservationInfo" style="width:100%"></div>
+					</div>
+					<hr>
+					<div class="row">
+						<select id="headCount">
+							
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -93,24 +103,23 @@
 	$getClass = 0;
 	
 	// 오늘 날짜에 대한 정보 선언
-	let today = new Date();
-    let year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
+	var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth() + 1;
+    var day = today.getDate();
     
  	// 넘어갈 정보들
-    var cPriceNo = '';
-    var selectDay = day;
-    var cPriceNo = '';
-    
-	
+    var cPriceNo = '';		// 룸 선택시 넘어갈 가격정보
+    var selectDay = day;	// 예약 날짜(기본:오늘)
+	var click1=0;			// 예약 시작 시간
+	var click2=0;			// 예약 종료 시간
+	var head=0;				// 예약 한 사람 수
+	var d=day;
 	
 		$(function(){
 			// 예약할 룸 클릭시 ajax로 데이터 가져와 예약불가 날짜 뿌려주기
 			$("[name='checkRoom']").on("click", function(){
 				cPriceNo = $('input[name="checkRoom"]:checked').val();
-
-
 				
 				$.ajax({
 					url:"checkRoom.do",
@@ -124,7 +133,8 @@
 						
 						click1=0;
 						click2=0;
-
+						
+						return cPriceNo;
 					},
 					error:function(data){
 						
@@ -134,13 +144,21 @@
 		});
 
  	//달력 화면에 뿌려주기
-    function showCalendar(y, m, day) {
+    function showCalendar(y, m, d) {
  		var text = '<p align="left" style="width:50%; display:inline-block;">시간 선택</p>';
- 		text += '<p align="right" style="width:50%; display:inline-block;">'+y+'년' +m+'일'+day+'일 </p>';
+ 		text += '<p align="right" style="width:50%; display:inline-block;">'+y+'년' +m+'일'+d+'일 </p>';
     	text += '<table border="1" style="text-align:center; width:100%;"><thead>';
-        text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12:y+','+(m-1))+')"> < </th>';
+    	if(m==month){
+    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m))+','+(d=day)+')"> < </th>';
+    	}else if(m>month){
+    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m-1))+','+(d=1)+')"> < </th>';
+    	}
         text += '<th colspan="5">' + y + '.' + ((m < 10) ? ('0' + m) : m) + '</th>';
-        text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1:y+','+(m+1))+')"> > </th>';
+        if(m==month){
+        	 text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1+','+(d=1):y+','+(m+1))+','+(d)+')"> > </th>';
+        }else{
+	        text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1+','+(d=1):y+','+(m+1))+','+(d=1)+')"> > </th>';
+        }
     	text += '<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>'
         text += '</thead>';
 
@@ -155,8 +173,8 @@
             }
         }
         document.getElementById('calendarDiv').innerHTML = text + '</tr>\n</table>';
-		colorApply(day);
-        return $getClass;
+		colorApply(d);
+        return $getClass, d;
     }
     
     // 클릭한 날짜 구하고 색깔 바꾸기
@@ -166,14 +184,15 @@
     	
     	for(var i in $("#calendarDiv tbody tr td").text()){
 	    	if(i == $(this).text()){
-	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","yellow");
-	    	}else if(i < day){
+	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","blue");
+	    	}else if(i < d){
 	    		$("#calendarDiv tbody tr td").eq(i).css("background","grey");
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css({"background":"grey"});
 	    	}else{
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","white");
 	    	}
     	}
+
     	// 여기에 시간 바뀌는 메소드를 만들어 적용하자
     	selectDay = $(this).text();
     	
@@ -238,16 +257,24 @@
 			}
 		}
 		
-		var click1=0;
-		var click2=0;
-		
 		// 예약 가능한 시간 마우스 호버시 마우스 모양 변화
 		$(document).on("mouseenter", ".timeSelect", function(){
 	    	$(".timeSelect").css("cursor","pointer");
 	    }).on("click",".timeSelect", function(){
 			$(this).css("background","blue");
 			
-			clickArea(parseInt($(this).parents(".time").text()));
+			clickArea(parseInt($(this).parents(".time").text().substring(0,2)));
+			
+			if(click2 == 0){
+				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ click2+':00 시 (1시간)');
+			}
+			else if(click1>click2){
+				$("#reservationInfo").text(selectDay +'일'+ click2+':00 시 ~'+ click1+':00 시'+'('+(click1-click2)+'시간)');												
+			}else{
+				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ click2+':00 시'+'('+(click2-click1)+'시간)');
+			}
+			
+			hCount();
 		})
 		
 	    // 예약 가능한 시간 클릭시 이벤트 처리
@@ -272,7 +299,7 @@
 							changeTime(data);
 							
 							for(var i=0; i<=10; i++){
-								if($(".time").eq(i).text() == click1){
+								if($(".time").eq(i).text().substring(0,2) == click1){
 									$(".time").eq(i).children(".timeSelect").css("background","blue");
 								}
 							}
@@ -285,6 +312,7 @@
 			    	return click1, click2;
 				}else{
 					click2 = str;
+					
 					// 가운데 색깔 채우기 & 예약 못하는 경우 추가
 					$.ajax({
 						url:"checkTime.do",
@@ -293,7 +321,8 @@
 			    		data:{date:selectDay, cPriceNo:cPriceNo},
 			    		success:function(data){
 							for(var i=0; i<=10; i++){
-								if($(".time").eq(i).text() > click1 && $(".time").eq(i).text() < click2 || $(".time").eq(i).text() < click1 && $(".time").eq(i).text() > click2){
+								$time = $(".time").eq(i).text().substring(0,2);
+								if($time > click1 && $time < click2 || $time < click1 && $time > click2){
 									$(".time").eq(i).children(".timeSelect").css("background","blue");			
 									
 									for(var j in data){
@@ -314,7 +343,24 @@
 				}
 			}
 		}
+		
+		// 인원수 체크 
+		function hCount(){
+			var cPriceNo = $('input[name="checkRoom"]:checked').val();
+			$select = $("#headCount");
+			$select.css("display","block");
+			
+			<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
+				if(${info.cPriceNo} == cPriceNo){
+					<c:forEach var="hCount" varStatus="i" begin="1" end="${info.cRoomHeadCount}">
+						$select.append("<option value='${i.count}'>${i.count}</option>");
+					</c:forEach>					
+				}
 
+			</c:forEach>
+		}
+		
+		
 	</script>
 	
 </body>
