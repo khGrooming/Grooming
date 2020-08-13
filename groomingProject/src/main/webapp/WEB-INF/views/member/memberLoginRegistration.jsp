@@ -10,7 +10,11 @@
 <title>Grooming</title>
 <link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
 
+<!-- jquery -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
+<!-- jquery cookie -->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-cookie/jquery.cookie.js.js"></script>
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -324,9 +328,9 @@ section .form_container .hideItem
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 
 	<!-- Cookie가 비어있지 않을 때 checked 속성을 줌 -->
-	<c:if test="${not empty cookie.userCheck}">
+<%-- 	<c:if test="${not empty cookie.userCheck}">
 		<c:set value="checked" var="checked"/>
-	</c:if>
+	</c:if> --%>
 	
 	<section>
 		<c:if test="${loginCheck == 'register'}">
@@ -343,7 +347,7 @@ section .form_container .hideItem
 					<form>
 						<h2>로그인</h2>
 						<div class="input-group">
-							<input type="text" id="loginEmail" name="memberEmail" value="${cookie.userCheck.value }" required>
+							<input type="text" id="loginEmail" name="memberEmail" value="" required>
 							<span>이메일</span>
 							<div class="chkVali" id="loginEmailChk">올바른 이메일을 입력해주세요.</div>
 						</div>
@@ -353,7 +357,7 @@ section .form_container .hideItem
 							<div class="chkVali" id="loginPwdChk">비밀번호를 입력해주세요.</div>
 						</div>
 						<div class="input-group">
-							<input type="checkbox" id="idSaveCheck" name="idSaveCheck" ${checked }><p>아이디 기억하기</p>
+							<input type="checkbox" id="idSaveCheck" name="idSaveCheck"><label for="idSaveCheck"><p>아이디 기억하기</p></label>
 							<div class="chkVali" id="loginError">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</div>
 						</div>
 						<input type="button" onclick="login()" value="로그인">
@@ -571,6 +575,12 @@ section .form_container .hideItem
 					success:function(data){
 						console.log("로그인 결과 : " + data);
 						if(data == "success"){
+							// 아이디 저장이 체크상태이면 쿠키에 아이디 저장
+							if($("#idSaveCheck").is(":checked")){
+								$.cookie("userCheck", memberEmail);
+								console.log($.cookie("userCheck"));
+							}
+
 							goBackPage();
 						} else{
 							$("#loginError").css("display","block");

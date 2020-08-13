@@ -62,10 +62,10 @@
 	<c:url var="communityMain" value="communityMain.do"/>
 	<c:url var="studyCafeMain" value="studyCafeMain.do"/>
 	<c:url var="loginPage" value="loginPage.do">
-		<param name="pageHistory" value="home">
+-		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 	</c:url>
 	<c:url var="registerPage" value="registerPage.do">
-		<param name="pageHistory" value="home">
+-		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 	</c:url>
 	<c:url var="myPage" value="myPage.do"/>
 	<c:url var="logout" value="logout.do"/>
