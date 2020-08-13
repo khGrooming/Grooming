@@ -42,4 +42,16 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.phoneDuplicateChk(m);
 	}
 
+	@Override
+	public int updateMemberOption(Member m) {
+
+		return mDao.updateMemberOption(m);
+	}
+
+	@Override
+	public int welcomePoint(String memberNo) {
+
+		return mDao.welcomePoint(memberNo);
+	}
+
 }

@@ -14,4 +14,8 @@ public interface MemberService {
 
 	int phoneDuplicateChk(Member m);
 
+	int updateMemberOption(Member m);
+
+	int welcomePoint(String memberNo);
+
 }

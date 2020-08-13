@@ -38,4 +38,14 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.phoneDuplicateChk", m);
 	}
 
+	public int updateMemberOption(Member m) {
+		
+		return sqlSessionTemplate.update("memberMapper.updateMemberOption", m);
+	}
+
+	public int welcomePoint(String memberNo) {
+
+		return sqlSessionTemplate.insert("pointMapper.welcomePoint", memberNo);
+	}
+
 }

@@ -9,6 +9,8 @@ public class Member implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7200797583466611023L;
+	
+	
 
 	private String memberNo;		// 멤버 번호
 	private String memberEmail;		// 멤버 이메일

@@ -6,10 +6,10 @@
 <meta charset="UTF-8">
 <title>footer</title>
 <style type="text/css">
-	.footer_question
-	{
-		color: white;
-	}
+.footer_question
+{
+	color: white;
+}
 </style>
 </head>
 <body>

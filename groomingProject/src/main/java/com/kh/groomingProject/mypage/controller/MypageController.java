@@ -44,8 +44,6 @@ public class MypageController {
 	
 	
 	
-	
-	
 	@RequestMapping("myPage.do")
 	public String myPageView(HttpServletRequest request) {
 		
