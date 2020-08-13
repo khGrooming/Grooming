@@ -510,6 +510,12 @@ section .form_container .hideItem
 
 	<!-- 로그인 -->
 	<script>
+		$("#loginPwd").keyup(function(e){
+			if(e.keyCode == 13){
+				login();
+			}
+		});
+
 		// 로그인 이메일 검사
 		function loginEmail() {
 			if (!regexEmail.test($("#loginEmail").val())) {
@@ -584,6 +590,12 @@ section .form_container .hideItem
 
 	<!-- 회원가입 -->
 	<script>
+		$("#regiPhone").keyup(function(e){
+			if(e.keyCode == 13){
+				register();
+			}
+		});
+		
 		// 이메일 정규화로 확인, 이메일 중복 확인(ajax)
 		function regiEmail() {
 			memberEmail = $("#regiEmail").val();
@@ -763,10 +775,7 @@ section .form_container .hideItem
 		});
 
 		// 회원가입(필수)
-		function register(){
-			// 추가 입력 테스트 용
-			registerOption();
-			
+		function register(){			
 			$("#registerError").css("display","none");
 			// 입력여부 확인
 			regiEmail();
