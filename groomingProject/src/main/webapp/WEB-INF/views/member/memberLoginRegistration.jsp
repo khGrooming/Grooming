@@ -10,15 +10,19 @@
 <title>Grooming</title>
 <link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
 
-<!-- jquery -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!-- jQuery -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
-<!-- jquery cookie -->
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-cookie/jquery.cookie.js.js"></script>
+<!-- jQuery cookie -->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-cookie/jquery.cookie.js"></script>
 
-<!-- Bootstrap CSS -->
+<!-- Bootstrap -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+<!-- Bootstrap4 TagsInput -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
 <link href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css" rel="stylesheet">
 
@@ -264,6 +268,11 @@ section .form_container .user .form-group form .signup a
 	text-decoration: none;
 	color: #677eff;
 }
+#idSaveCheckPopover
+{
+	cursor: pointer;
+	outline: none;
+}
 section .form_container .user .form-group form .signup a:hover
 {
 	color: green;
@@ -357,15 +366,16 @@ section .form_container .hideItem
 							<div class="chkVali" id="loginPwdChk">비밀번호를 입력해주세요.</div>
 						</div>
 						<div class="input-group">
-							<input type="checkbox" id="idSaveCheck" name="idSaveCheck"><label for="idSaveCheck"><p>아이디 기억하기</p></label>
+							<input type="checkbox" id="idSaveCheck" name="idSaveCheck">
+								<a tabindex="0" id="idSaveCheckPopover" data-toggle="popover" data-trigger="focus" data-content="개인정보 보호를 위해 개인 PC에서만 사용해 주세요.">
+									<p>아이디 기억하기</p>
+								</a>
 							<div class="chkVali" id="loginError">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</div>
 						</div>
 						<input type="button" onclick="login()" value="로그인">
 						<input type="button" onclick="kakaoLogin()" class="kakaoLogin" value="">
 						<p class="signup">로그인에 문제가 있나요 ? 
-							<a href="#" onclick="findAccount()">아이디 찾기</a>
-							/
-							<!-- <a href="#" onclick="findPassword()">비밀번호 찾기</a> -->
+							<a href="#" onclick="findAccount()">아이디 찾기 / 비밀번호 찾기</a>
 							<a href="#" onclick="goBackPage()">비밀번호 찾기</a>
 						</p>
 						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
@@ -498,8 +508,21 @@ section .form_container .hideItem
 		$(function() {
 			// 이전페이지 출력
 			console.log("이전페이지 : ${url}");
+			
+			// 쿠키에서 아이디 가져오기
+			if($.cookie("userCheck") != null) {
+				$("#loginEmail").val($.cookie("userCheck"));
+				$("input:checkbox[id='idSaveCheck']").prop("checked", true);
+			}
+			
 		});
 		
+		$("#idSaveCheckPopover").popover({
+			trigger: 'hover'
+		}).on("click", function(){
+			$("input:checkbox[id='idSaveCheck']").trigger("click");
+		});
+
 		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
 		function goBackPage() {
 			let url = "${url}";
@@ -579,6 +602,8 @@ section .form_container .hideItem
 							if($("#idSaveCheck").is(":checked")){
 								$.cookie("userCheck", memberEmail);
 								console.log($.cookie("userCheck"));
+							} else {
+								$.removeCookie("userCheck");
 							}
 
 							goBackPage();
@@ -918,12 +943,5 @@ section .form_container .hideItem
 
 	<jsp:include page="../common/footer.jsp" />
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<!--
-<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
- -->
 </body>
 </html>
