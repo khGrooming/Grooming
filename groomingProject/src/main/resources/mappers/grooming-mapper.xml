@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="groomingMapper">
+ 
+ 	<resultMap type="Grooming" id="groomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingContent" column="GROOMING_CONTENT"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="studySd" column="STUDY_START_DATE"/>
+		<result property="studyEd" column="STUDY_END_DATE"/>
+		<result property="groomingSd" column="GROOMING_START_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingCd" column="GROOMING_CREATE_DATE"/>
+		<result property="groomingMd" column="GROOMING_MODIFY_DATE"/>
+		<result property="status" column="GROOMING_STATUS"/>
+		<result property="count" column="GROOMING_COUNT"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		
+	</resultMap>
+	
+ 	<resultMap type="Gtag" id="gTagResultSet">
+		<id property="tagNo" column="TAG_NO"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="tagCount" column="TAG_COUNT"/>
+		<result property="tagDate" column="TAG_DATE"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		
+		
+	</resultMap>
+	
+ 	<resultMap type="Gspec" id="gSpecResultSet">
+		<id property="specNo" column="SPEC_NO"/>
+		<result property="specCNo" column="SPEC_C_NO"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="specFileName" column="SPEC_FILENAME"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="specConfirm" column="SPEC_CONFIRM"/>
+		
+		
+	</resultMap>
+ 
+ 	<select id="selectList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING
+ 		WHERE GROOMING_STATUS ='Y'
+ 		
+ 	</select>
+ 	
+ 	<select id="selectMentorList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING 
+ 		WHERE GROOMING_TYPE ='멘토'
+ 		ORDER BY GROOMING_NO DESC
+ 		
+ 	</select>
+ 
+ 	<select id="gSearchTitle" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND GROOMING_TITLE LIKE '%' || #{title} || '%'
+		ORDER BY GROOMING_NO DESC	
+		
+			
+ 	
+ 	</select>
+ 	<select id="gSearchWriter" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND MEMBER_NICKNAME LIKE '%' || #{writer} || '%'
+		ORDER BY GROOMING_NO DESC	
+		
+			
+ 	
+ 	</select>
+ 	<select id="gSearchContent" parameterType="string" resultMap="groomingResultSet" >
+ 		SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON (M.MEMBER_NO = G.MEMBER_NO)
+		WHERE GROOMING_STATUS ='Y'
+		AND GROOMING_CONTENT LIKE '%' || #{content} || '%'
+		ORDER BY GROOMING_NO DESC	
+	
+ 	</select>
+ 
+ 	<update id="updateCount" parameterType="string">
+ 		UPDATE GROOMING
+ 		SET GROOMING_COUNT = GROOMING_COUNT +1
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	</update>
+ 
+ 	<select id="selectOne" parameterType="string" resultMap="groomingResultSet">
+		SELECT *
+		FROM GROOMING G
+		WHERE GROOMING_NO=#{groomingNo}
+		AND GROOMING_STATUS ='Y'
+		
+	</select>
+ 
+ 	<select id="selectMoneyList" resultMap="groomingResultSet">
+ 		SELECT * 
+ 		FROM GROOMING 
+ 		WHERE DEPOSIT_MONEY > 0
+ 		ORDER BY GROOMING_NO DESC
+ 	
+ 	</select>
+ 
+ 	<select id="selectTag" parameterType="string" resultMap="gTagResultSet">
+ 		 SELECT TAG_NAME
+        FROM TAG T
+        JOIN GTAG G ON G.TAG_NO = T.TAG_NO
+        JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
+        JOIN MEMBER M ON M.MEMBER_NO = GR.MEMBER_NO
+        WHERE GR.GROOMING_NO= #{groomingNo}
+ 	
+ 	</select>
+ 	
+ 	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
+ 		SELECT SPEC_NAME
+        FROM SPEC S
+        JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
+        WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	</select>
+ 	
+ 	
+</mapper>

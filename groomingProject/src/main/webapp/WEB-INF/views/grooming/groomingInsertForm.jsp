@@ -195,12 +195,12 @@
                     <table class="study">
                     <tbody>
                         <tr>
-                            <td><span>스터디  진행 기간</span><br> <input type="date">
-                                ~ <input type="date"><br><small> <span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할 기간을 설정해주세요</span></small></td>
+                            <td><span>스터디  진행 기간</span><br> <input class="start" type="date">
+                                ~ <input class="end" type="date"><br><small> <span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할 기간을 설정해주세요</span></small></td>
                         </tr>
                         <tr>
-                        	 <td><span>스터디 모집 기간</span><br> <input type="date">
-                                ~ <input type="date"><br> <small><span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을 설정해주세요</span></small></td>
+                        	 <td><span>스터디 모집 기간</span><br> <input class="start" type="date">
+                                ~ <input class="end" type="date"><br> <small><span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을 설정해주세요</span></small></td>
                         </tr>
                         <tr>
                         	<td ><span>대표이미지</span><br>
@@ -208,7 +208,7 @@
                         	</td>
                         <tr>
                         <tr>
-                        	<td><button class="btn-3d green" onclick="location.href='groomingMain.do'">등록하기</button>
+                        	<td><button id="insert" class="btn-3d green" onclick="location.href='groomingMain.do'">등록하기</button>
                       			<button class="btn-3d green" onclick="save();">취소하기</button>
                         </tr>
                         </tbody>
@@ -304,10 +304,21 @@
    
 
         </script>
+        
+        <script>
+        // 나중에 고침
+        /* 	$(function(){
+        		$("#insert").on("click",function(){
+        		if($(".end").val() < $(".start").val()){
+        			alert("시작날짜보다 이후로 설정해주세요");
+        			$(".end").html("");
+        		}})
+        	}) */
+        </script>
     </section>
 
 
-    <footer> </footer>
+    <footer><jsp:include page="../common/footer.jsp" /> </footer>
 
 
     <!-- Optional JavaScript -->
