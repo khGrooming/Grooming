@@ -16,4 +16,6 @@ public interface MemberService {
 
 	int updateMemberOption(Member m);
 
+	int welcomePoint(String memberNo);
+
 }

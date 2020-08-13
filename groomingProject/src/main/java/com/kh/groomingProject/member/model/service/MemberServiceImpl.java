@@ -48,4 +48,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.updateMemberOption(m);
 	}
 
+	@Override
+	public int welcomePoint(String memberNo) {
+
+		return mDao.welcomePoint(memberNo);
+	}
+
 }

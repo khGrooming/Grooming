@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="alertMapper">
+
+	<resultMap type="Alert" id="alertResultSet">
+		<id property="alertNo" column="ALERT_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="alertContent" column="ALERT_CONTENT"/>
+		<result property="alertCreateDate" column="ALERT_CREATEDATE"/>
+		<result property="alertConfirm" column="ALERT_CONFIRM"/>
+	</resultMap>
+
+	<insert id="insertAlert" parameterType="MemberAlert">
+		INSERT INTO ALERT (ALERT_NO, MEMBER_NO, ALERT_CONTENT, ALERT_CREATEDATE, ALERT_CONFIRM)
+		VALUES('ALE' || LPAD(SEQ_ALERT_NO.NEXTVAL,5,0), #{memberNo}, #{alertContent}, SYSDATE, DEFAULT)
+	</insert>
+
+</mapper>

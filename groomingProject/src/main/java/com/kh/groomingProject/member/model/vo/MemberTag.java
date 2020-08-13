@@ -8,7 +8,7 @@ public class MemberTag implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8158359001773369165L;
-	
+
 	private String memberEmail;	// 회원 이메일
 	private String tagName;		// 태그명
 	public MemberTag() {
