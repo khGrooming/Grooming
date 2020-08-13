@@ -335,11 +335,6 @@ section .form_container .hideItem
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
-
-	<!-- Cookie가 비어있지 않을 때 checked 속성을 줌 -->
-<%-- 	<c:if test="${not empty cookie.userCheck}">
-		<c:set value="checked" var="checked"/>
-	</c:if> --%>
 	
 	<section>
 		<c:if test="${loginCheck == 'register'}">

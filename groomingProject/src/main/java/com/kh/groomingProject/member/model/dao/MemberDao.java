@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Repository("mDao")
 public class MemberDao {
@@ -46,6 +47,11 @@ public class MemberDao {
 	public int welcomePoint(String memberNo) {
 
 		return sqlSessionTemplate.insert("pointMapper.welcomePoint", memberNo);
+	}
+
+	public int mergeMemberTags(MemberTag memberTag) {
+
+		return sqlSessionTemplate.update("memberMapper.mergeMemberTags", memberTag);
 	}
 
 }

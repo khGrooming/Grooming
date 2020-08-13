@@ -70,5 +70,14 @@
 		WHERE GROOMING_NO = #{groomingNo}
 		AND MEMBER_STATUS='N'
 	</select>
+	
+	<update id="mergeMemberTags" parameterType="MemberTag">
+		MERGE INTO MEMBER_TAG M
+		USING (SELECT TAG_NO FROM TAG WHERE TAG_NAME=#{tagName}) T
+			ON (TRIM(M.TAG_NO)= T.TAG_NO)
+		WHEN NOT MATCHED THEN
+			INSERT (MEMBER_NO, TAG_NO) 
+			VALUES (#{memberNo}, T.TAG_NO)
+	</update>
 
 </mapper>

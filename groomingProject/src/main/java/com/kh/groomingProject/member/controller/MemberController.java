@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.alert.model.service.AlertService;
+import com.kh.groomingProject.grooming.model.exception.GroomingException;
+import com.kh.groomingProject.member.model.exception.MemberException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberAlert;
@@ -46,8 +48,6 @@ public class MemberController {
 	@RequestMapping("loginPage.do")
 	public ModelAndView loginPage(ModelAndView mv, String url) {
 
-//		System.out.println("request.getParameter(\"pageHistory\") : " + request.getParameter("pageHistory"));
-		
 		mv.addObject("url", url)
 		.addObject("loginCheck", "login")
 		.setViewName("member/memberLoginRegistration");
@@ -77,50 +77,66 @@ public class MemberController {
 
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMember(m);
-		
-		// 회원가입 (select)
-		Member member = mService.loginMember(m);
-		System.out.println("회원가입 정보 : " + m);
 
-		message = "신규가입을 환영합니다.";
-		
-		MemberAlert memberAlert = new MemberAlert(member.getMemberNo(), message);
-		System.out.println("회원가입 (신규 가입 알림 추가) : " + memberAlert);
-		
-		// 회원가입 (신규 가입 알림 추가)
-		int resultAlertJoin = alertService.insertAlert(memberAlert);
-
-		// 회원가입 (신규포인트 지급)
-		int resultWelcomePoint = mService.welcomePoint(member.getMemberNo());
-		
-		message = "신규가입 감사 포인트가 지급 되었습니다.";
-		
-		memberAlert.setAlertContent(message);
-		System.out.println("회원가입 (신규포인트 지급) : " + memberAlert);
-		
-		// 회원가입 (신규 가입 감사 포인트 알림 추가)
-		int resultAlertPoint = alertService.insertAlert(memberAlert);
-
-		if(resultInsertMember == 0) {
-			System.out.println("회원가입 (insert): 실패");
-
-		} else if(member.getMemberNo() == null) {
-			System.out.println("회원가입 (select): 실패");
-
-		} else if(resultAlertJoin == 0) {
-			System.out.println("회원가입 (신규 가입 알림 추가): 실패");
+		// if문안에 if로 처리 해야함(트리거 이용하면 신규가입 추가 insert는 전부 가능)
+		if(resultInsertMember > 0) {
+			System.out.println("회원가입 (insert): 성공");
 			
-		} else if(resultWelcomePoint == 0) {
-			System.out.println("회원가입 (신규포인트 지급): 실패");
+			// 회원가입 (select) <-- 쿼리문으로 셀렉은 줄이기 가능
+			Member member = mService.loginMember(m);
+			System.out.println("회원가입 정보 : " + m);
 			
-		} else if(resultAlertPoint == 0) {
-			System.out.println("회원가입 (신규 가입 감사 포인트 알림 추가): 실패");
-			
+			if(member.getMemberNo() != null) {
+				System.out.println("회원가입 (select): 성공");
+				
+				// 회원가입 (신규 가입 알림 추가 insert)
+				message = "신규가입을 환영합니다.";
+				MemberAlert memberAlert = new MemberAlert(member.getMemberNo(), message);
+				System.out.println("회원가입 (신규 가입 알림 추가) : " + memberAlert);
+				int resultAlertJoin = alertService.insertAlert(memberAlert);
+
+				if(resultAlertJoin > 0) {
+					System.out.println("회원가입 (신규 가입 알림 추가): 성공");
+
+					// 회원가입 (신규포인트 지급 insert)
+					int resultWelcomePoint = mService.welcomePoint(member.getMemberNo());
+
+					if(resultWelcomePoint > 0) {
+						System.out.println("회원가입 (신규포인트 지급): 성공");
+
+						// 회원가입 (신규 가입 감사 포인트 알림 추가 insert)
+						memberAlert.setAlertContent("신규가입 감사 포인트가 지급 되었습니다.");
+						System.out.println("회원가입 (신규포인트 지급) : " + memberAlert);
+						int resultAlertPoint = alertService.insertAlert(memberAlert);
+
+						if(resultAlertPoint > 0) {
+							System.out.println("회원가입 확인 : 성공");
+							return "success";
+
+						} else {
+							System.out.println("회원가입 (신규 가입 감사 포인트 알림 추가): 실패");
+							return "fail";
+						}
+
+					} else {
+						System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
+						return "fail";
+					}
+
+				} else {
+					System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
+					return "fail";
+				}
+
+			}else {
+				System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
+				return "fail";
+			}
+
 		} else {
-			System.out.println("회원가입 확인 : 성공");
-			return "success";
+			System.out.println("회원가입 (insert): 실패");
+			return "fail";
 		}
-		return "fail";
 
 	}
 	
@@ -186,49 +202,60 @@ public class MemberController {
 		
 		System.out.println("member update data : " + m);
 
-		int result = mService.updateMemberOption(m);
+		// 회원가입(추가 update)
+		int resultUpdateMemberOption = mService.updateMemberOption(m);
 
-		System.out.println("member update result : " + result);
+		System.out.println("member update result : " + resultUpdateMemberOption);
 
-		if(result > 0) {
+		if(resultUpdateMemberOption > 0) {
 			System.out.println("회원가입 추가정보 업데이트 : 성공");
+			
+			// 태그 테이블 업데이트
+			int resultMergeTags = 0;
+			if(!tagName.isEmpty()) {
+				String[] tag = tagName.split(",");
+		
+				for(int i = 0 ; i < tag.length; i++) {
+					String tagTemp = tag[i];
+					resultMergeTags = tagService.mergeTags(tagTemp);
+				}
+			}
+			
+			if(resultMergeTags > 0) {
+				System.out.println("TAG 업데이트 : 성공");
+				
+				// 멤버태그 테이블 추가
+				int resultMemberTag = 0;
+				if(!tagName.isEmpty()) {
+					String[] tag = tagName.split(",");
+			
+					for(int i = 0 ; i < tag.length; i++) {
+						String tagTemp = tag[i];
+						MemberTag memberTag = new MemberTag(m.getMemberNo(), tagTemp);
+						resultMemberTag = mService.mergeMemberTags(memberTag);
+					}
+				}
+				
+				if(resultMemberTag > 0) {
+					System.out.println("MemberTag 업데이트 : 성공");
+
+					return "home";
+
+				} else {
+					System.out.println("MemberTag 업데이트 : 실패");
+					throw new MemberException("MemberTag 업데이트 : 실패");
+				}
+				
+			} else {
+				System.out.println("TAG 업데이트 : 실패");
+				throw new MemberException("TAG 업데이트 : 실패");
+			}
+			
 		} else {
 			System.out.println("회원가입 추가정보 업데이트 : 실패");
+			throw new MemberException("회원가입 추가정보 업데이트 : 실패");
 		}
 
-		// 태그 테이블 업데이트
-		if(!tagName.isEmpty()) {
-			String[] tag = tagName.split(",");
-	
-			for(int i = 0 ; i < tag.length; i++) {
-				String tagTemp = tag[i];
-				result = tagService.mergeTags(tagTemp);
-			}
-		}
-		
-		if(result > 0) {
-			System.out.println("TAG 업데이트 : 성공");
-		} else {
-			System.out.println("TAG 업데이트 : 실패");
-		}
-
-		//TODO 멤버태그 테이블 추가
-//		ArrayList<Tag> tag = tagService.selectList()
-		
-//		ArrayList<MemberTag> memberTag = new ArrayList<MemberTag>();
-//		System.out.println("memberTag : " + memberTag);
-		
-
-
-//		if(result > 0) {
-//			System.out.println("회원가입 추가정보 업데이트 : 성공");
-//			return "success";
-//		} else {
-//			System.out.println("회원가입 추가정보 업데이트 : 실패");
-//			return "fail";
-//		}
-		
-		return "home";
 	}
 
 	@RequestMapping("memberLogin.do")
