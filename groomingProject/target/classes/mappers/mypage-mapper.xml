@@ -30,7 +30,7 @@
 		<result property="memberMemo" column="MEMBER_MEMO"/>
 		<result property="nowPoint" column="NOWPOINT"/>
 	</resultMap>
-	
+
 	<resultMap type="Spec" id="SpecSet">
 		<id property="specNo" column="SPEC_NO"/>
 		<result property="specCName" column="SPEC_C_NAME"/>
@@ -46,7 +46,7 @@
 		WHERE MEMBER_NO = #{mNo}
 		AND MEMBER_STATUS='N'
 	</select>
-	
+
 	<select id="testLoginUser2" parameterType="string" resultMap="ProfileMemberSet">
 		SELECT M.MEMBER_NO,M.MEMBER_PHOTO,M.MEMBER_NICKNAME,ML.LVL_RANK,M.MEMBER_EXP,ML.LVL_MAX_EXP,M.MEMBER_EMAIL,M.MEMBER_MEMO,P1.NOWPOINT
 		FROM (
@@ -58,19 +58,30 @@
 		WHERE P1.MEMBER_NO =#{mNo}
 	
 	</select>
-	
+
 	<select id="selectSpecList" parameterType="string" resultMap="SpecSet"> 
-	SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO
-	FROM SPEC S
-	JOIN SPEC_CATEGORY SC ON(S.SPEC_C_NO = SC.SPEC_C_NO)
-	WHERE MEMBER_NO=#{mNo}
-	
+		SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO
+		FROM SPEC S
+		JOIN SPEC_CATEGORY SC ON(S.SPEC_C_NO = SC.SPEC_C_NO)
+		WHERE MEMBER_NO=#{mNo}
 	</select>
-	
+
 	<update id="updateProfileIMG" parameterType="ProfileMember">
 		UPDATE MEMBER
 		SET MEMBER_PHOTO=#{memberPhoto}
 		WHERE MEMBER_NO =#{memberNo}
+	</update>
+
+	<update id="updateMemo" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_MEMO=#{memberMemo}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+
+	<update id="memberDelete" parameterType="Member">
+		UPDATE MEMBER 
+		SET MEMBER_STATUS='Y'
+		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
 </mapper>

@@ -103,11 +103,39 @@ public class CommunityController {
 	
 	
 	//////////////////////////////////공지 사항
+	///////////////////////////////// 자유 게시판
 	
 	@RequestMapping("communityFreeBoard.do")
-	public String communityFreeBoard() {
-		return "community/communityFreeBoard";
+	public ModelAndView communityFreeBoard(ModelAndView mav) {
+		ArrayList<Board> list = cService.selectListFB();
+		
+		if(!list.isEmpty()) {
+			mav.addObject("list", list);
+			mav.setViewName("community/communityFreeBoard");
+		}else {
+			throw new CommunityException("자유게시판 목록 보기 실패!");
+		}
+		return mav;
 	}
+	
+	@RequestMapping("FreeBoardDetail.do")
+	public String FreeBoardDetail(Model model, String boardNo, Board b) {
+		b = cService.selectOneFB(boardNo);
+		int result = cService.addViewCount(boardNo);
+		
+		if(b != null) {
+			model.addAttribute("board", b);
+		}else {
+			throw new CommunityException("자유게시판 상세 보기 실패!");
+		}
+		return "community/FreeBoardDetailView";
+	}
+	
+	
+	
+	///////////////////////////////// 자유 게시판
+	
+	
 	
 	@RequestMapping("communityStudyPromotion.do")
 	public String communityStudyPromotion() {

@@ -69,4 +69,19 @@
 		WHERE BOARD_NO=#{boardNo} 
 	</update>
 	
+	<select id="selectListFB" resultMap="boardResultSet">
+ 		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+        WHERE B_CATEGORY_NO = 'BC00002'
+        ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectOneFB" parameterType="string" resultMap="boardResultSet">
+		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+
+	
 </mapper>

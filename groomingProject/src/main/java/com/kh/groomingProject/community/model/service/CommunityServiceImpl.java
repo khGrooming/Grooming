@@ -50,6 +50,20 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.addViewCount(boardNo);
 	}
 
+	@Override
+	public ArrayList<Board> selectListFB() {
+		
+		return cDao.selectListFB();
+	}
+
+	@Override
+	public Board selectOneFB(String boardNo) {
+		
+		return cDao.selectOneFB(boardNo);
+	}
+
+
+
 
 
 

@@ -47,6 +47,21 @@ public class CommunityDao {
 		return sqlSessionTemplate.update("communityMapper.addViewCount", boardNo);
 	}
 
+	public ArrayList<Board> selectListFB() {
+		ArrayList list = new ArrayList();
+		
+		list = (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectListFB");
+		
+		return list;
+	}
+
+	public Board selectOneFB(String boardNo) {
+		
+		return sqlSessionTemplate.selectOne("communityMapper.selectOneFB", boardNo);
+	}
+
+
+
 
 
 

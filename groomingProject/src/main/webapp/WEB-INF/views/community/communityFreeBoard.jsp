@@ -15,7 +15,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- -------------- style 부분------------- -->
-<style type="text/css">
+<style type="text/css">    
 	.table_ra>tbody>tr>td, .table_ra>tbody>tr>th, .table_ra>tfoot>tr>td, .table_ra>tfoot>tr>th, .table_ra>thead>tr>td, .table_ra>thead>tr>th {
     	vertical-align: middle;
     	text-align:center;
@@ -65,7 +65,7 @@
 			<div class="col-sm-3"></div>
 			<div class="col-sm-6">
 				<h4>
-					<b>#추천 해시태그</b><input type="text" class="search form-control" id="search_ra">
+					<b>#추천 해시태그</b><input type="search" class="search form-control" id="search_ra">
 				</h4>
 				<hr class="hr_ra">
 				<a href="#" class="tagKind">#스터디</a>
@@ -97,41 +97,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td><a href="#" class="tagKind">#스터디</a><br>글 제목이요</td>
-							<td>이아라</td>
-							<td>0</td>
-							<td>20/08/06</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td><a href="#" class="tagKind">#스터디</a><br>글 제목이요</td>
-							<td>이아라</td>
-							<td>0</td>
-							<td>20/08/06</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td><a href="#" class="tagKind">#스터디</a><br>글 제목이요</td>
-							<td>이아라</td>
-							<td>0</td>
-							<td>20/08/06</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td><a href="#" class="tagKind">#스터디</a><br>글 제목이요</td>
-							<td>이아라</td>
-							<td>0</td>
-							<td>20/08/06</td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td><a href="#" class="tagKind">#스터디</a><br>글 제목이요</td>
-							<td>이아라</td>
-							<td>0</td>
-							<td>20/08/06</td>
-						</tr>
+						<c:forEach var="n" items="${list }">
+							<tr>
+								<td>${n.boardNo }</td>
+								<td>
+									<a href="#" class="tagKind">#스터디</a>
+									<br>
+									<c:url var="FreeBoardDetail" value="FreeBoardDetail.do">
+										<c:param name="boardNo" value="${n.boardNo }" />
+									</c:url>
+									<a href="${FreeBoardDetail }">${n.boardTitle }</a>
+								</td>
+								<td>${n.memberNickName }</td>
+								<td>${n.boardVcount }</td>
+								<td>${n.boardCreateDate }</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

@@ -13,13 +13,16 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -28,7 +31,7 @@ import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
-@SessionAttributes("loginUser")
+
 
 @Controller
 public class MypageController {
@@ -36,13 +39,19 @@ public class MypageController {
 	@Autowired
 	private MypageService mpService; 
 	
+	@Autowired 
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
+	
 	@RequestMapping("myPage.do")
-	public String myPageView(Model model, HttpServletRequest request) {
+	public String myPageView(HttpServletRequest request) {
 		
 		//임시 Session값 등록
-		HttpSession session =request.getSession();
-		Member m=(Member)session.getAttribute("loginUser");
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
 		String mNo =m.getMemberNo();
+		System.out.println(mNo);
 		
 		int school=0;
 		String[] schoolList = new String[3];
@@ -50,11 +59,12 @@ public class MypageController {
 		String[] certificateList = new String[3];
 		int career=0;
 		String[] careerList = new String[3];
+		
 //		Member loginUser = mpService.testLoginUser(mNo);
-		ProfileMember loginUser = mpService.testLoginUser2(mNo);
+		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-		String[] str = {"학1","학2","학3"};
-		System.out.println(loginUser);
+
+		System.out.println(profileInfo);
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
 			case "학교":
@@ -74,13 +84,12 @@ public class MypageController {
 			}
 		}
 
+		session.setAttribute("profileInfo",profileInfo);
+		session.setAttribute("schoolList",schoolList);
+		session.setAttribute("certificateList",certificateList);
+		session.setAttribute("careerList",careerList);
 		
-		
-		model.addAttribute("loginUser",loginUser);
-		model.addAttribute("schoolList",schoolList);
-		model.addAttribute("certificateList",certificateList);
-		model.addAttribute("careerList",careerList);
-		model.addAttribute("str",str);
+	
 		return "mypage/mypageinfo";
 	}
 	
@@ -171,16 +180,75 @@ public class MypageController {
 	}
 	
 	
+	@RequestMapping(value="upMemo.do",method=RequestMethod.POST)
+	public void updateMemo(String memberMemo
+						   ,HttpServletRequest request
+						   ) {
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		m.setMemberMemo(memberMemo);
+		
+		System.out.println(memberMemo);
+		System.out.println(m.getMemberNo());
+		int result = mpService.updateMemo(m);
+
+		if(result > 0) {
+			System.out.println("성공");
+		}
+	}
+	
+	
+	@RequestMapping("test1.do")
+	public String test() {
+		return "mypage/test";
+	}
 	
 	
 	
+	@RequestMapping(value="pwdCheck.do",method=RequestMethod.POST)
+	public void pwdCheck(HttpServletResponse response
+						,HttpServletRequest request
+						,String inputPwd) throws IOException {
+
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		PrintWriter out = response.getWriter(); 
+		System.out.println(m.getMemberPwd());
+		if(bcryptPasswordEncoder.matches(inputPwd,m.getMemberPwd())) {
+			System.out.println("비번 확인 : 성공");
+			out.append("Y");
+		} else {
+			System.out.println("비번 확인 : 실패");
+			out.append("N");
+		}
+		
+
+		
+		out.flush();
+		out.close();
+	}
 	
 	
-	
-	
-	
-	
-	
+	@RequestMapping("memberDel.do")
+	public String memberDel(SessionStatus status, HttpServletRequest request){
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		int result = mpService.memberDelete(m);
+		
+		if(result > 0) {
+			
+			session.invalidate();
+		}else {
+			System.out.println("탈퇴실패");
+		}
+
+		System.out.println("퇄퇴");
+		return "home";
+	}
 	
 	
 	

@@ -18,6 +18,13 @@ public interface CommunityService {
 
 	int addViewCount(String boardNo);
 
+	ArrayList<Board> selectListFB();
+
+	Board selectOneFB(String boardNo);
+
+
+
+
 
 
 
