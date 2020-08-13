@@ -322,6 +322,11 @@ section .form_container .hideItem
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
+
+	<!-- Cookie가 비어있지 않을 때 checked 속성을 줌 -->
+	<c:if test="${not empty cookie.userCheck}">
+		<c:set value="checked" var="checked"/>
+	</c:if>
 	
 	<section>
 		<c:if test="${loginCheck == 'register'}">
@@ -338,7 +343,7 @@ section .form_container .hideItem
 					<form>
 						<h2>로그인</h2>
 						<div class="input-group">
-							<input type="text" id="loginEmail" name="memberEmail" required>
+							<input type="text" id="loginEmail" name="memberEmail" value="${cookie.userCheck.value }" required>
 							<span>이메일</span>
 							<div class="chkVali" id="loginEmailChk">올바른 이메일을 입력해주세요.</div>
 						</div>
@@ -348,7 +353,7 @@ section .form_container .hideItem
 							<div class="chkVali" id="loginPwdChk">비밀번호를 입력해주세요.</div>
 						</div>
 						<div class="input-group">
-							<input type="checkbox" name="idSaveCheck"><p>아이디 기억하기</p>
+							<input type="checkbox" id="idSaveCheck" name="idSaveCheck" ${checked }><p>아이디 기억하기</p>
 							<div class="chkVali" id="loginError">가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.</div>
 						</div>
 						<input type="button" onclick="login()" value="로그인">
@@ -556,12 +561,13 @@ section .form_container .hideItem
 			} else if(!$("#loginPwd")[0].checkValidity()){
 				$("#loginPwd").focus();
 			} else{
+	 			let idSaveCheck = $("#idSaveCheck").is(":checked");
 				memberEmail = $("#loginEmail").val();
 				memberPwd = $("#loginPwd").val();
 				
 				$.ajax({
 					url:"memberLogin.do",
-					data:{memberEmail:memberEmail, memberPwd:memberPwd},
+					data:{memberEmail:memberEmail, memberPwd:memberPwd, idSaveCheck:idSaveCheck},
 					success:function(data){
 						console.log("로그인 결과 : " + data);
 						if(data == "success"){

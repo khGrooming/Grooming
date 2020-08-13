@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -211,7 +212,7 @@ public class MemberController {
 			System.out.println("TAG 업데이트 : 실패");
 		}
 
-		// 멤버태그 테이블 추가
+		//TODO 멤버태그 테이블 추가
 //		ArrayList<Tag> tag = tagService.selectList()
 		
 //		ArrayList<MemberTag> memberTag = new ArrayList<MemberTag>();
@@ -232,9 +233,9 @@ public class MemberController {
 
 	@RequestMapping("memberLogin.do")
 	@ResponseBody
-	public String memberLogin(Member m, Model model) {
+	public String memberLogin(Member m, Model model, String idSaveCheck) {
 		
-		System.out.println("memberLogin : " + m);
+		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
 		
 		Member loginUser = mService.loginMember(m);
 		
