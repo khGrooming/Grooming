@@ -46,4 +46,9 @@ public class MypageServiceImpl implements MypageService{
 	public int memberDelete(Member m) {
 		return mpDao.memberDelete(m);
 	}
+
+	@Override
+	public int memberInfoUpdate(Member m) {		
+		return mpDao.memberInfoUpdate(m);
+	}
 }

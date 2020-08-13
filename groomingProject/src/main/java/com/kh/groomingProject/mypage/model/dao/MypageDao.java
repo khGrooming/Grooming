@@ -40,4 +40,8 @@ public class MypageDao {
 		return sqlSessionTemplate.update("MyPageMapper.memberDelete",m);
 	}
 
+	public int memberInfoUpdate(Member m) {
+		return sqlSessionTemplate.update("MyPageMapper.memberInfoUpdate",m);
+	}
+
 }

@@ -84,5 +84,16 @@
 		SET MEMBER_STATUS='Y'
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
+	
+	<update id="memberInfoUpdate" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_PASSWORD=#{memberPwd}
+			,MEMBER_NICKNAME=#{memberNickName}
+			,MEMBER_NAME=#{memberName}
+			,MEMBER_GENDER=#{memberGender}
+			,MEMBER_PHONE=#{memberPhone}
+		WHERE MEMBER_NO = #{memberNo}
+		
+	</update>
 
 </mapper>

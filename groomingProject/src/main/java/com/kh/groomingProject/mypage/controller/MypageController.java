@@ -44,6 +44,8 @@ public class MypageController {
 	
 	
 	
+	
+	
 	@RequestMapping("myPage.do")
 	public String myPageView(HttpServletRequest request) {
 		
@@ -258,8 +260,18 @@ public class MypageController {
 			HttpSession session = request.getSession();
 			Member pwdM = (Member)session.getAttribute("loginUser");
 			m.setMemberPwd(pwdM.getMemberPwd());
+		}else {
+			String encPwd=bcryptPasswordEncoder.encode(m.getMemberPwd());
+			m.setMemberPwd(encPwd);
 		}
 		System.out.println("memberup.do"+m);
+		
+		int result = mpService.memberInfoUpdate(m);
+		if(result > 0) {
+			System.out.println("수정 완료");
+		}else {
+			System.out.println("수정 실패:memberUpdate 반드시 throw 할것");
+		}
 		
 		return "mypage/mypageinfo";
 	}
