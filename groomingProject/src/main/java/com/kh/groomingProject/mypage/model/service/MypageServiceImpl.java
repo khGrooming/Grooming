@@ -51,4 +51,9 @@ public class MypageServiceImpl implements MypageService{
 	public int memberInfoUpdate(Member m) {		
 		return mpDao.memberInfoUpdate(m);
 	}
+
+	@Override
+	public Member selectMember(String memberNo) {
+		return mpDao.memberSelect(memberNo);
+	}
 }

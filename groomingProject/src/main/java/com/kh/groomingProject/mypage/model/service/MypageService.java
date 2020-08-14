@@ -22,5 +22,7 @@ public interface MypageService {
 
 	int memberInfoUpdate(Member m);
 
+	Member selectMember(String memberNo);
+
 
 }

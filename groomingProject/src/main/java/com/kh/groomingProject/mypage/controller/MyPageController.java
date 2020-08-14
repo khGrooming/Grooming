@@ -34,7 +34,7 @@ import com.kh.groomingProject.mypage.model.vo.Spec;
 
 
 @Controller
-public class MypageController {
+public class MyPageController {
 	
 	@Autowired
 	private MypageService mpService; 
@@ -43,11 +43,11 @@ public class MypageController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	
-	
+
 	@RequestMapping("myPage.do")
 	public String myPageView(HttpServletRequest request) {
 		
-		//임시 Session값 등록
+		
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
 		String mNo =m.getMemberNo();
@@ -59,8 +59,7 @@ public class MypageController {
 		String[] certificateList = new String[3];
 		int career=0;
 		String[] careerList = new String[3];
-		
-//		Member loginUser = mpService.testLoginUser(mNo);
+
 		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
 
@@ -88,6 +87,7 @@ public class MypageController {
 		session.setAttribute("schoolList",schoolList);
 		session.setAttribute("certificateList",certificateList);
 		session.setAttribute("careerList",careerList);
+		
 		
 	
 		return "mypage/mypageinfo";
@@ -253,10 +253,10 @@ public class MypageController {
 
 	@RequestMapping("memberup.do")
 	public String memberUpdate(Member m,HttpServletRequest request) {
-		
-		if(m.getMemberPwd().equals("")) {
-			HttpSession session = request.getSession();
-			Member pwdM = (Member)session.getAttribute("loginUser");
+		System.out.println(m);
+		HttpSession session = request.getSession();
+		Member pwdM = (Member)session.getAttribute("loginUser");
+		if(m.getMemberPwd()=="") {
 			m.setMemberPwd(pwdM.getMemberPwd());
 		}else {
 			String encPwd=bcryptPasswordEncoder.encode(m.getMemberPwd());
@@ -267,11 +267,25 @@ public class MypageController {
 		int result = mpService.memberInfoUpdate(m);
 		if(result > 0) {
 			System.out.println("수정 완료");
+			Member loginUser = mpService.selectMember(pwdM.getMemberNo());
+			ProfileMember profileInfo = mpService.testLoginUser2(pwdM.getMemberNo());
+			
+			System.out.println("정보수정 후 loginUser"+loginUser);
+			System.out.println("정보수정 후 profileInfo"+profileInfo);
+			session.setAttribute("loginUser",loginUser);
+			session.setAttribute("profileInfo",profileInfo);
 		}else {
 			System.out.println("수정 실패:memberUpdate 반드시 throw 할것");
 		}
 		
 		return "mypage/mypageinfo";
+	}
+	
+	@RequestMapping(value="insertSpec.do",method=RequestMethod.POST)
+	public String insertSpect(HttpServletRequest request) {
+		System.out.println("뭐야");
+
+		return "home";
 	}
 	
 }

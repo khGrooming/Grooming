@@ -15,7 +15,7 @@
 		display: none;
 		padding: 20px 10px 10px 10px;
 		border: 3px solid rgba(175, 202, 202, 1);
-		height: 500px;
+		height: 550px;
 		
 		/* 변경 */
 		background:white; 
@@ -81,13 +81,18 @@
 		margin-bottom: 10px;	
 	}
 	#memberupForm input{
-		width: 58%;
+		width: 50%;
 		
 	}
 	.mLabel{
 		text-align:right;
 		width: 35%;
 		margin-right: 2%;
+	}
+	.spacIconTd{
+		width: 50px;
+	}
+	.memberupForm input{
 	}
 </style>
 </head>
@@ -102,7 +107,8 @@
             <label class="Mlabel" for="Mtab3">탈퇴 하기</label>
      		
             <div class="MsectionDiv"  id="Mcontent1" style="text-align: center;">
-            	<div style="margin-right:50px; width: 70%; margin-left: 5%; margin-right: auto;">
+<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
+            	<div style="margin-right:50px; width: 65%; margin-left: 10%; margin-top:5%; margin-right: auto;">
             	
             	<form id="memberupForm" action="memberup.do" method="post" onsubmit="return memberInfoSubmit()" >
             			<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
@@ -110,20 +116,25 @@
 		            	<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br>
 	            	
 	            	<label class="mLabel" id="pwdlabel">비밀번호</label>
-	            	<input type="password" id="memberPwdBefor" name="memberPwdBefor"><br>  
-	            	<div style="width: 60%; float: right; text-align: left; height: 10%;">
+	            	<input type="password" id="memberPwdBefor" name="memberPwdBefor"><br>  	            	
+	            	<!-- PasswordErrorMsg -->
+	            	<div style="width: 56%; float: right; text-align: left; height: 10%;">
 	            		<p id="pwderror" style="font-size:10px; margin: 0;">※비밀번호를 변경하기 위하여 현재 비밀번호를 입력해주세요.</p>
 	            	</div><br clear="both">
 	            	
 	            	<label class="mLabel" id="pwdchecklabel">변경할 비밀번호</label>
 	            	<input type="password" id="pwdRevised" name="pwdRevised" readonly><br>
-	            	<div id="pwdCheckErrorDiv"style="width: 60%; float: right; text-align: left; display: none;">
+	            	
+	            	<!-- PasswordErrorMsg -->
+	            	<div id="pwdCheckErrorDiv"style="width: 56%; float: right; text-align: left; display: none;">
 	            		<p id="pwdCheckerror" style="font-size:10px;"></p>
 	            	</div><br id="pwdCheckBr"style="width: 0; margin:0; display: none;"  clear="both" >
 	            		
            			<label class="mLabel" id="pwdchecklabel2">변경할 비밀번호 확인</label>
            			<input type="password" id="memberPwd" name="memberPwd" readonly><br>
-           			<div id="pwdCheckErrorDiv2"style="width: 60%; float: right; text-align: left; display: none;">
+           			
+           			<!-- PasswordErrorMsg -->
+           			<div id="pwdCheckErrorDiv2"style="width: 56%; float: right; text-align: left; display: none;">
 	            		<p id="pwdCheckerror2" style="font-size:10px;"></p>
 	            	</div><br id="pwdCheckBr2"style="width: 0; margin:0; display: none;"  clear="both" >
 	            			
@@ -131,16 +142,18 @@
             		<input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }" required><br>
 	            		
             		<label class="mLabel">이름</label>
-            		<input type="text" id="memberName" name="memberName" readonly value="${loginUser.memberName }"><br>
+            		<input type="text" id="memberName" name="memberName" value="${loginUser.memberName }"><br>
 	            		
+
             		<label class="mLabel">성별</label>
-	            		<div style="width: 58%; margin:0; float: right;  text-align: left;">
+	            		<div style="width: 50%; margin:0; float: right;  text-align: left;">
 		            		<input type="radio" id="genderM" name="memberGender" value="M" style="width: 5%;"><label for="genderM">남</label>
 							<input type="radio" id="genderF" name="memberGender" value="F" style="width: 5%; margin-left: 20%;"><label for="genderF">여</label><br>
-						</div>		<br><br>   
+						</div>		<br> 
             		<label class="mLabel">휴대전화 번호</label> 
            			<input type="text" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }">
-
+					<br>
+					<br>
 					<button>수정하기</button> 
 	            		
             	</form><br>            	
@@ -340,12 +353,40 @@
              	
              	
              	</script>
+             	
+<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
         
             <div class="MsectionDiv"  id="Mcontent2">
-                <span style="font-size: 25px;font-weight: 800;margin-right: 5%;">바난나킥</span><span>Lv.25</span>
-                <p>tab menu2의 내용</p>
+	            <div style="margin-right:50px; width: 70%; margin-left: auto; margin-top:5%; margin-right: auto;">
+	                <h4>멘토 신청</h4>
+	                <p style="font-size:11px;">멘토 신청에 관한 설명 약관 어쩌구 신청할 경우 요금? <br>이 있고 신고 당할경우 다시 멘토신청 할 수 없고 등등 <br>승인이 완료 될 때 까지 몇일이 걸린다~</p>
+	                <br>
+	                <br>
+	                <p>-스펙</p>
+	                <table>
+	                	<tr>
+	                		<td class="spacIconTd">이미지</td>
+	                		<th>학교</th>
+	                		<td style="color:red;">인증하기</td>
+	                	</tr>
+	                	<tr>
+	                		<td class="spacIconTd">이미지</td>
+	                		<th>자격증</th>
+	                		<td style="color:red;">인증하기</td>
+	                	</tr>
+	                	<tr>
+	                		<td class="spacIconTd">이미지</td>
+	                		<th>경력</th>
+	                		<td style="color:red;">인증하기</td>
+	                	</tr>
+	                </table>
+	                <script>
+	                	
+	                
+	                </script>
+                </div>
             </div>
-        
+<!-- 탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기------------>
             <div class="MsectionDiv"  id="Mcontent3" style="text-align: center;">
                <div id="pwdCheckDiv" style="margin-top:12%">
                
@@ -428,7 +469,7 @@
       				}
       			}
       		</script>
-
+<!-- 탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기------------>
 </body>
 </html>
 

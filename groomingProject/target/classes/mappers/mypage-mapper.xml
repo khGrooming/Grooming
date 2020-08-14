@@ -94,5 +94,12 @@
 		WHERE MEMBER_NO = #{memberNo}
 		
 	</update>
+	
+	<select id="memberSelect" parameterType="string" resultMap="MemberSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NO=#{memberNo}
+		AND MEMBER_STATUS='N'	
+	</select>
 
 </mapper>

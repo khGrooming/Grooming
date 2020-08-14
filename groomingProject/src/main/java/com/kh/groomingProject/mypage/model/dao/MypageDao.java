@@ -44,4 +44,8 @@ public class MypageDao {
 		return sqlSessionTemplate.update("MyPageMapper.memberInfoUpdate",m);
 	}
 
+	public Member memberSelect(String memberNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.memberSelect",memberNo);
+	}
+
 }
