@@ -25,8 +25,36 @@
 		
 		#reservation{display:none;}
 		#headCount{display:none;}
+		#space{display:none;}
+		#reservationBtn{display:none;}
+		.calculation{display:none;}
+		
 		.timeScroll{overflow-x:scroll;overflow-y:hidden;white-space: nowrap;}
 		.time, .impossible{width:50px;display:inline-block;}
+		
+		 /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
+
 	</style>
 </head>
 <body>
@@ -64,36 +92,71 @@
 					</c:forEach>
 				</div>
 				<div class="container col-sm-3">
+				<form method="post" action="insertR.do">
 					<div class="row">
 						<ul>
 							<c:forEach var="info" items="${info}">
-									<li>${info.cRoomName}&nbsp;&nbsp;&nbsp;<input type="radio" name="checkRoom" value="${info.cPriceNo}"></li>
+									<li>${info.cRoomName}&nbsp;&nbsp;&nbsp;<input type="radio" name="cPriceNo" value="${info.cPriceNo}"></li>
 							</c:forEach>
 						</ul>
 					</div>
+					
 					<hr>
+					
 					<div class="row">
 						<div id="calendarDiv" style="width:100%"></div>
 					</div>
+					
 					<hr>
-					<div id="reservation" class="row timeScroll">
+					
+					<div id="reservation" class="row timeScroll"><hr></div>
+					
 					<hr>
-						
-					</div>
-					<hr>
+					
 					<div class="row">
 						<div id="reservationInfo" style="width:100%"></div>
 					</div>
+					
 					<hr>
+					
 					<div class="row">
-						<select id="headCount">
-							
-						</select>
+						<p id="head" style="display:none;">총 인원 수</p>
+						<select id="headCount" name="cReserHeadCount"></select>	
 					</div>
+					
+					<hr>
+					
+					<input type="hidden" id="cReserDate" name="cReserDate">
+					<input type="hidden" id="STime" name="cReserSTime">
+					<input type="hidden" id="ETime" name="cReserETime">
+					
+					<hr>
+					
+					<div class="row">
+						<p id="space">공간 사용료</p>
+						<div class="calculation"></div>
+					</div>
+					
+					<button id="reservationBtn" type="button" onclick="openModal();" style="width:100%">예약하기</button>
+					
+					<div id="myModal" class="modal">
+				      <!-- Modal content -->
+				      <div class="modal-content">
+			                <p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">예약 확인</span></b></span></p>
+			                <p id="infoCheck" style="text-align: center; line-height: 1.5;"><br /></p>
+			                <p><br /></p>
+			           <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+			                <button type="submit" class="pop_bt" style="font-size: 13pt;" >확인</button>
+			                <button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+			            </div>
+				      </div>
+				    </div>
+				</form>
 				</div>
 			</div>
 		</div>
 		
+
 	</section>
 	<br><br><br>
 	<footer><jsp:include page="../common/footer.jsp"/></footer>
@@ -113,13 +176,12 @@
     var selectDay = day;	// 예약 날짜(기본:오늘)
 	var click1=0;			// 예약 시작 시간
 	var click2=0;			// 예약 종료 시간
-	var head=0;				// 예약 한 사람 수
-	var d=day;
+	var s;					// 달에 따라 바뀌는 클릭 가능한 날짜
 	
 		$(function(){
 			// 예약할 룸 클릭시 ajax로 데이터 가져와 예약불가 날짜 뿌려주기
-			$("[name='checkRoom']").on("click", function(){
-				cPriceNo = $('input[name="checkRoom"]:checked').val();
+			$("[name='cPriceNo']").on("click", function(){
+				cPriceNo = $('input[name="cPriceNo"]:checked').val();
 				
 				$.ajax({
 					url:"checkRoom.do",
@@ -146,17 +208,25 @@
  	//달력 화면에 뿌려주기
     function showCalendar(y, m, d) {
  		var text = '<p align="left" style="width:50%; display:inline-block;">시간 선택</p>';
- 		text += '<p align="right" style="width:50%; display:inline-block;">'+y+'년' +m+'일'+d+'일 </p>';
+ 		text += '<p align="right" style="width:50%; display:inline-block;">'+y+'년' +month+'일'+day+'일 </p>';
     	text += '<table border="1" style="text-align:center; width:100%;"><thead>';
     	if(m==month){
-    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m))+','+(d=day)+')"> < </th>';
+    		s=day;
+    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m))+','+(day)+')"> < </th>';
     	}else if(m>month){
-    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m-1))+','+(d=1)+')"> < </th>';
+    		if((m-1)==month){
+    			text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m-1))+','+(day)+')"> < </th>';
+    		}else{
+	    		s=1;
+	    		text += '<th onclick="showCalendar('+(m==1?(y-1)+','+12+','+(d=1):y+','+(m-1))+','+(d=1)+')"> < </th>';    			
+    		}
     	}
         text += '<th colspan="5">' + y + '.' + ((m < 10) ? ('0' + m) : m) + '</th>';
         if(m==month){
+        	s=day;
         	 text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1+','+(d=1):y+','+(m+1))+','+(d)+')"> > </th>';
         }else{
+        	s=1;
 	        text += '<th onclick="showCalendar('+(m==12?(y+1)+','+1+','+(d=1):y+','+(m+1))+','+(d=1)+')"> > </th>';
         }
     	text += '<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>'
@@ -174,25 +244,30 @@
         }
         document.getElementById('calendarDiv').innerHTML = text + '</tr>\n</table>';
 		colorApply(d);
-        return $getClass, d;
+		$("#cReserDate").val(y+'/'+((m < 10) ? ('0' + m) : m)+'/'+d);
+        return $getClass, s;
     }
     
     // 클릭한 날짜 구하고 색깔 바꾸기
     $(document).off("click").on("click",".calTd",function(){
-
+		
     	$(this).css("background","yellow");
     	
     	for(var i in $("#calendarDiv tbody tr td").text()){
 	    	if(i == $(this).text()){
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","blue");
-	    	}else if(i < d){
+	    	}else if(i < s){
 	    		$("#calendarDiv tbody tr td").eq(i).css("background","grey");
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css({"background":"grey"});
 	    	}else{
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","white");
 	    	}
     	}
-
+		
+    	// 날짜 변경
+		$selectDate = $("#cReserDate").val().substring(0,8);
+		$("#cReserDate").val($selectDate+$(this).text());
+    	
     	// 여기에 시간 바뀌는 메소드를 만들어 적용하자
     	selectDay = $(this).text();
     	
@@ -217,12 +292,12 @@
     })
     
     // 처음에 달력 색깔 바꿔주기
-    function colorApply(day){
+    function colorApply(d){
     	// 현재날짜 이전의 백그라운드 회색으로 설정
     	for(var i in $("#calendarDiv tbody tr td").text()){
-	    	if(i == day){
+	    	if(i == d){
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css("background","yellow");
-	    	}else if(i < day){
+	    	}else if(i < d){
 	    		$("#calendarDiv tbody tr td").eq(i).css({"background":"grey","opacity":"0.5"});
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).css({"background":"grey","opacity":"0.5"});
 	    		$("#calendarDiv tbody tr td").eq(parseInt(i)+parseInt($getClass)-1).prop("class","none");
@@ -232,18 +307,25 @@
 
 		// 룸 클릭이나 달력 날짜 클릭시 예약 시간 바뀌는 함수
 		function changeTime(data){
-
+			var cPriceNo = $('input[name="cPriceNo"]:checked').val();
 			$reservation = $("#reservation");
 			$reservation.css("display","block");
 			$reservation.html("");
 			
+			<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
+				if('${info.cPriceNo}'==(cPriceNo)){
+					$price = ${info.cRoomPrice};	
+					$time = ${info.cRoomAvailableTime};
+				}
+			</c:forEach>
 			// 모든 시간 뿌리기
-			for(var i=10; i <= 20; i++){
+			for(var i=10; i <= 10+$time; i++){
 				$timeDiv = $("<div class='time'>");
 				$timeDiv.append(i);
 				
-				$timespan = $("<span class='timeSelect' style='background:yellow'><br>");
-				$timespan.append("1000");
+				
+				$timespan = $("<span class='timeSelect' style='background:yellow;text-align:center;'><br>");
+				$timespan.append("&nbsp;&nbsp;&nbsp;"+$price);
 				
 				for(var j in data){
 					if(data[j].cReserSTime <= i && data[j].cReserETime >= i){
@@ -264,17 +346,26 @@
 			$(this).css("background","blue");
 			
 			clickArea(parseInt($(this).parents(".time").text().substring(0,2)));
-			
+
 			if(click2 == 0){
-				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ click2+':00 시 (1시간)');
+				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ (click1+1)+':00 시 (1시간)');
+				$("#STime").val(click1);
+				$("#ETime").val(click1+1);
 			}
 			else if(click1>click2){
-				$("#reservationInfo").text(selectDay +'일'+ click2+':00 시 ~'+ click1+':00 시'+'('+(click1-click2)+'시간)');												
+				$("#reservationInfo").text(selectDay +'일'+ click2+':00 시 ~'+ (click1+1)+':00 시'+'('+(click1-click2+1)+'시간)');	
+				$("#STime").val(click2);
+				$("#ETime").val(click1+1);
 			}else{
-				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ click2+':00 시'+'('+(click2-click1)+'시간)');
+				$("#reservationInfo").text(selectDay +'일'+ click1+':00 시 ~'+ (click2+1)+':00 시'+'('+(click2-click1+1)+'시간)');
+				$("#STime").val(click1);
+				$("#ETime").val(click2+1);
 			}
+
 			
-			hCount();
+			$("#headCount").html("");
+			hCount();		
+			
 		})
 		
 	    // 예약 가능한 시간 클릭시 이벤트 처리
@@ -330,6 +421,7 @@
 										if((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10)){
 											alert("예약할 수 없는 시간이 포함되어 있습니다.");
 											changeTime(data);
+											return;
 										}
 									}
 								}
@@ -346,21 +438,78 @@
 		
 		// 인원수 체크 
 		function hCount(){
-			var cPriceNo = $('input[name="checkRoom"]:checked').val();
+			var cPriceNo = $('input[name="cPriceNo"]:checked').val();
 			$select = $("#headCount");
-			$select.css("display","block");
+			$select.css("display","inline-block");
+			$("#head").css("display","inline-block");
 			
 			<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
-				if(${info.cPriceNo} == cPriceNo){
+				if('${info.cPriceNo}'==(cPriceNo)){
 					<c:forEach var="hCount" varStatus="i" begin="1" end="${info.cRoomHeadCount}">
-						$select.append("<option value='${i.count}'>${i.count}</option>");
+						$select.append("<option value='${i.count}'>${i.count} 명</option>");
 					</c:forEach>					
 				}
 
 			</c:forEach>
 		}
 		
+		// 사용료 계산
+		$("#headCount").on("change",function(){
+				$cal = $(".calculation");
+				$cal.css("display","block");
+				$cal.html("");
+			
+				
+				$head = $("#headCount option:selected").val();
+				
+				<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
+					if('${info.cPriceNo}'==(cPriceNo)){
+						$price = ${info.cRoomPrice};	
+					}
+				</c:forEach>
+				
+				$cal.append("<p>총 사용료</p>");
+				if(click1 > click2 && click2 != 0){
+					$cal.append("<p class='money' align='right'>"+$head*$price*(click1-click2)+" 원");					
+				}else if(click1 < click2){
+					$cal.append("<p class='money' align='right'>"+$head*$price*(click2-click1)+' 원');	
+				}else if(click2 == 0){
+					$cal.append('<p class="money" align="right">'+$head*$price+' 원');
+				}
+				$("#reservationBtn").css("display","block");
+				
+		})
+
+		// 모달창 오픈
+		function openModal(){
+			$(".modal").css("display","block");
+			
+			$cPriceNo = $('input[name="cPriceNo"]:checked').val();
+			$head = $("#headCount option:selected").val();
+			$money = $(".money").text();
+			$selectDate = $("#cReserDate").val();
+			
+			<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
+				if('${info.cPriceNo}'==$cPriceNo){
+					$cafeName = '${info.cafeName}';
+					$cRoomName = '${info.cRoomName}';
+				}
+			</c:forEach>
+			
+			if(click1 < click2){
+				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
+				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+			}else if(click2 < click1){
+				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click2 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
+				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+			}else{
+				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
+				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+			}
+			
+		}
 		
+
 	</script>
 	
 </body>

@@ -72,4 +72,17 @@
 		WHERE TO_CHAR(C_RESER_DATE,'DD') = #{date}
 		  AND C_PRICE_NO = #{cPriceNo}
 	</select>
+	
+	<insert id="insertReservation" parameterType="Reservation">
+		INSERT INTO CAFERESERVATION
+		VALUES (SEQ_C_RESER_NO.NEXTVAL
+				, 'M00001'
+				, #{cPriceNo}
+				, #{cReserHeadCount}
+				, #{cReserDate}
+				, #{cReserSTime}
+				, #{cReserETime}
+		)
+	</insert>
+	
 </mapper>

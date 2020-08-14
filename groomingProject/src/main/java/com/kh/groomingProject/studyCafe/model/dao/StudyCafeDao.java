@@ -47,4 +47,9 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCheckTime", str);
 	}
 
+	public int insertReservation(Reservation r) {
+
+		return sqlSessionTemplate.insert("cafeMapper.insertReservation", r);
+	}
+
 }

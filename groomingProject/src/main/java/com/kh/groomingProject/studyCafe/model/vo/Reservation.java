@@ -13,14 +13,14 @@ public class Reservation implements Serializable {
 	private String memberNo;
 	private String cPriceNo;
 	private int cReserHeadCount;
-	private Date cReserDate;
+	private String cReserDate;
 	private String cReserSTime;
 	private String cReserETime;
 	
 	public Reservation() {
 	}
 	
-	public Reservation(String creserNo, String memberNo, String cPriceNo, int cReserHeadCount, Date cReserDate,
+	public Reservation(String creserNo, String memberNo, String cPriceNo, int cReserHeadCount, String cReserDate,
 			String cReserSTime, String cReserETime) {
 		this.cReserNo = creserNo;
 		this.memberNo = memberNo;
@@ -55,10 +55,10 @@ public class Reservation implements Serializable {
 	public void setcReserHeadCount(int cReserHeadCount) {
 		this.cReserHeadCount = cReserHeadCount;
 	}
-	public Date getcReserDate() {
+	public String getcReserDate() {
 		return cReserDate;
 	}
-	public void setcReserDate(Date cReserDate) {
+	public void setcReserDate(String cReserDate) {
 		this.cReserDate = cReserDate;
 	}
 	public String getcReserSTime() {

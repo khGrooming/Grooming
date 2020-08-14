@@ -21,4 +21,6 @@ public interface StudyCafeService {
 
 	ArrayList<Reservation> selectCheckTime(Map str);
 
+	int insertReservation(Reservation r);
+
 }

@@ -124,6 +124,17 @@ public class StudtyCafeController {
 		gson.toJson(list, response.getWriter());
 	}
 	
+	// 최종 예약
+	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
+	public ModelAndView insertReservation(Reservation r, ModelAndView mv) {
+		System.out.println(r);
+		int result = studyCafeService.insertReservation(r);
+		
+		mv.addObject("r", r);
+		mv.setViewName("studyCafe/reservationCheck");
+		
+		return mv;
+	}
 	
 	// 카페 신청  내역 페이지로 이동
 	@RequestMapping(value="reservationCheck.do")

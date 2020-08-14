@@ -53,4 +53,10 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 		return studyCafeDao.selectCheckTime(str);
 	}
 
+	@Override
+	public int insertReservation(Reservation r) {
+
+		return studyCafeDao.insertReservation(r);
+	}
+
 }
