@@ -56,4 +56,9 @@ public class MypageServiceImpl implements MypageService{
 	public Member selectMember(String memberNo) {
 		return mpDao.memberSelect(memberNo);
 	}
+
+	@Override
+	public int insertSpec(Spec s) {
+		return mpDao.insertSpec(s);
+	}
 }

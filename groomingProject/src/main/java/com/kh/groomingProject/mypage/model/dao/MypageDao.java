@@ -48,4 +48,8 @@ public class MypageDao {
 		return sqlSessionTemplate.selectOne("MyPageMapper.memberSelect",memberNo);
 	}
 
+	public int insertSpec(Spec s) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertSpec",s);
+	}
+
 }

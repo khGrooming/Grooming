@@ -24,5 +24,7 @@ public interface MypageService {
 
 	Member selectMember(String memberNo);
 
+	int insertSpec(Spec s);
+
 
 }

@@ -63,7 +63,8 @@ public class MyPageController {
 		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
 
-		System.out.println(profileInfo);
+		System.out.println("myPage.do"+profileInfo);
+		System.out.println("myPage.do"+specList);
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
 			case "학교":
@@ -83,10 +84,10 @@ public class MyPageController {
 			}
 		}
 
-		session.setAttribute("profileInfo",profileInfo);
 		session.setAttribute("schoolList",schoolList);
 		session.setAttribute("certificateList",certificateList);
 		session.setAttribute("careerList",careerList);
+		session.setAttribute("profileInfo",profileInfo);
 		
 		
 	
@@ -104,13 +105,15 @@ public class MyPageController {
 		MultipartFile profileFile = request.getFile("profileFile");
 		System.out.println(profileFile.getOriginalFilename());
 		System.out.println(m.getMemberNo());
+		String folderName = "\\upprofileFiles";
+		
 		ProfileMember loginUser2 = mpService.testLoginUser2(m.getMemberNo());
 		String renameFileName="";
 		if(!(loginUser2.getMemberPhoto()).equals("MEMBER_SAMPLE_IMG.JPG")) {
 			System.out.println("파일 지우기"+loginUser2.getMemberPhoto());
-			deleteFile(loginUser2.getMemberPhoto(), request1);
+			deleteFile(loginUser2.getMemberPhoto(), request1,folderName);
 		}
-			renameFileName=saveFile(m.getMemberNo(),profileFile, request1);
+			renameFileName=saveFile(m.getMemberNo(),profileFile, request1,folderName);
 			m.setMemberPhoto(renameFileName);
 		
 		System.out.println(renameFileName);
@@ -131,9 +134,9 @@ public class MyPageController {
 	}
 	
 	//==========================================================================
-	private void deleteFile(String fileName, HttpServletRequest request) {
+	private void deleteFile(String fileName, HttpServletRequest request,String folderName) {
 		String root=request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root+"\\upprofileFiles";
+		String savePath = root+folderName;
 		
 		File f = new File(savePath + "\\" + fileName);
 		if(f.exists()) {
@@ -143,10 +146,10 @@ public class MyPageController {
 	}
 	
 	
-	private String saveFile(String memberNo,MultipartFile file,HttpServletRequest request) {
+	private String saveFile(String memberNo,MultipartFile file,HttpServletRequest request, String folderName) {
 		String root= request.getSession().getServletContext().getRealPath("resources");
 		
-		String savePath=root+"\\upprofileFiles";
+		String savePath=root+folderName;
 		File folder = new File(savePath);
 		
 		if(!folder.exists()) {
@@ -282,10 +285,56 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value="insertSpec.do",method=RequestMethod.POST)
-	public String insertSpect(HttpServletRequest request) {
-		System.out.println("뭐야");
+	public String insertSpect(MultipartHttpServletRequest request,HttpServletRequest request1, Spec s) {
+		
+		String folderName = "//upSpecFiles";
+		
+		
+		MultipartFile specFile = request.getFile("specFileName1");
+		System.out.println(specFile.getOriginalFilename());
+		
+		String specFileName = saveFile(s.getMemberNo(), specFile, request1, folderName);
+		s.setSpecFileName(specFileName);
+		int result = mpService.insertSpec(s);
+		
+		if(result > 0) {
+			System.out.println("등록 성공");
+			HttpSession session = request.getSession();
+			
+			int school=0;
+			String[] schoolList = new String[3];
+			int certificate=0;
+			String[] certificateList = new String[3];
+			int career=0;
+			String[] careerList = new String[3];
+			ArrayList<Spec> specList = mpService.selectSpecList(s.getMemberNo());
 
-		return "home";
+			for(Spec s1 : specList) {
+				switch (s1.getSpecCName()) {
+				case "학교":
+					schoolList[school]=s1.getSpecName();
+					school+=1;
+					break;
+				case "자격증":
+					certificateList[certificate]=s1.getSpecName();
+					certificate+=1;
+					break;
+				case "경력":
+					careerList[career]=s1.getSpecName();
+					career+=1;
+					break;
+				default:
+					break;
+				}
+			}
+
+			session.setAttribute("schoolList",schoolList);
+			session.setAttribute("certificateList",certificateList);
+			session.setAttribute("careerList",careerList);
+		}
+		
+
+		return "mypage/mypageinfo";
 	}
 	
 }

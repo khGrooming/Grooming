@@ -135,14 +135,20 @@ section {
 	white-space: pre;
 }
 
-
-.modelForm{
-	width: 150px;
-	height: 150px; 
-	border: 1px solid black; 
-	margin-left: auto; 
+.modelForm {
+	width: 100px;
+	height: 150px;
+	border: 1px solid black;
+	margin-left: auto;
 	margin-right: auto;
+}
 
+#fileView {
+	width: 155px;
+	height: 155px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid gray;
 }
 </style>
 </head>
@@ -170,9 +176,11 @@ section {
 						<form id="testForm" action="test1.do" method="post"
 							enctype="multipart/form-data">
 							<input type="hidden" name="memberPhoto" id="memberPhoto"
-								value="${profileInfo.memberPhoto }"> <input
+								value="${profileInfo.memberPhoto }">
+							 <input
 								type="hidden" name="memberNo" id="memberNo"
-								value="${profileInfo.memberNo}"> <input type="file"
+								value="${profileInfo.memberNo}"> 
+							<input type="file" accept=".gif, .jpg, .png"
 								name="profileFile" id="profileFile" style="display: none;"
 								onchange="test2();">
 						</form>
@@ -195,23 +203,20 @@ section {
 							${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
 						<div id="expBar"></div>
 						<script>
-                	$(function(){
-                		var maxExp= "${profileInfo.lvlMaxExp }";
-                		var memberExp= "${profileInfo.memberExp }";
-                		var empPercent=2;
-                		empPercent=(100/maxExp)*memberExp; 
-                		if(empPercent <1){
-                			/* 1%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
-                			$("#expBar").css("width","1%");
-                		}else{
-                			$("#expBar").css("width",empPercent+"%");
-                		}
-                		
-                		
-                		
-                	})
-                
-                </script>
+							$(function() {
+								var maxExp = "${profileInfo.lvlMaxExp }";
+								var memberExp = "${profileInfo.memberExp }";
+								var empPercent = 2;
+								empPercent = (100 / maxExp) * memberExp;
+								if (empPercent < 1) {
+									/* 1%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
+									$("#expBar").css("width", "1%");
+								} else {
+									$("#expBar").css("width", empPercent + "%");
+								}
+
+							})
+						</script>
 					</div>
 					<!-- 경험치 div_end -->
 
@@ -228,56 +233,67 @@ section {
 							style="position: absolute; top: 70%; left: 70%;">###</span>
 					</div>
 					<script>
-	            $(function() {
-	            	
-	            	var content=$("#memoTextArea").val();
-	            	
-	            	 $('#counter').html(content.length + '/100');
-	            	 
-	                $('#memoTextArea').keyup(function (e){
-	                    content = $(this).val();     
-	                   
-	                    $('#counter').html(content.length + '/100');
-	                    
-	                });
-	               
-	                $('#content').keyup();
-	                
-	                
-	                $('#memoTextArea').change(function(){
-	                	 alert(content);
-	                	var save = confirm("상태메시지를 저장하시겠습니까?");
-	                	if(save){
-	                		$.ajax({
-	                			url:"upMemo.do",
-	                			type:"post",
-	                			data:{memberMemo:$(this).val()},
-	                			success : function(data) {
-			                		alert("변경되었습니다");					            	
-					            },
-					            error : function(data) {  
-					               alert("code:"+request.status+"\n"+"error:"+error);
-					            }
-	                			
-	                		})
-	                	}else{
-	                		alert("취소하였습니다");
-	                		if("${profileInfo.memberMemo}"=="NULL"){
-	                			$('#memoTextArea').val("");
-	                		}else{
-	                			
-		                		$('#memoTextArea').val("${profileInfo.memberMemo}");
-	                		}
-	                	}
-	                	
-	                })
-	                
-	                
-	         	 });
-	          
-	            
-            
-            </script>
+						$(function() {
+
+							var content = $("#memoTextArea").val();
+
+							$('#counter').html(content.length + '/100');
+
+							$('#memoTextArea').keyup(function(e) {
+								content = $(this).val();
+
+								$('#counter').html(content.length + '/100');
+
+							});
+
+							$('#content').keyup();
+
+							$('#memoTextArea')
+									.change(
+											function() {
+												alert(content);
+												var save = confirm("상태메시지를 저장하시겠습니까?");
+												if (save) {
+													$
+															.ajax({
+																url : "upMemo.do",
+																type : "post",
+																data : {
+																	memberMemo : $(
+																			this)
+																			.val()
+																},
+																success : function(
+																		data) {
+																	alert("변경되었습니다");
+																},
+																error : function(
+																		data) {
+																	alert("code:"
+																			+ request.status
+																			+ "\n"
+																			+ "error:"
+																			+ error);
+																}
+
+															})
+												} else {
+													alert("취소하였습니다");
+													if ("${profileInfo.memberMemo}" == "NULL") {
+														$('#memoTextArea').val(
+																"");
+													} else {
+
+														$('#memoTextArea')
+																.val(
+																		"${profileInfo.memberMemo}");
+													}
+												}
+
+											})
+
+						});
+					</script>
 
 					<!-- 포인트 div -->
 					<div style="width: 75%; margin-left: auto; margin-right: auto;">
@@ -300,7 +316,7 @@ section {
 						<br clear="both">
 						<div class="grayBox" style="height: 250px;">
 							<div id="specTable"
-								style="margin-left: auto; height: 100%; margin-right: auto; width: 85%;">
+								style="margin-top: 5%; margin-left: auto; height: 100%; margin-right: auto; width: 85%;">
 								<table style="text-align: left;">
 									<tr>
 										<th rowspan="3" valign=top style="width: 50px;">학교</th>
@@ -340,7 +356,6 @@ section {
 										<td class="specTd" id="career2"></td>
 									</tr>
 								</table>
-								
 								<!-- 스펙 추가 모달창 -->
 								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 									aria-labelledby="myModalLabel">
@@ -354,24 +369,36 @@ section {
 													<span aria-hidden="true">×</span>
 												</button>
 											</div>
+												<form id="modelForm" action="insertSpec.do" method="post" enctype="Multipart/form-data">
 											<div class="modal-body">
-											<p>파일 미리보기</p>
-												<img id="fileView"style="">
+												<p>파일 미리보기</p>
+												<div id="fileView"></div>
+													<input type="hidden" id="specCName" name="specCName"><br>
+													<input type="hidden" id="memberNo" name="memberNo"
+														value="${loginUser.memberNo }"><br>
+													<table style="width: 300px; text-align: left; margin-left:auto; margin-right: auto;">
+														<tr>
+															<td style="width: 150px;"><label id="specNameLable"></label></td>
+															<td style="width: 250px;"><input type="text"
+																id="specName" name="specName" required></td>
+														</tr>
+														<tr>
+															<td><label id="specFileNameLable">파일첨부</label></td>
+															<td><input type="file" accept=".gif, .jpg, .png"
+																id="specFileName" name="specFileName1"
+																style="width: 100%;" required onchange="setThumbnail(event);" /></td>
+														<tr>
+													</table>
+													<br>
 												
-												<form id="modelForm" action="insertSpec.do"  method="post" enctype="Multipart/form-data" onsubmit="retrun fileCheck">
-													<input  type="hidden"  id="specCName" name="specCName"><br>
-													<input  type="hidden"  id="memberNo" name="memberNo" value="${loginUser.memberNo }"><br>
-													<label id="specNameLable"></label><input type="text" id="specName" name="specName" required ><br>
-													<label id="specFileNameLable">파일첨부</label><input type="file" id="specFileName" name="specFileName" style="width: 50%;" required>
-												
-											
+													
 											</div>
 											<div class="modal-footer">
-												<button class="btn btn-primary">확인</button>
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">취소</button>
+												<button type="submit" class="btn btn-primary">확인</button>
+												<button type="button" id="btn-delete"
+													class="btn btn-default" data-dismiss="modal">취소</button>
 											</div>
-											</form>	
+											</form>
 										</div>
 									</div>
 								</div>
@@ -380,141 +407,172 @@ section {
 						</div>
 						<!-- 스펙 추가 스크립트 -->
 						<script>
-						$(function(){
-							$("#subBtn").on("click",function(){
-								
+							function resetInputFile($input, $preview) {
+								var agent = navigator.userAgent.toLowerCase();
+								if ((navigator.appName == 'Netscape' && navigator.userAgent
+										.search('Trident') != -1)
+										|| (agent.indexOf("msie") != -1)) {
+									// ie 일때
+									$input.replaceWith($input.clone(true));
+									$preview.empty();
+								} else {
+									//other
+									$input.val("");
+									$preview.empty();
+								}
+							}
+
+							$("#btn-delete").click(function(event) {
+								var $input = $("#specFileName");
+								var $preview = $('#fileView');
+								resetInputFile($input, $preview);
+							});
+
+							// 등록 이미지 등록 미리보기
+							function readInputFile(input) {
+								if (input.files && input.files[0]) {
+									var reader = new FileReader();
+									reader.onload = function(e) {
+										$('#fileView')
+												.html(
+														"<img src="+ e.target.result +" style='width:150px; height:150px; margin-left:auto; margin-right:auto;'>");
+									}
+									reader.readAsDataURL(input.files[0]);
+								}
+							}
+
+							$("#specFileName").on('change', function() {
+								readInputFile(this);
+							});
+
+							$(function() {
+								var $tdId;
+								var school = new Array();
+								school[0] = "${schoolList[0]}";
+								school[1] = "${schoolList[1]}";
+								school[2] = "${schoolList[2]}";
+								/* $tdId=$("#school1");
+								$tdId.text(school[0]); */
+								for (var i = 0; i < school.length; i++) {
+									var $tdId;
+									switch (i) {
+									case 0:
+										$tdId = $("#school0");
+										break;
+									case 1:
+										$tdId = $("#school1");
+										break;
+									case 2:
+										$tdId = $("#school2");
+										break;
+
+									default:
+										break;
+									}
+									if (school[i] != "") {
+										$tdId.text(school[i]);
+									} else {
+										$tdId.attr("valign", "top");
+										$tdId
+												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
+                    							 +"style='width:15px; text-align:top;'>");
+										$tdId.attr("data-toggle", "modal");
+										$tdId.attr("data-target", "#myModal");
+
+										$tdId.on("click", function() {
+											$("#myModalLabel").text("학교 추가");
+											$("#specCName").val("SC00001");
+											$("#specNameLable").text("학교 이름");
+										})
+										break;
+									}
+
+								}
+
+								var certificate = new Array();
+								certificate[0] = "${certificateList[0]}";
+								certificate[1] = "${certificateList[1]}";
+								certificate[2] = "${certificateList[2]}";
+
+								for (var i = 0; i < certificate.length; i++) {
+									var $tdId;
+									switch (i) {
+									case 0:
+										$tdId = $("#certificate0");
+										break;
+									case 1:
+										$tdId = $("#certificate1");
+										break;
+									case 2:
+										$tdId = $("#certificate2");
+										break;
+
+									default:
+										break;
+									}
+									if (certificate[i] != "") {
+										$tdId.text(certificate[i]);
+									} else {
+										$tdId.attr("valign", "top");
+										$tdId
+												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
+                    							 +"style='width:15px; text-align:top;'>");
+										$tdId.attr("data-toggle", "modal");
+										$tdId.attr("data-target", "#myModal");
+
+										$tdId.on("click", function() {
+											$("#myModalLabel").text("자격증 추가");
+											$("#specCName").val("SC00002");
+											$("#specNameLable").text("자격증 이름");
+										})
+										break;
+									}
+
+								}
+
+								var career = new Array();
+								career[0] = "${careerList[0]}";
+								career[1] = "${careerList[1]}";
+								career[2] = "${careerList[2]}";
+
+								for (var i = 0; i < career.length; i++) {
+									var $tdId;
+									switch (i) {
+									case 0:
+										$tdId = $("#career0");
+										break;
+									case 1:
+										$tdId = $("#career1");
+										break;
+									case 2:
+										$tdId = $("#career2");
+										break;
+
+									default:
+										break;
+									}
+									if (career[i] != "") {
+										$tdId.text(career[i]);
+									} else {
+										$tdId.attr("valign", "top");
+										$tdId
+												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
+                    							 +"style='width:15px; text-align:top;'>");
+										$tdId.attr("data-toggle", "modal");
+										$tdId.attr("data-target", "#myModal");
+
+										$tdId.on("click", function() {
+											$("#myModalLabel").text("경력추가");
+											$("#specCName").val("SC00003");
+											$("#specNameLable").text("경력 작성");
+										})
+										break;
+									}
+
+								}
+
 							})
-						})
-					
-                	$(function(){
-                		var $tdId;
-                    	var school = new Array();
-                    	school[0]= "${schoolList[0]}";
-                    	school[1]= "${schoolList[1]}";
-                    	school[2]= "${schoolList[2]}";
-                    	/* $tdId=$("#school1");
-                    	$tdId.text(school[0]); */
-                    	for(var i=0; i<school.length;i++){
-                    		var $tdId;
-                    		switch (i) {
-							case 0:
-								$tdId=$("#school0");
-								break;
-							case 1:
-								$tdId=$("#school1");
-								break;
-							case 2:
-								$tdId=$("#school2");
-								break;
-
-							default:
-								break;
-							} 
-                    		if(school[i] != ""){
-                    			$tdId.text(school[i]);
-                    		}else{
-                    			$tdId.attr("valign","top");
-                    			$tdId.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>"); 
-                    			$tdId.attr("data-toggle","modal");
-                    			$tdId.attr("data-target","#myModal");
-
-                    			$tdId.on("click",function(){
-                    				$("#myModalLabel").text("학교 추가");
-                    				$("#specCName").val("SC00001");
-                    				$("#specNameLable").text("학교 이름");
-                    			})
-                    			break;
-                    		}
-    							
-                    		
-                    	}
-                    	
-                    	var certificate = new Array();
-                    	certificate[0]= "${certificateList[0]}";
-                    	certificate[1]= "${certificateList[1]}";
-                    	certificate[2]= "${certificateList[2]}";
-                    	
-                    	for(var i=0; i<certificate.length;i++){
-                    		var $tdId;
-                    		switch (i) {
-							case 0:
-								$tdId=$("#certificate0");
-								break;
-							case 1:
-								$tdId=$("#certificate1");
-								break;
-							case 2:
-								$tdId=$("#certificate2");
-								break;
-
-							default:
-								break;
-							} 
-                    		if(certificate[i] != ""){
-                    			$tdId.text(certificate[i]);
-                    		}else{
-                    			$tdId.attr("valign","top");
-                    			$tdId.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>"); 
-                    			$tdId.attr("data-toggle","modal");
-                    			$tdId.attr("data-target","#myModal");
-
-                    			$tdId.on("click",function(){
-                    				$("#myModalLabel").text("자격증 추가");
-                    				$("#specCName").val("SC00002");
-                    				$("#specNameLable").text("자격증 이름");
-                    			})
-                    			break;
-                    		}
-                    		
-                    	}
-                    	
-                    	var career = new Array();
-                    	career[0]= "${careerList[0]}";
-                    	career[1]= "${careerList[1]}";
-                    	career[2]= "${careerList[2]}";
-
-                    	for(var i=0; i<career.length;i++){
-                    		var $tdId;
-                    		switch (i) {
-							case 0:
-								$tdId=$("#career0");
-								break;
-							case 1:
-								$tdId=$("#career1");
-								break;
-							case 2:
-								$tdId=$("#career2");
-								break;
-
-							default:
-								break;
-							} 
-                    		if(career[i] != ""){
-                    			$tdId.text(career[i]);
-                    		}else{
-                    			$tdId.attr("valign","top");
-                    			$tdId.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>"); 
-                    			$tdId.attr("data-toggle","modal");
-                    			$tdId.attr("data-target","#myModal");
-
-                    			$tdId.on("click",function(){
-                    				$("#myModalLabel").text("경력추가");
-                    				$("#specCName").val("SC00003");
-                    				$("#specNameLable").text("경력 작성");
-                    			})
-                    			break;
-                    		}
-                    		
-                    	}
-                    	
-                	})
-                
-
-			
-                </script>
+						</script>
 
 
 					</div>
@@ -524,40 +582,41 @@ section {
 
 
 				<script>
-					$(function(){
-						$("#profileImg").on("click",function(){
+					$(function() {
+						$("#profileImg").on("click", function() {
 							$("#profileFile").click();
-							
+
 						})
-						
+
 					})
-					
-					
-					function test2(){
+
+					function test2() {
 						var formData = new FormData($('#testForm')[0]);
 
-				        alert("dgjd");
-				        $.ajax({
-				            type:'POST',
-				            url:"upproimg.do",
-				            enctype: 'multipart/form-data', // 필수 
-				            data: formData, // 필수 
-				            processData: false, // 필수 
-				            contentType: false, // 필수 
-				            processData: false,
-				            contentType: false,
-				            success : function(data) {
-				            	alert(data);
-								$("#profileImg").attr("src","${contextPath}/resources/upprofileFiles/"+data);
+						alert("dgjd");
+						$.ajax({
+							type : 'POST',
+							url : "upproimg.do",
+							enctype : 'multipart/form-data', // 필수 
+							data : formData, // 필수 
+							processData : false, // 필수 
+							contentType : false, // 필수 
+							processData : false,
+							contentType : false,
+							success : function(data) {
+								alert(data);
+								$("#profileImg").attr(
+										"src",
+										"${contextPath}/resources/upprofileFiles/"
+												+ data);
 								$("memberPhoto").val(data);
-				            },
-				            error : function(data) {  
-				               alert("code:"+request.status+"\n"+"error:"+error);
-				            }
-				        });
+							},
+							error : function(data) {
+								alert("code:" + request.status + "\n"
+										+ "error:" + error);
+							}
+						});
 					}
-		
-				
 				</script>
 
 				<div class="subContent_my"
@@ -582,9 +641,7 @@ section {
 						</div>
 					</div>
 				</div>
-				<br>
-				<br>
-				<br>
+				<br> <br> <br>
 				<div class="subContent_my a" id="a1"
 					style="width: 70%; display: block;">
 
@@ -598,50 +655,51 @@ section {
 				<div class="subContent_my a" id="a5" style="width: 70%;"></div>
 
 				<script>
-					$(".submenu").on("click",function(){
+					$(".submenu").on("click", function() {
 						var clickId = $(this).attr("id");
-						$(".a").css("display","none"); 
-						$(".s").css("background","white");
-					
+						$(".a").css("display", "none");
+						$(".s").css("background", "white");
+
 						switch (clickId) {
-						  case "menu1" :
-						    $("#menu1").css("background","gray");
-						    $("#a1").css("display","block"); 
-						    break;
-						  case "menu2" :
-							  $("#menu2").css("background","gray");
-							    $("#a2").css("display","block"); 
-							    break;
-						  case "menu3" :
-							  $("#menu3").css("background","gray");
-							    $("#a3").css("display","block"); 
-							    break;
-						  case "menu4" :
-							  $("#menu4").css("background","gray");
-							    $("#a4").css("display","block"); 
-							    break;
-						  case "menu5" :
-							  $("#menu5").css("background","gray");
-							    $("#a5").css("display","block"); 
-							    break;
-							    
-						  default :
-						    alert('선택한 값이 없습니다.');
-						    break;
+						case "menu1":
+							$("#menu1").css("background", "gray");
+							$("#a1").css("display", "block");
+							break;
+						case "menu2":
+							$("#menu2").css("background", "gray");
+							$("#a2").css("display", "block");
+							break;
+						case "menu3":
+							$("#menu3").css("background", "gray");
+							$("#a3").css("display", "block");
+							break;
+						case "menu4":
+							$("#menu4").css("background", "gray");
+							$("#a4").css("display", "block");
+							break;
+						case "menu5":
+							$("#menu5").css("background", "gray");
+							$("#a5").css("display", "block");
+							break;
+
+						default:
+							alert('선택한 값이 없습니다.');
+							break;
 						}
-						
+
 					})
 				</script>
 		</c:if>
 		<c:if test="${empty profileInfo}">
 			<h3>정보 없음</h3>
 		</c:if>
-		</div>
+	
 
 	</section>
 
 	<!-- /.container -->
 
+				</div>
 	<jsp:include page="../common/footer.jsp" />
 
 	<!-- Optional JavaScript -->
