@@ -70,7 +70,7 @@ public class GroomingDao {
 
 	public ArrayList<GroomingTag> selectTag(String groomingNo) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectTag",groomingNo);
+		return (ArrayList)sqlSessionTemplate.selectList("tagMapper.selectTag",groomingNo);
 	}
 
 	public ArrayList<GroomingSpec> selectSpec(String groomingNo) {
@@ -81,6 +81,11 @@ public class GroomingDao {
 	public Member selectMember(String groomingNo) {
 		
 		return sqlSessionTemplate.selectOne("memberMapper.selectHost",groomingNo);
+	}
+
+	public int insertGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertGrooming",g);
 	}
 	
 	

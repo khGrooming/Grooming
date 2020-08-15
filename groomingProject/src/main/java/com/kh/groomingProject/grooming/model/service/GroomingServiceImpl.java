@@ -88,5 +88,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectMember(groomingNo);
 	}
 
+	@Override
+	public int insertGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.insertGrooming(g);
+	}
+
+
 	
 }

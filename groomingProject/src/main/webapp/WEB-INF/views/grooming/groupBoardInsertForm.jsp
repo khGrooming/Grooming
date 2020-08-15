@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +7,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
   
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -29,20 +30,20 @@
             height: 1200px;
         }
 
-        /* div¿« ≈©±‚ø° ∏¬√„ */
+        /* divÏùò ÌÅ¨Í∏∞Ïóê ÎßûÏ∂§ */
         img {
             max-width: 100%;
             max-height: 100%;
         }
 
-        /* ¿Œ∂Û¿Œ «¸Ωƒ¿« √‚∑¬ */
+        /* Ïù∏ÎùºÏù∏ ÌòïÏãùÏùò Ï∂úÎ†• */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
 
-        /* ∞¢ ≈«¿« ∏ﬁ¥∫¿« ≥ªøÎ */
+        /* Í∞Å ÌÉ≠Ïùò Î©îÎâ¥Ïùò ÎÇ¥Ïö© */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
@@ -50,19 +51,19 @@
             height: 700px;
         }
 
-        /*∂Ûµø¿πˆ∆∞ º˚±Ë*/
+        /*ÎùºÎîîÏò§Î≤ÑÌäº Ïà®ÍπÄ*/
         .radio {
             display: none;
         }
 
 
-        /* ≈«∏ﬁ¥∫ ≈¬±◊ ∏∂øÏΩ∫ ø√∏±Ω√ */
+        /* ÌÉ≠Î©îÎâ¥ ÌÉúÍ∑∏ ÎßàÏö∞Ïä§ Ïò¨Î¶¥Ïãú */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
 
-        /* ≈¬±◊ ∏ﬁ¥∫ css */
+        /* ÌÉúÍ∑∏ Î©îÎâ¥ css */
         .menu {
             display: inline-block;
             margin: 0 0 -3px;
@@ -76,7 +77,7 @@
 
         }
 
-        /*input ≈¨∏ØΩ√, label Ω∫≈∏¿œ*/
+        /*input ÌÅ¥Î¶≠Ïãú, label Ïä§ÌÉÄÏùº*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
@@ -102,27 +103,27 @@
 </head>
 
 <body>
-    <!-- «Ï¥ıΩ√¿€ -->
+    <!-- Ìó§ÎçîÏãúÏûë -->
     <header>
         	<jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- ºΩº« Ω√¿€ -->
+    <!-- ÏÑπÏÖò ÏãúÏûë -->
 
-    <!-- ƒ¡≈◊¿Ã≥ ∑Œ æÁø∑ø° ∞¯πÈ ª˝º∫ -->
+    <!-- Ïª®ÌÖåÏù¥ÎÑàÎ°ú ÏñëÏòÜÏóê Í≥µÎ∞± ÏÉùÏÑ± -->
     <div class=container style="margin-top:150px ; ">
-        <!--µ∆˙∆Æ ∏ﬁ¥∫-->
+        <!--ÎîîÌè¥Ìä∏ Î©îÎâ¥-->
         <input id="tab1" type="radio" name="tabs" class="radio" checked>
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>∏ﬁ¿Œ</label>
+        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>Î©îÏù∏</label>
 
         <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>ƒ∂∏∞¥ı</label>
+        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>Ï∫òÎ¶∞Îçî</label>
 
         <input id="tab3" type="radio" name="tabs" class="radio">
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>∞‘Ω√∆«</label>
+        <label for="tab3" class="menu"><i class="fas fa-icons"></i>Í≤åÏãúÌåê</label>
 
 
-        <!-- ∏ﬁ¿Œø° µÈæÓ∞• ≥ªøÎøÎ -->
+        <!-- Î©îÏù∏Ïóê Îì§Ïñ¥Í∞à ÎÇ¥Ïö©Ïö© -->
         <section id="content3">
 
 
@@ -134,27 +135,27 @@
 
                     <form method="post">
                         <tr>
-                            <th>¿€º∫∞‘Ω√∆« </th>
+                            <th>ÏûëÏÑ±Í≤åÏãúÌåê </th>
                             <td>
-                                <label><input type="radio" name="board" class="board">¿⁄¿Ø∞‘Ω√∆«</label>
-                                <label><input type="radio" name="board" class="board">∞¯¡ˆªÁ«◊</label>
+                                <label><input type="radio" name="board" class="board">ÏûêÏú†Í≤åÏãúÌåê</label>
+                                <label><input type="radio" name="board" class="board">Í≥µÏßÄÏÇ¨Ìï≠</label>
                             </td>
                         </tr>
                         <tr>
-                            <th>¡¶∏Ò </th>
-                            <td><input type="text" placeholder="¡¶∏Ò¿ª ¿‘∑¬«œººø‰. " name="subject" class="form-control" ></td>
+                            <th>Ï†úÎ™© </th>
+                            <td><input type="text" placeholder="Ï†úÎ™©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî. " name="subject" class="form-control" ></td>
                         </tr>
                         <tr >
-                            <th>≥ªøÎ </th>
-                            <td><textarea cols="100" rows="10" placeholder="≥ªøÎ¿ª ¿‘∑¬«œººø‰. " id="summernote" name="editordata"
+                            <th>ÎÇ¥Ïö© </th>
+                            <td><textarea cols="100" rows="10" placeholder="ÎÇ¥Ïö©ÏùÑ ÏûÖÎ†•ÌïòÏÑ∏Ïöî. " id="summernote" name="editordata"
                                     class="form-control"></textarea></td>
                         </tr>
                        
                      
                         <tr style="text-align:center">
                             <td colspan="2">
-                                <input id="insert" type="button" value="µÓ∑œ" onclick="location.href='groupPage.do'">
-                                <input id="backlist" type="button" value="∏Ò∑œ¿∏∑Œ" onclick="location.href='groupPage.do'">
+                                <input id="insert" type="button" value="Îì±Î°ù" onclick="location.href='groupPage.do'">
+                                <input id="backlist" type="button" value="Î™©Î°ùÏúºÎ°ú" onclick="location.href='groupPage.do'">
                             </td>
                         </tr>
                     </form>

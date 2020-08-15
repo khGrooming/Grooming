@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!doctype html>
 <html lang="en">
@@ -16,7 +16,8 @@
         integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 
-    <script src="http:/code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -28,7 +29,7 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
         
-            <!--summernote css/js Ãß°¡  -->
+            <!--summernote css/js ì¶”ê°€  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -38,20 +39,20 @@
             height: 1200px;
         }
 
-        /* divÀÇ Å©±â¿¡ ¸ÂÃã */
+        /* divì˜ í¬ê¸°ì— ë§žì¶¤ */
         img {
             max-width: 100%;
             max-height: 100%;
         }
 
-        /* ÀÎ¶óÀÎ Çü½ÄÀÇ Ãâ·Â */
+        /* ì¸ë¼ì¸ í˜•ì‹ì˜ ì¶œë ¥ */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
 
-        /* °¢ ÅÇÀÇ ¸Þ´ºÀÇ ³»¿ë */
+        /* ê° íƒ­ì˜ ë©”ë‰´ì˜ ë‚´ìš© */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
@@ -59,19 +60,19 @@
             height: auto;
         }
 
-        /*¶óµð¿À¹öÆ° ¼û±è*/
+        /*ë¼ë””ì˜¤ë²„íŠ¼ ìˆ¨ê¹€*/
         .radio {
             display: none;
         }
 
 
-        /* ÅÇ¸Þ´º ÅÂ±× ¸¶¿ì½º ¿Ã¸±½Ã */
+        /* íƒ­ë©”ë‰´ íƒœê·¸ ë§ˆìš°ìŠ¤ ì˜¬ë¦´ì‹œ */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
 
-        /* ÅÂ±× ¸Þ´º css */
+        /* íƒœê·¸ ë©”ë‰´ css */
         .menu {
             display: inline-block;
             margin: 0 0 -3px;
@@ -85,7 +86,7 @@
 
         }
 
-        /*input Å¬¸¯½Ã, label ½ºÅ¸ÀÏ*/
+        /*input í´ë¦­ì‹œ, label ìŠ¤íƒ€ì¼*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
@@ -113,32 +114,32 @@
 </head>
 
 <body>
-    <!-- Çì´õ½ÃÀÛ -->
+    <!-- í—¤ë”ì‹œìž‘ -->
     <header>
         <jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- ¼½¼Ç ½ÃÀÛ -->
+    <!-- ì„¹ì…˜ ì‹œìž‘ -->
 
-    <!-- ÄÁÅ×ÀÌ³Ê·Î ¾ç¿·¿¡ °ø¹é »ý¼º -->
+    <!-- ì»¨í…Œì´ë„ˆë¡œ ì–‘ì˜†ì— ê³µë°± ìƒì„± -->
     <div class=container style="margin-top:150px ; ">
-        <!--µðÆúÆ® ¸Þ´º-->
+        <!--ë””í´íŠ¸ ë©”ë‰´-->
         <input id="tab1" type="radio" name="tabs" class="radio">
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>¸ÞÀÎ</label>
+        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>ë©”ì¸</label>
 
         <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>Ä¶¸°´õ</label>
+        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>ìº˜ë¦°ë”</label>
 
         <input id="tab3" type="radio" name="tabs" class="radio" checked>
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>°Ô½ÃÆÇ</label>
+        <label for="tab3" class="menu"><i class="fas fa-icons"></i>ê²Œì‹œíŒ</label>
 
 
-        <!-- ¸ÞÀÎ¿¡ µé¾î°¥ ³»¿ë¿ë -->
+        <!-- ë©”ì¸ì— ë“¤ì–´ê°ˆ ë‚´ìš©ìš© -->
         <section id="content3">
 
             <div style="text-align: right; margin-right: 20px;">
-            <a href="#">½Å°íÇÏ±â</a>
-            <p >ÀÛ¼ºÀÏ : <label>2020-07-25</label>&nbsp;&nbsp;Á¶È¸¼ö : <label>7È¸</label></p>
+            <a href="#">ì‹ ê³ í•˜ê¸°</a>
+            <p >ìž‘ì„±ì¼ : <label>2020-07-25</label>&nbsp;&nbsp;ì¡°íšŒìˆ˜ : <label>7íšŒ</label></p>
             </div>
                     <div class="container">
 
@@ -146,55 +147,55 @@
 
                             <form method="post">
                                 <tr>
-                                    <th>ÀÛ¼º°Ô½ÃÆÇ </th>
+                                    <th>ìž‘ì„±ê²Œì‹œíŒ </th>
                                     <td>
-                                        <label>ÀÚÀ¯°Ô½ÃÆÇ</label>
-                                        <label hidden>°øÁö»çÇ×</label>
+                                        <label>ìžìœ ê²Œì‹œíŒ</label>
+                                        <label hidden>ê³µì§€ì‚¬í•­</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Á¦¸ñ </th>
-                                    <td><label>³Ê¶û³ª¶ûÀº ³Ê¶û³ª¶ûÀº ³Ê¶û³ª¶ûÀº</label></td>
+                                    <th>ì œëª© </th>
+                                    <td><label>ë„ˆëž‘ë‚˜ëž‘ì€ ë„ˆëž‘ë‚˜ëž‘ì€ ë„ˆëž‘ë‚˜ëž‘ì€</label></td>
                                 </tr>
                                 <tr>
-                                    <th>³»¿ë </th>
+                                    <th>ë‚´ìš© </th>
                                     <td><textarea cols="100" rows="10" class="form-control" readonly
-                                            style="height:auto;">½Ã°ê º¸¸ç ¼Ó»èÀÌ´Â ºñ¹Ðµé
-						                                    °£ÀýÇÑ ³» ¸¾¼Ó ÀÌ¾ß±â
-						                                    Áö±Ý ³» ¸ð½ÀÀ» ÇØÃÄµµ ÁÁ¾Æ
-						                                    ³ª¸¦ ÀçÃËÇÏ¸é ÇÒ¼ö·Ï ÁÁ¾Æ
-						                                    ³» ÀÌ¸§ ºÒ·¯Áà
+                                            style="height:auto;">ì‹œê³Œ ë³´ë©° ì†ì‚­ì´ëŠ” ë¹„ë°€ë“¤
+						                                    ê°„ì ˆí•œ ë‚´ ë§˜ì† ì´ì•¼ê¸°
+						                                    ì§€ê¸ˆ ë‚´ ëª¨ìŠµì„ í•´ì³ë„ ì¢‹ì•„
+						                                    ë‚˜ë¥¼ ìž¬ì´‰í•˜ë©´ í• ìˆ˜ë¡ ì¢‹ì•„
+						                                    ë‚´ ì´ë¦„ ë¶ˆëŸ¬ì¤˜
 						                                    
-                                    * ¼Õ Æ´»õ·Î ºñÄ¡´Â ³» ¸¾ µéÅ³±î µÎ·Á¿ö
-						                                    °¡½¿ÀÌ ¸· ¹÷Â÷ ¼­·¯¿ö
-						                                    Á¶±Ý¸¸ ²À Âü°í ³¯ ±â´Ù·ÁÁà
-						                                    ³Ê¶û ³ª¶ûÀº Áö±Ý ¾ÈµÇÁö
-						                                    ½Ã°è¸¦ ´õ º¸Ã¤°í ½ÍÁö¸¸
-						                                    ³×°¡ ÀÖ´ø ¹Ì·¡¿¡¼­
-						                                    ³» ÀÌ¸§À» ºÒ·¯Áà
+                                    * ì† í‹ˆìƒˆë¡œ ë¹„ì¹˜ëŠ” ë‚´ ë§˜ ë“¤í‚¬ê¹Œ ë‘ë ¤ì›Œ
+						                                    ê°€ìŠ´ì´ ë§‰ ë²…ì°¨ ì„œëŸ¬ì›Œ
+						                                    ì¡°ê¸ˆë§Œ ê¼­ ì°¸ê³  ë‚  ê¸°ë‹¤ë ¤ì¤˜
+						                                    ë„ˆëž‘ ë‚˜ëž‘ì€ ì§€ê¸ˆ ì•ˆë˜ì§€
+						                                    ì‹œê³„ë¥¼ ë” ë³´ì±„ê³  ì‹¶ì§€ë§Œ
+						                                    ë„¤ê°€ ìžˆë˜ ë¯¸ëž˜ì—ì„œ
+						                                    ë‚´ ì´ë¦„ì„ ë¶ˆëŸ¬ì¤˜
 						                                    
-						                                    ³»°¡ ¸ÕÀú ¿³º¸°í ¿Â ½Ã°£µé
-						                                    ³Ê¿Í ³»°¡ ÇÔ²²¿´¾úÁö
-						                                    ³ª¶û ³î¾ÆÁÖ´Â ±×´ë°¡ ÁÁ¾Æ
-						                                    ³»°¡ ¹°¾îº¸¸é ±×´ëµµ ÁÁ¾Æ
-						                                    ³» ÀÌ¸§ÀÌ ¹¹¾ß
+						                                    ë‚´ê°€ ë¨¼ì € ì—¿ë³´ê³  ì˜¨ ì‹œê°„ë“¤
+						                                    ë„ˆì™€ ë‚´ê°€ í•¨ê»˜ì˜€ì—ˆì§€
+						                                    ë‚˜ëž‘ ë†€ì•„ì£¼ëŠ” ê·¸ëŒ€ê°€ ì¢‹ì•„
+						                                    ë‚´ê°€ ë¬¼ì–´ë³´ë©´ ê·¸ëŒ€ë„ ì¢‹ì•„
+						                                    ë‚´ ì´ë¦„ì´ ë­ì•¼
 						                                    
 						                                    * Repeat
 						                                    
-						                                    ´« ±ô¹ÚÇÏ¸é ¾î¸¥ÀÌ µÉ °Å¿¹¿ä
-						                                    ³¯ ¾Ë¾Æº¸°ÚÁÒ ±×´í ±â¾ïÇÏ°ÚÁÒ
-						                                    ±×·¡ ±â¹¦Çß´ø ¾ÆÀÌ
-						                                    ¼Õ Æ´»õ·Î ºñÄ¡´Â ³× ¸ð½À Âü ÁÁ´Ù
+						                                    ëˆˆ ê¹œë°•í•˜ë©´ ì–´ë¥¸ì´ ë  ê±°ì˜ˆìš”
+						                                    ë‚  ì•Œì•„ë³´ê² ì£  ê·¸ëŒ„ ê¸°ì–µí•˜ê² ì£ 
+						                                    ê·¸ëž˜ ê¸°ë¬˜í–ˆë˜ ì•„ì´
+						                                    ì† í‹ˆìƒˆë¡œ ë¹„ì¹˜ëŠ” ë„¤ ëª¨ìŠµ ì°¸ ì¢‹ë‹¤
 						                                    
-						                                    ¼Õ³¡À¸·Î µ¹¸®¸ç ½Ã°ì¹Ù´Ã¾Æ ´Þ·ÁºÁ
-						                                    Á¶±Ý¸¸ ´õ »¡¸® ³¯¾ÆºÁ
-						                                    µÎ ´«À» ²À °¨°í ¸¶¹ýÀ» °Ç´Ù
-						                                    ³Ê¶û ³ª¶ûÀº Á¶±Ý ³²¾ÒÁö
-						                                    ¸î³¯ ¸î½ÇÁø ¸ð¸£°ÚÁö¸¸
-						                                    ³×°¡ ÀÖÀ» ¹Ì·¡¿¡¼­
-						                                    È¤½Ã ³»°¡ Çì¸Ç´Ù¸é
-						                                    ³Ê¸¦ ¾Ë¾Æº¼ ¼ö ÀÖ°Ô
-						                                    ³» ÀÌ¸§À» ºÒ·¯Áà</textarea></td>
+						                                    ì†ëìœ¼ë¡œ ëŒë¦¬ë©° ì‹œê³—ë°”ëŠ˜ì•„ ë‹¬ë ¤ë´
+						                                    ì¡°ê¸ˆë§Œ ë” ë¹¨ë¦¬ ë‚ ì•„ë´
+						                                    ë‘ ëˆˆì„ ê¼­ ê°ê³  ë§ˆë²•ì„ ê±´ë‹¤
+						                                    ë„ˆëž‘ ë‚˜ëž‘ì€ ì¡°ê¸ˆ ë‚¨ì•˜ì§€
+						                                    ëª‡ë‚  ëª‡ì‹¤ì§„ ëª¨ë¥´ê² ì§€ë§Œ
+						                                    ë„¤ê°€ ìžˆì„ ë¯¸ëž˜ì—ì„œ
+						                                    í˜¹ì‹œ ë‚´ê°€ í—¤ë§¨ë‹¤ë©´
+						                                    ë„ˆë¥¼ ì•Œì•„ë³¼ ìˆ˜ ìžˆê²Œ
+						                                    ë‚´ ì´ë¦„ì„ ë¶ˆëŸ¬ì¤˜</textarea></td>
                                 </tr>
 
 
@@ -205,15 +206,15 @@
 
                         </table>
                         
-                       <!-- ¼öÁ¤ »èÁ¦ ¹öÆ° -->
+                       <!-- ìˆ˜ì • ì‚­ì œ ë²„íŠ¼ -->
                         <div align="right">
-                            <button type="button">¼öÁ¤</button>
-                            <button type="button">»èÁ¦</button>
+                            <button type="button">ìˆ˜ì •</button>
+                            <button type="button">ì‚­ì œ</button>
                         </div>
                         
                         <br><br><br>
                         
-                        <!-- ´ñ±Û µî·Ï  -->
+                        <!-- ëŒ“ê¸€ ë“±ë¡  -->
                         <div class="container">
                             <table class="table table-bordered">
                                 <form method="post">
@@ -225,13 +226,13 @@
                                         </td>
                                         <br><br>
                                         <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-                                            <button>´ñ±Û µî·Ï</button>
+                                            <button>ëŒ“ê¸€ ë“±ë¡</button>
                                         </td>
 
                                     </tr>
                                 </form>
                             </table>
-                            <!-- ´ñ±Û ¸ñ·Ï º¸±â -->
+                            <!-- ëŒ“ê¸€ ëª©ë¡ ë³´ê¸° -->
                             <table align="center" width="500" border="1" id="tb2">
                                 <thead>
                                     <tr>

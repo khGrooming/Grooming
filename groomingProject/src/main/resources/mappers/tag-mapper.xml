@@ -19,5 +19,14 @@
 		    INSERT (TAG_NO, TAG_NAME, TAG_COUNT, TAG_DATE) 
 		    VALUES ('TAG' || LPAD(SEQ_TAG_NO.NEXTVAL,5,0), #{tagTemp}, 1, SYSDATE)
 	</update>
-
+	
+	<select id="selectTag" parameterType="string" resultMap="tagResultSet">
+ 		 SELECT TAG_NAME
+        FROM TAG T
+        JOIN GTAG G ON G.TAG_NO = T.TAG_NO
+        JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
+        JOIN MEMBER M ON M.MEMBER_NO = GR.MEMBER_NO
+        WHERE GR.GROOMING_NO= #{groomingNo}
+ 	
+ 	</select>
 </mapper>

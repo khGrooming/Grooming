@@ -21,21 +21,11 @@
 		<result property="status" column="GROOMING_STATUS"/>
 		<result property="count" column="GROOMING_COUNT"/>
 		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
-		<result property="tagName" column="TAG_NAME"/>
-		<result property="specName" column="SPEC_NAME"/>
 		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
 		
 	</resultMap>
 	
- 	<resultMap type="Gtag" id="gTagResultSet">
-		<id property="tagNo" column="TAG_NO"/>
-		<result property="tagName" column="TAG_NAME"/>
-		<result property="tagCount" column="TAG_COUNT"/>
-		<result property="tagDate" column="TAG_DATE"/>
-		<result property="groomingNo" column="GROOMING_NO"/>
-		
-		
-	</resultMap>
+ 
 	
  	<resultMap type="Gspec" id="gSpecResultSet">
 		<id property="specNo" column="SPEC_NO"/>
@@ -118,15 +108,7 @@
  	
  	</select>
  
- 	<select id="selectTag" parameterType="string" resultMap="gTagResultSet">
- 		 SELECT TAG_NAME
-        FROM TAG T
-        JOIN GTAG G ON G.TAG_NO = T.TAG_NO
-        JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
-        JOIN MEMBER M ON M.MEMBER_NO = GR.MEMBER_NO
-        WHERE GR.GROOMING_NO= #{groomingNo}
- 	
- 	</select>
+ 
  	
  	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
  		SELECT SPEC_NAME
@@ -136,5 +118,30 @@
  	
  	</select>
  	
+ 	<insert id="insertGrooming" parameterType="Grooming" >
+ 		INSERT INTO GROOMING VALUES(
+ 			SEQ_GROOMING_NO.NEXTVAL
+ 			, #{memberNo}
+ 			, #{groomingType}
+ 			, #{groomingTitle}
+ 			, #{groomingContent}
+ 			, #{groomingIntroduce}
+ 			, #{groomingP}
+ 			, #{studySd}
+ 			, #{studyEd}
+ 			, #{groomingSd}
+ 			, #{groomingEd}
+ 			, #{money}
+ 			, #{groomingImg}
+ 			, #{groomingCd}
+ 			, #{groomingMd}
+ 			, #{status}
+ 			, #{count}
+ 			, SYSDATE
+ 			, DEFAULT
+ 			)
+	
+	
+ 	</insert>
  	
 </mapper>

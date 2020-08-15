@@ -29,4 +29,6 @@ public interface GroomingService {
 
 	Member selectMember(String groomingNo);
 
+	int insertGrooming(Grooming g);
+
 }
