@@ -74,7 +74,10 @@
 		            <br>
 		            <div class="searchView">
 		            <c:forEach var="cafe" items="${cafeList}">
-		                <div class="panel panel-default">
+			            <c:url var="cafeDetail" value="cafeDetail.do">
+				            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
+			            </c:url>
+		                <div class="panel panel-default" onclick="location.href='${cafeDetail}'">
 		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>

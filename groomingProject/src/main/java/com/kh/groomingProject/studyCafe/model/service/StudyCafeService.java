@@ -23,4 +23,10 @@ public interface StudyCafeService {
 
 	int insertReservation(Reservation r);
 
+	ArrayList<Reservation> selectReservation(String memberNo);
+
+	ArrayList<Reservation> rHistoryCheck(String memberNo);
+
+	int deleteReservation(String cReserNo);
+
 }

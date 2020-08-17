@@ -1,6 +1,7 @@
 package com.kh.groomingProject.studyCafe.controller;
 
 import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -89,9 +90,10 @@ public class StudtyCafeController {
 	
 	// 카페 디테일 페이지로 이동
 	@RequestMapping(value="cafeDetail.do")
-	public ModelAndView cafeDetail(ModelAndView mv, String cafeNo) {
+	public ModelAndView cafeDetail(ModelAndView mv, String cafeNo, String cReserNo) {
 		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
 		
+		mv.addObject("cReserNo", cReserNo);
 		mv.addObject("info", info);
 		mv.setViewName("studyCafe/cafeDetailView");
 		
@@ -126,19 +128,40 @@ public class StudtyCafeController {
 	
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
-	public ModelAndView insertReservation(Reservation r, ModelAndView mv) {
+	public String insertReservation(Reservation r) {
 		System.out.println(r);
 		int result = studyCafeService.insertReservation(r);
 		
-		mv.addObject("r", r);
+		
+		return "redirect:reservationCheck.do";
+	}
+	
+	// 카페 신청  내역 페이지로 이동
+	@RequestMapping(value="reservationCheck.do")
+	public ModelAndView reservationCheck(ModelAndView mv) {
+		String memberNo = "M00002";
+		ArrayList<Reservation> rlist = studyCafeService.selectReservation(memberNo);
+
+		mv.addObject("rlist", rlist);
 		mv.setViewName("studyCafe/reservationCheck");
 		
 		return mv;
 	}
 	
-	// 카페 신청  내역 페이지로 이동
-	@RequestMapping(value="reservationCheck.do")
-	public String reservationCheck() {
-		return "studyCafe/reservationCheck";
+	@RequestMapping(value="reservationHistory.do")
+	public ModelAndView rHistoryCheck(ModelAndView mv) {
+		String memberNo = "M00002";
+		ArrayList<Reservation> rlist = studyCafeService.rHistoryCheck(memberNo);
+		
+		mv.addObject("rlist", rlist);
+		mv.setViewName("studyCafe/reservationHistory");
+		return mv;
+	}
+	
+	@RequestMapping("cancelR.do")
+	public String canccelReservation(String cReserNo) {
+		int result = studyCafeService.deleteReservation(cReserNo);
+		
+		return "redirect:reservationCheck.do";
 	}
 }

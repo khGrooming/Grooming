@@ -36,6 +36,24 @@
 		<result property="cReserETime" column="C_RESER_E_TIME"/>
 	</resultMap>
 	
+	<resultMap type="ReservationView" id="rViewResultSet">
+		<id property="cReserNo" column="C_RESER_NO"/>
+
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="cPriceNo" column="C_PRICE_NO"/>
+		<result property="cReserHeadCount" column="C_RESER_HEAD_COUNT"/>
+		<result property="cReserDate" column="C_RESER_DATE"/>
+		<result property="cReserSTime" column="C_RESER_S_TIME"/>
+		<result property="cReserETime" column="C_RESER_E_TIME"/>
+		<result property="cafeName" column="CAFE_NAME"/>
+		<result property="cafePhone" column="CAFE_PHONE"/>
+		<result property="cRoomName" column="C_ROOM_NAME"/>
+		<result property="cRoomPrice" column="C_ROOM_PRICE"/>
+		<result property="cafeAddress" column="CAFE_ADDRESS"/>
+		<result property="cafeNo" column="CAFE_NO"/>
+
+	</resultMap>
+	
 	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">
 		SELECT *
 		FROM STUDYCAFE
@@ -73,16 +91,55 @@
 		  AND C_PRICE_NO = #{cPriceNo}
 	</select>
 	
+	<!-- 카페 예약  -->
 	<insert id="insertReservation" parameterType="Reservation">
-		INSERT INTO CAFERESERVATION
-		VALUES (SEQ_C_RESER_NO.NEXTVAL
-				, 'M00001'
-				, #{cPriceNo}
-				, #{cReserHeadCount}
-				, #{cReserDate}
-				, #{cReserSTime}
-				, #{cReserETime}
-		)
+		MERGE INTO 
+		     CAFERESERVATION
+		USING DUAL 
+		    ON (C_RESER_NO = '${cReserNo}')
+		WHEN MATCHED THEN 
+		    UPDATE SET  
+		    	MEMBER_NO = 'M00002'
+		        , C_PRICE_NO = '${cPriceNo}'
+		        , C_RESER_HEAD_COUNT = '${cReserHeadCount}'
+		        , C_RESER_DATE = '${cReserDate}'
+		        , C_RESER_S_TIME = '${cReserSTime}'
+		        , C_RESER_E_TIME = '${cReserETime}'
+		WHEN NOT MATCHED THEN 
+			INSERT (C_RESER_NO,MEMBER_NO,C_PRICE_NO,C_RESER_HEAD_COUNT,C_RESER_DATE,C_RESER_S_TIME,C_RESER_E_TIME)
+			VALUES (SEQ_C_RESER_NO.NEXTVAL
+					, 'M00002'
+					, '${cPriceNo}'
+					, '${cReserHeadCount}'
+					, '${cReserDate}'
+					, '${cReserSTime}'
+					, '${cReserETime}'
+			)
 	</insert>
 	
+	<!-- 현재 에약 신청한 카페 조회 -->
+	<select id="selectReservation" parameterType="string" resultMap="rViewResultSet">
+	<![CDATA[
+		SELECT *
+		FROM RESERVATION
+		WHERE MEMBER_NO = #{memberNo}
+		  AND C_RESER_DATE >= SYSDATE
+  	]]>
+	</select>
+	
+	<!-- 지난 카페 예약 조회 -->
+	<select id="rHistoryCheck" parameterType="string" resultMap="rViewResultSet">
+	<![CDATA[
+		SELECT *
+		FROM RESERVATION
+		WHERE MEMBER_NO = #{memberNo}
+		  AND C_RESER_DATE < SYSDATE
+  	]]>
+	</select>
+	
+	<!-- 예약 취소 -->
+	<delete id="deleteReservation" parameterType="string">
+		DELETE FROM CAFERESERVATION
+		WHERE C_RESER_NO = #{cReserNo}
+	</delete>
 </mapper>

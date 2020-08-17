@@ -59,4 +59,22 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 		return studyCafeDao.insertReservation(r);
 	}
 
+	@Override
+	public ArrayList<Reservation> selectReservation(String memberNo) {
+
+		return studyCafeDao.selectReservation(memberNo);
+	}
+
+	@Override
+	public ArrayList<Reservation> rHistoryCheck(String memberNo) {
+
+		return studyCafeDao.rHistoryCheck(memberNo);
+	}
+
+	@Override
+	public int deleteReservation(String cReserNo) {
+
+		return studyCafeDao.deleteReservation(cReserNo);
+	}
+
 }

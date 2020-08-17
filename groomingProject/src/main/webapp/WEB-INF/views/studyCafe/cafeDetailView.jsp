@@ -126,6 +126,7 @@
 					
 					<hr>
 					
+					<input type="hidden" id="cReserNo" name="cReserNo" value="${cReserNo}">
 					<input type="hidden" id="cReserDate" name="cReserDate">
 					<input type="hidden" id="STime" name="cReserSTime">
 					<input type="hidden" id="ETime" name="cReserETime">
@@ -170,6 +171,7 @@
     var year = today.getFullYear();
     var month = today.getMonth() + 1;
     var day = today.getDate();
+    var hours = today.getHours();
     
  	// 넘어갈 정보들
     var cPriceNo = '';		// 룸 선택시 넘어갈 가격정보
@@ -182,7 +184,8 @@
 			// 예약할 룸 클릭시 ajax로 데이터 가져와 예약불가 날짜 뿌려주기
 			$("[name='cPriceNo']").on("click", function(){
 				cPriceNo = $('input[name="cPriceNo"]:checked').val();
-				
+				$("#reservationInfo").html("");
+				$("#head").html("");
 				$.ajax({
 					url:"checkRoom.do",
 					type:"post",
@@ -322,10 +325,17 @@
 			for(var i=10; i <= 10+$time; i++){
 				$timeDiv = $("<div class='time'>");
 				$timeDiv.append(i);
-				
-				
+				if(i == 10+$time){
+					$timeDiv.append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+(11+$time));
+				}
 				$timespan = $("<span class='timeSelect' style='background:yellow;text-align:center;'><br>");
 				$timespan.append("&nbsp;&nbsp;&nbsp;"+$price);
+				if(selectDay == day){
+					if(hours+1 > i){
+						$timespan.css("background","grey");
+						$timespan.prop("class","none");
+					}					
+				}
 				
 				for(var j in data){
 					if(data[j].cReserSTime <= i && data[j].cReserETime >= i){
@@ -337,6 +347,7 @@
 
 				$reservation.append($timeDiv);
 			}
+
 		}
 		
 		// 예약 가능한 시간 마우스 호버시 마우스 모양 변화
@@ -470,10 +481,13 @@
 				
 				$cal.append("<p>총 사용료</p>");
 				if(click1 > click2 && click2 != 0){
-					$cal.append("<p class='money' align='right'>"+$head*$price*(click1-click2)+" 원");					
+					console.log("1 : "+click1,", " ,click2);
+					$cal.append("<p class='money' align='right'>"+$head*$price*((click1+1)-click2)+" 원");					
 				}else if(click1 < click2){
-					$cal.append("<p class='money' align='right'>"+$head*$price*(click2-click1)+' 원');	
+					console.log("2 : "+click1,", " ,click2);
+					$cal.append("<p class='money' align='right'>"+$head*$price*((click2+1)-click1)+' 원');	
 				}else if(click2 == 0){
+					console.log("3 : "+click1,", " ,click2);
 					$cal.append('<p class="money" align="right">'+$head*$price+' 원');
 				}
 				$("#reservationBtn").css("display","block");
@@ -495,16 +509,16 @@
 					$cRoomName = '${info.cRoomName}';
 				}
 			</c:forEach>
-			
+			console.log(click1);
 			if(click1 < click2){
 				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
 			}else if(click2 < click1){
 				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click2 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
 			}else{
 				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 시 예약 확인 페이지로 이동합니다.</p>");
+				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
 			}
 			
 		}

@@ -10,6 +10,7 @@
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeInfo" alias="CafeInfo"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Reservation" alias="Reservation"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.ReservationView" alias="ReservationView"/>
 	</typeAliases>
 	
 	<mappers>

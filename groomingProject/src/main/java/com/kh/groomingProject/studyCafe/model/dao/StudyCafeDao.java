@@ -52,4 +52,18 @@ public class StudyCafeDao {
 		return sqlSessionTemplate.insert("cafeMapper.insertReservation", r);
 	}
 
+	public ArrayList<Reservation> selectReservation(String memberNo) {
+		
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectReservation", memberNo);
+	}
+
+	public ArrayList<Reservation> rHistoryCheck(String memberNo) {
+		
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.rHistoryCheck", memberNo);
+	}
+
+	public int deleteReservation(String cReserNo) {
+		return sqlSessionTemplate.delete("cafeMapper.deleteReservation" ,cReserNo);
+	}
+
 }
