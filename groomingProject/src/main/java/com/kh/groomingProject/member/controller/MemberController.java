@@ -237,18 +237,23 @@ public class MemberController {
 						+ " 멤버 사진 : " + m.getMemberPhoto()
 						+ " 멤버 메모 : " + m.getMemberMemo());
 		System.out.println("멤버 Tags : " + memberTagName);
-		System.out.println("길이 : " + memberTagName.length());
 		
-		if(m.getMemberName() != "" &&  m.getMemberPhone( ) != "" 
-			&& m.getMemberGender() != "" && m.getMemberPhoto() != "" 
-			&& m.getMemberPhoto() != "" && m.getMemberMemo() != ""
-			&& memberTagName.length() != 0) {
+		System.out.println((m.getMemberEmail()).length() != 0);
+		System.out.println((m.getMemberName()).length() != 0);
+		System.out.println((m.getMemberPhone()).length() != 0);
+		System.out.println(m.getMemberGender() != null);
+		System.out.println(!file.getOriginalFilename().equals(""));
+		System.out.println((m.getMemberMemo()).length() != 0);
+		
+		if((m.getMemberEmail()).length() != 0) {
 			
+			// 프로필 사진 리네임을 위해 멤버 번호를 DB에서 가져온다
 			Member member = mService.loginMember(m);
 			System.out.println("회원가입(추가입력) 하려는 회원 : " + member);
 	
 			m.setMemberNo(member.getMemberNo());
 	
+			// 파일 저장 및 리네임
 			if(!file.getOriginalFilename().equals("")) {
 				String renameFileName = saveFile(member.getMemberNo(), file, request);
 	
@@ -258,59 +263,61 @@ public class MemberController {
 			}
 	
 			System.out.println("member update data : " + m);
-	
+
 			// 회원가입(추가 update)
 			int resultUpdateMemberOption = mService.updateMemberOption(m);
 
 			if(resultUpdateMemberOption > 0) {
 				System.out.println("회원가입 추가정보 업데이트 : 성공");
-		
-				// 태그 테이블 업데이트
-				int resultMergeTags = 0;
-				if(memberTagName.length() != 0 && !memberTagName.isEmpty()) {
-					String[] tag = memberTagName.split(",");
-	
-					for(int i = 0 ; i < tag.length; i++) {
-						String tagTemp = tag[i];
-						resultMergeTags = tagService.mergeTags(tagTemp);
-					}
-					if(resultMergeTags > 0) {
-						System.out.println("TAG 업데이트 : 성공");
-		
-						// 멤버태그 테이블 추가
-						int resultMemberTag = 0;
-	
-						for(int i = 0 ; i < tag.length; i++) {
-							String tagTemp = tag[i];
-							MemberTag memberTag = new MemberTag(m.getMemberNo(), tagTemp);
-							resultMemberTag = mService.mergeMemberTags(memberTag);
-						}
-	
-						if(resultMemberTag > 0) {
-							System.out.println("MemberTag 업데이트 : 성공");
-	
-							return "home";
-	
-						} else {
-							System.out.println("MemberTag 업데이트 : 실패");
-							throw new MemberException("MemberTag 업데이트 : 실패");
-						}
-	
-					} else {
-						System.out.println("TAG 업데이트 : 실패");
-						throw new MemberException("TAG 업데이트 : 실패");
-					}
-	
-				} else {
-					return "home";
-				}
 	
 			} else {
 				System.out.println("회원가입 추가정보 업데이트 : 실패");
 				throw new MemberException("회원가입 추가정보 업데이트 : 실패");
 			}
 
+		} else {
+			System.out.println("회원 추가입력(사진,이름,성별,한줄) : skip");
 		}
+		
+		// 태그 테이블 업데이트
+		int resultMergeTags = 0;
+		
+		if(memberTagName.length() != 0 && !memberTagName.isEmpty()) {
+			String[] tag = memberTagName.split(",");
+
+			for(int i = 0 ; i < tag.length; i++) {
+				String tagTemp = tag[i];
+				resultMergeTags = tagService.mergeTags(tagTemp);
+			}
+			if(resultMergeTags > 0) {
+				System.out.println("TAG 업데이트 : 성공");
+
+				// 멤버태그 테이블 추가
+				int resultMemberTag = 0;
+
+				for(int i = 0 ; i < tag.length; i++) {
+					String tagTemp = tag[i];
+					MemberTag memberTag = new MemberTag(m.getMemberNo(), tagTemp);
+					resultMemberTag = mService.mergeMemberTags(memberTag);
+				}
+
+				if(resultMemberTag > 0) {
+					System.out.println("MemberTag 업데이트 : 성공");
+
+					return "home";
+
+				} else {
+					System.out.println("MemberTag 업데이트 : 실패");
+					throw new MemberException("MemberTag 업데이트 : 실패");
+				}
+
+			} else {
+				System.out.println("TAG 업데이트 : 실패");
+				throw new MemberException("TAG 업데이트 : 실패");
+			}
+
+		}
+		
 		return "home";
 
 	}
