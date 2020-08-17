@@ -244,7 +244,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			<!-- style=" "> -->
 
 			<c:url var="groomingInsert" value="groomingInsertForm.do">
-				<param name="memberNo" value="${loginUser.memberNo}">
+				<c:param name="memberNo" value="${loginUser.memberNo}"/>
 			</c:url>
 			<form action="${groomingInsert }" method="post"
 				enctype="multipart/form-data">
@@ -257,7 +257,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td><span>스터디 그룹 이름</span><br> <input type="text"
 										size="50" placeholder="스터디 그룹 이름을 입력해주세요" id="title"
-										name="groomingTitle"><br> <small><span
+										name="groomingTitle" required><br> <small><span
 											style="color: lightblue">간략하면서 주제가 잘 들어난 이름이 좋아요</span></small> <small><span
 											style="color: #aaa;" id="counterTitle">(0/40)</span></small></td>
 
@@ -265,14 +265,14 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<label><input type="radio" name="groomingType" id="m"
-											value="m">멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
-											type="radio" name="groomingType" value="h" id="h">호스트 그룹</label></td>
+											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
+											type="radio" name="groomingType" value="h" id="호스트">호스트 그룹</label></td>
 								</tr>
 
 								<tr>
 									<td><span>한줄 소개</span><br> <input type="text"
 										size="50" placeholder="스터디 그룹 한줄 소개를 입력해주세요" id="introduce"
-										name="groomingIntroduce"><br> <small><span
+										name="groomingIntroduce" required><br> <small><span
 											style="color: lightblue">이목을 집중할 한마디면 충분해요!</span></small> <small><span
 											style="color: #aaa;" id="counterIntroduce">(0/60)</span></small></td>
 
@@ -280,20 +280,20 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td><span>활동인원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="number" max="6" min="2"
-										style="text-align: center;" name="groomingP"><span>&nbsp;&nbsp;명</span><br>
+										style="text-align: center;" name="groomingP" required><span>&nbsp;&nbsp;명</span><br>
 										<small><span style="color: lightblue;">2~6명으로
 												인원을 구성해주세요</span></small></td>
 								</tr>
 								<tr>
 									<td><span>내용</span><br> <textarea cols="50" rows="10"
 											placeholder="구체적인 활동 내용을 적어주세요!" id="content"
-											style="resize: none;" name="groomingContent"></textarea> <small><span
+											style="resize: none;" name="groomingContent" required></textarea> <small><span
 											style="color: #aaa;" align="right" id="counterContent">(0/480)</span></small></td>
 
 								</tr>
 								<tr>
 									<td><label>예치금</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<label id="l1"><input type="radio" name="money1" id="exist" value="y">있음</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+										<label id="l1"><input type="radio" name="money1" id="exist" value="y" checked>있음</label>&nbsp;&nbsp;&nbsp;&nbsp; 
 										<label id="l2"><input type="radio" name="money1" id="nonexist" value="x">없음</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="number" min="1000" step="1000" style="text-align: center; width: 60px;" class="money" name="money"><span class="money">&nbsp;&nbsp;원</span>
 									</td>
@@ -313,22 +313,22 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									<td><span>해시 태그</span><br> <input type="text"
 										name="tagName" value="" placeholder="Tags,"
 										data-role="tagsinput" class="form-control" id="tagName"
-										style="display: none;"> <small><span
+										style="display: none;" required> <small><span
 											style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span> </small></td>
 									</td>
 								</tr>
 
 								<tr>
-									<td><span>스터디 진행 기간</span><br> <input id="start" type="text" min="${today }" name="studySd"> ~ <input
-										id="end" type="text" name="studyEd"><br> <small>
+									<td><span>스터디 진행 기간</span><br> <input id="start" type="text" min="${today }" name="studySd" required> ~ <input
+										id="end" type="text" name="studyEd" required><br> <small>
 											<span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할
 												기간을 설정해주세요
 										</span>
 									</small></td>
 								</tr>
 								<tr>
-									<td><span>스터디 모집 기간</span><br> <input id="startG" type="text" name="groomingSd"> ~ 
-									<input id="endG" type="text" name="groomingEd"><br> <small><span>스터디
+									<td><span>스터디 모집 기간</span><br> <input id="startG" type="text" name="groomingSd" required> ~ 
+									<input id="endG" type="text" name="groomingEd" required><br> <small><span>스터디
 												그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을
 												설정해주세요
 										</span></small></td>
@@ -343,7 +343,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 										<div class="filebox preview-image">
 											<input class="upload-name" value="파일선택" disabled="disabled">
 											<label for="input-file">업로드</label> <input type="file"
-												id="input-file" class="upload-hidden" name="uploadFile">
+												id="input-file" class="upload-hidden" name="uploadFile" required>
 										</div>
 									</td>
 								</tr>
@@ -475,14 +475,14 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				$("input:radio[name='groomingType']").on("click", function() {
 					
 
-					if ($(this).val() == 'm') {
+					if ($(this).val() == '멘토') {
 						$("#exist").attr('style', "display:none;");
 						$("#nonexist").attr('style', "display:none;");
 						$("#l1").attr('style', "display:none;");
 						$("#l2").attr('style', "display:none;");
 						$(".money").attr('style', "display:inline;");
 					}
-					if ($(this).val() == 'h') {
+					if ($(this).val() == '호스트') {
 						$("#exist").attr('style', "display:inline;");
 						$("#nonexist").attr('style', "display:inline;");
 						$("#l1").attr('style', "display:inline;");

@@ -1,12 +1,15 @@
 package com.kh.groomingProject.grooming.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -86,6 +89,33 @@ public class GroomingDao {
 	public int insertGrooming(Grooming g) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertGrooming",g);
+	}
+
+	public ArrayList<Member> selectAppMember(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectAppMember",groomingNo);
+	}
+
+	public ArrayList<GroomingAppList> selectAppContent(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectAppContent",groomingNo);
+	}
+
+	public int selectApplyOne(String applyNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("applyNo", applyNo);
+		System.out.println(map);
+		return sqlSessionTemplate.update("groomingMapper.selectApplyOne",map);
+	}
+
+	public int addGroomingP(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.addGroomingP",groomingNo);
+	}
+
+	public int selectRejectApp(String applyNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.rejectApp",applyNo);
 	}
 	
 	

@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+{
+int count = 0;
 
+}
 <!doctype html>
 <html lang="ko">
 
@@ -21,8 +24,10 @@
 	href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
 	integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
 	crossorigin="anonymous">
+	
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
 
 <!-- modal CSS  -->
 <link
@@ -215,6 +220,7 @@ img {
 		</div>
 		<div class="container">
 			<div class="row">
+			<c:if test="${loginUser.memberNo eq grooming.memberNo }">
 				<div class="col-3">
 					<!-- 신청자 리스트  확인 버튼 -->
 					<button data-toggle="modal" data-target="#applicant">신청자
@@ -242,27 +248,26 @@ img {
 											<tr>
 												<th scope="col" style="width: 100px;">프로필</th>
 												<th scope="col" style="width: 100px;">닉네임</th>
-												<th scope="col" style="width: 300px;">경력</th>
 												<th scope="col">신청 내용</th>
 												<th scope="col" style="width: 200px">수락/거절</th>
 											</tr>
 										</thead>
-										<tbody>
-										<c:forEach var="gA" items="${galist }">
-											<tr>
+										<tbody class="tbody">
+										<c:forEach var="aL" items="${appList }">
+										
+											<tr class="appTr">
+											
+												<input type="hidden" class="applyNo" value="${aL.groomingAN }" >
+												
 												<td>
 													<div class="pimg" style="width: 50px; height: 50px;">
-														<img
-															src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto}">
+														<img src="${contextPath }/resources/upprofileFiles/${aL.memberPhoto}">
 													</div>
 												</td>
-												<td>아이유</td>
-												<td><c:forEach var="s" items="${spec }">
-													<span>${s.specName }</span>
-													</c:forEach></td>
-												<td><button data-toggle="modal" data-target="#open">신청서
+												<td>${aL.memberNickName }</td>
+												<td><button data-toggle="modal" data-target="#open_modal_appContent">신청서
 														열람</button>
-													<div class="modal modal-xl fade" id="open" tabindex="-1"
+													<div class="modal modal-xl fade" id="open_modal_appContent'+count+'" tabindex="-1"
 														role="dialog" aria-labelledby="exampleModalLabel"
 														aria-hidden="true">
 
@@ -272,21 +277,22 @@ img {
 																style="width: 800px; height: auto;">
 																<!-- 모달 제목 -->
 																<div class="modal-header">
-																	<h5 class="modal-title" id="exampleModalLabel">신청자
-																		리스트</h5>
+																	<h5 class="modal-title" id="exampleModalLabel">신청 내용</h5>
 																	<button type="button" class="close"
 																		data-dismiss="modal" aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
 																<!-- 모달 본문 내용 -->
-																<div class="modal-body"></div>
+																<div class="modal-body">
+																	${aL.groomingAC }
+																</div>
 															</div>
 														</div>
 													</div>
 												</td>
-												<td><button>수락</button>&nbsp;&nbsp;
-													<button>거절</button></td>
+												<td class="appTd"><button class="accept" >수락</button>&nbsp;&nbsp;
+													<button class="reject" >거절</button></td>
 
 											</tr>
 										</c:forEach>
@@ -311,7 +317,8 @@ img {
 					<button onclick="location.href='${gdelete}'">삭제</button>
 					<button onclick="location.href='${limit}'">마감</button>
 				</div>
-
+				</c:if>
+				<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
 				<div class="col-3">
 					<!-- 신청하기 버튼 -->
 					<button data-toggle="modal" data-target="#applyForm">신청하기</button>
@@ -349,16 +356,176 @@ img {
 					</div>
 					<!-- 신청 폼 모달 끝 -->
 				</div>
-
+			</c:if>
 			</div>
 		</div>
 	</section>
+<!-- 	<script>
+		$(function(){
+			$("#open_modal_appContent").draggable();
+		})
+	
+	</script> -->
 	<script>
-		$("#open").draggable({
-			handle : ".modal-header"
-		});
+	
+		$(function(){
+			getAppList();
+			
+			/* setInterval(function(){
+				getAppList();
+			},10000);  */
+			
+			$(document).on("click",".accept",function(){
+				var groomingNo = "${grooming.groomingNo}";
+				var appTemp = $(this);
+				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
+				
+				$.ajax({
+					url:"gaccept.do",
+					data:{applyNo:applyNo,groomingNo:groomingNo},
+					success:function(data){
+						if(data=="success"){
+						getAppList();
+					}
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+					})
+			})
+			
+			
+			$(document).on("click",".reject",function(){
+				var groomingNo = "${grooming.groomingNo}";
+				var appTemp = $(this);
+				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
+				
+				$.ajax({
+					url:"greject.do",
+					data:{applyNo:applyNo},
+					success:function(data){
+						if(data=="success"){
+						getAppList();
+					}
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+					})
+			})
+			
+		})
+		
+						
+			
+				/* -- ajax-- */
+			
+			
+		function getAppList(){
+			var groomingNo = "${grooming.groomingNo}";
+			$.ajax({
+				url:"gacceptList.do",
+				data:{groomingNo:groomingNo},
+				dataType:"json",
+				success:function(data){
+					$tableBody = $(".tbody");
+					$tableBody.html("");
+					
+					var $tr;
+					var $input;
+					var $td1;
+					var $div1;
+					var $img1;
+					var $td2;
+					var $td3;
+					var $td4;
+					var $button1;
+					var $div2;
+					var $div3;
+					var $div4;
+					var $div5;
+					var $h5;
+					var $button2;
+					var $span1;
+					
+					var $div6;
+					var $td5;
+					var $button3;
+			
+						console.log(data.length);
+					if(data.length> 0){	// 댓글이 하나 이상 존재하면
+						for(var i in data){
+							 $tr = $("<tr class='appTr'>");
+							 $input = $("<input type='hidden' class='applyNo' >");
+							 $inputVal = $input.val(data[i].groomingAN);
+							 $td1 = $("<td>");
+							 $div1 = $("<div class='pimg' style='width:50px; height:50px;'>");
+							 $img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+							 $td2 = $("<td>").text(data[i].memberNickName);
+							 $td3 = $("<td>");
+							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent'>").text("신청서열람");
+							 $div2 = $("<div class='modal modal-xl fade' id='open_modal_appContent' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
+							 $div3 = $("<div class='modal-dialog'>");
+							 $div4 = $("<div class='modal-content' style='width: 800px; height: auto;'>");
+							 $div5 = $("<div class='modal-header'>");
+							 $h5 = $("<h5 class='modal-title' id='exampleModalLabel'>").text("신청 내용");
+							 $button2 = $("<button type='button' class='close' data-dismiss='modal' aria-label='Close'>");
+							 $span1 = $("<span aria-hidden='true'>").text("X");
+							
+							 $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
+							 
+							 $td4 = $("<td>");
+							 $button3 = $("<button class='accept'>").text("수락");
+							 $button4 = $("<button class='reject'>").text("거절");
+							 
+							 $td1.append($div1);
+							 $div1.append($img1);
+							 $td3.append($button1);
+							 $td3.append($div2);
+							 
+							 $div2.append($div3);
+							 $div3.append($div4);
+							 $div4.append($div5);
+							 $div5.append($h5);
+							 $div5.append($button2);
+							 $button2.append($span1);
+							 
+							 $div4.append($div6);
+							 $td4.append($button3);
+							 $td4.append($button4);
+							 
+							 $tr.append($td1);
+							 $tr.append($td2);
+							 $tr.append($td3);
+							 $tr.append($td4);
+							 $tr.append($inputVal);
+							 $tableBody.append($tr);
+							 
+						}
+					}else{					// 댓글이 없으면
+						$tr = $("<tr>");
+						$rContent = $("<td colspan='3'>").text("신청자가 없습니다.");
+						
+						$tr.append($rContent);
+						$tableBody.append($tr);
+					}
+					
+					
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+			}) 
+		}
+		
 	</script>
-
+	
 
 	<footer><jsp:include page="../common/footer.jsp" />
 	</footer>
@@ -366,9 +533,9 @@ img {
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<!-- 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous"></script> -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

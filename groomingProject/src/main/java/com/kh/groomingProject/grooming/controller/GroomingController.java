@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +22,7 @@ import com.google.gson.JsonIOException;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -213,12 +213,18 @@ public class GroomingController<memberNo> {
 			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
 			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
 			Member member = gService.selectMember(groomingNo);
-			System.out.println(member);
+			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+			
+			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+			
+			
+			
 			if(grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming",grooming)
 				.addObject("tag",tag)
 				.addObject("spec",spec)
 				.addObject("member",member)
+				.addObject("appList",appList)
 				.setViewName("grooming/groomingDetailView");
 			}else {
 				throw new GroomingException("조회실패!");
@@ -239,14 +245,49 @@ public class GroomingController<memberNo> {
 	
 	
 	
+	@RequestMapping("gacceptList.do")	
+	@ResponseBody
+	public void groomingAppAccept(HttpServletResponse response,  String groomingNo) throws JsonIOException, IOException {
+		
+		response.setContentType("application/json; charset=utf-8");
+		ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+		
+
 	
+		
 	
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(appList,response.getWriter());
 	
-	
-	
-	
-	
-	
-	
+	}
+	@RequestMapping("gaccept.do")
+	@ResponseBody
+	public String groomingAccept(String applyNo,String groomingNo) {
+		System.out.println(applyNo);
+		int result = gService.selectApplyOne(applyNo);
+		int result1 = gService.addGroomingP(groomingNo);
+		if(result > 0 && result1 > 0) {
+			return "success";
+		}else {
+			return "false";
+		}
+		
+		
+		
+	}
+	@RequestMapping("greject.do")
+	@ResponseBody
+	public String groomingReject(String applyNo) {
+		System.out.println(applyNo);
+		int result = gService.selectRejectApp(applyNo);
+		if(result > 0 ) {
+			return "success";
+		}else {
+			return "false";
+		}
+		
+		
+		
+	}
 }
 

@@ -70,5 +70,15 @@
 		WHERE GROOMING_NO = #{groomingNo}
 		AND MEMBER_STATUS='N'
 	</select>
-
+	
+	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
+	SELECT *
+	FROM MEMBER M
+	JOIN GROOMING_APPLICANT GA ON GA.MEMBER_NO = M.MEMBER_NO
+	WHERE GA.GROOMING_NO = #{groomingNo}
+	
+	
+	
+	</select>
+	
 </mapper>

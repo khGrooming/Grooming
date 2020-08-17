@@ -37,6 +37,15 @@
 		
 		
 	</resultMap>
+	 
+	 <resultMap type="Gapp" id="gAppResultSet">
+		<id property="groomingAN" column="GROOMING_APPLY_NO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="groomingAC" column="GROOMING_APPLY_CONTENT"/>
+		
+		
+	</resultMap>
  
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
@@ -120,7 +129,7 @@
  	
  	<insert id="insertGrooming" parameterType="Grooming" >
  		INSERT INTO GROOMING VALUES(
- 			SEQ_GROOMING_NO.NEXTVAL
+ 			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
  			, #{memberNo}
  			, #{groomingType}
  			, #{groomingTitle}
@@ -133,15 +142,46 @@
  			, #{groomingEd}
  			, #{money}
  			, #{groomingImg}
- 			, #{groomingCd}
- 			, #{groomingMd}
- 			, #{status}
- 			, #{count}
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, 'Y'
+ 			, DEFAULT
  			, SYSDATE
  			, DEFAULT
  			)
 	
 	
  	</insert>
+ 	
+  	<select id="selectAppContent" parameterType="string" resultMap="gAppResultSet">
+ 	SELECT GROOMING_APPLY_NO,M.MEMBER_NICKNAME,M.MEMBER_PHOTO,GROOMING_APPLY_CONTENT
+	FROM GROOMING_APPLICANT GA
+	JOIN MEMBER M ON GA.MEMBER_NO = M.MEMBER_NO
+	WHERE GROOMING_APPLY_STATUS = 'Y' 
+	AND GROOMING_NO= #{groomingNo}
+	
+ 	
+ 	</select> 
+ 	
+ 	<update id="selectApplyOne" parameterType="string">
+ 	UPDATE GROOMING_APPLICANT
+	SET GROOMING_APPLY_STATUS = 'C'
+	WHERE GROOMING_APPLY_NO =#{applyNo}
+ 	</update>
+
+ 	<update id="rejectApp" parameterType="string">
+ 	UPDATE GROOMING_APPLICANT
+	SET GROOMING_APPLY_STATUS = 'D'
+	WHERE GROOMING_APPLY_NO =#{applyNo}
+ 	</update>
+ 	
+ 	<update id="addGroomingP" parameterType="string">
+ 	UPDATE GROOMING
+	SET GROOMING_CURRENT_PEOPLE = GROOMING_CURRENT_PEOPLE + 1
+	WHERE GROOMING_NO =#{groomingNo}
+ 	</update>
+ 	
+ 	
+ 	
  	
 </mapper>

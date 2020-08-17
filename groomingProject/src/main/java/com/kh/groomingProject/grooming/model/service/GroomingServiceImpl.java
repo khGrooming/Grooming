@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -92,6 +93,36 @@ public class GroomingServiceImpl implements GroomingService{
 	public int insertGrooming(Grooming g) {
 		// TODO Auto-generated method stub
 		return gDao.insertGrooming(g);
+	}
+
+	@Override
+	public ArrayList<Member> selectAppMember(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectAppMember(groomingNo);
+	}
+
+	@Override
+	public ArrayList<GroomingAppList> selectAppContent(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectAppContent(groomingNo);
+	}
+
+	@Override
+	public int selectApplyOne(String applyNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectApplyOne(applyNo);
+	}
+
+	@Override
+	public int addGroomingP(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.addGroomingP(groomingNo);
+	}
+
+	@Override
+	public int selectRejectApp(String applyNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectRejectApp(applyNo);
 	}
 
 
