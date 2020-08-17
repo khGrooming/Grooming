@@ -373,7 +373,7 @@
 
 	<div class="MsectionDiv" id="Mcontent2">
 		<div
-			style="margin-right: 50px; width: 70%; margin-left: auto; margin-top: 5%; margin-right: auto;">
+			style="margin-right: 50px; width: 80%; margin-left: auto; margin-top: 5%; margin-right: auto;">
 			<h4>멘토 신청</h4>
 			<p style="font-size: 11px;">
 				멘토 신청에 관한 설명 약관 어쩌구 신청할 경우 요금? <br>이 있고 신고 당할경우 다시 멘토신청 할 수 없고
@@ -381,28 +381,106 @@
 			</p>
 			<br> <br>
 			<p>-스펙</p>
-			<table>
+			<table id="ment"style="width: 95%;" >
 				<tr>
 					<td class="spacIconTd">이미지</td>
-					<th>학교</th>
-					<td style="color: red;">인증하기</td>
+					<th style="width: 10%;">학교</th>
+					<td id="schoolApply" >
+						<form method="post" enctype="Multipart/form-data">
+							<input type="hidden" id="specCName" name="specCName"><br>
+							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
+							<label id="specNameLable"></label>
+							<input type="text" id="specName" name="specName" required>
+							<input type="file" accept=".gif, .jpg, .png"id="specFileName" name="specFileName1" title=""
+							  style="width: 25%;" required />
+							 <button>전송</button>
+						</form>
+					</td>
 				</tr>
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>자격증</th>
-					<td style="color: red;">인증하기</td>
+					<td id="certificateApply">인증하기</td>
 				</tr>
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>경력</th>
-					<td style="color: red;">인증하기</td>
+					<td id="careerApply">인증하기</td>
 				</tr>
 			</table>
+			<div style="text-align: center; margin-top:10%;">
+
+				<input type="checkBox" id="agree"> <label for="agree"
+					style="font-size: 13px;"> 안내사항을 모두 확인했으며, 이에 동의합니다.</label> <br>
+				<button onclick="mentorApply();">신청하기</button>
+			</div>
+			
+			
 			<script>
-	                	
-	                
-	                </script>
-		</div>
+				$(function() {
+					
+					if ("${schoolList[0]}" == "") {
+						$("#schoolApply").html()
+						
+						text("인증하기").css("color", "red");
+						
+
+					} else {
+						if ("${schoolconfirm[0]}" == "N") {
+							$("#schoolApply").text("인증대기").css("color", "blue");
+
+						} else {
+
+							$("#schoolApply").text("인증완료")
+									.css("color", "green");
+						}
+					}
+					if ("${certificateList[0]}" == "") {
+						$("#certificateApply").text("인증하기").css("color", "red");
+
+					} else {
+						if ("${certificateconfirm[0]}" == "N") {
+							$("#certificateApply").text("인증대기").css("color",
+									"blue");
+
+						} else {
+
+							$("#certificateApply").text("인증완료").css("color",
+									"green");
+						}
+					}
+					if ("${careerList[0]}" == "") {
+						$("#careerApply").text("인증하기").css("color", "red");
+					
+						
+					} else {
+						if ("${careerconfirm[0]}" == "N") {
+							$("#careerApply").text("인증대기").css("color", "blue");
+
+						} else {
+
+							$("#careerApply").text("인증완료")
+									.css("color", "green");
+						}
+
+					}
+
+				})
+				function mentorApply() {
+
+					if ($("#agree").is(":checked")) {
+
+						var checked = confirm("신청하시겠습니까?");
+						if (checked) {
+							location.href = "mentorApply.do";
+						} else {
+							alert("취소하셨습니다.");
+						}
+					} else {
+						alert("체크하세요");
+					}
+				}
+			</script></div>
 	</div>
 	<!-- 탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기----------탈퇴하기------------>
 	<div class="MsectionDiv" id="Mcontent3" style="text-align: center;">

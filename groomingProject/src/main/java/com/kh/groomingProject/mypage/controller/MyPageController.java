@@ -55,10 +55,13 @@ public class MyPageController {
 		
 		int school=0;
 		String[] schoolList = new String[3];
+		String[] schoolconfirm = new String[3];
 		int certificate=0;
 		String[] certificateList = new String[3];
+		String[] certificateconfirm = new String[3];
 		int career=0;
 		String[] careerList = new String[3];
+		String[] careerconfirm = new String[3];
 
 		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
@@ -69,14 +72,20 @@ public class MyPageController {
 			switch (s.getSpecCName()) {
 			case "학교":
 				schoolList[school]=s.getSpecName();
+				schoolconfirm[school]=s.getSpecConfirm();
+				
 				school+=1;
 				break;
 			case "자격증":
 				certificateList[certificate]=s.getSpecName();
+				certificateconfirm[certificate]=s.getSpecConfirm();
+				
 				certificate+=1;
 				break;
 			case "경력":
 				careerList[career]=s.getSpecName();
+				careerconfirm[career]=s.getSpecConfirm();
+				
 				career+=1;
 				break;
 			default:
@@ -84,9 +93,17 @@ public class MyPageController {
 			}
 		}
 
+		
 		session.setAttribute("schoolList",schoolList);
+		session.setAttribute("schoolconfirm",schoolconfirm);
+		
 		session.setAttribute("certificateList",certificateList);
+		session.setAttribute("certificateconfirm",certificateconfirm);
+		
+		
 		session.setAttribute("careerList",careerList);
+		session.setAttribute("careerconfirm",careerconfirm);
+		
 		session.setAttribute("profileInfo",profileInfo);
 		
 		
@@ -289,6 +306,9 @@ public class MyPageController {
 		
 		String folderName = "//upSpecFiles";
 		
+		if(request1.getAttribute("mentorFome") == "Y") {
+			System.out.println("마자마자");
+		}
 		
 		MultipartFile specFile = request.getFile("specFileName1");
 		System.out.println(specFile.getOriginalFilename());
@@ -300,6 +320,7 @@ public class MyPageController {
 		if(result > 0) {
 			System.out.println("등록 성공");
 			HttpSession session = request.getSession();
+		
 			
 			int school=0;
 			String[] schoolList = new String[3];
@@ -307,20 +328,29 @@ public class MyPageController {
 			String[] certificateList = new String[3];
 			int career=0;
 			String[] careerList = new String[3];
+			
+			String[] schoolconfirm = new String[3];
+			String[] certificateconfirm = new String[3];
+			String[] careerconfirm = new String[3];
+
 			ArrayList<Spec> specList = mpService.selectSpecList(s.getMemberNo());
 
 			for(Spec s1 : specList) {
 				switch (s1.getSpecCName()) {
 				case "학교":
 					schoolList[school]=s1.getSpecName();
+					schoolconfirm[school]=s1.getSpecConfirm();
+
 					school+=1;
 					break;
 				case "자격증":
 					certificateList[certificate]=s1.getSpecName();
+					certificateconfirm[certificate]=s1.getSpecConfirm();
 					certificate+=1;
 					break;
 				case "경력":
 					careerList[career]=s1.getSpecName();
+					careerconfirm[career]=s1.getSpecConfirm();
 					career+=1;
 					break;
 				default:
@@ -331,6 +361,10 @@ public class MyPageController {
 			session.setAttribute("schoolList",schoolList);
 			session.setAttribute("certificateList",certificateList);
 			session.setAttribute("careerList",careerList);
+			session.setAttribute("schoolconfirm",schoolconfirm);
+			session.setAttribute("certificateconfirm",certificateconfirm);
+			session.setAttribute("careerconfirm",careerconfirm);
+
 		}
 		
 

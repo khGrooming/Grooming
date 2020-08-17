@@ -448,9 +448,13 @@ section {
 							$(function() {
 								var $tdId;
 								var school = new Array();
+								var schoolCon = new Array();
 								school[0] = "${schoolList[0]}";
 								school[1] = "${schoolList[1]}";
 								school[2] = "${schoolList[2]}";
+								schoolCon[0] = "${schoolconfirm[0]}";
+								schoolCon[1] = "${schoolconfirm[1]}";
+								schoolCon[2] = "${schoolconfirm[2]}";
 								/* $tdId=$("#school1");
 								$tdId.text(school[0]); */
 								for (var i = 0; i < school.length; i++) {
@@ -470,9 +474,13 @@ section {
 										break;
 									}
 									if (school[i] != "") {
-										$tdId.text(school[i]);
+										if(schoolCon[i] == "N"){
+											
+											$tdId.text(school[i]).css("color","lightgrey");
+										}
 									} else {
-										$tdId.attr("valign", "top");
+										
+										$tdId.attr("valign", "top"); 
 										$tdId
 												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
                     							 +"style='width:15px; text-align:top;'>");
@@ -490,9 +498,13 @@ section {
 								}
 
 								var certificate = new Array();
+								var certificateconfirm = new Array();
 								certificate[0] = "${certificateList[0]}";
 								certificate[1] = "${certificateList[1]}";
 								certificate[2] = "${certificateList[2]}";
+								certificateconfirm[0] = "${certificateconfirm[0]}";
+								certificateconfirm[1] = "${certificateconfirm[1]}";
+								certificateconfirm[2] = "${certificateconfirm[2]}";
 
 								for (var i = 0; i < certificate.length; i++) {
 									var $tdId;
@@ -511,7 +523,10 @@ section {
 										break;
 									}
 									if (certificate[i] != "") {
-										$tdId.text(certificate[i]);
+										if(certificateconfirm[i] == "N"){
+											
+											$tdId.text(certificate[i]).css("color","lightgrey");
+										}
 									} else {
 										$tdId.attr("valign", "top");
 										$tdId
@@ -531,9 +546,13 @@ section {
 								}
 
 								var career = new Array();
+								var careerconfirm = new Array();
 								career[0] = "${careerList[0]}";
 								career[1] = "${careerList[1]}";
 								career[2] = "${careerList[2]}";
+								careerconfirm[0] = "${careerconfirm[0]}";
+								careerconfirm[1] = "${careerconfirm[1]}";
+								careerconfirm[2] = "${careerconfirm[2]}";
 
 								for (var i = 0; i < career.length; i++) {
 									var $tdId;
@@ -552,7 +571,10 @@ section {
 										break;
 									}
 									if (career[i] != "") {
-										$tdId.text(career[i]);
+										if(certificateconfirm[i] == "N"){
+											
+											$tdId.text(career[i]).css("color","lightgrey");
+										}
 									} else {
 										$tdId.attr("valign", "top");
 										$tdId
