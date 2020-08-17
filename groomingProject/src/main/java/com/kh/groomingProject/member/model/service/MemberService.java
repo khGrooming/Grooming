@@ -21,4 +21,6 @@ public interface MemberService {
 
 	int mergeMemberTags(MemberTag memberTag);
 
+	int insertMemberKakao(Member m);
+
 }

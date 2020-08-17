@@ -26,6 +26,16 @@
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
 <link href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css" rel="stylesheet">
 
+<!-- 카카오 로그인 연결 (리소스) -->
+<script	src="${pageContext.servletContext.contextPath }/resources/js/kakaologin/kakaoLogin.js"></script>	
+<script>
+	Kakao.init('a2db16454e8a262c90d8aca3da57b23e');
+	Kakao.isInitialized();
+
+	console.log('카카오');
+	console.log('카카오' + Kakao.isInitialized());
+</script>
+
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
 <!-- 기본 스타일 -->
@@ -347,7 +357,6 @@ section .form_container .hideItem
 			<div class="user singinBx">
 				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
 				<div class="form-group">
-					<!-- <form action="memberLogin.do" method="post" id="loginForm"> -->
 					<form>
 						<h2>로그인</h2>
 						<div class="input-group">
@@ -408,13 +417,6 @@ section .form_container .hideItem
 							<div class="chkVali" id="regiNickNameDupl">이미 사용 중 입니다.</div>
 							<div class="chkVali chkValiComp" id="regiNickNameComp">멋진 닉네임이네요!</div>
 						</div>
-						<div class="input-group">
-							<input type="text" id="regiPhone" name="memberPhone" required>
-							<span>휴대전화</span>
-							<div class="chkVali" id="regiPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
-							<div class="chkVali" id="regiPhoneDupl">이미 사용 중입니다.</div>
-							<div class="chkVali chkValiComp" id="regiPhoneComp">사용가능 합니다.</div>
-						</div>
 						<div class="registerError" id="registerError">잠시 후 다시 시도해 주세요.</div>
 						<input type="button" onclick="register()" value="회원가입">
 						<p class="signup">이미 회원 이신가요 ? <a onclick="toggleForm()">로그인</a></p>
@@ -437,7 +439,6 @@ section .form_container .hideItem
 						<div class="input-group">
 							<input type="text" id="optionName" name="memberName" required>
 							<span>이름</span>
-							<div class="chkVali chkValiComp" id="optionNameChk"></div>
 						</div>
 						<div class="input-group">
 							<div class="divRadio">
@@ -448,6 +449,12 @@ section .form_container .hideItem
 							</div>
 						</div>
 						<div class="input-group">
+							<input type="text" id="optionPhone" name="memberPhone" required>
+							<span>휴대전화</span>
+							<div class="chkVali" id="optionPhoneChk">올바른 휴대전화 번호를 입력해 주세요</div>
+							<div class="chkVali chkValiComp" id="optionPhoneComp">사용가능 합니다.</div>
+						</div>
+						<div class="input-group">
 							<input type="text" id="optionMemo" name="memberMemo" maxlength="30" required>
 							<span>상태 메시지</span>
 						</div>
@@ -455,7 +462,7 @@ section .form_container .hideItem
 							<p class="tagP">관심있는 태그를 남겨주세요.</p>
 						</div>
 						<div>
-							<input type="text" name="tagName" value="" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+							<input type="text" name="memberTagName" value="" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
 						</div>
 						<div class="registerError" id="">잠시후 다시 시도해 주세요.</div>
 						<input type="button" onclick="registerComp()" value="완료">
@@ -486,7 +493,6 @@ section .form_container .hideItem
 		let regiEmailPass = false;
 		let regiPwdPass = false;
 		let regiNickNamePass = false;
-		let regiPhonePass = false;
 		// 정규식
 		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
 		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
@@ -581,7 +587,7 @@ section .form_container .hideItem
 				$("#loginEmail").focus();
 			} else if(!$("#loginPwd")[0].checkValidity()){
 				$("#loginPwd").focus();
-			} else{
+			} else {
 	 			let idSaveCheck = $("#idSaveCheck").is(":checked");
 				memberEmail = $("#loginEmail").val();
 				memberPwd = $("#loginPwd").val();
@@ -601,15 +607,12 @@ section .form_container .hideItem
 							}
 
 							goBackPage();
-						} else{
+						} else {
 							$("#loginError").css("display","block");
 						}
 					},
 					error:function(request, status, errorData){
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						/* alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData); */
 					}
 				});
 			}
@@ -618,14 +621,70 @@ section .form_container .hideItem
 
 	<!-- 카카오 로그인 -->	
 	<script>
+		// 카카오 로그인 스크립트 => 자동 회원가입 기능 (ajax)
 		function kakaoLogin(){
-			
+			Kakao.Auth.loginForm({
+				success : function(response) {
+					console.log("카카오 로그인 : 성공");
+
+					Kakao.API.request({
+						url : '/v2/user/me',
+						success : function(response) {
+							console.log(response);
+
+							memberEmail = response.id;
+							memberNickName = response.properties.nickname;
+
+							$.ajax({
+								url:"kakaoLogin.do",
+								data:{memberEmail:memberEmail, memberNickName:memberNickName},
+								success:function(data){
+									console.log("회원가입 결과 : " + data);
+									if(data == "success"){
+										goBackPage();
+									} else {
+										$.ajax({
+											url:"memberInsertkakao.do",
+											data:{memberEmail:memberEmail, memberNickName:memberNickName},
+											success:function(data){
+												console.log("로그인kakao 결과 : " + data);
+												if(data == "success"){
+													toggleForm();
+													/* $("#mainProfileArea").load(window.location.href + "#mainProfileArea"); */
+													registerOption();
+												} else {
+													$("#loginError").css("display","block");
+												}
+											},
+											error:function(request, status, errorData){
+												alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+											}
+										});
+									}
+								},
+								error:function(request, status, errorData){
+									alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+									
+									
+									//		+"error: " + errorData);
+								}
+							});
+						},
+						fail : function(error) {
+							console.log("카카오 정보 요청 실패" + error);
+						}
+					});
+				},
+				fail : function(error) {
+					console.log("카카오 로그인 실패" + error);
+				},
+			});
 		}
 	</script>
 
 	<!-- 회원가입 -->
 	<script>
-		$("#regiPhone").keyup(function(e){
+		$("#regiNickName").keyup(function(e){
 			if(e.keyCode == 13){
 				register();
 			}
@@ -662,9 +721,6 @@ section .form_container .hideItem
 					error:function(request, status, errorData){
 						regiEmailPass = false;
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						/* alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData); */
 					}
 				});
 			}
@@ -754,9 +810,6 @@ section .form_container .hideItem
 					error:function(request, status, errorData){
 						regiNickNamePass = false;
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						/* alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData); */
 					}
 				});
 			}
@@ -764,49 +817,6 @@ section .form_container .hideItem
 		// 키이벤트 닉네임 확인
 		$("#regiNickName").on("keyup change", function () {
 			regiNickName();
-		});
-
-		// 전화번호 정규화 확인, 전화번호 중복 확인(ajax)
-		function regiPhone() {
-			// 전화번호 - 제거
-			memberPhone = ($("#regiPhone").val()).replace(/-/gi,"");
-
-			if (!regexPhone.test(memberPhone)) {
-				regiPhonePass = false;
-				$("#regiPhoneChk").css("display","block");
-				$("#regiPhoneDupl").css("display","none");
-				$("#regiPhoneComp").css("display","none");
-			} else {
-				$.ajax({
-					url:"phoneDuplicateChk.do",
-					data:{memberPhone:memberPhone},
-					success:function(data){
-						console.log("회원가입 전화번호 결과 : " + data);
-						if(data == "success"){
-							regiPhonePass = true;
-							$("#regiPhoneChk").css("display","none");
-							$("#regiPhoneDupl").css("display","none");
-							$("#regiPhoneComp").css("display","block");
-						} else {
-							regiPhonePass = false;
-							$("#regiPhoneChk").css("display","none");
-							$("#regiPhoneDupl").css("display","block");
-							$("#regiPhoneComp").css("display","none");
-						}
-					},
-					error:function(request, status, errorData){
-						regiPhonePass = false;
-						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						/* alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData); */
-					}
-				});
-			}
-		}
-		// 키이벤트 휴대전화 확인
-		$("#regiPhone").on("keyup change", function () {
-			regiPhone();
 		});
 
 		// 회원가입(필수)
@@ -817,12 +827,10 @@ section .form_container .hideItem
 			regiPwd();
 			regiPwdDupl();
 			regiNickName();
-			regiPhone();
 			
 			console.log("회원가입 이메일 결과 : " + regiEmailPass);
 			console.log("회원가입 비밀번호 결과 : " + regiPwdPass);
 			console.log("회원가입 닉네임 결과 : " + regiNickNamePass);
-			console.log("회원가입 전화번호 결과 : " + regiPhonePass);
 			
 			if(!regiEmailPass){
 				$("#regiEmail").focus();
@@ -832,22 +840,18 @@ section .form_container .hideItem
 				$("#regiPwdDupl").focus();
 			} else if(!regiNickNamePass){
 				$("#regiNickName").focus();
-			} else if(!regiPhonePass){
-				$("#regiPhone").focus();
 			} else {
 				console.log("회원가입(필수)");
 
 				memberEmail = $("#regiEmail").val();
 				memberPwd = $("#regiPwd").val();
 				memberNickName = $("#regiNickName").val();
-				memberPhone = $("#regiPhone").val();
 				
 				$.ajax({
 					url:"memberInsert.do",
 					data:{memberEmail:memberEmail
 						, memberPwd:memberPwd
-						, memberNickName:memberNickName
-						, memberPhone:memberPhone},
+						, memberNickName:memberNickName},
 					success:function(data){
 						console.log("회원가입 결과 : " + data);
 						if(data == "success"){
@@ -858,9 +862,6 @@ section .form_container .hideItem
 					},
 					error:function(request, status, errorData){
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-						// alert("error code: " + request.status + "\n"
-						//		+"message: " + request.responseText
-						//		+"error: " + errorData);
 					}
 				});
 			}
@@ -868,11 +869,18 @@ section .form_container .hideItem
 	</script>
 
 	<!-- 회원가입(추가입력) -->
-	<script>		
+	<script>
+		// 회원가입(추가입력) 페이지로 변경
+		function registerOption() {
+			$("#regiFst").css("display","none");
+			$("#regiSnd").css("display","flex");
+		};
+
 		// 추가입력 취소
 		function optionSkip(){
 			goBackPage();
 		}
+
 		// 파일첨부 열기
 		$("#inputImg").on("click", function() {
 			$("#profileImgInput").click();
@@ -912,12 +920,24 @@ section .form_container .hideItem
 		$("#deleteImg").on("click", function(){
 			deleteImg();
 		});
-	
-		// 회원가입(추가입력) 페이지로 변경
-		function registerOption() {
-			$("#regiFst").css("display","none");
-			$("#regiSnd").css("display","flex");
-		};
+
+		// 전화번호 정규화 확인, 전화번호 중복 확인(ajax)
+		function opionPhone() {
+			// 전화번호 - 제거
+			memberPhone = ($("#opionPhone").val()).replace(/-/gi,"");
+
+			if (!regexPhone.test(memberPhone)) {
+				$("#optionPhoneChk").css("display","block");
+				$("#optionPhoneComp").css("display","none");
+			} else {
+				$("#optionPhoneChk").css("display","none");
+				$("#optionPhoneComp").css("display","block");
+			}
+		}
+		// 키이벤트 휴대전화 확인
+		$("#opionPhone").on("keyup change", function () {
+			opionPhone();
+		});
 
 		// 회원가입(추가입력)
 		function registerComp() {
@@ -927,9 +947,10 @@ section .form_container .hideItem
 			console.log("사진 : " + memberPhoto);
 			console.log("이름 : " + $("#optionName").val());
 			console.log("성별 : " + $("input[name=memberGender]").val());
+			console.log("전화 : " + $("#optionPhone").val());
 			console.log("메모 : " + $("#optionMemo").val());
 			console.log("태그 : " + $("#tagName").val());
-
+			
 			// 추가입력 완료
 			$("#optionUpdateForm").submit();
 		}

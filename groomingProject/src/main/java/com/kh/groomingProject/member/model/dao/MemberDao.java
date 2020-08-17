@@ -54,4 +54,9 @@ public class MemberDao {
 		return sqlSessionTemplate.update("memberMapper.mergeMemberTags", memberTag);
 	}
 
+	public int insertMemberKakao(Member m) {
+
+		return sqlSessionTemplate.insert("memberMapper.insertMemberKakao", m);
+	}
+
 }

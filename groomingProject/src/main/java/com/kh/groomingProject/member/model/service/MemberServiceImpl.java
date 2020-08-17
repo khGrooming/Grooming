@@ -61,4 +61,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.mergeMemberTags(memberTag);
 	}
 
+	@Override
+	public int insertMemberKakao(Member m) {
+
+		return mDao.insertMemberKakao(m);
+	}
+
 }

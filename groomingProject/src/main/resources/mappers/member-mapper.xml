@@ -16,20 +16,22 @@
 		<result property="memberPhoto" column="MEMBER_PHOTO"/>
 		<result property="memberAdmin" column="MEMBER_ADMIN"/>
 		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="memberKakao" column="MEMBER_KAKAO"/>
 		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD
-							, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_GENDER
-							, MEMBER_PHONE, LVL_NO, MEMBER_EXP
-							, MEMBER_MEMO, MEMBER_PHOTO, MEMBER_ADMIN
-							, MEMBER_STATUS, MEMBER_JOIN_DATE)
-		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}
-				, #{memberNickName}, #{memberName}, #{memberGender}
-				, #{memberPhone}, DEFAULT, #{memberExp}
-				, #{memberMemo}, DEFAULT, DEFAULT
-				, DEFAULT, SYSDATE)
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SYSDATE)
+	</insert>
+	
+	<insert id="insertMemberKakao" parameterType="Member">
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'K', SYSDATE)
 	</insert>
 	
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -59,7 +61,13 @@
 
 	<update id="updateMemberOption" parameterType="Member">
 		UPDATE MEMBER
-		SET MEMBER_NAME=#{memberName}, MEMBER_GENDER=#{memberGender}, MEMBER_MEMO=#{memberMemo}, MEMBER_PHOTO=#{memberPhoto}
+		<set>
+			<if test="memberName !=null">MEMBER_NAME=#{memberName},</if>
+			<if test="memberGender !=null">MEMBER_GENDER=#{memberGender},</if>
+			<if test="memberPhone !=null">MEMBER_PHONE=#{memberPhone},</if>
+			<if test="memberMemo !=null">MEMBER_MEMO=#{memberMemo},</if>
+			<if test="memberPhoto !=null">MEMBER_PHOTO=#{memberPhoto}</if>
+		</set>
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
