@@ -10,6 +10,7 @@ import com.kh.groomingProject.studyCafe.model.dao.StudyCafeDao;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
+import com.kh.groomingProject.studyCafe.model.vo.ReservationView;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Service
@@ -61,13 +62,13 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<Reservation> selectReservation(String memberNo) {
+	public ArrayList<ReservationView> selectReservation(String memberNo) {
 
 		return studyCafeDao.selectReservation(memberNo);
 	}
 
 	@Override
-	public ArrayList<Reservation> rHistoryCheck(String memberNo) {
+	public ArrayList<ReservationView> rHistoryCheck(String memberNo) {
 
 		return studyCafeDao.rHistoryCheck(memberNo);
 	}
@@ -79,15 +80,15 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public int checkPoint(String memberNo) {
+	public int checkPoint(Map rinfo) {
 		
-		return studyCafeDao.checkPoint(memberNo);
+		return studyCafeDao.checkPoint(rinfo);
 	}
 
 	@Override
-	public int pointCalculation(Point cal) {
+	public int pointCalculation(Map rinfo) {
 		
-		return studyCafeDao.pointCalculation(cal);
+		return studyCafeDao.pointCalculation(rinfo);
 	}
 
 }

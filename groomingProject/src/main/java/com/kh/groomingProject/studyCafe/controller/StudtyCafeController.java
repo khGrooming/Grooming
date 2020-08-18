@@ -17,11 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.kh.groomingProject.studyCafe.model.exception.StudyCafeException;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
-import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
+import com.kh.groomingProject.studyCafe.model.vo.ReservationView;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Controller
@@ -130,10 +129,33 @@ public class StudtyCafeController {
 	
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
-	public String insertReservation(Reservation r) {
+	public String insertReservation(Reservation r, String money) {
+		Map rinfo = new HashMap();
+		
+		String memberNo = "M00002";
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
+		
+		for(int i=0; i<rlist.size(); i++) {
+			if(r.getcReserNo().equals(rlist.get(i).getcReserNo())) {
+				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
+				
+				rinfo.put("memberNo", memberNo);
+				rinfo.put("pointList", "카페 예약 취소");
+				rinfo.put("addPoint", oldMoney);
+				int resultPoint = studyCafeService.pointCalculation(rinfo);
+			}
+		}
 		
 		int result = studyCafeService.insertReservation(r);
 		
+		rinfo.put("memberNo", memberNo);
+		int totalPoint = studyCafeService.checkPoint(rinfo);
+
+		if(totalPoint > Integer.valueOf(money)) {
+			rinfo.put("pointList", "카페 예약");
+			rinfo.put("addPoint", -Integer.valueOf(money));
+			int resultPoint = studyCafeService.pointCalculation(rinfo);			
+		}
 		
 		return "redirect:reservationCheck.do";
 	}
@@ -142,7 +164,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="reservationCheck.do")
 	public ModelAndView reservationCheck(ModelAndView mv) {
 		String memberNo = "M00002";
-		ArrayList<Reservation> rlist = studyCafeService.selectReservation(memberNo);
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
 
 		mv.addObject("rlist", rlist);
 		mv.setViewName("studyCafe/reservationCheck");
@@ -153,7 +175,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="reservationHistory.do")
 	public ModelAndView rHistoryCheck(ModelAndView mv) {
 		String memberNo = "M00002";
-		ArrayList<Reservation> rlist = studyCafeService.rHistoryCheck(memberNo);
+		ArrayList<ReservationView> rlist = studyCafeService.rHistoryCheck(memberNo);
 		
 		mv.addObject("rlist", rlist);
 		mv.setViewName("studyCafe/reservationHistory");
@@ -162,6 +184,22 @@ public class StudtyCafeController {
 	
 	@RequestMapping("cancelR.do")
 	public String canccelReservation(String cReserNo) {
+		Map rinfo = new HashMap();
+		
+		String memberNo = "M00002";
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
+		
+		for(int i=0; i<rlist.size(); i++) {
+			if(cReserNo.equals(rlist.get(i).getcReserNo())) {
+				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
+				
+				rinfo.put("memberNo", memberNo);
+				rinfo.put("pointList", "카페 예약 취소");
+				rinfo.put("addPoint", oldMoney);
+				int resultPoint = studyCafeService.pointCalculation(rinfo);
+			}
+		}
+		
 		int result = studyCafeService.deleteReservation(cReserNo);
 		
 		return "redirect:reservationCheck.do";
@@ -169,26 +207,16 @@ public class StudtyCafeController {
 	
 	@RequestMapping("checkPoint.do")
 	@ResponseBody
-	public String checkPoint(int money) {
+	public String checkPoint(int money, String cReserNo) {
 		String memberNo = "M00002";
-		int point = studyCafeService.checkPoint(memberNo);
 		
-		if(money <= point) {
-
-			Point cal = new Point();
-			cal.setMemberNo(memberNo);
-			cal.setAddPoint(-money);
-			cal.setPointList("카페 예약");
-			System.out.println(cal);
-			
-			int result = studyCafeService.pointCalculation(cal);
-			
-			if(result > 0) {
-				return "success";				
-			}else {
-				throw new StudyCafeException("포인트 결제 실패!");
-			}
-			
+		Map rinfo = new HashMap();
+		rinfo.put("memberNo", memberNo);
+		
+		int totalPoint = studyCafeService.checkPoint(rinfo);
+		
+		if(totalPoint >= money) {
+			return "success";
 		}else {
 			return "fail";
 		}

@@ -130,6 +130,7 @@
 					<input type="hidden" id="cReserDate" name="cReserDate">
 					<input type="hidden" id="STime" name="cReserSTime">
 					<input type="hidden" id="ETime" name="cReserETime">
+					<input type="hidden" id="money" name="money">
 					
 					<hr>
 					
@@ -497,10 +498,13 @@
 			$(".modal").css("display","block");
 
 			$money = $(".money").text().split(' 원');
+			$("#money").val($money[0]);
+			
+			$cReserNo = ${cReserNo eq null? null: cReserNo}
 			console.log($money[0])
 			$.ajax({
 				url:"checkPoint.do",
-				data:{money:$money[0]},
+				data:{money:$money[0],cReserNo:$cReserNo},
 				success:function(data){
 					if(data == "success"){
 						$cPriceNo = $('input[name="cPriceNo"]:checked').val();
@@ -518,14 +522,17 @@
 						if(click1 < click2){
 							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
 							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+							$("#infoCheck").append("<p>★예약 변경시 신청한 예약은 취소 됩니다.</p>");
 						}else if(click2 < click1){
 							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click2 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
 							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+							$("#infoCheck").append("<p>★예약 변경시 신청한 예약은 취소 됩니다.</p>");
 						}else{
 							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
 							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+							$("#infoCheck").append("<p>★예약 변경시 신청한 예약은 취소 됩니다.</p>");
 						}
-					}else{
+					}else {
 						$("#infoCheck").append("<p>포인트가 부족합니다.<br>확인 클릭시 포인트 충전 페이지로 이동합니다.<p>");
 						$("#userConfirm").attr("type","button");
 						
@@ -539,14 +546,7 @@
 			})
 			
 		}
-		
-		// 결제 포인트 확인
-		function pointCheck(){
-			
-		}
 
-		
-		
 		
 	</script>
 	

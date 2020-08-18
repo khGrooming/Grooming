@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
+import com.kh.groomingProject.studyCafe.model.vo.ReservationView;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Repository
@@ -53,12 +54,12 @@ public class StudyCafeDao {
 		return sqlSessionTemplate.insert("cafeMapper.insertReservation", r);
 	}
 
-	public ArrayList<Reservation> selectReservation(String memberNo) {
+	public ArrayList<ReservationView> selectReservation(String memberNo) {
 		
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectReservation", memberNo);
 	}
 
-	public ArrayList<Reservation> rHistoryCheck(String memberNo) {
+	public ArrayList<ReservationView> rHistoryCheck(String memberNo) {
 		
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.rHistoryCheck", memberNo);
 	}
@@ -67,14 +68,14 @@ public class StudyCafeDao {
 		return sqlSessionTemplate.delete("cafeMapper.deleteReservation" ,cReserNo);
 	}
 
-	public int checkPoint(String memberNo) {
+	public int checkPoint(Map rinfo) {
 		
-		return sqlSessionTemplate.selectOne("cafeMapper.checkPoint", memberNo);
+		return sqlSessionTemplate.selectOne("cafeMapper.checkPoint", rinfo);
 	}
 
-	public int pointCalculation(Point cal) {
+	public int pointCalculation(Map rinfo) {
 		
-		return sqlSessionTemplate.insert("cafeMapper.pointCalculation", cal);
+		return sqlSessionTemplate.insert("cafeMapper.pointCalculation", rinfo);
 	}
 
 }

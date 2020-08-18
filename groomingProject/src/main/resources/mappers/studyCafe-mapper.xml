@@ -156,19 +156,19 @@
 		WHERE C_RESER_NO = #{cReserNo}
 	</delete>
 	
-	<select id="checkPoint" parameterType="string" resultType="_int">
+	<select id="checkPoint" parameterType="map" resultType="_int">
 		SELECT SUM(ADD_POINT) 
-		FROM POINT 
-		WHERE MEMBER_NO = #{memberNo}
+		FROM POINT
+		WHERE MEMBER_NO = #{memberNo}		
 		GROUP BY MEMBER_NO
 	</select>
 	
-	<insert id="pointCalculation" parameterType="Point">
+	<insert id="pointCalculation" parameterType="map">
 		INSERT INTO POINT
 		VALUES (SEQ_POINT_NO.NEXTVAL
 				, #{memberNo}
 				, #{addPoint}
-				, null
+				, 0
 				, #{pointList}
 				, SYSDATE)
 	</insert>
