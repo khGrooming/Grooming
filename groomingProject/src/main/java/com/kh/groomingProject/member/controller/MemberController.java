@@ -4,10 +4,15 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +46,9 @@ public class MemberController {
 	
 	@Autowired
 	private AlertService alertService;
+	
+	@Autowired
+	private JavaMailSenderImpl mailSender;
 
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -429,6 +437,49 @@ public class MemberController {
 			return "fail";
 		}
 
+	}
+
+	@RequestMapping("sendCertiEmail.do")
+	@ResponseBody
+	public String sendCertiMail(String memberEmail) {
+		System.out.println("메일 전송 : " + memberEmail);
+		
+		int randomCode = 123456;
+		
+		String mailFrom = "onebunonecho@gmail.com";
+		String mailTo = memberEmail;
+		String mailTitle = "회원 정보 찾기 인증 코드 입니다.";
+		String mailContent = "인증코드 : " + Integer.toString(randomCode) + " 입니다.";
+
+//		MimeMessage message = mailSender.createMimeMessage();
+//		MimeMessageHelper messageHelper;
+//		try {
+//			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+//			messageHelper.setFrom(mailFrom);
+//			messageHelper.setTo(mailTo);
+//			messageHelper.setSubject(mailTitle);
+//			messageHelper.setText(mailContent);
+//
+//			mailSender.send(message);
+//
+//		} catch (MessagingException e) {
+//			e.printStackTrace();
+//			return "fail";
+//		}
+		
+		final MimeMessagePreparator prep = new MimeMessagePreparator() {
+			@Override
+			public void prepare(MimeMessage mimeMessage) throws Exception {
+				final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+				helper.setFrom(mailFrom);
+				helper.setTo(mailTo);
+				helper.setSubject(mailTitle);
+				helper.setText(mailContent, true);
+			}
+		};
+		mailSender.send(prep);
+
+		return "success";
 	}
 
 }

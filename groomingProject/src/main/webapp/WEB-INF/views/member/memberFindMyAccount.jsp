@@ -195,7 +195,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 						</div>
 						<input type="button" class="col-4 btn_send" onclick="sendEmail()" value="인증 번호 받기">
 						<div class="input-group col-12 m-1">
-							<p class="m-0">인증번호 유지 시간 : &nbsp;</p><p id="timer" class="m-0">00:00</p>
+							<p class="m-0">인증번호 유지 시간 : &nbsp;</p><p id="timer" class="m-0">10:00</p>
 						</div>
 						<div class="input-group col-8 my-3">
 							<input type="text" id="certiNumber" name="certiNumber" value="" required disabled>
@@ -253,7 +253,6 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 		});
 		
 		function sendEmail() {
-			console.log(!$("#certiEmail")[0].checkValidity());
 			if(!$("#certiEmail")[0].checkValidity()){
 				certiEmailPass = false;
 				$("#certiEmailChk").css("display","block");
@@ -265,22 +264,13 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 
 			if(certiEmailPass){
 				$(".loading").show();
-				
-				// 성공 시
-				clearTime(10);
-				setTimer();	
-				
-				$(".btn_next").css("background","#677eff");
-				$(".btn_send").css("background","grey");
-
-				$("#certiNumber").prop("disabled","");
-				$("#certiNumberSpan").css("color","black");
-				$(".loading").fadeOut();
-				
+			} else{
+				return;
 			}
+			console.log("인증 메일 전송")
 
 			//TODO email 전송 만들어야함
-			/* $.ajax({ 
+			$.ajax({ 
 				url:"sendCertiEmail.do",
 				data:{memberEmail:memberEmail},
 				success:function(data){
@@ -304,7 +294,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-			$(".loading").fadeOut(); */
+			$(".loading").fadeOut();
 		}
 			// alert("인증번호 6자리를 정확하게 입력해 주세요.");
 			// alert("잘못된 인증번호입니다. 인증번호를 확인한 다음 다시 입력해 주세요.");
