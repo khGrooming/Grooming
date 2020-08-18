@@ -1,7 +1,6 @@
 package com.kh.groomingProject.studyCafe.controller;
 
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,13 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.studyCafe.model.exception.StudyCafeException;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
+import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
@@ -54,7 +56,7 @@ public class StudtyCafeController {
 
 		list = studyCafeService.selectCafeNameList(name);
 		
-		System.out.println(list);
+
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -129,7 +131,7 @@ public class StudtyCafeController {
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
 	public String insertReservation(Reservation r) {
-		System.out.println(r);
+		
 		int result = studyCafeService.insertReservation(r);
 		
 		
@@ -164,4 +166,34 @@ public class StudtyCafeController {
 		
 		return "redirect:reservationCheck.do";
 	}
+	
+	@RequestMapping("checkPoint.do")
+	@ResponseBody
+	public String checkPoint(int money) {
+		String memberNo = "M00002";
+		int point = studyCafeService.checkPoint(memberNo);
+		
+		if(money <= point) {
+
+			Point cal = new Point();
+			cal.setMemberNo(memberNo);
+			cal.setAddPoint(-money);
+			cal.setPointList("카페 예약");
+			System.out.println(cal);
+			
+			int result = studyCafeService.pointCalculation(cal);
+			
+			if(result > 0) {
+				return "success";				
+			}else {
+				throw new StudyCafeException("포인트 결제 실패!");
+			}
+			
+		}else {
+			return "fail";
+		}
+	}
+	
+	
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
+import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
@@ -64,6 +65,16 @@ public class StudyCafeDao {
 
 	public int deleteReservation(String cReserNo) {
 		return sqlSessionTemplate.delete("cafeMapper.deleteReservation" ,cReserNo);
+	}
+
+	public int checkPoint(String memberNo) {
+		
+		return sqlSessionTemplate.selectOne("cafeMapper.checkPoint", memberNo);
+	}
+
+	public int pointCalculation(Point cal) {
+		
+		return sqlSessionTemplate.insert("cafeMapper.pointCalculation", cal);
 	}
 
 }

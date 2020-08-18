@@ -147,7 +147,7 @@
 			                <p id="infoCheck" style="text-align: center; line-height: 1.5;"><br /></p>
 			                <p><br /></p>
 			           <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
-			                <button type="submit" class="pop_bt" style="font-size: 13pt;" >확인</button>
+			                <button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">확인</button>
 			                <button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
 			            </div>
 				      </div>
@@ -428,7 +428,7 @@
 									$(".time").eq(i).children(".timeSelect").css("background","blue");			
 									
 									for(var j in data){
-										console.log((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10));
+
 										if((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10)){
 											alert("예약할 수 없는 시간이 포함되어 있습니다.");
 											changeTime(data);
@@ -481,50 +481,111 @@
 				
 				$cal.append("<p>총 사용료</p>");
 				if(click1 > click2 && click2 != 0){
-					console.log("1 : "+click1,", " ,click2);
 					$cal.append("<p class='money' align='right'>"+$head*$price*((click1+1)-click2)+" 원");					
 				}else if(click1 < click2){
-					console.log("2 : "+click1,", " ,click2);
 					$cal.append("<p class='money' align='right'>"+$head*$price*((click2+1)-click1)+' 원');	
 				}else if(click2 == 0){
-					console.log("3 : "+click1,", " ,click2);
 					$cal.append('<p class="money" align="right">'+$head*$price+' 원');
 				}
-				$("#reservationBtn").css("display","block");
 				
-		})
+				$("#reservationBtn").css("display","block");
+
+		});
 
 		// 모달창 오픈
 		function openModal(){
 			$(".modal").css("display","block");
-			
-			$cPriceNo = $('input[name="cPriceNo"]:checked').val();
-			$head = $("#headCount option:selected").val();
-			$money = $(".money").text();
-			$selectDate = $("#cReserDate").val();
-			
-			<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
-				if('${info.cPriceNo}'==$cPriceNo){
-					$cafeName = '${info.cafeName}';
-					$cRoomName = '${info.cRoomName}';
+
+			$money = $(".money").text().split(' 원');
+			console.log($money[0])
+			$.ajax({
+				url:"checkPoint.do",
+				data:{money:$money[0]},
+				success:function(data){
+					if(data == "success"){
+						$cPriceNo = $('input[name="cPriceNo"]:checked').val();
+						$head = $("#headCount option:selected").val();
+						$money = $(".money").text();
+						$selectDate = $("#cReserDate").val();
+						
+						<c:forEach var="info" items="${info}" begin="0" end="${info.size()}">
+							if('${info.cPriceNo}'==$cPriceNo){
+								$cafeName = '${info.cafeName}';
+								$cRoomName = '${info.cRoomName}';
+							}
+						</c:forEach>
+
+						if(click1 < click2){
+							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
+							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+						}else if(click2 < click1){
+							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click2 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
+							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+						}else{
+							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
+							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
+						}
+					}else{
+						$("#infoCheck").append("<p>포인트가 부족합니다.<br>확인 클릭시 포인트 충전 페이지로 이동합니다.<p>");
+						$("#userConfirm").attr("type","button");
+						
+						// 포인트 충전 사이트로 바꿔놓을 것!!
+						$("#userConfirm").attr("onclick","location.href='searchName.do'");
+					}
+					
+				},
+				error:function(data){
 				}
-			</c:forEach>
-			console.log(click1);
-			if(click1 < click2){
-				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
-			}else if(click2 < click1){
-				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click2 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
-			}else{
-				$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click1+1) + " 시<br>" + $head+" 명</p><br>");
-				$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");
-			}
+			})
 			
 		}
 		
+		// 결제 포인트 확인
+		function pointCheck(){
+			
+		}
 
+		
+		
+		
 	</script>
 	
+	
+	<!-- 수량 버튼 스크립트 -->
+    <!-- <script>
+        (function ($) {
+            $.fn.spinner = function() {
+                this.each(function() {
+                    var el = $(this);
+
+                    // add elements
+                    el.wrap('<span class="spinner"></span>');
+                    el.before('<span class="sub">-</span>');
+                    el.after('<span class="add">+</span>');
+
+                    // substract
+                    el.parent().on('click', '.sub', function () {
+                    if (el.val() > parseInt(el.attr('min'))){
+                        el.val(function(i, oldval) { return --oldval; });
+                        //console.log(el.val());
+                    }
+
+                    });
+
+                    // increment
+                    el.parent().on('click', '.add', function () {
+                    if (el.val() < parseInt(el.attr('max'))){ // 최대 예약인원
+                        el.val(function(i, oldval) { return ++oldval; });
+                        //console.log(el.val());
+                    } else {
+                       alert("1회 구매 최대 수량입니다.");
+                    }
+                        
+                    });
+                });
+            };
+        })(jQuery);// 수량 버튼 스크립트 끝
+        $('.ㅊ]').spinner();
+    </script> -->
 </body>
 </html>

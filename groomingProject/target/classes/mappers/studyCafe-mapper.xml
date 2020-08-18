@@ -51,8 +51,21 @@
 		<result property="cRoomPrice" column="C_ROOM_PRICE"/>
 		<result property="cafeAddress" column="CAFE_ADDRESS"/>
 		<result property="cafeNo" column="CAFE_NO"/>
-
 	</resultMap>
+	
+	<resultMap type="Point" id="PointRestulSet">
+		<id property="pointNo" column="POINT_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="addPoint" column="ADD_POINT"/>
+		<result property="pointList" column="POINT_LIST"/>
+		<result property="pointDate" column="POINT_DATE"/>
+	</resultMap>
+	
+
+
+
+
 	
 	<select id="selectCafeNameList" parameterType="string" resultMap="studyCafeResultSet">
 		SELECT *
@@ -142,4 +155,21 @@
 		DELETE FROM CAFERESERVATION
 		WHERE C_RESER_NO = #{cReserNo}
 	</delete>
+	
+	<select id="checkPoint" parameterType="string" resultType="_int">
+		SELECT SUM(ADD_POINT) 
+		FROM POINT 
+		WHERE MEMBER_NO = #{memberNo}
+		GROUP BY MEMBER_NO
+	</select>
+	
+	<insert id="pointCalculation" parameterType="Point">
+		INSERT INTO POINT
+		VALUES (SEQ_POINT_NO.NEXTVAL
+				, #{memberNo}
+				, #{addPoint}
+				, null
+				, #{pointList}
+				, SYSDATE)
+	</insert>
 </mapper>

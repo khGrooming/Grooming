@@ -64,12 +64,10 @@
 		        <div class="card-body">
 		            <br>
 		            <div class="row">
-		            	<form>
 		                	<input type="text" id="searchName" name="searchName">
-		                    <button type="button" class="btn btn-default" onclick="searchCafeName();">
+		                    <button type="button" id="click" class="btn btn-default" onclick="searchCafeName();">
 		                        <span class="glyphicon glyphicon-search"></span> 검색
 		                    </button>
-	                    </form>
 		            </div>
 		            <br>
 		            <div class="searchView">
@@ -77,7 +75,7 @@
 			            <c:url var="cafeDetail" value="cafeDetail.do">
 			            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
 			            </c:url>
-		                <div class="panel panel-default" onclick="location.href='${cafeDetail}'">
+		                <div class="panel panel-default" onclick="location.href='cafeDetail.do?cafeNo=${cafe.cafeNo}'">
 		                    <img src="${contextPath}/resources/views/images/study.jpg" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
@@ -95,7 +93,14 @@
 	<footer><jsp:include page="../common/footer.jsp" /></footer>
 	
 	<script>
+		$("#searchName").keyup(function(event){
+			if(event.keyCode == 13){
+				searchCafeName();
+			}
+		})
+	
 		function searchCafeName(){
+
 			name = $("#searchName").val();
 
 			$.ajax({
@@ -109,6 +114,7 @@
 					for(var i in data){
 
 						$panel = $("<div class='panel panel-default'>");
+						$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
 						$img = $("<img src='${contextPath }/resources/views/images/study.jpg' class='thumbnail'>");
 						$body = $("<div class='panel-body'>");
 						$footer = $("<div class='panel-footer'>");

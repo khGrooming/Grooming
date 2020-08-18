@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.studyCafe.model.dao.StudyCafeDao;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
+import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
 import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
@@ -75,6 +76,18 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	public int deleteReservation(String cReserNo) {
 
 		return studyCafeDao.deleteReservation(cReserNo);
+	}
+
+	@Override
+	public int checkPoint(String memberNo) {
+		
+		return studyCafeDao.checkPoint(memberNo);
+	}
+
+	@Override
+	public int pointCalculation(Point cal) {
+		
+		return studyCafeDao.pointCalculation(cal);
 	}
 
 }
