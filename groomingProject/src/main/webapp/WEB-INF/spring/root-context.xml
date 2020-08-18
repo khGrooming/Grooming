@@ -31,4 +31,11 @@
 		<property name="maxUploadSize" value="100000000"/>
 		<property name="maxInMemorySize" value="100000000"/>
 	</bean>
+	
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="465"/>
+	</bean>
+
 </beans>
