@@ -42,4 +42,6 @@ public interface GroomingService {
 
 	int selectRejectApp(String applyNo);
 
+	int updateGrooming(Grooming g);
+
 }

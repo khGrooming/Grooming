@@ -234,12 +234,12 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<div class="form_container container">
 			<!-- style=" "> -->
 
-			<c:url var="groomingInsert" value="groomingInsertForm.do">
-				<c:param name="memberNo" value="${loginUser.memberNo}" />
+			<c:url var="groomingUpdate" value="gUpdate.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
 			</c:url>
-			<form action="${groomingInsert }" method="post"
+			<form action="${groomingUpdate }" method="post"
 				enctype="multipart/form-data">
-
+				<input type="hidden" value="${grooming.groomingNo }">
 				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
 
 					<div class="col-7">
@@ -248,51 +248,69 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td><span>스터디 그룹 이름</span><br> <input type="text"
 										size="50" placeholder="스터디 그룹 이름을 입력해주세요" id="title"
-										name="groomingTitle" required><br> <small><span
+										name="groomingTitle" value="${grooming.groomingTitle }" required><br> <small><span
 											style="color: lightblue">간략하면서 주제가 잘 들어난 이름이 좋아요</span></small> <small><span
 											style="color: #aaa;" id="counterTitle">(0/40)</span></small></td>
 
 								</tr>
 								<tr>
 									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<label><input type="radio" name="groomingType" id="m"
-											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
-											type="radio" name="groomingType" value="h" id="호스트">호스트
+									<c:if test="${grooming.groomingType eq '멘토' }">
+										<label for="m"><input type="radio" name="groomingType" id="m"
+											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h">호스트
 											그룹</label></td>
+									</c:if>
+									<c:if test="${grooming.groomingType eq '호스트' }">
+										<label for="m"><input type="radio" name="groomingType" id="m"
+											value="멘토" >멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트
+											그룹</label></td>
+									</c:if>		
 								</tr>
 
 								<tr>
 									<td><span>한줄 소개</span><br> <input type="text"
 										size="50" placeholder="스터디 그룹 한줄 소개를 입력해주세요" id="introduce"
-										name="groomingIntroduce" required><br> <small><span
+										name="groomingIntroduce" value="${grooming.groomingIntroduce }" required><br> <small><span
 											style="color: lightblue">이목을 집중할 한마디면 충분해요!</span></small> <small><span
 											style="color: #aaa;" id="counterIntroduce">(0/60)</span></small></td>
 
 								</tr>
 								<tr>
 									<td><span>활동인원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="number" max="6" min="2"
-										style="text-align: center;" name="groomingP" required><span>&nbsp;&nbsp;명</span><br>
+										<input type="number" max="6" min="2" style="text-align: center;" name="groomingP" value="${grooming.groomingP }" required><span>&nbsp;&nbsp;명</span><br>
 										<small><span style="color: lightblue;">2~6명으로
 												인원을 구성해주세요</span></small></td>
 								</tr>
 								<tr>
-									<td><span>내용</span><br> <textarea cols="50" rows="10"
-											placeholder="구체적인 활동 내용을 적어주세요!" id="content"
-											style="resize: none;" name="groomingContent" required></textarea>
-										<small><span style="color: #aaa;" align="right"
-											id="counterContent">(0/480)</span></small></td>
-
+									<td><span>내용</span><br> 
+									<textarea cols="50" rows="10" placeholder="구체적인 활동 내용을 적어주세요!" id="content" style="resize: none;" name="groomingContent"  required></textarea>
+										<small><span style="color: #aaa;" align="right" id="counterContent">(0/480)</span></small></td>
+									<input type="hidden" value="${grooming.groomingContent }" id ="textareaContent">
 								</tr>
 								<tr>
 									<td><label>예치금</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<label id="l1"><input type="radio" name="money1"
-											id="exist" value="y" checked>있음</label>&nbsp;&nbsp;&nbsp;&nbsp;
-										<label id="l2"><input type="radio" name="money1"
-											id="nonexist" value="x">없음</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="number" min="1000" step="1000"
-										style="text-align: center; width: 60px;" class="money"
-										name="money"><span class="money">&nbsp;&nbsp;원</span>
+										<c:if test="${grooming.money gt 0 }">
+											<label id="l1"><input type="radio" name="money1"
+												id="exist" value="y" checked>있음</label>&nbsp;&nbsp;&nbsp;&nbsp;
+											<label id="l2"><input type="radio" name="money1"
+												id="nonexist" value="x">없음</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="number" min="1000" step="1000" style="text-align: center; width: 60px;" class="money" name="money" value="${grooming.money }">
+											<span class="money">&nbsp;&nbsp;원</span>
+										</c:if>
+										<c:if test="${grooming.money eq 0 }">
+											<label id="l1"><input type="radio" name="money1"
+												id="exist" value="y" >있음</label>&nbsp;&nbsp;&nbsp;&nbsp;
+											<label id="l2"><input type="radio" name="money1"
+												id="nonexist" value="x" checked>없음</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="number" min="1000" step="1000" style="text-align: center; width: 60px;" class="money" name="money" value="${grooming.money }">
+											<span class="money">&nbsp;&nbsp;원</span>
+										</c:if>
+										
+										
+										
+										
 									</td>
 								</tr>
 
@@ -305,53 +323,49 @@ section .form_container .study .bootstrap-tagsinput .badge {
 					<div class="col-5" style="margin: 0;">
 						<table class="study">
 							<tbody>
-
 								<tr>
-									<td><span>해시 태그</span><br> <input type="text"
-										name="tagName" value="" placeholder="Tags,"
-										data-role="tagsinput" class="form-control" id="tagName"
-										style="display: none;" required> <small><span
-											style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span> </small></td>
+									<td>
+										<span>해시 태그</span><br> 
+										
+											<input type="text" name="tagName" placeholder="Tags," data-role="tagsinput" value="${tlist }" class="form-control"
+											 id="tagName" style="display: none;" required>
+										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small></td>
 									</td>
 								</tr>
 
 								<tr>
-									<td><span>스터디 진행 기간</span><br> <input id="start"
-										type="text" min="${today }" name="studySd" required> ~
-										<input id="end" type="text" name="studyEd" required><br>
-										<small> <span>스터디 그룹을&nbsp;&nbsp;<span
-												style="color: red;">진행</span>할 기간을 설정해주세요
-										</span>
-									</small></td>
+									<td>
+										<span>스터디 진행 기간</span><br> 
+										<input id="start" type="text" min="${today }" name="studySd" value="${grooming.studySd }" required> ~
+										<input id="end" type="text" name="studyEd" value="${grooming.studyEd }" required><br>
+										<small> <span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할 기간을 설정해주세요</span></small>
+									</td>
 								</tr>
 								<tr>
-									<td><span>스터디 모집 기간</span><br> <input id="startG"
-										type="text" name="groomingSd" required> ~ <input
-										id="endG" type="text" name="groomingEd" required><br>
-										<small><span>스터디 그룹을&nbsp;&nbsp;<span
-												style="color: red;">모집</span>할 기간을 설정해주세요
-										</span></small></td>
+									<td>
+										<span>스터디 모집 기간</span><br> 
+										<input id="startG" type="text" name="groomingSd" value="${grooming.groomingSd }" required> ~ <input id="endG" type="text" name="groomingEd" value="${grooming.groomingEd }" required><br>
+										<small><span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을 설정해주세요</span></small>
+									</td>
 								</tr>
 								<tr>
-									<td><span>대표이미지</span><br> <!-- 	<div class="image">
-                        			<div class="icon"><i class="fas fa-plus" ></i></div>
-                        		</div> --></td>
+									<td><span>대표이미지</span><br></td>
 								</tr>
 								<tr>
 									<td>
 										<div class="filebox preview-image">
-											<input class="upload-name" value="파일선택" disabled="disabled">
-											<label for="input-file">업로드</label> <input type="file"
-												id="input-file" class="upload-hidden" name="uploadFile"
-												required>
+											<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}" id="UImg" style="width:300px;height:150px;"> 
+											<input class="upload-name" value="파일선택" disabled="disabled" >
+											<label for="input-file">업로드</label> 
+											<input type="file" id="input-file" class="upload-hidden" name="uploadFile"  required>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td><input id="insert" class="btn-3d green" type="submit"
-										value="등록하기">
-
-										<button class="btn-3d green" onclick="save();">취소하기</button></td>
+									<td>
+										<input id="insert" class="btn-3d green" type="submit" value="수정하기">
+										<button class="btn-3d green" onclick="save();">취소하기</button>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -359,40 +373,33 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				</div>
 			</form>
 		</div>
+		
+		
 		<script>
-			$(function() {
-				var inputText = $('input[type="text"]').val();
-				var inputRadio = $('input[type="radio"]').val();
-				var inputNumber = $('input[type="number"]').val();
-				var inputFile = $('input[type="file"]').val();
-				var textarea = $("textarea").val();
-
-				/* $("#insert").on("click",function(e){
-					alert();
-					e.preventDefault();
-				}) */
+			$(function(){
+			
+				var textareaContent = $("#textareaContent").val();
+				var content = $("#content");
+				if(textareaContent != null){
+					content.text(textareaContent);
+				}
 			})
+			
 		</script>
 		<script>
 			$('input').keydown(function() {
 				if (event.keyCode === 13) {
 					event.preventDefault();
-				}
-				;
+				};
 			});
 		</script>
 		<script>
 			// 파일 업로드 관련 script
-			$(document)
-					.ready(
-							function() {
+			$(document).ready(function() {
 
 								var fileTarget = $('.filebox .upload-hidden');
 
-								fileTarget
-										.on(
-												'change',
-												function() {
+								fileTarget.on('change',function() {
 													if (window.FileReader) {
 														// 파일명 추출
 														var filename = $(this)[0].files[0].name;
@@ -400,14 +407,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 													else {
 														// Old IE 파일명 추출
-														var filename = $(this)
-																.val().split(
-																		'/')
-																.pop().split(
-																		'\\')
-																.pop();
-													}
-													;
+														var filename = $(this).val().split('/').pop().split('\\').pop();
+													};
 
 													$(this).siblings(
 															'.upload-name')
@@ -415,60 +416,59 @@ section .form_container .study .bootstrap-tagsinput .badge {
 												});
 
 								//preview image 
-								var imgTarget = $('.preview-image .upload-hidden');
+								var imgTarget = $('.preview-image .upload-hidden');	// api에서 기존에 있었던 이미지
+								var imgTarget1 = $('.preview-image #UImg');	// 원래 업로드 하여 사용중이었던 이미지
+								imgTarget.on('change',function() {
+												var parent = $('.preview-image .upload-hidden').parent();
+												parent.children('.upload-display').remove();
+												imgTarget1.remove();
+							if (window.FileReader) {
+							//image 파일만
+									if (!$(this)[0].files[0].type.match(/image\//))
+										return;
+									var reader = new FileReader();
+									reader.onload = function(e) {
+										var src = e.target.result;
+										parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+									}
+									reader.readAsDataURL($(this)[0].files[0]);
+								}
+							else {
+								$(this)[0].select();
+								$(this)[0].blur();
+								var imgSrc = document.selection.createRange().text;
+								parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
 
-								imgTarget
-										.on(
-												'change',
-												function() {
-													var parent = $(this)
-															.parent();
-													parent.children(
-															'.upload-display')
-															.remove();
-
-													if (window.FileReader) {
-														//image 파일만
-														if (!$(this)[0].files[0].type
-																.match(/image\//))
-															return;
-
-														var reader = new FileReader();
-														reader.onload = function(
-																e) {
-															var src = e.target.result;
-															parent
-																	.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-
-														}
-														reader
-																.readAsDataURL($(this)[0].files[0]);
-													}
-
-													else {
-														$(this)[0].select();
-														$(this)[0].blur();
-														var imgSrc = document.selection
-																.createRange().text;
-														parent
-																.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-														var img = $(this)
-																.siblings(
-																		'.upload-display')
-																.find('img');
-														img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""
-																+ imgSrc
-																+ "\")";
-													}
+								var img = $(this).siblings('.upload-display').find('img');
+								img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+ imgSrc+ "\")";
+							}
 												});
-							});
+									});
 		</script>
 
 
 		<script>
 			// 그룹 타입 관련 script
 			$(function() {
+				
+				if($("#m").is(":checked")){
+					$("#exist").attr('style', "display:none;");
+					$("#nonexist").attr('style', "display:none;");
+					$("#l1").attr('style', "display:none;");
+					$("#l2").attr('style', "display:none;");
+					$(".money").attr('style', "display:inline;");
+				}
+				if($("#h").is(":checked")){
+					$("#exist").attr('style', "display:inline;");
+					$("#nonexist").attr('style', "display:inline;");
+					$("#l1").attr('style', "display:inline;");
+					$("#l2").attr('style', "display:inline;");
+					$(".money").attr('style', "display:inline;");
+				
+				
+				}
+				
+				
 				$("input:radio[name='groomingType']").on("click", function() {
 
 					if ($(this).val() == '멘토') {
@@ -506,14 +506,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			function save() {
-				var result = confirm("임시저장 하시겠습니까?");
+				var result = confirm("수정을 취소하시겠습니까?");
 				if (result) {
-					alert("임시저장되었습니다.");
-					/*    location.href="groomingMain.do"; */
-				} else {
 					alert("취소되었습니다.");
-					location.href = "groomingMain.do";
-				}
+					location.href="groomingMain.do"; 
+				} 
 			}
 		</script>
 

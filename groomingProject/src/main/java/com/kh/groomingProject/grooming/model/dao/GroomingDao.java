@@ -117,6 +117,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.rejectApp",applyNo);
 	}
+
+	public int updateGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateGrooming",g);
+	}
 	
 	
 	

@@ -21,7 +21,7 @@
 	</update>
 	
 	<select id="selectTag" parameterType="string" resultMap="tagResultSet">
- 		 SELECT TAG_NAME
+ 		SELECT TAG_NAME
         FROM TAG T
         JOIN GTAG G ON G.TAG_NO = T.TAG_NO
         JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
@@ -29,4 +29,24 @@
         WHERE GR.GROOMING_NO= #{groomingNo}
  	
  	</select>
+ 	
+ 	<select id="selectGtagList" parameterType="string" resultMap="tagResultSet">
+	 	SELECT TAG_NAME
+		FROM TAG T
+		JOIN GTAG GT ON T.TAG_NO = GT.TAG_NO
+		JOIN GROOMING G ON G.GROOMING_NO = GT.GROOMING_NO
+		WHERE G.GROOMING_NO = #{groomingNo}
+ 	
+ 	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

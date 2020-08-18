@@ -376,9 +376,9 @@ img {
 			
 			getAppList();
 			
-			/* setInterval(function(){
+			 setInterval(function(){
 				getAppList();
-			},10000);  */
+			},10000);  
 			
 			$(document).on("click",".accept",function(){
 				var groomingNo = "${grooming.groomingNo}";
@@ -463,7 +463,7 @@ img {
 					var $button3;
 			
 						console.log(data.length);
-					if(data.length> 0){	// 댓글이 하나 이상 존재하면
+					if(data.length> 0){	// 신청자가 한 명 이상 존재하면
 						for(var i in data){
 							 $tr = $("<tr class='appTr'>");
 							 $input = $("<input type='hidden' class='applyNo' >");
@@ -512,7 +512,7 @@ img {
 							 $tableBody.append($tr);
 							 
 						}
-					}else{					// 댓글이 없으면
+					}else{					// 신청자가 없으면
 						$tr = $("<tr>");
 						$rContent = $("<td colspan='3'>").text("신청자가 없습니다.");
 						

@@ -181,6 +181,23 @@
 	WHERE GROOMING_NO =#{groomingNo}
  	</update>
  	
+ 	<update id="updateGrooming" parameterType="Grooming">
+ 		UPDATE GROOMING
+ 		SET GROOMING_TYPE = #{groomingType},
+ 		GROOMING_TITLE = #{groomingTitle},
+ 		GROOMING_CONTENT = #{groomingContent},
+ 		GROOMING_INTRODUCE = #{groomingIntroduce},
+ 		GROOMING_PARTICIPANTS = #{groomingP},
+ 		STUDY_START_DATE = #{studySd},
+ 		STUDY_END_DATE = #{studyEd},
+ 		GROOMING_START_DATE = #{groomingSd},
+ 		GROOMING_END_DATE = #{groomingEd},
+ 		DEPOSIT_MONEY = #{money},
+ 		GROOMING_IMG = #{groomingImg},
+ 		GROOMING_MODIFY_DATE = SYSDATE 		
+ 		WHERE GROOMING_NO =#{groomingNo}
+ 	
+ 	</update>
  	
  	
  	

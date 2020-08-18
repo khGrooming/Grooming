@@ -27,6 +27,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.tag.model.service.TagService;
+import com.kh.groomingProject.tag.model.vo.Tag;
 
 @Controller
 public class GroomingController<memberNo> {
@@ -217,7 +218,7 @@ public class GroomingController<memberNo> {
 			
 			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
 			
-			
+//			System.out.println("나 tag야 " +tag);
 			
 			if(grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming",grooming)
@@ -292,15 +293,72 @@ public class GroomingController<memberNo> {
 	
 	@RequestMapping("groomingUpdate.do")
 	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo) {
-		
-		mv.addObject("grooming",gService.selectGrooming(groomingNo))
-		.setViewName("grooming/groomingUpdateForm");
-		
+		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo); 
+//		System.out.println("나 tlist야" +tlist);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		String str = "";
+		for(int i=0; i < tlist.size() ; i++) {
+			str += tlist.get(i).getTagName();
+			if((i+1) < tlist.size()) {
+				str+=',';
+			}
+		}
+		if(grooming !=null && tlist != null) {
+			mv.addObject("grooming",grooming)
+			.addObject("tlist",str)
+			.setViewName("grooming/groomingUpdateForm");
+		}else {
+			throw new GroomingException("수정 게시글 불러오기 실패!");
+		}
 		
 		return mv;
 	}
+	@RequestMapping("gUpdate.do")
+	public ModelAndView groomingUpdate(HttpServletRequest request,ModelAndView mv,String groomingNo, Grooming g,@RequestParam(value="uploadFile", required=true)  MultipartFile file) {
 	
+		  String renameFileName="";
+	       // 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
+	       // 그럼 그걸 가지고 기존의 파일을 삭제하자
+	       System.out.println(g.getGroomingImg());
+	       if(!file.getOriginalFilename().equals("")) {   // 새로 올린 파일이 있는냐 
+	          if(g.getGroomingImg() != null) {         // 기존의 파일이 있느냐
+	             deleteFile(g.getGroomingImg(), request);
+	             // deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
+	             // 폴더명만 수정하자
+	          }
+	          renameFileName = saveFile(file, request);
+	        
+	          
+	          // Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
+	          if(!renameFileName.equals("")) {
+	        
+	             g.setGroomingImg(renameFileName);
+	          }
+	          
+	       }
+	       g.setGroomingNo(groomingNo);
+	       System.out.println("수정controller"+g);
+	       
+	       int result = gService.updateGrooming(g);
+	       System.out.println("나 수정 됬어요~" +result);
+	       if(result>0) {
+	    	   mv.setViewName("redirect:groomingMain.do");
+	    	   
+	       }else {
+	          throw new GroomingException("게시글 수정 실패!");
+	       }
+	       return mv;
+	}
 	
+	private void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\upGroomingFiles";
+		
+		File f= new File(savePath + "\\" + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
 	
 	
 	

@@ -266,7 +266,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<label><input type="radio" name="groomingType" id="m"
 											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
-											type="radio" name="groomingType" value="h" id="호스트">호스트 그룹</label></td>
+											type="radio" name="groomingType" value="호스트" id="h">호스트 그룹</label></td>
 								</tr>
 
 								<tr>

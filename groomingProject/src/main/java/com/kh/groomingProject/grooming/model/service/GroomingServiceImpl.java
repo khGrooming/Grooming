@@ -125,6 +125,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectRejectApp(applyNo);
 	}
 
+	@Override
+	public int updateGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.updateGrooming(g);
+	}
+
 
 	
 }
