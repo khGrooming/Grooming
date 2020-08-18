@@ -67,7 +67,7 @@
 	<c:url var="registerPage" value="registerPage.do">
 		<param name="pageHistory" value="home">
 	</c:url>
-	<c:url var="myPage" value="myPage.do"/>
+	<c:url var="myPage" value="mypage-memberup.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 

@@ -92,9 +92,7 @@
 	width: 50px;
 }
 
-.memberupForm input {
-	
-}
+
 </style>
 </head>
 <body>
@@ -381,31 +379,56 @@
 			</p>
 			<br> <br>
 			<p>-스펙</p>
-			<table id="ment"style="width: 95%;" >
+			<table id="ment"style="width: 80%; height: 50%;" >
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th style="width: 10%;">학교</th>
-					<td id="schoolApply" >
-						<form method="post" enctype="Multipart/form-data">
-							<input type="hidden" id="specCName" name="specCName"><br>
-							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
-							<label id="specNameLable"></label>
-							<input type="text" id="specName" name="specName" required>
-							<input type="file" accept=".gif, .jpg, .png"id="specFileName" name="specFileName1" title=""
-							  style="width: 25%;" required />
-							 <button>전송</button>
+					<td id="schoolApply" style="width: 80px;">
+					</td>
+					<td class="schoolinput" style="width: 200px;">
+						<form id="sForm" method="post" enctype="Multipart/form-data">
+						<input type="hidden" id="specCName" name="specCName" value="SC00001"><br>
+						<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
+						<input type="text" id="specName" name="specName" placeholder="학교 이름을 입력하세요" required>
+						<input type="file" id="SspecFileName" name="specFileName1" onchange="" accept=".gif, .jpg, .png" style="width: 30%"required>
+						<button onclick="specFileClick('SspecFileName');">업로드</button>	
 						</form>
 					</td>
+					
 				</tr>
+				
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>자격증</th>
-					<td id="certificateApply">인증하기</td>
+					<td id="certificateApply" style="width: 80px;"></td>
+					
+					<td class="certificateinput" style="width: 200px;">
+						<form id="ceForm" method="post" enctype="Multipart/form-data">
+							<input type="hidden" id="specCName" name="specCName" value="SC00002"><br>
+							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
+							<input type="text" id="specName" name="specName" placeholder="자격증을 입력하세요" required>
+							<input type="file" id="CespecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%">
+							<button onclick="specFileClick('CespecFileName');">업로드</button>
+						</form>
+					
+					</td>
+					
+					
 				</tr>
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>경력</th>
-					<td id="careerApply">인증하기</td>
+					<td id="careerApply" style="width: 80px;" ></td>
+					<td class="careerinput">
+						<form>
+							<input type="hidden" id="specCName" name="specCName" value="SC00003"><br>
+							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
+							<input type="text" id="specName" name="specName" placeholder="경력을 입력하세요"required>
+							<input type="file" id="CAspecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%;">						
+							<button onclick="specFileClick('CaspecFileName');">업로드</button>
+						</form>
+					</td>
+					
 				</tr>
 			</table>
 			<div style="text-align: center; margin-top:10%;">
@@ -417,22 +440,65 @@
 			
 			
 			<script>
+				function specFileClick(type){
+					
+					var formData;
+					
+					switch (type) {
+					case 'SspecFileName':
+						
+						formData = new FormData($('#sForm')[0]);
+						break;
+					case 'CespecFileName':
+						formData = new FormData($('#ceForm')[0]);
+						break;
+					case 'CAspecFileName':
+						break;
+
+					default:
+						break;
+					}	
+					
+
+					$.ajax({
+						type : 'POST',
+						url : "mentorA.do",
+						enctype : 'multipart/form-data', // 필수 
+						data : formData, // 필수 
+						processData : false, // 필수 
+						contentType : false, // 필수 
+						processData : false,
+						contentType : false,
+						success : function(data) {
+							$(".MinputBar").attr("checked",false);
+							alert($("#Mtab1").prop("checked"));
+							$("#Mtab2").click();
+						},
+						error : function(data) {
+							alert("code:" + request.status + "\n"
+									+ "error:" + error);
+						}
+					});
+					
+					
+					
+				}
 				$(function() {
 					
 					if ("${schoolList[0]}" == "") {
-						$("#schoolApply").html()
-						
-						text("인증하기").css("color", "red");
+						$("#schoolApply").	text("인증하기").css("color", "red");
 						
 
 					} else {
 						if ("${schoolconfirm[0]}" == "N") {
 							$("#schoolApply").text("인증대기").css("color", "blue");
+							$(".schoolinput").css("display", "none");
+							
 
 						} else {
 
-							$("#schoolApply").text("인증완료")
-									.css("color", "green");
+							$("#schoolApply").text("인증완료").css("color", "green");
+							$(".schoolinput").css("display", "none");
 						}
 					}
 					if ("${certificateList[0]}" == "") {
@@ -440,13 +506,13 @@
 
 					} else {
 						if ("${certificateconfirm[0]}" == "N") {
-							$("#certificateApply").text("인증대기").css("color",
-									"blue");
+							$("#certificateApply").text("인증대기").css("color","blue");
+							$(".certificateinput").css("display", "none");
 
 						} else {
 
-							$("#certificateApply").text("인증완료").css("color",
-									"green");
+							$("#certificateApply").text("인증완료").css("color","green");
+							$(".certificateinput").css("display", "none");
 						}
 					}
 					if ("${careerList[0]}" == "") {
@@ -456,11 +522,13 @@
 					} else {
 						if ("${careerconfirm[0]}" == "N") {
 							$("#careerApply").text("인증대기").css("color", "blue");
+							$(".careerinput").css("display", "none");
+
 
 						} else {
 
-							$("#careerApply").text("인증완료")
-									.css("color", "green");
+							$("#careerApply").text("인증완료").css("color", "green");
+							$(".careerinput").css("display", "none");
 						}
 
 					}

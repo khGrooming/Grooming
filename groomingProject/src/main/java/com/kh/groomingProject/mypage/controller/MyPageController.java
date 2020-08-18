@@ -44,7 +44,7 @@ public class MyPageController {
 	
 	
 
-	@RequestMapping("myPage.do")
+	@RequestMapping("mypage-memberup.do")
 	public String myPageView(HttpServletRequest request) {
 		
 		
@@ -52,7 +52,72 @@ public class MyPageController {
 		Member m = (Member)session.getAttribute("loginUser");
 		String mNo =m.getMemberNo();
 		System.out.println(mNo);
+		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
+		System.out.println("myPage.do"+profileInfo);
 		
+		
+//		int school=0;
+//		String[] schoolList = new String[3];
+//		String[] schoolconfirm = new String[3];
+//		int certificate=0;
+//		String[] certificateList = new String[3];
+//		String[] certificateconfirm = new String[3];
+//		int career=0;
+//		String[] careerList = new String[3];
+//		String[] careerconfirm = new String[3];
+//
+//		
+//		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
+//
+//		
+//		for(Spec s : specList) {
+//			switch (s.getSpecCName()) {
+//			case "학교":
+//				schoolList[school]=s.getSpecName();
+//				schoolconfirm[school]=s.getSpecConfirm();
+//				
+//				school+=1;
+//				break;
+//			case "자격증":
+//				certificateList[certificate]=s.getSpecName();
+//				certificateconfirm[certificate]=s.getSpecConfirm();
+//				
+//				certificate+=1;
+//				break;
+//			case "경력":
+//				careerList[career]=s.getSpecName();
+//				careerconfirm[career]=s.getSpecConfirm();
+//				
+//				career+=1;
+//				break;
+//			default:
+//				break;
+//			}
+//		}
+//
+//		
+//		session.setAttribute("schoolList",schoolList);
+//		session.setAttribute("schoolconfirm",schoolconfirm);
+//		
+//		session.setAttribute("certificateList",certificateList);
+//		session.setAttribute("certificateconfirm",certificateconfirm);
+//		
+//		
+//		session.setAttribute("careerList",careerList);
+//		session.setAttribute("careerconfirm",careerconfirm);		
+		
+		specSelect(request, mNo);
+		
+		
+		session.setAttribute("profileInfo",profileInfo);
+		
+		
+	
+		return "mypage/mypage-memberup";
+	}
+	
+	public void specSelect(HttpServletRequest request,String mNo) {
+		HttpSession session = request.getSession();
 		int school=0;
 		String[] schoolList = new String[3];
 		String[] schoolconfirm = new String[3];
@@ -63,11 +128,10 @@ public class MyPageController {
 		String[] careerList = new String[3];
 		String[] careerconfirm = new String[3];
 
-		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
+		
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
 
-		System.out.println("myPage.do"+profileInfo);
-		System.out.println("myPage.do"+specList);
+		
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
 			case "학교":
@@ -102,13 +166,7 @@ public class MyPageController {
 		
 		
 		session.setAttribute("careerList",careerList);
-		session.setAttribute("careerconfirm",careerconfirm);
-		
-		session.setAttribute("profileInfo",profileInfo);
-		
-		
-	
-		return "mypage/mypageinfo";
+		session.setAttribute("careerconfirm",careerconfirm);	
 	}
 	
 	//==========================================================================
@@ -219,10 +277,8 @@ public class MyPageController {
 	}
 	
 	
-	@RequestMapping("test1.do")
-	public String test() {
-		return "mypage/test";
-	}
+	
+
 	
 	
 	
@@ -321,54 +377,59 @@ public class MyPageController {
 			System.out.println("등록 성공");
 			HttpSession session = request.getSession();
 		
+			specSelect(request, s.getMemberNo());
 			
-			int school=0;
-			String[] schoolList = new String[3];
-			int certificate=0;
-			String[] certificateList = new String[3];
-			int career=0;
-			String[] careerList = new String[3];
-			
-			String[] schoolconfirm = new String[3];
-			String[] certificateconfirm = new String[3];
-			String[] careerconfirm = new String[3];
-
-			ArrayList<Spec> specList = mpService.selectSpecList(s.getMemberNo());
-
-			for(Spec s1 : specList) {
-				switch (s1.getSpecCName()) {
-				case "학교":
-					schoolList[school]=s1.getSpecName();
-					schoolconfirm[school]=s1.getSpecConfirm();
-
-					school+=1;
-					break;
-				case "자격증":
-					certificateList[certificate]=s1.getSpecName();
-					certificateconfirm[certificate]=s1.getSpecConfirm();
-					certificate+=1;
-					break;
-				case "경력":
-					careerList[career]=s1.getSpecName();
-					careerconfirm[career]=s1.getSpecConfirm();
-					career+=1;
-					break;
-				default:
-					break;
-				}
-			}
-
-			session.setAttribute("schoolList",schoolList);
-			session.setAttribute("certificateList",certificateList);
-			session.setAttribute("careerList",careerList);
-			session.setAttribute("schoolconfirm",schoolconfirm);
-			session.setAttribute("certificateconfirm",certificateconfirm);
-			session.setAttribute("careerconfirm",careerconfirm);
-
+		
 		}
 		
 
-		return "mypage/mypageinfo";
+		return "mypage/mypage-memberup";
+	}
+	
+	@RequestMapping("mentorA.do")
+	public void mentorA(MultipartHttpServletRequest request, Spec s,
+			HttpServletRequest request1,
+			HttpServletResponse response) throws IOException {
+		System.out.println("Sdfasdf"+s);
+		String folderName = "//upSpecFiles";
+		
+		if(request1.getAttribute("mentorFome") == "Y") {
+			System.out.println("마자마자");
+		}
+		
+		MultipartFile specFile = request.getFile("specFileName1");
+		System.out.println(specFile.getOriginalFilename());
+		
+		String specFileName = saveFile(s.getMemberNo(), specFile, request1, folderName);
+		s.setSpecFileName(specFileName);
+		int result = mpService.insertSpec(s);
+		PrintWriter out=response.getWriter();
+		if(result > 0) {
+			System.out.println("등록 성공");
+			HttpSession session = request.getSession();
+		
+			specSelect(request, s.getMemberNo());
+		
+		}
+		System.out.println("갔다 안오나?");
+		out.append("Y");
+		
+		
+		
+		out.flush();
+		out.close();
+		
+	}
+	
+	@RequestMapping("mentor.do")
+	public String mentorPage() {
+		return "mypage/mentor";
+	}
+	
+	
+	@RequestMapping("memberSecession.do")
+	public String memberSecession() {
+		return "mypage/memberSecession";
 	}
 	
 }

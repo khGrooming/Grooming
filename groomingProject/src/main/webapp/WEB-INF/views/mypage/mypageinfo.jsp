@@ -45,7 +45,6 @@ section {
 
 .subContent_my {
 	height: 100%;
-	float: left;
 }
 
 .profile_my {
@@ -150,579 +149,170 @@ section {
 	margin-right: auto;
 	border: 1px solid gray;
 }
+
+#test {
+	margin-top:5px;
+	text-align: center;
+}
+
+#test ul ul {
+	display: none;
+}
+
+#test ul li:hover>ul {
+	display: block;
+}
+
+#test ul {
+    width: 80%;
+	list-style: none;
+	position: relative;
+	display: inline-table;
+}
+
+#test ul:after {
+	content: "";
+	clear: both;
+	display: block;
+}
+
+#test ul li {
+	float: left;
+	margin-left: 3%;
+	margin-right: 3%;
+	
+}
+
+#test ul li :hover {
+}
+
+#test ul li a {
+	width:120px;
+	display: block;
+	padding: 10px;
+	color : #757575;
+	text-decoration: none;
+	margin: 0 10px;
+}
+
+#test ul ul {
+	width:20%;
+	position: absolute;
+	padding:1%;
+	border: 1px solid rgba(229, 229, 229, 1); 
+	border-radius: 10px;
+	background:white;
+	top: 100%;
+	z-index: 50;
+}
+
+#test ul ul li {
+	float: none;
+	position: relative;
+}
+
+#test ul ul li a {
+	color: gray;
+}
+#test ul ul li a:hover {
+	color: black;
+	
+	border-bottom:1px solid gray; 
+}
+
 </style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
-	<section>
-		<c:if test="${!empty profileInfo }">
-			<!-- 프로필 정보 div -->
-			<div class="signup form_container active"
-				style="width: 100%; margin-top: 10%; margin-bottom: 10%">
-				<!-- active toggle -->
-				<div class="subContent_my"
-					style="width: 25%; margin-right: 1%; text-align: center;">
+
+	<c:if test="${!empty profileInfo }">
+		
 
 
-					<!-- 프로필 사진 div -->
-					<div class="profile_my" style="position: relative;">
-						<img src="icon.png" class="profile_img"> <img
-							src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
-							id="profileImg" class="profile_img"
-							style="border: 3px solid gray;" onclick="prpfileChange()">
 
-						<form id="testForm" action="test1.do" method="post"
-							enctype="multipart/form-data">
-							<input type="hidden" name="memberPhoto" id="memberPhoto"
-								value="${profileInfo.memberPhoto }">
-							 <input
-								type="hidden" name="memberNo" id="memberNo"
-								value="${profileInfo.memberNo}"> 
-							<input type="file" accept=".gif, .jpg, .png"
-								name="profileFile" id="profileFile" style="display: none;"
-								onchange="test2();">
-						</form>
+		<div class="subContent_my"
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
 
-					</div>
-					<!-- 프로필 사진 div_end -->
-
-
-					<!-- 닉네임/ 레벨 영역-->
-					<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
-					<span>&nbsp;&nbsp;</span> <span
-						style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
-					<!-- 레벨에 대한 설명을 보여줄 툴팁 추가해야함!!! -->
-					<br>
-
-					<!-- 경험치_div -->
-					<div id="expBox" style="position: relative;">
-						<div
-							style="font-size: 10px; position: absolute; z-index: 100; margin-left: 45%;">
-							${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
-						<div id="expBar"></div>
-						<script>
-							$(function() {
-								var maxExp = "${profileInfo.lvlMaxExp }";
-								var memberExp = "${profileInfo.memberExp }";
-								var empPercent = 2;
-								empPercent = (100 / maxExp) * memberExp;
-								if (empPercent < 1) {
-									/* 1%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
-									$("#expBar").css("width", "1%");
-								} else {
-									$("#expBar").css("width", empPercent + "%");
-								}
-
-							})
-						</script>
-					</div>
-					<!-- 경험치 div_end -->
-
-					<!-- 이메일 영역-->
-					<p id="MemberEmail"
-						style="color: rgba(120, 120, 120, 1); letter-spacing: 0.3em">${profileInfo.memberEmail }</p>
-
-					<!-- 상태메시지 -->
-					<div id="memo" style="position: relative;">
-						<textarea id="memoTextArea" style="letter-spacing: 0.3em"
-							maxlength="100"><c:if
-								test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
-						<span id="counter"
-							style="position: absolute; top: 70%; left: 70%;">###</span>
-					</div>
-					<script>
-						$(function() {
-
-							var content = $("#memoTextArea").val();
-
-							$('#counter').html(content.length + '/100');
-
-							$('#memoTextArea').keyup(function(e) {
-								content = $(this).val();
-
-								$('#counter').html(content.length + '/100');
-
-							});
-
-							$('#content').keyup();
-
-							$('#memoTextArea')
-									.change(
-											function() {
-												alert(content);
-												var save = confirm("상태메시지를 저장하시겠습니까?");
-												if (save) {
-													$
-															.ajax({
-																url : "upMemo.do",
-																type : "post",
-																data : {
-																	memberMemo : $(
-																			this)
-																			.val()
-																},
-																success : function(
-																		data) {
-																	alert("변경되었습니다");
-																},
-																error : function(
-																		data) {
-																	alert("code:"
-																			+ request.status
-																			+ "\n"
-																			+ "error:"
-																			+ error);
-																}
-
-															})
-												} else {
-													alert("취소하였습니다");
-													if ("${profileInfo.memberMemo}" == "NULL") {
-														$('#memoTextArea').val(
-																"");
-													} else {
-
-														$('#memoTextArea')
-																.val(
-																		"${profileInfo.memberMemo}");
-													}
-												}
-
-											})
-
-						});
-					</script>
-
-					<!-- 포인트 div -->
-					<div style="width: 75%; margin-left: auto; margin-right: auto;">
-						<p
-							style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
-
-
-						<p
-							style="font-size: 18px; font-weight: bold; margin-bottom: auto; height: 50px; letter-spacing: 0.3em;">
-							${profileInfo.nowPoint } G</p>
-
-
-					</div>
-
-
-					<!-- 스펙div -->
-					<div style="width: 75%; margin-left: auto; margin-right: auto;">
-						<p
-							style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">스펙</p>
-						<br clear="both">
-						<div class="grayBox" style="height: 250px;">
-							<div id="specTable"
-								style="margin-top: 5%; margin-left: auto; height: 100%; margin-right: auto; width: 85%;">
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">학교</th>
-										<td class="specTd" id="school0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="school1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="school2"></td>
-									</tr>
-								</table>
-								<br>
-
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">자격증</th>
-										<td class="specTd" id="certificate0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="certificate1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="certificate2"></td>
-									</tr>
-								</table>
-								<br>
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">경력</th>
-										<td class="specTd" id="career0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="career1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="career2"></td>
-									</tr>
-								</table>
-								<!-- 스펙 추가 모달창 -->
-								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-									aria-labelledby="myModalLabel">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-
-												<h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
-												<button type="button" class="close" data-dismiss="modal"
-													aria-label="Close">
-													<span aria-hidden="true">×</span>
-												</button>
-											</div>
-												<form id="modelForm" action="insertSpec.do" method="post" enctype="Multipart/form-data">
-											<div class="modal-body">
-												<p>파일 미리보기</p>
-												<div id="fileView"></div>
-													<input type="hidden" id="specCName" name="specCName"><br>
-													<input type="hidden" id="memberNo" name="memberNo"
-														value="${loginUser.memberNo }"><br>
-													<table style="width: 300px; text-align: left; margin-left:auto; margin-right: auto;">
-														<tr>
-															<td style="width: 150px;"><label id="specNameLable"></label></td>
-															<td style="width: 250px;"><input type="text"
-																id="specName" name="specName" required></td>
-														</tr>
-														<tr>
-															<td><label id="specFileNameLable">파일첨부</label></td>
-															<td><input type="file" accept=".gif, .jpg, .png"
-																id="specFileName" name="specFileName1"
-																style="width: 100%;" required onchange="setThumbnail(event);" /></td>
-														<tr>
-													</table>
-													<br>
-												
-													
-											</div>
-											<div class="modal-footer">
-												<button type="submit" class="btn btn-primary">확인</button>
-												<button type="button" id="btn-delete"
-													class="btn btn-default" data-dismiss="modal">취소</button>
-											</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-						<!-- 스펙 추가 스크립트 -->
-						<script>
-							function resetInputFile($input, $preview) {
-								var agent = navigator.userAgent.toLowerCase();
-								if ((navigator.appName == 'Netscape' && navigator.userAgent
-										.search('Trident') != -1)
-										|| (agent.indexOf("msie") != -1)) {
-									// ie 일때
-									$input.replaceWith($input.clone(true));
-									$preview.empty();
-								} else {
-									//other
-									$input.val("");
-									$preview.empty();
-								}
-							}
-
-							$("#btn-delete").click(function(event) {
-								var $input = $("#specFileName");
-								var $preview = $('#fileView');
-								resetInputFile($input, $preview);
-							});
-
-							// 등록 이미지 등록 미리보기
-							function readInputFile(input) {
-								if (input.files && input.files[0]) {
-									var reader = new FileReader();
-									reader.onload = function(e) {
-										$('#fileView')
-												.html(
-														"<img src="+ e.target.result +" style='width:150px; height:150px; margin-left:auto; margin-right:auto;'>");
-									}
-									reader.readAsDataURL(input.files[0]);
-								}
-							}
-
-							$("#specFileName").on('change', function() {
-								readInputFile(this);
-							});
-
-							$(function() {
-								var $tdId;
-								var school = new Array();
-								var schoolCon = new Array();
-								school[0] = "${schoolList[0]}";
-								school[1] = "${schoolList[1]}";
-								school[2] = "${schoolList[2]}";
-								schoolCon[0] = "${schoolconfirm[0]}";
-								schoolCon[1] = "${schoolconfirm[1]}";
-								schoolCon[2] = "${schoolconfirm[2]}";
-								/* $tdId=$("#school1");
-								$tdId.text(school[0]); */
-								for (var i = 0; i < school.length; i++) {
-									var $tdId;
-									switch (i) {
-									case 0:
-										$tdId = $("#school0");
-										break;
-									case 1:
-										$tdId = $("#school1");
-										break;
-									case 2:
-										$tdId = $("#school2");
-										break;
-
-									default:
-										break;
-									}
-									if (school[i] != "") {
-										if(schoolCon[i] == "N"){
-											
-											$tdId.text(school[i]).css("color","lightgrey");
-										}
-									} else {
-										
-										$tdId.attr("valign", "top"); 
-										$tdId
-												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>");
-										$tdId.attr("data-toggle", "modal");
-										$tdId.attr("data-target", "#myModal");
-
-										$tdId.on("click", function() {
-											$("#myModalLabel").text("학교 추가");
-											$("#specCName").val("SC00001");
-											$("#specNameLable").text("학교 이름");
-										})
-										break;
-									}
-
-								}
-
-								var certificate = new Array();
-								var certificateconfirm = new Array();
-								certificate[0] = "${certificateList[0]}";
-								certificate[1] = "${certificateList[1]}";
-								certificate[2] = "${certificateList[2]}";
-								certificateconfirm[0] = "${certificateconfirm[0]}";
-								certificateconfirm[1] = "${certificateconfirm[1]}";
-								certificateconfirm[2] = "${certificateconfirm[2]}";
-
-								for (var i = 0; i < certificate.length; i++) {
-									var $tdId;
-									switch (i) {
-									case 0:
-										$tdId = $("#certificate0");
-										break;
-									case 1:
-										$tdId = $("#certificate1");
-										break;
-									case 2:
-										$tdId = $("#certificate2");
-										break;
-
-									default:
-										break;
-									}
-									if (certificate[i] != "") {
-										if(certificateconfirm[i] == "N"){
-											
-											$tdId.text(certificate[i]).css("color","lightgrey");
-										}
-									} else {
-										$tdId.attr("valign", "top");
-										$tdId
-												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>");
-										$tdId.attr("data-toggle", "modal");
-										$tdId.attr("data-target", "#myModal");
-
-										$tdId.on("click", function() {
-											$("#myModalLabel").text("자격증 추가");
-											$("#specCName").val("SC00002");
-											$("#specNameLable").text("자격증 이름");
-										})
-										break;
-									}
-
-								}
-
-								var career = new Array();
-								var careerconfirm = new Array();
-								career[0] = "${careerList[0]}";
-								career[1] = "${careerList[1]}";
-								career[2] = "${careerList[2]}";
-								careerconfirm[0] = "${careerconfirm[0]}";
-								careerconfirm[1] = "${careerconfirm[1]}";
-								careerconfirm[2] = "${careerconfirm[2]}";
-
-								for (var i = 0; i < career.length; i++) {
-									var $tdId;
-									switch (i) {
-									case 0:
-										$tdId = $("#career0");
-										break;
-									case 1:
-										$tdId = $("#career1");
-										break;
-									case 2:
-										$tdId = $("#career2");
-										break;
-
-									default:
-										break;
-									}
-									if (career[i] != "") {
-										if(certificateconfirm[i] == "N"){
-											
-											$tdId.text(career[i]).css("color","lightgrey");
-										}
-									} else {
-										$tdId.attr("valign", "top");
-										$tdId
-												.html("<img src='${contextPath }/resources/views/icons/plusIcon.png'"
-                    							 +"style='width:15px; text-align:top;'>");
-										$tdId.attr("data-toggle", "modal");
-										$tdId.attr("data-target", "#myModal");
-
-										$tdId.on("click", function() {
-											$("#myModalLabel").text("경력추가");
-											$("#specCName").val("SC00003");
-											$("#specNameLable").text("경력 작성");
-										})
-										break;
-									}
-
-								}
-
-							})
-						</script>
-
-
-					</div>
+			<div class="menubar">
+				<div id="test">
+					<ul>
+						<li><a href="#">개인정보</a>
+							<ul>
+								<li><a href="mypage-memberup.do">개인정보수정</a></li>
+								<li><a href="mentor.do">멘토등록</a></li>
+								<li><a href="memberSecession.do">탈퇴하기</a></li>
+							</ul>
+						</li>
+						<li><a href="#">스터디</a>
+							<ul>
+								<li><a href="#">개설한 스터디</a></li>
+								<li><a href="#">찜목록</a></li>
+								<li><a href="#">신청내역</a></li>
+								<li><a href="#">작성내역</a></li>
+							</ul>
+						</li>
+						<li><a href="#">활동내역</a>
+							<ul>
+								<li><a href="#">내가 쓴 글</a></li>
+								<li><a href="#">내가 쓴 댓글</a></li>
+							</ul>
+						</li>
+						<li><a href="#">포인트</a></li>
+					</ul>
 				</div>
-				<!-- 프로필 정보 div_end -->
+			</div>
+		</div>
 
 
+		</div>
+		<script>
+			$(".submenu").on("click", function() {
+				var clickId = $(this).attr("id");
+				$(".a").css("display", "none");
+				$(".s").css("background", "white");
 
-				<script>
-					$(function() {
-						$("#profileImg").on("click", function() {
-							$("#profileFile").click();
+				switch (clickId) {
+				case "menu1":
+					$("#menu1").css("background", "gray");
+					$("#a1").css("display", "block");
+					break;
+				case "menu2":
+					$("#menu2").css("background", "gray");
+					$("#a2").css("display", "block");
+					break;
+				case "menu3":
+					$("#menu3").css("background", "gray");
+					$("#a3").css("display", "block");
+					break;
+				case "menu4":
+					$("#menu4").css("background", "gray");
+					$("#a4").css("display", "block");
+					break;
+				case "menu5":
+					$("#menu5").css("background", "gray");
+					$("#a5").css("display", "block");
+					break;
 
-						})
+				default:
+					alert('선택한 값이 없습니다.');
+					break;
+				}
 
-					})
+			})
+		</script>
+	</c:if>
+	<c:if test="${empty profileInfo}">
+		<h3>정보 없음</h3>
+	</c:if>
 
-					function test2() {
-						var formData = new FormData($('#testForm')[0]);
 
-						alert("dgjd");
-						$.ajax({
-							type : 'POST',
-							url : "upproimg.do",
-							enctype : 'multipart/form-data', // 필수 
-							data : formData, // 필수 
-							processData : false, // 필수 
-							contentType : false, // 필수 
-							processData : false,
-							contentType : false,
-							success : function(data) {
-								alert(data);
-								$("#profileImg").attr(
-										"src",
-										"${contextPath}/resources/upprofileFiles/"
-												+ data);
-								$("memberPhoto").val(data);
-							},
-							error : function(data) {
-								alert("code:" + request.status + "\n"
-										+ "error:" + error);
-							}
-						});
-					}
-				</script>
-
-				<div class="subContent_my"
-					style="width: 60%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px;">
-					<div class="menubar">
-						<div class="nav">
-							<div class="submenu s" id="menu1">
-								<a>개인정보</a>
-							</div>
-							<div class="submenu s" id="menu2">
-								<a>스터디</a>
-							</div>
-							<div class="submenu s" id="menu3">
-								<a>찜목록</a>
-							</div>
-							<div class="submenu s" id="menu4">
-								<a>활동내역</a>
-							</div>
-							<div class="submenu s" id="menu5">
-								<a>포인트</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<br> <br> <br>
-				<div class="subContent_my a" id="a1"
-					style="width: 70%; display: block;">
-
-					<jsp:include page="./mypage_member.jsp" />
-				</div>
-				<div class="subContent_my a" id="a2" style="width: 70%;">
-					<jsp:include page="./test2.jsp" />
-				</div>
-				<div class="subContent_my a" id="a3" style="width: 70%;"></div>
-				<div class="subContent_my a" id="a4" style="width: 70%;"></div>
-				<div class="subContent_my a" id="a5" style="width: 70%;"></div>
-
-				<script>
-					$(".submenu").on("click", function() {
-						var clickId = $(this).attr("id");
-						$(".a").css("display", "none");
-						$(".s").css("background", "white");
-
-						switch (clickId) {
-						case "menu1":
-							$("#menu1").css("background", "gray");
-							$("#a1").css("display", "block");
-							break;
-						case "menu2":
-							$("#menu2").css("background", "gray");
-							$("#a2").css("display", "block");
-							break;
-						case "menu3":
-							$("#menu3").css("background", "gray");
-							$("#a3").css("display", "block");
-							break;
-						case "menu4":
-							$("#menu4").css("background", "gray");
-							$("#a4").css("display", "block");
-							break;
-						case "menu5":
-							$("#menu5").css("background", "gray");
-							$("#a5").css("display", "block");
-							break;
-
-						default:
-							alert('선택한 값이 없습니다.');
-							break;
-						}
-
-					})
-				</script>
-		</c:if>
-		<c:if test="${empty profileInfo}">
-			<h3>정보 없음</h3>
-		</c:if>
-	
-
-	</section>
 
 	<!-- /.container -->
 
-				</div>
-	<jsp:include page="../common/footer.jsp" />
+
+
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
