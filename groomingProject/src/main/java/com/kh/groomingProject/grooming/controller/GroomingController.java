@@ -289,5 +289,21 @@ public class GroomingController<memberNo> {
 		
 		
 	}
+	
+	@RequestMapping("groomingUpdate.do")
+	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo) {
+		
+		mv.addObject("grooming",gService.selectGrooming(groomingNo))
+		.setViewName("grooming/groomingUpdateForm");
+		
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
 }
 

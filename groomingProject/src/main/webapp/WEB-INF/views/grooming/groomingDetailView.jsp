@@ -291,8 +291,10 @@ img {
 														</div>
 													</div>
 												</td>
-												<td class="appTd"><button class="accept" >수락</button>&nbsp;&nbsp;
-													<button class="reject" >거절</button></td>
+												<td class="appTd">
+													<button class="accept" >수락</button>&nbsp;&nbsp;
+													<button class="reject" >거절</button>
+												</td>
 
 											</tr>
 										</c:forEach>
@@ -308,7 +310,9 @@ img {
 					<!-- 신청자 리스트 모달 끝 -->
 				</div>
 
-				<c:url var="gupdate" value="groomingUpdate.do" />
+				<c:url var="gupdate" value="groomingUpdate.do" >
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
+				</c:url>
 				<c:url var="gdelete" value="groomingDelete.do" />
 				<c:url var="limit" value="limit.do" />
 				<!-- 글의 상태 버튼 -->
