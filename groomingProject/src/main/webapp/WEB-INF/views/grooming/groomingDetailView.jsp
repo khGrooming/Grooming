@@ -367,8 +367,9 @@ img {
 	
 	</script> -->
 	<script>
-	
+		
 		$(function(){
+			
 			getAppList();
 			
 			/* setInterval(function(){
@@ -426,6 +427,7 @@ img {
 			
 			
 		function getAppList(){
+			
 			var groomingNo = "${grooming.groomingNo}";
 			$.ajax({
 				url:"gacceptList.do",
@@ -467,8 +469,8 @@ img {
 							 $img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
 							 $td2 = $("<td>").text(data[i].memberNickName);
 							 $td3 = $("<td>");
-							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent'>").text("신청서열람");
-							 $div2 = $("<div class='modal modal-xl fade' id='open_modal_appContent' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
+							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent"+i+"'>").text("신청서열람");
+							 $div2 = $("<div class='modal modal-xl fade' id='open_modal_appContent"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
 							 $div3 = $("<div class='modal-dialog'>");
 							 $div4 = $("<div class='modal-content' style='width: 800px; height: auto;'>");
 							 $div5 = $("<div class='modal-header'>");
