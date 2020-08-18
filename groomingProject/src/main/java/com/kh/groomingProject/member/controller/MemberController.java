@@ -64,6 +64,14 @@ public class MemberController {
 
 		return mv;
 	}
+	
+	@RequestMapping("findAccount.do")
+	public ModelAndView findAccount(ModelAndView mv) {
+
+		mv.setViewName("member/memberFindMyAccount");
+
+		return mv;
+	}
 
 	@RequestMapping("memberInsert.do")
 	@ResponseBody

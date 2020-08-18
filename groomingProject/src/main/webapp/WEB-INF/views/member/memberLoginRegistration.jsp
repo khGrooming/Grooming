@@ -81,7 +81,6 @@ section .form_container .user .imgBx
 	position: relative;
 	width: 50%;
 	height: 100%;
-	background: #ff0;
 	transition: 0.5s;
 }
 section .form_container .user .imgBx img
@@ -91,7 +90,7 @@ section .form_container .user .imgBx img
 	left: 0;
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
 }
 section .form_container .user .form-group
 {
@@ -355,7 +354,8 @@ section .form_container .hideItem
 
 			<!-- 로그인 -->
 			<div class="user singinBx">
-				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div>	
+				<%-- <div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/Sign_In.png"></div> --%>	
+				<div class="imgBx"><img alt="로그인이미지" src="${contextPath }/resources/views/images/login.png"></div>	
 				<div class="form-group">
 					<form>
 						<h2>로그인</h2>
@@ -379,7 +379,7 @@ section .form_container .hideItem
 						<input type="button" onclick="login()" value="로그인">
 						<input type="button" onclick="kakaoLogin()" class="kakaoLogin" value="">
 						<p class="signup">로그인에 문제가 있나요 ? 
-							<a href="#" onclick="findAccount()">아이디 /비밀번호 찾기</a>
+							<a href="#" onclick="location.href='findAccount.do'">아이디 /비밀번호 찾기</a>
 						</p>
 						<p class="signup">아직 회원이 아니세요 ? <a onclick="toggleForm()">회원가입</a></p>
 					</form>
@@ -649,9 +649,7 @@ section .form_container .hideItem
 											success:function(data){
 												console.log("로그인kakao 결과 : " + data);
 												if(data == "success"){
-													toggleForm();
-													/* $("#mainProfileArea").load(window.location.href + "#mainProfileArea"); */
-													registerOption();
+													goBackPage();
 												} else {
 													$("#loginError").css("display","block");
 												}
