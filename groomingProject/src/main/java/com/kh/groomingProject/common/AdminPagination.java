@@ -1,10 +1,10 @@
 package com.kh.groomingProject.common;
 
-import com.kh.groomingProject.common.PageInfo;
+import com.kh.groomingProject.common.AdminPageInfo;
 
-public class Pagination {
-   public static PageInfo getPageInfo(int currentPage, int listCount) {
-      PageInfo pi = null;
+public class AdminPagination {
+   public static AdminPageInfo getPageInfo(int currentPage, int listCount) {
+      AdminPageInfo pi = null;
       
       int pageLimit = 10;
       int maxPage;
@@ -23,7 +23,7 @@ public class Pagination {
          endPage=maxPage;
       }
       
-      pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage,
+      pi = new AdminPageInfo(currentPage, listCount, pageLimit, maxPage, startPage,
             endPage, boardLimit);
       
       

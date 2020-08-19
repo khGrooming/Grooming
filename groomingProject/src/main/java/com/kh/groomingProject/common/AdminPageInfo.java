@@ -2,7 +2,7 @@ package com.kh.groomingProject.common;
 
 import java.io.Serializable;
 
-public class PageInfo implements Serializable {
+public class AdminPageInfo implements Serializable {
 	/**
 	 * 
 	 */
@@ -16,10 +16,10 @@ public class PageInfo implements Serializable {
 	
 	private int boardLimit;
 	
-	public PageInfo() {
+	public AdminPageInfo() {
 	}
 
-	public PageInfo(int currentPage, int listCount, int pageLimit, int maxPage, int startPage, int endPage,
+	public AdminPageInfo(int currentPage, int listCount, int pageLimit, int maxPage, int startPage, int endPage,
 			int boardLimit) {
 		this.currentPage = currentPage;
 		this.listCount = listCount;

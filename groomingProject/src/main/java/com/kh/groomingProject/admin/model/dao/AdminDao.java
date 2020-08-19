@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
-import com.kh.groomingProject.common.PageInfo;
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 @Repository
@@ -23,7 +23,7 @@ public class AdminDao {
 		return sqlSessionTemplate.selectOne("adminMapper.memberListCount", info);
 	}
 
-	public ArrayList<MemberManageView> selectList(PageInfo pi, Map info) {
+	public ArrayList<MemberManageView> selectList(AdminPageInfo pi, Map info) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		

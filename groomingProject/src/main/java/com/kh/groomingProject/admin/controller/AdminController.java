@@ -1,6 +1,6 @@
 package com.kh.groomingProject.admin.controller;
 
-import static com.kh.groomingProject.common.Pagination.getPageInfo;
+import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
-import com.kh.groomingProject.common.PageInfo;
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 @Controller
@@ -43,7 +43,7 @@ public class AdminController {
 		
 		int listCount = adminService.memberList(info);
 		
-		PageInfo pi = getPageInfo(currentPage, listCount);
+		AdminPageInfo pi = getPageInfo(currentPage, listCount);
 		
 		ArrayList<MemberManageView> list = adminService.selectList(pi, info);
 

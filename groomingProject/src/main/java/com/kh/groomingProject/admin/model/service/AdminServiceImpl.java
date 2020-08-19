@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.admin.model.dao.AdminDao;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
-import com.kh.groomingProject.common.PageInfo;
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 @Service
@@ -23,7 +23,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ArrayList<MemberManageView> selectList(PageInfo pi, Map info) {
+	public ArrayList<MemberManageView> selectList(AdminPageInfo pi, Map info) {
 
 		return adminDao.selectList(pi, info);
 	}
