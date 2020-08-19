@@ -46,6 +46,23 @@ public class Grooming implements Serializable{
 
 
 
+	public Grooming(String groomingNo, String memberNo) {
+		super();
+		this.groomingNo = groomingNo;
+		this.memberNo = memberNo;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 	public Grooming(String groomingNo, String memberNo, String groomingType, String groomingTitle,
 			String groomingContent, String groomingIntroduce, int groomingP, Date studySd, Date studyEd,
 			Date groomingSd, Date groomingEd, int money, String groomingImg, Date groomingCd, Date groomingMd,

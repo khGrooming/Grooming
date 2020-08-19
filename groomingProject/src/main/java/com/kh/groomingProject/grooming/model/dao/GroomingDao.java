@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -131,6 +132,16 @@ public class GroomingDao {
 	public int statusUpdate(String groomingNo) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.statusUpdate",groomingNo);
+	}
+
+	public int applyContent(GroomingApplicant ga) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.applyContent",ga);
+	}
+
+	public GroomingApplicant selectAppMemberNo(Map info) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectAppMemberNo",info);
 	}
 	
 	

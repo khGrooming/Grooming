@@ -1,9 +1,11 @@
 package com.kh.groomingProject.grooming.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -47,5 +49,9 @@ public interface GroomingService {
 	int groomingDelete(String groomingNo);
 
 	int statusUpdate(String groomingNo);
+
+	int applyContent(GroomingApplicant ga);
+
+	GroomingApplicant selectAppMemberNo(Map info);
 
 }

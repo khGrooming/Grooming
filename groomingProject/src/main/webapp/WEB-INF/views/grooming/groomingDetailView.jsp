@@ -129,6 +129,52 @@ img {
 						<tr>
 							<td>&nbsp;<i class="far fa-bookmark"></i>&nbsp;&nbsp; <a
 								href="#" onclick="">신고</a>
+								<!-- 신청하기 버튼 -->
+					<c:if test="${!empty memberNoList }">
+						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply' disabled>신청하기</button>" escapeXml="false" />
+					</c:if>
+					
+					<c:if test="${!empty memberNoList }">
+						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply'>신청하기</button>" escapeXml="false" />
+					</c:if>
+			
+					<!-- 신청폼 모달 -->
+					<div class="modal fade" id="applyForm" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+						<div class="modal-dialog">
+							<form action="applyContent.do" method="post">
+								<div class="modal-content" style="width: auto; height: auto;">
+								<input type="hidden" value="${grooming.groomingNo }" name="groomingNo">
+								<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+								
+	
+									<!-- 모달 제목 -->
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">신청서</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<!-- 모달 본문 내용 -->
+									<div class="modal-body container">
+										
+										<textarea cols="100" rows="10" placeholder="내용을 입력하세요. "
+											id="summernote" name="groomingAC" class="form-control" required></textarea>
+										</td>
+									</div>
+									<div style="text-align:center; margin-bottom:10px;">
+										<button type="sumbit">제출</button>
+										<button type="button" data-dismiss="modal">취소</button>
+									</div>
+								</div>
+							</form>
+						</div>
+
+					</div>
+								
+								
 							</td>
 
 						</tr>
@@ -264,7 +310,7 @@ img {
 														<img src="${contextPath }/resources/upprofileFiles/${aL.memberPhoto}">
 													</div>
 												</td>
-												<td>${aL.memberNickName }</td>
+												<td >${aL.memberNickName }</td>
 												<td><button data-toggle="modal" data-target="#open_modal_appContent">신청서
 														열람</button>
 													<div class="modal modal-xl fade" id="open_modal_appContent'+count+'" tabindex="-1"
@@ -329,16 +375,27 @@ img {
 				<c:if test="${grooming.status eq 'Y' }">
 				<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
 				<div class="col-3">
+		
 					<!-- 신청하기 버튼 -->
-					<button data-toggle="modal" data-target="#applyForm">신청하기</button>
+					<c:if test="${!empty memberNoList }">
+						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply' disabled>신청하기</button>" escapeXml="false" />
+					</c:if>
+					
+					<c:if test="${!empty memberNoList }">
+						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply'>신청하기</button>" escapeXml="false" />
+					</c:if>
+			
 					<!-- 신청폼 모달 -->
 					<div class="modal fade" id="applyForm" tabindex="-1" role="dialog"
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
 
 						<div class="modal-dialog">
-							<form action="groomingAppliate">
+							<form action="applyContent.do" method="post">
 								<div class="modal-content" style="width: auto; height: auto;">
-
+								<input type="hidden" value="${grooming.groomingNo }" name="groomingNo">
+								<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+								
+	
 									<!-- 모달 제목 -->
 									<div class="modal-header">
 										<h5 class="modal-title" id="exampleModalLabel">신청서</h5>
@@ -349,26 +406,28 @@ img {
 									</div>
 									<!-- 모달 본문 내용 -->
 									<div class="modal-body container">
-										<div class="row">
-											<div cols="6"></div>
-											<div cols="6"></div>
-										</div>
+										
 										<textarea cols="100" rows="10" placeholder="내용을 입력하세요. "
-											id="summernote" name="editordata" class="form-control"></textarea>
+											id="summernote" name="groomingAC" class="form-control" required></textarea>
 										</td>
 									</div>
-
+									<div style="text-align:center; margin-bottom:10px;">
+										<button type="sumbit">제출</button>
+										<button type="button" data-dismiss="modal">취소</button>
+									</div>
 								</div>
 							</form>
 						</div>
 
 					</div>
+					
 					<!-- 신청 폼 모달 끝 -->
 				</div>
 				</c:if>
 			</c:if>
 			</div>
 		</div>
+	
 	</section>
 <!-- 	<script>
 		$(function(){
@@ -376,6 +435,7 @@ img {
 		})
 	
 	</script> -->
+	
 	<script>
 		
 		$(function(){

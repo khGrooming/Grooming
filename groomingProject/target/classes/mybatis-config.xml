@@ -15,6 +15,7 @@
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingAppList" alias="Gapp"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingApplicant" alias="GroomingAp"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>

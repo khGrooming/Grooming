@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -212,7 +215,7 @@ public class GroomingController<memberNo> {
 
 	// 그루밍 상세보기
 	@RequestMapping("groomingDetail.do")
-	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo) {
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo,String memberNo) {
 
 		int result = gService.addReadCount(groomingNo);
 		System.out.println(result);
@@ -225,12 +228,17 @@ public class GroomingController<memberNo> {
 			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
 
 			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
-
+			Map info = new HashMap();
+			info.put("groomingNo", groomingNo);
+			info.put("memberNo", memberNo);
+			
+			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
 //			System.out.println("나 tag야 " +tag);
 
+			
 			if (grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
-						.addObject("member", member).addObject("appList", appList)
+						.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList)
 						.setViewName("grooming/groomingDetailView");
 			} else {
 				throw new GroomingException("조회실패!");
@@ -371,6 +379,18 @@ public class GroomingController<memberNo> {
 			return "redirect:groomingMain.do";
 		} else {
 			throw new GroomingException("게시글 삭제 실패!");
+		}
+	}
+	
+	@RequestMapping("applyContent.do")
+	public String applyContent(GroomingApplicant ga) {
+		System.out.println("나 ga" +ga);
+		int result = gService.applyContent(ga);
+		
+		if (result > 0) {
+			return "redirect:groomingMain.do";
+		} else {
+			throw new GroomingException("게시글 신청 실패!");
 		}
 	}
 	

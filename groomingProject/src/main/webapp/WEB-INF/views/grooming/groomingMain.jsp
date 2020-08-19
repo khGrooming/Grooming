@@ -171,6 +171,7 @@
 		                            <!-- 그룹 제목 -->
 		                            <c:url var="gdetail" value="groomingDetail.do">
 										<c:param name="groomingNo" value="${g.groomingNo }"/>
+										<c:param name="memberNo" value="${loginUser.memberNo }"/> 
 										<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
 										<!-- 현재 보던 페이지 정보도 넘기자 -->
 									</c:url>

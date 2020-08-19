@@ -1,6 +1,7 @@
 package com.kh.groomingProject.grooming.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -141,6 +143,18 @@ public class GroomingServiceImpl implements GroomingService{
 	public int statusUpdate(String groomingNo) {
 		// TODO Auto-generated method stub
 		return gDao.statusUpdate(groomingNo);
+	}
+
+	@Override
+	public int applyContent(GroomingApplicant ga) {
+		// TODO Auto-generated method stub
+		return gDao.applyContent(ga);
+	}
+
+	@Override
+	public GroomingApplicant selectAppMemberNo(Map info) {
+		// TODO Auto-generated method stub
+		return gDao.selectAppMemberNo(info);
 	}
 
 

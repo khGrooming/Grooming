@@ -46,6 +46,16 @@
 		
 		
 	</resultMap>
+	
+	 <resultMap type="GroomingAp" id="GACResultSet">
+		<id property="groomingAn" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="groomingAC" column="GROOMING_APPLY_CONTENT"/>
+		<result property="groomingAS" column="GROOMING_APPLY_STATUS"/>
+		
+		
+	</resultMap>
  
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
@@ -212,5 +222,26 @@
  		WHERE GROOMING_NO = #{groomingNo}
  	]]>
  	</update>
+ 	
+ 	<insert id="applyContent" parameterType="GroomingAp">
+ 		INSERT INTO GROOMING_APPLICANT VALUES(
+ 		'GA' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{groomingNo}
+ 		,#{memberNo}
+ 		,#{groomingAC}
+ 		,DEFAULT
+ 		)
+ 		
+ 	</insert>
+ 	
+ 	<select id="selectAppMemberNo" parameterType="map" resultMap="GACResultSet">
+ 		SELECT *
+ 		FROM GROOMING_APPLICANT
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 		AND MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</select>
+ 	
  	
 </mapper>
