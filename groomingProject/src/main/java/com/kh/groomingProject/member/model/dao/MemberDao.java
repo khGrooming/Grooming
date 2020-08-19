@@ -1,10 +1,13 @@
 package com.kh.groomingProject.member.model.dao;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberCertiCode;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Repository("mDao")
@@ -57,6 +60,21 @@ public class MemberDao {
 	public int insertMemberKakao(Member m) {
 
 		return sqlSessionTemplate.insert("memberMapper.insertMemberKakao", m);
+	}
+
+	public int findMemberEmail(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.findMemberEmail", m);
+	}
+
+	public int insertRandomCode(MemberCertiCode mcc) {
+
+		return sqlSessionTemplate.insert("memberMapper.insertRandomCode", mcc);
+	}
+
+	public int certiChk(MemberCertiCode mcc) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.certiChk", mcc);
 	}
 
 }

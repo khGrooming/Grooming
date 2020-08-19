@@ -1,6 +1,9 @@
 package com.kh.groomingProject.member.model.service;
 
+import java.util.HashMap;
+
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberCertiCode;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 
 public interface MemberService {
@@ -22,5 +25,11 @@ public interface MemberService {
 	int mergeMemberTags(MemberTag memberTag);
 
 	int insertMemberKakao(Member m);
+
+	int findMemberEmail(Member m);
+
+	int insertRandomCode(MemberCertiCode mcc);
+
+	int certiChk(MemberCertiCode mcc);
 
 }

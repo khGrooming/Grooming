@@ -3,6 +3,7 @@ package com.kh.groomingProject.member.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -30,9 +31,11 @@ import com.kh.groomingProject.member.model.exception.MemberException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberAlert;
+import com.kh.groomingProject.member.model.vo.MemberCertiCode;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 import com.kh.groomingProject.tag.model.service.TagService;
 import com.kh.groomingProject.tag.model.vo.Tag;
+import com.sun.javafx.collections.MappingChange.Map;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -53,6 +56,7 @@ public class MemberController {
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
+	// 로그인 페이지 이동
 	@RequestMapping("loginPage.do")
 	public ModelAndView loginPage(ModelAndView mv, String url) {
 
@@ -63,6 +67,7 @@ public class MemberController {
 		return mv;
 	}
 
+	// 회원가입 페이지 이동
 	@RequestMapping("registerPage.do")
 	public ModelAndView registerPage(ModelAndView mv, String url) {
 
@@ -72,7 +77,8 @@ public class MemberController {
 
 		return mv;
 	}
-	
+
+	// 회원정보 찾기 페이지 이동
 	@RequestMapping("findAccount.do")
 	public ModelAndView findAccount(ModelAndView mv) {
 
@@ -81,6 +87,7 @@ public class MemberController {
 		return mv;
 	}
 
+	// 회원 가입 : 일반 회원
 	@RequestMapping("memberInsert.do")
 	@ResponseBody
 	public String memberInsert(Member m) {
@@ -144,6 +151,7 @@ public class MemberController {
 
 	}
 
+	// 회원 가입 : 카카오 회원
 	@RequestMapping("memberInsertkakao.do")
 	@ResponseBody
 	public String memberKakaoInsert(Member m) {
@@ -231,17 +239,18 @@ public class MemberController {
 	}
 
 	// 프로필 사진 파일 삭제
-	private void deleteFile(String fileName, HttpServletRequest request) {
-		String root=request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root+"\\upprofileFiles";
+//	private void deleteFile(String fileName, HttpServletRequest request) {
+//		String root=request.getSession().getServletContext().getRealPath("resources");
+//		String savePath = root+"\\upprofileFiles";
+//
+//		File f = new File(savePath + "\\" + fileName);
+//		if(f.exists()) {
+//			f.delete();
+//		}
+//
+//	}
 
-		File f = new File(savePath + "\\" + fileName);
-		if(f.exists()) {
-			f.delete();
-		}
-
-	}
-
+	// 회원 가입 : 추가 사항 업데이트
 	@RequestMapping("memberOptionUpdate.do")
 	public String memberOptionUpdate(HttpServletRequest request, Member m
 			,@RequestParam(value="memberTagName", required=false) String memberTagName
@@ -338,6 +347,7 @@ public class MemberController {
 
 	}
 
+	// 회원 로그인
 	@RequestMapping("memberLogin.do")
 	@ResponseBody
 	public String memberLogin(Member m, Model model, String idSaveCheck) {
@@ -357,6 +367,7 @@ public class MemberController {
 		
 	}
 
+	// 카카오 회원 로그인
 	@RequestMapping("kakaoLogin.do")
 	@ResponseBody
 	public String kakaoLogin(Member m, Model model) {
@@ -376,15 +387,17 @@ public class MemberController {
 		}
 		
 	}
-	
+
+	// 회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status){
+		//TODO session 처리 방식 수정
 		status.setComplete();
 
 		return "home";
-		
 	}
-	
+
+	// 회원 가입 : 이메일 중복 확인
 	@RequestMapping("emailDuplicateChk.do")
 	@ResponseBody
 	public String emailDuplicateChk(Member m) {
@@ -402,7 +415,8 @@ public class MemberController {
 		}
 
 	}
-	
+
+	// 회원 가입 : 닉네임 중복 확인
 	@RequestMapping("nickNameDuplicateChk.do")
 	@ResponseBody
 	public String nickNameDuplicateChk(Member m) {
@@ -421,6 +435,7 @@ public class MemberController {
 		
 	}
 
+	// 회원 가입 : 전화번호 중복 확인
 	@RequestMapping("phoneDuplicateChk.do")
 	@ResponseBody
 	public String phoneDuplicateChk(Member m) {
@@ -439,35 +454,42 @@ public class MemberController {
 
 	}
 
+	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
 	@RequestMapping("sendCertiEmail.do")
 	@ResponseBody
-	public String sendCertiMail(String memberEmail) {
-		System.out.println("메일 전송 : " + memberEmail);
-		
-		int randomCode = 123456;
-		
-		String mailFrom = "onebunonecho@gmail.com";
-		String mailTo = memberEmail;
-		String mailTitle = "회원 정보 찾기 인증 코드 입니다.";
-		String mailContent = "인증코드 : " + Integer.toString(randomCode) + " 입니다.";
+	public String sendCertiMail(Member m) {
+		System.out.println("메일 전송 : " + m.getMemberEmail());
 
-//		MimeMessage message = mailSender.createMimeMessage();
-//		MimeMessageHelper messageHelper;
-//		try {
-//			messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-//			messageHelper.setFrom(mailFrom);
-//			messageHelper.setTo(mailTo);
-//			messageHelper.setSubject(mailTitle);
-//			messageHelper.setText(mailContent);
-//
-//			mailSender.send(message);
-//
-//		} catch (MessagingException e) {
-//			e.printStackTrace();
-//			return "fail";
-//		}
+		// 회원인지 확인
+		int result = mService.findMemberEmail(m);
+
+		if(result == 0) {
+			System.out.println("회원 정보 찾기 : 정보 없음");
+			return "fail";
+		}
+
+		// 인증 숫자 생성
+		String randomCode = "" + (int)(Math.random()*1000000);
+		System.out.println("인증코드 : " + randomCode);
+
+		MemberCertiCode mcc = new MemberCertiCode();
 		
-		final MimeMessagePreparator prep = new MimeMessagePreparator() {
+		mcc.setCertiNumber(randomCode);
+		mcc.setMemberEmail(m.getMemberEmail());
+		
+		result = mService.insertRandomCode(mcc);
+		if(result == 0) {
+			System.out.println("회원 정보 찾기 : 인증코드 저장 실패");
+			return "retry";
+		}
+
+		//TODO 인증코드 메일 HTML 만들기
+		String mailFrom = "onebunonecho@gmail.com";
+		String mailTo = m.getMemberEmail();
+		String mailTitle = "회원 정보 찾기 인증 코드 입니다.";
+		String mailContent = "인증코드는 [ " + randomCode + " ] 입니다.";
+
+		final MimeMessagePreparator mmp = new MimeMessagePreparator() {
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
@@ -477,9 +499,24 @@ public class MemberController {
 				helper.setText(mailContent, true);
 			}
 		};
-		mailSender.send(prep);
+		mailSender.send(mmp);
 
 		return "success";
+	}
+
+	// 회원정보 찾기 : 인증번호 확인
+	@RequestMapping("certiChk.do")
+	@ResponseBody
+	public String certiChk(MemberCertiCode mcc) {
+		System.out.println("메일 : " + mcc.getMemberEmail() + " / 인증코드 : " + mcc.getCertiNumber());
+
+		int result = mService.certiChk(mcc);
+		if(result > 0) {
+			System.out.println("회원 정보 찾기 : 인증번호 일치");
+			return "success";
+		}
+		System.out.println("회원 정보 찾기 : 인증번호 불일치");
+		return "fail";
 	}
 
 }

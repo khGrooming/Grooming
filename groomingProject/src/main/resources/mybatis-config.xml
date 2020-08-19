@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-<!-- 	<settings>
+	<settings>
 		<setting name="jdbcTypeForNull" value="NULL"/>
-	</settings> -->
-	
+	</settings>
+
 	<typeAliases>
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberAlert" alias="MemberAlert"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberCertiCode" alias="MemberCertiCode"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
