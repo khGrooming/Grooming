@@ -59,9 +59,9 @@
 
 					<!-- 프로필 사진 div -->
 					<div class="profile_my" style="position: relative;">
-						<img src='${contextPath }/resources/views/icons/profileIcon.png' id="profileImg"  style="width: 110px; height:110px; z-index: 3;"class="profile_img">
+						<img src='${contextPath }/resources/views/icons/profileIcon.png' id="profileImgIcon"  style="width: 110px; height:110px; z-index: 3;"class="profile_img">
 						<img
-							src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
+							src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"  id="profileImg" 
 							class="profile_img"
 							style="width: 100px;">
 
@@ -80,7 +80,7 @@
 					</div>
 					<script>
 					$(function() {
-						$("#profileImg").on("click", function() {
+						$("#profileImgIcon").on("click", function() {
 							$("#profileFile").click();
 
 						})
