@@ -324,6 +324,7 @@ img {
 					<button onclick="location.href='${limit}'">마감</button>
 				</div>
 				</c:if>
+				<c:if test="${grooming.status eq 'Y' }">
 				<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
 				<div class="col-3">
 					<!-- 신청하기 버튼 -->
@@ -362,6 +363,7 @@ img {
 					</div>
 					<!-- 신청 폼 모달 끝 -->
 				</div>
+				</c:if>
 			</c:if>
 			</div>
 		</div>

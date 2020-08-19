@@ -51,6 +51,7 @@
  		SELECT * 
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
+ 			OR GROOMING_STATUS = 'D'
  		
  	</select>
  	
@@ -105,7 +106,7 @@
 		SELECT *
 		FROM GROOMING G
 		WHERE GROOMING_NO=#{groomingNo}
-		AND GROOMING_STATUS ='Y'
+		
 		
 	</select>
  
@@ -204,5 +205,12 @@
  		WHERE GROOMING_NO = #{groomingNo}
  	</delete>
  	
+ 	<update id="statusUpdate" >
+ 	<![CDATA[ 
+ 		UPDATE GROOMING
+ 		SET GROOMING_STATUS = 'B'
+ 		WHERE GROOMING_NO = #{gNo}
+ 	]]>
+ 	</update>
  	
 </mapper>
