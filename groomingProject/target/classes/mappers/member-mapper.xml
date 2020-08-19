@@ -111,7 +111,7 @@
 			    ORDER BY CERTI_C_DATE DESC) 
 		WHERE ROWNUM = 1
 		AND CERTI_CODE = #{certiNumber}
-		AND CERTI_TIME < 11
+		AND CERTI_TIME < #{expireTime}
 		]]>
 	</select>
 

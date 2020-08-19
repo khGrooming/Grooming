@@ -97,7 +97,6 @@ section .form_container .findAccount .form-group form p
 	font-size: 1rem;
 	font-weight: 100;
 }
-section .form_container .findAccount .form-group form a,
 section .form_container .findAccount .form-group form input
 {
 	position: relative;
@@ -141,11 +140,8 @@ section .form_container .findAccount .form-group form .input-group input:valid ~
 	font-size: 13px;
 	padding: 2px 5px;
 }
-section .form_container .findAccount .form-group form a,
 section .form_container .findAccount .form-group form input[type="button"]
 {
-	text-align: center;
-	text-decoration: none;
 	outline: none;
 	border: 1px solid lightgrey;
 	background: #677eff;
@@ -197,13 +193,9 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 							<span>이메일 주소</span>
 							<div class="chkVali" id="certiEmailChk">올바른 이메일을 입력해주세요.</div>
 						</div>
-						<!-- <input type="button" class="col-4 btn_send"value=""> -->
-						<a onclick="sendEmail()" tabindex="0" class="col-4 btn_send popover_send_btn" role="button" 
-						data-toggle="popover" data-trigger="focus" data-placement="top" title="인증번호를 발송했습니다." 
-						data-content="인증번호가 오지 않았으면 입력하신 정보가 회원정보와 일치하는지 확인해 주세요.">인증 번호 받기</a>
+						<input type="button" class="col-4 btn_send" onclick="sendEmail()" value="인증 번호 받기">
 						<div class="input-group col-12 m-1">
 							<p class="m-0">인증번호 유지 시간 : &nbsp;</p><p id="timer" class="m-0">10:00</p>
-							<p id="sendmail"></p>
 						</div>
 						<div class="input-group col-8 my-3">
 							<input type="text" id="certiNumberInput" name="certiNumber" required disabled>
@@ -215,12 +207,20 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 				</div>
 			</div>
 		</div>
+
+		<!-- 로딩 팝업창  -->
+		<div class="loading">
+			<br>&nbsp;이메일 전송 중입니다. <br>&nbsp;잠시만 기다려 주세요 ^-^*
+			<div class="spinner-border text-primary" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>  
 	</section>
 
 	<script type="text/javascript">
 		let memberEmail = "";
 		var certiNumber = "";
-		let expireTime = 10;
+		let expireTime = 1;
 		// 정규식
 		let certiEmailPass = false;
 		let certiCodePass = false;
@@ -254,9 +254,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 		$("#certiNumberInput").on("keyup change", function () {
 			certiNumberFn();
 		});
-
-		$('.popover_send_btn').popover({ trigger: 'focus' });
-
+		
 		function sendEmail() {
 			if(!$("#certiEmail")[0].checkValidity()){
 				console.log("이메일을 입력해 주세요.");
@@ -268,10 +266,11 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 
 			memberEmail = $("#certiEmail").val();
 
-			if(!certiEmailPass){
+			if(certiEmailPass){
+				$(".loading").show();
+			} else{
 				return;
 			}
-
 			console.log("인증 메일 전송")
 
 			//TODO email 전송 만들어야함
@@ -290,16 +289,20 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 						$(".btn_send").css("background","grey");
 						$("#certiNumberInput").prop("disabled","");
 						$("#certiNumberSpan").css("color","black");
-						
+						$(".loading").fadeOut();
+						alert("인증번호를 발송했습니다.\n인증번호가 오지 않았으면 입력하신 정보가 회원정보와 일치하는지 확인해 주세요.");
 					} else if(data == "retry"){
 						console.log("이메일 전송 결과 : 실패");
+						$(".loading").fadeOut();
 						alert("정상적으로 처리되지 않았습니다. 잠시 후 다시 해주세요.");
 					} else {
 						console.log("이메일 전송 결과 : 일치하는 정보 없음");
+						$(".loading").fadeOut();
 						alert("입력하신 이메일과 일치하는 정보가 없습니다.");
 					}
 				},
 				error:function(request, status, errorData){
+					$(".loading").fadeOut();
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
@@ -327,6 +330,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 				console.log("인증번호 검증 시작 : 입력 제약조건 이메일 확인");
 			} else if(certiCodePass == true){
 				console.log("인증번호 검증 시작 : 입력 제약조건 인증코드 확인");
+				$(".loading").show();
 			} else {
 				return;
 			}
@@ -354,6 +358,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
+			$(".loading").fadeOut();
 		}
 	</script>
 
@@ -377,7 +382,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 				setTimeout("setTimer()",1000);
 			} else {
 				$("#timer").empty();
-				$("#timer").append(expireTime+":00");
+				$("#timer").append("10:00");
 				$(".btn_next").css("background","grey");
 				$(".btn_send").css("background","#677eff");
 				$("#certiNumberInput").prop("disabled","disabled");
