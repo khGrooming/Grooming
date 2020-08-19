@@ -209,7 +209,7 @@
  	<![CDATA[ 
  		UPDATE GROOMING
  		SET GROOMING_STATUS = 'B'
- 		WHERE GROOMING_NO = #{gNo}
+ 		WHERE GROOMING_NO = #{groomingNo}
  	]]>
  	</update>
  	

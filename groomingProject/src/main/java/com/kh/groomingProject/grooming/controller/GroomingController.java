@@ -56,8 +56,8 @@ public class GroomingController<memberNo> {
 			  System.out.println("나 nowDate야 "+ nowDate);
 			 
 			  if(endDate.compareTo(nowDate) < 0) {
-				  String gNo =glist.get(i).getGroomingNo();
-				  result = gService.statusUpdate(gNo);
+				  String groomingNo =glist.get(i).getGroomingNo();
+				  result = gService.statusUpdate(groomingNo);
 			  }
 			 
 
@@ -361,4 +361,23 @@ public class GroomingController<memberNo> {
 			throw new GroomingException("게시글 삭제 실패!");
 		}
 	}
+	
+	@RequestMapping("groomingLimit.do")
+	public String groomingLimit(String groomingNo) {
+		
+		int result = gService.statusUpdate(groomingNo);
+		
+		if (result > 0) {
+			return "redirect:groomingMain.do";
+		} else {
+			throw new GroomingException("게시글 삭제 실패!");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
 }

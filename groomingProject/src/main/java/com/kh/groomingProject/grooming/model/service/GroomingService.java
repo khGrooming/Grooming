@@ -46,6 +46,6 @@ public interface GroomingService {
 
 	int groomingDelete(String groomingNo);
 
-	int statusUpdate(String gNo);
+	int statusUpdate(String groomingNo);
 
 }

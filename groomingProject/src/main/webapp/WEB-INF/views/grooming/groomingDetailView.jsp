@@ -316,7 +316,9 @@ img {
 				<c:url var="gdelete" value="groomingDelete.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
 				</c:url>
-				<c:url var="limit" value="limit.do" />
+				<c:url var="limit" value="groomingLimit.do" >
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
+				</c:url>
 				<!-- 글의 상태 버튼 -->
 				<div class="col-6" style="text-align: center">
 					<button onclick="location.href='${gupdate}'">수정</button>

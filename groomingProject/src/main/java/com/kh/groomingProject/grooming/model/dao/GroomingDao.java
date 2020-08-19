@@ -128,9 +128,9 @@ public class GroomingDao {
 		return sqlSessionTemplate.delete("groomingMapper.groomingDelete",groomingNo);
 	}
 
-	public int statusUpdate(String gNo) {
+	public int statusUpdate(String groomingNo) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.update("groomingMapper.statusUpdate",gNo);
+		return sqlSessionTemplate.update("groomingMapper.statusUpdate",groomingNo);
 	}
 	
 	

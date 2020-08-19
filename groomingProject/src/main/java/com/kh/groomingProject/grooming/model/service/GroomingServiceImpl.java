@@ -138,9 +138,9 @@ public class GroomingServiceImpl implements GroomingService{
 	}
 
 	@Override
-	public int statusUpdate(String gNo) {
+	public int statusUpdate(String groomingNo) {
 		// TODO Auto-generated method stub
-		return gDao.statusUpdate(gNo);
+		return gDao.statusUpdate(groomingNo);
 	}
 
 
