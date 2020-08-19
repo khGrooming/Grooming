@@ -6,28 +6,56 @@
 	</settings>
 
 	<typeAliases>
+		<!-- 공용 -->
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
+
+		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberAlert" alias="MemberAlert"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberCertiCode" alias="MemberCertiCode"/>
+
+		<!-- 마이페이지 -->
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
+
+		<!-- 그루밍 -->	
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
+
+		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeInfo" alias="CafeInfo"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Reservation" alias="Reservation"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.ReservationView" alias="ReservationView"/>
+		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Point" alias="Point"/>
+
+		<!-- 관리자 -->
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
 	</typeAliases>
 	
 	<mappers>
+		<!-- 공용 멥퍼 -->
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
-		<mapper resource="/mappers/member-mapper.xml"/>
-		<mapper resource="/mappers/mypage-mapper.xml"/>
-		<mapper resource="/mappers/grooming-mapper.xml"/>
-		<mapper resource="/mappers/studyCafe-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+
+		<!-- 멤버 멥퍼 -->
+		<mapper resource="/mappers/member-mapper.xml"/>
+
+		<!-- 마이페이지 멥퍼 -->
+		<mapper resource="/mappers/mypage-mapper.xml"/>
+
+		<!-- 그루밍 멥퍼 -->
+		<mapper resource="/mappers/grooming-mapper.xml"/>
+		
+		<!-- 스터디 카페 멥퍼 -->
+		<mapper resource="/mappers/studyCafe-mapper.xml"/>
+		
+		<!-- 관리자 멥퍼 -->
+		<mapper resource="/mappers/admin-mapper.xml"/>
 	</mappers>
 	
 </configuration>
