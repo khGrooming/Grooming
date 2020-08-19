@@ -1,6 +1,7 @@
 package com.kh.groomingProject.member.model.service;
 
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberTag;
 
 public interface MemberService {
 
@@ -17,5 +18,9 @@ public interface MemberService {
 	int updateMemberOption(Member m);
 
 	int welcomePoint(String memberNo);
+
+	int mergeMemberTags(MemberTag memberTag);
+
+	int insertMemberKakao(Member m);
 
 }

@@ -21,27 +21,22 @@
 	font-family: 'Jua', sans-serif;
 }
 /* font end */
-
 .main_navbar {
 	
 }
-
 .mainNavImg {
 	height: 50px;
 }
-
 .main_messages_icon, .main_alerts_icon {
 	cursor: pointer;
 	padding: 0 15px 0 15px;
 	position: relative;
 }
-
 .main_messages_icon svg, .main_alerts_icon svg {
 	width: 38px;
 	height: 38px;
 	fill: #fff;
 }
-
 .main_messages_txt, .main_alerts_txt {
 	color: white;
 	width: 25px;
@@ -62,18 +57,17 @@
 	<c:url var="communityMain" value="communityMain.do"/>
 	<c:url var="studyCafeMain" value="studyCafeMain.do"/>
 	<c:url var="loginPage" value="loginPage.do">
-		<param name="pageHistory" value="home">
+-		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 	</c:url>
 	<c:url var="registerPage" value="registerPage.do">
-		<param name="pageHistory" value="home">
+-		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 	</c:url>
-	<c:url var="myPage" value="mypage-memberup.do"/>
+	<c:url var="myPage" value="myPage.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 
 	<!-- Navigation -->
-	<nav
-		class="main_navbar navbar navbar-expand-sm navbar-dark bg-success font-weight-bold h5 fixed-top">
+	<nav class="main_navbar navbar navbar-expand-sm navbar-dark bg-success font-weight-bold h5 fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="${mainPage }">
 				<img class="mainNavImg" alt="groominglogo"
@@ -90,7 +84,7 @@
 					<a class="nav-link" href="${studyCafeMain }">스터디카페</a>
 				</li>
 			</ul>
-			<ul class="navbar-nav ml-auto">
+			<ul id="mainProfileArea" class="navbar-nav ml-auto">
 				<c:if test="${empty sessionScope.loginUser }">
 					<li class="nav-item">
 						<a class="nav-link" href="${loginPage }">로그인</a>

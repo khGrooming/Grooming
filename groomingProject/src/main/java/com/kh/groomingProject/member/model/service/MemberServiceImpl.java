@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.member.model.dao.MemberDao;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -52,6 +53,18 @@ public class MemberServiceImpl implements MemberService {
 	public int welcomePoint(String memberNo) {
 
 		return mDao.welcomePoint(memberNo);
+	}
+
+	@Override
+	public int mergeMemberTags(MemberTag memberTag) {
+
+		return mDao.mergeMemberTags(memberTag);
+	}
+
+	@Override
+	public int insertMemberKakao(Member m) {
+
+		return mDao.insertMemberKakao(m);
 	}
 
 }
