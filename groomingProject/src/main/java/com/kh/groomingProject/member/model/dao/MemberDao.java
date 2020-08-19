@@ -77,4 +77,9 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.certiChk", mcc);
 	}
 
+	public int updateMemberPwd(Member m) {
+
+		return  sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
+	}
+
 }

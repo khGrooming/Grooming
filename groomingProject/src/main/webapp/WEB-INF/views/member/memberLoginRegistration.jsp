@@ -532,6 +532,8 @@ section .form_container .hideItem
 				location.href="home.do";
 			} else if(url.indexOf("logout") != -1) {
 				location.href="home.do";
+			} else if(url.indexOf("newPwd") != -1) {
+				location.href="home.do";
 			} else if(url == "") {
 				location.href="home.do";
 			} else {

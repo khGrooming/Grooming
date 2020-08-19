@@ -164,19 +164,6 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 {
 	color: grey;
 }
-.loading
-{
-	width:100%;
-	height:100px;
-	position:fixed; /* 스크롤 내려도 그 위치에 */
-	left:0%;
-	top:45%;
-	background:#F2F1DF;
-	text-align: center;
-	z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
-	display: none;
-	border: 1px solid gray;
-}
 </style>
 </head>
 <body>
@@ -187,7 +174,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			<div class="findAccount">
 				<div class="imgBx"><img alt="회원 정보 찾기 이미지" src="${contextPath }/resources/views/images/find_account.png"></div>	
 				<div class="form-group">
-					<form class="row" action="changePwd.do" method="post" id="changePwdForm">
+					<form class="row" action="changePwdPage.do" method="post" id="changePwdForm">
 						<div class="col-12">
 							<h2>회원정보 찾기</h2>
 							<p>회원 가입에 사용한 이메일로 인증번호를 보내드립니다.</p>
@@ -219,14 +206,15 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 
 	<script type="text/javascript">
 		let memberEmail = "";
-		var certiNumber = "";
+		let certiNumber = "";
 		let expireTime = 10;
 		// 정규식
 		let certiEmailPass = false;
 		let certiCodePass = false;
+		let certiEmailpass = false;
 		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
 		let regexCertiNum = /^\d{6,6}$/;
-		
+
 		// 이메일 검사
 		function certiEmail() {
 			if (!regexEmail.test($("#certiEmail").val())) {
@@ -255,6 +243,12 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			certiNumberFn();
 		});
 
+		$("#certiEmail").keyup(function(e){
+			if(e.keyCode == 13){
+				sendEmail();
+			}
+		});
+
 		$('.popover_send_btn').popover({ trigger: 'focus' });
 
 		function sendEmail() {
@@ -270,9 +264,13 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 
 			if(!certiEmailPass){
 				return;
+			} else if(certiEmailpass){
+				alert("이미 이메일이 전송되었습니다. 잠시만 기다려 주세요.");
+				return;
 			}
 
-			console.log("인증 메일 전송")
+			console.log("인증 메일 전송");
+			certiEmailpass = true;
 
 			//TODO email 전송 만들어야함
 			$.ajax({ 
@@ -293,17 +291,26 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 						
 					} else if(data == "retry"){
 						console.log("이메일 전송 결과 : 실패");
+						certiEmailpass = false;
 						alert("정상적으로 처리되지 않았습니다. 잠시 후 다시 해주세요.");
 					} else {
 						console.log("이메일 전송 결과 : 일치하는 정보 없음");
+						certiEmailpass = false;
 						alert("입력하신 이메일과 일치하는 정보가 없습니다.");
 					}
 				},
 				error:function(request, status, errorData){
+					certiEmailpass = false;
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
 		}
+
+		$("#certiNumberInput").keyup(function(e){
+			if(e.keyCode == 13){
+				findAccountFn();
+			}
+		});
 
 		// 인증 번호 확인
 		function findAccountFn() {
@@ -323,9 +330,9 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			console.log("인증번호 검증 시작 (이멜): " + certiEmailPass);
 			console.log("인증번호 검증 시작 (코드): " + certiCodePass);
 
-			if(certiEmailPass == true){
+			if(certiEmailPass){
 				console.log("인증번호 검증 시작 : 입력 제약조건 이메일 확인");
-			} else if(certiCodePass == true){
+			} else if(certiCodePass){
 				console.log("인증번호 검증 시작 : 입력 제약조건 인증코드 확인");
 			} else {
 				return;
@@ -382,6 +389,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 				$(".btn_send").css("background","#677eff");
 				$("#certiNumberInput").prop("disabled","disabled");
 				$("#certiNumberSpan").css("color","grey");
+				certiEmailpass = false;
 				alert("인증 번호가 만료 되었습니다. 인증번호를 다시 받으세요.");
 			}
 		}

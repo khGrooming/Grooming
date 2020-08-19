@@ -19,6 +19,18 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+<!-- recaptcha 나중에... -->
+<!-- <script src="https://www.google.com/recaptcha/api.js?render=6LdYz8AZAAAAAFCliYQlMH778UwYbDfnrV-X8YGk"></script>
+
+<script>
+	grecaptcha.ready(function() {
+		grecaptcha.execute('6LdYz8AZAAAAAFCliYQlMH778UwYbDfnrV-X8YGk', {action: 'changePwd.do'}).then(function(token) {
+			//TODO 하자 나중에...
+			// pass the token to the backend script for verification
+		});
+	});
+</script> -->
+  
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 <style type="text/css">
 <!-- 기본 스타일 -->
@@ -132,6 +144,10 @@ section .form_container .findAccount .form-group form .input-group .chkVali
 	padding: 0 5px;
 	display: none;
 }
+section .form_container .findAccount .form-group form .input-group .chkValiComp
+{
+	color: green;
+}
 section .form_container .findAccount .form-group form .input-group input:focus ~ span,
 section .form_container .findAccount .form-group form .input-group input:valid ~ span
 {
@@ -152,27 +168,6 @@ section .form_container .findAccount .form-group form input[type="button"]
 	letter-spacing: 1px;
 	transition: 0.5s;
 }
-section .form_container .findAccount .form-group form input[type="button"].btn_next
-{
-	background: grey;
-}
-#certiNumberSpan
-{
-	color: grey;
-}
-.loading
-{
-	width:100%;
-	height:100px;
-	position:fixed; /* 스크롤 내려도 그 위치에 */
-	left:0%;
-	top:45%;
-	background:#F2F1DF;
-	text-align: center;
-	z-index:1000; /* 이 값으로 레이어의 위치를 조정합니다. */
-	display: none;
-	border: 1px solid gray;
-}
 </style>
 </head>
 <body>
@@ -181,223 +176,112 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 	<section>
 		<div class="form_container">
 			<div class="findAccount">
-				<div class="imgBx"><img alt="회원 정보 찾기 이미지" src="${contextPath }/resources/views/images/find_account.png"></div>	
+				<div class="imgBx"><img alt="회원 비밀번호 변경 이미지" src="${contextPath }/resources/views/images/changePwd.png"></div>	
 				<div class="form-group">
-					<form class="row" action="changePwd.do" method="post" id="changePwdForm">
-						<div class="col-12">
-							<h2>회원정보 찾기</h2>
-							<p>회원 가입에 사용한 이메일로 인증번호를 보내드립니다.</p>
+					<form action="newPwd.do" method="post" id="newPwdForm">
+						<div>
+							<h2>비밀번호 재설정</h2>
+							<p>비밀번호를 변경해 주세요.</p>
+							<p>다른 아이디나 사이트에서 사용한 적 없는 안전한 비밀번호로 변경해 주세요.</p>
 						</div>
-						<div class="input-group col-8">
-							<input type="text" id="certiEmail" name="memberEmail" required>
-							<span>이메일 주소</span>
-							<div class="chkVali" id="certiEmailChk">올바른 이메일을 입력해주세요.</div>
+						<input type="hidden" name="memberEmail" value="${memberEmail }">
+						<div class="input-group mb-3">
+							<input type="password" id="new_pw" autocomplete="off" name="memberPwd" required>
+							<span>새 비밀번호</span>
+							<div class="chkVali" id="new_pwChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
+							<div class="chkVali chkValiComp" id="new_pwComp">사용 가능합니다.</div>
 						</div>
-						<input type="button" class="col-4 btn_send" onclick="sendEmail()" value="인증 번호 받기">
-						<div class="input-group col-12 m-1">
-							<p class="m-0">인증번호 유지 시간 : &nbsp;</p><p id="timer" class="m-0">10:00</p>
+						<div class="input-group">
+							<input type="password" id="new_conf_pw" autocomplete="off" required>
+							<span>새 비밀번호 확인</span>
+							<div class="chkVali" id="new_conf_pwChk">비밀번호가 일치하지 않습니다.</div>
+							<div class="chkVali chkValiComp" id="new_conf_pwComp">비밀번호가 일치합니다.</div>
 						</div>
-						<div class="input-group col-8 my-3">
-							<input type="text" id="certiNumberInput" name="certiNumber" required disabled>
-							<span id="certiNumberSpan">인증번호</span>
-							<div class="chkVali" id="certiNumberChk">올바른 인증번호를 입력해주세요.</div>
-						</div>
-						<input type="button" class="btn_next col-4 my-3" onclick="findAccountFn()" value="다음">
+						<input type="button" class="btn_next my-3" onclick="findAccountFn()" value="확인">
 					</form>
 				</div>
 			</div>
 		</div>
-
-		<!-- 로딩 팝업창  -->
-		<div class="loading">
-			<br>&nbsp;이메일 전송 중입니다. <br>&nbsp;잠시만 기다려 주세요 ^-^*
-			<div class="spinner-border text-primary" role="status">
-				<span class="sr-only">Loading...</span>
-			</div>
-		</div>  
 	</section>
 
 	<script type="text/javascript">
-		let memberEmail = "";
-		var certiNumber = "";
-		let expireTime = 1;
 		// 정규식
-		let certiEmailPass = false;
-		let certiCodePass = false;
-		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		let newPwdPass = false;
+		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
 		let regexCertiNum = /^\d{6,6}$/;
 		
-		// 이메일 검사
-		function certiEmail() {
-			if (!regexEmail.test($("#certiEmail").val())) {
-				certiEmailPass = false;
-				$("#certiEmailChk").css("display","block");
+
+		// 비밀번호 정규화로 확인, 비밀번호 확인과 동일 여부 확인
+		function newPwd() {
+			if (!regexPwd.test($("#new_pw").val())) {
+				newPwdPass = false;
+				$("#new_pwChk").css("display","block");
+				$("#new_pwComp").css("display","none");
 			} else {
-				certiEmailPass = true;
-				$("#certiEmailChk").css("display","none");
+				$("#new_pwChk").css("display","none");
+				$("#new_pwComp").css("display","block");
 			}
-		}
-		$("#certiEmail").on("keyup change", function () {
-			certiEmail();
-		});
-
-		// 인증번호 검사
-		function certiNumberFn() {
-			if (!regexCertiNum.test($("#certiNumberInput").val())) {
-				certiCodePass = false;
-				$("#certiNumberChk").css("display","block");
+			if ($("#new_pw").val() != $("#new_conf_pw").val()) {
+				$("#new_conf_pwChk").css("display","block");
+				$("#new_conf_pwComp").css("display","none");
+				newPwdPass = false;
+				console.log("비밀번호 불일치");
 			} else {
-				certiCodePass = true;
-				$("#certiNumberChk").css("display","none");
-			}
-		}
-		$("#certiNumberInput").on("keyup change", function () {
-			certiNumberFn();
-		});
-		
-		function sendEmail() {
-			if(!$("#certiEmail")[0].checkValidity()){
-				console.log("이메일을 입력해 주세요.");
-				certiEmailPass = false;
-				$("#certiEmailChk").css("display","block");
-				$("#certiEmail").focus();
-				return;
-			}
-
-			memberEmail = $("#certiEmail").val();
-
-			if(certiEmailPass){
-				$(".loading").show();
-			} else{
-				return;
-			}
-			console.log("인증 메일 전송")
-
-			//TODO email 전송 만들어야함
-			$.ajax({ 
-				url:"sendCertiEmail.do",
-				data:{memberEmail:memberEmail},
-				success:function(data){
-					console.log("이메일 전송 결과 : " + data);
-					if(data == "success"){
-						console.log("이메일 전송 결과 : 완료");
-						// 타이머 설정
-						clearTime(expireTime);
-						setTimer();	
-						// css 설정
-						$(".btn_next").css("background","#677eff");
-						$(".btn_send").css("background","grey");
-						$("#certiNumberInput").prop("disabled","");
-						$("#certiNumberSpan").css("color","black");
-						$(".loading").fadeOut();
-						alert("인증번호를 발송했습니다.\n인증번호가 오지 않았으면 입력하신 정보가 회원정보와 일치하는지 확인해 주세요.");
-					} else if(data == "retry"){
-						console.log("이메일 전송 결과 : 실패");
-						$(".loading").fadeOut();
-						alert("정상적으로 처리되지 않았습니다. 잠시 후 다시 해주세요.");
-					} else {
-						console.log("이메일 전송 결과 : 일치하는 정보 없음");
-						$(".loading").fadeOut();
-						alert("입력하신 이메일과 일치하는 정보가 없습니다.");
-					}
-				},
-				error:function(request, status, errorData){
-					$(".loading").fadeOut();
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				$("#new_conf_pwChk").css("display","none");
+				$("#new_conf_pwComp").css("display","block");
+				if (regexPwd.test($("#new_pwChk").val())) {
+					newPwdPass = true;
+					console.log("changePwdPass : "+ changePwdPass);
+					console.log("비밀번호 일치");
 				}
-			});
+			}
 		}
+		// 키이벤트 비밀번호 확인
+		$("#new_pw").on("keyup change", function () {
+			newPwd();
+		});
 
-		// 인증 번호 확인
+		// 비밀번호와 동일 여부 확인
+		function newPwdDupl() {
+			if ($("#new_pw").val() != $("#new_conf_pw").val()) {
+				newPwdPass = false;
+				$("#new_conf_pwChk").css("display","block");
+				$("#new_conf_pwComp").css("display","none");
+				console.log("비밀번호 불일치");
+			} else {
+				$("#new_conf_pwChk").css("display","none");
+				$("#new_conf_pwComp").css("display","block");
+				if (regexPwd.test($("#new_pw").val())) {
+					newPwdPass = true;
+					console.log("newPwdPass : "+ newPwdPass);
+					console.log("비밀번호 일치");
+				}
+			}
+		}
+		// 키이벤트 비밀번호 재확인
+		$("#new_conf_pw").on("keyup change", function () {
+			newPwdDupl();
+		});
+
+		$("#new_conf_pw").keyup(function(e){
+			if(e.keyCode == 13){
+				findAccountFn();
+			}
+		});
+
 		function findAccountFn() {
-			console.log("인증번호 검증 시작 : 입력 확인");
-			if(!$("#certiEmail")[0].checkValidity()){
-				certiEmailPass = false;
-				$("#certiEmailChk").css("display","block");
-				$("#certiEmail").focus();
-				return;
-			} else if(!$("#certiNumberInput")[0].checkValidity()){
-				certiCodePass = false;
-				$("#certiNumberChk").css("display","block");
-				$("#certiNumberInput").focus();
-				return;
-			}
-			console.log("인증번호 검증 시작 : 입력 제약조건 확인");
-			console.log("인증번호 검증 시작 (이멜): " + certiEmailPass);
-			console.log("인증번호 검증 시작 (코드): " + certiCodePass);
+			newPwd();
 
-			if(certiEmailPass == true){
-				console.log("인증번호 검증 시작 : 입력 제약조건 이메일 확인");
-			} else if(certiCodePass == true){
-				console.log("인증번호 검증 시작 : 입력 제약조건 인증코드 확인");
-				$(".loading").show();
+			if(!newPwdPass){
+				$("#new_pw").focus();
+				return;
 			} else {
-				return;
+				console.log("비밀번호 업데이트 submit")
+				$("#newPwdForm").submit();
 			}
-
-			console.log("인증 번호 확인 시작")
-			memberEmail = $("#certiEmail").val();
-			certiNumber = $("#certiNumberInput").val();
-
-			$.ajax({ 
-				url:"certiChk.do",
-				data:{memberEmail:memberEmail
-					 ,certiNumber:certiNumber
-					 ,expireTime:expireTime},
-				success:function(data){
-					console.log("인증번호 확인 결과 : " + data);
-					if(data == "success"){
-						console.log("인증번호 결과 : 완료");
-						$("#changePwdForm").submit();
-					} else {
-						console.log("이메일 전송 결과 : 일치하지 않음");
-						alert("잘못된 인증번호입니다. 인증번호를 확인한 다음 다시 입력해 주세요.");
-					}
-				},
-				error:function(request, status, errorData){
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-				}
-			});
-			$(".loading").fadeOut();
 		}
 	</script>
 
-	<!-- 타이머 -->
-	<script>
-		// 시간설정 변수
-		let initMinute;
-		let remainSecond;
-		function clearTime(min) {
-			initMinut = min;
-			remainSecond = min*60;
-		}
-		function setTimer() {
-			remainMinute_ = parseInt(remainSecond/60);
-			remainSecond_ = remainSecond%60;
-			
-			if(remainSecond >= 0){
-				$("#timer").empty();
-				$("#timer").append(Lpad(remainMinute_,2) + ":" + Lpad(remainSecond_,2));
-				remainSecond--;
-				setTimeout("setTimer()",1000);
-			} else {
-				$("#timer").empty();
-				$("#timer").append("10:00");
-				$(".btn_next").css("background","grey");
-				$(".btn_send").css("background","#677eff");
-				$("#certiNumberInput").prop("disabled","disabled");
-				$("#certiNumberSpan").css("color","grey");
-				alert("인증 번호가 만료 되었습니다. 인증번호를 다시 받으세요.");
-			}
-		}
-		function Lpad(str,len) {
-			str = str+"";
-			while(str.length<len){
-				str = "0" + str;
-			}
-			return str;
-		}
-	</script>
 
 	<jsp:include page="../common/footer.jsp" />
 

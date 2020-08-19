@@ -114,5 +114,11 @@
 		AND CERTI_TIME < #{expireTime}
 		]]>
 	</select>
+	
+	<update id="updateMemberPwd" parameterType="Member">
+		UPDATE MEMBER
+		SET	MEMBER_PASSWORD=#{memberPwd}
+		WHERE MEMBER_EMAIL=#{memberEmail}
+	</update>
 
 </mapper>

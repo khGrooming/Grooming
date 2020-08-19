@@ -88,4 +88,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.certiChk(mcc);
 	}
 
+	@Override
+	public int updateMemberPwd(Member m) {
+
+		return mDao.updateMemberPwd(m);
+	}
+
 }

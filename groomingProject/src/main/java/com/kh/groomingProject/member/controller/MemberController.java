@@ -55,15 +55,15 @@ public class MemberController {
 
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-
+	
 	// 로그인 페이지 이동
 	@RequestMapping("loginPage.do")
 	public ModelAndView loginPage(ModelAndView mv, String url) {
-
+		
 		mv.addObject("url", url)
 		.addObject("loginCheck", "login")
 		.setViewName("member/memberLoginRegistration");
-
+		
 		return mv;
 	}
 
@@ -84,6 +84,16 @@ public class MemberController {
 
 		mv.setViewName("member/memberFindMyAccount");
 
+		return mv;
+	}
+	
+	// 회원정보 변경 페이지 이동
+	@RequestMapping("changePwdPage.do")
+	public ModelAndView changePwd(ModelAndView mv, Member m) {
+		
+		mv.addObject("memberEmail", m.getMemberEmail())
+		.setViewName("member/memberChangePwd");
+		
 		return mv;
 	}
 
@@ -519,4 +529,42 @@ public class MemberController {
 		return "fail";
 	}
 
+	// 회원 가입 : 일반 회원
+	@RequestMapping("newPwd.do")
+	public String newPwd(Member m) {
+		String message = "";
+		System.out.println("비밀번호 재설정 : " + m.getMemberEmail() + " / 재설정 비밀번호 : " + m.getMemberPwd());
+
+		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
+
+		m.setMemberPwd(emcPwd);
+
+		// 비밀번호 재설정
+		int resultUpdateMemberPwd = mService.updateMemberPwd(m);
+
+		// 비밀번호 재설정
+		if(resultUpdateMemberPwd > 0) {
+			System.out.println("비밀번호 재설정: 성공");
+
+			// 비밀번호 재설정 (알림 추가 insert)
+			message = "비밀번호가 변경 되었습니다..";
+			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
+			System.out.println("비밀번호 재설정 (알림 추가) : " + memberAlert);
+			int resultAlertJoin = alertService.insertAlert(memberAlert);
+
+			if(resultAlertJoin > 0) {
+				System.out.println("비밀번호 재설정 (알림 추가) : 성공");
+
+				return "home";
+			} else {
+				System.out.println("비밀번호 재설정 (알림 추가) : 실패");
+				throw new MemberException("비밀번호 재설정 (알림 추가) : 실패");
+			}
+
+		} else {
+			System.out.println("비밀번호 재설정 : 실패");
+			throw new MemberException("비밀번호 재설정 : 실패");
+		}
+
+	}
 }

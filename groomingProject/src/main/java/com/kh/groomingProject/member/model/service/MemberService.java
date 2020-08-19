@@ -32,4 +32,6 @@ public interface MemberService {
 
 	int certiChk(MemberCertiCode mcc);
 
+	int updateMemberPwd(Member m);
+
 }
