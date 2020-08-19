@@ -37,6 +37,7 @@
 		<result property="specName" column="SPEC_NAME"/>
 		<result property="specFileName" column="SPEC_FILENAME"/>
 		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="specConfirm" column="SPEC_CONFIRM" />
 	</resultMap>
 
 
@@ -60,7 +61,7 @@
 	</select>
 
 	<select id="selectSpecList" parameterType="string" resultMap="SpecSet"> 
-		SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO
+		SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO, S.SPEC_CONFIRM
 		FROM SPEC S
 		JOIN SPEC_CATEGORY SC ON(S.SPEC_C_NO = SC.SPEC_C_NO)
 		WHERE MEMBER_NO=#{mNo}
@@ -83,5 +84,37 @@
 		SET MEMBER_STATUS='Y'
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
+	
+	<update id="memberInfoUpdate" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_PASSWORD=#{memberPwd}
+			,MEMBER_NICKNAME=#{memberNickName}
+			,MEMBER_NAME=#{memberName}
+			,MEMBER_GENDER=#{memberGender}
+			,MEMBER_PHONE=#{memberPhone}
+		WHERE MEMBER_NO = #{memberNo}
+		
+	</update>
+	
+	<select id="memberSelect" parameterType="string" resultMap="MemberSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NO=#{memberNo}
+		AND MEMBER_STATUS='N'	
+	</select>
+	
+	<insert id="insertSpec" parameterType="Spec" >
+		INSERT INTO SPEC VALUES('SPEC' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0) , #{specCName},#{specName},#{specFileName},#{memberNo},DEFAULT)
+	</insert>
+	
+	<select id="mentorUserSelect" parameterType="string" resultType="string">
+		SELECT MENTOR_PASS
+		FROM MENTOR
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+	
+	<insert id="insertMentor" parameterType="string">
+		INSERT INTO MENTOR VALUES('MTR' || LPAD(SEQ_MENTOR_NO.NEXTVAL,5,0) , #{mNo},'N')
+	</insert>
 
 </mapper>

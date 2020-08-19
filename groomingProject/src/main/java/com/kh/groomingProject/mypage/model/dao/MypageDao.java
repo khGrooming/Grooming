@@ -40,4 +40,24 @@ public class MypageDao {
 		return sqlSessionTemplate.update("MyPageMapper.memberDelete",m);
 	}
 
+	public int memberInfoUpdate(Member m) {
+		return sqlSessionTemplate.update("MyPageMapper.memberInfoUpdate",m);
+	}
+
+	public Member memberSelect(String memberNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.memberSelect",memberNo);
+	}
+
+	public int insertSpec(Spec s) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertSpec",s);
+	}
+
+	public String mentorUserSelect(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.mentorUserSelect",mNo);
+	}
+
+	public int insertMentor(String mNo) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertMentor",mNo);
+	}
+
 }
