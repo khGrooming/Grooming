@@ -363,5 +363,16 @@ public class GroomingController<memberNo> {
 	
 	
 	
+	@RequestMapping("groomingDelete.do")
+	public String groomingDelete(String groomingNo) {
+		
+		int result = gService.groomingDelete(groomingNo);
+		
+		if(result > 0) {
+			return "redirect:groomingMain.do";
+		}else {
+			throw new GroomingException("게시글 삭제 실패!");
+		}
+	}
 }
 

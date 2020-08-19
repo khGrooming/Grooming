@@ -199,6 +199,10 @@
  	
  	</update>
  	
+ 	<delete id="groomingDelete" parameterType="string">
+ 		DELETE FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	</delete>
  	
  	
 </mapper>

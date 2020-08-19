@@ -44,4 +44,6 @@ public interface GroomingService {
 
 	int updateGrooming(Grooming g);
 
+	int groomingDelete(String groomingNo);
+
 }

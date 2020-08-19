@@ -122,6 +122,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.updateGrooming",g);
 	}
+
+	public int groomingDelete(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.groomingDelete",groomingNo);
+	}
 	
 	
 	

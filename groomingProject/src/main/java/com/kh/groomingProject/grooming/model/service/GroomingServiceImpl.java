@@ -131,6 +131,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.updateGrooming(g);
 	}
 
+	@Override
+	public int groomingDelete(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.groomingDelete(groomingNo);
+	}
+
 
 	
 }

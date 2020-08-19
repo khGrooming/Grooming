@@ -42,6 +42,7 @@ body {
 img {
 	max-width: 100%;
 	max-height: 100%;
+	
 }
 /*폰트 설정 */
 @font-face {
@@ -150,8 +151,7 @@ img {
 							<tr>
 								<td>
 									<div class="groomingImage">
-										<img
-											src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}">
+										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}">
 									</div>
 								</td>
 							</tr>
@@ -313,7 +313,9 @@ img {
 				<c:url var="gupdate" value="groomingUpdate.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
 				</c:url>
-				<c:url var="gdelete" value="groomingDelete.do" />
+				<c:url var="gdelete" value="groomingDelete.do" >
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
+				</c:url>
 				<c:url var="limit" value="limit.do" />
 				<!-- 글의 상태 버튼 -->
 				<div class="col-6" style="text-align: center">
@@ -376,9 +378,9 @@ img {
 			
 			getAppList();
 			
-			 setInterval(function(){
+		/* 	 setInterval(function(){
 				getAppList();
-			},10000);  
+			},10000);   */
 			
 			$(document).on("click",".accept",function(){
 				var groomingNo = "${grooming.groomingNo}";
