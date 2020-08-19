@@ -133,7 +133,6 @@ public class MyPageController {
 
 		
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-		System.out.println(specList);
 		
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
@@ -176,7 +175,6 @@ public class MyPageController {
 		 
 		 String mentor = mpService.mentorUserSelect(mNo);
 		 
-		 System.out.println("mentor:"+mentor);
 		 if(mentor==null) {
 			 System.out.println("멘토가 아닙니다");
 			 mentor="F";
@@ -461,6 +459,13 @@ public class MyPageController {
 			throw new MypageException("멘토 등록 실패");
 		}
 		
+	}
+	
+	
+	
+	@RequestMapping("opengrooming.do")
+	public String opengroomingPage() {
+		return "mypage/opengrooming";
 	}
 	
 }

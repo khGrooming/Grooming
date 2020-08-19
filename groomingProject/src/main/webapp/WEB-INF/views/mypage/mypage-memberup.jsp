@@ -59,10 +59,11 @@
 
 					<!-- 프로필 사진 div -->
 					<div class="profile_my" style="position: relative;">
-						<img src="icon.png" class="profile_img"> <img
+						<img src='${contextPath }/resources/views/icons/profileIcon.png' id="profileImg"  style="width: 110px; height:110px; z-index: 3;"class="profile_img">
+						<img
 							src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
-							id="profileImg" class="profile_img"
-							style="border: 3px solid gray;" onclick="prpfileChange()">
+							class="profile_img"
+							style="width: 100px;">
 
 						<form id="testForm" action="test1.do" method="post"
 							enctype="multipart/form-data">
@@ -77,6 +78,44 @@
 						</form>
 
 					</div>
+					<script>
+					$(function() {
+						$("#profileImg").on("click", function() {
+							$("#profileFile").click();
+
+						})
+
+					})
+
+					function test2() {
+						var formData = new FormData($('#testForm')[0]);
+
+						alert("dgjd");
+						$.ajax({
+							type : 'POST',
+							url : "upproimg.do",
+							enctype : 'multipart/form-data', // 필수 
+							data : formData, // 필수 
+							processData : false, // 필수 
+							contentType : false, // 필수 
+							processData : false,
+							contentType : false,
+							success : function(data) {
+								alert(data);
+								$("#profileImg").attr(
+										"src",
+										"${contextPath}/resources/upprofileFiles/"
+												+ data);
+								$("memberPhoto").val(data);
+							},
+							error : function(data) {
+								alert("code:" + request.status + "\n"
+										+ "error:" + error);
+							}
+						});
+					}
+				</script>
+				<br>
 					<!-- 프로필 사진 div_end -->
 
 
@@ -500,44 +539,7 @@
 					</div>
 				</div>
 	
-			<script>
-					$(function() {
-						$("#profileImg").on("click", function() {
-							$("#profileFile").click();
-
-						})
-
-					})
-
-					function test2() {
-						var formData = new FormData($('#testForm')[0]);
-
-						alert("dgjd");
-						$.ajax({
-							type : 'POST',
-							url : "upproimg.do",
-							enctype : 'multipart/form-data', // 필수 
-							data : formData, // 필수 
-							processData : false, // 필수 
-							contentType : false, // 필수 
-							processData : false,
-							contentType : false,
-							success : function(data) {
-								alert(data);
-								$("#profileImg").attr(
-										"src",
-										"${contextPath}/resources/upprofileFiles/"
-												+ data);
-								$("memberPhoto").val(data);
-							},
-							error : function(data) {
-								alert("code:" + request.status + "\n"
-										+ "error:" + error);
-							}
-						});
-					}
-				</script>
-				<br>
+			
 				<br>
 				<br>
 		<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->

@@ -164,7 +164,7 @@ section {
 }
 
 #test ul {
-    width: 80%;
+       width: 90%;
 	list-style: none;
 	position: relative;
 	display: inline-table;
@@ -236,8 +236,8 @@ section {
 			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
 
 			<div class="menubar">
-				<div id="test">
-					<ul>
+				<div  id="test">
+					<ul >
 						<li><a href="mypage-memberup.do">개인정보</a>
 							<ul>
 								<li><a href="mypage-memberup.do">개인정보수정</a></li>
@@ -245,9 +245,9 @@ section {
 								<li><a href="memberSecession.do">탈퇴하기</a></li>
 							</ul>
 						</li>
-						<li><a href="#">스터디</a>
+						<li><a href="opengrooming.do">스터디</a>
 							<ul>
-								<li><a href="#">개설한 스터디</a></li>
+								<li><a href="opengrooming.do">개설한 스터디</a></li>
 								<li><a href="#">찜목록</a></li>
 								<li><a href="#">신청내역</a></li>
 								<li><a href="#">작성내역</a></li>
