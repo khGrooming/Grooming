@@ -55,7 +55,7 @@
 <body>
 	<c:url var="mainPage" value="home.do"/>
 	<c:url var="groomingMain" value="groomingMain.do"/>
-	<c:url var="communityMain" value="communityMain.do"/>
+	<c:url var="communityMain" value="community.do"/>
 	<c:url var="studyCafeMain" value="searchMap.do"/>
 	<c:url var="loginPage" value="loginPage.do">
 -		<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>

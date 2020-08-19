@@ -20,6 +20,9 @@
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
 
+		<!-- 커뮤니티 -->
+		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>
+
 		<!-- 그루밍 -->	
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
@@ -47,6 +50,9 @@
 
 		<!-- 마이페이지 멥퍼 -->
 		<mapper resource="/mappers/mypage-mapper.xml"/>
+
+		<!-- 커뮤니티 멥퍼 -->
+		<mapper resource="/mappers/community-mapper.xml"/>
 
 		<!-- 그루밍 멥퍼 -->
 		<mapper resource="/mappers/grooming-mapper.xml"/>
