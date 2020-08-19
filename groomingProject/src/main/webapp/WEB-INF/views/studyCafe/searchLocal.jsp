@@ -64,17 +64,18 @@
 		        <div class="card-body">
 		            <br>
 		            <div class="row">
-		            	<form>
 		                	<input type="text" id="searchLocal" name="searchLocal">
 		                    <button type="button" class="btn btn-default" onclick="searchCafeLocal();">
 		                        <span class="glyphicon glyphicon-search"></span> 검색
 		                    </button>
-	                    </form>
 		            </div>
 		            <br>
 		            <div class="searchView">
 		            <c:forEach var="cafe" items="${cafeList}">
-		                <div class="panel panel-default">
+			            <c:url var="cafeDetail" value="cafeDetail.do">
+				            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
+			            </c:url>
+		                <div class="panel panel-default" onclick="location.href='${cafeDetail}'">
 		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
@@ -92,6 +93,12 @@
 	<footer><jsp:include page="../common/footer.jsp" /></footer>
 	
 	<script>
+	$("#searchLocal").keyup(function(event){
+		if(event.keyCode == 13){
+			searchCafeLocal();
+		}
+	})
+	
 	// 카페 검색 결과 ajax
 		function searchCafeLocal(){
 			name = $("#searchLocal").val();
@@ -107,6 +114,7 @@
 					for(var i in data){
 
 						$panel = $("<div class='panel panel-default'>");
+						$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
 						$img = $("<img src='${contextPath }/resources/views/images/study.jpg' class='thumbnail'>");
 						$body = $("<div class='panel-body'>");
 						$footer = $("<div class='panel-footer'>");
