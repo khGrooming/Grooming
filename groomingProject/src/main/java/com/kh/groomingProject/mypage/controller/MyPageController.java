@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
@@ -107,7 +108,7 @@ public class MyPageController {
 //		session.setAttribute("careerconfirm",careerconfirm);		
 		
 		specSelect(request, mNo);
-		
+		mentorSelect(request, mNo);
 		
 		session.setAttribute("profileInfo",profileInfo);
 		
@@ -116,6 +117,8 @@ public class MyPageController {
 		return "mypage/mypage-memberup";
 	}
 	
+	
+// ===========스펙 검색 메소드 (검색 후 session에 저장)
 	public void specSelect(HttpServletRequest request,String mNo) {
 		HttpSession session = request.getSession();
 		int school=0;
@@ -130,7 +133,7 @@ public class MyPageController {
 
 		
 		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-
+		System.out.println(specList);
 		
 		for(Spec s : specList) {
 			switch (s.getSpecCName()) {
@@ -168,6 +171,20 @@ public class MyPageController {
 		session.setAttribute("careerList",careerList);
 		session.setAttribute("careerconfirm",careerconfirm);	
 	}
+	 public void mentorSelect(HttpServletRequest request,String mNo) {
+		 HttpSession session = request.getSession();
+		 
+		 String mentor = mpService.mentorUserSelect(mNo);
+		 
+		 System.out.println("mentor:"+mentor);
+		 if(mentor==null) {
+			 System.out.println("멘토가 아닙니다");
+			 mentor="F";
+		 }
+		 
+		 session.setAttribute("mentor",mentor);
+		 
+	 }
 	
 	//==========================================================================
 	
@@ -430,6 +447,20 @@ public class MyPageController {
 	@RequestMapping("memberSecession.do")
 	public String memberSecession() {
 		return "mypage/memberSecession";
+	}
+	
+	@RequestMapping("mentorApply")
+	public String mentorApply(HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		int result = mpService.insertMentor(mNo);
+		
+		if(result>0) {
+			return "home";
+		}else {
+			throw new MypageException("멘토 등록 실패");
+		}
+		
 	}
 	
 }

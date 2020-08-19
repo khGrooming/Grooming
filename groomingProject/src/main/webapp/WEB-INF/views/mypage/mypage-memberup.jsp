@@ -81,6 +81,9 @@
 
 
 					<!-- 닉네임/ 레벨 영역-->
+					<c:if test="${mentor eq 'Y' }">
+					<span><img src='${contextPath }/resources/views/icons/mentorIcon.png' style="width: 25px;"></span>&nbsp;
+					</c:if>
 					<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
 					<span>&nbsp;&nbsp;</span> <span
 						style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
@@ -368,6 +371,8 @@
 										if(schoolCon[i] == "N"){
 											
 											$tdId.text(school[i]).css("color","lightgrey");
+										}else{
+											$tdId.text(school[i]).css("color","black");
 										}
 									} else {
 										
@@ -417,6 +422,8 @@
 										if(certificateconfirm[i] == "N"){
 											
 											$tdId.text(certificate[i]).css("color","lightgrey");
+										}else{
+											$tdId.text(school[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");
@@ -465,6 +472,8 @@
 										if(certificateconfirm[i] == "N"){
 											
 											$tdId.text(career[i]).css("color","lightgrey");
+										}else{
+											$tdId.text(school[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");

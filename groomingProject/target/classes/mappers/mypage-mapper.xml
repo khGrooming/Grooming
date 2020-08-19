@@ -106,5 +106,15 @@
 	<insert id="insertSpec" parameterType="Spec" >
 		INSERT INTO SPEC VALUES('SPEC' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0) , #{specCName},#{specName},#{specFileName},#{memberNo},DEFAULT)
 	</insert>
+	
+	<select id="mentorUserSelect" parameterType="string" resultType="string">
+		SELECT MENTOR_PASS
+		FROM MENTOR
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+	
+	<insert id="insertMentor" parameterType="string">
+		INSERT INTO MENTOR VALUES('MTR' || LPAD(SEQ_MENTOR_NO.NEXTVAL,5,0) , #{mNo},'N')
+	</insert>
 
 </mapper>

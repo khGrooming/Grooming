@@ -52,4 +52,12 @@ public class MypageDao {
 		return sqlSessionTemplate.insert("MyPageMapper.insertSpec",s);
 	}
 
+	public String mentorUserSelect(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.mentorUserSelect",mNo);
+	}
+
+	public int insertMentor(String mNo) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertMentor",mNo);
+	}
+
 }

@@ -26,5 +26,9 @@ public interface MypageService {
 
 	int insertSpec(Spec s);
 
+	String mentorUserSelect(String mNo);
+
+	int insertMentor(String mNo);
+
 
 }

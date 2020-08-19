@@ -31,7 +31,6 @@ public class MypageServiceImpl implements MypageService{
 		return mpDao.selectSpecList(mNo);
 	}
 
-
 	@Override
 	public int updateProfileIMG(ProfileMember m) {
 		return mpDao.updateProfileIMG(m);
@@ -60,5 +59,15 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int insertSpec(Spec s) {
 		return mpDao.insertSpec(s);
+	}
+
+	@Override
+	public String mentorUserSelect(String mNo) {
+		return mpDao.mentorUserSelect(mNo);
+	}
+
+	@Override
+	public int insertMentor(String mNo) {
+		return mpDao.insertMentor(mNo);
 	}
 }

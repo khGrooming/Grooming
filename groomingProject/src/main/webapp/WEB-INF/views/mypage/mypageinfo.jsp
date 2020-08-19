@@ -238,7 +238,7 @@ section {
 			<div class="menubar">
 				<div id="test">
 					<ul>
-						<li><a href="#">개인정보</a>
+						<li><a href="mypage-memberup.do">개인정보</a>
 							<ul>
 								<li><a href="mypage-memberup.do">개인정보수정</a></li>
 								<li><a href="mentor.do">멘토등록</a></li>

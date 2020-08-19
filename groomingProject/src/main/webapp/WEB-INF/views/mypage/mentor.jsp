@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+
+</style>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 <div style="width: 65%; margin-right: auto; margin-left: auto;">
+	<c:if test="${mentor eq 'F' }">
 	<div class="MsectionDiv" id="Mcontent2">
 		<div
 			style="margin-right: 50px; width: 80%; margin-left: auto; margin-top: 5%; margin-right: auto;">
@@ -19,16 +25,16 @@
 			</p>
 			<br> <br>
 			<p>-스펙</p>
-			<table id="ment"style="width: 80%; text-align:top;" >
+			<table id="ment"style="width: 80%;" >
 				<tr>
-					<td class="spacIconTd" style="width: 80px;">이미지</td>
-					<th style="width: 10%;">학교</th>
+					<td class="spacIconTd" style="width: 50px;">이미지</td>
+					<th style="width: 50px;">학교</th>
 					<td id="schoolApply" style="width: 80px;">
 					</td>
 					
 					<td class="schoolinput" style="width: 200px;">
 						<form id="sForm" method="post" enctype="Multipart/form-data" >
-						<input type="hidden" id="specCName" name="specCName" value="SC00001" style="display: none;"><br>
+						<input type="hidden" id="specCName" name="specCName" value="SC00001" style="display: none;">
 						<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }" style="display: none;">
 						
 						<input type="text" id="specName" name="specName" placeholder="학교 이름을 입력하세요" required>
@@ -42,38 +48,39 @@
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>자격증</th>
-					<td id="certificateApply" style="width: 80px;">
+					<td id="certificateApply">
 					</td>
 					
-					<td class="certificateinput" style="width: 200px;">
+					<td class="certificateinput" >
 							<form id="ceForm" method="post" enctype="Multipart/form-data">
-							<input type="hidden" id="specCName" name="specCName" value="SC00002"><br>
+							<input type="hidden" id="specCName" name="specCName" value="SC00002">
 							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
 							<input type="text" id="specName" name="specName" placeholder="자격증을 입력하세요" required>
 							<input type="file" id="CespecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%">
 							<button onclick="specFileClick('CespecFileName');">업로드</button>
 						
 					
-					</td>
 					</form>
+					</td>
 					
 				</tr>
 				<tr>
 					<td class="spacIconTd">이미지</td>
 					<th>경력</th>
-					<td id="careerApply" style="width: 80px;" ></td>
+					<td id="careerApply" ></td>
 					
 					<td class="careerinput">
+						
 							<form id="caForm" method="post" enctype="Multipart/form-data">
-							<input type="hidden" id="specCName" name="specCName" value="SC00003"><br>
+							<input type="hidden" id="specCName" name="specCName" value="SC00003">
 							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
 							
 							<input type="text" id="specName" name="specName" placeholder="경력을 입력하세요"required>
 							<input type="file" id="CAspecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%;">						
 							<button onclick="specFileClick('CaspecFileName');">업로드</button>
 						
-					</td>
 					</form>
+					</td>
 				</tr>
 			</table>
 			<div style="text-align: center; margin-top:10%;">
@@ -97,7 +104,7 @@
 					case 'CespecFileName':
 						formData = new FormData($('#ceForm')[0]);
 						break;
-					case 'CAspecFileName':
+					case 'CaspecFileName':
 						formData = new FormData($('#caForm')[0]);
 						break;
 
@@ -116,16 +123,13 @@
 						processData : false,
 						contentType : false,
 						success : function(data) {
-							alert(data);
 						},
 						error : function(data) {
 							alert("code:" + request.status + "\n"
 									+ "error:" + error);
 						}
 					});
-					
-					
-					
+				
 				}
 				$(function() {
 					
@@ -184,15 +188,33 @@
 
 						var checked = confirm("신청하시겠습니까?");
 						if (checked) {
-							location.href = "mentorApply.do";
+							if(("${schoolconfirm[0]}" != "")&&("${certificateList[0]}" != "")&&("${careerconfirm[0]}" != "")){
+								
+								alert("신청이 완료되었습니다.");
+								location.href = "mentorApply.do"; 
+							}else{
+								alert("스펙을 등록해야 합니다.")
+							}
+							
 						} else {
 							alert("취소하셨습니다.");
 						}
 					} else {
 						alert("체크하세요");
-					}
+					}         
 				}
 			</script></div>
+			</c:if>
+			<c:if test="${mentor eq 'N' }">
+				<div style="width: 100%; text-align: center; margin-top: 20%">
+				<h3>심사중입니다.</h3>
+				</div>
+			</c:if>
+			<c:if test="${mentor eq 'Y' }">
+			<div style="width: 100%; text-align: center; margin-top: 20%">
+				<h3>이미 멘토입니다.</h3>
+				</div>
+			</c:if>
 	</div>
 </div>
 </body>
