@@ -6,17 +6,22 @@
 	</settings>
 	
 	<typeAliases>
+		<!-- 스터디 카페 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeInfo" alias="CafeInfo"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Reservation" alias="Reservation"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.ReservationView" alias="ReservationView"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Point" alias="Point"/>
+		
+		<!-- 관리자 -->
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/studyCafe-mapper.xml"/>
+		<mapper resource="/mappers/admin-mapper.xml"/>
 	</mappers>
 	
 </configuration>
