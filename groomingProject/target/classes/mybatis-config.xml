@@ -19,6 +19,7 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
+		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
 	</typeAliases>
 	
 	<mappers>
@@ -29,6 +30,7 @@
 		<mapper resource="/mappers/grooming-mapper.xml"/>
 		<mapper resource="/mappers/studyCafe-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+		<mapper resource="/mappers/declaration-mapper.xml"/>
 	</mappers>
 	
 </configuration>
