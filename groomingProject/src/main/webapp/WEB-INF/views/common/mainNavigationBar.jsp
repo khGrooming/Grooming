@@ -147,6 +147,7 @@
 .main_messages_body,
 .main_alerts_body
 {
+	font-weight: lighter;
 	font-size: 16px;
 	width: 100%;
 	display: block;
@@ -453,11 +454,9 @@
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
-				var $alerts_bodyTime = $('<div>').addClass("main_aBody_time");
 				
 				$alerts_body.append($alerts_bodyInput);
 				$alerts_body.append($alerts_bodyContent);
-				$alerts_body.append($alerts_bodyTime);
 				
 				$alerts_dropdown_container.append($alerts_body);
 			}
