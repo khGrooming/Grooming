@@ -61,7 +61,7 @@
  		SELECT * 
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
- 			OR GROOMING_STATUS = 'D'
+ 			OR GROOMING_STATUS = 'B'
  		
  	</select>
  	

@@ -21,6 +21,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.declaration.model.service.DeclarationService;
+import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -41,6 +43,9 @@ public class GroomingController<memberNo> {
 	@Autowired
 	private TagService tagService;
 
+	@Autowired
+	private DeclarationService declarationService;
+	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv) {
@@ -391,6 +396,18 @@ public class GroomingController<memberNo> {
 			return "redirect:groomingMain.do";
 		} else {
 			throw new GroomingException("게시글 신청 실패!");
+		}
+	}
+	
+	@RequestMapping("declare.do")
+	public String declareG(Declaration d) {
+		
+		int result = declarationService.declareG(d);
+		
+		if (result > 0) {
+			return "redirect:groomingMain.do";
+		} else {
+			throw new GroomingException("게시글 신고 실패!");
 		}
 	}
 	

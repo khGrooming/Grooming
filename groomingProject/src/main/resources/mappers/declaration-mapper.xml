@@ -14,7 +14,22 @@
 		
 	</resultMap>
   
-  
+  	<insert id="declareG" parameterType="Declaration">
+	  	INSERT INTO DECLARATION VALUES(
+	 			'DEC' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+	 			, #{memberNo}
+	 			, '4'
+	 			, #{dnNo}
+	 			, #{dContent}
+	 			, DEFAULT
+	 		
+	 			)
+	
+	
+  	
+  	
+  	
+  	</insert>
   
   
   
