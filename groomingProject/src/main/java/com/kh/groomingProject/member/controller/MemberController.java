@@ -478,8 +478,9 @@ public class MemberController {
 			return "fail";
 		}
 
-		// 인증 숫자 생성
-		String randomCode = String.format("%06d", "" + (int)(Math.random()*1000000));
+		// 인증 숫자 생성 (앞은 0으로 6자리 채우기)
+		int randomTemp = (int)(Math.random()*1000000);
+		String randomCode = String.format("%06d", randomTemp);
 		System.out.println("인증코드 : " + randomCode);
 
 		MemberCertiCode mcc = new MemberCertiCode();
