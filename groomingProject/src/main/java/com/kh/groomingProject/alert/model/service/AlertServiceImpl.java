@@ -1,9 +1,13 @@
 package com.kh.groomingProject.alert.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.alert.model.dao.AlertDao;
+import com.kh.groomingProject.alert.model.vo.Alert;
+import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberAlert;
 
 @Service("alertService")
@@ -16,6 +20,12 @@ public class AlertServiceImpl implements AlertService {
 	public int insertAlert(MemberAlert memberAlert) {
 
 		return alertDao.insertAlert(memberAlert);
+	}
+
+	@Override
+	public ArrayList<Alert> getUserAlert(Member m) {
+
+		return alertDao.getUserAlert(m);
 	}
 
 }

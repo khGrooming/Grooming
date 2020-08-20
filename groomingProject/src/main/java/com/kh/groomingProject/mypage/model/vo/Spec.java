@@ -14,32 +14,31 @@ public class Spec implements Serializable{
 	private String specName;
 	private String specFileName;
 	private String memberNo;
+	private String specConfirm;
 	public Spec() {
 	}
-
-	public Spec(String specNo, String specCName, String specName, String specFileName, String memberNo) {
+	public Spec(String specNo, String specCName, String specName, String specFileName, String memberNo,
+			String specConfirm) {
+		super();
 		this.specNo = specNo;
 		this.specCName = specCName;
 		this.specName = specName;
 		this.specFileName = specFileName;
 		this.memberNo = memberNo;
+		this.specConfirm = specConfirm;
 	}
-
 	public String getSpecNo() {
 		return specNo;
 	}
 	public void setSpecNo(String specNo) {
 		this.specNo = specNo;
 	}
-	
 	public String getSpecCName() {
 		return specCName;
 	}
-
 	public void setSpecCName(String specCName) {
 		this.specCName = specCName;
 	}
-
 	public String getSpecName() {
 		return specName;
 	}
@@ -58,16 +57,21 @@ public class Spec implements Serializable{
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
+	public String getSpecConfirm() {
+		return specConfirm;
+	}
+	public void setSpecConfirm(String specConfirm) {
+		this.specConfirm = specConfirm;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 	@Override
 	public String toString() {
 		return "Spec [specNo=" + specNo + ", specCName=" + specCName + ", specName=" + specName + ", specFileName="
-				+ specFileName + ", memberNo=" + memberNo + "]";
+				+ specFileName + ", memberNo=" + memberNo + ", specConfirm=" + specConfirm + "]";
 	}
-	
+
 	
 	
 }

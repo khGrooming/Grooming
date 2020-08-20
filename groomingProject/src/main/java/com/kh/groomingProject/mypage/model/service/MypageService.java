@@ -20,5 +20,15 @@ public interface MypageService {
 
 	int memberDelete(Member m);
 
+	int memberInfoUpdate(Member m);
+
+	Member selectMember(String memberNo);
+
+	int insertSpec(Spec s);
+
+	String mentorUserSelect(String mNo);
+
+	int insertMentor(String mNo);
+
 
 }

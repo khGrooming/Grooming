@@ -4,7 +4,9 @@
 
 	<insert id="welcomePoint" parameterType="string">
 		INSERT INTO POINT (POINT_NO, MEMBER_NO, ADD_POINT, SUB_POINT, POINT_LIST, POINT_DATE)
-		VALUES('P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0), #{memberNo}, 1000, 0, '신규가입', SYSDATE)
+		VALUES('P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0)
+			, (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail})
+			, 1000, 0, '신규가입', SYSDATE)
 	</insert>
 	
 </mapper>

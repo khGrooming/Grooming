@@ -16,20 +16,22 @@
 		<result property="memberPhoto" column="MEMBER_PHOTO"/>
 		<result property="memberAdmin" column="MEMBER_ADMIN"/>
 		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="memberKakao" column="MEMBER_KAKAO"/>
 		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">
-		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD
-							, MEMBER_NICKNAME, MEMBER_NAME, MEMBER_GENDER
-							, MEMBER_PHONE, LVL_NO, MEMBER_EXP
-							, MEMBER_MEMO, MEMBER_PHOTO, MEMBER_ADMIN
-							, MEMBER_STATUS, MEMBER_JOIN_DATE)
-		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}
-				, #{memberNickName}, #{memberName}, #{memberGender}
-				, #{memberPhone}, DEFAULT, #{memberExp}
-				, #{memberMemo}, DEFAULT, DEFAULT
-				, DEFAULT, SYSDATE)
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SYSDATE)
+	</insert>
+	
+	<insert id="insertMemberKakao" parameterType="Member">
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'K', SYSDATE)
 	</insert>
 	
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
@@ -59,7 +61,13 @@
 
 	<update id="updateMemberOption" parameterType="Member">
 		UPDATE MEMBER
-		SET MEMBER_NAME=#{memberName}, MEMBER_GENDER=#{memberGender}, MEMBER_MEMO=#{memberMemo}, MEMBER_PHOTO=#{memberPhoto}
+		<set>
+			<if test="memberName !=null">MEMBER_NAME=#{memberName},</if>
+			<if test="memberGender !=null">MEMBER_GENDER=#{memberGender},</if>
+			<if test="memberPhone !=null">MEMBER_PHONE=#{memberPhone},</if>
+			<if test="memberMemo !=null">MEMBER_MEMO=#{memberMemo},</if>
+			<if test="memberPhoto !=null">MEMBER_PHOTO=#{memberPhoto}</if>
+		</set>
 		WHERE MEMBER_NO=#{memberNo}
 	</update>
 
@@ -70,6 +78,48 @@
 		WHERE GROOMING_NO = #{groomingNo}
 		AND MEMBER_STATUS='N'
 	</select>
+	
+	<update id="mergeMemberTags" parameterType="MemberTag">
+		MERGE INTO MEMBER_TAG M
+		USING (SELECT TAG_NO FROM TAG WHERE TAG_NAME=#{tagName}) T
+			ON (TRIM(M.TAG_NO)= T.TAG_NO)
+		WHEN NOT MATCHED THEN
+			INSERT (MEMBER_NO, TAG_NO) 
+			VALUES (#{memberNo}, T.TAG_NO)
+	</update>
+
+	<select id="findMemberEmail" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL=#{memberEmail}
+		AND MEMBER_STATUS='N'
+	</select>
+
+	<insert id="insertRandomCode" parameterType="MemberCertiCode">
+		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
+		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0), 
+				(SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}), 
+				#{certiNumber}, SYSDATE)	
+	</insert>
+
+	<select id="certiChk" parameterType="MemberCertiCode" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*) 
+		FROM (SELECT CERTI_NO, ROUND((SYSDATE-CERTI_C_DATE)*24*60) CERTI_TIME, CERTI_CODE, CERTI_MEMO 
+		FROM CERTIFICATION
+			    WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail}) 
+			    ORDER BY CERTI_C_DATE DESC) 
+		WHERE ROWNUM = 1
+		AND CERTI_CODE = #{certiNumber}
+		AND CERTI_TIME < #{expireTime}
+		]]>
+	</select>
+	
+	<update id="updateMemberPwd" parameterType="Member">
+		UPDATE MEMBER
+		SET	MEMBER_PASSWORD=#{memberPwd}
+		WHERE MEMBER_EMAIL=#{memberEmail}
+	</update>
 	
 	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
 	SELECT *

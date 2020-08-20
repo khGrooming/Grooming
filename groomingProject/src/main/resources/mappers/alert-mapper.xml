@@ -12,7 +12,17 @@
 
 	<insert id="insertAlert" parameterType="MemberAlert">
 		INSERT INTO ALERT (ALERT_NO, MEMBER_NO, ALERT_CONTENT, ALERT_CREATEDATE, ALERT_CONFIRM)
-		VALUES('ALE' || LPAD(SEQ_ALERT_NO.NEXTVAL,5,0), #{memberNo}, #{alertContent}, SYSDATE, DEFAULT)
+		VALUES('ALE' || LPAD(SEQ_ALERT_NO.NEXTVAL,5,0)
+			, (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail})
+			, #{alertContent}, SYSDATE, DEFAULT)
 	</insert>
+	
+	<select id="getUserAlert" parameterType="Member" resultMap="alertResultSet">
+		SELECT ALERT_NO, MEMBER_NO, ALERT_CONTENT, ALERT_CREATEDATE, ALERT_CONFIRM
+		FROM ALERT
+		WHERE MEMBER_NO = #{memberNo}
+		AND ALERT_CONFIRM = 'N'
+		ORDER BY ALERT_CREATEDATE DESC
+	</select>
 
 </mapper>
