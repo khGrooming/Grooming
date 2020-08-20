@@ -14,4 +14,6 @@ public interface AlertService {
 
 	ArrayList<Alert> getUserAlert(Member m);
 
+	int readUserAlert(String alertNo);
+
 }

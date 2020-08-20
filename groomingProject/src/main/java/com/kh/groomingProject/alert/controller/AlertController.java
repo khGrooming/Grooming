@@ -43,13 +43,33 @@ public class AlertController {
 	public void getUserAlert(HttpServletResponse response,Member m) throws JsonIOException, IOException {
 		
 		System.out.println("알림 확인 : " + m.getMemberNo());
-		
+
 		ArrayList<Alert> aList = alertService.getUserAlert(m);
-		
+
 		System.out.println("알림 확인 리스트: " + aList);
-		
+
 		response.setContentType("application/json;charset=utf-8");
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm").create();
+		gson.toJson(aList, response.getWriter());
 		
+	}
+
+	@RequestMapping("readUserAlert.do")
+	public void readUserAlert(HttpServletResponse response,Member m, String alertNo) throws JsonIOException, IOException {
+		
+		System.out.println("알림 읽음 : " + alertNo);
+		
+		int result = alertService.readUserAlert(alertNo);
+		
+		System.out.println("알림 읽음 확인 : " + result);
+
+		ArrayList<Alert> aList = alertService.getUserAlert(m);
+
+		System.out.println("알림 확인 리스트: " + aList);
+
+		response.setContentType("application/json;charset=utf-8");
+
 		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm").create();
 		gson.toJson(aList, response.getWriter());
 		

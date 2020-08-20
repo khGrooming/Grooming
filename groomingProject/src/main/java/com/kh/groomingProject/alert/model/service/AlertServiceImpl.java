@@ -34,4 +34,10 @@ public class AlertServiceImpl implements AlertService {
 		return alertDao.getUserAlert(m);
 	}
 
+	@Override
+	public int readUserAlert(String alertNo) {
+
+		return alertDao.readUserAlert(alertNo);
+	}
+
 }

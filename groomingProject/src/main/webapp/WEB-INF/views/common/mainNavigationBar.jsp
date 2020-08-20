@@ -222,6 +222,11 @@
 		<c:if test="${!empty sessionScope.loginUser }">
 		$(function() {
 			getUserAlert();
+			
+			// 디버깅 때 테스트
+			/* setInterval(function(){
+				getUserAlert();
+			}, 100000); */
 		});
 		</c:if>
 		
@@ -266,20 +271,25 @@
 				$alerts_dropdown_container.append($alerts_body);
 			}
 		}
-		
+
 		$(".main_alerts_body_container").on("click",function(){
+			if($(this).find("input[type=hidden]").val() == ""){
+				console.log("알림이 없습니다.");
+				return;
+			}
+			
 			var memberNo = "${loginUser.memberNo}";
 			var alertBody = $(this);
 			var alertNo = $(this).find("input[type=hidden]").val();
 
-			console.log("삭제할 알람 번호" + alertNo);
-
+			console.log("읽을 알람 번호" + alertNo);
+			
 			// 알림 삭제
 			$.ajax({
-				url:"deleteUserAlert.do",
+				url:"readUserAlert.do",
 				data:{alertNo:alertNo,memberNo:memberNo},
 				success:function(data){
-					console.log("알림 확인 결과 : " + data.length);
+					console.log("알림 읽음 결과 : " + data.length);
 					refreshAlertBody(data);
 				},
 				error:function(request, status, errorData){
@@ -299,37 +309,7 @@
 				dateType:"json",
 				success:function(data){
 					console.log("알림 확인 결과 : " + data.length);
-					var $alerts_dropdown = $(".main_alerts_body");
-					var $alerts_dropdown_container = $(".main_alerts_body_container");
-					$alerts_dropdown_container.html("");
-					
-					// 알림 내용 추가
-					if(data.length > 0) {
-						for(var i in data){
-							console.log("알림 추가 시작");
-							var $alerts_body = $('<div>').addClass("main_alerts_body");
-							var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
-							var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
-							var $alerts_bodyTime = $('<div>').addClass("main_aBody_time").text(data[i].alertCreateDate);
-							
-							$alerts_body.append($alerts_bodyInput);
-							$alerts_body.append($alerts_bodyContent);
-							$alerts_body.append($alerts_bodyTime);
-							
-							$alerts_dropdown_container.append($alerts_body);
-						}
-					} else {
-						var $alerts_body = $('<div>').addClass("main_alerts_body");
-						var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
-						var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
-						var $alerts_bodyTime = $('<div>').addClass("main_aBody_time");
-						
-						$alerts_body.append($alerts_bodyInput);
-						$alerts_body.append($alerts_bodyContent);
-						$alerts_body.append($alerts_bodyTime);
-						
-						$alerts_dropdown_container.append($alerts_body);
-					}
+					refreshAlertBody(data);
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");

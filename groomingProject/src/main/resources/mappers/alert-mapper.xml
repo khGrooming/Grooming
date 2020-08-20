@@ -33,4 +33,10 @@
 		ORDER BY ALERT_CREATEDATE DESC
 	</select>
 
+	<update id="readUserAlert" parameterType="string">
+		UPDATE ALERT
+		SET ALERT_CONFIRM='Y'
+		WHERE ALERT_NO=#{alertNo}
+	</update>
+
 </mapper>
