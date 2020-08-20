@@ -104,7 +104,7 @@ public class MemberController {
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMember(m);
 
-		// if문안에 if로 처리 해야함(트리거 이용하면 신규가입 추가 insert는 전부 가능)
+		// 회원가입 확인
 		if(resultInsertMember > 0) {
 			System.out.println("회원가입 (insert): 성공");
 
@@ -157,14 +157,14 @@ public class MemberController {
 	// 회원 가입 : 카카오 회원
 	@RequestMapping("memberInsertkakao.do")
 	@ResponseBody
-	public String memberKakaoInsert(Member m) {
+	public String memberKakaoInsert(Member m, Model model) {
 		String message = "";
 		System.out.println("회원가입Kakao (프론트정보): " + m);
 
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMemberKakao(m);
 
-		// if문안에 if로 처리 해야함(트리거 이용하면 신규가입 추가 insert는 전부 가능)
+		// 회원가입 확인
 		if(resultInsertMember > 0) {
 			System.out.println("회원가입Kakao (insert): 성공");
 
@@ -190,6 +190,12 @@ public class MemberController {
 
 					if(resultAlertPoint > 0) {
 						System.out.println("회원가입Kakao 확인 : 성공");
+
+						Member loginUser = mService.loginMember(m);
+						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+
+						model.addAttribute("loginUser", loginUser);
+							
 						return "success";
 
 					} else {
@@ -361,6 +367,7 @@ public class MemberController {
 		
 		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			System.out.println("로그인 확인 : 성공");
+			loginUser.setMemberPwd("");
 			model.addAttribute("loginUser", loginUser);
 			return "success";
 		} else {

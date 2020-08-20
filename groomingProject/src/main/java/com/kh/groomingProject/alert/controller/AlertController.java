@@ -29,9 +29,9 @@ public class AlertController {
 	
 		System.out.println("알림 확인 : " + m.getMemberNo());
 		
-		ArrayList<Alert> aList = new ArrayList<Alert>();
+		ArrayList<Alert> aList = alertService.getUserAlert(m);
 		
-		aList = alertService.getUserAlert(m);
+		System.out.println("알림 확인 리스트: " + aList);
 
 		response.setContentType("application/json;charset=utf-8");
 		
