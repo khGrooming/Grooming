@@ -153,6 +153,12 @@
 	display: block;
 	padding: 8px;
 }
+.main_messages_img
+{
+	height: 25px;
+	width: 25px;
+	object-fit: contain;
+}
 .main_mBody_time,
 .main_aBody_time
 {
@@ -269,6 +275,7 @@
 	
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
+		let memberNo = "${loginUser.memberNo}";
 		$(function() {
 			getUserAlert();
 			getUserMessagee();
@@ -289,7 +296,7 @@
 		}
 		// 메시지 카운트
 		function getUserMessagee() {
-			var memberNo = "${loginUser.memberNo}";
+			
 			$.ajax({
 				url:"getUserMessagesCount.do",
 				data:{memberNo:memberNo},
@@ -321,12 +328,14 @@
 			if(data.length > 0) {
 				for(var i in data){
 					console.log("메시지 추가 시작");
-					var $messages_body = $('<div>').addClass("main_alerts_body");
+					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
-					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNo);
+					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/M0000220200819210925.gif");
+					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
 					
+					$messages_bodyFrom.prepend($messages_Img);
 					$messages_body.append($messages_bodyInput);
 					$messages_body.append($messages_bodyFrom);
 					$messages_body.append($messages_bodyContent);
@@ -351,7 +360,6 @@
 			// 메시지 수 삭제
 			$(".main_messages_txt").remove();
 			
-			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
 				url:"getUserMessage.do",
 				data:{memberNo:memberNo},
@@ -365,7 +373,6 @@
 				}
 			});
 		});
-		
 
 		// 메시지 읽음 ajax
 		$(".main_messages_body_container").on("click",function(){
@@ -374,16 +381,15 @@
 				return;
 			}
 			
-			var memberNo = "${loginUser.memberNo}";
-			var alertBody = $(this);
-			var alertNo = $(this).find("input[type=hidden]").val();
+			var messagBody = $(this);
+			var messageNo = $(this).find("input[type=hidden]").val();
 
 			console.log("읽을 메시지 번호" + messageNo);
 			
 			// 메시지 삭제
 			$.ajax({
 				url:"readUserMessage.do",
-				data:{messagesNo:messagesNo,memberNo:memberNo},
+				data:{messagesNo:memberNo,memberNo:memberNo},
 				success:function(data){
 					console.log("메시지 읽음 결과 : " + data.length);
 					refreshMessageBody(data);
@@ -406,7 +412,7 @@
 		}
 		// 알림 카운트
 		function getUserAlert() {
-			var memberNo = "${loginUser.memberNo}";
+			
 			$.ajax({
 				url:"getUserAlertCount.do",
 				data:{memberNo:memberNo},
@@ -414,7 +420,6 @@
 					console.log("알림 카운트 : " + data);
 
 					var $alertIcon = $(".main_alerts_icon");
-
 
 					if(data > 0) {
 						// 알림 숫자 표시
@@ -467,8 +472,7 @@
 		$(".main_alerts_icon").on("click",function(){
 			// 알림 수 삭제
 			$(".main_alerts_txt").remove();
-			
-			var memberNo = "${loginUser.memberNo}";
+
 			$.ajax({
 				url:"getUserAlert.do",
 				data:{memberNo:memberNo},
@@ -490,8 +494,7 @@
 				console.log("알림이 없습니다.");
 				return;
 			}
-			
-			var memberNo = "${loginUser.memberNo}";
+
 			var alertBody = $(this);
 			var alertNo = $(this).find("input[type=hidden]").val();
 

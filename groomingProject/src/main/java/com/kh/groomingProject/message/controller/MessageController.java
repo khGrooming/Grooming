@@ -54,7 +54,7 @@ public class MessageController {
 
 		response.setContentType("application/json;charset=utf-8");
 
-		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm:ss").create();
 		gson.toJson(mList, response.getWriter());
 		
 	}

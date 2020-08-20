@@ -5,7 +5,9 @@
 	<resultMap type="Message" id="messageResultSet">
 		<id property="messageNo" column="MESSAGE_NO"/>
 		<result property="fromMemberNo" column="FROM_MEMBER_NO"/>
+		<result property="fromMemberNickname" column="FROM_MEMBER_NICKNAME"/>
 		<result property="toMemberNo" column="TO_MEMBER_NO"/>
+		<result property="toMemberNickname" column="TO_MEMBER_NICKNAME"/>
 		<result property="messageContent" column="MESSAGE_CONTENT"/>
 		<result property="messageDate" column="MESSAGE_DATE"/>
 		<result property="MessageConfirm" column="MESSAGE_CONFIRM"/>
@@ -26,8 +28,8 @@
 	</select>
 
 	<select id="getUserMessage" parameterType="Member" resultMap="messageResultSet">
-		SELECT MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM
-		FROM MESSAGE
+		SELECT MESSAGE_NO, FROM_MEMBER_NO, FROM_MEMBER_NICKNAME, TO_MEMBER_NO, TO_MEMBER_NICKNAME, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM
+		FROM VIEW_MESSAGE
 		WHERE TO_MEMBER_NO = #{memberNo}
 		AND MESSAGE_CONFIRM = 'N'
 		ORDER BY MESSAGE_DATE DESC

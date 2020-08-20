@@ -364,17 +364,20 @@ public class MemberController {
 		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
 		
 		Member loginUser = mService.loginMember(m);
+		System.out.println("회원 확인 : " + loginUser);
 		
-		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			System.out.println("로그인 확인 : 성공");
-			loginUser.setMemberPwd("");
-			model.addAttribute("loginUser", loginUser);
-			return "success";
-		} else {
-			System.out.println("로그인 확인 : 실패");
-			return "fail";
+		if(loginUser != null) {
+			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+				System.out.println("로그인 확인 : 성공");
+				loginUser.setMemberPwd("");
+				model.addAttribute("loginUser", loginUser);
+				return "success";
+			} else {
+				System.out.println("로그인 확인 : 실패");
+				return "fail";
+			}
 		}
-		
+		return "fail";
 	}
 
 	// 카카오 회원 로그인
