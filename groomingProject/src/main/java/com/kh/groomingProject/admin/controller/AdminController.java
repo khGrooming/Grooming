@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
+import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
@@ -69,7 +70,7 @@ public class AdminController {
 		}else {
 			p.setPointList("포인트 지급");
 		}
-		System.out.println(p);
+		
 		int result = adminService.pointCalculation(p);
 		
 		if(result > 0) {
@@ -81,8 +82,43 @@ public class AdminController {
 	}
 	
 	@RequestMapping("mentoManage.do")
-	public String mentoManage() {
-		return "admin/mentoManage";
+	public ModelAndView mentoManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		ArrayList<MemberManageView> mNo = adminService.selectNo(1);
+		ArrayList<MemberManageView> sNo = adminService.selectNo(2);
+		
+		System.out.println("mNo : "+mNo);
+		System.out.println("sNo : "+sNo);
+
+		int listCount = adminService.selectmentoCount(1);
+		int spareCount = adminService.selectmentoCount(2);
+		
+		System.out.println(listCount);
+		System.out.println(spareCount);
+		
+		AdminPageInfo pi = getPageInfo(currentPage, listCount);
+		AdminPageInfo spi = getPageInfo(currentPage, spareCount);
+		
+		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(pi, mNo);
+		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(spi, sNo);
+
+		System.out.println("mentoList : "+mentoList);
+		System.out.println("spareList : "+spareList);
+		mv.addObject("pi", pi);
+		mv.addObject("spi", spi);
+		mv.addObject("mNo",listCount);
+		mv.addObject("sNo", spareCount);
+		mv.addObject("mentoList", mentoList);
+		mv.addObject("spareMentoList", spareList);
+		mv.setViewName("admin/mentoManage");
+
+		return mv;
 	}
 	
 

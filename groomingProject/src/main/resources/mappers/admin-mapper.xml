@@ -9,7 +9,22 @@
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="memberPhone" column="MEMBER_PHONE"/>
 		<result property="point" column="POINT"/>
+		<result property="sanctions" column="SANCTIONS"/>
 	</resultMap>
+	
+	<resultMap type="MentoManageView" id="mentoViewResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="mentorNo" column="MENTOR_NO"/>
+		<result property="mentorPass" column="MENTOR_PASS"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="specFileName" column="SPEC_FILENAME"/>
+		<result property="specCName" column="SPEC_C_NAME"/>
+	</resultMap>
+
 	
 	<select id="memberListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
@@ -23,6 +38,9 @@
 			</if>
 			<if test="category == 'email'">
 				MEMBER_EMAIL LIKE '%'||#{name}||'%'
+			</if>
+			<if test="category == 'sanctions'">
+				SANCTIONS IS NOT NULL
 			</if>
 		</where>
 	</select>
@@ -40,6 +58,9 @@
 			<if test="category == 'email'">
 				MEMBER_EMAIL LIKE '%'||#{name}||'%'
 			</if>
+			<if test="category == 'sanctions'">
+				SANCTIONS IS NOT NULL
+			</if>
 		</where>
 	</select>
 	
@@ -53,4 +74,54 @@
 			 , SYSDATE
 		)
 	</insert>
+	
+	<select id="selectNo" parameterType="map" resultMap="memberViewResultSet">
+		SELECT MEMBER_NO
+		FROM MENTOR
+		<where>
+			<if test="kind == 1">
+				MENTOR_PASS = 'Y'
+			</if>
+			<if test="kind == 2">
+				MENTOR_PASS = 'C'
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectmentoCount" parameterType="map" resultType="_int">
+		SELECT COUNT(MEMBER_NO)
+		FROM MENTOR
+		<where>
+			<if test="kind == 1">
+				MENTOR_PASS = 'Y'
+			</if>
+			<if test="kind == 2">
+				MENTOR_PASS = 'C'
+			</if>
+		</where>
+	</select>
+	
+	<select id="selectmentoList" parameterType="list" resultMap="mentoViewResultSet">
+		SELECT *
+		FROM METO_MANAGE
+		WHERE MENTOR_PASS = 'Y' 
+		AND MEMBER_NO IN 
+		<foreach item="mNo" index="index" collection="list"
+				open="(" separator="," close=")">
+				#{mNo.memberNo} 
+		</foreach>
+		ORDER BY SPEC_C_NAME DESC
+	</select>
+	
+	<select id="selectSpareMentoList" resultMap="mentoViewResultSet">
+		SELECT * 
+		FROM METO_MANAGE
+		WHERE MENTOR_PASS = 'C'
+		AND MEMBER_NO IN 
+		<foreach item="mNo" index="index" collection="list"
+				open="(" separator="," close=")">
+				#{mNo.memberNo} 
+		</foreach>
+		ORDER BY SPEC_C_NAME DESC
+	</select>
 </mapper>
