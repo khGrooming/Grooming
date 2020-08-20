@@ -57,6 +57,14 @@
 		
 	</resultMap>
  
+	 <resultMap type="Gheart" id="GheartResultSet">
+		<id property="groomingHNo" column="GROOMING_HEART_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		
+		
+		
+	</resultMap>
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
@@ -243,5 +251,13 @@
  	
  	</select>
  	
+ 	<select id="selectHeartMember" parameterType="map" resultMap="GheartResultSet">
+ 		SELECT *
+ 		FROM GROOMING_HEART
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 		AND MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</select>
  	
 </mapper>

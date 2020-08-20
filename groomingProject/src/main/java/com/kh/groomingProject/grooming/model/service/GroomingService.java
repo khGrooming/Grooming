@@ -6,6 +6,7 @@ import java.util.Map;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -53,5 +54,7 @@ public interface GroomingService {
 	int applyContent(GroomingApplicant ga);
 
 	GroomingApplicant selectAppMemberNo(Map info);
+
+	GroomingHeart selectHeartMember(Map info);
 
 }

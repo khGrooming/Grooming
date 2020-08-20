@@ -10,6 +10,7 @@ import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -155,6 +156,12 @@ public class GroomingServiceImpl implements GroomingService{
 	public GroomingApplicant selectAppMemberNo(Map info) {
 		// TODO Auto-generated method stub
 		return gDao.selectAppMemberNo(info);
+	}
+
+	@Override
+	public GroomingHeart selectHeartMember(Map info) {
+		// TODO Auto-generated method stub
+		return gDao.selectHeartMember(info);
 	}
 
 

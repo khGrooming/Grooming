@@ -80,6 +80,14 @@ img {
 	width: 100px;
 	height: 90px;
 }
+.far .fas{
+	font-size:20px;
+	
+}
+
+.fas{
+	color:yellow;
+}
 </style>
 </head>
 
@@ -127,7 +135,13 @@ img {
 							</td>
 						</tr>
 						<tr>
-							<td>&nbsp;<i class="far fa-bookmark"></i>&nbsp;&nbsp; 
+							<td style="text-align:right;"> 
+								<c:if test="${!empty heart }">
+								<i class="fas fa-bookmark"></i>
+								</c:if>
+								<c:if test="${empty heart }">
+								<i class="far fa-bookmark"></i>
+								</c:if>
 								<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 						
 								<!-- 신청폼 모달 -->
@@ -141,8 +155,7 @@ img {
 												<!-- 모달 제목 -->
 												<div class="modal-header">
 													<h5 class="modal-title" id="exampleModalLabel">신고 사유</h5>
-													<button type="button" class="close" data-dismiss="modal"
-														aria-label="Close">
+													<button type="button" class="close" data-dismiss="modal"aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
@@ -418,12 +431,30 @@ img {
 		</div>
 	
 	</section>
-<!-- 	<script>
-		$(function(){
-			$("#open_modal_appContent").draggable();
-		})
 	
-	</script> -->
+	<script>
+	
+		$(function(){
+				
+			
+		
+		
+		
+		})
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
 	
 	<script>
 		

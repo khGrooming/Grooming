@@ -28,6 +28,7 @@ import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -238,12 +239,13 @@ public class GroomingController<memberNo> {
 			info.put("memberNo", memberNo);
 			
 			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+			GroomingHeart heart = gService.selectHeartMember(info);
 //			System.out.println("나 tag야 " +tag);
 
 			
 			if (grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
-						.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList)
+						.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList).addObject("heart",heart)
 						.setViewName("grooming/groomingDetailView");
 			} else {
 				throw new GroomingException("조회실패!");
