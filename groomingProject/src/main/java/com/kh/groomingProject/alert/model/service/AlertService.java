@@ -10,6 +10,8 @@ public interface AlertService {
 
 	int insertAlert(MemberAlert memberAlert);
 
+	int getUserAlertCount(Member m);
+
 	ArrayList<Alert> getUserAlert(Member m);
 
 }

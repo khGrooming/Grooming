@@ -264,22 +264,22 @@ public class MemberController {
 	public String memberOptionUpdate(HttpServletRequest request, Member m
 			,@RequestParam(value="memberTagName", required=false) String memberTagName
 			,@RequestParam(value="profileFile", required=false) MultipartFile file) {
-		System.out.println("회원가입 추가 // 멤버 이메일  : " + m.getMemberEmail()
+		System.out.println("회원가입 추가 ( 멤버 이메일  : " + m.getMemberEmail()
 						+ " 멤버 이름 : " + m.getMemberName()
 						+ " 멤버 전화 : " + m.getMemberPhone()
 						+ " 멤버 성별 : " + m.getMemberGender()
 						+ " 멤버 사진 : " + m.getMemberPhoto()
-						+ " 멤버 메모 : " + m.getMemberMemo());
+						+ " 멤버 메모 : " + m.getMemberMemo() + " )");
 		System.out.println("멤버 Tags : " + memberTagName);
 		
-		System.out.println((m.getMemberEmail()).length() != 0);
-		System.out.println((m.getMemberName()).length() != 0);
-		System.out.println((m.getMemberPhone()).length() != 0);
-		System.out.println(m.getMemberGender() != null);
-		System.out.println(!file.getOriginalFilename().equals(""));
-		System.out.println((m.getMemberMemo()).length() != 0);
+		System.out.println("값 유무 확인 (이멜) : " + ((m.getMemberEmail()).length() != 0));
+		System.out.println("값 유무 확인 (이름) : " +((m.getMemberName()).length() != 0));
+		System.out.println("값 유무 확인 (전화) : " + ((m.getMemberPhone()).length() != 0));
+		System.out.println("값 유무 확인 (성별) : " + (m.getMemberGender() != null));
+		System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
+		System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
 		
-		if((m.getMemberEmail()).length() != 0) {
+		if((m.getMemberEmail()).length() != 0 && ((m.getMemberName()).length() != 0 || (m.getMemberPhone()).length() != 0 || m.getMemberGender() != null || !file.getOriginalFilename().equals("") || (m.getMemberMemo()).length() != 0)) {
 			
 			// 프로필 사진 리네임을 위해 멤버 번호를 DB에서 가져온다
 			Member member = mService.loginMember(m);

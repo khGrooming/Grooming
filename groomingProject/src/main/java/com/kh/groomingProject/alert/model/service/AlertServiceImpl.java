@@ -21,6 +21,12 @@ public class AlertServiceImpl implements AlertService {
 
 		return alertDao.insertAlert(memberAlert);
 	}
+	
+	@Override
+	public int getUserAlertCount(Member m) {
+
+		return alertDao.getUserAlertCount(m);
+	}
 
 	@Override
 	public ArrayList<Alert> getUserAlert(Member m) {

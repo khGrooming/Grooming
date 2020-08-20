@@ -25,7 +25,17 @@
 /* font end */
 .main_navbar
 {
-	
+	border-bottom: 1px solid;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.nav-link:hover
+{
+	background-color: #F9F9F9;
+	border-radius: 15% / 50%;
+	font-size: 1.5rem;
+	padding: 0.5rem 1.3rem;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	transition: 0.2s;
 }
 .mainNavImg
 {
@@ -41,24 +51,46 @@
 {
 	position: relative;
 }
-.main_messages_icon svg, .main_alerts_icon svg
+.main_messages_icon svg,
+.main_alerts_icon svg
 {
 	width: 38px;
 	height: 38px;
-	fill: #fff;
+	fill: grey;
+}
+.main_alerts_icon svg:hover
+{
+	background-color: #F9F9F9;
+	border-radius: 50%;
+	padding: 5px;
+	width: 40px;
+	height: 40px;
+	fill: drak;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	transition: 0.2s;
+}
+.main_messages_icon svg:hover
+{
+	background-color: #F9F9F9;
+	border-radius: 30%;
+	padding: 5px;
+	width: 40px;
+	height: 40px;
+	fill: drak;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	transition: 0.2s;
 }
 .main_messages_txt, .main_alerts_txt
 {
-	padding: 2px;
+	padding: 4px;
 	color: white;
 	width: 25px;
 	height: 25px;
-	background: darkorange;
+	background: #cc0000;
 	border-radius: 50%;
-	border: 1px solid;
 	font-size: 18px;
 	position: absolute;
-	transform: translateY(-50%);
+	transform: translateY(-40%);
 	left: 38px;
 }
 .main_alerts_dropdown
@@ -122,7 +154,7 @@
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
 
 	<!-- Navigation -->
-	<nav class="main_navbar navbar navbar-expand-sm navbar-dark bg-success font-weight-bold h5 fixed-top">
+	<nav class="main_navbar navbar navbar-expand-sm navbar-light font-weight-bold h5 fixed-top">
 		<div class="container">
 			<a class="navbar-brand" href="${mainPage }">
 				<img class="mainNavImg" alt="groominglogo"
@@ -200,8 +232,62 @@
 			
 			$(".main_alerts_txt").remove();
 		}
+		
+		function refreshAlertBody(data) {
+			var $alerts_dropdown = $(".main_alerts_body");
+			var $alerts_dropdown_container = $(".main_alerts_body_container");
+			$alerts_dropdown_container.html("");
+			
+			// 알림 내용 추가
+			if(data.length > 0) {
+				for(var i in data){
+					console.log("알림 추가 시작");
+					var $alerts_body = $('<div>').addClass("main_alerts_body");
+					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
+					var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
+					var $alerts_bodyTime = $('<div>').addClass("main_aBody_time").text(data[i].alertCreateDate);
+					
+					$alerts_body.append($alerts_bodyInput);
+					$alerts_body.append($alerts_bodyContent);
+					$alerts_body.append($alerts_bodyTime);
+					
+					$alerts_dropdown_container.append($alerts_body);
+				}
+			} else {
+				var $alerts_body = $('<div>').addClass("main_alerts_body");
+				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
+				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
+				var $alerts_bodyTime = $('<div>').addClass("main_aBody_time");
+				
+				$alerts_body.append($alerts_bodyInput);
+				$alerts_body.append($alerts_bodyContent);
+				$alerts_body.append($alerts_bodyTime);
+				
+				$alerts_dropdown_container.append($alerts_body);
+			}
+		}
+		
 		$(".main_alerts_body_container").on("click",function(){
-			console.log("test plz");
+			var memberNo = "${loginUser.memberNo}";
+			var alertBody = $(this);
+			var alertNo = $(this).find("input[type=hidden]").val();
+
+			console.log("삭제할 알람 번호" + alertNo);
+
+			// 알림 삭제
+			$.ajax({
+				url:"deleteUserAlert.do",
+				data:{alertNo:alertNo,memberNo:memberNo},
+				success:function(data){
+					console.log("알림 확인 결과 : " + data.length);
+					refreshAlertBody(data);
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+			
+			
 			event.stopPropagation();
 		});
 		
@@ -251,27 +337,25 @@
 			});
 		});
 		
+		// 알림 카운트
 		function getUserAlert() {
 			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
-				url:"getUserAlert.do",
+				url:"getUserAlertCount.do",
 				data:{memberNo:memberNo},
-				dateType:"json",
 				success:function(data){
-					console.log("알림 확인 결과 : " + data.length);
+					console.log("알림 카운트 : " + data);
 					
-					//$("div").remove(".main_alerts_txt");
-
+					
 					var $alertIcon = $(".main_alerts_icon");
-					var alertCount = data.length;
 					
-					if(data.length >= 10) {
+					if(data >= 10) {
 						alertCount = "9+";
 					}
 					
-					if(data.length > 0) {
+					if(data > 0) {
 						// 알림 숫자 표시
-						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(alertCount);
+						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(data);
 
 						$alertIcon.prepend($alertDiv);
 					}

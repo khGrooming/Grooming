@@ -21,9 +21,15 @@ public class AlertDao {
 		return sqlSessionTemplate.insert("alertMapper.insertAlert", memberAlert);
 	}
 
+	public int getUserAlertCount(Member m) {
+		
+		return sqlSessionTemplate.selectOne("alertMapper.getUserAlertCount", m);
+	}
+
 	public ArrayList<Alert> getUserAlert(Member m) {
 
 		return (ArrayList)sqlSessionTemplate.selectList("alertMapper.getUserAlert", m);
 	}
+
 
 }
