@@ -191,7 +191,6 @@
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
 					<li class="nav-item main_messages_icon">
-						<div class="main_messages_txt text-center">${msg.count }</div>
 						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
 						</svg>
@@ -209,7 +208,7 @@
 							</div>
 						</div>
 					</li>
-					<li class="nav-item main_alerts_icon mr-2">
+					<li class="nav-item main_alerts_icon mr-2" onclick="alertChk()">
 						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 							<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
 							<path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
@@ -295,38 +294,36 @@
 				for(var i in data){
 					console.log("알림 추가 시작");
 					var $alerts_body = $('<div>').addClass("main_alerts_body");
-					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
-					var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
-					var $alerts_bodyTime = $('<div>').addClass("main_aBody_time").text(data[i].alertCreateDate);
+					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
+					var $alerts_bodyContent = $('<div>').text(data[i].messageContent);
+					var $alerts_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
 					
-					$alerts_body.append($alerts_bodyInput);
-					$alerts_body.append($alerts_bodyContent);
-					$alerts_body.append($alerts_bodyTime);
+					$messages_body.append($messages_bodyInput);
+					$messages_body.append($messages_bodyContent);
+					$messages_body.append($messages_bodyTime);
 					
-					$alerts_dropdown_container.append($alerts_body);
+					$messages_dropdown_container.append($messages_body);
 				}
 			} else {
-				var $alerts_body = $('<div>').addClass("main_alerts_body");
-				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
-				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
-				var $alerts_bodyTime = $('<div>').addClass("main_aBody_time");
+				var $messages_body = $('<div>').addClass("main_messages_body");
+				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
+				var $messages_bodyContent = $('<div>').text("아직 알림이 없습니다!");
+				var $messages_bodyTime = $('<div>').addClass("main_mBody_time");
 				
-				$alerts_body.append($alerts_bodyInput);
-				$alerts_body.append($alerts_bodyContent);
-				$alerts_body.append($alerts_bodyTime);
+				$messages_body.append($messages_bodyInput);
+				$messages_body.append($messages_bodyContent);
+				$messages_body.append($messages_bodyTime);
 				
-				$alerts_dropdown_container.append($alerts_body);
+				$messages_dropdown_container.append($messages_body);
 			}
 		}
 		
 
-		// 메시지 리스트 불러오기 ajax
-		$(".main_alerts_icon").on("click",function(){
-			var container = document.querySelector('.main_alerts_dropdown');
-			container.classList.toggle('active');
 
+		// 메시지 리스트 불러오기 ajax
+		$(".main_messages_icon").on("click",function(){
 			// 메시지 수 삭제
-			$(".main_alerts_txt").remove();
+			$(".main_messages_txt").remove();
 			
 			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
@@ -335,7 +332,7 @@
 				dateType:"json",
 				success:function(data){
 					console.log("알림 확인 결과 : " + data.length);
-					refreshAlertBody(data);
+					refreshMessageBody(data);
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -345,9 +342,9 @@
 		
 
 		// 메시지 읽음 ajax
-		$(".main_alerts_body_container").on("click",function(){
+		$(".main_messages_body_container").on("click",function(){
 			if($(this).find("input[type=hidden]").val() == ""){
-				console.log("알림이 없습니다.");
+				console.log("메시지가 없습니다.");
 				return;
 			}
 			
@@ -355,15 +352,15 @@
 			var alertBody = $(this);
 			var alertNo = $(this).find("input[type=hidden]").val();
 
-			console.log("읽을 알람 번호" + alertNo);
+			console.log("읽을 메시지 번호" + messageNo);
 			
 			// 메시지 삭제
 			$.ajax({
-				url:"readUserAlert.do",
-				data:{alertNo:alertNo,memberNo:memberNo},
+				url:"readUserMessage.do",
+				data:{messagesNo:messagesNo,memberNo:memberNo},
 				success:function(data){
-					console.log("알림 읽음 결과 : " + data.length);
-					refreshAlertBody(data);
+					console.log("메시지 읽음 결과 : " + data.length);
+					refreshMessageBody(data);
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -375,8 +372,12 @@
 		});
 	</script>
 
-	<!-- 알림 스크립트 -->
+	<!-- 메시지 스크립트 -->
 	<script type="text/javascript">
+		function alertChk() {
+			var container = document.querySelector('.main_alerts_dropdown');
+			container.classList.toggle('active');
+		}
 		// 알림 카운트
 		function getUserAlert() {
 			var memberNo = "${loginUser.memberNo}";
@@ -444,9 +445,6 @@
 
 		// 알림 리스트 불러오기 ajax
 		$(".main_alerts_icon").on("click",function(){
-			var container = document.querySelector('.main_alerts_dropdown');
-			container.classList.toggle('active');
-
 			// 알림 수 삭제
 			$(".main_alerts_txt").remove();
 			

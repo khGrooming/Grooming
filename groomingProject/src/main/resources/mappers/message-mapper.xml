@@ -18,10 +18,10 @@
 					,SYSDATE, DEFAULT)
 	</insert>
 
-	<select id="getUserMessagesCount" parameterType="Message" resultType="_int">
+	<select id="getUserMessagesCount" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MESSAGE
-		WHERE TO_MEMBER_NO = #{toMemeberNo}
+		WHERE TO_MEMBER_NO = #{memberNo}
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 

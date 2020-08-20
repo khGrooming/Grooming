@@ -27,13 +27,13 @@ public class AlertController {
 
 	@RequestMapping("getUserAlertCount.do")
 	@ResponseBody
-	public int getUserAlertCount(HttpServletResponse response,Member m) throws JsonIOException, IOException {
+	public int getUserAlertCount(HttpServletResponse response,Member m) {
 	
 		System.out.println("알림 확인 : " + m.getMemberNo());
 		
 		int aCount = alertService.getUserAlertCount(m);
 		
-		System.out.println("알림 카운트: " + aCount);
+		System.out.println("알림 카운트 : " + aCount);
 		
 		return aCount;
 
@@ -46,7 +46,7 @@ public class AlertController {
 
 		ArrayList<Alert> aList = alertService.getUserAlert(m);
 
-		System.out.println("알림 확인 리스트: " + aList);
+		System.out.println("알림 확인 리스트 : " + aList);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -66,7 +66,7 @@ public class AlertController {
 
 		ArrayList<Alert> aList = alertService.getUserAlert(m);
 
-		System.out.println("알림 확인 리스트: " + aList);
+		System.out.println("알림 확인 리스트 : " + aList);
 
 		response.setContentType("application/json;charset=utf-8");
 
