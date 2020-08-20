@@ -46,8 +46,8 @@
 	padding: 0 15px 0 15px;
 	position: relative;
 }
-.main_messages_icon .main_messages_dropdown,
-.main_alerts_icon .main_alert_dropdown
+.main_messages_icon,
+.main_alerts_icon
 {
 	position: relative;
 }
@@ -58,7 +58,7 @@
 	height: 38px;
 	fill: grey;
 }
-.main_alerts_icon svg:hover
+.main_alerts_icon > svg:hover
 {
 	background-color: #F9F9F9;
 	border-radius: 50%;
@@ -69,7 +69,15 @@
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-.main_messages_icon svg:hover
+.main_alerts_header > svg:hover
+{
+	background-color: #F9F9F9;
+	border-radius: 30%;
+	fill: green;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	transition: 0.2s;
+}
+.main_messages_icon > svg:hover
 {
 	background-color: #F9F9F9;
 	border-radius: 30%;
@@ -77,6 +85,14 @@
 	width: 40px;
 	height: 40px;
 	fill: drak;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	transition: 0.2s;
+}
+.main_messages_header > svg:hover
+{
+	background-color: #F9F9F9;
+	border-radius: 30%;
+	fill: green;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
@@ -94,7 +110,18 @@
 	transform: translateY(-40%);
 	left: 38px;
 }
-.main_messages_dropdown,
+.main_messages_dropdown
+{
+	display: none;
+	right: 0;
+	overflow: auto;
+	position: absolute;
+	border-radius: 5px;
+	background-color: #F9F9F9;
+	min-width: 300px;
+	padding: 8px 0;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
 .main_alerts_dropdown
 {
 	display: none;
@@ -190,7 +217,7 @@
 					</li>
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
-					<li class="nav-item main_messages_icon">
+					<li class="nav-item main_messages_icon" onclick="messageChk()">
 						<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
 							<path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
 						</svg>
@@ -255,6 +282,10 @@
 	
 	<!-- 메시지 스크립트 -->
 	<script type="text/javascript">
+		function messageChk() {
+			var msg_container = document.querySelector('.main_messages_dropdown');
+			msg_container.classList.toggle('active');
+		}
 		// 메시지 카운트
 		function getUserMessagee() {
 			var memberNo = "${loginUser.memberNo}";
@@ -265,10 +296,6 @@
 					console.log("메시지 카운트 : " + data);
 					
 					var $messagesIcon = $(".main_messages_icon");
-					
-					if(data >= 10) {
-						alertCount = "9+";
-					}
 					
 					if(data > 0) {
 						// 알림 숫자 표시
@@ -284,21 +311,23 @@
 		}
 
 		// 메시지 리스트 생성
-		function refreshAlertBody(data) {
-			var $alerts_dropdown = $(".main_alerts_body");
-			var $alerts_dropdown_container = $(".main_alerts_body_container");
-			$alerts_dropdown_container.html("");
+		function refreshMessageBody(data) {
+			var $messages_dropdown = $(".main_alerts_body");
+			var $messages_dropdown_container = $(".main_messages_body_container");
+			$messages_dropdown_container.html("");
 			
 			// 메시지 내용 추가
 			if(data.length > 0) {
 				for(var i in data){
-					console.log("알림 추가 시작");
-					var $alerts_body = $('<div>').addClass("main_alerts_body");
-					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
-					var $alerts_bodyContent = $('<div>').text(data[i].messageContent);
-					var $alerts_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
+					console.log("메시지 추가 시작");
+					var $messages_body = $('<div>').addClass("main_alerts_body");
+					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
+					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNo);
+					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
+					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
 					
 					$messages_body.append($messages_bodyInput);
+					$messages_body.append($messages_bodyFrom);
 					$messages_body.append($messages_bodyContent);
 					$messages_body.append($messages_bodyTime);
 					
@@ -307,18 +336,14 @@
 			} else {
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
-				var $messages_bodyContent = $('<div>').text("아직 알림이 없습니다!");
-				var $messages_bodyTime = $('<div>').addClass("main_mBody_time");
+				var $messages_bodyContent = $('<div>').text("아직 메시지가 없습니다!");
 				
 				$messages_body.append($messages_bodyInput);
 				$messages_body.append($messages_bodyContent);
-				$messages_body.append($messages_bodyTime);
 				
 				$messages_dropdown_container.append($messages_body);
 			}
 		}
-		
-
 
 		// 메시지 리스트 불러오기 ajax
 		$(".main_messages_icon").on("click",function(){
@@ -327,7 +352,7 @@
 			
 			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
-				url:"getUserAlert.do",
+				url:"getUserMessage.do",
 				data:{memberNo:memberNo},
 				dateType:"json",
 				success:function(data){
@@ -375,8 +400,8 @@
 	<!-- 메시지 스크립트 -->
 	<script type="text/javascript">
 		function alertChk() {
-			var container = document.querySelector('.main_alerts_dropdown');
-			container.classList.toggle('active');
+			var alt_container = document.querySelector('.main_alerts_dropdown');
+			alt_container.classList.toggle('active');
 		}
 		// 알림 카운트
 		function getUserAlert() {
@@ -387,16 +412,12 @@
 				success:function(data){
 					console.log("알림 카운트 : " + data);
 
-					var alertCount = "";
 					var $alertIcon = $(".main_alerts_icon");
 
-					if(data >= 10) {
-						alertCount = "9+";
-					}
 
 					if(data > 0) {
 						// 알림 숫자 표시
-						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(alertCount);
+						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(data);
 
 						$alertIcon.prepend($alertDiv);
 					}

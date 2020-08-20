@@ -25,6 +25,14 @@
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 
+	<select id="getUserMessage" parameterType="Member" resultMap="messageResultSet">
+		SELECT MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM
+		FROM MESSAGE
+		WHERE TO_MEMBER_NO = #{memberNo}
+		AND MESSAGE_CONFIRM = 'N'
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
 </mapper>
 
 

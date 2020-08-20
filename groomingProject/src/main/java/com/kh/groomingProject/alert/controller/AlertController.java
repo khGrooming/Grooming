@@ -27,7 +27,7 @@ public class AlertController {
 
 	@RequestMapping("getUserAlertCount.do")
 	@ResponseBody
-	public int getUserAlertCount(HttpServletResponse response,Member m) {
+	public String getUserAlertCount(HttpServletResponse response,Member m) {
 	
 		System.out.println("알림 확인 : " + m.getMemberNo());
 		
@@ -35,18 +35,24 @@ public class AlertController {
 		
 		System.out.println("알림 카운트 : " + aCount);
 		
-		return aCount;
+		String result = Integer.toString(aCount);
+		
+		if(aCount >= 10) {
+			result = "9+";
+		}
+		
+		return result;
 
 	}
 
 	@RequestMapping("getUserAlert.do")
 	public void getUserAlert(HttpServletResponse response,Member m) throws JsonIOException, IOException {
 		
-		System.out.println("알림 확인 : " + m.getMemberNo());
+		System.out.println("알림 리스트 확인 : " + m.getMemberNo());
 
 		ArrayList<Alert> aList = alertService.getUserAlert(m);
 
-		System.out.println("알림 확인 리스트 : " + aList);
+		System.out.println("알림 리스트 : " + aList);
 
 		response.setContentType("application/json;charset=utf-8");
 

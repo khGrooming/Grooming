@@ -1,34 +1,5 @@
--- v3.0
--- MEMBER 테이블 : MEMBER_LEVEL테이블의 LVL_NO를 FK로 선언하는 구문 수정
-
--- v3.1
--- SPEC 테이블 : 인증 컬럼추가/ 인증 데이터 추가
--- CAFE 관련 테이블 : 위도 경도 컬럼 추가 / 시간 시작, 종료 컬럼 추가 (데이터 미적용)
-
--- v3.2
--- grooming 테이블 : 현재 참가 인원 컬럼 추가
-
--- v3.3
--- 멤버 정보 관리자 추가
-
--- v3.4
--- 그루밍 게시글 상태 COMMENT 마감 추가 , GTAG 데이터 수정
-
--- v3.5
--- 회원 테이블 카카오 연동을 위해 수정
-
--- v3.6
--- 인증코드 테이블 추가
-
--- v3.7
--- GTAG 데이터 수정 , GROOMING_NO 외래키 참조 DELETE ON CASCADE 추가 , grooming status checked 'B' 마감 추가
-
--- v3.8
--- GROOMING_HEART TABLE 추가(찜 테이블)
-
--- v3.9
--- DROP TABLE CERTIFICATION 추가...
-
+-- v4.0
+-- Grooming 테이블 deposit_money 자료형 varchar2(2000)으로 변경 , 기본값 '0'
 
 DROP TABLE MEMBER CASCADE CONSTRAINTS;
 DROP TABLE POINT CASCADE CONSTRAINTS;
@@ -582,7 +553,7 @@ CREATE TABLE GROOMING (
 	STUDY_END_DATE DATE NOT NULL,
 	GROOMING_START_DATE DATE NOT NULL,
 	GROOMING_END_DATE DATE NOT NULL,
-	DEPOSIT_MONEY NUMBER,
+	DEPOSIT_MONEY VARCHAR2(2000) DEFAULT '0',
 	GROOMING_IMG VARCHAR2(2000) NOT NULL,
 	GROOMING_CREATE_DATE DATE DEFAULT SYSDATE NOT NULL,
 	GROOMING_MODIFY_DATE DATE,
