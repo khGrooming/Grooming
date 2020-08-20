@@ -2,12 +2,8 @@ package com.kh.groomingProject.member.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.alert.model.service.AlertService;
-import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.member.model.exception.MemberException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -34,8 +29,6 @@ import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 import com.kh.groomingProject.tag.model.service.TagService;
-import com.kh.groomingProject.tag.model.vo.Tag;
-import com.sun.javafx.collections.MappingChange.Map;
 
 @SessionAttributes("loginUser")
 @Controller
@@ -401,7 +394,7 @@ public class MemberController {
 	// 회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status){
-		//TODO session 처리 방식 수정
+		//TODO session 처리 방식 수정 필요할까?
 		status.setComplete();
 
 		return "home";

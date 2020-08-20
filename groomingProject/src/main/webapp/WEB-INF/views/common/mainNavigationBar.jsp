@@ -39,6 +39,7 @@
 	fill: #fff;
 }
 .main_messages_txt, .main_alerts_txt {
+	padding: 2px;
 	color: white;
 	width: 25px;
 	height: 25px;
@@ -47,7 +48,7 @@
 	border: 1px solid;
 	font-size: 18px;
 	position: absolute;
-	top: -2px;
+	transform: translateY(-50%);
 	left: 38px;
 }
 </style>
@@ -106,7 +107,7 @@
 							<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
 							<path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
 						</svg>
-						<div class="main_alerts_txt text-center">${alerts.count }</div>
+						<!-- <div class="main_alerts_txt text-center"></div> -->
 					</li>
 					<li class="nav-item mr-2">
 						<a class="nav-link" href="${myPage }">${loginUser.memberNickName }</a>
@@ -120,11 +121,46 @@
 	</nav>
 	
 	<script type="text/javascript">
-		window.onpageshow = function(event){
-			// 히스토리 뒤로가기로 접근시 페이지 새로 고침
-			if(performance.navigation.type == 2){
-				location.reload(true);
-			}
+		<c:if test="${!empty sessionScope.loginUser }">
+		$(function() {
+			getUserAlert();
+			todolist();
+		});
+		</c:if>
+		
+		function todolist() {
+			console.log("TODO LIST");
+			console.log("알림을 가져오자....");
+			console.log("메시지를 가져오자....");
+			
+		}
+		
+		function getUserAlert() {
+			var memberNo = "${loginUser.memberNo}";
+			$.ajax({
+				url:"getUserAlert.do",
+				data:{memberNo:memberNo},
+				dateType:"json",
+				success:function(data){
+					console.log("알림 확인 결과 : " + data.length);
+
+					var $alertIcon = $(".main_alerts_icon");
+
+					if(data.length > 0) {
+						$(".main_alerts_txt").val(data.length);
+						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(data.length);
+
+						$alertIcon.append($alertDiv);
+
+					} else {
+						$("div").remove(".main_alerts_txt");
+					}
+					
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
 		}
 	</script>
 
