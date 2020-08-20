@@ -5,11 +5,12 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 		<setting name="returnInstanceForEmptyRow" value="true"/>
 	</settings>
-	
+
 	<typeAliases>
 		<!-- 공용 -->
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
+		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
 
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
@@ -32,9 +33,9 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingHeart" alias="Gheart"/>
 
+
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
-		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.CafeInfo" alias="CafeInfo"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.Reservation" alias="Reservation"/>
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.ReservationView" alias="ReservationView"/>
@@ -49,6 +50,7 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+		<mapper resource="/mappers/declaration-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
 		<mapper resource="/mappers/member-mapper.xml"/>
@@ -67,7 +69,8 @@
 		
 		<!-- 관리자 멥퍼 -->
 		<mapper resource="/mappers/admin-mapper.xml"/>
-		<mapper resource="/mappers/declaration-mapper.xml"/>
+
+
 	</mappers>
 	
 </configuration>
