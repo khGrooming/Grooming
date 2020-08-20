@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="messageMapper">
+
+	<resultMap type="Message" id="messageResultSet">
+		<id property="messageNo" column="MESSAGE_NO"/>
+		<result property="fromMemberNo" column="FROM_MEMBER_NO"/>
+		<result property="toMemberNo" column="TO_MEMBER_NO"/>
+		<result property="messageContent" column="MESSAGE_CONTENT"/>
+		<result property="messageDate" column="MESSAGE_DATE"/>
+		<result property="MessageConfirm" column="MESSAGE_CONFIRM"/>
+	</resultMap>
+
+	<insert id="insertMessage" parameterType="Message">
+		INSERT INTO MESSAGE (MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM)
+			VALUES ('ALE' || LPAD(SEQ_MESSAGE_NO.NEXTVAL,5,0)
+					, #{fromMemberNo}, #{toMemberNo}, #{messageContent}
+					,SYSDATE, DEFAULT)
+	</insert>
+
+	<select id="getUserMessagesCount" parameterType="Message" resultType="_int">
+		SELECT COUNT(*)
+		FROM MESSAGE
+		WHERE TO_MEMBER_NO = #{toMemeberNo}
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
+</mapper>
+
+
+
+
+
