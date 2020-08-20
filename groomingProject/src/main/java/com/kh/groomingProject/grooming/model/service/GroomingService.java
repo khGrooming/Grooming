@@ -57,4 +57,8 @@ public interface GroomingService {
 
 	GroomingHeart selectHeartMember(Map info);
 
+	int addHeart(Map info);
+
+	int cancelHeart(Map info);
+
 }

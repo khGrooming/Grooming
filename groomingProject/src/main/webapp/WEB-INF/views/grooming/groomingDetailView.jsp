@@ -136,11 +136,12 @@ img {
 						</tr>
 						<tr>
 							<td style="text-align:right;"> 
+							
 								<c:if test="${!empty heart }">
-								<i class="fas fa-bookmark"></i>
+								<i id="heart" class="fas fa-bookmark"></i>
 								</c:if>
 								<c:if test="${empty heart }">
-								<i class="far fa-bookmark"></i>
+								<i id="nheart" class="far fa-bookmark"></i>
 								</c:if>
 								<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 						
@@ -374,6 +375,9 @@ img {
 					<button onclick="location.href='${limit}'">마감</button>
 				</div>
 				</c:if>
+				<div>
+					<button onclick="location.href='groomingMain.do'">목록으로</button>
+				</div>
 				<c:if test="${grooming.status eq 'Y' }">
 					<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
 				<div class="col-3">
@@ -435,24 +439,34 @@ img {
 	<script>
 	
 		$(function(){
-				
+			var gheart = "${heart.groomingHNo}";
+			var groomingNo = "${grooming.groomingNo}";
+			var memberNo = "${loginUser.memberNo}";
 			
+			if(gheart==""){
+				$("#nheart").on("click",function(){
+					var result = confirm("찜 하시겠습니까?");
+					if(result){
+						location.href='addHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
+					}
+				
+				
+				})
+			}else{
+				$("#heart").on("click",function(){
+					var result = confirm("찜 해제 하시겠습니까?");
+					if(result){
+						location.href='cancelHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
+					}
+				
+				
+				})
+			}
 		
 		
 		
 		})
 		
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	</script>
 	

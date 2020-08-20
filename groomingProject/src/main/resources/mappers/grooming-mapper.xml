@@ -260,4 +260,22 @@
  	
  	</select>
  	
+ 	<insert id="addHeart" parameterType="map">
+ 		INSERT INTO GROOMING_HEART VALUES(
+ 		'GH' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{groomingNo}
+ 		,#{memberNo}
+ 		)
+ 	
+ 	</insert>
+ 	
+ 	
+ 	<delete id="cancelHeart" parameterType="map">
+		DELETE
+		FROM GROOMING_HEART
+		WHERE GROOMING_NO = #{groomingNo}
+		AND MEMBER_NO = #{memberNo}
+
+ 	</delete>
+ 	
 </mapper>

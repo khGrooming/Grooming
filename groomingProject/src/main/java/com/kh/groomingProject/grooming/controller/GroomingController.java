@@ -414,6 +414,80 @@ public class GroomingController<memberNo> {
 	}
 	
 	
+//	찜하기
+	
+	@RequestMapping("addHeart.do")
+	public ModelAndView addHeart(ModelAndView mv,String groomingNo, String memberNo) {
+		
+		Map info = new HashMap();
+		info.put("groomingNo", groomingNo);
+		info.put("memberNo", memberNo);
+		
+		int result = gService.addHeart(info);
+		if(result >0) {
+				Grooming grooming = gService.selectGrooming(groomingNo);
+		
+				ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+				ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+				Member member = gService.selectMember(groomingNo);
+				ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+		
+				ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+				
+				GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+				GroomingHeart heart = gService.selectHeartMember(info);
+		
+				
+				if (grooming != null && tag != null && spec != null && member != null) {
+					mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+							.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList).addObject("heart",heart)
+							.setViewName("grooming/groomingDetailView");
+				} else {
+					throw new GroomingException("조회실패!");
+				}
+		}else {
+			throw new GroomingException("찜하기 실패!");
+		}
+		
+		return mv;
+	}
+	
+	@RequestMapping("cancelHeart.do")
+	public ModelAndView cancelHeart(ModelAndView mv, String groomingNo, String memberNo) {
+		
+		Map info = new HashMap();
+		info.put("groomingNo", groomingNo);
+		info.put("memberNo", memberNo);
+		
+		int result = gService.cancelHeart(info);
+		if(result >0) {
+			Grooming grooming = gService.selectGrooming(groomingNo);
+	
+			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+			Member member = gService.selectMember(groomingNo);
+			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+	
+			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+			
+			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+			GroomingHeart heart = gService.selectHeartMember(info);
+	
+			
+			if (grooming != null && tag != null && spec != null && member != null) {
+				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+						.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList).addObject("heart",heart)
+						.setViewName("grooming/groomingDetailView");
+			} else {
+				throw new GroomingException("조회실패!");
+			}
+	}else {
+		throw new GroomingException("찜하기 실패!");
+	}
+	
+	return mv;
+	}
+	
 	
 	
 	

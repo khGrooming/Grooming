@@ -644,9 +644,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			});
 		</script>
 
-		<script>
-			
-		</script>
+		
 
 
 	</section>
