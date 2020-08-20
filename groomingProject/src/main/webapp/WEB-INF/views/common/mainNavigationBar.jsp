@@ -147,8 +147,14 @@
 					var $alertIcon = $(".main_alerts_icon");
 
 					if(data.length > 0) {
-						$(".main_alerts_txt").val(data.length);
+						$("div").remove(".main_alerts_txt");
 						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(data.length);
+
+						$alertIcon.append($alertDiv);
+
+					} else if(data.length >= 10) {
+						$("div").remove(".main_alerts_txt");
+						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text("9+");
 
 						$alertIcon.append($alertDiv);
 
