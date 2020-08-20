@@ -76,14 +76,15 @@
 	</insert>
 	
 	<select id="selectNo" parameterType="map" resultMap="memberViewResultSet">
-		SELECT MEMBER_NO
-		FROM MENTOR
+		SELECT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME
+		FROM MEMBER M
+		RIGHT JOIN MENTOR T ON (M.MEMBER_NO = T.MEMBER_NO)
 		<where>
 			<if test="kind == 1">
-				MENTOR_PASS = 'Y'
+				T.MENTOR_PASS = 'Y'
 			</if>
 			<if test="kind == 2">
-				MENTOR_PASS = 'C'
+				T.MENTOR_PASS = 'C'
 			</if>
 		</where>
 	</select>
