@@ -200,7 +200,7 @@
     <!-- 필터 -->
 	<script>
 		$(function(){
-		
+	
 			 
 			$("#mentor").click(function(){
 				
@@ -234,6 +234,12 @@
 						
 						if(data.length >0){ 
 							for(var i in data){
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
 								 $divCard = $("<div class='card'>");
 								 $divTopImg = $("<div class='top-img'>");
@@ -242,7 +248,7 @@
 								 if(data[i].groomingEd > data[i].groomingNd){
 									
 									 $dDay = $("<span id='d-day'>").text("D-");
-									 $day = $("<span id='day'>");
+									 $day = $("<span id='day'>").text(difDate);
 									 $divCircle.append($dDay);
 									 $divCircle.append($day);
 								 }else{
@@ -334,6 +340,12 @@
 						if(data.length >0){ 
 							for(var i in data){
 								console.log(data[i].groomingNo);
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
 								 $divCard = $("<div class='card'>");
 								 $divTopImg = $("<div class='top-img'>");
@@ -341,7 +353,7 @@
 								 $divCircle = $("<div id='circle'>");
 								 if(data[i].groomingEd > data[i].groomingNd){
 									 $dDay = $("<span id='d-day'>").text("D-");
-									 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									 $day = $("<span id='day'>").text(difDate);
 									 $divCircle.append($dDay);
 									 $divCircle.append($day);
 								 }else{
@@ -440,6 +452,12 @@
 						if(data.length > 0) {
 							for(var i in data) {
 								console.log(data[i].groomingNo);
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								$divCardDeck = $("<div class='card-deck col-lg-3'>");
 								$divCard = $("<div class='card'>");
 								$divTopImg = $("<div class='top-img'>");
@@ -448,7 +466,7 @@
 								
 								if (data[i].groomingEd > data[i].groomingNd) {
 									$dDay = $("<span id='d-day'>").text("D-");
-									$day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									$day = $("<span id='day'>").text(difDate);
 									$divCircle.append($dDay);
 									$divCircle.append($day);
 								} else {

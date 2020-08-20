@@ -2,8 +2,10 @@ package com.kh.groomingProject.grooming.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -121,6 +123,9 @@ public class GroomingController<memberNo> {
 			ArrayList<Grooming> list = gService.gSearchContent(keyword);
 			glist = list;
 		}
+		
+	
+		
 
 		System.out.println("gSearchWriter // search : " + search);
 		System.out.println("gSearchWriter // keyword : " + keyword);
