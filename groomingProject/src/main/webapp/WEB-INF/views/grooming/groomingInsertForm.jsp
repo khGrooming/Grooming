@@ -349,10 +349,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td>
-									<input id="insert" class="btn-3d green" type="submit"
-										value="등록하기">
-
-										<button class="btn-3d green" onclick="save();">취소하기</button></td>
+										<input id="insert" class="btn-3d green" type="submit" value="등록하기">
+										<input id="cansel" class="btn-3d green" type="submit" value ="취소하기" onclick="save();">
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -386,9 +385,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			// 파일 업로드 관련 script
-			$(document)
-					.ready(
-							function() {
+			$(document).ready(function() {
 
 								var fileTarget = $('.filebox .upload-hidden');
 
@@ -420,10 +417,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								//preview image 
 								var imgTarget = $('.preview-image .upload-hidden');
 
-								imgTarget
-										.on(
-												'change',
-												function() {
+								imgTarget.on('change',function() {
 													var parent = $(this)
 															.parent();
 													parent.children(
@@ -437,29 +431,21 @@ section .form_container .study .bootstrap-tagsinput .badge {
 															return;
 
 														var reader = new FileReader();
-														reader.onload = function(
-																e) {
+														reader.onload = function(e) {
 															var src = e.target.result;
-															parent
-																	.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+															parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
 
 														}
-														reader
-																.readAsDataURL($(this)[0].files[0]);
+														reader.readAsDataURL($(this)[0].files[0]);
 													}
 
 													else {
 														$(this)[0].select();
 														$(this)[0].blur();
-														var imgSrc = document.selection
-																.createRange().text;
-														parent
-																.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+														var imgSrc = document.selection.createRange().text;
+														parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
 
-														var img = $(this)
-																.siblings(
-																		'.upload-display')
-																.find('img');
+														var img = $(this).siblings('.upload-display').find('img');
 														img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""
 																+ imgSrc
 																+ "\")";
@@ -472,6 +458,22 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<script>
 			// 그룹 타입 관련 script
 			$(function() {
+				if($("#m").is(":checked")){
+					$("#exist").attr('style', "display:none;");
+					$("#nonexist").attr('style', "display:none;");
+					$("#l1").attr('style', "display:none;");
+					$("#l2").attr('style', "display:none;");
+					$(".money").attr('style', "display:inline;");
+				}
+				if($("#h").is(":checked")){
+					$("#exist").attr('style', "display:inline;");
+					$("#nonexist").attr('style', "display:inline;");
+					$("#l1").attr('style', "display:inline;");
+					$("#l2").attr('style', "display:inline;");
+					$(".money").attr('style', "display:inline;");
+				
+				
+				}
 				$("input:radio[name='groomingType']").on("click", function() {
 					
 
@@ -513,7 +515,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				var result = confirm("임시저장 하시겠습니까?");
 				if (result) {
 					alert("임시저장되었습니다.");
-					/*    location.href="groomingMain.do"; */
+					    location.href="groomingMain.do";
 				} else {
 					alert("취소되었습니다.");
 					location.href = "groomingMain.do";

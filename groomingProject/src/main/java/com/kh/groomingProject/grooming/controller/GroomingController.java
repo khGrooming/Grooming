@@ -168,7 +168,8 @@ public class GroomingController<memberNo> {
 			}
 
 		}
-
+		
+		
 		System.out.println(g);
 		int result = gService.insertGrooming(g);
 
@@ -206,12 +207,12 @@ public class GroomingController<memberNo> {
 		// 공지글은 파일명 중복 제거는 신경쓰지 않고 했지만
 		// 게시판에서는 파일명을 날짜(업로드 시간)로 rename 해보자
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
+//		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+//				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
-		String filePath = folder + "\\" + renameFileName;
+		String filePath = folder + "\\" + originFileName;
 		// 실제 저장 될 파일의 경로 + rename 파일명
 
 		try {
@@ -221,7 +222,7 @@ public class GroomingController<memberNo> {
 			e.printStackTrace();
 		}
 
-		return renameFileName;
+		return originFileName;
 	}
 
 	// 그루밍 상세보기

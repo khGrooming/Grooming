@@ -158,8 +158,15 @@
  			, #{studySd}
  			, #{studyEd}
  			, #{groomingSd}
- 			, #{groomingEd}
- 			, #{money}
+ 			, #{groomingEd} 
+ 		
+ 			<if test="money != ''">
+ 			,#{money}
+ 			</if>
+ 			<if test="money == '' ">
+ 			 ,DEFAULT
+ 			</if>
+ 		
  			, #{groomingImg}
  			, DEFAULT
  			, DEFAULT

@@ -21,7 +21,7 @@ public class Grooming implements Serializable{
 	private Date studyEd;				// 스터디 종강일
 	private Date groomingSd;			// 그룹 모집 시작
 	private Date groomingEd;			// 그룹 모집 마감
-	private int money;					// 예치금
+	private String money;					// 예치금
 	private String groomingImg;			// 그루밍 썸네일 이미지
 	private Date groomingCd;			// 작성일
 	private Date groomingMd;			// 수정일
@@ -65,7 +65,7 @@ public class Grooming implements Serializable{
 
 	public Grooming(String groomingNo, String memberNo, String groomingType, String groomingTitle,
 			String groomingContent, String groomingIntroduce, int groomingP, Date studySd, Date studyEd,
-			Date groomingSd, Date groomingEd, int money, String groomingImg, Date groomingCd, Date groomingMd,
+			Date groomingSd, Date groomingEd, String money, String groomingImg, Date groomingCd, Date groomingMd,
 			String status, int count, Date groomingNd, int currentP) {
 		super();
 		this.groomingNo = groomingNo;
@@ -430,7 +430,7 @@ public class Grooming implements Serializable{
 
 
 
-	public int getMoney() {
+	public String getMoney() {
 		return money;
 	}
 
@@ -445,7 +445,7 @@ public class Grooming implements Serializable{
 
 
 
-	public void setMoney(int money) {
+	public void setMoney(String money) {
 		this.money = money;
 	}
 
