@@ -12,27 +12,32 @@ public class Message implements Serializable{
 
 	private String messageNo;			// 메시지 번호
 	private String fromMemberNo;		// 보낸사람 번호
-	private String fromMemberNickname;	// 보낸사람 번호
+	private String fromMemberNickname;	// 보낸사람 닉네임
+	private String fromMemberPhoto;		// 보낸사람 프로필 사진
 	private String toMemberNo;			// 받는사람 번호
-	private String toMemberNickname;	// 받는사람
+	private String toMemberNickname;	// 받는사람 닉네임
+	private String toMemberPhoto;		// 받는사람 프로필 사진
 	private String messageContent;		// 메시지 내용
 	private Date messageDate;			// 메시지 생성일
-	private String MessageConfirm;		// 메시지 확인 유무
+	private String messageConfirm;		// 메시지 확인 유무
 
 	public Message() {
 		super();
 	}
-	public Message(String messageNo, String fromMemberNo, String fromMemberNickname, String toMemberNo,
-			String toMemberNickname, String messageContent, Date messageDate, String messageConfirm) {
+	public Message(String messageNo, String fromMemberNo, String fromMemberNickname, String fromMemberPhoto,
+			String toMemberNo, String toMemberNickname, String toMemberPhoto, String messageContent, Date messageDate,
+			String messageConfirm) {
 		super();
 		this.messageNo = messageNo;
 		this.fromMemberNo = fromMemberNo;
 		this.fromMemberNickname = fromMemberNickname;
+		this.fromMemberPhoto = fromMemberPhoto;
 		this.toMemberNo = toMemberNo;
 		this.toMemberNickname = toMemberNickname;
+		this.toMemberPhoto = toMemberPhoto;
 		this.messageContent = messageContent;
 		this.messageDate = messageDate;
-		MessageConfirm = messageConfirm;
+		this.messageConfirm = messageConfirm;
 	}
 	public String getMessageNo() {
 		return messageNo;
@@ -52,6 +57,12 @@ public class Message implements Serializable{
 	public void setFromMemberNickname(String fromMemberNickname) {
 		this.fromMemberNickname = fromMemberNickname;
 	}
+	public String getFromMemberPhoto() {
+		return fromMemberPhoto;
+	}
+	public void setFromMemberPhoto(String fromMemberPhoto) {
+		this.fromMemberPhoto = fromMemberPhoto;
+	}
 	public String getToMemberNo() {
 		return toMemberNo;
 	}
@@ -63,6 +74,12 @@ public class Message implements Serializable{
 	}
 	public void setToMemberNickname(String toMemberNickname) {
 		this.toMemberNickname = toMemberNickname;
+	}
+	public String getToMemberPhoto() {
+		return toMemberPhoto;
+	}
+	public void setToMemberPhoto(String toMemberPhoto) {
+		this.toMemberPhoto = toMemberPhoto;
 	}
 	public String getMessageContent() {
 		return messageContent;
@@ -77,20 +94,20 @@ public class Message implements Serializable{
 		this.messageDate = messageDate;
 	}
 	public String getMessageConfirm() {
-		return MessageConfirm;
+		return messageConfirm;
 	}
 	public void setMessageConfirm(String messageConfirm) {
-		MessageConfirm = messageConfirm;
+		this.messageConfirm = messageConfirm;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
-		return "ViewMessage [messageNo=" + messageNo + ", fromMemberNo=" + fromMemberNo + ", fromMemberNickname="
-				+ fromMemberNickname + ", toMemberNo=" + toMemberNo + ", toMemberNickname=" + toMemberNickname
-				+ ", messageContent=" + messageContent + ", messageDate=" + messageDate + ", MessageConfirm="
-				+ MessageConfirm + "]";
+		return "Message [messageNo=" + messageNo + ", fromMemberNo=" + fromMemberNo + ", fromMemberNickname="
+				+ fromMemberNickname + ", fromMemberPhoto=" + fromMemberPhoto + ", toMemberNo=" + toMemberNo
+				+ ", toMemberNickname=" + toMemberNickname + ", toMemberPhoto=" + toMemberPhoto + ", messageContent="
+				+ messageContent + ", messageDate=" + messageDate + ", messageConfirm=" + messageConfirm + "]";
 	}
 
 }

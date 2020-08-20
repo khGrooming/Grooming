@@ -153,8 +153,13 @@
 	display: block;
 	padding: 8px;
 }
+.main_messages_body > div
+{
+	padding: 0 0 3px 0;
+}
 .main_messages_img
 {
+	padding: 4px 4px 0 0;
 	height: 25px;
 	width: 25px;
 	object-fit: contain;
@@ -330,7 +335,7 @@
 					console.log("메시지 추가 시작");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
-					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/M0000220200819210925.gif");
+					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
 					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
