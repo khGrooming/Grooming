@@ -479,7 +479,7 @@ public class MemberController {
 		}
 
 		// 인증 숫자 생성
-		String randomCode = "" + (int)(Math.random()*1000000);
+		String randomCode = String.format("%06d", "" + (int)(Math.random()*1000000));
 		System.out.println("인증코드 : " + randomCode);
 
 		MemberCertiCode mcc = new MemberCertiCode();
@@ -493,11 +493,58 @@ public class MemberController {
 			return "retry";
 		}
 
-		//TODO 인증코드 메일 HTML 만들기
 		String mailFrom = "onebunonecho@gmail.com";
 		String mailTo = m.getMemberEmail();
-		String mailTitle = "회원 정보 찾기 인증 코드 입니다.";
-		String mailContent = "인증코드는 [ " + randomCode + " ] 입니다.";
+		String mailTitle = "회원정보 찾기 인증 코드 입니다.";
+		String mailContent = "<div marginwidth=\"0\" marginheight=\"0\">\r\n" + 
+				"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"\r\n" + 
+				"style=\"width:100%;background-color:#f8f8f9;letter-spacing:-1px\" align=\"center\">\r\n" + 
+				"<tbody>\r\n" + 
+				"<tr>\r\n" + 
+				"<td align=\"center\">\r\n" + 
+				"<div style=\"max-width:595px;margin:0 auto\">\r\n" + 
+				"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:595px;width:100%;font-family:'\\00b098\\00b214\\00ace0\\00b515',NanumGothic,'\\00b9d1\\00c740\\00ace0\\00b515',Malgun Gothic,'\\00b3cb\\00c6c0',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;background-color:#fff;text-align:left\" align=\"center\">\r\n" + 
+				"<tbody>\r\n" + 
+				"<tr><td height=\"30\"></td></tr>\r\n" + 
+				"<tr><td style=\"padding-right:27px;padding-left:21px\">\r\n" + 
+				"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\r\n" + 
+				"<tbody>\r\n" + 
+				"<tr><td style=\"padding-right:5px;line-height:34px;font-size:29px;color:#424240;font-family:NanumGothic\">Grooming</td>\r\n" + 
+				"<td style=\"vertical-align:bottom;font-size:14px;color:#696969;line-height:13px;font-family:NanumGothic\">회원정보</td></tr>\r\n" + 
+				"</tbody>\r\n" + 
+				"</table>\r\n" + 
+				"</td>\r\n" + 
+				"</tr>\r\n" + 
+				"<tr><td height=\"13\"></td></tr>\r\n" + 
+				"<tr><td style=\"padding-right:27px;padding-left:18px;line-height:34px;font-size:29px;color:#424240;font-family:NanumGothic\">요청하신 인증번호를<br><span style=\"color:#1ec800\">발송해드립니다.</span></td></tr>\r\n" + 
+				"<tr><td height=\"22\"></td></tr>\r\n" + 
+				"<tr><td height=\"1\" style=\"background-color:#e5e5e5\"></td></tr><tr>\r\n" + 
+				"<td style=\"padding-top:24px;padding-right:27px;padding-bottom:32px;padding-left:20px\">\r\n" + 
+				"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" align=\"left\" width=\"100%\">\r\n" + 
+				"<tbody>\r\n" + 
+				"<tr>\r\n" + 
+				"<td style=\"font-size:14px;color:#696969;line-height:24px;font-family:NanumGothic\">\r\n" + 
+				"<strong>아래의 인증번호를 인증번호 입력창에 입력해 주세요.</strong> </td>\r\n" + 
+				"</tr>\r\n" + 
+				"<tr><td height=\"24\"></td></tr>\r\n" + 
+				"<tr><td style=\"font-size:14px;color:#696969;line-height:24px;font-family:NanumGothic\"><strong>인증번호 : <span style=\"color:#009e25\">" + randomCode + "</span></strong></td></tr>\r\n" + 
+				"<tr><td height=\"24\"></td></tr>\r\n" + 
+				"<tr><td style=\"font-size:14px;color:#696969;line-height:24px;font-family:NanumGothic\">Grooming을 이용해 주셔서 감사합니다.<br> 더욱 편리한 서비스를 제공하기 위해 항상 최선을 다하겠습니다.</td></tr>\r\n" + 
+				"</tbody>\r\n" + 
+				"</table>\r\n" + 
+				"</td>\r\n" + 
+				"</tr>\r\n" + 
+				"<tr><td style=\"padding-top:26px;padding-left:21px;padding-right:21px;padding-bottom:13px;background:#f9f9f9;font-size:12px;font-family:NanumGothic;color:#696969;line-height:17px\">본 메일은 발신전용 입니다. Grooming 서비스관련 궁금하신 사항은 Grooming <a href=\"http://localhost:8888/groomingProject/help.do\" style=\"color:#696969;font-weight:bold;text-decoration:underline\" target=\"_blank\" data-saferedirecturl=\"https://www.google.com/url?q=http://localhost:8888/groomingProject/help.do\">고객센터</a>에서 확인해주세요.</td></tr>\r\n" + 
+				"<tr><td style=\"padding-left:21px;padding-right:21px;padding-bottom:57px;background:#f9f9f9;font-size:12px;font-family:Helvetica;color:#696969;line-height:17px\">\r\n" + 
+				"Copyright ⓒ <strong>Grooming</strong> Corp. All Rights Reserved.</td></tr>\r\n" + 
+				"</tbody>\r\n" + 
+				"</table>\r\n" + 
+				"</div>\r\n" + 
+				"</td>\r\n" + 
+				"</tr>\r\n" + 
+				"</tbody>\r\n" + 
+				"</table>\r\n" + 
+				"</div>";
 
 		final MimeMessagePreparator mmp = new MimeMessagePreparator() {
 			@Override
