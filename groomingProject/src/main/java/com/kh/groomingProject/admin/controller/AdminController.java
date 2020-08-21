@@ -82,40 +82,43 @@ public class AdminController {
 	}
 	
 	@RequestMapping("mentoManage.do")
-	public ModelAndView mentoManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView mentoManage(ModelAndView mv, @RequestParam(value="mpage", required=false) Integer mpage, @RequestParam(value="spage", required=false) Integer spage, String category, String searchMento) {
+
+		int scurrentPage = 1;
+		int mcurrentPage = 1;
 		
-		int currentPage = 1;
-		
-		if(page != null) {
-			currentPage = page;
+		if(mpage != null) {
+			mcurrentPage = mpage;
 		}
-		
-		ArrayList<MemberManageView> mNo = adminService.selectNo(1);
-		ArrayList<MemberManageView> sNo = adminService.selectNo(2);
-		
-		System.out.println("mNo : "+mNo);
-		System.out.println("sNo : "+sNo);
+		if(spage != null) {
+			scurrentPage = spage;
+		}
 
 		int listCount = adminService.selectmentoCount(1);
 		int spareCount = adminService.selectmentoCount(2);
-		
-		System.out.println(listCount);
-		System.out.println(spareCount);
-		
-		AdminPageInfo pi = getPageInfo(currentPage, listCount);
-		AdminPageInfo spi = getPageInfo(currentPage, spareCount);
-		
-		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(pi, mNo);
-		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(spi, sNo);
 
-		System.out.println("mentoList : "+mentoList);
-		System.out.println("spareList : "+spareList);
+		
+		AdminPageInfo pi = getPageInfo(mcurrentPage, listCount);
+		AdminPageInfo spi = getPageInfo(scurrentPage, spareCount);
+
+		
+		ArrayList<MemberManageView> mNo = adminService.selectNo(pi, 1);
+		ArrayList<MemberManageView> sNo = adminService.selectNo(spi, 2);
+
+
+		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(mNo);
+		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(sNo);
+
+		
 		mv.addObject("pi", pi);
 		mv.addObject("spi", spi);
-		mv.addObject("mNo",listCount);
-		mv.addObject("sNo", spareCount);
+		
+		mv.addObject("mNo",mNo);
+		mv.addObject("sNo", sNo);
+		
 		mv.addObject("mentoList", mentoList);
 		mv.addObject("spareMentoList", spareList);
+		
 		mv.setViewName("admin/mentoManage");
 
 		return mv;

@@ -43,25 +43,24 @@ public class AdminDao {
 		return sqlSessionTemplate.selectOne("adminMapper.selectmentoCount", num);
 	}
 	
-	public ArrayList<MentoManageView> selectmentoList(AdminPageInfo pi, ArrayList<MemberManageView> mNo) {
-		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+	public ArrayList<MentoManageView> selectmentoList(ArrayList<MemberManageView> mNo) {
 		
-		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectmentoList", mNo, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectmentoList", mNo);
 	}
 
-	public ArrayList<MentoManageView> selectSpareMentoList(AdminPageInfo spi, ArrayList<MemberManageView> sNo) {
-		int offset = (spi.getCurrentPage() - 1)*spi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, spi.getBoardLimit());
+	public ArrayList<MentoManageView> selectSpareMentoList(ArrayList<MemberManageView> sNo) {
 		
-		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectSpareMentoList", sNo, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectSpareMentoList", sNo);
 	}
 
-	public ArrayList<MemberManageView> selectNo(int i) {
+	public ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i) {
 		Map num = new HashMap();
 		num.put("kind", i);
+		
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectNo", num);
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectNo", num, rowBounds);
 	}
 
 	

@@ -102,26 +102,28 @@
 		</where>
 	</select>
 	
-	<select id="selectmentoList" parameterType="list" resultMap="mentoViewResultSet">
+	<select id="selectmentoList" parameterType="java.util.List" resultMap="mentoViewResultSet">
 		SELECT *
 		FROM METO_MANAGE
-		WHERE MENTOR_PASS = 'Y' 
-		AND MEMBER_NO IN 
+		WHERE MENTOR_PASS = 'Y'
 		<foreach item="mNo" index="index" collection="list"
-				open="(" separator="," close=")">
-				#{mNo.memberNo} 
+				open="AND (" separator="OR" close=")">
+				<if test="mNo.memberNo != null">
+					MEMBER_NO = #{mNo.memberNo} 
+				</if>
 		</foreach>
 		ORDER BY SPEC_C_NAME DESC
 	</select>
 	
-	<select id="selectSpareMentoList" resultMap="mentoViewResultSet">
+	<select id="selectSpareMentoList" parameterType="java.util.List" resultMap="mentoViewResultSet">
 		SELECT * 
 		FROM METO_MANAGE
 		WHERE MENTOR_PASS = 'C'
-		AND MEMBER_NO IN 
-		<foreach item="mNo" index="index" collection="list"
-				open="(" separator="," close=")">
-				#{mNo.memberNo} 
+		<foreach item="sNo" index="index" collection="list"
+				open="AND (" separator="OR" close=")">
+				<if test="sNo.memberNo != null">
+					MEMBER_NO = #{sNo.memberNo} 
+				</if>
 		</foreach>
 		ORDER BY SPEC_C_NAME DESC
 	</select>

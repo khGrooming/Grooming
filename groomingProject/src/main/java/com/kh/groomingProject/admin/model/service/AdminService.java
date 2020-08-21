@@ -18,11 +18,11 @@ public interface AdminService {
 
 	int selectmentoCount(int i);
 
-	ArrayList<MentoManageView> selectmentoList(AdminPageInfo pi, ArrayList<MemberManageView> mNo);
+	ArrayList<MentoManageView> selectmentoList(ArrayList<MemberManageView> mNo);
 
-	ArrayList<MentoManageView> selectSpareMentoList(AdminPageInfo spi, ArrayList<MemberManageView> sNo);
+	ArrayList<MentoManageView> selectSpareMentoList(ArrayList<MemberManageView> sNo);
 
-	ArrayList<MemberManageView> selectNo(int i);
+	ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i);
 
 	
 

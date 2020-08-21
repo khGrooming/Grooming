@@ -42,21 +42,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ArrayList<MentoManageView> selectmentoList(AdminPageInfo pi, ArrayList<MemberManageView> mNo) {
+	public ArrayList<MentoManageView> selectmentoList(ArrayList<MemberManageView> mNo) {
 
-		return adminDao.selectmentoList(pi, mNo);
+		return adminDao.selectmentoList(mNo);
 	}
 
 	@Override
-	public ArrayList<MentoManageView> selectSpareMentoList(AdminPageInfo spi, ArrayList<MemberManageView> sNo) {
+	public ArrayList<MentoManageView> selectSpareMentoList(ArrayList<MemberManageView> sNo) {
 
-		return adminDao.selectSpareMentoList(spi, sNo);
+		return adminDao.selectSpareMentoList(sNo);
 	}
 
 	@Override
-	public ArrayList<MemberManageView> selectNo(int i) {
+	public ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i) {
 
-		return adminDao.selectNo(i);
+		return adminDao.selectNo(pi, i);
 	}
 
 	

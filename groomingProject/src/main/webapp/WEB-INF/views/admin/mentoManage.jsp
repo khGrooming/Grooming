@@ -56,47 +56,54 @@
 	         <div class="col-sm-8">
 	             <h1 align="center">멘토 관리</h1>
 	                 <div class="search">
-	                     <form>
-	                         <input type="text" id="searchMento" name="searchMember">
+	                     <form action="mentoManage.do">
+	                     <select name="category">
+	                     	<option value="mento" selected>멘토</option>
+	                     	<option value="spare">멘토 신청자</option>
+	                     </select>
+	                         <input type="text" id="searchMento" name="searchMento">
 	                         <button type="submit" id="searchMeentoBtn">찾기</button>
 	                     </form>
 	                 </div>
 	                 <br><br>
 	                 <table class="mentoInfo" border="1">
-	                     <thead>
-	                         <tr>
-	                             <th>아이디</th>
-	                             <th>닉네임</th>
-	                             <th>이름</th>
-	                             <th colspan="3">경력(학교, 자격증, 경력)</th>
-	                             <th>관리</th>
-	                         </tr>
-	                     </thead>
 	                     <tbody>
+	                     	<tr>
+	                             <th rowspan="2">아이디</th>
+	                             <th rowspan="2">닉네임</th>
+	                             <th rowspan="2">이름</th>
+	                             <th colspan="3">경력(학교, 자격증, 경력)</th>
+	                             <th rowspan="2">관리</th>
+	                         </tr>
+	                     	<tr>
+	                         	<th>학교</th>
+	                         	<th>자격증</th>
+	                         	<th>경력</th>
+	                         </tr>
 	                     <c:if test="${!empty mentoList}">
-	                     	<c:forEach var="mento" varStatus="i" items="${mentoList}" begin="1" end="${mNo}">
+	                     	<c:forEach var="mento" varStatus="i" items="${mNo}" begin="0" end="${mNo.size()}">
 	                     		<tr>
-		                         	<td><c:out value="${i.current}"/></td>
-		                         	<td><c:out value="${mento.memberNickname}"/></td>
-		                         	<td><c:out value="${mento.memberName}"/></td>
+		                         	<td><c:out value="${i.current.memberEmail}"/></td>
+		                         	<td><c:out value="${i.current.memberNickname}"/></td>
+		                         	<td><c:out value="${i.current.memberName}"/></td>
 		                         	
 		                         	<td><ul>
 		                         	<c:forEach var="career" items="${mentoList}">
-			                         	<c:if test="${career.specCName eq '학교'}">
+			                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
 				                         	<li>${career.specName}</li>
 			                         	</c:if>
 		                         	</c:forEach>
 		                         	</ul></td>
 		                         	<td><ul>
 		                         	<c:forEach var="career" items="${mentoList}">
-			                         	<c:if test="${career.specCName eq '자격증'}">
+			                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
 				                         	<li>${career.specName}</li>
 			                         	</c:if>
 		                         	</c:forEach>
 		                         	</ul></td>
 		                         	<td><ul>
 		                         	<c:forEach var="career" items="${mentoList}">
-			                         	<c:if test="${career.specCName eq '경력'}">
+			                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
 				                         	<li>${career.specName}</li>
 			                         	</c:if>
 		                         	</c:forEach>
@@ -120,9 +127,10 @@
 									</c:if>
 									<c:if test="${pi.currentPage gt 1}">
 										<c:url var="listBack" value="mentoManage.do">
-											<c:param name="page" value="${pi.currentPage - 1}"/>
+											<c:param name="mpage" value="${pi.currentPage - 1}"/>
+											<c:param name="spage" value="${spi.currentPage}"/>
 										</c:url>
-										<a href="${listBack}">[이전]</a>&nbsp;
+										<a onclick="test();">[이전]</a>&nbsp;
 									</c:if>
 						<!-- [번호들] -->
 									<c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
@@ -131,9 +139,10 @@
 										</c:if>
 										<c:if test="${p ne pi.currentPage}">
 											<c:url var="listCheck" value="mentoManage.do">
-												<c:param name="page" value="${p}"/>
+												<c:param name="mpage" value="${p}"/>
+												<c:param name="spage" value="${spi.currentPage}"/>
 											</c:url>
-											<a href="${listCheck}">${p}</a>
+											<a onclick="test();">${p}</a>
 										</c:if>
 									</c:forEach>
 						<!-- [이후] -->
@@ -142,52 +151,80 @@
 									</c:if>
 									<c:if test="${pi.currentPage lt pi.maxPage}">
 										<c:url var="listAfter" value="mentoManage.do">
-											<c:param name="page" value="${pi.currentPage + 1}"/>
+											<c:param name="mpage" value="${pi.currentPage + 1}"/>
+											<c:param name="spage" value="${spi.currentPage}"/>
 										</c:url>
-										&nbsp;<a href="${listAfter}">[이후]</a>
+										&nbsp;<a onclick="listAfter()">[이후]</a>
 									</c:if>
 								</td>
 							</tr>
 	                     </tbody>
 	                 </table>
+	                 
 	                 <h1 align="center">멘토 신청자 관리</h1>
 	                 <table class="mentoInfo" border="1">
-	                     <thead>
-	                         <tr>
-	                             <th>아이디</th>
-	                             <th>닉네임</th>
-	                             <th>이름</th>
-	                             <th>경력</th>
-	                             <th>관리</th>
-	                         </tr>
-	                     </thead>
 	                     <tbody>
-	                     	<c:if test="${!empty spareMentoList}">
-	                     	<c:forEach var="mento" items="${spareMentoList}">
-		                         <tr>
-		                         	<td>${mento.memberEmail }</td>
-		                         	<td>${mento.memberNickname}</td>
-		                         	<td>${mento.memberName}</td>
-		                         	<td>${mento.specName}</td>
+	                     	<tr>
+	                             <th rowspan="2">아이디</th>
+	                             <th rowspan="2">닉네임</th>
+	                             <th rowspan="2">이름</th>
+	                             <th colspan="3">경력(학교, 자격증, 경력)</th>
+	                             <th rowspan="2">관리</th>
+	                         </tr>
+	                     	<tr>
+	                         	<th>학교</th>
+	                         	<th>자격증</th>
+	                         	<th>경력</th>
+	                         </tr>
+	                     <c:if test="${!empty spareMentoList}">
+	                     	<c:forEach var="mento" varStatus="i" items="${sNo}" begin="0" end="${sNo.size()}">
+	                     		<tr>
+		                         	<td><c:out value="${i.current.memberEmail}"/></td>
+		                         	<td><c:out value="${i.current.memberNickname}"/></td>
+		                         	<td><c:out value="${i.current.memberName}"/></td>
+		                         	
+		                         	<td><ul>
+		                         	<c:forEach var="career" items="${spareMentoList}">
+			                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<li>${career.specName}</li>
+			                         	</c:if>
+		                         	</c:forEach>
+		                         	</ul></td>
+		                         	<td><ul>
+		                         	<c:forEach var="career" items="${spareMentoList}">
+			                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<li>${career.specName}</li>
+			                         	</c:if>
+		                         	</c:forEach>
+		                         	</ul></td>
+		                         	<td><ul>
+		                         	<c:forEach var="career" items="${spareMentoList}">
+			                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<li>${career.specName}</li>
+			                         	</c:if>
+		                         	</c:forEach>
+		                         	</ul></td>
 		                         	<td><button id="metoManageBtn">관리</button></td>
-		                         </tr>
+								</tr>
+		                         
 	                         </c:forEach>
 						</c:if>
 						<c:if test="${empty spareMentoList}">
 							<tr>
-								<td colspan="5">멘토 신청자가 없습니다.</td>
+								<td colspan="7">멘토 신청자가 없습니다.</td>
 							<tr>
 						</c:if>
 	                        <!-- 페이징 처리 부분 -->
 							<tr align="center" height="20">
-								<td colspan="6">
+								<td colspan="7">
 						<!-- [이전] -->
 									<c:if test="${spi.currentPage eq 1}">
 										[이전]&nbsp;
 									</c:if>
 									<c:if test="${spi.currentPage gt 1}">
 										<c:url var="slistBack" value="mentoManage.do">
-											<c:param name="page" value="${spi.currentPage - 1}"/>
+											<c:param name="spage" value="${spi.currentPage - 1}"/>
+											<c:param name="mpage" value="${pi.currentPage}"/>
 										</c:url>
 										<a href="${slistBack }">[이전]</a>&nbsp;
 									</c:if>
@@ -198,7 +235,8 @@
 										</c:if>
 										<c:if test="${p ne spi.currentPage}">
 											<c:url var="slistCheck" value="mentoManage.do">
-												<c:param name="page" value="${p}"/>
+												<c:param name="spage" value="${p}"/>
+												<c:param name="mpage" value="${pi.currentPage}"/>
 											</c:url>
 											<a href="${slistCheck }">${p}</a>
 										</c:if>
@@ -209,7 +247,8 @@
 									</c:if>
 									<c:if test="${spi.currentPage lt spi.maxPage}">
 										<c:url var="slistAfter" value="mentoManage.do">
-											<c:param name="page" value="${spi.currentPage + 1}"/>
+											<c:param name="spage" value="${spi.currentPage + 1}"/>
+											<c:param name="mpage" value="${pi.currentPage}"/>
 										</c:url>
 										&nbsp;<a href="${slistAfter }">[이후]</a>
 									</c:if>
@@ -226,8 +265,8 @@
 </body>
 	
 	<script>
-		function test(){
-			console.log("실행 되나?");
+		function listAfter(){
+			location.href="${listAfter}";
 		}
 	</script>
 
