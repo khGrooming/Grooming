@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-{
-int count = 0;
 
-}
 <!doctype html>
 <html lang="ko">
 
@@ -316,7 +313,7 @@ img {
 												<td >${aL.memberNickName }</td>
 												<td><button data-toggle="modal" data-target="#open_modal_appContent">신청서
 														열람</button>
-													<div class="modal modal-xl fade" id="open_modal_appContent'+count+'" tabindex="-1"
+													<div class="modal2 modal-xl fade" id="open_modal_appContent'+count+'" tabindex="-1"
 														role="dialog" aria-labelledby="exampleModalLabel"
 														aria-hidden="true">
 
@@ -328,7 +325,7 @@ img {
 																<div class="modal-header">
 																	<h5 class="modal-title" id="exampleModalLabel">신청 내용</h5>
 																	<button type="button" class="close"
-																		data-dismiss="modal" aria-label="Close">
+																		data-dismiss="modal2" aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
@@ -442,14 +439,20 @@ img {
 			var gheart = "${heart.groomingHNo}";
 			var groomingNo = "${grooming.groomingNo}";
 			var memberNo = "${loginUser.memberNo}";
+			var gmemberNo="${grooming.memberNo}";
 			
 			if(gheart==""){
 				$("#nheart").on("click",function(){
+					if(memberNo == gmemberNo){
+						alert("자신의 글은 찜할 수 없습니다.!")
+					}else{
+						
 					var result = confirm("찜 하시겠습니까?");
 					if(result){
 						location.href='addHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
 					}
 				
+					}
 				
 				})
 			}else{
@@ -464,6 +467,13 @@ img {
 			}
 		
 		
+			$("#apply").on("click",function(e){
+				if(memberNo == gmemberNo){
+					alert("자신의 글은 신고할 수 없습니다.");
+					$(this).attr("disabled",true)
+				}
+			})
+			
 		
 		})
 		
@@ -474,22 +484,31 @@ img {
 		
 		$(function(){
 			
+			
 			getAppList();
 			
 		/* 	 setInterval(function(){
 				getAppList();
 			},10000);   */
 			
-			$(document).on("click",".accept",function(){
+			$(document).on("click",".accept",function(e){
 				var groomingNo = "${grooming.groomingNo}";
 				var appTemp = $(this);
 				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
+				var groomingP = "${grooming.groomingP}" ;
+				var currentP = "${grooming.currentP}";
 				
+				if(currentP == groomingP){
+					alert("참여인원이 꽉 찼습니다.!");
+					$(this).attr("disabled",true);
+					e.preventDefault();
+				}
 				$.ajax({
 					url:"gaccept.do",
 					data:{applyNo:applyNo,groomingNo:groomingNo},
 					success:function(data){
 						if(data=="success"){
+						location.reload();
 						getAppList();
 					}
 						

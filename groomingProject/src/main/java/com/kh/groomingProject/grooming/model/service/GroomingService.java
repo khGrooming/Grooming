@@ -61,4 +61,10 @@ public interface GroomingService {
 
 	int cancelHeart(Map info);
 
+	String selectGimg(String groomingNo);
+
+	String findAppMemberNo(String applyNo);
+
+	int addGroomingMember(Map map);
+
 }

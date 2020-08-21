@@ -176,6 +176,24 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.cancelHeart(info);
 	}
 
+	@Override
+	public String selectGimg(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGimg(groomingNo);
+	}
+
+	@Override
+	public String findAppMemberNo(String applyNo) {
+		// TODO Auto-generated method stub
+		return gDao.findAppMemberNo(applyNo);
+	}
+
+	@Override
+	public int addGroomingMember(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.addGroomingMember(map);
+	}
+
 
 	
 }

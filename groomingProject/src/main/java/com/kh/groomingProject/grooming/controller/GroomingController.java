@@ -161,10 +161,10 @@ public class GroomingController<memberNo> {
 //		 map.put(g, "g");
 //		g.setMemberNo(memberNo);
 		if (!file.getOriginalFilename().equals("")) {
-			String savePath = saveFile(file, request);
+			String renameFileName = saveFile(file, request);
 
-			if (savePath != null) { // 파일이 잘 저장되어 경로가 반환 된다면..
-				g.setGroomingImg(file.getOriginalFilename());
+			if (renameFileName != null) { // 파일이 잘 저장되어 경로가 반환 된다면..
+				g.setGroomingImg(renameFileName);
 			}
 
 		}
@@ -207,12 +207,12 @@ public class GroomingController<memberNo> {
 		// 공지글은 파일명 중복 제거는 신경쓰지 않고 했지만
 		// 게시판에서는 파일명을 날짜(업로드 시간)로 rename 해보자
 
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String originFileName = file.getOriginalFilename();
-//		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-//				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
+		String renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
 
-		String filePath = folder + "\\" + originFileName;
+		String filePath = folder + "\\" + renameFileName;
 		// 실제 저장 될 파일의 경로 + rename 파일명
 
 		try {
@@ -222,7 +222,7 @@ public class GroomingController<memberNo> {
 			e.printStackTrace();
 		}
 
-		return originFileName;
+		return renameFileName;
 	}
 
 	// 그루밍 상세보기
@@ -282,7 +282,15 @@ public class GroomingController<memberNo> {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
-		if (result > 0 && result1 > 0) {
+		
+		String memberNo = gService.findAppMemberNo(applyNo);
+		Map map = new HashMap();
+		map.put("memberNo",memberNo);
+		map.put("groomingNo", groomingNo);
+		
+		int result2 = gService.addGroomingMember(map);
+		
+		if (result > 0 && result1 > 0 && result2 >0) {
 			return "success";
 		} else {
 			return "false";
@@ -326,7 +334,7 @@ public class GroomingController<memberNo> {
 
 	@RequestMapping("gUpdate.do")
 	public ModelAndView groomingUpdate(HttpServletRequest request, ModelAndView mv, String groomingNo, Grooming g,
-			@RequestParam(value = "uploadFile", required = true) MultipartFile file) {
+			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
 
 		String renameFileName = "";
 		// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
@@ -346,6 +354,8 @@ public class GroomingController<memberNo> {
 				g.setGroomingImg(renameFileName);
 			}
 
+		}else {
+			g.setGroomingImg(gService.selectGimg(groomingNo));
 		}
 		g.setGroomingNo(groomingNo);
 		System.out.println("수정controller" + g);

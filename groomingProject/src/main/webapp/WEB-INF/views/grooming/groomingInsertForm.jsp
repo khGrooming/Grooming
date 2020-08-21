@@ -588,10 +588,12 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									onClose : function(selectedDate) {
 										// 시작일(fromDate) datepicker가 닫힐때
 										// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-										$("#end").datepicker("option",
-												"minDate", selectedDate);
-									}
-								});
+										
+									 $("#end").datepicker("option",
+												"minDate", "selectedDate:'+1d'"); 
+									 $("#endG").datepicker("option",
+												"maxDate", selectedDate); 
+									}});
 
 				//종료일
 				$('#end')
@@ -603,12 +605,12 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									buttonText : "날짜선택",
 									dateFormat : "yy-mm-dd",
 									changeMonth : true,
-									//minDate: 0, // 오늘 이전 날짜 선택 불가
+									minDate: 0, // 오늘 이전 날짜 선택 불가  */
 									onClose : function(selectedDate) {
 										// 종료일(toDate) datepicker가 닫힐때
 										// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
 										$("#start").datepicker("option",
-												"maxDate", selectedDate);
+												"maxDate",  selectedDate);
 									}
 								});
 				/*  --------------------------- 위는 스터디 기간, 아래는 스터디 모집 기간-------------------------- */
@@ -628,7 +630,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 										// 시작일(fromDate) datepicker가 닫힐때
 										// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
 										$("#endG").datepicker("option",
-												"minDate", selectedDate);
+												"minDate", "selectedDate:'+1d'");
 									}
 								});
 

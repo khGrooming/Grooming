@@ -61,10 +61,13 @@
 		<id property="groomingHNo" column="GROOMING_HEART_NO"/>
 		<result property="groomingNo" column="GROOMING_NO"/>
 		<result property="memberNo" column="MEMBER_NO"/>
-		
-		
-		
 	</resultMap>
+	 <resultMap type="Gmember" id="GmemberResultSet">
+		<id property="gmemberNo" column="G_MEMBER_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
@@ -284,5 +287,29 @@
 		AND MEMBER_NO = #{memberNo}
 
  	</delete>
+ 	
+ 	<select id="selectGimg" parameterType="string" resultType="string">
+ 		SELECT GROOMING_IMG
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	
+ 	
+ 	</select>
+ 	<select id="findAppMemberNo" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NO
+ 		FROM GROOMING_APPLICANT
+ 		WHERE GROOMING_APPLY_NO = #{applyNo}
+ 	
+ 	</select>
+ 	<insert id="addGroomingMember" parameterType="map">
+ 		INSERT INTO GROMMING_MEMBER VALUES(
+ 		'GM' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{memberNo}
+ 		,#{groomingNo}
+ 	)
+ 	</insert>
+ 	
+ 	
  	
 </mapper>
