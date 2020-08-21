@@ -67,4 +67,12 @@ public interface GroomingService {
 
 	int addGroomingMember(Map map);
 
+	String getGroomingNo(String memberNo);
+
+	String findTagNo(String tagTemp);
+
+	int insertGtag(Map map);
+
+	Grooming select(String memberNo);
+
 }

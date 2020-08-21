@@ -31,7 +31,7 @@
  	</select>
  	
  	<select id="selectGtagList" parameterType="string" resultMap="tagResultSet">
-	 	SELECT TAG_NAME
+	 	SELECT *
 		FROM TAG T
 		JOIN GTAG GT ON T.TAG_NO = GT.TAG_NO
 		JOIN GROOMING G ON G.GROOMING_NO = GT.GROOMING_NO

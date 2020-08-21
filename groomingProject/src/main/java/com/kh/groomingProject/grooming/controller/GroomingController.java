@@ -51,9 +51,10 @@ public class GroomingController<memberNo> {
 	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
-	public ModelAndView groomingList(ModelAndView mv) {
+	public ModelAndView groomingList(ModelAndView mv,String memberNo) {
 
 		ArrayList<Grooming> glist = gService.selectList();
+		Grooming selectG = gService.select(memberNo);
 		/* System.out.println("나 glist야 " +glist); */
 		int result = 0;
 		for (int i = 0; i < glist.size(); i++) {
@@ -75,7 +76,7 @@ public class GroomingController<memberNo> {
 		}
 		System.out.println("나 result" + result);
 		if (glist != null ) {
-			mv.addObject("glist", glist);
+			mv.addObject("glist", glist).addObject("selectG",selectG);
 			mv.setViewName("grooming/groomingMain");
 		} else {
 			throw new GroomingException("리스트 불러오기 실패!");
@@ -155,7 +156,7 @@ public class GroomingController<memberNo> {
 	}
 
 	@RequestMapping("groomingInsertForm.do")
-	public String boardInsert(HttpServletRequest request, String memberNo, Grooming g, String tagName,
+	public String groomingInsertForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
 			@RequestParam(value = "uploadFile", required = true) MultipartFile file) {
 //		 Map<Object, String> map = new HashMap<> ();
 //		 map.put(g, "g");
@@ -170,19 +171,35 @@ public class GroomingController<memberNo> {
 		}
 		
 		
-		System.out.println(g);
+		
+		// 그루밍 테이블에 값을 넣음
 		int result = gService.insertGrooming(g);
-
+		int result1 = 0;
+		// 그루밍 테이블 번호를 가져옴
+		String groomingNo = gService.getGroomingNo(memberNo);
 		if (tagName.length() != 0) {
 			String[] tag = tagName.split(",");
+			String[] tagNo = new String[tag.length];
 
 			for (int i = 0; i < tag.length; i++) {
+				// TAG 테이블에 값넣기
 				String tagTemp = tag[i];
 				result = tagService.mergeTags(tagTemp);
+				// GTAG 테이블에 값넣기
+				tagNo[i] = gService.findTagNo(tagTemp);
+				String GtagNo = tagNo[i];
+				
+				Map map = new HashMap();
+				map.put("GtagNo",GtagNo);
+				map.put("groomingNo", groomingNo);
+				
+				// db 갔다 오기
+				result1 = gService.insertGtag(map);
+				
 			}
 		}
 
-		if (result > 0) {
+		if (result > 0 && result1 > 0) {
 			return "redirect:groomingMain.do";
 		} else {
 			throw new GroomingException("게시글 등록 실패!");
@@ -333,7 +350,7 @@ public class GroomingController<memberNo> {
 	}
 
 	@RequestMapping("gUpdate.do")
-	public ModelAndView groomingUpdate(HttpServletRequest request, ModelAndView mv, String groomingNo, Grooming g,
+	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo, Grooming g,
 			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
 
 		String renameFileName = "";
@@ -357,10 +374,15 @@ public class GroomingController<memberNo> {
 		}else {
 			g.setGroomingImg(gService.selectGimg(groomingNo));
 		}
+		
 		g.setGroomingNo(groomingNo);
 		System.out.println("수정controller" + g);
 
 		int result = gService.updateGrooming(g);
+	
+	
+		
+		
 		System.out.println("나 수정 됬어요~" + result);
 		if (result > 0) {
 			mv.setViewName("redirect:groomingMain.do");

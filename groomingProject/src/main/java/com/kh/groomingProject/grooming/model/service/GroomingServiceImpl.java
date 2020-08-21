@@ -194,6 +194,30 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.addGroomingMember(map);
 	}
 
+	@Override
+	public String getGroomingNo(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.getGroomingNo(memberNo);
+	}
+
+	@Override
+	public String findTagNo(String tagTemp) {
+		// TODO Auto-generated method stub
+		return gDao.findTagNo(tagTemp);
+	}
+
+	@Override
+	public int insertGtag(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.insertGtag(map);
+	}
+
+	@Override
+	public Grooming select(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.select(memberNo);
+	}
+
 
 	
 }

@@ -122,7 +122,9 @@
                     <button id="find">검색</button>
                     
                     <c:if test="${!empty loginUser }">
-                    <button type="button" onclick="location.href='groomingInsert.do'">글쓰기</button>
+                  	
+                    <button type="button" id="writeG">글쓰기</button>
+                 	  
                     </c:if>
                 </div>
             </div>
@@ -196,8 +198,27 @@
   
         </div>
        </div>
+       <input type="hidden" value="${selectG }" id="selectG">
     </section>
     <!-- 필터 -->
+    
+    <script>
+   	$(function(){
+    		
+   	
+    	var gmemberNo =$("#selectG").val();
+    	$("#writeG").on("click",function(){
+    		if(gmemberNo != ""){
+    			alert("이미 작성하신 스터디 게시글이 있습니다.");
+    		
+    		}else{
+    			
+    			location.href='groomingInsert.do';
+    		}
+    	})
+   	})
+    
+    </script>
 	<script>
 		$(function(){
 	

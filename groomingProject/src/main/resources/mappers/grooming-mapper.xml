@@ -310,6 +310,41 @@
  	)
  	</insert>
  	
+ 	<select id="getGroomingNo" parameterType="string" resultType="string">
+ 		SELECT GROOMING_NO
+		FROM GROOMING G
+		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+		WHERE G.MEMBER_NO=#{memberNo}
+ 	
+ 	</select>
+ 	<select id="findTagNo" parameterType="string" resultType="string">
+		 
+		 	
+		 	SELECT TAG_NO
+			FROM TAG
+			WHERE TAG_NAME = #{tagTemp}
+ 	
+ 	</select>
+ 	
+ 	<insert id="insertGtag" parameterType="map">
+ 		INSERT INTO GTAG VALUES(
+ 			#{GtagNo}
+ 			, #{groomingNo}
+ 		)
+ 	
+ 	
+ 	
+ 	</insert>
+ 	
+ 	<select id="select" parameterType="string" resultMap="groomingResultSet">
+ 		SELECT *
+ 		FROM GROOMING G
+ 		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+ 		WHERE M.MEMBER_NO = #{memberNo}
+ 		
+ 	</select>
+ 	
+ 	
  	
  	
 </mapper>

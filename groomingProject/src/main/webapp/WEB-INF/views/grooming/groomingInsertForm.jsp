@@ -319,19 +319,19 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 
 								<tr>
+									<td><span>스터디 모집 기간</span><br> <input id="startG" type="text" name="groomingSd" required> ~ 
+									<input id="endG" type="text" name="groomingEd" required><br> <small><span>스터디
+												그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을
+												설정해주세요
+										</span></small></td>
+								</tr>
+								<tr>
 									<td><span>스터디 진행 기간</span><br> <input id="start" type="text" min="${today }" name="studySd" required> ~ <input
 										id="end" type="text" name="studyEd" required><br> <small>
 											<span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할
 												기간을 설정해주세요
 										</span>
 									</small></td>
-								</tr>
-								<tr>
-									<td><span>스터디 모집 기간</span><br> <input id="startG" type="text" name="groomingSd" required> ~ 
-									<input id="endG" type="text" name="groomingEd" required><br> <small><span>스터디
-												그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을
-												설정해주세요
-										</span></small></td>
 								</tr>
 								<tr>
 									<td><span>대표이미지</span><br> <!-- 	<div class="image">
@@ -609,8 +609,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									onClose : function(selectedDate) {
 										// 종료일(toDate) datepicker가 닫힐때
 										// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-										$("#start").datepicker("option",
-												"maxDate",  selectedDate);
+										$("#start").datepicker("option", "maxDate",  selectedDate);
+										$("#endG").datepicker("option","minDate",selectedDate);
 									}
 								});
 				/*  --------------------------- 위는 스터디 기간, 아래는 스터디 모집 기간-------------------------- */

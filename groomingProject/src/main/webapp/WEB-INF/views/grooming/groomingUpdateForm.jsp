@@ -237,7 +237,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			<c:url var="groomingUpdate" value="gUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
 			</c:url>
+			
 			<form action="${groomingUpdate }" method="post" enctype="multipart/form-data">
+				
 				<input type="hidden" value="${grooming.groomingNo }">
 				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
 
@@ -334,17 +336,17 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 								<tr>
 									<td>
-										<span>스터디 진행 기간</span><br> 
-										<input id="start" type="text" min="${today }" name="studySd" value="${grooming.studySd }" required> ~
-										<input id="end" type="text" name="studyEd" value="${grooming.studyEd }" required><br>
-										<small> <span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할 기간을 설정해주세요</span></small>
+										<span>스터디 모집 기간</span><br> 
+										<input id="startG" type="text" name="groomingSd" value="${grooming.groomingSd }" required> ~ <input id="endG" type="text" name="groomingEd" value="${grooming.groomingEd }" required><br>
+										<small><span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을 설정해주세요</span></small>
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<span>스터디 모집 기간</span><br> 
-										<input id="startG" type="text" name="groomingSd" value="${grooming.groomingSd }" required> ~ <input id="endG" type="text" name="groomingEd" value="${grooming.groomingEd }" required><br>
-										<small><span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">모집</span>할 기간을 설정해주세요</span></small>
+										<span>스터디 진행 기간</span><br> 
+										<input id="start" type="text" min="${today }" name="studySd" value="${grooming.studySd }" required> ~
+										<input id="end" type="text" name="studyEd" value="${grooming.studyEd }" required><br>
+										<small> <span>스터디 그룹을&nbsp;&nbsp;<span style="color: red;">진행</span>할 기간을 설정해주세요</span></small>
 									</td>
 								</tr>
 								<tr>
@@ -374,8 +376,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			</form>
 		</div>
 		
-		
-		<!-- <script>
+		<!-- textarea에 값을 넣을 script -->
+		 <script>
 			$(function(){
 			
 				var textareaContent = $("#textareaContent").val();
@@ -385,7 +387,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				}
 			})
 			
-		</script> -->
+		</script> 
 		<script>
 			$('input').keydown(function() {
 				if (event.keyCode === 13) {
@@ -564,49 +566,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 				// 시작일은 종료일이후 날짜 선택 불가
 				// 종료일은 시작일 이전 날짜 선택 불가
-
-				//시작일.
-				$('#start')
-						.datepicker(
-								{
-									showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
-									buttonImage : "${contextPath }/resources/views/images/calendar.png", // 버튼 이미지
-									buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
-									buttonText : "날짜선택", // 버튼의 대체 텍스트
-									dateFormat : "yy-mm-dd", // 날짜의 형식
-									changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
-									minDate : 0,
-									onClose : function(selectedDate) {
-										// 시작일(fromDate) datepicker가 닫힐때
-										// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-										
-									 $("#end").datepicker("option",
-												"minDate", "selectedDate:'+1d'"); 
-									 $("#endG").datepicker("option",
-												"maxDate", selectedDate); 
-									}});
-
-				//종료일
-				$('#end')
-						.datepicker(
-								{
-									showOn : "both",
-									buttonImage : "${contextPath }/resources/views/images/calendar.png",
-									buttonImageOnly : true,
-									buttonText : "날짜선택",
-									dateFormat : "yy-mm-dd",
-									changeMonth : true,
-									minDate: 0, // 오늘 이전 날짜 선택 불가  */
-									onClose : function(selectedDate) {
-										// 종료일(toDate) datepicker가 닫힐때
-										// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
-										$("#start").datepicker("option",
-												"maxDate",  selectedDate);
-									}
-								});
-				/*  --------------------------- 위는 스터디 기간, 아래는 스터디 모집 기간-------------------------- */
-
-				//시작일.
+					//시작일.
 				$('#startG')
 						.datepicker(
 								{
@@ -641,8 +601,51 @@ section .form_container .study .bootstrap-tagsinput .badge {
 										// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
 										$("#startG").datepicker("option",
 												"maxDate", selectedDate);
+										 $("#start").datepicker("option",
+													"minDate", selectedDate); 
 									}
 								});
+				/*  --------------------------- 위는 스터디 모집 기간, 아래는 스터디  기간-------------------------- */
+				//시작일.
+				$('#start')
+						.datepicker(
+								{
+									showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
+									buttonImage : "${contextPath }/resources/views/images/calendar.png", // 버튼 이미지
+									buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
+									buttonText : "날짜선택", // 버튼의 대체 텍스트
+									dateFormat : "yy-mm-dd", // 날짜의 형식
+									changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
+									minDate : 0,
+									onClose : function(selectedDate) {
+										// 시작일(fromDate) datepicker가 닫힐때
+										// 종료일(toDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+										
+									 $("#end").datepicker("option",
+												"minDate", "selectedDate:'+1d'"); 
+								
+									}});
+
+				//종료일
+				$('#end')
+						.datepicker(
+								{
+									showOn : "both",
+									buttonImage : "${contextPath }/resources/views/images/calendar.png",
+									buttonImageOnly : true,
+									buttonText : "날짜선택",
+									dateFormat : "yy-mm-dd",
+									changeMonth : true,
+									minDate: 0, // 오늘 이전 날짜 선택 불가  */
+									onClose : function(selectedDate) {
+										// 종료일(toDate) datepicker가 닫힐때
+										// 시작일(fromDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 종료일로 지정 
+										$("#start").datepicker("option",
+												"maxDate",  selectedDate);
+									}
+								});
+
+			
 			});
 		</script>
 

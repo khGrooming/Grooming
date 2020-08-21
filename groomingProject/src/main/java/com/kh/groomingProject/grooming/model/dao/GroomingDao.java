@@ -174,6 +174,26 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.addGroomingMember",map);
 	}
+
+	public String getGroomingNo(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGroomingNo",memberNo);
+	}
+
+	public String findTagNo(String tagTemp) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.findTagNo",tagTemp);
+	}
+
+	public int insertGtag(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertGtag",map);
+	}
+
+	public Grooming select(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.select",memberNo);
+	}
 	
 	
 	
