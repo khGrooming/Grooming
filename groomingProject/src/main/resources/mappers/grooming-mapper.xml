@@ -345,6 +345,106 @@
  	</select>
  	
  	
+ 	<insert id="insertSave" parameterType="Grooming" >
+ 		INSERT INTO GROOMING VALUES(
+ 			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			, #{memberNo}
+ 			, #{groomingType}
+ 			<if test="groomingTitle != ''">
+ 			, #{groomingTitle}
+ 			</if>
+ 			<if test="groomingTitle == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingContent != ''">
+ 			, #{groomingContent}
+ 			</if>
+ 			<if test="groomingContent == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingIntroduce != ''">
+ 			, #{groomingIntroduce}
+ 			</if>
+ 			<if test="groomingIntroduce == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingP != ''">
+ 			, #{groomingP}
+ 			</if>
+ 			<if test="groomingP == ''">
+ 			, '2'
+ 			</if>
+ 			
+ 			<if test="studySd != null">
+ 			, #{studySd}
+ 			</if>
+ 			<if test="studySd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="studyEd != null">
+ 			, #{studyEd}
+ 			</if>
+ 			<if test="studyEd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="groomingSd != null">
+ 			, #{groomingSd}
+ 			</if>
+ 			<if test="groomingSd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="groomingEd != null">
+ 			, #{groomingEd}
+ 			</if>
+ 			<if test="groomingEd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="money != ''">
+ 			,#{money}
+ 			</if>
+ 			<if test="money == '' ">
+ 			 ,DEFAULT
+ 			</if>
+ 		
+ 			<if test="groomingImg != null">
+ 			,#{groomingImg}
+ 			</if>
+ 			<if test="groomingImg == null ">
+ 			 , 'test.png'
+ 			</if>
+ 			
+ 			, DEFAULT
+ 			, SYSDATE
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, DEFAULT
+ 			)
+	
+	
+ 	</insert>
+ 	
+ 	<insert id="GroupHostIn" parameterType="map">
+ 		INSERT INTO GROMMING_MEMBER VALUES(
+ 			'GM' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			,#{memberNo}
+ 			,#{groomingNo}
+ 	)
+ 	</insert>
+ 	
+ 	<delete id="deleteGtag" parameterType="string">
+ 	
+ 		DELETE FROM GTAG 
+		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	</delete>
  	
  	
 </mapper>

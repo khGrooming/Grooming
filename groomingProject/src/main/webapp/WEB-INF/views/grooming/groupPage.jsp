@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="ko">
 
@@ -119,9 +120,9 @@
         <section id="content1">
          
                <!-- 그루밍 제목 -->
-                <h2 style="margin-top:20px; margin-left:20px;" align="left">Spring Project Fighting</h2>
+                <h2 style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
                 <!-- 그루밍 한줄 소개 -->
-                <p  style="margin-top:20px; margin-left:20px;" align="left">스프링 프로젝트 열심히해서 포트폴리오에 자신있게 씁시다~~~~~~~~~~~~~~~~</p>
+                <p  style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingIntroduce }</p>
                 <div class="row">
                     <div class="col-4" style="width: 20%;">
                         <table>
@@ -129,7 +130,7 @@
                                 <div class="gimg"
                                     style="width: 300px; height:300px;  margin-left: 50px; margin-top: 50px; position: relative;">
                                     <!-- 그룹 이미지 들어갈 곳 -->
-                                    <img src="${contextPath }/resources/views/images/박재범.jpg"> 
+                                    <img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}"> 
                                 </div>
                             </tr>
 
@@ -146,64 +147,29 @@
                                     <th scope="col" style="width: 200px;">이메일</th>
                                     <th scope="col" style="width: 200px;">연락처</th>
                                     <th scope="col" style="width:200px;">회원</th>
+                                    <th scope="col" style="width:200px;">제명</th>
                                 </tr>
                             </thead>
                             <tbody>
+                            <c:forEach var="m" items="${mlist }">
                                 <tr>
                                     <td>
-                                        <div class="pimg" style="width:40px; height:40px; "><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
+                                        <div class="pimg" style="width:40px; height:40px; ">
+                                        	<img src="${contextPath }/resources/upprofileFiles/${m.memberPhoto}">
+                                        </div>
                                     </td>
-                                    <td>아이유</td>
-                                    <td>gdoeb@naver.com</td>
-                                    <td>01051704587</td>
-                                    <td>멘토</td>
+                                    <td>${m.memberNickName}</td>
+                                    <td>${m.memberEmail}</td>
+                                    <td>${m.memberPhone}</td>
+                                    <c:if test="${grooming.memberNo eq m.memberNo }">
+                                    	<td>${grooming.groomingType }</td>
+                                    </c:if>
+	                                <c:if test="${grooming.memberNo ne m.memberNo }">
+                                  	 	 <td>스터디원</td>
+                                    </c:if>
+                                    <td><button type="button" onclick="location.href=''">제명</button></td>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px; "><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
-                                    </th>
-
-                                    <td>Jacob</td>
-                                    <td>2323@naver.com</td>
-                                    <td>02616161</td>
-                                    <td>스터디원</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
-                                    </th>
-                                    <td>maroon5</td>
-                                    <td>sugar@naver.com</td>
-                                    <td>01051876123</td>
-                                    <td>스터디원</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
-                                    </th>
-                                    <td>손담비</td>
-                                    <td>미쳤어@naver.com</td>
-                                    <td>1515111531</td>
-                                    <td>스터디원</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
-                                    </th>
-                                    <td>원빈</td>
-                                    <td>Onebin@naver.com</td>
-                                    <td>1531313513</td>
-                                    <td>스터디원</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/박재범.jpg"></div>
-                                    </th>
-                                    <td>방탄유리</td>
-                                    <td>Yuri@naver.com</td>
-                                    <td>777888877777</td>
-                                    <td>스터디원</td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -260,78 +226,6 @@
                 <td>김성훈</td>
                 <td>2020-07-12</td>
                 <td>2</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>공지사항</td>
-                <td>내일 늦으면 과제 2배에요요</td>
-                <td>김성훈</td>
-                <td>2020-07-17</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>공지사항</td>
-                <td>시험이 일주일 남았네요요</td>
-                <td>김성훈</td>
-                <td>2020-07-27</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>자유게시판</td>
-                <td>금요일에 만나요</td>
-                <td>아이유유</td>
-                <td>2020-07-12</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>자유게시판</td>
-                <td>묘해 너와</td>
-                <td>디에이드</td>
-                <td>2020-07-22</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">6</th>
-                <td>자유게시판</td>
-                <td>purpose</td>
-                <td>etham</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">7</th>
-                <td>자유게시판</td>
-                <td>너랑나</td>
-                <td>아이유</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>자유게시판</td>
-                <td>비도 오고 그래서</td>
-                <td>헤이즈</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">9</th>
-                <td>자유게시판</td>
-                <td>디키즈 크루 모집</td>
-                <td>양홍원</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">10</th>
-                <td>자유게시판판</td>
-                <td>내일 스터디 바나프레소에서 모여요</td>
-                <td>김성훈</td>
-                <td>2020-07-12</td>
-                <td>12</td>
               </tr>
 
             </tbody>

@@ -170,8 +170,6 @@ public class GroomingController<memberNo> {
 
 		}
 		
-		
-		
 		// 그루밍 테이블에 값을 넣음
 		int result = gService.insertGrooming(g);
 		int result1 = 0;
@@ -198,8 +196,12 @@ public class GroomingController<memberNo> {
 				
 			}
 		}
+		Map map1 = new HashMap();
+		map1.put("memberNo", memberNo);
+		map1.put("groomingNo", groomingNo);
+		int result2 = gService.GroupHostIn(map1);
 
-		if (result > 0 && result1 > 0) {
+		if (result > 0 && result1 > 0 && result2 >0) {
 			return "redirect:groomingMain.do";
 		} else {
 			throw new GroomingException("게시글 등록 실패!");
@@ -379,12 +381,38 @@ public class GroomingController<memberNo> {
 		System.out.println("수정controller" + g);
 
 		int result = gService.updateGrooming(g);
-	
+		
+		int result1= 0;
+		
+		// 기존에 GTAG에 존재해있던 값을 지우자
+		int result2 = gService.deleteGtag(groomingNo);
+		
+		if (tagName.length() != 0) {
+			String[] tag = tagName.split(",");
+			String[] tagNo = new String[tag.length];
+
+			for (int i = 0; i < tag.length; i++) {
+				// TAG 테이블에 값넣기
+				String tagTemp = tag[i];
+				result = tagService.mergeTags(tagTemp);
+				// GTAG 테이블에 값넣기
+				tagNo[i] = gService.findTagNo(tagTemp);
+				String GtagNo = tagNo[i];
+				
+				Map map = new HashMap();
+				map.put("GtagNo",GtagNo);
+				map.put("groomingNo", groomingNo);
+				
+				// db 갔다 오기
+				result1 = gService.insertGtag(map);
+				
+			}
+		}
 	
 		
 		
 		System.out.println("나 수정 됬어요~" + result);
-		if (result > 0) {
+		if (result > 0 && result1 > 0 && result2 > 0) {
 			mv.setViewName("redirect:groomingMain.do");
 
 		} else {
@@ -527,6 +555,57 @@ public class GroomingController<memberNo> {
 	}
 	
 	
+	@RequestMapping("save.do")
+	public String groomingSaveForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
+			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+//		 Map<Object, String> map = new HashMap<> ();
+//		 map.put(g, "g");
+//		g.setMemberNo(memberNo);
+		System.out.println("나 save.do야");
+		if (!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file, request);
+
+			if (renameFileName != null) { // 파일이 잘 저장되어 경로가 반환 된다면..
+				g.setGroomingImg(renameFileName);
+			}
+
+		}
+	
+		// 그루밍 테이블에 값을 넣음
+		int result = gService.insertSaveGrooming(g);
+		int result1 = 0;
+		
+		// 그루밍 테이블 번호를 가져옴
+		String groomingNo = gService.getGroomingNo(memberNo);
+		
+		if (tagName.length() != 0) {
+			String[] tag = tagName.split(",");
+			String[] tagNo = new String[tag.length];
+
+			for (int i = 0; i < tag.length; i++) {
+				// TAG 테이블에 값넣기
+				String tagTemp = tag[i];
+				result = tagService.mergeTags(tagTemp);
+				// GTAG 테이블에 값넣기
+				tagNo[i] = gService.findTagNo(tagTemp);
+				String GtagNo = tagNo[i];
+				
+				Map map = new HashMap();
+				map.put("GtagNo",GtagNo);
+				map.put("groomingNo", groomingNo);
+				
+				// db 갔다 오기
+				result1 = gService.insertGtag(map);
+				
+			}
+		}
+
+		if (result > 0 ) {
+			return "redirect:groomingMain.do";
+		} else {
+			throw new GroomingException("게시글 임시저장 실패!");
+		}
+	}
 	
 	
 	

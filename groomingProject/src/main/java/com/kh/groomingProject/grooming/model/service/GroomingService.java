@@ -75,4 +75,10 @@ public interface GroomingService {
 
 	Grooming select(String memberNo);
 
+	int insertSaveGrooming(Grooming g);
+
+	int GroupHostIn(Map map1);
+
+	int deleteGtag(String groomingNo);
+
 }

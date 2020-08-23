@@ -218,6 +218,24 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.select(memberNo);
 	}
 
+	@Override
+	public int insertSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.insertSaveGrooming(g);
+	}
+
+	@Override
+	public int GroupHostIn(Map map1) {
+		// TODO Auto-generated method stub
+		return gDao.GroupHostIn(map1);
+	}
+
+	@Override
+	public int deleteGtag(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.deleteGtag(groomingNo);
+	}
+
 
 	
 }

@@ -118,7 +118,7 @@
                         <option value="writer" id="writer">작성자</option>
                         <option value="content" id="content">내용</option>
                     </select>
-                    <input type="text" size="30px" id="keyword">
+                    <input type="text" size="30px" id="keyword" required>
                     <button id="find">검색</button>
                     
                     <c:if test="${!empty loginUser }">

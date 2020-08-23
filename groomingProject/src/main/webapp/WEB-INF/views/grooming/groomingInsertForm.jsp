@@ -243,12 +243,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<div class="form_container container">
 			<!-- style=" "> -->
 
-			<c:url var="groomingInsert" value="groomingInsertForm.do">
-				<c:param name="memberNo" value="${loginUser.memberNo}"/>
-			</c:url>
+			<c:url var="groomingInsert" value="groomingInsertForm.do"/>
+				
 			<form action="${groomingInsert }" method="post"
-				enctype="multipart/form-data">
-
+				enctype="multipart/form-data" id="form">
+ 				<input type="hidden" value="${loginUser.memberNo }" id="hiddienMemberNo" name="memberNo"> 
 				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
 
 					<div class="col-7">
@@ -280,7 +279,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td><span>활동인원</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="number" max="6" min="2"
-										style="text-align: center;" name="groomingP" required><span>&nbsp;&nbsp;명</span><br>
+										style="text-align: center;" name="groomingP" id="groomingP" required><span>&nbsp;&nbsp;명</span><br>
 										<small><span style="color: lightblue;">2~6명으로
 												인원을 구성해주세요</span></small></td>
 								</tr>
@@ -350,7 +349,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td>
 										<input id="insert" class="btn-3d green" type="submit" value="등록하기">
-										<input id="cansel" class="btn-3d green" type="submit" value ="취소하기" onclick="save();">
+										<input id="cansel" class="btn-3d green" type="submit" value ="취소하기" >
 									</td>
 								</tr>
 							</tbody>
@@ -359,6 +358,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				</div>
 			</form>
 		</div>
+	
 		 <script>
 			$(function(){
 					var inputText = $('input[type="text"]').val();
@@ -374,6 +374,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			})
 		
 		</script> 
+		
+		<!-- 엔터키 입력시 submit 방지 -->
 		<script>
 			$('input').keydown(function() {
 			  if (event.keyCode === 13) {
@@ -383,8 +385,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			
 		
 		</script>
+		
+			<!--  파일 업로드 관련 script -->
 		<script>
-			// 파일 업로드 관련 script
 			$(document).ready(function() {
 
 								var fileTarget = $('.filebox .upload-hidden');
@@ -455,8 +458,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		
 	
+			<!-- 그룹 타입 관련 script -->
 		<script>
-			// 그룹 타입 관련 script
 			$(function() {
 				if($("#m").is(":checked")){
 					$("#exist").attr('style', "display:none;");
@@ -510,19 +513,63 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 			})
 		</script>
+		
 		<script>
-			function save() {
-				var result = confirm("임시저장 하시겠습니까?");
-				if (result) {
-					alert("임시저장되었습니다.");
-					    location.href="groomingMain.do";
-				} else {
-					alert("취소되었습니다.");
-					location.href = "groomingMain.do";
-				}
-			}
+/* 			var memberNo = $("#hiddienMemberNo").val(); */
+		/* 	console.log(memberNo); */
+			$(function(){
+				var memberNo = "${loginUser.memberNo}";
+						$("#cansel").on("click",function(){
+							
+						var result = confirm("임시저장 하시겠습니까?");
+						var groomingP = $("#groomingP").val();
+						var startG = $("#startG").val();
+						var endG = $("#endG").val();
+						var start = $("#start").val();
+						var end = $("#end").val();
+						
+						if (result) {
+								
+							if(groomingP == null  ){
+								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
+							}else if(startG == null){
+								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
+							
+							}else if(endG == null){
+								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
+							}else if(start == null){
+								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
+							}else if(end == null){
+								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
+							}else {
+							
+							$("#title").attr("required",false);
+							$("#introduce").attr("required",false);
+					/* 		$("#groomingP").attr("required",false); */
+							$("#content").attr("required",false);
+							$("#tagName").attr("required",false);
+						/* 	$("#startG").attr("required",false);
+							$("#endG").attr("required",false);
+							$("#start").attr("required",false);
+							$("#end").attr("required",false); */
+							$("#input-file").attr("required",false);
+							
+							$("#form").attr("action","save.do");  
+							
+							$("#cansel").submit();
+							}
+						} else {
+							alert("취소되었습니다.");
+							location.href = "groomingMain.do";
+						}
+					})
+				})			
+			
 		</script>
-
+		
+		
+		
+			<!-- 실시간 글자 카운팅  -->
 		<script>
 			// 그룹 이름 
 			$('#title').keydown(function(e) {
@@ -561,8 +608,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			});
 		</script>
 
+			<!--  날짜 관련 script -->
 		<script>
-			// 날짜 관련 script
 			$(function() {
 
 				//오늘 날짜를 출력
@@ -656,6 +703,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 	
 		<script>
+		
+		
 		
 		</script>
 	

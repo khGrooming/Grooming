@@ -365,7 +365,6 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td>
 										<input id="insert" class="btn-3d green" type="submit" value="수정하기">
-										<input id="hiddenSave" class="btn-3d green" type="submit" value="임시저장">
 										<button class="btn-3d green" onclick="save();">취소하기</button>
 									</td>
 								</tr>
