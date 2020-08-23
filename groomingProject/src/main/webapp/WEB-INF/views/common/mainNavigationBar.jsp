@@ -214,7 +214,7 @@
 					</li>
 				</c:if>
 				<c:if test="${!empty sessionScope.loginUser }">
-					<li class="nav-item main_messages_icon" onclick="messageChk()">
+					<li class="nav-item main_messages_icon">
 						<div class="main_naviIcon">
 							<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-thin.svg">
 						</div>
@@ -289,14 +289,8 @@
 	
 	<!-- 메시지 스크립트 -->
  	<script type="text/javascript">
-		function messageChk() {
-			var msg_container = document.querySelector('.main_messages_dropdown');
-			msg_container.classList.toggle('active');
-			return false;
-		}
 		// 메시지 카운트
 		function getUserMessages() {
-			
 			$.ajax({
 				url:"getUserMessagesCount.do",
 				data:{memberNo:memberNo},
@@ -317,17 +311,51 @@
 				}
 			});
 		}
+		
+		// 메시지 읽음 fn & ajax
+		(function ($) {
+            $.fn.readMessage = function() {
+                //this.each(function() {
+        			console.log($(this));
+                    var el = $(this);
+                    
+                    el.parent().on('click', '.readMessage', function () {
+                        console.log(el.val());
+                        // 빈값이면 동작 멈춤
+                        if($(this).find("input[type=hidden]").val() == ""){
+            				console.log("메시지가 없습니다.");
+            				return;
+            			}
 
+						var messageNo = el.find("input[type=hidden]").val();
+
+            			console.log("읽을 메시지 번호" + messageNo);
+            			
+            			// 메시지 읽음
+            			$.ajax({
+            				url:"readUserMessage.do",
+            				data:{messagesNo:memberNo,memberNo:memberNo},
+            				success:function(data){
+            					console.log("메시지 읽음 결과 : " + data.length);
+            					refreshMessageBody(data);
+            				},
+            				error:function(request, status, errorData){
+            					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+            				}
+            			});
+                    });
+                //});
+            };
+        })(jQuery);
+		
 		// 메시지 리스트 생성
 		function refreshMessageBody(data) {
-			var $messages_dropdown = $(".main_messages_body");
-			var $messages_dropdown_container = $(".main_messages_body_container");
-			$messages_dropdown_container.html("");
-			
+			$("div").remove(".main_messages_body");
 			// 메시지 내용 추가
 			if(data.length > 0) {
+				console.log("메시지 추가");
 				for(var i in data){
-					console.log("메시지 추가 시작");
+					var $messages_dropdown = $(".main_messages_dropdown");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
 					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
@@ -341,9 +369,11 @@
 					$messages_body.append($messages_bodyContent);
 					$messages_body.append($messages_bodyTime);
 					
-					$messages_dropdown_container.append($messages_body);
+					$messages_dropdown.append($messages_body);
 				}
 			} else {
+				console.log("메시지 없음");
+				var $messages_dropdown = $(".main_messages_dropdown");
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $messages_bodyContent = $('<div>').text("아직 메시지가 없습니다!");
@@ -351,58 +381,35 @@
 				$messages_body.append($messages_bodyInput);
 				$messages_body.append($messages_bodyContent);
 				
-				$messages_dropdown_container.append($messages_body);
+				$messages_dropdown.append($messages_body);
 			}
+			$(".main_messages_body").readMessage();
 		}
 
-		// 메시지 리스트 불러오기 ajax
-		$(".main_messages_icon").on("click",function(){
-			// 메시지 수 삭제
-			$(".main_messages_txt").remove();
-			console.log("메시지 아이콘 클릭");
-			$.ajax({
-				url:"getUserMessage.do",
-				data:{memberNo:memberNo},
-				dateType:"json",
-				success:function(data){
-					console.log("메시지 확인 결과 : " + data.length);
-					refreshMessageBody(data);
-				},
-				error:function(request, status, errorData){
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-				}
-			});
-		});
+		// 알림 리스트 추가
+ 		$(".main_messages_icon").click(function() {
+			var alt_container = document.querySelector('.main_messages_dropdown');
+			alt_container.classList.toggle('active');
 
-		// 메시지 읽음 ajax
-		$(".main_messages_body").on("click",function(e){
-			console.log($(this));
-			if($(this).find("input[type=hidden]").val() == ""){
-				console.log("메시지가 없습니다.");
-				return false;
+			if($(".main_messages_dropdown").hasClass("active") === true){
+				// 메시지 수 삭제
+				$(".main_messages_txt").remove();
+	
+				console.log("메시지 아이콘 클릭");
+				$.ajax({
+					url:"getUserMessage.do",
+					data:{memberNo:memberNo},
+					dateType:"json",
+					success:function(data){
+						console.log("메시지 확인 결과 : " + data.length);
+						refreshMessageBody(data);
+					},
+					error:function(request, status, errorData){
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+					}
+				});
 			}
-			
-			var messagBody = $(this);
-			var messageNo = $(this).find("input[type=hidden]").val();
-
-			console.log("읽을 메시지 번호" + messageNo);
-			
-			// 메시지 삭제
-			$.ajax({
-				url:"readUserMessage.do",
-				data:{messagesNo:memberNo,memberNo:memberNo},
-				success:function(data){
-					console.log("메시지 읽음 결과 : " + data.length);
-					refreshMessageBody(data);
-				},
-				error:function(request, status, errorData){
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-				}
-			});
-			
 			return false;
-			// 이벤트 전파 막기(창닫기x)
-			e.stopPropagation();
 		});
 	</script>
 
@@ -469,10 +476,10 @@
 
 		// 알림 리스트 생성
 		function refreshAlertBody(data) {
-			console.log("알림 추가 시작");
 			$("div").remove(".main_alerts_body");
 			// 알림 내용 추가
 			if(data.length > 0) {
+				console.log("알림 추가");
 				for(var i in data){
 					var $alerts_dropdown = $(".main_alerts_dropdown");
 					var $alerts_body = $('<div>').addClass("main_alerts_body");
@@ -487,6 +494,7 @@
 					$alerts_dropdown.append($alerts_body);
 				}
 			} else {
+				console.log("알림 없음");
 				var $alerts_dropdown = $(".main_alerts_dropdown");
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
@@ -497,14 +505,12 @@
 				
 				$alerts_dropdown.append($alerts_body);
 			}
+			// 클릭 읽음 기능 추가
 			$(".main_alerts_body").readAlert();
-			/* $(".main_alerts_body").on("click",function() {
-				readAlert();
-			}); */
 		}
 
 		// 알림 리스트 추가
- 		$(".main_aIcon").click(function() {
+ 		$(".main_alerts_icon").click(function() {
 			var alt_container = document.querySelector('.main_alerts_dropdown');
 			alt_container.classList.toggle('active');
 
