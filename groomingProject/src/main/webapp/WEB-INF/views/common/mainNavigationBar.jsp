@@ -76,7 +76,7 @@
 }
 .main_messages_dropdown
 {
-	/* display: none; */
+	display: none;
 	right: 0;
 	overflow: auto;
 	position: absolute;
@@ -315,11 +315,11 @@
 		// 메시지 읽음 fn & ajax
 		(function ($) {
             $.fn.readMessage = function() {
-                //this.each(function() {
+                this.each(function() {
         			console.log($(this));
                     var el = $(this);
-                    
-                    el.parent().on('click', '.readMessage', function () {
+
+                    el.parent().on('click', '.main_messages_body', function(event) {
                         console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
@@ -334,7 +334,7 @@
             			// 메시지 읽음
             			$.ajax({
             				url:"readUserMessage.do",
-            				data:{messagesNo:memberNo,memberNo:memberNo},
+            				data:{messageNo:messageNo,memberNo:memberNo},
             				success:function(data){
             					console.log("메시지 읽음 결과 : " + data.length);
             					refreshMessageBody(data);
@@ -343,8 +343,9 @@
             					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
             				}
             			});
+            			event.stopPropagation();
                     });
-                //});
+                });
             };
         })(jQuery);
 		
@@ -356,6 +357,7 @@
 				console.log("메시지 추가");
 				for(var i in data){
 					var $messages_dropdown = $(".main_messages_dropdown");
+					var $mbody_container = $('<div>').addClass("mbody_container");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
 					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
@@ -368,21 +370,25 @@
 					$messages_body.append($messages_bodyFrom);
 					$messages_body.append($messages_bodyContent);
 					$messages_body.append($messages_bodyTime);
+					$mbody_container.append($messages_body);
 					
-					$messages_dropdown.append($messages_body);
+					$messages_dropdown.append($mbody_container);
 				}
 			} else {
 				console.log("메시지 없음");
 				var $messages_dropdown = $(".main_messages_dropdown");
+				var $mbody_container = $('<div>').addClass("mbody_container");
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $messages_bodyContent = $('<div>').text("아직 메시지가 없습니다!");
 				
 				$messages_body.append($messages_bodyInput);
 				$messages_body.append($messages_bodyContent);
-				
-				$messages_dropdown.append($messages_body);
+				$mbody_container.append($messages_body);
+
+				$messages_dropdown.append($mbody_container);
 			}
+			// 클릭 읽음 기능 추가
 			$(".main_messages_body").readMessage();
 		}
 
@@ -445,7 +451,7 @@
         			console.log($(this));
                     var el = $(this);
 
-                    el.parent().on('click', '.main_alerts_body', function () {
+                    el.parent().on('click', '.main_alerts_body', function(event) {
                         console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
@@ -469,6 +475,7 @@
             					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
             				}
             			});
+            			event.stopPropagation();
                     });
                 });
             };
@@ -482,6 +489,7 @@
 				console.log("알림 추가");
 				for(var i in data){
 					var $alerts_dropdown = $(".main_alerts_dropdown");
+					var $abody_container = $('<div>').addClass("abody_container");
 					var $alerts_body = $('<div>').addClass("main_alerts_body");
 					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
 					var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
@@ -490,20 +498,23 @@
 					$alerts_body.append($alerts_bodyInput);
 					$alerts_body.append($alerts_bodyContent);
 					$alerts_body.append($alerts_bodyTime);
+					$abody_container.append($alerts_body);
 					
-					$alerts_dropdown.append($alerts_body);
+					$alerts_dropdown.append($abody_container);
 				}
 			} else {
 				console.log("알림 없음");
 				var $alerts_dropdown = $(".main_alerts_dropdown");
+				var $abody_container = $('<div>').addClass("abody_container");
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
 				
 				$alerts_body.append($alerts_bodyInput);
 				$alerts_body.append($alerts_bodyContent);
+				$abody_container.append($alerts_body);
 				
-				$alerts_dropdown.append($alerts_body);
+				$alerts_dropdown.append($abody_container);
 			}
 			// 클릭 읽음 기능 추가
 			$(".main_alerts_body").readAlert();
