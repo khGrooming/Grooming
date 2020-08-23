@@ -114,12 +114,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 			                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-			                         		<c:if test="${j.current.mentorPass eq 'Y'}">
+			                         		<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>
@@ -129,12 +129,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 			                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-				                         	<c:if test="${j.current.mentorPass eq 'Y'}">
+				                         	<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>
@@ -144,12 +144,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 			                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-				                         	<c:if test="${j.current.mentorPass eq 'Y'}">
+				                         	<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>
@@ -280,12 +280,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 			                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-				                         	<c:if test="${j.current.mentorPass eq 'Y'}">
+				                         	<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>
@@ -295,12 +295,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 			                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-				                         	<c:if test="${j.current.mentorPass eq 'Y'}">
+				                         	<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>
@@ -310,12 +310,12 @@
 		                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 			                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
 			                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
-			                         	<input type="hidden" class="pass${j.index}" value="${career.mentorPass}">
+			                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 			                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
-				                         	<c:if test="${j.current.mentorPass eq 'Y'}">
+				                         	<c:if test="${j.current.specComfirm eq 'Y'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
 			                         		</c:if>
-			                         		<c:if test="${j.current.mentorPass eq 'N'}">
+			                         		<c:if test="${j.current.specComfirm eq 'N'}">
 					                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
 			                         		</c:if>
 			                         	</c:if>

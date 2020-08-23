@@ -23,6 +23,7 @@
 		<result property="specName" column="SPEC_NAME"/>
 		<result property="specFileName" column="SPEC_FILENAME"/>
 		<result property="specCName" column="SPEC_C_NAME"/>
+		<result property="specComfirm" column="SPEC_CONFIRM"/>
 	</resultMap>
 
 	

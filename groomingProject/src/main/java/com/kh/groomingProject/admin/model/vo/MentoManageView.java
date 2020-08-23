@@ -16,12 +16,14 @@ public class MentoManageView implements Serializable{
 	private String specName;
 	private String specFileName;
 	private String specCName;
+	private String specComfirm;
 	
 	public MentoManageView() {
 	}
 	
 	public MentoManageView(String memberNo, String memberEmail, String memberNickname, String memberName,
-			String mentorNo, String mentorPass, String specName, String specFileName, String specCName) {
+			String mentorNo, String mentorPass, String specName, String specFileName, String specCName,
+			String specComfirm) {
 		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
 		this.memberNickname = memberNickname;
@@ -31,6 +33,7 @@ public class MentoManageView implements Serializable{
 		this.specName = specName;
 		this.specFileName = specFileName;
 		this.specCName = specCName;
+		this.specComfirm = specComfirm;
 	}
 	
 	public String getMemberNo() {
@@ -87,13 +90,19 @@ public class MentoManageView implements Serializable{
 	public void setSpecCName(String specCName) {
 		this.specCName = specCName;
 	}
+	public String getSpecComfirm() {
+		return specComfirm;
+	}
+	public void setSpecComfirm(String specComfirm) {
+		this.specComfirm = specComfirm;
+	}
 	
 	@Override
 	public String toString() {
 		return "MentoManageView [memberNo=" + memberNo + ", memberEmail=" + memberEmail + ", memberNickname="
 				+ memberNickname + ", memberName=" + memberName + ", mentorNo=" + mentorNo + ", mentorPass="
 				+ mentorPass + ", specName=" + specName + ", specFileName=" + specFileName + ", specCName=" + specCName
-				+ "]";
+				+ ", specComfirm=" + specComfirm + "]";
 	}
 	
 }
