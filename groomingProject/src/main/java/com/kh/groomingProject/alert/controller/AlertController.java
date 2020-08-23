@@ -75,19 +75,10 @@ public class AlertController {
 		ArrayList<Alert> aList = alertService.getUserAlert(m);
 
 		System.out.println("알림 확인 리스트 : " + aList);
-		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//		
-//		for(Alert temp : aList) {
-//			Date date = temp.getAlertCreateDate().getTime();
-//			
-//			temp.setAlertCreateDate(date);
-//			
-//		}
 
 		response.setContentType("application/json;charset=utf-8");
 
-		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd'T'HH:mm:ssX").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd'T'HH:mm:ss").create();
 		gson.toJson(aList, response.getWriter());
 		
 	}

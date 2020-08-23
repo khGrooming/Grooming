@@ -24,4 +24,9 @@ public class MessageDao {
 
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.getUserMessage", m);
 	}
+
+	public int readUserMessage(String messageNo) {
+
+		return sqlSessionTemplate.update("messageMapper.readUserMessage", messageNo);
+	}
 }

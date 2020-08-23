@@ -58,5 +58,25 @@ public class MessageController {
 		gson.toJson(mList, response.getWriter());
 		
 	}
-	
+
+	@RequestMapping("readUserMessage.do")
+	public void readUserMessage(HttpServletResponse response,Member m, String messageNo) throws JsonIOException, IOException {
+		
+		System.out.println("메시지 읽음 : " + messageNo);
+		
+		int result = msgService.readUserMessage(messageNo);
+		
+		System.out.println("메시지 읽음 확인 : " + result);
+
+		ArrayList<Message> mList = msgService.getUserMessage(m);
+
+		System.out.println("메시지 확인 리스트 : " + mList);
+
+		response.setContentType("application/json;charset=utf-8");
+
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd'T'HH:mm:ss").create();
+		gson.toJson(mList, response.getWriter());
+		
+	}
+
 }

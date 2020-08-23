@@ -26,4 +26,10 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.getUserMessage(m);
 	}
+
+	@Override
+	public int readUserMessage(String messageNo) {
+
+		return msgDao.readUserMessage(messageNo);
+	}
 }

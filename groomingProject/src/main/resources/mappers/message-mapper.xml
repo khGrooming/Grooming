@@ -39,6 +39,12 @@
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 
+	<update id="readUserMessage" parameterType="string">
+		UPDATE MESSAGE
+		SET MESSAGE_CONFIRM='Y'
+		WHERE MESSAGE_NO=#{messageNo}
+	</update>
+
 </mapper>
 
 

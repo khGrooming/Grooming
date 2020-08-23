@@ -11,4 +11,6 @@ public interface MessageService {
 
 	ArrayList<Message> getUserMessage(Member m);
 
+	int readUserMessage(String messageNo);
+
 }
