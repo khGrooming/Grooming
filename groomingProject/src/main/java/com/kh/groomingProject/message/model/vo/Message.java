@@ -2,6 +2,7 @@ package com.kh.groomingProject.message.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Message implements Serializable{
 
@@ -18,14 +19,14 @@ public class Message implements Serializable{
 	private String toMemberNickname;	// 받는사람 닉네임
 	private String toMemberPhoto;		// 받는사람 프로필 사진
 	private String messageContent;		// 메시지 내용
-	private Date messageDate;			// 메시지 생성일
+	private Timestamp messageDate;		// 메시지 생성일
 	private String messageConfirm;		// 메시지 확인 유무
 
 	public Message() {
 		super();
 	}
 	public Message(String messageNo, String fromMemberNo, String fromMemberNickname, String fromMemberPhoto,
-			String toMemberNo, String toMemberNickname, String toMemberPhoto, String messageContent, Date messageDate,
+			String toMemberNo, String toMemberNickname, String toMemberPhoto, String messageContent, Timestamp messageDate,
 			String messageConfirm) {
 		super();
 		this.messageNo = messageNo;
@@ -87,10 +88,10 @@ public class Message implements Serializable{
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
 	}
-	public Date getMessageDate() {
+	public Timestamp getMessageDate() {
 		return messageDate;
 	}
-	public void setMessageDate(Date messageDate) {
+	public void setMessageDate(Timestamp messageDate) {
 		this.messageDate = messageDate;
 	}
 	public String getMessageConfirm() {

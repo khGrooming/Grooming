@@ -479,7 +479,7 @@ section .form_container .hideItem
 						<p class="signup">마이페이지에서 하겠습니다. <a onclick="goBackPage()">Skip</a></p>
 					</form>
 				</div>
-				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/2853458.jpg"></div>	
+				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/register3.png"></div>	
 			</div>
 		</div>
 	</section>
