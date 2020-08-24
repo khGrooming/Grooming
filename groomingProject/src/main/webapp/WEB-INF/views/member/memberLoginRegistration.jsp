@@ -216,6 +216,10 @@ section .form_container .user .bootstrap-tagsinput .badge
 	margin: 0 3px;
     font-weight: lighter;
 }
+section .form_container .user .bootstrap-tagsinput .badge::before
+{
+	content: "#";
+}
 section .form_container .user .form-group form .input-group p
 {
 	font-size: 12px;
@@ -285,7 +289,7 @@ section .form_container .user .form-group form .signup-block a
 {
 	font-weight: lighter;
 }
-#idSaveCheckPopover
+section #idSaveCheckPopover
 {
 	cursor: pointer;
 	outline: none;
