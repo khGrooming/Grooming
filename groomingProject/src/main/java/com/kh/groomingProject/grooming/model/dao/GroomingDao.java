@@ -14,6 +14,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("gDao")
@@ -208,6 +209,16 @@ public class GroomingDao {
 	public int deleteGtag(String groomingNo) {
 		
 		return sqlSessionTemplate.delete("groomingMapper.deleteGtag",groomingNo);
+	}
+
+	public int deleteGmember(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.deleteGmember",memberNo);
+	}
+
+	public ArrayList<GroupMember> selectMemberList(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMemberList",groomingNo);
 	}
 	
 	

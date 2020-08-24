@@ -11,8 +11,10 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
    
@@ -106,10 +108,10 @@
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
         <!--디폴트 메뉴-->
-        <input id="tab1" type="radio" name="tabs" >
+        <input id="tab1" type="radio" name="tabs" checked>
         <label for="tab1"><i class="fas fa-user-graduate"></i>메인</label>
 
-        <input id="tab2" type="radio" name="tabs" checked>
+        <input id="tab2" type="radio" name="tabs">
         <label for="tab2"><i class="fas fa-calendar-alt"></i>캘린더</label>
 
         <input id="tab3" type="radio" name="tabs" >
@@ -150,9 +152,10 @@
                                     <th scope="col" style="width:200px;">제명</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="tbody">
                             <c:forEach var="m" items="${mlist }">
                                 <tr>
+                                	<input type="hidden" value="${m.memberNo }" class="memberNo">
                                     <td>
                                         <div class="pimg" style="width:40px; height:40px; ">
                                         	<img src="${contextPath }/resources/upprofileFiles/${m.memberPhoto}">
@@ -167,17 +170,125 @@
 	                                <c:if test="${grooming.memberNo ne m.memberNo }">
                                   	 	 <td>스터디원</td>
                                     </c:if>
-                                    <td><button type="button" onclick="location.href=''">제명</button></td>
+                                    <c:if test="${grooming.memberNo eq m.memberNo }">
+                                   	 <td><button type="button" disabled>제명</button></td>
+                                    </c:if>
+                                    <c:if test="${grooming.memberNo ne m.memberNo }">
+                                   	 <td><button type="button" id="kickout">제명</button></td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            
+            <input type="hidden" value="${grooming.groomingNo }" id="groomingNo">
     
     </section>
+	<script>
+		$(function(){
+			var groomingNo = $("#groomingNo").val();
+			var memberNo = $(".memberNo").val();
+			var groomingType = "${grooming.groomingType}";
+			$("#kickout").on("click",function(){
+				var result = confirm("제명하시겠습니까?");
+		
+				if(result){
+					
+					$.ajax({
+						url:'kickOut.do',
+						type:'post',
+						data:{groomingNo:groomingNo, memberNo:memberNo},
+						dataType:"json",
+						success:function(data) {
+							
+							$tableBody = $(".tbody");
+							$tableBody.html("");
+							
+							var $tr;
+							var $input;
+							var $inputVal;
+							var $td1;
+							var $div1;
+							var $img1;
+							
+							var $td2;
+							var $td3;
+							var $td4;
+							var $td5;
+							var $td6;
+							var $td7;
+							var $button;							
+							
+							if(data.length > 0) {
+								for(var i in data) {
+									console.log(data[i].gMemberNo);
+								$tr = $("<tr>");
+								$input = $("<input type='hidden' class='memberNo'>");
+								$inputVal = $input.val(data[i].memberNo);            
+								$td1 = $("<td>");
+								$div1 = $("<div class='pimg' style='width:40px; height:40px; '>");
+								$img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+								
+								$td3 = $("<td>").text(data[i].memberNickName);
+								$td4 = $("<td>").text(data[i].email);
+								$td5 = $("<td>").text(data[i].phone);
+								
+									if(data[i].memberNo == data[i].gMemberNo){
+										$td6 = $("<td>").text(groomingType);
+									}else if(data[i].memberNo != data[i].gMemberNo){
+										$td6 = $("<td>").text("스터디 원");
+									}
+
+								$td7 = $("<td>");
+									if(data[i].memberNo == data[i].gMemberNo){
+										$button = $("<button type='button' disabled>");
+										$td7.append($button);
+									}else if(data[i].memberNo != data[i].gMemberNo){
+										$button = $("<button type='button' id='kickout'>");
+										$td7.append($button);
+									}
+									
+									
+									$div1.append($img1);
+									$td1.append($div1);
+									$tr.append($inputVal);
+									$tr.append($td1);
+									$tr.append($td2);
+									$tr.append($td3);
+									$tr.append($td4);
+									$tr.append($td5);
+									$tr.append($td6);
+									$tr.append($td7);
+									
+									$tableBody.append($tr);
+								} //for end
+							}
+
+						},
+						error : function(request, status, errorData) {
+							alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+						}
+
+					}); // ajax end
+				
+				
+				}
+				
+				
+			
+			
+			})
+		})
+		
+		
+		
 	
+	
+	
+	</script>
 	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
     <section id="content2">
        
@@ -267,7 +378,7 @@
 </div>
 
 
-    <footer>
+    <footer  style="margin-top:100px;">
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>
@@ -275,9 +386,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+  
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>

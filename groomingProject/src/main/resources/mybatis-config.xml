@@ -33,6 +33,7 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingHeart" alias="Gheart"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingMember" alias="Gmember"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupMember" alias="GroupM"/>
 
 
 		<!-- 스터디 카페 -->	

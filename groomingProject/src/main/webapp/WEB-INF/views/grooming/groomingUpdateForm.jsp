@@ -214,6 +214,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	border: 3px solid lightgreen;
 	border-radius: 10px;
 }
+
+.badge::before
+{
+   content: "#";
+}
 </style>
 </head>
 
@@ -393,6 +398,10 @@ section .form_container .study .bootstrap-tagsinput .badge {
 					event.preventDefault();
 				};
 			});
+			
+			  window.onbeforeunload = function(e) {
+			        return false;
+			    };
 		</script>
 		<script>
 			// 파일 업로드 관련 script

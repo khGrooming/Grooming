@@ -2,10 +2,8 @@ package com.kh.groomingProject.grooming.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,12 +31,14 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.tag.model.service.TagService;
 import com.kh.groomingProject.tag.model.vo.Tag;
 
 @Controller
-public class GroomingController<memberNo> {
+public class GroomingController {
 
 	@Autowired
 	private GroomingService gService;
@@ -49,12 +49,16 @@ public class GroomingController<memberNo> {
 	@Autowired
 	private DeclarationService declarationService;
 	
+	@Autowired
+	private MemberService mService;
+	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv,String memberNo) {
 
 		ArrayList<Grooming> glist = gService.selectList();
 		Grooming selectG = gService.select(memberNo);
+		
 		/* System.out.println("나 glist야 " +glist); */
 		int result = 0;
 		for (int i = 0; i < glist.size(); i++) {
@@ -135,20 +139,7 @@ public class GroomingController<memberNo> {
 		gson.toJson(glist, response.getWriter());
 	}
 
-	@RequestMapping("groupPage.do")
-	public String groupPage() {
-		return "grooming/groupPage";
-	}
 
-	@RequestMapping("groupBoardInsertForm.do")
-	public String groupBoardInsertForm() {
-		return "grooming/groupBoardInsertForm";
-	}
-
-	@RequestMapping("groupdetail.do")
-	public String groupBoardDetailView() {
-		return "grooming/groupBoardDetailView";
-	}
 
 	@RequestMapping("groomingInsert.do")
 	public String groomingInsert() {
@@ -607,6 +598,48 @@ public class GroomingController<memberNo> {
 		}
 	}
 	
+	@RequestMapping("groupPage.do")
+	public ModelAndView groupPage(ModelAndView mv , String groomingNo) {
+		
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		ArrayList<Member> mlist = new ArrayList<>();
+		mlist = mService.GroupMList(groomingNo);
+		
+		if(grooming != null && mlist != null) {
+			mv.addObject("grooming",grooming).addObject("mlist",mlist).setViewName("grooming/groupPage");
+		}else {
+			throw new GroomingException("그룹페이지 조회실패!");
+		}
+		return mv;
+	}
+
+	@RequestMapping("kickOut.do")
+	public void kickOut(HttpServletResponse response , String groomingNo, String memberNo) throws JsonIOException, IOException {
+		
+		int result = gService.deleteGmember(memberNo);
+		
+		response.setContentType("application/json; charset=utf-8");
+		ArrayList<GroupMember> memberList = gService.selectMemberList(groomingNo);
+		Member gMemberNo = gService.selectMember(groomingNo);
+		for(int i=0; i < memberList.size(); i++) {
+			memberList.get(i).setgMemberNo(gMemberNo.getMemberNo());
+			System.out.println(gMemberNo.getMemberNo());
+		}
+		if(result > 0) {
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(memberList, response.getWriter());
+		}
+	}
+	
+	@RequestMapping("groupBoardInsertForm.do")
+	public String groupBoardInsertForm() {
+		return "grooming/groupBoardInsertForm";
+	}
+
+	@RequestMapping("groupdetail.do")
+	public String groupBoardDetailView() {
+		return "grooming/groupBoardDetailView";
+	}
 	
 	
 

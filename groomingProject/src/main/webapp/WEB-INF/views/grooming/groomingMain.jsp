@@ -159,10 +159,10 @@
 		                          
 		                            <!-- 그룹 d-day 태그 -->
 		                            <div id="circle" >
-		                            <c:if test="${g.groomingEd gt g.groomingNd }">
+		                            <c:if test="${(g.groomingEd gt g.groomingNd) && (g.groomingP gt g.currentP) && (g.status eq 'Y') }">
 		                                <span id="d-day">D-</span><span id="day" >${difDate }</span>
 		                            </c:if>
-		                            <c:if test="${g.groomingEd lt g.groomingNd }">
+		                            <c:if test="${(g.groomingEd lt g.groomingNd) || (g.groomingP eq g.currentP) || (g.status eq 'B')}">
 		                               <span id="day">마감</span>
 		                            </c:if>
 		                          
@@ -206,8 +206,9 @@
    	$(function(){
     		
    	
-    	var gmemberNo =$("#selectG").val();
+    	var gmemberNo = $("#selectG").val();
     	$("#writeG").on("click",function(){
+    	
     		if(gmemberNo != ""){
     			alert("이미 작성하신 스터디 게시글이 있습니다.");
     		
@@ -436,12 +437,12 @@
 				var search = $('#search').val();
 				var keyword = $('#keyword').val();
 	
-				/* if(search == null || keyword == null){
-					alert("빈칸없이 검색해주세요!");
+				if(keyword == ""){
+					alert("한 글자 이상 검색해주세요!");
 				}else{
-					location.href="search.do";
-				}
-				 */
+					
+				
+				 
 				$.ajax({
 					url:'search.do',
 					type:'post',
@@ -539,8 +540,8 @@
 
 				}); // ajax end
 	
+			}
 			}); // click end
-	
 		});
 	</script> 
 

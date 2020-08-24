@@ -1,5 +1,6 @@
 package com.kh.groomingProject.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.groomingProject.member.model.vo.Member;
@@ -33,5 +34,7 @@ public interface MemberService {
 	int certiChk(MemberCertiCode mcc);
 
 	int updateMemberPwd(Member m);
+
+	ArrayList<Member> GroupMList(String groomingNo);
 
 }

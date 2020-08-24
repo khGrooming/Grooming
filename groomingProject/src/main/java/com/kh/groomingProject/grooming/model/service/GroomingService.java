@@ -9,6 +9,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
 public interface GroomingService {
@@ -80,5 +81,9 @@ public interface GroomingService {
 	int GroupHostIn(Map map1);
 
 	int deleteGtag(String groomingNo);
+
+	int deleteGmember(String memberNo);
+
+	ArrayList<GroupMember> selectMemberList(String groomingNo);
 
 }

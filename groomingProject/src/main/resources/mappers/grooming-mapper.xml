@@ -62,12 +62,21 @@
 		<result property="groomingNo" column="GROOMING_NO"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 	</resultMap>
+	
 	 <resultMap type="Gmember" id="GmemberResultSet">
 		<id property="gmemberNo" column="G_MEMBER_NO"/>
 		<result property="groomingNo" column="GROOMING_NO"/>
 		<result property="memberNo" column="MEMBER_NO"/>
 	</resultMap>
 	
+	 <resultMap type="GroupM" id="GroupMResultSet">
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="email" column="MEMBER_EMAIL"/>
+		<result property="phone" column="MEMBER_PHONE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="gMemberNo" column="MEMBER_NO"/>
+	</resultMap>
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
@@ -445,6 +454,31 @@
 		WHERE GROOMING_NO = #{groomingNo}
  	
  	</delete>
+ 	
+ 	<delete id="deleteGmember" parameterType="string">
+ 	
+ 		DELETE FROM GROMMING_MEMBER
+ 		WHERE MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</delete>
+ 	
+ 	<select id="selectMemberList" parameterType="string" resultMap="GroupMResultSet">
+ 	   SELECT MEMBER_PHOTO,MEMBER_NICKNAME,MEMBER_EMAIL,MEMBER_PHONE,M.MEMBER_NO,G.MEMBER_NO
+       FROM GROMMING_MEMBER GM
+       JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       WHERE GM.GROOMING_NO = #{groomingNo}
+	   ORDER BY G_MEMBER_NO 
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+ 	
  	
  	
 </mapper>

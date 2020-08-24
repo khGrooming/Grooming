@@ -122,10 +122,10 @@ img {
 						<tr>
 							<td align="right">
 								<div class="status">
-									<c:if test="${grooming.groomingEd gt grooming.groomingNd }">
+									<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
 										<c:out value="<h4>모집중</h4>" escapeXml="false" />
 									</c:if>
-									<c:if test="${grooming.groomingEd lt grooming.groomingNd }">
+									<c:if test="${(grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
 										<c:out value="<h4>마감</h4>" escapeXml="false" />
 									</c:if>
 								</div>
@@ -218,10 +218,10 @@ img {
 											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}">
 									</div>
 								</td>
-								<td>호스트 : <span>${member.memberNickName }</span><br> <c:forEach
+								<td>호스트 : <span>${member.memberNickName }</span><br> 태그:<c:forEach
 										var="t" items="${tag }">
 										<span style="color: lightblue;">${t.tagName }</span>
-									</c:forEach> 경력 : <c:forEach var="s" items="${spec }">
+									</c:forEach><br> 경력 : <c:forEach var="s" items="${spec }">
 										<span>${s.specName }</span>
 									</c:forEach>
 								</td>
@@ -380,14 +380,16 @@ img {
 				<div class="col-3">
 		
 					<!-- 신청하기 버튼 -->
-					<c:if test="${!empty memberNoList }">
+					<c:if test="${(!empty memberNoList) || (grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
 						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply' disabled>신청하기</button>" escapeXml="false" />
 					</c:if>
 					
-					<c:if test="${empty memberNoList }">
+					<c:if test="${(empty memberNoList) && (grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
 						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply'>신청하기</button>" escapeXml="false" />
 					</c:if>
-			
+				
+				
+					
 					<!-- 신청폼 모달 -->
 					<div class="modal fade" id="applyForm" tabindex="-1" role="dialog"
 						aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -430,9 +432,18 @@ img {
 			</c:if>
 			</div>
 		</div>
-	
+	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
+	 <c:url var="groupPage" value="groupPage.do">
+						<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+					</c:url>
+					<c:if test="${grooming.memberNo eq loginUser.memberNo }">
+						<button onclick="location.href='${groupPage}'" type="button" > 그룹페이지 가보기 (임시용)</button>
+					</c:if>
 	</section>
-	
+	 <script type="text/javascript">
+		 window.history.forward();
+		 function noBack(){window.history.forward();}
+	</script>
 	<script>
 	
 		$(function(){

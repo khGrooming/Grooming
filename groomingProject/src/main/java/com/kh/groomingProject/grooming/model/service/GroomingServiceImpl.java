@@ -13,6 +13,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("gService")
@@ -234,6 +235,18 @@ public class GroomingServiceImpl implements GroomingService{
 	public int deleteGtag(String groomingNo) {
 		// TODO Auto-generated method stub
 		return gDao.deleteGtag(groomingNo);
+	}
+
+	@Override
+	public int deleteGmember(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.deleteGmember(memberNo);
+	}
+
+	@Override
+	public ArrayList<GroupMember> selectMemberList(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectMemberList(groomingNo);
 	}
 
 
