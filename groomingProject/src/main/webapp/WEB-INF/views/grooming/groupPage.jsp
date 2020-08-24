@@ -154,14 +154,14 @@
                             </thead>
                             <tbody class="tbody">
                             <c:forEach var="m" items="${mlist }">
-                                <tr>
+                                <tr class="appTr">
                                 	<input type="hidden" value="${m.memberNo }" class="memberNo">
                                     <td>
                                         <div class="pimg" style="width:40px; height:40px; ">
                                         	<img src="${contextPath }/resources/upprofileFiles/${m.memberPhoto}">
                                         </div>
                                     </td>
-                                    <td>${m.memberNickName}</td>
+                                    <td class="nick">${m.memberNickName}</td>
                                     <td>${m.memberEmail}</td>
                                     <td>${m.memberPhone}</td>
                                     <c:if test="${grooming.memberNo eq m.memberNo }">
@@ -171,10 +171,10 @@
                                   	 	 <td>스터디원</td>
                                     </c:if>
                                     <c:if test="${grooming.memberNo eq m.memberNo }">
-                                   	 <td><button type="button" disabled>제명</button></td>
+                                   	 <td><button class="kickout" value="제명" disabled></button></td>
                                     </c:if>
                                     <c:if test="${grooming.memberNo ne m.memberNo }">
-                                   	 <td><button type="button" id="kickout">제명</button></td>
+                                   	 <td><button type="button" class="kickout" ><i class="fas fa-user-minus"></i></button></td>
                                     </c:if>
                                 </tr>
                             </c:forEach>
@@ -187,83 +187,35 @@
     </section>
 	<script>
 		$(function(){
-			var groomingNo = $("#groomingNo").val();
-			var memberNo = $(".memberNo").val();
-			var groomingType = "${grooming.groomingType}";
-			$("#kickout").on("click",function(){
-				var result = confirm("제명하시겠습니까?");
+			
+			
+			
+			getGroupList();
+			
+			setInterval(function(){
+				getGroupList();
+			},10000);   
+			
+			$(document).on("click",".kickout",function(){
+			var appTemp = $(this);
+			var memberNo = appTemp.parents(".appTr").children(".memberNo").val();
+			var nick = appTemp.parents(".appTr").children(".nick").text();
+			
+				var result = confirm(nick+"님을 제명하시겠습니까?");
 		
 				if(result){
 					
 					$.ajax({
 						url:'kickOut.do',
 						type:'post',
-						data:{groomingNo:groomingNo, memberNo:memberNo},
-						dataType:"json",
+						data:{memberNo:memberNo},
 						success:function(data) {
-							
-							$tableBody = $(".tbody");
-							$tableBody.html("");
-							
-							var $tr;
-							var $input;
-							var $inputVal;
-							var $td1;
-							var $div1;
-							var $img1;
-							
-							var $td2;
-							var $td3;
-							var $td4;
-							var $td5;
-							var $td6;
-							var $td7;
-							var $button;							
-							
-							if(data.length > 0) {
-								for(var i in data) {
-									console.log(data[i].gMemberNo);
-								$tr = $("<tr>");
-								$input = $("<input type='hidden' class='memberNo'>");
-								$inputVal = $input.val(data[i].memberNo);            
-								$td1 = $("<td>");
-								$div1 = $("<div class='pimg' style='width:40px; height:40px; '>");
-								$img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
-								
-								$td3 = $("<td>").text(data[i].memberNickName);
-								$td4 = $("<td>").text(data[i].email);
-								$td5 = $("<td>").text(data[i].phone);
-								
-									if(data[i].memberNo == data[i].gMemberNo){
-										$td6 = $("<td>").text(groomingType);
-									}else if(data[i].memberNo != data[i].gMemberNo){
-										$td6 = $("<td>").text("스터디 원");
-									}
-
-								$td7 = $("<td>");
-									if(data[i].memberNo == data[i].gMemberNo){
-										$button = $("<button type='button' disabled>");
-										$td7.append($button);
-									}else if(data[i].memberNo != data[i].gMemberNo){
-										$button = $("<button type='button' id='kickout'>");
-										$td7.append($button);
-									}
-									
-									
-									$div1.append($img1);
-									$td1.append($div1);
-									$tr.append($inputVal);
-									$tr.append($td1);
-									$tr.append($td2);
-									$tr.append($td3);
-									$tr.append($td4);
-									$tr.append($td5);
-									$tr.append($td6);
-									$tr.append($td7);
-									
-									$tableBody.append($tr);
-								} //for end
+							if(data=="success"){
+							getGroupList();
+							alert(nick+"님을 그룹에서 제명하셨습니다.");
 							}
+						
+							
 
 						},
 						error : function(request, status, errorData) {
@@ -281,6 +233,93 @@
 			
 			
 			})
+			
+			
+			function getGroupList(){
+				var groomingNo = $("#groomingNo").val();
+				var groomingType = "${grooming.groomingType}";
+				
+				$.ajax({
+					url:'groupList.do',
+					type:'post',
+					data:{groomingNo:groomingNo},
+					dataType:"json",
+					success:function(data) {
+						
+						$tableBody = $(".tbody");
+						$tableBody.html("");
+						
+						var $tr;
+						var $input;
+						var $inputVal;
+						var $td1;
+						var $div1;
+						var $img1;
+						
+						var $td3;
+						var $td4;
+						var $td5;
+						var $td6;
+						var $td7;
+						var $button;							
+						var $icon;
+						if(data.length > 0) {
+							for(var i in data) {
+								console.log(data[i].gMemberNo);
+							$tr = $("<tr class='appTr'>");
+							$input = $("<input type='hidden' class='memberNo'>");
+							$inputVal = $input.val(data[i].memberNo);            
+							$td1 = $("<td>");
+							$div1 = $("<div class='pimg' style='width:40px; height:40px; '>");
+							$img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+							
+							$td3 = $("<td class='nick'>").text(data[i].memberNickName);
+							$td4 = $("<td>").text(data[i].email);
+							$td5 = $("<td>").text(data[i].phone);
+							
+								if(data[i].memberNo == data[i].gMemberNo){
+									$td6 = $("<td>").text(groomingType);
+								}else if(data[i].memberNo != data[i].gMemberNo){
+									$td6 = $("<td>").text("스터디원");
+								}
+							$icon =$("<i class='fas fa-user-minus'>");
+							$td7 = $("<td>");
+								if(data[i].memberNo == data[i].gMemberNo){
+									$button = $("<button class='kickout' disabled>");
+									$button.append($icon);
+									$td7.append($button);
+								}else if(data[i].memberNo != data[i].gMemberNo){
+									$button = $("<button class='kickout'>");
+									$button.append($icon);
+									$td7.append($button);
+								}
+								
+								
+								$div1.append($img1);
+								$td1.append($div1);
+								$tr.append($inputVal);
+								$tr.append($td1);
+								$tr.append($td3);
+								$tr.append($td4);
+								$tr.append($td5);
+								$tr.append($td6);
+								$tr.append($td7);
+								
+								$tableBody.append($tr);
+								
+							} //for end
+						}
+
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+							+ "message: " + request.responseText
+							+ "error: " + errorData);
+					}
+
+				}); // ajax end
+				
+			}
 		})
 		
 		

@@ -613,10 +613,11 @@ public class GroomingController {
 		return mv;
 	}
 
-	@RequestMapping("kickOut.do")
-	public void kickOut(HttpServletResponse response , String groomingNo, String memberNo) throws JsonIOException, IOException {
+	@RequestMapping("groupList.do")
+	@ResponseBody
+	public void groupList(HttpServletResponse response , String groomingNo) throws JsonIOException, IOException {
 		
-		int result = gService.deleteGmember(memberNo);
+		
 		
 		response.setContentType("application/json; charset=utf-8");
 		ArrayList<GroupMember> memberList = gService.selectMemberList(groomingNo);
@@ -625,11 +626,26 @@ public class GroomingController {
 			memberList.get(i).setgMemberNo(gMemberNo.getMemberNo());
 			System.out.println(gMemberNo.getMemberNo());
 		}
-		if(result > 0) {
+		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(memberList, response.getWriter());
+		
+	}
+	
+	@RequestMapping("kickOut.do")
+	@ResponseBody
+	public String kickOut(String memberNo) {
+		
+		int result = gService.deleteGmember(memberNo);
+	
+		if (result > 0 ) {
+			return "success";
+		} else {
+			return "false";
 		}
 	}
+	
+	
 	
 	@RequestMapping("groupBoardInsertForm.do")
 	public String groupBoardInsertForm() {
