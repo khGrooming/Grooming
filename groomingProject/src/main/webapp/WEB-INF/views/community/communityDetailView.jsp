@@ -82,7 +82,7 @@
 				<tbody>
 		
 				</tbody>
-			</table>
+			</table> 
 	
         	<!-- 댓글 등록하기 -->
 			<table align="center" width="70%" id="replyAdd">
