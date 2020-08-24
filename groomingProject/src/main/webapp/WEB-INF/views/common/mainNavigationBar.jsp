@@ -19,14 +19,7 @@
 <style type="text/css">
 *
 {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     font-family: 'Jua', sans-serif
-}
-body
-{
-    transition: 0.6s;
 }
 .main_navbar
 {
@@ -89,9 +82,9 @@ body
 }
 .main_navbar ul li:hover
 {
-    color: green;
-    border: 1px solid green;
-    border-radius: 5px;
+    border: thin solid green;
+	outline: thin solid lightyellow;
+    border-radius: 3px;
 }
 .main_navbar ul li:hover a
 {
@@ -116,14 +109,6 @@ body
     justify-content: space-between;
 	align-content: center;
 }
-/* .main_navbar_link:hover
-{
-	background-color: #F9F9F9;
-	border-radius: 14% / 50%;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	transition: 0.2s;
-} */
-
 /* 메시지 알림창 */
 .main_messages_icon,
 .main_alerts_icon
@@ -141,14 +126,6 @@ body
 {
 	width: 28px;
 	height: 28px;
-}
-.main_alerts_icon .main_naviIcon > .img_svg:hover,
-.main_messages_icon .main_naviIcon > .img_svg:hover
-{
-	background-color: #F9F9F9;
-	border-radius: 50%;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	transition: 0.2s;
 }
 .main_messages_txt,
 .main_alerts_txt
