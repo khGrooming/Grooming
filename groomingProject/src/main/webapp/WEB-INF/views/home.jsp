@@ -40,10 +40,6 @@
 {
 	font-family: 'Nanum Gothic', sans-serif;
 }
-body
-{
-    position: relative;
-}
 .mento_container{
 	margin-top: 150px;
 }
