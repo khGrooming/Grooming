@@ -249,6 +249,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectMemberList(groomingNo);
 	}
 
+	@Override
+	public int getListCount() {
+		// TODO Auto-generated method stub
+		return gDao.getListCount();
+	}
+
 
 	
 }

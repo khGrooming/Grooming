@@ -107,15 +107,19 @@
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
+    <c:url var="calendar" value="calendar.do"/>
+	<c:url var="gBlist" value="gBlist.do"/>
+	<c:url var="groupP" value="groupPage.do"/>
+    
         <!--디폴트 메뉴-->
         <input id="tab1" type="radio" name="tabs" checked>
-        <label for="tab1"><i class="fas fa-user-graduate"></i>메인</label>
+        <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
         <input id="tab2" type="radio" name="tabs">
-        <label for="tab2"><i class="fas fa-calendar-alt"></i>캘린더</label>
+        <label for="tab2"><a href="${calendar }"></a><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
         <input id="tab3" type="radio" name="tabs" >
-        <label for="tab3"><i class="fas fa-icons"></i>게시판</label>
+        <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
         <!-- 메인에 들어갈 내용용 -->
@@ -322,96 +326,20 @@
 			}
 		})
 		
-		
-		
-	
-	
-	
 	</script>
+	
 	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
     <section id="content2">
        
-           <div id='calendar'></div>
-       
-       
-       
-       
-      <!-- 캘린더 script -->
-     <script>
-		
-        document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-
-          initialView: 'dayGridMonth',
-          selectable: true
-         
-        });
-        calendar.render();
-      });
-
-    </script>
+          
        
     </section>
 
     <!--게시판에 들어갈 내용 -->
     <section id="content3">
         
-        <table class="table table-hover" id="boardId">
-            <thead>
-              <tr>
-                <th scope="col">글번호</th>	
-                <th scope="col">글유형</th><!-- 공지사항/자유게시판 -->
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">작성일</th>
-                <th scope="col">조회수</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr onclick="location.href='groupdetail.do'">
-                <th scope="row">1</th>
-                <td>공지사항</td>
-                <td>내일 예정이었던 스터디디</td>
-                <td>김성훈</td>
-                <td>2020-07-12</td>
-                <td>2</td>
-              </tr>
-
-            </tbody>
+          
         
-          </table>
-          
-          <!-- 글작성 버튼 -->
- 	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'" >글 작성</button>
-          </div>
-         <!--     <script>
-                $(function () {
-                    var td = $("#boardId tbody tr td").eq(0).text();
-                    if (td.equals("공지사항")) {
-                        $('#boardId tbody tr td').css({
-                            "background-color": "blue"
-                        });
-                    }
-                })
-            </script> -->
-    
-          
-          <!-- 페이지네이션 -->
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
     </section>
 
 </div>

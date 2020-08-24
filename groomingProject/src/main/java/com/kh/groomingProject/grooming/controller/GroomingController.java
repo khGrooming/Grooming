@@ -645,8 +645,22 @@ public class GroomingController {
 		}
 	}
 	
+	@RequestMapping("gBlist.do")
+	public ModelAndView gBoardList(ModelAndView mv,
+			@RequestParam(value="page", required=false) Integer page) {
+		
+		// 페이징 관련 처리부터 하자
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+			
+		int listCount = gService.getListCount();
 	
-	
+		
+		
+		return mv;
+	}
 	@RequestMapping("groupBoardInsertForm.do")
 	public String groupBoardInsertForm() {
 		return "grooming/groupBoardInsertForm";

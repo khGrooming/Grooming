@@ -77,6 +77,35 @@
 		<result property="memberNo" column="MEMBER_NO"/>
 		<result property="gMemberNo" column="MEMBER_NO"/>
 	</resultMap>
+	
+	 <resultMap type="GroupB" id="GroupBoardResultSet">
+	 	<id property="gBoardNo" column="G_BOARD_NO"/>
+		<result property="gMemberNo" column="GROOMING_MEMBER_NO"/>
+		<result property="gBoardCategory" column="G_BOARD_CATEGORY"/>
+		<result property="gBoardTitle" column="G_BOARD_TITLE"/>
+		<result property="gBoardContent" column="G_BOARD_CONTENT"/>
+		<result property="count" column="G_BOARD_VIEW_COUNT"/>
+		<result property="createDate" column="G_BOARD_CREATE_DATE"/>
+		<result property="modifyDate" column="G_BOARD_MODIFY_DATE"/>
+		<result property="gBoardImg" column="G_BOARD_IMG"/>
+	</resultMap>
+	
+	 <resultMap type="GReply" id="GroupReplyResultSet">
+	 	<id property="gReplyNo" column="G_REPLY_NO"/>
+		<result property="gBoardNo" column="G_BOARD_NO"/>
+		<result property="gMemberNo" column="GROOMING_MEMBER_NO"/>
+		<result property="gReplyContent" column="G_REPLY_CONTENT"/>
+		<result property="gReplyCreateDate" column="G_REPLY_CAEATE_DATE"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING

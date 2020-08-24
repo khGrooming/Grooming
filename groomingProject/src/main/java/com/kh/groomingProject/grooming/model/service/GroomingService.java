@@ -86,4 +86,6 @@ public interface GroomingService {
 
 	ArrayList<GroupMember> selectMemberList(String groomingNo);
 
+	int getListCount();
+
 }
