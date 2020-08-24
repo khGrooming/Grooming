@@ -590,5 +590,28 @@ public class MyPageController {
 		
 		return mv;
 	}
+
+	//신청한 스터디 그룹 삭제하기
+	@RequestMapping("deleteAppl.do")
+	public void deleteApplicant(String gaNo) {
+		
+		int result=mpService.deleteApplicant(gaNo);
+		System.out.println("머야?"+gaNo);
+	}
 	
+	//진행중인 그루밍 보여주기
+	@RequestMapping("mpgrooming.do")
+	public String myPageGroomingPage(HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		int listCount = 0;//todo 
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int GroomingLimit = 4;
+		double f=0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		return "mypage/mpgrooming";
+	}
 }

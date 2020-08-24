@@ -9,10 +9,9 @@
 <title>Insert title here</title>
 <style>
 .content-op{
-width: 85%;
-height:100%;
-margin-right: auto; 
-margin-left: auto; 
+	width: 70%;
+	height: 1000px;
+	margin: 5% auto;
 }
 
 </style>

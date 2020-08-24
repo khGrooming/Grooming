@@ -52,5 +52,7 @@ public interface MypageService {
 
 	ArrayList<MyPageApplicant> selectgApplicant(MyPagePageInfo pi, String mNo);
 
+	int deleteApplicant(String gaNo);
+
 
 }

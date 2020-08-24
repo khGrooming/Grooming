@@ -119,4 +119,9 @@ public class MypageServiceImpl implements MypageService{
 	public ArrayList<MyPageApplicant> selectgApplicant(MyPagePageInfo pi, String mNo) {
 		return mpDao.selectgApplicant(pi,mNo);
 	}
+
+	@Override
+	public int deleteApplicant(String gaNo) {
+		return mpDao.deleteApplicant(gaNo);
+	}
 }

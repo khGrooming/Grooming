@@ -246,7 +246,7 @@ section {
 								<li><a href="memberSecession.do">탈퇴하기</a></li>
 							</ul>
 						</li>
-						<li><a href="opengrooming.do">스터디</a>
+						<li><a href="mpgrooming.do">스터디</a>
 							<ul>
 								<li><a href="opengrooming.do">개설한 스터디</a></li>
 								

@@ -108,4 +108,8 @@ public class MypageDao {
 		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectgApplicantList",mNo,rowBounds);
 	}
 
+	public int deleteApplicant(String gaNo) {
+		return sqlSessionTemplate.delete("MyPageMapper.deleteApplicant",gaNo);
+	}
+
 }

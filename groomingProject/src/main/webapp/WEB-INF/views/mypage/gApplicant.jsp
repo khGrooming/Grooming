@@ -18,82 +18,125 @@
 	position: absolute;
 	top: 10px;
 	left: 10px;
-	width: 70px;
-	height: 70px;
-	border: 1px solid black;
+	width: 50px;
+	height: 50px;
 	border-radius: 50px;
 	background: white;
 }
-#dday_div div{
-	
-	margin: 27% 10%;
-	font-size:20px;
+
+#dday_div div {
+	margin: 27% 5%;
+	font-size: 15px;
 }
 
+#gCard {
+	position: relative;
+	border: 3px solid #17a2b8;
+	width: 23%;
+	float: left;
+	margin-left: 5px;
+	margin-right: 10px;
+	border-radius: 20px;
+}
 </style>
 </head>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 <div id="content">
 	<h3>신청 내역</h3>
-	<h3>왜 안대는 것이오?</h3>
-	<h3>왜 안대는 것이오?</h3>
-	<h3>왜 안대는 것이오?</h3>
-	<h3>왜 안대는 것이오?</h3>
 	 		<c:forEach var="app" items="${appList }">
-	   <c:url var="groupPage" value="groupPage.do" />
+	   <c:url var="gdetail" value="groomingDetail.do">
+			<c:param name="groomingNo" value="${app.groomingNo }"/>
+			<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
+			<!-- 현재 보던 페이지 정보도 넘기자 -->
+		</c:url>
 			
 		         <fmt:formatDate value="${app.groomingNd }" var="nowDate1" pattern="yyyyMMdd"/>	   	
 	 	 		<fmt:formatDate value="${app.groomingEd }" var="endDate1" pattern="yyyyMMdd"/>	 	 		
 	 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
 	 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />	 	 		
 		    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
-		<div style="position:relative; border:3px solid #17a2b8; width: 23%;float: left; margin-left:5px; margin-right: 10px; border-radius: 20px;" onclick="location.href='${groupPage}'">
+		<div id="gCard"onclick="location.href='${groupPage}'">
 			<c:if test="${app.applyStatus eq 'Y' }">
 		
 				<c:if test="${app.groomingEd gt app.groomingNd }">
 					<div id="dday_div" style="border:3px solid green;">
-						<div >
-							D-${difDate }
+						<div style="font-size:13px;">
+							&nbsp;심사중
 						</div>
 					</div>
 				</c:if>
 				<c:if test="${app.groomingEd lt app.groomingNd }">
-					<div id="dday_div" style="border:3px solid red;">
+					<div id="dday_div" style="border:3px solid grey;background: lightgrey;">
 						<div>
 							&nbsp;마감
 						</div>
 					</div>
 				</c:if>
 			</c:if>	
-			<c:if test="${app.applyStatus eq 'N' }">
+			<c:if test="${app.applyStatus eq 'C' }">
 				<div id="dday_div" style="border:3px solid blue;">
 						<div>
 							&nbsp;합격
 						</div>
 					</div>
 			</c:if>
-		
-			<img src="${contextPath }/resources/views/images/${app.groomingImg}" style=" width: 100%;border-bottom: 2px solid #17a2b8"><br><br>
+			<c:if test="${app.applyStatus eq 'D' }">
+				<div id="dday_div" style="border:3px solid blue;">
+						<div>
+							&nbsp;탈락
+						</div>
+					</div>
+			</c:if>
+			<div style="position: absolute;  right: 5%;" onclick="deleteAppli('${app.gApplyNo}');">
+				<img src="${contextPath }/resources/views/icons/XIcon.png" style="width: 15px;">
+			</div>
+				
+			<br>
+			<br>
+			<div style="width: 100%;border-bottom: 2px solid #17a2b8;">
+				<img src="${contextPath }/resources/views/images/${app.groomingImg}" style=" width: 90%; margin-left: 5%;"><br><br>
+			</div>
 			<div style="width: 97%; margin-left: auto; margin-right: auto;">
 			<p style="font-size: 20px; ">${app.groomingTitle}</p>
-			<div style="width: 97%; height: 100px;">
-			
-			<p style="font-size: 10px;">${app.groomingIntroduce}</p><br>
+				<div style="width: 97%; height: 80px;">
+				
+					<p style="font-size: 10px;">${app.groomingIntroduce}</p><br>
+				</div>
+				<div style="margin:2px 5px;">
+					<span>${app.groomingType}</span>
+					<span style="float: right;">${app.currentP}/${app.groomingP}</span>
+				
+				</div>
 			</div>
-			<div>
-			<span>${app.groomingType}</span>
-			<span style="float: right;">${app.currentP}/${app.groomingP}</span>
 			
-			</div>
-			</div>
-			
-			
-			
-		<br>
+
 		</div>
 		
 	</c:forEach> 
+	<script>
+					function deleteAppli(gaNo){
+						var check = confirm("신청을 취소 하시겠습니까?");
+						if(check){
+							$.ajax({
+								url:"deleteAppl.do",
+								type:"post",
+								data:{gaNo:gaNo},
+								success:function(data) {
+											alert("변경되었습니다");
+										},
+								error:function(data) {
+									alert("code:" +request.status +"\n"+
+											+ "error:"+ error);
+								}
+
+							})
+						
+						}else{
+							alert("취소하였습니다.");
+						}
+					}
+				</script>
 </div>
 <jsp:include page="../common/footer.jsp" />
 </body>

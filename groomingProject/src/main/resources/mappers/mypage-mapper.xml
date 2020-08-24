@@ -222,5 +222,9 @@
 		JOIN GROOMING G ON(GA.GROOMING_NO = G.GROOMING_NO)
 		WHERE GA.MEMBER_NO =#{mNo}
 	</select>
+	
+	<delete id="deleteApplicant" parameterType="string">		
+	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
+	</delete>
 
 </mapper>

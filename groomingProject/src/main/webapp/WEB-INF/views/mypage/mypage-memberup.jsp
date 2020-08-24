@@ -189,8 +189,7 @@
 												alert(content);
 												var save = confirm("상태메시지를 저장하시겠습니까?");
 												if (save) {
-													$
-															.ajax({
+													$.ajax({
 																url : "upMemo.do",
 																type : "post",
 																data : {
