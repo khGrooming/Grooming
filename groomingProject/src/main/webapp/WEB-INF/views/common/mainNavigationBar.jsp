@@ -17,40 +17,117 @@
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
 
 <style type="text/css">
-/* font start */
 *
 {
-	font-family: 'Jua', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Jua', sans-serif
 }
-/* font end */
-.main_navbar
+
+/* .main_navbar
 {
 	border-bottom: 1px solid;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+} */
+.main_navbar
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.6s;
+    padding: 20px 240px;
+	border-bottom: 1px solid lightgrey;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 10;
 }
-.nav-link:hover
+.main_navbar .main_navbar_logo
+{
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.main_navbar .mainNavImg
+{
+	height: 50px;
+    transition: 0.6s;
+}
+.main_navbar #mainProfileArea
+{
+	margin-left: auto;
+}
+.main_navbar .proFile_img
+{
+	height: 35px;
+	width: 35px;
+	border-radius: 50%;
+	border: 1px solid grey;
+}
+.main_navbar ul,
+.main_navbar ul#mainProfileArea
+{
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.main_navbar ul li
+{
+    list-style: none;
+}
+.main_navbar ul li a
+{
+	min-width: auto;
+	font-size: 26px;
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+    letter-spacing: 1px;
+    transition: 0.6s;
+}
+.main_navbar.sticky
+{
+    padding: 5px 340px;
+}
+.main_navbar.sticky ul li a
+{
+	font-size: 22px;
+}
+.main_navbar.sticky .mainNavImg
+{
+	height: 25px;
+}
+/* 네비바 기본 스타일 끝 */
+.main_navbar .main_flex_between_center
+{
+    display: flex;
+    justify-content: space-between;
+	align-content: center;
+}
+/* .main_navbar_link:hover
 {
 	background-color: #F9F9F9;
 	border-radius: 14% / 50%;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	transition: 0.2s;
-}
-.mainNavImg
-{
-	height: 50px;
-}
+} */
+
+/* 메시지 알림창 */
 .main_messages_icon,
 .main_alerts_icon
 {
 	cursor: pointer;
-	padding: 5px 15px;
+	margin-top: auto;
+	margin-bottom: auto;
+	padding: 0 15px;
 	position: relative;
 }
 .main_messages_icon .main_naviIcon .img_svg,
 .main_alerts_icon .main_naviIcon .img_svg
 {
-	width: 30px;
-	height: 30px;
+	width: 28px;
+	height: 28px;
 }
 .main_alerts_icon .main_naviIcon > .img_svg:hover,
 .main_messages_icon .main_naviIcon > .img_svg:hover
@@ -63,39 +140,34 @@
 .main_messages_txt,
 .main_alerts_txt
 {
+	line-height: 20px;
 	padding: 4px;
 	color: white;
 	width: 25px;
 	height: 25px;
 	background: #cc0000;
 	border-radius: 50%;
+	text-align: center;
 	font-size: 18px;
 	position: absolute;
 	top: -5px;
 	left: 31px;
 }
+.main_dropdown
+{
+	display: none;
+	overflow: auto;
+	position: absolute;
+	border-radius: 5px;
+	background-color: #F9F9F9;
+	min-width: 300px;
+	padding: 8px 0;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	z-index: 10000;
+}
 .main_messages_dropdown
 {
-	display: none;
-	right: 0;
-	overflow: auto;
-	position: absolute;
-	border-radius: 5px;
-	background-color: #F9F9F9;
-	min-width: 300px;
-	padding: 8px 0;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-.main_alerts_dropdown
-{
-	display: none;
-	overflow: auto;
-	position: absolute;
-	border-radius: 5px;
-	background-color: #F9F9F9;
-	min-width: 300px;
-	padding: 8px 0;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	right: 10px;
 }
 .main_messages_dropdown.active,
 .main_alerts_dropdown.active
@@ -163,13 +235,8 @@
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-.main_navbar .proFile_img
-{
-	height: 35px;
-	width: 35px;
-	border-radius: 50%;
-	border: 1px solid grey;
-}
+
+
 </style>
 </head>
 <body>
@@ -186,91 +253,94 @@
 	<c:url var="myPage" value="mypage-memberup.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
-
+<script>
+	window.addEventListener("scroll", function(){
+		var header = document.querySelector(".main_navbar");
+		header.classList.toggle("sticky", window.scrollY > 0);
+    });
+</script>
+	<header>
 	<!-- Navigation -->
-	<nav class="main_navbar navbar navbar-expand-sm navbar-light font-weight-bold h5 fixed-top">
-		<div class="container">
-			<a class="navbar-brand" href="${mainPage }">
-				<img class="mainNavImg" alt="groominglogo" src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
-			</a>
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="${groomingMain }">그루밍</a>
+	<nav class="main_navbar">
+		<a class="main_navbar_logo" href="${mainPage }">
+			<img class="mainNavImg" alt="Groominglogo" src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
+		</a>
+		<ul class="main_flex_between_center">
+			<li class="main_navbar_item">
+				<a class="main_navbar_link" href="${groomingMain }">그루밍</a>
+			</li>
+			<li class="main_navbar_item">
+				<a class="main_navbar_link" href="${communityMain }">커뮤니티</a>
+			</li>
+			<li class="main_navbar_item">
+				<a class="main_navbar_link" href="${studyCafeMain }">스터디카페</a>
+			</li>
+		</ul>
+		<ul id="mainProfileArea" class="main_flex_between_center">
+			<c:if test="${empty sessionScope.loginUser }">
+				<li class="main_navbar_item">
+					<a class="main_navbar_link" href="${loginPage }">로그인</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="${communityMain }">커뮤니티</a>
+				<li class="main_navbar_item">
+					<a class="main_navbar_link" href="${registerPage }">회원가입</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="${studyCafeMain }">스터디카페</a>
-				</li>
-			</ul>
-			<ul id="mainProfileArea" class="navbar-nav ml-auto">
-				<c:if test="${empty sessionScope.loginUser }">
-					<li class="nav-item">
-						<a class="nav-link" href="${loginPage }">로그인</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="${registerPage }">회원가입</a>
-					</li>
-				</c:if>
-				<c:if test="${!empty sessionScope.loginUser }">
-					<li class="nav-item main_messages_icon">
-						<div class="main_naviIcon">
-							<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-thin.svg">
-						</div>
-						<div class="main_messages_dropdown">
-							<div class="main_messages_header d-flex justify-content-between align-items-center">
-								<span>메시지</span>
-								<div class="main_mIcons_container">
-									<div class="main_mIcon">
-										<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-comments-thin.svg">
-									</div>
-									<div class="main_mIcon">
-										<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
-									</div>
+			</c:if>
+			<c:if test="${!empty sessionScope.loginUser }">
+				<li class="main_navbar_item main_messages_icon">
+					<div class="main_naviIcon">
+						<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-thin.svg">
+					</div>
+					<div class="main_messages_dropdown main_dropdown">
+						<div class="main_messages_header main_flex_between_center">
+							<span>메시지</span>
+							<div class="main_mIcons_container">
+								<div class="main_mIcon">
+									<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-comments-thin.svg">
 								</div>
-							</div>
-							<div class="main_messages_body_container">
-								<div class="main_messages_body">
-									<div class="spinner-border text-success" role="status">
-										<span class="sr-only">Loading...</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</li>
-					<li class="nav-item main_alerts_icon mr-2">
-						<div class="main_naviIcon main_aIcon">
-							<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-cat-4.svg">
-						</div>
-						<div class="main_alerts_dropdown">
-							<div class="main_alerts_header d-flex justify-content-between align-items-center">
-								<span>알림</span>
-								<div class="main_aIcon">
+								<div class="main_mIcon">
 									<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
 								</div>
 							</div>
-							<div class="main_alerts_body">
+						</div>
+						<div class="main_messages_body_container">
+							<div class="main_messages_body">
 								<div class="spinner-border text-success" role="status">
 									<span class="sr-only">Loading...</span>
 								</div>
 							</div>
 						</div>
-						
-					</li>
-					<li class="nav-item mr-2 d-flex justify-content-between align-items-center">
-						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
-							onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-						<a class="nav-link" href="${myPage }">${loginUser.memberNickName }</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="${logout }">로그아웃</a>
-					</li>
-				</c:if>
-			</ul>
-		</div>
+					</div>
+				</li>
+				<li class="main_navbar_item main_alerts_icon">
+					<div class="main_naviIcon main_aIcon">
+						<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-cat-4.svg">
+					</div>
+					<div class="main_alerts_dropdown main_dropdown">
+						<div class="main_alerts_header main_flex_between_center">
+							<span>알림</span>
+							<div class="main_aIcon">
+								<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
+							</div>
+						</div>
+						<div class="main_alerts_body">
+							<div class="spinner-border text-success" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="main_navbar_item main_flex_between_center">
+					<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+					<a class="main_navbar_link" href="${myPage }">${loginUser.memberNickName }</a>
+				</li>
+				<li class="main_navbar_item">
+					<a class="main_navbar_link" href="${logout }">로그아웃</a>
+				</li>
+			</c:if>
+		</ul>
 	</nav>
-	
+	</header>
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
 		let memberNo = "${loginUser.memberNo}";
@@ -301,7 +371,7 @@
 					
 					if(data > 0) {
 						// 알림 숫자 표시
-						var $messagesCountDiv = $("<div>").addClass("main_messages_txt text-center").text(data);
+						var $messagesCountDiv = $("<div>").addClass("main_messages_txt").text(data);
 
 						$messagesIcon.prepend($messagesCountDiv);
 					}
@@ -433,7 +503,7 @@
 
 					if(data > 0) {
 						// 알림 숫자 표시
-						var $alertDiv = $("<div>").addClass("main_alerts_txt text-center").text(data);
+						var $alertDiv = $("<div>").addClass("main_alerts_txt").text(data);
 
 						$alertIcon.prepend($alertDiv);
 					}
