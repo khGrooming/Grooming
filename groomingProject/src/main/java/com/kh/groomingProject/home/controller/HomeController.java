@@ -17,14 +17,12 @@ public class HomeController {
 	@Autowired
 	private HomeService homeService;
 	
-	
-	
 	@RequestMapping("home.do")
 	public ModelAndView home(ModelAndView mv) {
 		
 		ArrayList<HomeBoard> hBoardList = homeService.getBoardTopList();
 		
-		
+		System.out.println("홈 탑 게시글 : " + hBoardList);
 		
 		
 		mv.addObject("hBoardList", hBoardList)

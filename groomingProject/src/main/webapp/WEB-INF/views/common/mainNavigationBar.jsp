@@ -17,7 +17,7 @@
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
 
 <style type="text/css">
-*
+header
 {
     font-family: 'Jua', sans-serif
 }
@@ -246,7 +246,6 @@ header .main_upIcon.show
 {
 	display: block;
 }
-
 </style>
 </head>
 <body>
@@ -263,6 +262,7 @@ header .main_upIcon.show
 	<c:url var="myPage" value="mypage-memberup.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
+<!-- scroll 스크립트 -->
 <script>
 	window.addEventListener("scroll", function(){
 		var header = document.querySelector(".main_navbar");

@@ -6,12 +6,10 @@
 		<id property="boardNo" column="BOARD_NO"/>
 		<result property="bCategoryName" column="B_CATEGORY_NAME"/>
 		<result property="boardTitle" column="BOARD_TITLE"/>
-		<result property="boardContent" column="BOARD_CONTENT"/>
-		<result property="boardVCount" column="BOARD_VCOUNT"/>
 	</resultMap>
 	
 	<select id="getBoardTopList" resultMap="homeBoardResultSet">
-		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE,BOARD_CONTENT,BOARD_VCOUNT
+		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
 		FROM BOARD B
 		JOIN BCATEGORY BC ON (B.B_CATEGORY_NO = BC.B_CATEGORY_NO)
 		WHERE BOARD_STATUS = 'Y'

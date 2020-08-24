@@ -102,53 +102,25 @@ body
 <body>
 	<jsp:include page="common/mainNavigationBar.jsp" />
 
+<c:if test="${!empty hBoardList }">
 	<div class="right_container">
 		<div class="right_spotlight_title">
 			<h3>시끌벅적</h3>
 		</div>
+		<c:forEach var="b" items="${hBoardList }">
 		<div class="right_spotlight_body">
-			<a href="#" target="_blank">
+			<a href="?boardNo=${b.boardNo }">
 				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[질문 게시판]</div>
+					<div class="right_spotlight_category">[ ${b.bCategoryName } ]</div>
 					<div class="right_spotlight_content">
-						<strong>테스트 게시글 입니다.테스트 게시글 입니다.테스트 게시글 입니다.</strong>
-					</div>
-				</div>
-			</a>
-			<a href="#" target="_blank">
-				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[질문 게시판]</div>
-					<div class="right_spotlight_content">
-						<strong>테스트 게시글 입니다.테스트 게시글 입니다.테스트 게시글 입니다.</strong>
-					</div>
-				</div>
-			</a>
-			<a href="#" target="_blank">
-				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[질문 게시판]</div>
-					<div class="right_spotlight_content">
-						<strong>테스트 게시글 입니다.테스트 게시글 입니다.테스트 게시글 입니다.</strong>
-					</div>
-				</div>
-			</a>
-			<a href="#" target="_blank">
-				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[질문 게시판]</div>
-					<div class="right_spotlight_content">
-						<strong>테스트 게시글 입니다.테스트 게시글 입니다.테스트 게시글 입니다.</strong>
-					</div>
-				</div>
-			</a>
-			<a href="#" target="_blank">
-				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[질문 게시판]</div>
-					<div class="right_spotlight_content">
-						<strong>테스트 게시글 입니다.테스트 게시글 입니다.테스트 게시글 입니다.</strong>
+						<strong>${b.boardTitle }</strong>
 					</div>
 				</div>
 			</a>
 		</div>
+		</c:forEach>
 	</div>
+</c:if>
 	<!-- 멘토 그루밍 컨테이너 -->
 	<div class="main_fst_container mento_container container">
 		<div class="container_header">

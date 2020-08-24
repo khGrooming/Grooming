@@ -12,19 +12,15 @@ public class HomeBoard implements Serializable {
 	private String boardNo;			// 게시판 번호
 	private String bCategoryName;	// 게시판 카테고리
 	private String boardTitle;		// 게시글 제목
-	private String boardContent;	// 게시글 내용
-	private int boardVCount;		// 게시글 조회수
 
 	public HomeBoard() {
 		super();
 	}
-	public HomeBoard(String boardNo, String bCategoryName, String boardTitle, String boardContent, int boardVCount) {
+	public HomeBoard(String boardNo, String bCategoryName, String boardTitle) {
 		super();
 		this.boardNo = boardNo;
 		this.bCategoryName = bCategoryName;
 		this.boardTitle = boardTitle;
-		this.boardContent = boardContent;
-		this.boardVCount = boardVCount;
 	}
 	public String getBoardNo() {
 		return boardNo;
@@ -44,25 +40,13 @@ public class HomeBoard implements Serializable {
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
 	}
-	public String getBoardContent() {
-		return boardContent;
-	}
-	public void setBoardContent(String boardContent) {
-		this.boardContent = boardContent;
-	}
-	public int getBoardVCount() {
-		return boardVCount;
-	}
-	public void setBoardVCount(int boardVCount) {
-		this.boardVCount = boardVCount;
-	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
 		return "HomeBoard [boardNo=" + boardNo + ", bCategoryName=" + bCategoryName + ", boardTitle=" + boardTitle
-				+ ", boardContent=" + boardContent + ", boardVCount=" + boardVCount + "]";
+				+ "]";
 	}
 
 }
