@@ -78,7 +78,7 @@ public class MemberDao {
 
 	public int updateMemberPwd(Member m) {
 
-		return  sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
+		return sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
 	}
 
 }
