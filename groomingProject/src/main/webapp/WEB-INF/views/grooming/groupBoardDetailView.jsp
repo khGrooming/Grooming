@@ -29,7 +29,7 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
         
-            <!--summernote css/js 異�媛�  -->
+            <!--summernote css/js 추가  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -38,41 +38,34 @@
         body {
             height: 1200px;
         }
-
-        /* div�� �ш린�� 留�異� */
+        /* div의 크기에 맞춤 */
         img {
             max-width: 100%;
             max-height: 100%;
         }
-
-        /* �몃�쇱�� ������ 異��� */
+        /* 인라인 형식의 출력 */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
-
-        /* 媛� ���� 硫��댁�� �댁�� */
+        /* 각 탭의 메뉴의 내용 */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
             border: 3px solid #ddd;
             height: auto;
         }
-
-        /*�쇰���ㅻ��� �④�*/
+        /*라디오버튼 숨김*/
         .radio {
             display: none;
         }
-
-
-        /* ��硫��� ��洹� 留��곗�� �щ┫�� */
+        /* 탭메뉴 태그 마우스 올릴시 */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
-
-        /* ��洹� 硫��� css */
+        /* 태그 메뉴 css */
         .menu {
             display: inline-block;
             margin: 0 0 -3px;
@@ -83,22 +76,18 @@
             border: 1px solid #ddd;
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
-
         }
-
-        /*input �대┃��, label �ㅽ����*/
+        /*input 클릭시, label 스타일*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
             /* border-top: 2px solid #2e9cdf; */
             border-bottom: 3px solid #ffffff;
         }
-
         .table th {
             text-align: center;
             vertical-align: middle;
         }
-
       
 		
 		  @font-face { 
@@ -114,32 +103,32 @@
 </head>
 
 <body>
-    <!-- �ㅻ������ -->
+    <!-- 헤더시작 -->
     <header>
         <jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- �뱀�� ���� -->
+    <!-- 섹션 시작 -->
 
-    <!-- 而⑦���대��濡� ������ 怨듬갚 ���� -->
+    <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
-        <!--���댄�� 硫���-->
+        <!--디폴트 메뉴-->
         <input id="tab1" type="radio" name="tabs" class="radio">
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>硫���</label>
+        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>메인</label>
 
         <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>罹�由곕��</label>
+        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>캘린더</label>
 
         <input id="tab3" type="radio" name="tabs" class="radio" checked>
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>寃�����</label>
+        <label for="tab3" class="menu"><i class="fas fa-icons"></i>게시판</label>
 
 
-        <!-- 硫��몄�� �ㅼ�닿� �댁�⑹�� -->
+        <!-- 메인에 들어갈 내용용 -->
         <section id="content3">
 
             <div style="text-align: right; margin-right: 20px;">
-            <a href="#">��怨���湲�</a>
-            <p >���깆�� : <label>2020-07-25</label>&nbsp;&nbsp;議고���� : <label>7��</label></p>
+            <a href="#">신고하기</a>
+            <p >작성일 : <label>2020-07-25</label>&nbsp;&nbsp;조회수 : <label>7회</label></p>
             </div>
                     <div class="container">
 
@@ -147,55 +136,55 @@
 
                             <form method="post">
                                 <tr>
-                                    <th>���깃����� </th>
+                                    <th>작성게시판 </th>
                                     <td>
-                                        <label>����寃�����</label>
-                                        <label hidden>怨듭��ы��</label>
+                                        <label>자유게시판</label>
+                                        <label hidden>공지사항</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>��紐� </th>
-                                    <td><label>���������� ���������� ����������</label></td>
+                                    <th>제목 </th>
+                                    <td><label>너랑나랑은 너랑나랑은 너랑나랑은</label></td>
                                 </tr>
                                 <tr>
-                                    <th>�댁�� </th>
+                                    <th>내용 </th>
                                     <td><textarea cols="100" rows="10" class="form-control" readonly
-                                            style="height:auto;">��怨� 蹂대ŉ �����대�� 鍮�諛���
-						                                    媛����� �� 留��� �댁�쇨린
-						                                    吏�湲� �� 紐⑥�듭�� �댁��� 醫���
-						                                    ��瑜� �ъ���硫� ����濡� 醫���
-						                                    �� �대� 遺��ъ�
+                                            style="height:auto;">시곌 보며 속삭이는 비밀들
+						                                    간절한 내 맘속 이야기
+						                                    지금 내 모습을 해쳐도 좋아
+						                                    나를 재촉하면 할수록 좋아
+						                                    내 이름 불러줘
 						                                    
-                                    * �� ����濡� 鍮�移��� �� 留� �ㅽ�ш� ���ㅼ��
-						                                    媛��댁�� 留� 踰�李� ���ъ��
-						                                    議곌�留� 瑗� 李멸� �� 湲곕�ㅻ�ㅼ�
-						                                    ���� ������ 吏�湲� ����吏�
-						                                    ��怨�瑜� �� 蹂댁�怨� �띠�留�
-						                                    �ㅺ� ���� 誘몃������
-						                                    �� �대��� 遺��ъ�
+                                    * 손 틈새로 비치는 내 맘 들킬까 두려워
+						                                    가슴이 막 벅차 서러워
+						                                    조금만 꼭 참고 날 기다려줘
+						                                    너랑 나랑은 지금 안되지
+						                                    시계를 더 보채고 싶지만
+						                                    네가 있던 미래에서
+						                                    내 이름을 불러줘
 						                                    
-						                                    �닿� 癒쇱�� �용낫怨� �� ��媛���
-						                                    ���� �닿� �④�����吏�
-						                                    ���� ����二쇰�� 洹몃��媛� 醫���
-						                                    �닿� 臾쇱�대낫硫� 洹몃���� 醫���
-						                                    �� �대��� 萸���
+						                                    내가 먼저 엿보고 온 시간들
+						                                    너와 내가 함께였었지
+						                                    나랑 놀아주는 그대가 좋아
+						                                    내가 물어보면 그대도 좋아
+						                                    내 이름이 뭐야
 						                                    
 						                                    * Repeat
 						                                    
-						                                    �� 源�諛���硫� �대Ⅸ�� �� 嫄곗����
-						                                    �� ����蹂닿�二� 洹몃�� 湲곗�듯��寃�二�
-						                                    洹몃�� 湲곕����� ����
-						                                    �� ����濡� 鍮�移��� �� 紐⑥�� 李� 醫���
+						                                    눈 깜박하면 어른이 될 거예요
+						                                    날 알아보겠죠 그댄 기억하겠죠
+						                                    그래 기묘했던 아이
+						                                    손 틈새로 비치는 네 모습 참 좋다
 						                                    
-						                                    �����쇰� ��由щŉ ��怨�諛����� �щ�ㅻ�
-						                                    議곌�留� �� 鍮⑤━ ����遊�
-						                                    �� ���� 瑗� 媛�怨� 留�踰��� 嫄대��
-						                                    ���� ������ 議곌� �⑥��吏�
-						                                    紐��� 紐��ㅼ� 紐⑤Ⅴ寃�吏�留�
-						                                    �ㅺ� ���� 誘몃������
-						                                    �뱀�� �닿� �ㅻ㎤�ㅻ㈃
-						                                    ��瑜� ����蹂� �� ��寃�
-						                                    �� �대��� 遺��ъ�</textarea></td>
+						                                    손끝으로 돌리며 시곗바늘아 달려봐
+						                                    조금만 더 빨리 날아봐
+						                                    두 눈을 꼭 감고 마법을 건다
+						                                    너랑 나랑은 조금 남았지
+						                                    몇날 몇실진 모르겠지만
+						                                    네가 있을 미래에서
+						                                    혹시 내가 헤맨다면
+						                                    너를 알아볼 수 있게
+						                                    내 이름을 불러줘</textarea></td>
                                 </tr>
 
 
@@ -206,15 +195,15 @@
 
                         </table>
                         
-                       <!-- ���� ���� 踰��� -->
+                       <!-- 수정 삭제 버튼 -->
                         <div align="right">
-                            <button type="button">����</button>
-                            <button type="button">����</button>
+                            <button type="button">수정</button>
+                            <button type="button">삭제</button>
                         </div>
                         
                         <br><br><br>
                         
-                        <!-- ��湲� �깅�  -->
+                        <!-- 댓글 등록  -->
                         <div class="container">
                             <table class="table table-bordered">
                                 <form method="post">
@@ -226,13 +215,13 @@
                                         </td>
                                         <br><br>
                                         <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-                                            <button>��湲� �깅�</button>
+                                            <button>댓글 등록</button>
                                         </td>
 
                                     </tr>
                                 </form>
                             </table>
-                            <!-- ��湲� 紐⑸� 蹂닿린 -->
+                            <!-- 댓글 목록 보기 -->
                             <table align="center" width="500" border="1" id="tb2">
                                 <thead>
                                     <tr>
