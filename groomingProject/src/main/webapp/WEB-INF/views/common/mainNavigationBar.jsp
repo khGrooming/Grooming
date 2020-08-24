@@ -24,12 +24,10 @@
     box-sizing: border-box;
     font-family: 'Jua', sans-serif
 }
-
-/* .main_navbar
+body
 {
-	border-bottom: 1px solid;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-} */
+    transition: 0.6s;
+}
 .main_navbar
 {
     position: fixed;
@@ -40,7 +38,7 @@
     justify-content: center;
     align-items: center;
     transition: 0.6s;
-    padding: 20px 240px;
+    padding: 20px 100px;
 	border-bottom: 1px solid lightgrey;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
@@ -52,6 +50,7 @@
 }
 .main_navbar .mainNavImg
 {
+	padding: 3px;
 	height: 50px;
     transition: 0.6s;
 }
@@ -61,6 +60,9 @@
 }
 .main_navbar .proFile_img
 {
+	margin-top: auto;
+	margin-bottom: auto;
+	margin-left: 3px;
 	height: 35px;
 	width: 35px;
 	border-radius: 50%;
@@ -78,7 +80,6 @@
 }
 .main_navbar ul li a
 {
-	min-width: auto;
 	font-size: 26px;
     margin: 0 15px;
     text-decoration: none;
@@ -86,9 +87,19 @@
     letter-spacing: 1px;
     transition: 0.6s;
 }
+.main_navbar ul li:hover
+{
+    color: green;
+    border: 1px solid green;
+    border-radius: 5px;
+}
+.main_navbar ul li:hover a
+{
+    color: green;
+}
 .main_navbar.sticky
 {
-    padding: 5px 340px;
+    padding: 5px 200px;
 }
 .main_navbar.sticky ul li a
 {
@@ -120,7 +131,9 @@
 	cursor: pointer;
 	margin-top: auto;
 	margin-bottom: auto;
-	padding: 0 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	padding: 3px;
 	position: relative;
 }
 .main_messages_icon .main_naviIcon .img_svg,
@@ -235,7 +248,27 @@
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-
+header .main_upIcon
+{
+	display: none;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	z-index: 99;
+	font-size: 18px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+}
+header .main_upIcon .img_svg
+{
+	width: 30px;
+	height: 30px;
+}
+header .main_upIcon.show
+{
+	display: block;
+}
 
 </style>
 </head>
@@ -256,7 +289,9 @@
 <script>
 	window.addEventListener("scroll", function(){
 		var header = document.querySelector(".main_navbar");
+		var topBtn = document.querySelector(".main_upIcon");
 		header.classList.toggle("sticky", window.scrollY > 0);
+		topBtn.classList.toggle("show", window.scrollY > 100);
     });
 </script>
 	<header>
@@ -340,6 +375,9 @@
 			</c:if>
 		</ul>
 	</nav>
+	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
+		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
+	</div>
 	</header>
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
