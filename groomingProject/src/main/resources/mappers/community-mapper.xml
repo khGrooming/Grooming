@@ -17,6 +17,19 @@
 		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="replyNo" column="REPLY_NO" />
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="replyCreateDate" column="REPLY_CREATE_DATE" />
+		<result property="replyModifyDate" column="REPLY_MODIFY_DATE" />
+		<result property="replySelection" column="PEPLY_SELECTION" />
+		<result property="replyStatus" column="REPLY_STATUS" />
+		<result property="declarationCount" column="DECLARATION_COUNT" />
+	</resultMap>
 		
 	<select id="selectList" parameterType="map" resultMap="boardResultSet">
  		SELECT * FROM BOARD
@@ -74,6 +87,13 @@
 		WHERE BOARD_NO=#{boardNo}
 	</delete>
 	
+
+	<select id="selectReplyList" parameterType="map" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE B_CATEGORY_NO=#{board.bCategoryNo}
+		ORDER BY REPLY_NO DESC
+	</select>
 
 
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.community.model.dao.CommunityDao;
 import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("cService")
@@ -50,6 +51,13 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return cDao.communityDelete(boardNo);
 	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(String boardNo) {
+		
+		return cDao.selectReplyList(boardNo);
+	}
+
 
 
 

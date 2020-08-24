@@ -9,21 +9,22 @@ public class MemberTag implements Serializable{
 	 */
 	private static final long serialVersionUID = 8158359001773369165L;
 
-	private String memberEmail;	// 회원 이메일
+	private String memberNo;	// 회원번호
 	private String tagName;		// 태그명
+
 	public MemberTag() {
 		super();
 	}
-	public MemberTag(String memberEmail, String tagName) {
+	public MemberTag(String memberNo, String tagName) {
 		super();
-		this.memberEmail = memberEmail;
+		this.memberNo = memberNo;
 		this.tagName = tagName;
 	}
-	public String getMemberEmail() {
-		return memberEmail;
+	public String getMemberNo() {
+		return memberNo;
 	}
-	public void setMemberEmail(String memberEmail) {
-		this.memberEmail = memberEmail;
+	public void setMemberNo(String memberNo) {
+		this.memberNo = memberNo;
 	}
 	public String getTagName() {
 		return tagName;
@@ -36,7 +37,7 @@ public class MemberTag implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "MemberTag [memberEmail=" + memberEmail + ", tagName=" + tagName + "]";
+		return "MemberTag [memberNo=" + memberNo + ", tagName=" + tagName + "]";
 	}
 
 }

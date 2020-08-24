@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.member.model.dao.MemberDao;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberCertiCode;
+import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -52,6 +54,42 @@ public class MemberServiceImpl implements MemberService {
 	public int welcomePoint(String memberNo) {
 
 		return mDao.welcomePoint(memberNo);
+	}
+
+	@Override
+	public int mergeMemberTags(MemberTag memberTag) {
+
+		return mDao.mergeMemberTags(memberTag);
+	}
+
+	@Override
+	public int insertMemberKakao(Member m) {
+
+		return mDao.insertMemberKakao(m);
+	}
+
+	@Override
+	public int findMemberEmail(Member m) {
+
+		return mDao.findMemberEmail(m);
+	}
+
+	@Override
+	public int insertRandomCode(MemberCertiCode mcc) {
+
+		return mDao.insertRandomCode(mcc);
+	}
+
+	@Override
+	public int certiChk(MemberCertiCode mcc) {
+
+		return mDao.certiChk(mcc);
+	}
+
+	@Override
+	public int updateMemberPwd(Member m) {
+
+		return mDao.updateMemberPwd(m);
 	}
 
 }

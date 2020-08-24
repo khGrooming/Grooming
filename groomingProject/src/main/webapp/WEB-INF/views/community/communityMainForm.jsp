@@ -96,7 +96,7 @@
 							</td>
 							<td>${n.memberNickName }</td>
 							<td>${n.boardVcount }</td>
-							<td>${n.boardCreateDate }</td>
+							<td>${n.boardModifyDate }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

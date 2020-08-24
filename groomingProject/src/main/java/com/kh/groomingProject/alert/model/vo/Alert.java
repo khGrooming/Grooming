@@ -2,6 +2,7 @@ package com.kh.groomingProject.alert.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Alert implements Serializable{
 
@@ -10,16 +11,16 @@ public class Alert implements Serializable{
 	 */
 	private static final long serialVersionUID = -5614251653763257702L;
 	
-	private String alertNo;			// 알림 번호
-	private String memberNo;		// 멤버 번호
-	private String alertContent;	// 알림 내용
-	private Date alertCreateDate;	// 알림 생성날짜
-	private String alertConfirm;	// 알림 확인 유무
+	private String alertNo;				// 알림 번호
+	private String memberNo;			// 멤버 번호
+	private String alertContent;		// 알림 내용
+	private Timestamp alertCreateDate;	// 알림 생성날짜
+	private String alertConfirm;		// 알림 확인 유무
 
 	public Alert() {
 		super();
 	}
-	public Alert(String alertNo, String memberNo, String alertContent, Date alertCreateDate, String alertConfirm) {
+	public Alert(String alertNo, String memberNo, String alertContent, Timestamp alertCreateDate, String alertConfirm) {
 		super();
 		this.alertNo = alertNo;
 		this.memberNo = memberNo;
@@ -45,10 +46,10 @@ public class Alert implements Serializable{
 	public void setAlertContent(String alertContent) {
 		this.alertContent = alertContent;
 	}
-	public Date getAlertCreateDate() {
+	public Timestamp getAlertCreateDate() {
 		return alertCreateDate;
 	}
-	public void setAlertCreateDate(Date alertCreateDate) {
+	public void setAlertCreateDate(Timestamp alertCreateDate) {
 		this.alertCreateDate = alertCreateDate;
 	}
 	public String getAlertConfirm() {

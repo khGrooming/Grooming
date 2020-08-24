@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("cDao")
@@ -56,6 +57,17 @@ public class CommunityDao {
 		
 		return sqlSessionTemplate.delete("communityMapper.communityDelete", boardNo);
 	}
+
+	public ArrayList<Reply> selectReplyList(String boardNo) {
+		ArrayList replyList = new ArrayList();
+		HashMap<String, String> hashMap = new HashMap<>();
+		hashMap.put("boardNo",boardNo);
+		replyList = (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectReplyList", hashMap);
+		
+		return replyList;
+	}
+
+
 
 
 

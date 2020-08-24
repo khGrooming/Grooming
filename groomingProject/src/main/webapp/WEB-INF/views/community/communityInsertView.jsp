@@ -6,45 +6,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>Grooming</title>
-<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
-
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
-
+<meta name="description" content="">
+<meta name="author" content="">        
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Grooming</title>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
-<!-- -------------- style 부분------------- -->
-<style type="text/css">
-	.table_ra>tbody>tr>td, .table_ra>tbody>tr>th, .table_ra>tfoot>tr>td, .table_ra>tfoot>tr>th, .table_ra>thead>tr>td, .table_ra>thead>tr>th {
-    	vertical-align: middle;
-    	text-align:center;
-	}
-	#noticeIcon {
-    	vertical-align: bottom;
-    	color: red;
-	}
+     
+<title>Insert title here</title>
+<style>
+    /*datatable css*/
+    div.dataTables_wrapper {
+        width: 70rem;
+        margin: 0 auto;
+    }
 </style>
-<!-- -------------- style 부분------------- -->
 </head>
 <body>
 		<jsp:include page="../common/mainNavigationBar.jsp"/>
-		<div class="col-sm-2">
-			<jsp:include page="../common/communityBar.jsp"/>
-		</div>
-		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
-		<div class="col-sm-10">
-			<!-- ------------------ 작성 ------------------- -->
-			<div class="col-sm-1"></div>
-			<div class="col-sm-8">
-				<div class="col-sm-12">
-					<input type="button" value="글쓰기" class="btn btn-info" style="margin-left: 640px;" onclick="location.href='communityInsertView.do'">
-					<br><br>
-				</div>
+	
+			<br><br><br><br><br><br><br>
 				
 				<form id="fm-notice" action="communityInsert.do" method="post" enctype="Multipart/form-data">
 					<table align="center">
@@ -62,6 +49,7 @@
 							<td><input type="hidden" name="memberNo" value="${loginUser.memberNo }"></td>
 							<td><input type="hidden" name="bCategoryNo" value="${bCategoryNo}"></td>
 						</tr>
+						
 						<tr>
 							<td colspan="2" align="center">
 								<input type="submit" value="등록 하기">&nbsp;
@@ -70,8 +58,6 @@
 						</tr>
 					</table>	
 				</form>
-			</div>
-			<div class="col-sm-3"></div>
 			
 			<!--summerNote-->
 			<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
@@ -85,8 +71,5 @@
         			})
     			});
 			</script>
-			<!-- ------------------ 작성 ------------------- -->
-		</div>
-		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
 </body>
 </html>

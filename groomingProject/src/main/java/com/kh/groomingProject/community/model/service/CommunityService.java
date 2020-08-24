@@ -3,6 +3,7 @@ package com.kh.groomingProject.community.model.service;
 import java.util.ArrayList;
 
 import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
 
 public interface CommunityService {
@@ -18,6 +19,10 @@ public interface CommunityService {
 	int communityUpdate(Board b, Member member);
 
 	int communityDelete(String boardNo);
+
+	ArrayList<Reply> selectReplyList(String boardNo);
+
+
 
 
 

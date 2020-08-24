@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap type="MemberManageView" id="memberViewResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberNickname" column="MEMBER_NICKNAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="point" column="POINT"/>
+	</resultMap>
+	
+	<select id="memberListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER_MANAGE
+		<where>
+			<if test="category == 'nickname'">
+				MEMBER_NICKNAME LIKE '%'||#{name}||'%'
+			</if>
+			<if test="category == 'memberName'">
+				MEMBER_NAME LIKE '%'||#{name}||'%'
+			</if>
+			<if test="category == 'email'">
+				MEMBER_EMAIL LIKE '%'||#{name}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<select id="memberList" parameterType="string" resultMap="memberViewResultSet">
+		SELECT *
+		FROM MEMBER_MANAGE
+		<where>
+			<if test="category == 'nickname'">
+				MEMBER_NICKNAME LIKE '%'||#{name}||'%'
+			</if>
+			<if test="category == 'memberName'">
+				MEMBER_NAME LIKE '%'||#{name}||'%'
+			</if>
+			<if test="category == 'email'">
+				MEMBER_EMAIL LIKE '%'||#{name}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<insert id="pointCalculation" parameterType="Point">
+		INSERT INTO POINT
+		VALUES(SEQ_POINT_NO.NEXTVAL
+			 , #{memberNo}
+			 , #{addPoint}
+			 , 0
+			 , #{pointList}
+			 , SYSDATE
+		)
+	</insert>
+</mapper>

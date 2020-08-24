@@ -6,55 +6,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<title>Grooming</title>
-<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
-
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
-
+<meta name="description" content="">
+<meta name="author" content="">        
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<title>Grooming</title>
 <!-- -------------- style 부분------------- -->
-<style type="text/css">
-	.table_ra>tbody>tr>td, .table_ra>tbody>tr>th, .table_ra>tfoot>tr>td, .table_ra>tfoot>tr>th, .table_ra>thead>tr>td, .table_ra>thead>tr>th {
-    	vertical-align: middle;
-    	text-align:center;
-	}
-	#noticeIcon {
-    	vertical-align: bottom;
-    	color: red;
-	}
+<style>
+    /*datatable css*/
+    div.dataTables_wrapper {
+        width: 70rem;
+        margin: 0 auto;
+    }
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-	<jsp:include page="../common/mainNavigationBar.jsp"/>
-	<div class="col-sm-2">
-		<jsp:include page="../common/communityBar.jsp"/>
-	</div>
-	<!-- ----------------------- 메인 화면 테이블 ------------------ -->
-	<div class="col-sm-10">
-	<!-- ------------------ 상세보기 ------------------- -->
-		<div class="col-sm-1"></div>
-		<div class="col-sm-8">
-			<table align="center" border="1" cellspacing="0" width="400">
-				<tr>
-					<td>제목</td>
-					<td>${board.boardTitle }</td>
-				</tr>
-				<tr>
-					<td>작성자</td>
-					<td>${board.memberNickName }</td>
-				</tr>
-				<tr>
-					<td>작성날짜</td>
-					<td>${board.boardCreateDate }</td>
-				</tr>
-				<tr>
-					<td>작성내용</td>
-					<td>${board.boardContent }</td>
-				</tr>	
+		<jsp:include page="../common/mainNavigationBar.jsp"/>
+	
+		<br><br><br><br><br><br><br>
+		<h2 class="text-center">게시글 보기</h2><p>&nbsp;</p>
+		
+	<div class="container" align="center">
+		<div class="table table-responsive">
+        	<table class="table">
+        		<tr>
+            		<th class="success">글번호</th>
+            		<td>${board.boardNo }</td>
+            		<th class="success">조회수</th>
+            		<td>${board.boardVcount }</td>
+        		</tr>
+        		<tr>
+            		<th class="success">작성자</th>
+            		<td>${board.memberNickName }</td>
+            		<th class="success">작성일</th>
+            		<td>${board.boardCreateDate }</td>
+        		</tr>
+        		<tr>
+            		<th class="success">제목</th>
+            		<td colspan="3">${board.boardTitle }</td>
+        		</tr>  
+        		<tr>
+            		<th class="success">글 내용</th>
+            		<td colspan="3">${board.boardContent }</td>
+        		</tr>
 				<c:url var="communityUpdateView" value="communityUpdateView.do">
 					<c:param name="boardNo" value="${board.boardNo }" />
 				</c:url>
@@ -71,13 +71,31 @@
 						</td>
 					</tr>
 				</c:if> 
+        	</table>
+        	<hr>
+        	
+        	<!-- 댓글 목록 보기 -->
+			<table align="center" width="70%" id="replyList">
+				<thead>
+
+				</thead>
+				<tbody>
+		
+				</tbody>
 			</table>
-		</div>
-		<div class="col-sm-3"></div>
-		<!-- ------------------ 상세보기 ------------------- -->
-	</div>
-	<!-- ----------------------- 메인 화면 테이블 ------------------ -->
 	
-	
+        	<!-- 댓글 등록하기 -->
+			<table align="center" width="70%" id="replyAdd">
+				<tr>
+					<td>${loginUser.memberNickName }</td>
+					<td><textarea rows="3" cols="60" id="replyContent" placeholder=" 댓글을 작성해주세요"></textarea></td>
+					<td>
+						<button id="replySubmit">등록하기</button>
+					</td>
+				</tr>
+			</table>
+    	</div>
+	</div>	
+
 </body>
 </html>

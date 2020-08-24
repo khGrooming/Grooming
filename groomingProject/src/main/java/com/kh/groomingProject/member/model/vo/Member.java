@@ -9,8 +9,6 @@ public class Member implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7200797583466611023L;
-	
-	
 
 	private String memberNo;		// 멤버 번호
 	private String memberEmail;		// 멤버 이메일
@@ -25,6 +23,7 @@ public class Member implements Serializable {
 	private String memberPhoto;		// 멤버 프로필 사진
 	private String memberAdmin;		// 멤버 관리자 권한
 	private String memberStatus;	// 멤버 탈퇴 상태
+	private String memberKakao;		// 멤버 카카오 로그인
 	private Date memberJoinDate;	// 멤버 가입 날짜
 
 	public Member() {
@@ -32,7 +31,7 @@ public class Member implements Serializable {
 	}
 	public Member(String memberNo, String memberEmail, String memberPwd, String memberNickName, String memberName,
 			String memberGender, String memberPhone, String lvlNo, int memberExp, String memberMemo, String memberPhoto,
-			String memberAdmin, String memberStatus, Date memberJoinDate) {
+			String memberAdmin, String memberStatus, String memberKakao, Date memberJoinDate) {
 		super();
 		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
@@ -47,6 +46,7 @@ public class Member implements Serializable {
 		this.memberPhoto = memberPhoto;
 		this.memberAdmin = memberAdmin;
 		this.memberStatus = memberStatus;
+		this.memberKakao = memberKakao;
 		this.memberJoinDate = memberJoinDate;
 	}
 	public String getMemberNo() {
@@ -127,6 +127,12 @@ public class Member implements Serializable {
 	public void setMemberStatus(String memberStatus) {
 		this.memberStatus = memberStatus;
 	}
+	public String getMemberKakao() {
+		return memberKakao;
+	}
+	public void setMemberKakao(String memberKakao) {
+		this.memberKakao = memberKakao;
+	}
 	public Date getMemberJoinDate() {
 		return memberJoinDate;
 	}
@@ -142,7 +148,7 @@ public class Member implements Serializable {
 				+ ", memberNickName=" + memberNickName + ", memberName=" + memberName + ", memberGender=" + memberGender
 				+ ", memberPhone=" + memberPhone + ", lvlNo=" + lvlNo + ", memberExp=" + memberExp + ", memberMemo="
 				+ memberMemo + ", memberPhoto=" + memberPhoto + ", memberAdmin=" + memberAdmin + ", memberStatus="
-				+ memberStatus + ", memberJoinDate=" + memberJoinDate + "]";
+				+ memberStatus + ", memberKakao=" + memberKakao + ", memberJoinDate=" + memberJoinDate + "]";
 	}
 
 }
