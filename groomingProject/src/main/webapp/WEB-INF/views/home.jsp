@@ -40,10 +40,12 @@
 {
 	font-family: 'Nanum Gothic', sans-serif;
 }
-.mento_container{
+.mento_container
+{
 	margin-top: 150px;
 }
-.main_lst_container{
+.main_lst_container
+{
 	margin-bottom: 100px;
 }
 .right_container

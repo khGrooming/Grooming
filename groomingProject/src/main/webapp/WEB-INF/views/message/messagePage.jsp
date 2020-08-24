@@ -18,272 +18,496 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-
-<!-- recaptcha 나중에... -->
-<!-- <script src="https://www.google.com/recaptcha/api.js?render=6LdYz8AZAAAAAFCliYQlMH778UwYbDfnrV-X8YGk"></script>
-
-<script>
-	grecaptcha.ready(function() {
-		grecaptcha.execute('6LdYz8AZAAAAAFCliYQlMH778UwYbDfnrV-X8YGk', {action: 'changePwd.do'}).then(function(token) {
-			//TODO 하자 나중에...
-			// pass the token to the backend script for verification
-		});
-	});
-</script> -->
   
-<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
+<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/messagePage.css" rel="stylesheet"> --%>
 <style type="text/css">
-<!-- 기본 스타일 -->
-*
-{
-	margin: 0;
-	padding: 0;
-	/* box-sizind: border-box; */
-}
 section
 {
-	margin-top: 76px;
-	position: relative;
-	min-height: 86.3vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 0;
+	margin-top: 150px;
 }
-section .form_container
+.container
 {
-	position: relative;
-	width: 1000px;
-	height: 700px;
-	border: 1px solid lightgrey;
-	background: #fff;
-	box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+	max-width: 1170px;
+	margin: auto;
+}
+img
+{
+	max-width: 100%;
+}
+.inbox_people
+{
+	background: #f8f8f8 none repeat scroll 0 0;
+	float: left;
 	overflow: hidden;
-	
+	width: 40%;
+	border-right: 1px solid #c4c4c4;
 }
-section .form_container .findAccount
+.inbox_msg
 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	display: flex;
+	border: 1px solid #c4c4c4;
+	clear: both;
+	overflow: hidden;
 }
-section .form_container .findAccount .imgBx
+.top_spac
 {
-	position: relative;
-	width: 50%;
-	height: 100%;
-	min-width: 400px;
-	transition: 0.5s;
+	margin: 20px 0 0;
 }
-section .form_container .findAccount .imgBx img
+.recent_heading
 {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: contain;
+	float: left;
+	width: 25%;
 }
-section .form_container .findAccount .form-group
+.srch_bar
 {
-	position: relative;
-	width: 50%;
-	height: 100%;
-	min-width: 400px;
-	background: #fff;
-	display: flex;
-	justify-centent: center;
-	align-items: center;
-	padding: 40px 60px;
-	transition: 0.5s;
+	display: inline-block;
+	text-align: right;
+	width: 60%;
+	padding: 5px;
 }
-section .form_container .findAccount .form-group form
+.headind_srch
 {
-	width: 100%;
+	padding: 10px 10px 10px 20px;
+	overflow: hidden;
+	border-bottom: 1px solid #c4c4c4;
 }
-section .form_container .findAccount .form-group form p
+.recent_heading h4
 {
-	font-size: 1rem;
-	font-weight: 100;
+	line-height: 40px;
+	color: #05728f;
+	font-size: 21px;
+	margin: 0;
 }
-section .form_container .findAccount .form-group form input
+.srch_bar input
 {
-	position: relative;
-	width: 100%;
-	height: 45px;
-	padding: 10px;
-	border-radius: 4px;
-	background-color: #fff;
-	border: 1px solid #ccc;
-	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-	color: #333;
-	outline: none;
-	box-shadow: none;
+	border: 1px solid #cdcdcd;
+	border-width: 0 0 1px 0;
+	width: 80%;
+	padding: 2px 0 4px 6px;
+	background: none;
+}
+.srch_bar .input-group-addon button
+{
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	padding: 0;
+	color: #707070;
+	font-size: 18px;
+}
+.srch_bar .input-group-addon
+{
+	margin: 0 0 0 -20px;
+}
+.chat_ib h5
+{
+	font-size: 15px;
+	color: #464646;
+	margin: 0 0 8px 0;
+}
+.chat_ib h5 span
+{
+	font-size: 13px;
+	float: right;
+}
+.chat_ib p
+{
 	font-size: 14px;
+	color: #989898;
+	margin: auto;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
-section .form_container .findAccount .form-group form .input-group span
+.chat_img
 {
-    position: absolute;
-    top: 10px;
-    left: 25px;
-    padding: 0;
-    transition: 0.5s;
-    pointer-events: none;
-    background: #fff;
-    text-transform: uppercase;
+	float: left;
+	width: 11%;
 }
-section .form_container .findAccount .form-group form .input-group .chkVali
+.chat_ib
 {
-	font-size: 13px;
+	float: left;
+	padding: 0 0 0 15px;
+	width: 88%;
+}
+.chat_people
+{
+	overflow: hidden;
+	clear: both;
+}
+.chat_list
+{
+	border-bottom: 1px solid #c4c4c4;
+	margin: 0;
+	padding: 18px 16px 10px;
+}
+.inbox_chat
+{
+	height: 590px;
+	overflow-y: auto;
+}
+.active_chat
+{
+	background: #ebebeb;
+}
+.incoming_msg_img
+{
+	display: inline-block;
+	width: 6%;
+}
+.received_msg
+{
+	display: inline-block;
+	padding: 0 0 0 10px;
+	vertical-align: top;
+	width: 92%;
+}
+.received_withd_msg p
+{
+	background: #ebebeb none repeat scroll 0 0;
+	border-radius: 3px;
+	color: #646464;
+	font-size: 14px;
+	margin: 0;
+	padding: 5px 10px 5px 12px;
 	width: 100%;
-	color: red;
-	text-align: left;
-	padding: 0 5px;
-	display: none;
 }
-section .form_container .findAccount .form-group form .input-group .chkValiComp
+.time_date
 {
-	color: green;
+	color: #747474;
+	display: block;
+	font-size: 12px;
+	margin: 8px 0 0;
 }
-section .form_container .findAccount .form-group form .input-group input:focus ~ span,
-section .form_container .findAccount .form-group form .input-group input:valid ~ span
+.received_withd_msg
 {
-	top: -15px;
-	left: 20px;
-	font-size: 13px;
-	padding: 2px 5px;
+    width: 57%;
 }
-section .form_container .findAccount .form-group form input[type="button"]
+.mesgs_header
 {
-	outline: none;
-	border: 1px solid lightgrey;
-	background: #677eff;
+	float: left;
+	display: flex;
+	padding: 15px;
+	width: 60%;
+}
+.mesgs_header .profile_img
+{
+	display: inline-block;
+	margin-right: 5px;
+	width: 40px;
+}
+.mesgs_header p
+{
+	margin: 0;
+	font-size: 30px;
+	line-height: 40px;
+}
+.mesgs
+{
+	float: left;
+	padding: 0 15px 5px 15px;
+	width: 85%;
+}
+.sent_msg p {
+    background: #05728f;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 0;
+    color: #fff;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+.outgoing_msg {
+    overflow: hidden;
+    margin: 26px 0 26px;
+}
+.sent_msg {
+    float: right;
+    width: 46%;
+}
+.input_msg_write input
+{
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	color: #4c4c4c;
+	font-size: 15px;
+	min-height: 48px;
+	width: 100%;
+}
+.type_msg
+{
+	border-top: 1px solid #c4c4c4;
+	position: relative;
+}
+.msg_send_btn
+{
+	background: #05728f none repeat scroll 0 0;
+	border: medium none;
+	border-radius: 50%;
 	color: #fff;
 	cursor: pointer;
-	font-size: 14px;
-	font-weight: 400;
-	letter-spacing: 1px;
-	transition: 0.5s;
+	font-size: 5px;
+	height: 33px;
+	position: absolute;
+	right: 0;
+	top: 11px;
+	width: 33px;
+}
+.messaging
+{
+	padding: 0 0 50px 0;
+}
+.msg_history
+{
+	height: 516px;
+	overflow-y: auto;
 }
 </style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
 
-	<section>
-		<div class="form_container">
-			<div class="findAccount">
-				<div class="imgBx"><img alt="회원 비밀번호 변경 이미지" src="${contextPath }/resources/views/images/changePwd.png"></div>	
-				<div class="form-group">
-					<form action="newPwd.do" method="post" id="newPwdForm">
-						<div>
-							<h2>비밀번호 재설정</h2>
-							<p>비밀번호를 변경해 주세요.</p>
-							<p>다른 아이디나 사이트에서 사용한 적 없는 안전한 비밀번호로 변경해 주세요.</p>
-						</div>
-						<input type="hidden" name="memberEmail" value="${memberEmail }">
-						<div class="input-group mb-3">
-							<input type="password" id="new_pw" autocomplete="off" name="memberPwd" required>
-							<span>새 비밀번호</span>
-							<div class="chkVali" id="new_pwChk">8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.</div>
-							<div class="chkVali chkValiComp" id="new_pwComp">사용 가능합니다.</div>
-						</div>
-						<div class="input-group">
-							<input type="password" id="new_conf_pw" autocomplete="off" required>
-							<span>새 비밀번호 확인</span>
-							<div class="chkVali" id="new_conf_pwChk">비밀번호가 일치하지 않습니다.</div>
-							<div class="chkVali chkValiComp" id="new_conf_pwComp">비밀번호가 일치합니다.</div>
-						</div>
-						<input type="button" class="btn_next my-3" onclick="findAccountFn()" value="확인">
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+<section>
+
+	<div class="container">
+        <div class="messaging">
+            <div class="inbox_msg">
+                <div class="inbox_people">
+                    <div class="headind_srch">
+                        <div class="recent_heading">
+                            <h4>메시지</h4>
+                        </div>
+                        <div class="srch_bar">
+                            <div class="stylish-input-group">
+                                <input type="text" class="search-bar" placeholder="Search">
+                                <span class="input-group-addon">
+                                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                </span> </div>
+                        </div>
+                    </div>
+                    <div class="inbox_chat">
+                        <div class="chat_list active_chat">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_list">
+                            <div class="chat_people">
+                                <div class="chat_img">
+                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                                </div>
+                                <div class="chat_ib">
+                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <p>Test, which is a new approach to have all solutions
+                                        astrology under one roof.</p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="mesgs_header">
+                    <div class="profile_img">
+                        <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                    </div>
+                    <p>Tester</p>
+                </div>
+                <div class="mesgs">
+                    <div class="msg_history">
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>Test which is a new approach to have all
+                                        solutions</p>
+                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Test which is a new approach to have all
+                                    solutions</p>
+                                <span class="time_date"> 11:01 AM | June 9</span>
+                            </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>Test, which is a new approach to have</p>
+                                    <span class="time_date"> 11:01 AM | Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Apollo University, Delhi, India Test</p>
+                                <span class="time_date"> 11:01 AM | Today</span>
+                            </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>We work directly with our designers and suppliers,
+                                        and sell direct to you, which means quality, exclusive
+                                        products, at a price anyone can afford.</p>
+                                    <span class="time_date"> 11:01 AM | Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Apollo University, Delhi, India Test</p>
+                                <span class="time_date"> 11:01 AM | Today</span>
+                            </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>We work directly with our designers and suppliers,
+                                        and sell direct to you, which means quality, exclusive
+                                        products, at a price anyone can afford.</p>
+                                    <span class="time_date"> 11:01 AM | Today</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>Apollo University, Delhi, India Test</p>
+                                <span class="time_date"> 11:01 AM | Today</span>
+                            </div>
+                        </div>
+                        <div class="incoming_msg">
+                            <div class="incoming_msg_img">
+                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>We work directly with our designers and suppliers,
+                                        and sell direct to you, which means quality, exclusive
+                                        products, at a price anyone can afford.</p>
+                                    <span class="time_date"> 11:01 AM | Today</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="type_msg">
+                        <div class="input_msg_write">
+                            <input type="text" class="write_msg" placeholder="Type a message" />
+                            <button class="msg_send_btn" type="button"> 전송 </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
 
 	<script type="text/javascript">
-		// 정규식
-		let newPwdPass = false;
-		let regexPwd = /(?=.*\d{1,})(?=.*[~`!@#$%\^&*()-+=]{1,})(?=.*[a-zA-Z]{1,}).{8,16}$/;
-		let regexCertiNum = /^\d{6,6}$/;
-		
-
-		// 비밀번호 정규화로 확인, 비밀번호 확인과 동일 여부 확인
-		function newPwd() {
-			if (!regexPwd.test($("#new_pw").val())) {
-				newPwdPass = false;
-				$("#new_pwChk").css("display","block");
-				$("#new_pwComp").css("display","none");
-			} else {
-				$("#new_pwChk").css("display","none");
-				$("#new_pwComp").css("display","block");
-			}
-			if ($("#new_pw").val() != $("#new_conf_pw").val()) {
-				$("#new_conf_pwChk").css("display","block");
-				$("#new_conf_pwComp").css("display","none");
-				newPwdPass = false;
-				console.log("비밀번호 불일치");
-			} else {
-				$("#new_conf_pwChk").css("display","none");
-				$("#new_conf_pwComp").css("display","block");
-				if (regexPwd.test($("#new_pwChk").val())) {
-					newPwdPass = true;
-					console.log("changePwdPass : "+ changePwdPass);
-					console.log("비밀번호 일치");
-				}
-			}
-		}
-		// 키이벤트 비밀번호 확인
-		$("#new_pw").on("keyup change", function () {
-			newPwd();
-		});
-
-		// 비밀번호와 동일 여부 확인
-		function newPwdDupl() {
-			if ($("#new_pw").val() != $("#new_conf_pw").val()) {
-				newPwdPass = false;
-				$("#new_conf_pwChk").css("display","block");
-				$("#new_conf_pwComp").css("display","none");
-				console.log("비밀번호 불일치");
-			} else {
-				$("#new_conf_pwChk").css("display","none");
-				$("#new_conf_pwComp").css("display","block");
-				if (regexPwd.test($("#new_pw").val())) {
-					newPwdPass = true;
-					console.log("newPwdPass : "+ newPwdPass);
-					console.log("비밀번호 일치");
-				}
-			}
-		}
-		// 키이벤트 비밀번호 재확인
-		$("#new_conf_pw").on("keyup change", function () {
-			newPwdDupl();
-		});
-
-		$("#new_conf_pw").keyup(function(e){
-			if(e.keyCode == 13){
-				findAccountFn();
-			}
-		});
-
-		function findAccountFn() {
-			newPwd();
-
-			if(!newPwdPass){
-				$("#new_pw").focus();
-				return;
-			} else {
-				console.log("비밀번호 업데이트 submit")
-				$("#newPwdForm").submit();
-			}
-		}
+	
 	</script>
 
-
 	<jsp:include page="../common/footer.jsp" />
-
 </body>
 </html>

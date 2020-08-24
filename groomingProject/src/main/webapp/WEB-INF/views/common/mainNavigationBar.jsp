@@ -317,7 +317,7 @@ header .main_upIcon.show
 						<div class="main_messages_header main_flex_between_center">
 							<span>메시지</span>
 							<div class="main_mIcons_container">
-								<div class="main_mIcon">
+								<div class="main_mIcon messageBtn">
 									<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-comments-thin.svg">
 								</div>
 								<div class="main_mIcon">
@@ -386,6 +386,11 @@ header .main_upIcon.show
 	
 	<!-- 메시지 스크립트 -->
  	<script type="text/javascript">
+ 		$(".messageBtn").on("click", function() {
+			location.href="messagePage.do?memberNo=${loginUser.memberNo}";
+			return false;
+		});
+ 	
 		// 메시지 카운트
 		function getUserMessages() {
 			$.ajax({
