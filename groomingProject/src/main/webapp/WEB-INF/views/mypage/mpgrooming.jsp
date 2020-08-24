@@ -20,7 +20,7 @@
 <jsp:include page="./mypageinfo.jsp" />
 <div id="content">
 <h3>현재 진행중인 그루밍들 다 보이도록 합시다</h3>
- 		<%-- <c:forEach var="app" items="${appList }">
+ 		<c:forEach var="app" items="${appList }">
 	   <c:url var="groupPage" value="groupPage.do" />
 			
 		         <fmt:formatDate value="${app.groomingNd }" var="nowDate1" pattern="yyyyMMdd"/>	   	
@@ -73,7 +73,7 @@
 		<br>
 		</div>
 		
-	</c:forEach> --%>
+	</c:forEach>
 </div>
 
 <jsp:include page="../common/footer.jsp" />

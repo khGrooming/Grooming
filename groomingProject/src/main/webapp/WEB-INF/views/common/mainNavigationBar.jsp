@@ -61,6 +61,10 @@ header
 	border-radius: 50%;
 	border: 1px solid grey;
 }
+.main_navbar #memberNickName
+{
+	margin-left: 0;
+}
 .main_navbar ul,
 .main_navbar ul#mainProfileArea
 {
@@ -141,7 +145,7 @@ header
 	font-size: 18px;
 	position: absolute;
 	top: -5px;
-	left: 31px;
+	left: 18px;
 }
 .main_dropdown
 {
@@ -236,6 +240,11 @@ header .main_upIcon
 	border: none;
 	outline: none;
 	cursor: pointer;
+}
+header .main_upIcon:hover
+{
+	border-radius: 50%;
+	background-color: yellow;
 }
 header .main_upIcon .img_svg
 {
@@ -342,9 +351,10 @@ header .main_upIcon.show
 					</div>
 				</li>
 				<li class="main_navbar_item main_flex_between_center">
+					<a id="memberNickName" class="main_navbar_link" href="${myPage }">
 					<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
 						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-					<a class="main_navbar_link" href="${myPage }">${loginUser.memberNickName }</a>
+					${loginUser.memberNickName }</a>
 				</li>
 				<li class="main_navbar_item">
 					<a class="main_navbar_link" href="${logout }">로그아웃</a>

@@ -52,11 +52,10 @@ body
 }
 .right_container
 {
-	position: absolute;
+	margin-right: 5%;
+	float: right;
 	padding: 2px;
     width: 160px;
-    right: 200px;
-    top: 0;
     border-radius: 3px;
 	border: 1px solid lightgrey;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -122,7 +121,7 @@ body
 	</div>
 </c:if>
 	<!-- 멘토 그루밍 컨테이너 -->
-	<div class="main_fst_container mento_container container">
+	<div class="main_container mento_container container">
 		<div class="container_header">
 			<h2 class="mt-auto mb-auto">멘토 그루밍</h2>
 			<h6 class="font-weight-lighter">실력있는 멘토와 함께하는 스터디 그룹입니다.</h6>
