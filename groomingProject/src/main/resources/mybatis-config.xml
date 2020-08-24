@@ -11,6 +11,10 @@
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.groomingProject.message.model.vo.Message" alias="Message"/>
+		
+		<!-- 홈 -->
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeBoard" alias="HomeBoard"/>
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeGrooming" alias="HomeGrooming"/>
 
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
@@ -47,6 +51,9 @@
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
 		<mapper resource="/mappers/message-mapper.xml"/>
+		
+		<!-- 홈 멥퍼 -->
+		<mapper resource="/mappers/home-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
 		<mapper resource="/mappers/member-mapper.xml"/>
