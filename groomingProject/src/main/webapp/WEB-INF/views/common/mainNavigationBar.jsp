@@ -19,7 +19,7 @@
 <style type="text/css">
 header
 {
-    font-family: 'Jua', sans-serif
+    font-family: 'Jua', sans-serif;
 }
 .main_navbar
 {

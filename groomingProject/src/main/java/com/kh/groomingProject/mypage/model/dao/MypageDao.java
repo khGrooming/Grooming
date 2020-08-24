@@ -2,11 +2,16 @@ package com.kh.groomingProject.mypage.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
+import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -58,6 +63,53 @@ public class MypageDao {
 
 	public int insertMentor(String mNo) {
 		return sqlSessionTemplate.insert("MyPageMapper.insertMentor",mNo);
+	}
+
+	public int mpSelectListCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.mpSelectListCount",mNo);
+	}
+
+	public ArrayList<Grooming> selectopenGroomingList(MyPagePageInfo pi, String mNo) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectopenGroomingList",mNo,rowBounds);
+	}
+
+	public int selectPoint(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectPoint",mNo);
+	}
+
+	public int selectPoint2(String mNo) {		
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectPoint2",mNo);
+	}
+
+	public ArrayList<MyPageHeart> selectMyPageHeart(MyPagePageInfo pi,String mNo) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyPageHeart",mNo,rowBounds);
+	}
+
+	public int heartListCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.heartListCount",mNo);
+	}
+
+	public int heartListDelete(String ghNo) {
+		return sqlSessionTemplate.delete("MyPageMapper.heartListDelete",ghNo);
+	}
+
+	public int gApplicantListCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.gApplicantListCount",mNo);
+	}
+
+	public ArrayList<MyPageApplicant> selectgApplicant(MyPagePageInfo pi, String mNo) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectgApplicantList",mNo,rowBounds);
+	}
+
+	public int deleteApplicant(String gaNo) {
+		return sqlSessionTemplate.delete("MyPageMapper.deleteApplicant",gaNo);
 	}
 
 }

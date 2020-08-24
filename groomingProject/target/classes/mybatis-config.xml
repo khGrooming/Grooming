@@ -24,7 +24,9 @@
 
 		<!-- 마이페이지 -->
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
-		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>		
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageHeart" alias="MyPageHeart"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageApplicant" alias="MyPageApplicant"/>
 
 		<!-- 커뮤니티 -->
 		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>

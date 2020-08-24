@@ -33,7 +33,7 @@
 {
     margin: 0;
     padding: 0;
-    font-family: 'Jua', sans-serif
+    font-family: 'Jua', sans-serif;
 }
 .right_container .right_spotlight_body .right_spotlight_category,
 .right_container .right_spotlight_body .right_spotlight_content strong
