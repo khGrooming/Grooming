@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +7,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
   
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -29,20 +30,20 @@
             height: 1200px;
         }
 
-        /* divÀÇ Å©±â¿¡ ¸ÂÃã */
+        /* divï¿½ï¿½ ï¿½Ñˆë¦°ï¿½ï¿½ ï§ï¿½ç•°ï¿½ */
         img {
             max-width: 100%;
             max-height: 100%;
         }
 
-        /* ÀÎ¶óÀÎ Çü½ÄÀÇ Ãâ·Â */
+        /* ï¿½ëªƒï¿½ì‡±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ç•°ï¿½ï¿½ï¿½ */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
 
-        /* °¢ ÅÇÀÇ ¸Þ´ºÀÇ ³»¿ë */
+        /* åª›ï¿½ ï¿½ï¿½ï¿½ï¿½ ï§Žï¿½ï¿½ëŒï¿½ï¿½ ï¿½ëŒï¿½ï¿½ */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
@@ -50,19 +51,19 @@
             height: 700px;
         }
 
-        /*¶óµð¿À¹öÆ° ¼û±è*/
+        /*ï¿½ì‡°ï¿½ï¿½ï¿½ã…»ï¿½ï¿½ï¿½ ï¿½â‘£ï¿½*/
         .radio {
             display: none;
         }
 
 
-        /* ÅÇ¸Þ´º ÅÂ±× ¸¶¿ì½º ¿Ã¸±½Ã */
+        /* ï¿½ï¿½ï§Žï¿½ï¿½ï¿½ ï¿½ï¿½æ´¹ï¿½ ï§ï¿½ï¿½ê³—ï¿½ï¿½ ï¿½Ñ‰â”«ï¿½ï¿½ */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
 
-        /* ÅÂ±× ¸Þ´º css */
+        /* ï¿½ï¿½æ´¹ï¿½ ï§Žï¿½ï¿½ï¿½ css */
         .menu {
             display: inline-block;
             margin: 0 0 -3px;
@@ -76,7 +77,7 @@
 
         }
 
-        /*input Å¬¸¯½Ã, label ½ºÅ¸ÀÏ*/
+        /*input ï¿½ëŒ€â”ƒï¿½ï¿½, label ï¿½ã…½ï¿½ï¿½ï¿½ï¿½*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
@@ -102,27 +103,27 @@
 </head>
 
 <body>
-    <!-- Çì´õ½ÃÀÛ -->
+    <!-- ï¿½ã…»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
     <header>
         	<jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- ¼½¼Ç ½ÃÀÛ -->
+    <!-- ï¿½ë±€ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -->
 
-    <!-- ÄÁÅ×ÀÌ³Ê·Î ¾ç¿·¿¡ °ø¹é »ý¼º -->
+    <!-- è€Œâ‘¦ï¿½ï¿½ï¿½ëŒ€ï¿½ï¿½æ¿¡ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ æ€¨ë“¬ê°š ï¿½ï¿½ï¿½ï¿½ -->
     <div class=container style="margin-top:150px ; ">
-        <!--µðÆúÆ® ¸Þ´º-->
+        <!--ï¿½ï¿½ï¿½ëŒ„ï¿½ï¿½ ï§Žï¿½ï¿½ï¿½-->
         <input id="tab1" type="radio" name="tabs" class="radio" checked>
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>¸ÞÀÎ</label>
+        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>ï§Žï¿½ï¿½ï¿½</label>
 
         <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>Ä¶¸°´õ</label>
+        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>ï§¦ï¿½ç”±ê³•ï¿½ï¿½</label>
 
         <input id="tab3" type="radio" name="tabs" class="radio">
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>°Ô½ÃÆÇ</label>
+        <label for="tab3" class="menu"><i class="fas fa-icons"></i>å¯ƒï¿½ï¿½ï¿½ï¿½ï¿½</label>
 
 
-        <!-- ¸ÞÀÎ¿¡ µé¾î°¥ ³»¿ë¿ë -->
+        <!-- ï§Žï¿½ï¿½ëª„ï¿½ï¿½ ï¿½ã…¼ï¿½ë‹¿ï¿½ ï¿½ëŒï¿½â‘¹ï¿½ï¿½ -->
         <section id="content3">
 
 
@@ -134,27 +135,27 @@
 
                     <form method="post">
                         <tr>
-                            <th>ÀÛ¼º°Ô½ÃÆÇ </th>
+                            <th>ï¿½ï¿½ï¿½ê¹ƒï¿½ï¿½ï¿½ï¿½ï¿½ </th>
                             <td>
-                                <label><input type="radio" name="board" class="board">ÀÚÀ¯°Ô½ÃÆÇ</label>
-                                <label><input type="radio" name="board" class="board">°øÁö»çÇ×</label>
+                                <label><input type="radio" name="board" class="board">ï¿½ï¿½ï¿½ï¿½å¯ƒï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                <label><input type="radio" name="board" class="board">æ€¨ë“­ï¿½ï¿½Ñ‹ï¿½ï¿½</label>
                             </td>
                         </tr>
                         <tr>
-                            <th>Á¦¸ñ </th>
-                            <td><input type="text" placeholder="Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä. " name="subject" class="form-control" ></td>
+                            <th>ï¿½ï¿½ï§ï¿½ </th>
+                            <td><input type="text" placeholder="ï¿½ï¿½ï§â‘¹ï¿½ï¿½ ï¿½ï¿½ï¿½Î½ï¿½ï¿½ï¿½ëª„ï¿½ï¿½. " name="subject" class="form-control" ></td>
                         </tr>
                         <tr >
-                            <th>³»¿ë </th>
-                            <td><textarea cols="100" rows="10" placeholder="³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä. " id="summernote" name="editordata"
+                            <th>ï¿½ëŒï¿½ï¿½ </th>
+                            <td><textarea cols="100" rows="10" placeholder="ï¿½ëŒï¿½â‘¹ï¿½ï¿½ ï¿½ï¿½ï¿½Î½ï¿½ï¿½ï¿½ëª„ï¿½ï¿½. " id="summernote" name="editordata"
                                     class="form-control"></textarea></td>
                         </tr>
                        
                      
                         <tr style="text-align:center">
                             <td colspan="2">
-                                <input id="insert" type="button" value="µî·Ï" onclick="location.href='groupPage.do'">
-                                <input id="backlist" type="button" value="¸ñ·ÏÀ¸·Î" onclick="location.href='groupPage.do'">
+                                <input id="insert" type="button" value="ï¿½ê¹…ï¿½" onclick="location.href='groupPage.do'">
+                                <input id="backlist" type="button" value="ï§â‘¸ï¿½ï¿½ì‡°ï¿½" onclick="location.href='groupPage.do'">
                             </td>
                         </tr>
                     </form>

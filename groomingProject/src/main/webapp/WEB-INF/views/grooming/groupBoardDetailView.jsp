@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!doctype html>
 <html lang="en">
@@ -16,7 +16,8 @@
         integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 
-    <script src="http:/code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
@@ -28,7 +29,7 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
         
-            <!--summernote css/js Ãß°¡  -->
+            <!--summernote css/js ç•°ï¿½åª›ï¿½  -->
 
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -38,20 +39,20 @@
             height: 1200px;
         }
 
-        /* divÀÇ Å©±â¿¡ ¸ÂÃã */
+        /* divï¿½ï¿½ ï¿½Ñˆë¦°ï¿½ï¿½ ï§ï¿½ç•°ï¿½ */
         img {
             max-width: 100%;
             max-height: 100%;
         }
 
-        /* ÀÎ¶óÀÎ Çü½ÄÀÇ Ãâ·Â */
+        /* ï¿½ëªƒï¿½ì‡±ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ç•°ï¿½ï¿½ï¿½ */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
 
-        /* °¢ ÅÇÀÇ ¸Þ´ºÀÇ ³»¿ë */
+        /* åª›ï¿½ ï¿½ï¿½ï¿½ï¿½ ï§Žï¿½ï¿½ëŒï¿½ï¿½ ï¿½ëŒï¿½ï¿½ */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
@@ -59,19 +60,19 @@
             height: auto;
         }
 
-        /*¶óµð¿À¹öÆ° ¼û±è*/
+        /*ï¿½ì‡°ï¿½ï¿½ï¿½ã…»ï¿½ï¿½ï¿½ ï¿½â‘£ï¿½*/
         .radio {
             display: none;
         }
 
 
-        /* ÅÇ¸Þ´º ÅÂ±× ¸¶¿ì½º ¿Ã¸±½Ã */
+        /* ï¿½ï¿½ï§Žï¿½ï¿½ï¿½ ï¿½ï¿½æ´¹ï¿½ ï§ï¿½ï¿½ê³—ï¿½ï¿½ ï¿½Ñ‰â”«ï¿½ï¿½ */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
 
-        /* ÅÂ±× ¸Þ´º css */
+        /* ï¿½ï¿½æ´¹ï¿½ ï§Žï¿½ï¿½ï¿½ css */
         .menu {
             display: inline-block;
             margin: 0 0 -3px;
@@ -85,7 +86,7 @@
 
         }
 
-        /*input Å¬¸¯½Ã, label ½ºÅ¸ÀÏ*/
+        /*input ï¿½ëŒ€â”ƒï¿½ï¿½, label ï¿½ã…½ï¿½ï¿½ï¿½ï¿½*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
@@ -113,32 +114,32 @@
 </head>
 
 <body>
-    <!-- Çì´õ½ÃÀÛ -->
+    <!-- ï¿½ã…»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -->
     <header>
         <jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- ¼½¼Ç ½ÃÀÛ -->
+    <!-- ï¿½ë±€ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -->
 
-    <!-- ÄÁÅ×ÀÌ³Ê·Î ¾ç¿·¿¡ °ø¹é »ý¼º -->
+    <!-- è€Œâ‘¦ï¿½ï¿½ï¿½ëŒ€ï¿½ï¿½æ¿¡ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ æ€¨ë“¬ê°š ï¿½ï¿½ï¿½ï¿½ -->
     <div class=container style="margin-top:150px ; ">
-        <!--µðÆúÆ® ¸Þ´º-->
+        <!--ï¿½ï¿½ï¿½ëŒ„ï¿½ï¿½ ï§Žï¿½ï¿½ï¿½-->
         <input id="tab1" type="radio" name="tabs" class="radio">
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>¸ÞÀÎ</label>
+        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>ï§Žï¿½ï¿½ï¿½</label>
 
         <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>Ä¶¸°´õ</label>
+        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>ï§¦ï¿½ç”±ê³•ï¿½ï¿½</label>
 
         <input id="tab3" type="radio" name="tabs" class="radio" checked>
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>°Ô½ÃÆÇ</label>
+        <label for="tab3" class="menu"><i class="fas fa-icons"></i>å¯ƒï¿½ï¿½ï¿½ï¿½ï¿½</label>
 
 
-        <!-- ¸ÞÀÎ¿¡ µé¾î°¥ ³»¿ë¿ë -->
+        <!-- ï§Žï¿½ï¿½ëª„ï¿½ï¿½ ï¿½ã…¼ï¿½ë‹¿ï¿½ ï¿½ëŒï¿½â‘¹ï¿½ï¿½ -->
         <section id="content3">
 
             <div style="text-align: right; margin-right: 20px;">
-            <a href="#">½Å°íÇÏ±â</a>
-            <p >ÀÛ¼ºÀÏ : <label>2020-07-25</label>&nbsp;&nbsp;Á¶È¸¼ö : <label>7È¸</label></p>
+            <a href="#">ï¿½ï¿½æ€¨ï¿½ï¿½ï¿½æ¹²ï¿½</a>
+            <p >ï¿½ï¿½ï¿½ê¹†ï¿½ï¿½ : <label>2020-07-25</label>&nbsp;&nbsp;è­°ê³ ï¿½ï¿½ï¿½ï¿½ : <label>7ï¿½ï¿½</label></p>
             </div>
                     <div class="container">
 
@@ -146,55 +147,55 @@
 
                             <form method="post">
                                 <tr>
-                                    <th>ÀÛ¼º°Ô½ÃÆÇ </th>
+                                    <th>ï¿½ï¿½ï¿½ê¹ƒï¿½ï¿½ï¿½ï¿½ï¿½ </th>
                                     <td>
-                                        <label>ÀÚÀ¯°Ô½ÃÆÇ</label>
-                                        <label hidden>°øÁö»çÇ×</label>
+                                        <label>ï¿½ï¿½ï¿½ï¿½å¯ƒï¿½ï¿½ï¿½ï¿½ï¿½</label>
+                                        <label hidden>æ€¨ë“­ï¿½ï¿½Ñ‹ï¿½ï¿½</label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Á¦¸ñ </th>
-                                    <td><label>³Ê¶û³ª¶ûÀº ³Ê¶û³ª¶ûÀº ³Ê¶û³ª¶ûÀº</label></td>
+                                    <th>ï¿½ï¿½ï§ï¿½ </th>
+                                    <td><label>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</label></td>
                                 </tr>
                                 <tr>
-                                    <th>³»¿ë </th>
+                                    <th>ï¿½ëŒï¿½ï¿½ </th>
                                     <td><textarea cols="100" rows="10" class="form-control" readonly
-                                            style="height:auto;">½Ã°ê º¸¸ç ¼Ó»èÀÌ´Â ºñ¹Ðµé
-						                                    °£ÀýÇÑ ³» ¸¾¼Ó ÀÌ¾ß±â
-						                                    Áö±Ý ³» ¸ð½ÀÀ» ÇØÃÄµµ ÁÁ¾Æ
-						                                    ³ª¸¦ ÀçÃËÇÏ¸é ÇÒ¼ö·Ï ÁÁ¾Æ
-						                                    ³» ÀÌ¸§ ºÒ·¯Áà
+                                            style="height:auto;">ï¿½ï¿½æ€¨ï¿½ è¹‚ëŒ€Å‰ ï¿½ï¿½ï¿½ï¿½ï¿½ëŒ€ï¿½ï¿½ é®ï¿½è«›ï¿½ï¿½ï¿½
+						                                    åª›ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï§ï¿½ï¿½ï¿½ ï¿½ëŒï¿½ì‡¨ë¦°
+						                                    ï§žï¿½æ¹²ï¿½ ï¿½ï¿½ ï§â‘¥ï¿½ë“­ï¿½ï¿½ ï¿½ëŒï¿½ï¿½ï¿½ é†«ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ç‘œï¿½ ï¿½ÑŠï¿½ï¿½ï¿½ï§Žï¿½ ï¿½ï¿½ï¿½ï¿½æ¿¡ï¿½ é†«ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ ï¿½ëŒ€ï¿½ éºï¿½ï¿½ÑŠï¿½
 						                                    
-                                    * ¼Õ Æ´»õ·Î ºñÄ¡´Â ³» ¸¾ µéÅ³±î µÎ·Á¿ö
-						                                    °¡½¿ÀÌ ¸· ¹÷Â÷ ¼­·¯¿ö
-						                                    Á¶±Ý¸¸ ²À Âü°í ³¯ ±â´Ù·ÁÁà
-						                                    ³Ê¶û ³ª¶ûÀº Áö±Ý ¾ÈµÇÁö
-						                                    ½Ã°è¸¦ ´õ º¸Ã¤°í ½ÍÁö¸¸
-						                                    ³×°¡ ÀÖ´ø ¹Ì·¡¿¡¼­
-						                                    ³» ÀÌ¸§À» ºÒ·¯Áà
+                                    * ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½æ¿¡ï¿½ é®ï¿½ç§»ï¿½ï¿½ï¿½ ï¿½ï¿½ ï§ï¿½ ï¿½ã…½ï¿½Ñˆï¿½ ï¿½ï¿½ï¿½ã…¼ï¿½ï¿½
+						                                    åª›ï¿½ï¿½ëŒï¿½ï¿½ ï§ï¿½ è¸°ï¿½ï§¡ï¿½ ï¿½ï¿½ï¿½ÑŠï¿½ï¿½
+						                                    è­°ê³Œï¿½ï§ï¿½ ç‘—ï¿½ ï§¡ë©¸ï¿½ ï¿½ï¿½ æ¹²ê³•ï¿½ã…»ï¿½ã…¼ï¿½
+						                                    ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï§žï¿½æ¹²ï¿½ ï¿½ï¿½ï¿½ï¿½ï§žï¿½
+						                                    ï¿½ï¿½æ€¨ï¿½ç‘œï¿½ ï¿½ï¿½ è¹‚ëŒï¿½æ€¨ï¿½ ï¿½ë ï¿½ï§ï¿½
+						                                    ï¿½ã…ºï¿½ ï¿½ï¿½ï¿½ï¿½ èª˜ëªƒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ ï¿½ëŒ€ï¿½ï¿½ï¿½ éºï¿½ï¿½ÑŠï¿½
 						                                    
-						                                    ³»°¡ ¸ÕÀú ¿³º¸°í ¿Â ½Ã°£µé
-						                                    ³Ê¿Í ³»°¡ ÇÔ²²¿´¾úÁö
-						                                    ³ª¶û ³î¾ÆÁÖ´Â ±×´ë°¡ ÁÁ¾Æ
-						                                    ³»°¡ ¹°¾îº¸¸é ±×´ëµµ ÁÁ¾Æ
-						                                    ³» ÀÌ¸§ÀÌ ¹¹¾ß
+						                                    ï¿½ë‹¿ï¿½ ç™’ì‡±ï¿½ï¿½ ï¿½ìš©ë‚«æ€¨ï¿½ ï¿½ï¿½ ï¿½ï¿½åª›ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ï¿½ï¿½ ï¿½ë‹¿ï¿½ ï¿½â‘£ï¿½ï¿½ï¿½ï¿½ï¿½ï§žï¿½
+						                                    ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½äºŒì‡°ï¿½ï¿½ æ´¹ëªƒï¿½ï¿½åª›ï¿½ é†«ï¿½ï¿½ï¿½
+						                                    ï¿½ë‹¿ï¿½ è‡¾ì‡±ï¿½ëŒ€ë‚«ï§Žï¿½ æ´¹ëªƒï¿½ï¿½ï¿½ï¿½ é†«ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ ï¿½ëŒ€ï¿½ï¿½ï¿½ è¸ï¿½ï¿½ï¿½
 						                                    
 						                                    * Repeat
 						                                    
-						                                    ´« ±ô¹ÚÇÏ¸é ¾î¸¥ÀÌ µÉ °Å¿¹¿ä
-						                                    ³¯ ¾Ë¾Æº¸°ÚÁÒ ±×´í ±â¾ïÇÏ°ÚÁÒ
-						                                    ±×·¡ ±â¹¦Çß´ø ¾ÆÀÌ
-						                                    ¼Õ Æ´»õ·Î ºñÄ¡´Â ³× ¸ð½À Âü ÁÁ´Ù
+						                                    ï¿½ï¿½ æºï¿½è«›ï¿½ï¿½ï¿½ï§Žï¿½ ï¿½ëŒ€â…¨ï¿½ï¿½ ï¿½ï¿½ å«„ê³—ï¿½ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½è¹‚ë‹¿ï¿½äºŒï¿½ æ´¹ëªƒï¿½ï¿½ æ¹²ê³—ï¿½ë“¯ï¿½ï¿½å¯ƒï¿½äºŒï¿½
+						                                    æ´¹ëªƒï¿½ï¿½ æ¹²ê³•ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+						                                    ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½æ¿¡ï¿½ é®ï¿½ç§»ï¿½ï¿½ï¿½ ï¿½ï¿½ ï§â‘¥ï¿½ï¿½ ï§¡ï¿½ é†«ï¿½ï¿½ï¿½
 						                                    
-						                                    ¼Õ³¡À¸·Î µ¹¸®¸ç ½Ã°ì¹Ù´Ã¾Æ ´Þ·ÁºÁ
-						                                    Á¶±Ý¸¸ ´õ »¡¸® ³¯¾ÆºÁ
-						                                    µÎ ´«À» ²À °¨°í ¸¶¹ýÀ» °Ç´Ù
-						                                    ³Ê¶û ³ª¶ûÀº Á¶±Ý ³²¾ÒÁö
-						                                    ¸î³¯ ¸î½ÇÁø ¸ð¸£°ÚÁö¸¸
-						                                    ³×°¡ ÀÖÀ» ¹Ì·¡¿¡¼­
-						                                    È¤½Ã ³»°¡ Çì¸Ç´Ù¸é
-						                                    ³Ê¸¦ ¾Ë¾Æº¼ ¼ö ÀÖ°Ô
-						                                    ³» ÀÌ¸§À» ºÒ·¯Áà</textarea></td>
+						                                    ï¿½ï¿½ï¿½ï¿½ï¿½ì‡°ï¿½ ï¿½ï¿½ç”±Ñ‰Å‰ ï¿½ï¿½æ€¨ï¿½è«›ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ‰ï¿½ã…»ï¿½
+						                                    è­°ê³Œï¿½ï§ï¿½ ï¿½ï¿½ é®â‘¤â” ï¿½ï¿½ï¿½ï¿½éŠï¿½
+						                                    ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ç‘—ï¿½ åª›ï¿½æ€¨ï¿½ ï§ï¿½è¸°ï¿½ï¿½ï¿½ å«„ëŒ€ï¿½ï¿½
+						                                    ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ è­°ê³Œï¿½ ï¿½â‘¥ï¿½ï¿½ï§žï¿½
+						                                    ï§ï¿½ï¿½ï¿½ ï§ï¿½ï¿½ã…¼ï¿½ ï§â‘¤â…¤å¯ƒï¿½ï§žï¿½ï§ï¿½
+						                                    ï¿½ã…ºï¿½ ï¿½ï¿½ï¿½ï¿½ èª˜ëªƒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+						                                    ï¿½ë±€ï¿½ï¿½ ï¿½ë‹¿ï¿½ ï¿½ã…»ãŽ¤ï¿½ã…»ãˆƒ
+						                                    ï¿½ï¿½ç‘œï¿½ ï¿½ï¿½ï¿½ï¿½è¹‚ï¿½ ï¿½ï¿½ ï¿½ï¿½å¯ƒï¿½
+						                                    ï¿½ï¿½ ï¿½ëŒ€ï¿½ï¿½ï¿½ éºï¿½ï¿½ÑŠï¿½</textarea></td>
                                 </tr>
 
 
@@ -205,15 +206,15 @@
 
                         </table>
                         
-                       <!-- ¼öÁ¤ »èÁ¦ ¹öÆ° -->
+                       <!-- ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ è¸°ï¿½ï¿½ï¿½ -->
                         <div align="right">
-                            <button type="button">¼öÁ¤</button>
-                            <button type="button">»èÁ¦</button>
+                            <button type="button">ï¿½ï¿½ï¿½ï¿½</button>
+                            <button type="button">ï¿½ï¿½ï¿½ï¿½</button>
                         </div>
                         
                         <br><br><br>
                         
-                        <!-- ´ñ±Û µî·Ï  -->
+                        <!-- ï¿½ï¿½æ¹²ï¿½ ï¿½ê¹…ï¿½  -->
                         <div class="container">
                             <table class="table table-bordered">
                                 <form method="post">
@@ -225,13 +226,13 @@
                                         </td>
                                         <br><br>
                                         <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-                                            <button>´ñ±Û µî·Ï</button>
+                                            <button>ï¿½ï¿½æ¹²ï¿½ ï¿½ê¹…ï¿½</button>
                                         </td>
 
                                     </tr>
                                 </form>
                             </table>
-                            <!-- ´ñ±Û ¸ñ·Ï º¸±â -->
+                            <!-- ï¿½ï¿½æ¹²ï¿½ ï§â‘¸ï¿½ è¹‚ë‹¿ë¦° -->
                             <table align="center" width="500" border="1" id="tb2">
                                 <thead>
                                     <tr>

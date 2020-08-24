@@ -1,5 +1,7 @@
 package com.kh.groomingProject.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +92,12 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMemberPwd(Member m) {
 
 		return mDao.updateMemberPwd(m);
+	}
+
+	@Override
+	public ArrayList<Member> GroupMList(String groomingNo) {
+
+		return mDao.GroupMList(groomingNo);
 	}
 
 }

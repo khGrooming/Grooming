@@ -1,335 +1,740 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!doctype html>
 <html lang="ko">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!--      <script src="http:/code.jquery.com/jquery-latest.min.js"></script> -->
-     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
-        integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--      <script src="http:/code.jquery.com/jquery-latest.min.js"></script> -->
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+<!-- datapicker  -->
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Bootstrap CSS -->
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+	integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+	crossorigin="anonymous">
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
+<link
+	href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css"
+	rel="stylesheet">
+
+<title>Hello, world!</title>
+<style>
+body {
+	height: auto;
+}
+
+textarea {
+	height: 300px;
+	border-radius: 5px;
+}
+
+input {
+	border-radius: 5px;
+}
+/*í°íŠ¸ ì„¤ì • */
+@font-face {
+	font-family: 'TmoneyRoundWindExtraBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+* {
+	font-family: "TmoneyRoundWindExtraBold";
+}
+
+/* imageì‚½ì… div */
+.image {
+	width: 400px;
+	height: 300px;
+	background-color: lightgray;
+	border-radius: 10px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+
+section {
+	margin-bottom: 100px;
+}
+
+.study tbody tr td {
+	padding: 10px;
+}
+
+/* 3D Button */
+.btn-3d {
+	position: relative;
+	display: inline-block;
+	font-size: 12px;
+	padding: 20px 60px;
+	color: white;
+	margin: 10px;
+	border-radius: 6px;
+	text-align: center;
+	transition: top .01s linear;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.btn-3d.green:hover {
+	background-color: #80C49D;
+}
+
+{
+background-color
 
 
-    <title>Hello, world!</title>
-    <style>
-    	body{
-    		height:auto;
-    	}
-        textarea {
-            height: 300px;
-            border-radius: 5px;
-        }
+:
 
-        input {
-            border-radius: 5px;
-        }
-		/*ÆùÆ® ¼³Á¤ */
-        @font-face {
-            font-family: 'TmoneyRoundWindExtraBold';
-            src:
-                url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-      
-        }
+ 
 
-        * {
-            font-family: "TmoneyRoundWindExtraBold";
-        }
-        
-        /* image»ğÀÔ div */
-     	#image{
-     		width:400px;
-     		height:300px;
-     		background-color:lightgray;
-     		border-radius:10px;
-     	    display: table-cell;
-    		vertical-align: middle;
-    		text-align:center;
-     	}
-     	
-     	
-     	.icon{
-     		font-size:50px;
-     		color:white;
-     	 
-     	}
-     	section{
-     		margin-bottom:100px;
-     	}
-     	
-     	.study tbody tr td{
-     		padding:10px;
-     	}
-     	
-     	/* 3D Button */
-		.btn-3d {
-			position: relative;
-			display: inline-block;
-			font-size: 12px;
-			padding: 20px 60px;
-			color: white;
-			margin:10px;
-			border-radius: 6px;
-			text-align: center;
-			transition: top .01s linear;
-			text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-		}
-		
-		.btn-3d.green:hover  {background-color: #80C49D;}
-		  {background-color: #82D1E3;}
-		
-		.btn-3d:active {
-			top: 9px;
-		}
-		
-		
-		
-		.btn-3d.green {
-			background-color: #82c8a0;
-			box-shadow: 0 0 0 1px #82c8a0 inset,
-						0 0 0 2px rgba(255,255,255,0.15) inset,
-						0 8px 0 0 rgba(126, 194, 155, .7),
-						0 8px 0 1px rgba(0,0,0,.4),
-						0 8px 8px 1px rgba(0,0,0,0.5);
-		}
-		.btn-3d.green:active {
-			box-shadow: 0 0 0 1px #82c8a0 inset,
-						0 0 0 2px rgba(255,255,255,0.15) inset,
-						0 0 0 1px rgba(0,0,0,0.4);
-		}
+#82D1E3
 
 
+;
+}
+.btn-3d:active {
+	top: 9px;
+}
 
+.btn-3d.green {
+	background-color: #82c8a0;
+	box-shadow: 0 0 0 1px #82c8a0 inset, 0 0 0 2px rgba(255, 255, 255, 0.15)
+		inset, 0 8px 0 0 rgba(126, 194, 155, .7), 0 8px 0 1px
+		rgba(0, 0, 0, .4), 0 8px 8px 1px rgba(0, 0, 0, 0.5);
+}
 
-    </style>
+.btn-3d.green:active {
+	box-shadow: 0 0 0 1px #82c8a0 inset, 0 0 0 2px rgba(255, 255, 255, 0.15)
+		inset, 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.money {
+	display: none;
+}
+
+section .form_container .study .bootstrap-tagsinput .badge {
+	margin: 0 3px;
+	font-weight: lighter;
+}
+
+.ui-datepicker-trigger {
+	width: 25px;
+	height: 25px;
+}
+
+.filebox input[type="file"] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.filebox label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #999;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #fdfdfd;
+	cursor: pointer;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+}
+/* named upload */
+.filebox .upload-name {
+	display: inline-block;
+	padding: .5em .75em;
+	/* labelì˜ íŒ¨ë”©ê°’ê³¼ ì¼ì¹˜ */
+	font-size: inherit;
+	font-family: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #f5f5f5;
+	border: 1px solid #ebebeb;
+	border-bottom-color: #e2e2e2;
+	border-radius: .25em;
+	-webkit-appearance: none; /* ë„¤ì´í‹°ë¸Œ ì™¸í˜• ê°ì¶”ê¸° */
+	ppearance: none;
+}
+
+.filebox .upload-display { /* ì´ë¯¸ì§€ê°€ í‘œì‹œë  ì§€ì—­ */
+	margin-bottom: 5px;
+	width: 300px;
+}
+
+@media ( min-width : 768px) {
+	.filebox .upload-display {
+		display: inline-block;
+		margin-right: 5px;
+		margin-bottom: 0;
+	}
+}
+
+.filebox .upload-thumb-wrap { /* ì¶”ê°€ë  ì´ë¯¸ì§€ë¥¼ ê°ì‹¸ëŠ” ìš”ì†Œ */
+	display: inline-block;
+	width: 100%;
+	padding: 2px;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+.filebox .upload-display img { /* ì¶”ê°€ë  ì´ë¯¸ì§€ */
+	display: block;
+	max-width: 100%;
+	width: 100%;
+	height: auto;
+}
+
+.form_container {
+	width: 100%;
+	margin-top: 150px;
+	border: 3px solid lightgreen;
+	border-radius: 10px;
+}
+
+.badge::before
+{
+   content: "#";
+}
+</style>
 </head>
 
 <body>
 
-    <header>
-        <jsp:include page="../common/mainNavigationBar.jsp" />
-    </header>
+	<header>
+		<jsp:include page="../common/mainNavigationBar.jsp" />
+	</header>
 
 
-    <section>
+	<section>
 
-        <div class="container" style="margin-top: 150px; border:3px solid lightgreen; border-radius:10px;">
-        	<div  class="row">
-        	
-        
-            <div class="col-7">
-                <form>
-                    <table class="study">
-                    <tbody>
-                    
-                          
-                        <tr>
-                            <td><span>½ºÅÍµğ ±×·ì ÀÌ¸§</span><br><input type="text" size="50" placeholder="½ºÅÍµğ ±×·ì ÀÌ¸§À» ÀÔ·ÂÇØÁÖ¼¼¿ä" id="title"><br>
-                                <small><span style="color: lightblue">°£·«ÇÏ¸é¼­ ÁÖÁ¦°¡ Àß µé¾î³­ ÀÌ¸§ÀÌ ÁÁ¾Æ¿ä</span></small>
-                                <small><span style="color: #aaa;" id="counterTitle">(0/40)</span></small></td>
 
-                        </tr>
-                        <tr>
-                            <td><label>Å¸ÀÔ</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="radio" name="group">¸àÅä ±×·ì</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="radio" name="group">ÀÚÀ¯ ±×·ì</label></td>
-                        </tr>
-                        
-                        <tr>
-                            <td><span>ÇÑÁÙ ¼Ò°³</span><br><input type="text" size="50" placeholder="½ºÅÍµğ ±×·ì ÇÑÁÙ ¼Ò°³¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä" id="introduce"><br>
-                                <small><span style="color: lightblue">ÀÌ¸ñÀ» ÁıÁßÇÒ
-                                        ÇÑ¸¶µğ¸é ÃæºĞÇØ¿ä!</span></small> <small><span style="color: #aaa;"
-                                        id="counterIntroduce">(0/60)</span></small></td>
+		<jsp:useBean id="now" class="java.util.Date" />
+		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
-                        </tr>
-                        <tr>
-                            <td><span>È°µ¿
-                                    ÀÎ¿ø</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="number" max="6" min="2"
-                                    style="text-align: center;"><span>&nbsp;&nbsp;¸í</span><br>
-                                    <small><span style="color: lightblue;">2~6¸íÀ¸·Î ÀÎ¿øÀ» ±¸¼ºÇØÁÖ¼¼¿ä</span></small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span>³»¿ë</span><br> <textarea cols="50" rows="10" placeholder="±¸Ã¼ÀûÀÎ È°µ¿ ³»¿ëÀ» Àû¾îÁÖ¼¼¿ä!"
-                                    id="content" style=""></textarea>
-                                <small><span style="color: #aaa;" align="right"
-                                        id="counterContent">(0/480)</span></small></td>
+		<label id="today" style=""></label>
+		<div class="form_container container">
+			<!-- style=" "> -->
 
-                        </tr>
-                        <tr>
-                            <td><label>¿¹Ä¡±İ</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="radio" name="money" id="exist">ÀÖÀ½</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <label><input type="radio" name="money"
-                                        id="nonexist">¾øÀ½</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="number" min="2000" step="1000" style="text-align: center; width:100px;"
-                                    id="money"><span>¿ø</span></td>
-                        </tr>
+			<c:url var="groomingInsert" value="groomingInsertForm.do"/>
+				
+			<form action="${groomingInsert }" method="post"
+				enctype="multipart/form-data" id="form">
+ 				<input type="hidden" value="${loginUser.memberNo }" id="hiddienMemberNo" name="memberNo"> 
+				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
 
-                      
-                        <tr>
-                            <td><span>ÇØ½Ã ÅÂ±×</span><br><input type="text" size="50" placeholder="±×·ìÀ» ÇØ½ÃÅÂ±×·Î Ç¥ÇöÇØÁÖ¼¼¿ä" id="hash"><br> <small><span
-                                        style="color: lightblue">ÇØ½¬ÅÂ±×´Â 2°³ÀÌ»ó µî·ÏÇØÁÖ¼¼¿ä!</span> <span style="color: #aaa;"
-                                        align="right" id="hashCount">0°³</span></small></td>
+					<div class="col-7">
+						<table class="study">
+							<tbody>
+								<tr>
+									<td><span>ìŠ¤í„°ë”” ê·¸ë£¹ ì´ë¦„</span><br> <input type="text"
+										size="50" placeholder="ìŠ¤í„°ë”” ê·¸ë£¹ ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”" id="title"
+										name="groomingTitle" required><br> <small><span
+											style="color: lightblue">ê°„ëµí•˜ë©´ì„œ ì£¼ì œê°€ ì˜ ë“¤ì–´ë‚œ ì´ë¦„ì´ ì¢‹ì•„ìš”</span></small> <small><span
+											style="color: #aaa;" id="counterTitle">(0/40)</span></small></td>
 
-                        </tr>
+								</tr>
+								<tr>
+									<td><label>íƒ€ì…</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<label><input type="radio" name="groomingType" id="m"
+											value="ë©˜í† " checked>ë©˜í†  ê·¸ë£¹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
+											type="radio" name="groomingType" value="í˜¸ìŠ¤íŠ¸" id="h">í˜¸ìŠ¤íŠ¸ ê·¸ë£¹</label></td>
+								</tr>
+
+								<tr>
+									<td><span>í•œì¤„ ì†Œê°œ</span><br> <input type="text"
+										size="50" placeholder="ìŠ¤í„°ë”” ê·¸ë£¹ í•œì¤„ ì†Œê°œë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”" id="introduce"
+										name="groomingIntroduce" required><br> <small><span
+											style="color: lightblue">ì´ëª©ì„ ì§‘ì¤‘í•  í•œë§ˆë””ë©´ ì¶©ë¶„í•´ìš”!</span></small> <small><span
+											style="color: #aaa;" id="counterIntroduce">(0/60)</span></small></td>
+
+								</tr>
+								<tr>
+									<td><span>í™œë™ì¸ì›</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="number" max="6" min="2"
+										style="text-align: center;" name="groomingP" id="groomingP" required><span>&nbsp;&nbsp;ëª…</span><br>
+										<small><span style="color: lightblue;">2~6ëª…ìœ¼ë¡œ
+												ì¸ì›ì„ êµ¬ì„±í•´ì£¼ì„¸ìš”</span></small></td>
+								</tr>
+								<tr>
+									<td><span>ë‚´ìš©</span><br> <textarea cols="50" rows="10"
+											placeholder="êµ¬ì²´ì ì¸ í™œë™ ë‚´ìš©ì„ ì ì–´ì£¼ì„¸ìš”!" id="content"
+											style="resize: none;" name="groomingContent" required></textarea> <small><span
+											style="color: #aaa;" align="right" id="counterContent">(0/480)</span></small></td>
+
+								</tr>
+								<tr>
+									<td><label>ì˜ˆì¹˜ê¸ˆ</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<label id="l1"><input type="radio" name="money1" id="exist" value="y" checked>ìˆìŒ</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+										<label id="l2"><input type="radio" name="money1" id="nonexist" value="x">ì—†ìŒ</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="number" min="1000" step="1000" style="text-align: center; width: 60px;" class="money" name="money"><span class="money">&nbsp;&nbsp;ì›</span>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+
+					<!-- ì»¨í…Œì´ë„ˆ ìš°ì¸¡ -->
+					<div class="col-5" style="margin: 0;">
+						<table class="study">
+							<tbody>
+
+								<tr>
+									<td><span>í•´ì‹œ íƒœê·¸</span><br> <input type="text"
+										name="tagName" value="" placeholder="Tags,"
+										data-role="tagsinput" class="form-control" id="tagName"
+										style="display: none;" required> <small><span
+											style="color: lightblue">í•´ì‰¬íƒœê·¸ëŠ” 5ê°œ ì´í•˜ë¡œ ë“±ë¡í•´ì£¼ì„¸ìš”!</span> </small></td>
+									</td>
+								</tr>
+
+								<tr>
+									<td><span>ìŠ¤í„°ë”” ëª¨ì§‘ ê¸°ê°„</span><br> <input id="startG" type="text" name="groomingSd" required> ~ 
+									<input id="endG" type="text" name="groomingEd" required><br> <small><span>ìŠ¤í„°ë””
+												ê·¸ë£¹ì„&nbsp;&nbsp;<span style="color: red;">ëª¨ì§‘</span>í•  ê¸°ê°„ì„
+												ì„¤ì •í•´ì£¼ì„¸ìš”
+										</span></small></td>
+								</tr>
+								<tr>
+									<td><span>ìŠ¤í„°ë”” ì§„í–‰ ê¸°ê°„</span><br> <input id="start" type="text" min="${today }" name="studySd" required> ~ <input
+										id="end" type="text" name="studyEd" required><br> <small>
+											<span>ìŠ¤í„°ë”” ê·¸ë£¹ì„&nbsp;&nbsp;<span style="color: red;">ì§„í–‰</span>í• 
+												ê¸°ê°„ì„ ì„¤ì •í•´ì£¼ì„¸ìš”
+										</span>
+									</small></td>
+								</tr>
+								<tr>
+									<td><span>ëŒ€í‘œì´ë¯¸ì§€</span><br> <!-- 	<div class="image">
+                        			<div class="icon"><i class="fas fa-plus" ></i></div>
+                        		</div> --></td>
+								</tr>
+								<tr>
+									<td>
+										<div class="filebox preview-image">
+											<input class="upload-name" value="íŒŒì¼ì„ íƒ" disabled="disabled">
+											<label for="input-file">ì—…ë¡œë“œ</label> <input type="file"
+												id="input-file" class="upload-hidden" name="uploadFile" required>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<input id="insert" class="btn-3d green" type="submit" value="ë“±ë¡í•˜ê¸°">
+										<input id="cansel" class="btn-3d green" type="submit" value ="ì·¨ì†Œí•˜ê¸°" >
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</form>
+		</div>
+	
+		 <script>
+			$(function(){
+					var inputText = $('input[type="text"]').val();
+					var inputRadio = $('input[type="radio"]').val();
+					var inputNumber = $('input[type="number"]').val();
+					var inputFile = $('input[type="file"]').val();
+					var textarea = $("textarea").val();
 					
-					</tbody>
-                    </table>
-                </form>
-            </div>
+				/* $("#insert").on("click",function(e){
+					alert();
+					e.preventDefault();
+				}) */
+			})
+		
+		</script> 
+		
+		<!-- ì—”í„°í‚¤ ì…ë ¥ì‹œ submit ë°©ì§€ -->
+		<script>
+			$('input').keydown(function() {
+			  if (event.keyCode === 13) {
+			    event.preventDefault();
+			  };
+			});
+			
+			
+			  window.onbeforeunload = function(e) {
+			        return false;
+			    };
+		</script>
+		
+			<!--  íŒŒì¼ ì—…ë¡œë“œ ê´€ë ¨ script -->
+		<script>
+			$(document).ready(function() {
 
-            <!-- ÄÁÅ×ÀÌ³Ê ¿ìÃø -->
-            <div class="col-5">
-                <form>
-                    <table class="study">
-                    <tbody>
-                        <tr>
-                            <td><span>½ºÅÍµğ  ÁøÇà ±â°£</span><br> <input class="start" type="date">
-                                ~ <input class="end" type="date"><br><small> <span>½ºÅÍµğ ±×·ìÀ»&nbsp;&nbsp;<span style="color: red;">ÁøÇà</span>ÇÒ ±â°£À» ¼³Á¤ÇØÁÖ¼¼¿ä</span></small></td>
-                        </tr>
-                        <tr>
-                        	 <td><span>½ºÅÍµğ ¸ğÁı ±â°£</span><br> <input class="start" type="date">
-                                ~ <input class="end" type="date"><br> <small><span>½ºÅÍµğ ±×·ìÀ»&nbsp;&nbsp;<span style="color: red;">¸ğÁı</span>ÇÒ ±â°£À» ¼³Á¤ÇØÁÖ¼¼¿ä</span></small></td>
-                        </tr>
-                        <tr>
-                        	<td ><span>´ëÇ¥ÀÌ¹ÌÁö</span><br>
-                        		<div id="image"><div class="icon"><i class="fas fa-plus"></div></i></div>
-                        	</td>
-                        <tr>
-                        <tr>
-                        	<td><button id="insert" class="btn-3d green" onclick="location.href='groomingMain.do'">µî·ÏÇÏ±â</button>
-                      			<button class="btn-3d green" onclick="save();">Ãë¼ÒÇÏ±â</button>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-	</div>
-        </div>
-        <script>
-        	function save(){
-        		var result = confirm("ÀÓ½ÃÀúÀå ÇÏ½Ã°Ú½À´Ï±î?");
-        		if(result){
-        		    alert("ÀÓ½ÃÀúÀåµÇ¾ú½À´Ï´Ù.");
-        		    location.href="groomingMain.do";
-        		}else{
-        		    alert("Ãë¼ÒµÇ¾ú½À´Ï´Ù.");
-        		    location.href="groomingMain.do";
-        		}
-        	}
-        
-        </script>
-        <script>
+								var fileTarget = $('.filebox .upload-hidden');
 
-            // ±×·ì ÀÌ¸§ 
-            $('#title').keydown(function (e) {
-                var content = $(this).val();
-                $('#counterTitle').html("(" + content.length + "/40)");    //±ÛÀÚ¼ö ½Ç½Ã°£ Ä«¿îÆÃ
+								fileTarget
+										.on(
+												'change',
+												function() {
+													if (window.FileReader) {
+														// íŒŒì¼ëª… ì¶”ì¶œ
+														var filename = $(this)[0].files[0].name;
+													}
 
-                if (content.length > 40) {
-                    alert("ÃÖ´ë 40ÀÚ±îÁö ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
-                    $(this).val(content.substring(0, 40));
-                    $('#counterTitle').html("(40/40)");
-                }
-            });
+													else {
+														// Old IE íŒŒì¼ëª… ì¶”ì¶œ
+														var filename = $(this)
+																.val().split(
+																		'/')
+																.pop().split(
+																		'\\')
+																.pop();
+													}
+													;
 
-            // ÇÑÁÙ ¼Ò°³
-            $('#introduce').keydown(function (e) {
-                var content = $(this).val();
-                $('#counterIntroduce').html("(" + content.length + "/60)");    //±ÛÀÚ¼ö ½Ç½Ã°£ Ä«¿îÆÃ
+													$(this).siblings(
+															'.upload-name')
+															.val(filename);
+												});
 
-                if (content.length > 60) {
-                    alert("ÃÖ´ë 60ÀÚ±îÁö ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
-                    $(this).val(content.substring(0, 60));
-                    $('#counterIntroduce').html("(60/60)");
-                }
-            });
+								//preview image 
+								var imgTarget = $('.preview-image .upload-hidden');
 
-            // ³»¿ë
-            $('#content').keydown(function (e) {
-                var content = $(this).val();
-                $('#counterContent').html("(" + content.length + "/480)");    //±ÛÀÚ¼ö ½Ç½Ã°£ Ä«¿îÆÃ
+								imgTarget.on('change',function() {
+													var parent = $(this)
+															.parent();
+													parent.children(
+															'.upload-display')
+															.remove();
 
-                if (content.length > 480) {
-                    alert("ÃÖ´ë 480ÀÚ±îÁö ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
-                    $(this).val(content.substring(0, 480));
-                    $('#counterContent').html("(480/480)");
-                }
-            });
+													if (window.FileReader) {
+														//image íŒŒì¼ë§Œ
+														if (!$(this)[0].files[0].type
+																.match(/image\//))
+															return;
+
+														var reader = new FileReader();
+														reader.onload = function(e) {
+															var src = e.target.result;
+															parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+
+														}
+														reader.readAsDataURL($(this)[0].files[0]);
+													}
+
+													else {
+														$(this)[0].select();
+														$(this)[0].blur();
+														var imgSrc = document.selection.createRange().text;
+														parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+														var img = $(this).siblings('.upload-display').find('img');
+														img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""
+																+ imgSrc
+																+ "\")";
+													}
+												});
+							});
+		</script>
+		
+	
+			<!-- ê·¸ë£¹ íƒ€ì… ê´€ë ¨ script -->
+		<script>
+			$(function() {
+				if($("#m").is(":checked")){
+					$("#exist").attr('style', "display:none;");
+					$("#nonexist").attr('style', "display:none;");
+					$("#l1").attr('style', "display:none;");
+					$("#l2").attr('style', "display:none;");
+					$(".money").attr('style', "display:inline;");
+				}
+				if($("#h").is(":checked")){
+					$("#exist").attr('style', "display:inline;");
+					$("#nonexist").attr('style', "display:inline;");
+					$("#l1").attr('style', "display:inline;");
+					$("#l2").attr('style', "display:inline;");
+					$(".money").attr('style', "display:inline;");
+				
+				
+				}
+				$("input:radio[name='groomingType']").on("click", function() {
+					
+
+					if ($(this).val() == 'ë©˜í† ') {
+						$("#exist").attr('style', "display:none;");
+						$("#nonexist").attr('style', "display:none;");
+						$("#l1").attr('style', "display:none;");
+						$("#l2").attr('style', "display:none;");
+						$(".money").attr('style', "display:inline;");
+					}
+					if ($(this).val() == 'í˜¸ìŠ¤íŠ¸') {
+						$("#exist").attr('style', "display:inline;");
+						$("#nonexist").attr('style', "display:inline;");
+						$("#l1").attr('style', "display:inline;");
+						$("#l2").attr('style', "display:inline;");
+						$(".money").attr('style', "display:inline;");
+						$("#exist").attr("checked", true);
+					}
+
+				})
+
+				$("input:radio[name='money1']").on("click", function() {
+
+					if ($(this).val() == 'x') {
+						console.log("ì˜ˆì¹˜ê¸ˆ ì—†ì•°");
+						$(".money").attr('style', "display:none;");
+					}
+					if ($(this).val() == 'y') {
+						console.log("ì˜ˆì¹˜ê¸ˆ ìˆìŒ");
+						$(".money").attr('style', "display:inline;");
+					}
+
+				})
+
+			})
+		</script>
+		
+		<script>
+/* 			var memberNo = $("#hiddienMemberNo").val(); */
+		/* 	console.log(memberNo); */
+			$(function(){
+				var memberNo = "${loginUser.memberNo}";
+						$("#cansel").on("click",function(){
+							
+						var result = confirm("ì„ì‹œì €ì¥ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
+						var groomingP = $("#groomingP").val();
+						var startG = $("#startG").val();
+						var endG = $("#endG").val();
+						var start = $("#start").val();
+						var end = $("#end").val();
+						
+						if (result) {
+								
+							if(groomingP == null  ){
+								alert("ì°¸ê°€ì¸ì›, ëª¨ì§‘ê¸°ê°„, ìŠ¤í„°ë”” ê¸°ê°„ì€ ì²´í¬í•´ì£¼ì…”ì•¼ ì„ì‹œì €ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.!");
+							}else if(startG == null){
+								alert("ì°¸ê°€ì¸ì›, ëª¨ì§‘ê¸°ê°„, ìŠ¤í„°ë”” ê¸°ê°„ì€ ì²´í¬í•´ì£¼ì…”ì•¼ ì„ì‹œì €ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.!");
+							
+							}else if(endG == null){
+								alert("ì°¸ê°€ì¸ì›, ëª¨ì§‘ê¸°ê°„, ìŠ¤í„°ë”” ê¸°ê°„ì€ ì²´í¬í•´ì£¼ì…”ì•¼ ì„ì‹œì €ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.!");
+							}else if(start == null){
+								alert("ì°¸ê°€ì¸ì›, ëª¨ì§‘ê¸°ê°„, ìŠ¤í„°ë”” ê¸°ê°„ì€ ì²´í¬í•´ì£¼ì…”ì•¼ ì„ì‹œì €ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.!");
+							}else if(end == null){
+								alert("ì°¸ê°€ì¸ì›, ëª¨ì§‘ê¸°ê°„, ìŠ¤í„°ë”” ê¸°ê°„ì€ ì²´í¬í•´ì£¼ì…”ì•¼ ì„ì‹œì €ì¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.!");
+							}else {
+							
+							$("#title").attr("required",false);
+							$("#introduce").attr("required",false);
+					/* 		$("#groomingP").attr("required",false); */
+							$("#content").attr("required",false);
+							$("#tagName").attr("required",false);
+						/* 	$("#startG").attr("required",false);
+							$("#endG").attr("required",false);
+							$("#start").attr("required",false);
+							$("#end").attr("required",false); */
+							$("#input-file").attr("required",false);
+							
+							$("#form").attr("action","save.do");  
+							
+							$("#cansel").submit();
+							}
+						} else {
+							alert("ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.");
+							location.href = "groomingMain.do";
+						}
+					})
+				})			
+			
+		</script>
+		
+		
+		
+			<!-- ì‹¤ì‹œê°„ ê¸€ì ì¹´ìš´íŒ…  -->
+		<script>
+			// ê·¸ë£¹ ì´ë¦„ 
+			$('#title').keydown(function(e) {
+				var content = $(this).val();
+				$('#counterTitle').html("(" + content.length + "/40)"); //ê¸€ììˆ˜ ì‹¤ì‹œê°„ ì¹´ìš´íŒ…
+
+				if (content.length > 40) {
+					alert("ìµœëŒ€ 40ìê¹Œì§€ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+					$(this).val(content.substring(0, 40));
+					$('#counterTitle').html("(40/40)");
+				}
+			});
+
+			// í•œì¤„ ì†Œê°œ
+			$('#introduce').keydown(function(e) {
+				var content = $(this).val();
+				$('#counterIntroduce').html("(" + content.length + "/60)"); //ê¸€ììˆ˜ ì‹¤ì‹œê°„ ì¹´ìš´íŒ…
+
+				if (content.length > 60) {
+					alert("ìµœëŒ€ 60ìê¹Œì§€ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+					$(this).val(content.substring(0, 60));
+					$('#counterIntroduce').html("(60/60)");
+				}
+			});
+
+			// ë‚´ìš©
+			$('#content').keydown(function(e) {
+				var content = $(this).val();
+				$('#counterContent').html("(" + content.length + "/480)"); //ê¸€ììˆ˜ ì‹¤ì‹œê°„ ì¹´ìš´íŒ…
+
+				if (content.length > 480) {
+					alert("ìµœëŒ€ 480ìê¹Œì§€ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤.");
+					$(this).val(content.substring(0, 480));
+					$('#counterContent').html("(480/480)");
+				}
+			});
+		</script>
+
+			<!--  ë‚ ì§œ ê´€ë ¨ script -->
+		<script>
+			$(function() {
+
+				//ì˜¤ëŠ˜ ë‚ ì§œë¥¼ ì¶œë ¥
+				$("#today").text(new Date().toLocaleDateString());
+
+				//datepicker í•œêµ­ì–´ë¡œ ì‚¬ìš©í•˜ê¸° ìœ„í•œ ì–¸ì–´ì„¤ì •
+				$.datepicker.setDefaults($.datepicker.regional['ko']);
+
+				// ì‹œì‘ì¼ì€ ì¢…ë£Œì¼ì´í›„ ë‚ ì§œ ì„ íƒ ë¶ˆê°€
+				// ì¢…ë£Œì¼ì€ ì‹œì‘ì¼ ì´ì „ ë‚ ì§œ ì„ íƒ ë¶ˆê°€
+
+				//ì‹œì‘ì¼.
+				$('#start')
+						.datepicker(
+								{
+									showOn : "both", // ë‹¬ë ¥ì„ í‘œì‹œí•  íƒ€ì´ë° (both: focus or button)
+									buttonImage : "${contextPath }/resources/views/images/calendar.png", // ë²„íŠ¼ ì´ë¯¸ì§€
+									buttonImageOnly : true, // ë²„íŠ¼ ì´ë¯¸ì§€ë§Œ í‘œì‹œí• ì§€ ì—¬ë¶€
+									buttonText : "ë‚ ì§œì„ íƒ", // ë²„íŠ¼ì˜ ëŒ€ì²´ í…ìŠ¤íŠ¸
+									dateFormat : "yy-mm-dd", // ë‚ ì§œì˜ í˜•ì‹
+									changeMonth : true, // ì›”ì„ ì´ë™í•˜ê¸° ìœ„í•œ ì„ íƒìƒì í‘œì‹œì—¬ë¶€
+									minDate : 0,
+									onClose : function(selectedDate) {
+										// ì‹œì‘ì¼(fromDate) datepickerê°€ ë‹«íë•Œ
+										// ì¢…ë£Œì¼(toDate)ì˜ ì„ íƒí• ìˆ˜ìˆëŠ” ìµœì†Œ ë‚ ì§œ(minDate)ë¥¼ ì„ íƒí•œ ì‹œì‘ì¼ë¡œ ì§€ì •
+										
+									 $("#end").datepicker("option",
+												"minDate", "selectedDate:'+1d'"); 
+									 $("#endG").datepicker("option",
+												"maxDate", selectedDate); 
+									}});
+
+				//ì¢…ë£Œì¼
+				$('#end')
+						.datepicker(
+								{
+									showOn : "both",
+									buttonImage : "${contextPath }/resources/views/images/calendar.png",
+									buttonImageOnly : true,
+									buttonText : "ë‚ ì§œì„ íƒ",
+									dateFormat : "yy-mm-dd",
+									changeMonth : true,
+									minDate: 0, // ì˜¤ëŠ˜ ì´ì „ ë‚ ì§œ ì„ íƒ ë¶ˆê°€  */
+									onClose : function(selectedDate) {
+										// ì¢…ë£Œì¼(toDate) datepickerê°€ ë‹«íë•Œ
+										// ì‹œì‘ì¼(fromDate)ì˜ ì„ íƒí• ìˆ˜ìˆëŠ” ìµœëŒ€ ë‚ ì§œ(maxDate)ë¥¼ ì„ íƒí•œ ì¢…ë£Œì¼ë¡œ ì§€ì • 
+										$("#start").datepicker("option", "maxDate",  selectedDate);
+										$("#endG").datepicker("option","minDate",selectedDate);
+									}
+								});
+				/*  --------------------------- ìœ„ëŠ” ìŠ¤í„°ë”” ê¸°ê°„, ì•„ë˜ëŠ” ìŠ¤í„°ë”” ëª¨ì§‘ ê¸°ê°„-------------------------- */
+
+				//ì‹œì‘ì¼.
+				$('#startG')
+						.datepicker(
+								{
+									showOn : "both", // ë‹¬ë ¥ì„ í‘œì‹œí•  íƒ€ì´ë° (both: focus or button)
+									buttonImage : "${contextPath }/resources/views/images/calendar.png", // ë²„íŠ¼ ì´ë¯¸ì§€
+									buttonImageOnly : true, // ë²„íŠ¼ ì´ë¯¸ì§€ë§Œ í‘œì‹œí• ì§€ ì—¬ë¶€
+									buttonText : "ë‚ ì§œì„ íƒ", // ë²„íŠ¼ì˜ ëŒ€ì²´ í…ìŠ¤íŠ¸
+									dateFormat : "yy-mm-dd", // ë‚ ì§œì˜ í˜•ì‹
+									changeMonth : true, // ì›”ì„ ì´ë™í•˜ê¸° ìœ„í•œ ì„ íƒìƒì í‘œì‹œì—¬ë¶€
+									minDate : 0,
+									onClose : function(selectedDate) {
+										// ì‹œì‘ì¼(fromDate) datepickerê°€ ë‹«íë•Œ
+										// ì¢…ë£Œì¼(toDate)ì˜ ì„ íƒí• ìˆ˜ìˆëŠ” ìµœì†Œ ë‚ ì§œ(minDate)ë¥¼ ì„ íƒí•œ ì‹œì‘ì¼ë¡œ ì§€ì •
+										$("#endG").datepicker("option",
+												"minDate", "selectedDate:'+1d'");
+									}
+								});
+
+				//ì¢…ë£Œì¼
+				$('#endG')
+						.datepicker(
+								{
+									showOn : "both",
+									buttonImage : "${contextPath }/resources/views/images/calendar.png",
+									buttonImageOnly : true,
+									buttonText : "ë‚ ì§œì„ íƒ",
+									dateFormat : "yy-mm-dd",
+									changeMonth : true,
+									//minDate: 0, // ì˜¤ëŠ˜ ì´ì „ ë‚ ì§œ ì„ íƒ ë¶ˆê°€
+									onClose : function(selectedDate) {
+										// ì¢…ë£Œì¼(toDate) datepickerê°€ ë‹«íë•Œ
+										// ì‹œì‘ì¼(fromDate)ì˜ ì„ íƒí• ìˆ˜ìˆëŠ” ìµœëŒ€ ë‚ ì§œ(maxDate)ë¥¼ ì„ íƒí•œ ì¢…ë£Œì¼ë¡œ ì§€ì • 
+										$("#startG").datepicker("option",
+												"maxDate", selectedDate);
+									}
+								});
+			});
+		</script>
+	
+		<script>
+		
+		
+		
+		</script>
+	
+	
+	</section>
 
 
-
-        </script>
-        <script>
-            // ÇØ½¬ÅÂ±×°³¼ö(³ªÁß¿¡ °è»ê / ¹Ì¿Ï)
-            $('#hash').keydown(function (e) {
-                var content = $(this).val();
-                var hash = content.split("#");
-                var count = 0;
-                for (i = 0; i < hash.length; i++) {
-                    count++;
-                }
-                
-                $('#hashCount').html(count + "°³");    //±ÛÀÚ¼ö ½Ç½Ã°£ Ä«¿îÆÃ
-
-         
-                    if (window.event.keyCode == 13) {
-
-                        if (hash.length < 2) {
-                            alert("2°³ ÀÌ»ó ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-                            $('#hashCount').html(count + "°³");
-                        } else {
-                            for (i = 0; i < content.length; i++) {
-                                if (content.indexOf(i) == ' ') {
-                                    alert("#À» ºÙ¿©¼­ ¶ç¾î¾²±â¾øÀÌ ÇØ½ÃÅÂ±× ´Ü¾î¸¦ ¿Ï¼ºÇØÁÖ¼¼¿ä ");
-                                }
-                            }
-                        }
-                    }
-                
-                $('#hashCount').html(count + "°³");
-            })
-        
-   
-
-        </script>
-        
-        <script>
-        // ³ªÁß¿¡ °íÄ§
-        /* 	$(function(){
-        		$("#insert").on("click",function(){
-        		if($(".end").val() < $(".start").val()){
-        			alert("½ÃÀÛ³¯Â¥º¸´Ù ÀÌÈÄ·Î ¼³Á¤ÇØÁÖ¼¼¿ä");
-        			$(".end").html("");
-        		}})
-        	}) */
-        </script>
-    </section>
+	<footer><jsp:include page="../common/footer.jsp" />
+	</footer>
 
 
-    <footer><jsp:include page="../common/footer.jsp" /> </footer>
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-        crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+	integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+	crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -259,7 +259,9 @@ header .main_upIcon.show
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>
-	<c:url var="groomingMain" value="groomingMain.do"/>
+	<c:url var="groomingMain" value="groomingMain.do">
+		<c:param name="memberNo" value="${loginUser.memberNo}"/>
+	</c:url>
 	<c:url var="communityMain" value="communityMain.do"/>
 	<c:url var="studyCafeMain" value="searchMap.do"/>
 	<c:url var="loginPage" value="loginPage.do">
