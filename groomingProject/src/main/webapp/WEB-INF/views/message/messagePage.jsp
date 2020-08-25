@@ -301,24 +301,25 @@ section
                                     <button type="button">
 										<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-search-thin.svg">
 									</button>
-                                </span> </div>
+                                </span>
+							</div>
                         </div>
                     </div>
                     <div class="inbox_chat">
-                    
+                    <c:forEach var="m" items="mList">
                         <div class="chat_list">
                             <div class="chat_people">
                                 <div class="chat_img">
-									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${m.fromMemberPhoto }"
 									onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                                 </div>
                                 <div class="chat_ib">
-                                    <h5>nickname <span class="chat_date">2020/09/01</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
+                                    <h5>${m.fromMemberNickname } <span class="chat_date">${m.messageDate }</span></h5>
+                                    <p>${m.messageContent }</p>
                                 </div>
                             </div>
                         </div>
+                    </c:forEach>
                         
 
                         

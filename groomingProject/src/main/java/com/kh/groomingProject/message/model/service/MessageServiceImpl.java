@@ -32,4 +32,10 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.readUserMessage(messageNo);
 	}
+
+	@Override
+	public ArrayList<Message> getUserMessageList(Member m) {
+
+		return msgDao.getUserMessageList(m);
+	}
 }

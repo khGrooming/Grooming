@@ -29,10 +29,11 @@ public class MessageController {
 	@RequestMapping("messagePage.do")
 	public ModelAndView loginPage(ModelAndView mv, Member m) {
 		
+		ArrayList<Message> mList = msgService.getUserMessageList(m);
 		
 		
-		
-		mv.setViewName("message/messagePage");
+		mv.addObject("mList", mList)
+		.setViewName("message/messagePage");
 		
 		return mv;
 	}

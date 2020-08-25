@@ -45,6 +45,18 @@
 		SET MESSAGE_CONFIRM='Y'
 		WHERE MESSAGE_NO=#{messageNo}
 	</update>
+	
+	<select id="getUserMessageList" parameterType="Member" resultMap="messageResultSet">
+		SELECT MESSAGE_NO, FROM_MEMBER_NO, FROM_MEMBER_NICKNAME, FROM_MEMBER_PHOTO
+			, TO_MEMBER_NO, TO_MEMBER_NICKNAME, TO_MEMBER_PHOTO
+			, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM
+		FROM VIEW_MESSAGE
+		WHERE TO_MEMBER_NO=#{messageNo}
+		OR (FROM_MEMBER_NO=#{messageNo}
+		    AND TO_MEMBER_NO NOT IN (SELECT FROM_MEMBER_NO FROM VIEW_MESSAGE
+		                                WHERE TO_MEMBER_NO=#{messageNo}))
+		ORDER BY MESSAGE_DATE DESC;
+	</select>
 
 </mapper>
 
