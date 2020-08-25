@@ -21,11 +21,6 @@
   
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/messagePage.css" rel="stylesheet"> --%>
 <style type="text/css">
-.container
-{
-	max-width: 1170px;
-	margin: auto;
-}
 section
 {
 	position: relative;
@@ -36,7 +31,9 @@ section
 }
 .massage_container
 {
-	margin: 20px 0;
+	max-width: 1170px;
+	max-height: 750px;
+	margin: auto;
 }
 .massage_container .chat_img img,
 .massage_container .profile_img img,
@@ -146,6 +143,7 @@ section
 }
 .chat_people
 {
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -160,7 +158,7 @@ section
 }
 .inbox_chat
 {
-	height: 100%;
+	height: 630px;
 	overflow-y: auto;
 }
 .chat_list:hover
@@ -290,6 +288,7 @@ section
         <div class="messaging">
             <div class="inbox_msg">
                 <div class="inbox_people">
+
                     <div class="headind_srch">
                         <div class="recent_heading">
                             <h4>메시지</h4>
@@ -305,24 +304,24 @@ section
 							</div>
                         </div>
                     </div>
-                    <div class="inbox_chat">
-                    <c:forEach var="m" items="mList">
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${m.fromMemberPhoto }"
-									onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>${m.fromMemberNickname } <span class="chat_date">${m.messageDate }</span></h5>
-                                    <p>${m.messageContent }</p>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
-                        
 
-                        
+					<div class="inbox_chat">
+
+                   	<c:forEach var="m" items="${mList }">
+						<div class="chat_list">
+							<div class="chat_people">
+								<div class="chat_img">
+									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${m.fromMemberPhoto }"
+										onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+								</div>
+								<div class="chat_ib">
+									<h5>${m.fromMemberNickname } <span class="chat_date">${m.messageDate }</span></h5>
+									<p>${m.messageContent }</p>
+								</div>
+							</div>
+                        </div>
+					</c:forEach>
+
                     </div>
                 </div>
                 <div class="mesgs_header">
