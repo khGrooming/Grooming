@@ -13,6 +13,7 @@
 		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
 		<typeAlias type="com.kh.groomingProject.message.model.vo.Message" alias="Message"/>
 	
+
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
@@ -57,7 +58,10 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+<<<<<<< HEAD
 		<mapper resource="/mappers/declaration-mapper.xml"/>
+=======
+>>>>>>> refs/remotes/origin/eunjin
 		<mapper resource="/mappers/message-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->

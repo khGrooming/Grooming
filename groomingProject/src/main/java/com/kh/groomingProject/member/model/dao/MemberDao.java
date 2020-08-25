@@ -13,7 +13,7 @@ import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Repository("mDao")
 public class MemberDao {
-	
+
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
 
@@ -25,7 +25,6 @@ public class MemberDao {
 	public Member loginMember(Member m) {
 
 		return sqlSessionTemplate.selectOne("memberMapper.loginMember", m);
-
 	}
 
 	public int emailDuplicateChk(Member m) {
@@ -44,7 +43,7 @@ public class MemberDao {
 	}
 
 	public int updateMemberOption(Member m) {
-		
+
 		return sqlSessionTemplate.update("memberMapper.updateMemberOption", m);
 	}
 

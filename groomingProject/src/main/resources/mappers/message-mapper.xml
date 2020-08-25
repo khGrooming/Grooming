@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="messageMapper">
+
+	<resultMap type="Message" id="messageResultSet">
+		<id property="messageNo" column="MESSAGE_NO"/>
+		<result property="fromMemberNo" column="FROM_MEMBER_NO"/>
+		<result property="fromMemberNickname" column="FROM_MEMBER_NICKNAME"/>
+		<result property="fromMemberPhoto" column="FROM_MEMBER_PHOTO"/>
+		<result property="toMemberNo" column="TO_MEMBER_NO"/>
+		<result property="toMemberNickname" column="TO_MEMBER_NICKNAME"/>
+		<result property="toMemberPhoto" column="TO_MEMBER_PHOTO"/>
+		<result property="messageContent" column="MESSAGE_CONTENT"/>
+		<result property="messageDate" column="MESSAGE_DATE"/>
+		<result property="messageConfirm" column="MESSAGE_CONFIRM"/>
+	</resultMap>
+
+	<insert id="insertMessage" parameterType="Message">
+		INSERT INTO MESSAGE (MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM)
+			VALUES ('ALE' || LPAD(SEQ_MESSAGE_NO.NEXTVAL,5,0)
+					, #{fromMemberNo}, #{toMemberNo}, #{messageContent}
+					,SYSDATE, DEFAULT)
+	</insert>
+
+	<select id="getUserMessagesCount" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MESSAGE
+		WHERE TO_MEMBER_NO = #{memberNo}
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
+	<select id="getUserMessage" parameterType="Member" resultMap="messageResultSet">
+		SELECT MESSAGE_NO, FROM_MEMBER_NO, FROM_MEMBER_NICKNAME, FROM_MEMBER_PHOTO
+			, TO_MEMBER_NO, TO_MEMBER_NICKNAME, TO_MEMBER_PHOTO
+			, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM
+		FROM VIEW_MESSAGE
+		WHERE TO_MEMBER_NO = #{memberNo}
+		AND MESSAGE_CONFIRM = 'N'
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
+	<update id="readUserMessage" parameterType="string">
+		UPDATE MESSAGE
+		SET MESSAGE_CONFIRM='Y'
+		WHERE MESSAGE_NO=#{messageNo}
+	</update>
+
+</mapper>
+
+
+
+
+

@@ -63,9 +63,8 @@
 						<img src='${contextPath }/resources/views/icons/profileIcon.png'  id="profileImgIcon" style="width: 110px; height:110px; z-index: 3;"class="profile_img">
 
 						<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
-							class="profile_img" id="profileImg"
+							class="profile_img" id="profileImg" style="width: 100px;">
 
-			style="width: 100px;">
 
 						<form id="testForm" action="test1.do" method="post"
 							enctype="multipart/form-data">
@@ -189,8 +188,13 @@
 												alert(content);
 												var save = confirm("상태메시지를 저장하시겠습니까?");
 												if (save) {
+<<<<<<< HEAD
 																					$.ajax({
 Memo.do",
+=======
+													$.ajax({
+																url : "upMemo.do",
+>>>>>>> refs/remotes/origin/eunjin
 																type : "post",
 																data : {
 																	memberMemo : $(
@@ -799,12 +803,8 @@ Memo.do",
 
 </div>
 
-<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정
--------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
 
-
-<jsp:include page="../common/footer.js<jsp:include page="../common/footer.jsp" />	
->	
+<jsp:include page="../common/footer.jsp" />	
 
 </body>
 </html>
