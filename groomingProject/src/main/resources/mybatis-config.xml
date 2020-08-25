@@ -58,10 +58,9 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
-<<<<<<< HEAD
+
 		<mapper resource="/mappers/declaration-mapper.xml"/>
-=======
->>>>>>> refs/remotes/origin/eunjin
+
 		<mapper resource="/mappers/message-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
