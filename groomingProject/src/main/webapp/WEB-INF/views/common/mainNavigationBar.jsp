@@ -191,6 +191,12 @@ header
 	display: block;
 	padding: 8px;
 }
+.main_messages_body_container,
+.main_alerts_body_container
+{
+	overflow: auto;
+    max-height: 300px;
+}
 .main_messages_body > div
 {
 	padding: 0 0 3px 0;
@@ -326,7 +332,7 @@ header .main_upIcon.show
 							</div>
 						</div>
 						<div class="main_messages_body_container">
-							<div class="main_messages_body">
+							<div class="mbody_container">
 								<div class="spinner-border text-success" role="status">
 									<span class="sr-only">Loading...</span>
 								</div>
@@ -345,9 +351,11 @@ header .main_upIcon.show
 								<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
 							</div>
 						</div>
-						<div class="main_alerts_body">
-							<div class="spinner-border text-success" role="status">
-								<span class="sr-only">Loading...</span>
+						<div class="main_alerts_body_container">
+							<div class="main_alerts_body">
+								<div class="spinner-border text-success" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -401,7 +409,7 @@ header .main_upIcon.show
 					
 					var $messagesIcon = $(".main_messages_icon");
 					
-					if(data > 0) {
+					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
 						var $messagesCountDiv = $("<div>").addClass("main_messages_txt").text(data);
 
@@ -453,12 +461,12 @@ header .main_upIcon.show
 		
 		// 메시지 리스트 생성
 		function refreshMessageBody(data) {
-			$("div").remove(".main_messages_body");
+			$("div").remove(".mbody_container");
 			// 메시지 내용 추가
 			if(data.length > 0) {
 				console.log("메시지 추가");
 				for(var i in data){
-					var $messages_dropdown = $(".main_messages_dropdown");
+					var $main_messages_body_container = $(".main_messages_body_container");
 					var $mbody_container = $('<div>').addClass("mbody_container");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
@@ -474,11 +482,11 @@ header .main_upIcon.show
 					$messages_body.append($messages_bodyTime);
 					$mbody_container.append($messages_body);
 					
-					$messages_dropdown.append($mbody_container);
+					$main_messages_body_container.append($mbody_container);
 				}
 			} else {
 				console.log("메시지 없음");
-				var $messages_dropdown = $(".main_messages_dropdown");
+				var $main_messages_body_container = $(".main_messages_body_container");
 				var $mbody_container = $('<div>').addClass("mbody_container");
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
@@ -488,7 +496,7 @@ header .main_upIcon.show
 				$messages_body.append($messages_bodyContent);
 				$mbody_container.append($messages_body);
 
-				$messages_dropdown.append($mbody_container);
+				$main_messages_body_container.append($mbody_container);
 			}
 			// 클릭 읽음 기능 추가
 			$(".main_messages_body").readMessage();
@@ -533,7 +541,7 @@ header .main_upIcon.show
 
 					var $alertIcon = $(".main_alerts_icon");
 
-					if(data > 0) {
+					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
 						var $alertDiv = $("<div>").addClass("main_alerts_txt").text(data);
 
@@ -585,12 +593,12 @@ header .main_upIcon.show
 
 		// 알림 리스트 생성
 		function refreshAlertBody(data) {
-			$("div").remove(".main_alerts_body");
+			$("div").remove(".abody_container");
 			// 알림 내용 추가
 			if(data.length > 0) {
 				console.log("알림 추가");
 				for(var i in data){
-					var $alerts_dropdown = $(".main_alerts_dropdown");
+					var $main_alerts_body_container = $(".main_alerts_body_container");
 					var $abody_container = $('<div>').addClass("abody_container");
 					var $alerts_body = $('<div>').addClass("main_alerts_body");
 					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
@@ -602,11 +610,11 @@ header .main_upIcon.show
 					$alerts_body.append($alerts_bodyTime);
 					$abody_container.append($alerts_body);
 					
-					$alerts_dropdown.append($abody_container);
+					$main_alerts_body_container.append($abody_container);
 				}
 			} else {
 				console.log("알림 없음");
-				var $alerts_dropdown = $(".main_alerts_dropdown");
+				var $main_alerts_body_container = $(".main_alerts_body_container");
 				var $abody_container = $('<div>').addClass("abody_container");
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
@@ -616,7 +624,7 @@ header .main_upIcon.show
 				$alerts_body.append($alerts_bodyContent);
 				$abody_container.append($alerts_body);
 				
-				$alerts_dropdown.append($abody_container);
+				$main_alerts_body_container.append($abody_container);
 			}
 			// 클릭 읽음 기능 추가
 			$(".main_alerts_body").readAlert();

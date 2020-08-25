@@ -27,7 +27,10 @@ public class MessageController {
 	
 	// 메시지 페이지 이동
 	@RequestMapping("messagePage.do")
-	public ModelAndView loginPage(ModelAndView mv) {
+	public ModelAndView loginPage(ModelAndView mv, Member m) {
+		
+		
+		
 		
 		mv.setViewName("message/messagePage");
 		
