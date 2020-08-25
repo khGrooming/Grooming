@@ -35,18 +35,15 @@
     padding: 0;
     font-family: 'Jua', sans-serif;
 }
+/* section
+{
+	padding-top: 150px;
+	min-height: calc(100vh - 56px);
+} */
 .right_container .right_spotlight_body .right_spotlight_category,
 .right_container .right_spotlight_body .right_spotlight_content strong
 {
 	font-family: 'Nanum Gothic', sans-serif;
-}
-.mento_container
-{
-	margin-top: 150px;
-}
-.main_lst_container
-{
-	margin-bottom: 100px;
 }
 .right_container
 {
@@ -98,6 +95,7 @@
 </head>
 <body>
 	<jsp:include page="common/mainNavigationBar.jsp" />
+<section>
 
 <c:if test="${!empty hBoardList }">
 	<div class="right_container">
@@ -184,7 +182,7 @@
 
 	<div class="main_lst_container container"></div>
 
+</section>
 	<jsp:include page="common/footer.jsp" />
-
 </body>
 </html>

@@ -21,26 +21,37 @@
   
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/messagePage.css" rel="stylesheet"> --%>
 <style type="text/css">
-section
-{
-	margin-top: 150px;
-}
 .container
 {
 	max-width: 1170px;
 	margin: auto;
 }
-img
+section
 {
-	max-width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
+.massage_container
+{
+	margin: 20px 0;
+}
+.massage_container .chat_img img,
+.massage_container .profile_img img,
+.massage_container .incoming_msg_img img
+{
+	width: 100%;
+	border: thin solid lightgrey;
+	border-radius: 50%;
 }
 .inbox_people
 {
-	background: #f8f8f8 none repeat scroll 0 0;
 	float: left;
 	overflow: hidden;
-	width: 40%;
-	border-right: 1px solid #c4c4c4;
+	width: 25%;
+	height: 100%;
 }
 .inbox_msg
 {
@@ -55,20 +66,20 @@ img
 .recent_heading
 {
 	float: left;
-	width: 25%;
+	width: 100%;
 }
 .srch_bar
 {
 	display: inline-block;
 	text-align: right;
-	width: 60%;
+	width: 100%;
 	padding: 5px;
 }
 .headind_srch
 {
-	padding: 10px 10px 10px 20px;
+	padding: 10px;
 	overflow: hidden;
-	border-bottom: 1px solid #c4c4c4;
+	border-bottom: thin solid lightgrey;
 }
 .recent_heading h4
 {
@@ -79,10 +90,12 @@ img
 }
 .srch_bar input
 {
+	outline: none;
+	margin: 0 5px;
 	border: 1px solid #cdcdcd;
 	border-width: 0 0 1px 0;
 	width: 80%;
-	padding: 2px 0 4px 6px;
+	padding: 5px;
 	background: none;
 }
 .srch_bar .input-group-addon button
@@ -99,9 +112,12 @@ img
 }
 .chat_ib h5
 {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	font-size: 15px;
 	color: #464646;
-	margin: 0 0 8px 0;
+	margin: 0 0 2px 0;
 }
 .chat_ib h5 span
 {
@@ -120,16 +136,19 @@ img
 .chat_img
 {
 	float: left;
-	width: 11%;
+	width: 20%;
 }
 .chat_ib
 {
 	float: left;
-	padding: 0 0 0 15px;
-	width: 88%;
+	padding: 0 0 0 5px;
+	width: 80%;
 }
 .chat_people
 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	overflow: hidden;
 	clear: both;
 }
@@ -137,21 +156,22 @@ img
 {
 	border-bottom: 1px solid #c4c4c4;
 	margin: 0;
-	padding: 18px 16px 10px;
+	padding: 10px;
 }
 .inbox_chat
 {
-	height: 590px;
+	height: 100%;
 	overflow-y: auto;
 }
-.active_chat
+.chat_list:hover
 {
 	background: #ebebeb;
+	cursor: pointer;
 }
 .incoming_msg_img
 {
 	display: inline-block;
-	width: 6%;
+	width: 30px;
 }
 .received_msg
 {
@@ -185,8 +205,10 @@ img
 {
 	float: left;
 	display: flex;
-	padding: 15px;
-	width: 60%;
+	padding: 10px 15px;
+	width: 75%;
+	border-bottom: thin solid lightgrey;
+	border-left: thin solid lightgrey;
 }
 .mesgs_header .profile_img
 {
@@ -203,8 +225,9 @@ img
 .mesgs
 {
 	float: left;
-	padding: 0 15px 5px 15px;
-	width: 85%;
+	padding: 15px;
+	width: 75%;
+	border-left: thin solid lightgrey;
 }
 .sent_msg p {
     background: #05728f;
@@ -217,7 +240,7 @@ img
 }
 .outgoing_msg {
     overflow: hidden;
-    margin: 26px 0 26px;
+    margin: 26px 8px;
 }
 .sent_msg {
     float: right;
@@ -251,13 +274,9 @@ img
 	top: 11px;
 	width: 33px;
 }
-.messaging
-{
-	padding: 0 0 50px 0;
-}
 .msg_history
 {
-	height: 516px;
+	height: 600px;
 	overflow-y: auto;
 }
 </style>
@@ -267,7 +286,7 @@ img
 
 <section>
 
-	<div class="container">
+	<div class="massage_container container">
         <div class="messaging">
             <div class="inbox_msg">
                 <div class="inbox_people">
@@ -279,132 +298,46 @@ img
                             <div class="stylish-input-group">
                                 <input type="text" class="search-bar" placeholder="Search">
                                 <span class="input-group-addon">
-                                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                    <button type="button">
+										<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-search-thin.svg">
+									</button>
                                 </span> </div>
                         </div>
                     </div>
                     <div class="inbox_chat">
-                        <div class="chat_list active_chat">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
+                    
                         <div class="chat_list">
                             <div class="chat_people">
                                 <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+									onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                                 </div>
                                 <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                    <h5>nickname <span class="chat_date">2020/09/01</span></h5>
                                     <p>Test, which is a new approach to have all solutions
                                         astrology under one roof.</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_img">
-                                    <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                                </div>
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div> -->
+                        
+
+                        
                     </div>
                 </div>
                 <div class="mesgs_header">
                     <div class="profile_img">
-                        <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                     </div>
                     <p>Tester</p>
                 </div>
                 <div class="mesgs">
                     <div class="msg_history">
+                    
                         <div class="incoming_msg">
                             <div class="incoming_msg_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
+								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+								onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                             </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
@@ -414,6 +347,7 @@ img
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="outgoing_msg">
                             <div class="sent_msg">
                                 <p>Test which is a new approach to have all
@@ -421,74 +355,8 @@ img
                                 <span class="time_date"> 11:01 AM | June 9</span>
                             </div>
                         </div>
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                            </div>
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>Test, which is a new approach to have</p>
-                                    <span class="time_date"> 11:01 AM | Yesterday</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                                <p>Apollo University, Delhi, India Test</p>
-                                <span class="time_date"> 11:01 AM | Today</span>
-                            </div>
-                        </div>
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                            </div>
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>We work directly with our designers and suppliers,
-                                        and sell direct to you, which means quality, exclusive
-                                        products, at a price anyone can afford.</p>
-                                    <span class="time_date"> 11:01 AM | Today</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                                <p>Apollo University, Delhi, India Test</p>
-                                <span class="time_date"> 11:01 AM | Today</span>
-                            </div>
-                        </div>
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                            </div>
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>We work directly with our designers and suppliers,
-                                        and sell direct to you, which means quality, exclusive
-                                        products, at a price anyone can afford.</p>
-                                    <span class="time_date"> 11:01 AM | Today</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                                <p>Apollo University, Delhi, India Test</p>
-                                <span class="time_date"> 11:01 AM | Today</span>
-                            </div>
-                        </div>
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img">
-                                <img src="https://ptetutorials.com/images/user-profile.png" alt="프로필사진">
-                            </div>
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>We work directly with our designers and suppliers,
-                                        and sell direct to you, which means quality, exclusive
-                                        products, at a price anyone can afford.</p>
-                                    <span class="time_date"> 11:01 AM | Today</span>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        
                     </div>
                     <div class="type_msg">
                         <div class="input_msg_write">
