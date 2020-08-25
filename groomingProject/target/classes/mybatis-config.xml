@@ -11,6 +11,11 @@
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.groomingProject.message.model.vo.Message" alias="Message"/>
+		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
+		
+		<!-- 홈 -->
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeBoard" alias="HomeBoard"/>
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeGrooming" alias="HomeGrooming"/>
 
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
@@ -29,8 +34,15 @@
 
 		<!-- 그루밍 -->	
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingAppList" alias="Gapp"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingApplicant" alias="GroomingAp"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingTag" alias="Gtag"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSpec" alias="Gspec"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingHeart" alias="Gheart"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingMember" alias="Gmember"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupMember" alias="GroupM"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupBoard" alias="GroupB"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GReply" alias="GReply"/>
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
@@ -49,6 +61,9 @@
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
 		<mapper resource="/mappers/message-mapper.xml"/>
+		
+		<!-- 홈 멥퍼 -->
+		<mapper resource="/mappers/home-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
 		<mapper resource="/mappers/member-mapper.xml"/>

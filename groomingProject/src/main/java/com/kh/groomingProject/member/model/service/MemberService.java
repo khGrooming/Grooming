@@ -1,5 +1,7 @@
 package com.kh.groomingProject.member.model.service;
 
+import java.util.ArrayList;
+
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
 import com.kh.groomingProject.member.model.vo.MemberTag;
@@ -31,5 +33,7 @@ public interface MemberService {
 	int certiChk(MemberCertiCode mcc);
 
 	int updateMemberPwd(Member m);
+
+	ArrayList<Member> GroupMList(String groomingNo);
 
 }

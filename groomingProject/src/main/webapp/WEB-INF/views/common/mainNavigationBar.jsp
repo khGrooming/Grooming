@@ -17,16 +17,9 @@
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
 
 <style type="text/css">
-*
+header
 {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Jua', sans-serif
-}
-body
-{
-    transition: 0.6s;
+    font-family: 'Jua', sans-serif;
 }
 .main_navbar
 {

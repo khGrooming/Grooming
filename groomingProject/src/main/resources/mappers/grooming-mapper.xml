@@ -21,21 +21,11 @@
 		<result property="status" column="GROOMING_STATUS"/>
 		<result property="count" column="GROOMING_COUNT"/>
 		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
-		<result property="tagName" column="TAG_NAME"/>
-		<result property="specName" column="SPEC_NAME"/>
 		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
 		
 	</resultMap>
 	
- 	<resultMap type="Gtag" id="gTagResultSet">
-		<id property="tagNo" column="TAG_NO"/>
-		<result property="tagName" column="TAG_NAME"/>
-		<result property="tagCount" column="TAG_COUNT"/>
-		<result property="tagDate" column="TAG_DATE"/>
-		<result property="groomingNo" column="GROOMING_NO"/>
-		
-		
-	</resultMap>
+ 
 	
  	<resultMap type="Gspec" id="gSpecResultSet">
 		<id property="specNo" column="SPEC_NO"/>
@@ -47,11 +37,80 @@
 		
 		
 	</resultMap>
+	 
+	 <resultMap type="Gapp" id="gAppResultSet">
+		<id property="groomingAN" column="GROOMING_APPLY_NO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="groomingAC" column="GROOMING_APPLY_CONTENT"/>
+		
+		
+	</resultMap>
+	
+	 <resultMap type="GroomingAp" id="GACResultSet">
+		<id property="groomingAn" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="groomingAC" column="GROOMING_APPLY_CONTENT"/>
+		<result property="groomingAS" column="GROOMING_APPLY_STATUS"/>
+		
+		
+	</resultMap>
  
+	 <resultMap type="Gheart" id="GheartResultSet">
+		<id property="groomingHNo" column="GROOMING_HEART_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
+	 <resultMap type="Gmember" id="GmemberResultSet">
+		<id property="gmemberNo" column="G_MEMBER_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
+	 <resultMap type="GroupM" id="GroupMResultSet">
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="email" column="MEMBER_EMAIL"/>
+		<result property="phone" column="MEMBER_PHONE"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="gMemberNo" column="MEMBER_NO"/>
+	</resultMap>
+	
+	 <resultMap type="GroupB" id="GroupBoardResultSet">
+	 	<id property="gBoardNo" column="G_BOARD_NO"/>
+		<result property="gMemberNo" column="GROOMING_MEMBER_NO"/>
+		<result property="gBoardCategory" column="G_BOARD_CATEGORY"/>
+		<result property="gBoardTitle" column="G_BOARD_TITLE"/>
+		<result property="gBoardContent" column="G_BOARD_CONTENT"/>
+		<result property="count" column="G_BOARD_VIEW_COUNT"/>
+		<result property="createDate" column="G_BOARD_CREATE_DATE"/>
+		<result property="modifyDate" column="G_BOARD_MODIFY_DATE"/>
+		<result property="gBoardImg" column="G_BOARD_IMG"/>
+	</resultMap>
+	
+	 <resultMap type="GReply" id="GroupReplyResultSet">
+	 	<id property="gReplyNo" column="G_REPLY_NO"/>
+		<result property="gBoardNo" column="G_BOARD_NO"/>
+		<result property="gMemberNo" column="GROOMING_MEMBER_NO"/>
+		<result property="gReplyContent" column="G_REPLY_CONTENT"/>
+		<result property="gReplyCreateDate" column="G_REPLY_CAEATE_DATE"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+	</resultMap>
+	
+	
+	
+	
+	
+	
+	
  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
+ 			OR GROOMING_STATUS = 'B'
  		
  	</select>
  	
@@ -106,7 +165,7 @@
 		SELECT *
 		FROM GROOMING G
 		WHERE GROOMING_NO=#{groomingNo}
-		AND GROOMING_STATUS ='Y'
+		
 		
 	</select>
  
@@ -118,15 +177,7 @@
  	
  	</select>
  
- 	<select id="selectTag" parameterType="string" resultMap="gTagResultSet">
- 		 SELECT TAG_NAME
-        FROM TAG T
-        JOIN GTAG G ON G.TAG_NO = T.TAG_NO
-        JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
-        JOIN MEMBER M ON M.MEMBER_NO = GR.MEMBER_NO
-        WHERE GR.GROOMING_NO= #{groomingNo}
- 	
- 	</select>
+ 
  	
  	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
  		SELECT SPEC_NAME
@@ -135,6 +186,328 @@
         WHERE GROOMING_NO = #{groomingNo}
  	
  	</select>
+ 	
+ 	<insert id="insertGrooming" parameterType="Grooming" >
+ 		INSERT INTO GROOMING VALUES(
+ 			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			, #{memberNo}
+ 			, #{groomingType}
+ 			, #{groomingTitle}
+ 			, #{groomingContent}
+ 			, #{groomingIntroduce}
+ 			, #{groomingP}
+ 			, #{studySd}
+ 			, #{studyEd}
+ 			, #{groomingSd}
+ 			, #{groomingEd} 
+ 		
+ 			<if test="money != ''">
+ 			,#{money}
+ 			</if>
+ 			<if test="money == '' ">
+ 			 ,DEFAULT
+ 			</if>
+ 		
+ 			, #{groomingImg}
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, 'Y'
+ 			, DEFAULT
+ 			, SYSDATE
+ 			, DEFAULT
+ 			)
+	
+	
+ 	</insert>
+ 	
+  	<select id="selectAppContent" parameterType="string" resultMap="gAppResultSet">
+ 	SELECT GROOMING_APPLY_NO,M.MEMBER_NICKNAME,M.MEMBER_PHOTO,GROOMING_APPLY_CONTENT
+	FROM GROOMING_APPLICANT GA
+	JOIN MEMBER M ON GA.MEMBER_NO = M.MEMBER_NO
+	WHERE GROOMING_APPLY_STATUS = 'Y' 
+	AND GROOMING_NO= #{groomingNo}
+	
+ 	
+ 	</select> 
+ 	
+ 	<update id="selectApplyOne" parameterType="string">
+ 	UPDATE GROOMING_APPLICANT
+	SET GROOMING_APPLY_STATUS = 'C'
+	WHERE GROOMING_APPLY_NO =#{applyNo}
+ 	</update>
+
+ 	<update id="rejectApp" parameterType="string">
+ 	UPDATE GROOMING_APPLICANT
+	SET GROOMING_APPLY_STATUS = 'D'
+	WHERE GROOMING_APPLY_NO =#{applyNo}
+ 	</update>
+ 	
+ 	<update id="addGroomingP" parameterType="string">
+ 	UPDATE GROOMING
+	SET GROOMING_CURRENT_PEOPLE = GROOMING_CURRENT_PEOPLE + 1
+	WHERE GROOMING_NO =#{groomingNo}
+ 	</update>
+ 	
+ 	<update id="updateGrooming" parameterType="Grooming">
+ 		UPDATE GROOMING
+ 		SET GROOMING_TYPE = #{groomingType},
+ 		GROOMING_TITLE = #{groomingTitle},
+ 		GROOMING_CONTENT = #{groomingContent},
+ 		GROOMING_INTRODUCE = #{groomingIntroduce},
+ 		GROOMING_PARTICIPANTS = #{groomingP},
+ 		STUDY_START_DATE = #{studySd},
+ 		STUDY_END_DATE = #{studyEd},
+ 		GROOMING_START_DATE = #{groomingSd},
+ 		GROOMING_END_DATE = #{groomingEd},
+ 		DEPOSIT_MONEY = #{money},
+ 		GROOMING_IMG = #{groomingImg},
+ 		GROOMING_MODIFY_DATE = SYSDATE 		
+ 		WHERE GROOMING_NO =#{groomingNo}
+ 	
+ 	</update>
+ 	
+ 	<delete id="groomingDelete" parameterType="string">
+ 		DELETE FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	</delete>
+ 	
+ 	<update id="statusUpdate" >
+ 	<![CDATA[ 
+ 		UPDATE GROOMING
+ 		SET GROOMING_STATUS = 'B'
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	]]>
+ 	</update>
+ 	
+ 	<insert id="applyContent" parameterType="GroomingAp">
+ 		INSERT INTO GROOMING_APPLICANT VALUES(
+ 		'GA' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{groomingNo}
+ 		,#{memberNo}
+ 		,#{groomingAC}
+ 		,DEFAULT
+ 		)
+ 		
+ 	</insert>
+ 	
+ 	<select id="selectAppMemberNo" parameterType="map" resultMap="GACResultSet">
+ 		SELECT *
+ 		FROM GROOMING_APPLICANT
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 		AND MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</select>
+ 	
+ 	<select id="selectHeartMember" parameterType="map" resultMap="GheartResultSet">
+ 		SELECT *
+ 		FROM GROOMING_HEART
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 		AND MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</select>
+ 	
+ 	<insert id="addHeart" parameterType="map">
+ 		INSERT INTO GROOMING_HEART VALUES(
+ 		'GH' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{groomingNo}
+ 		,#{memberNo}
+ 		)
+ 	
+ 	</insert>
+ 	
+ 	
+ 	<delete id="cancelHeart" parameterType="map">
+		DELETE
+		FROM GROOMING_HEART
+		WHERE GROOMING_NO = #{groomingNo}
+		AND MEMBER_NO = #{memberNo}
+
+ 	</delete>
+ 	
+ 	<select id="selectGimg" parameterType="string" resultType="string">
+ 		SELECT GROOMING_IMG
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	
+ 	
+ 	</select>
+ 	<select id="findAppMemberNo" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NO
+ 		FROM GROOMING_APPLICANT
+ 		WHERE GROOMING_APPLY_NO = #{applyNo}
+ 	
+ 	</select>
+ 	<insert id="addGroomingMember" parameterType="map">
+ 		INSERT INTO GROMMING_MEMBER VALUES(
+ 		'GM' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{memberNo}
+ 		,#{groomingNo}
+ 	)
+ 	</insert>
+ 	
+ 	<select id="getGroomingNo" parameterType="string" resultType="string">
+ 		SELECT GROOMING_NO
+		FROM GROOMING G
+		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+		WHERE G.MEMBER_NO=#{memberNo}
+ 	
+ 	</select>
+ 	<select id="findTagNo" parameterType="string" resultType="string">
+		 
+		 	
+		 	SELECT TAG_NO
+			FROM TAG
+			WHERE TAG_NAME = #{tagTemp}
+ 	
+ 	</select>
+ 	
+ 	<insert id="insertGtag" parameterType="map">
+ 		INSERT INTO GTAG VALUES(
+ 			#{GtagNo}
+ 			, #{groomingNo}
+ 		)
+ 	
+ 	
+ 	
+ 	</insert>
+ 	
+ 	<select id="select" parameterType="string" resultMap="groomingResultSet">
+ 		SELECT *
+ 		FROM GROOMING G
+ 		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+ 		WHERE M.MEMBER_NO = #{memberNo}
+ 		
+ 	</select>
+ 	
+ 	
+ 	<insert id="insertSave" parameterType="Grooming" >
+ 		INSERT INTO GROOMING VALUES(
+ 			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			, #{memberNo}
+ 			, #{groomingType}
+ 			<if test="groomingTitle != ''">
+ 			, #{groomingTitle}
+ 			</if>
+ 			<if test="groomingTitle == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingContent != ''">
+ 			, #{groomingContent}
+ 			</if>
+ 			<if test="groomingContent == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingIntroduce != ''">
+ 			, #{groomingIntroduce}
+ 			</if>
+ 			<if test="groomingIntroduce == ''">
+ 			, '임시저장'
+ 			</if>
+ 			
+ 			<if test="groomingP != ''">
+ 			, #{groomingP}
+ 			</if>
+ 			<if test="groomingP == ''">
+ 			, '2'
+ 			</if>
+ 			
+ 			<if test="studySd != null">
+ 			, #{studySd}
+ 			</if>
+ 			<if test="studySd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="studyEd != null">
+ 			, #{studyEd}
+ 			</if>
+ 			<if test="studyEd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="groomingSd != null">
+ 			, #{groomingSd}
+ 			</if>
+ 			<if test="groomingSd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="groomingEd != null">
+ 			, #{groomingEd}
+ 			</if>
+ 			<if test="groomingEd == null">
+ 			, SYSDATE
+ 			</if>
+ 			
+ 			<if test="money != ''">
+ 			,#{money}
+ 			</if>
+ 			<if test="money == '' ">
+ 			 ,DEFAULT
+ 			</if>
+ 		
+ 			<if test="groomingImg != null">
+ 			,#{groomingImg}
+ 			</if>
+ 			<if test="groomingImg == null ">
+ 			 , 'test.png'
+ 			</if>
+ 			
+ 			, DEFAULT
+ 			, SYSDATE
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, DEFAULT
+ 			, DEFAULT
+ 			)
+	
+	
+ 	</insert>
+ 	
+ 	<insert id="GroupHostIn" parameterType="map">
+ 		INSERT INTO GROMMING_MEMBER VALUES(
+ 			'GM' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			,#{memberNo}
+ 			,#{groomingNo}
+ 	)
+ 	</insert>
+ 	
+ 	<delete id="deleteGtag" parameterType="string">
+ 	
+ 		DELETE FROM GTAG 
+		WHERE GROOMING_NO = #{groomingNo}
+ 	
+ 	</delete>
+ 	
+ 	<delete id="deleteGmember" parameterType="string">
+ 	
+ 		DELETE FROM GROMMING_MEMBER
+ 		WHERE MEMBER_NO = #{memberNo}
+ 	
+ 	
+ 	</delete>
+ 	
+ 	<select id="selectMemberList" parameterType="string" resultMap="GroupMResultSet">
+ 	   SELECT MEMBER_PHOTO,MEMBER_NICKNAME,MEMBER_EMAIL,MEMBER_PHONE,M.MEMBER_NO,G.MEMBER_NO
+       FROM GROMMING_MEMBER GM
+       JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       WHERE GM.GROOMING_NO = #{groomingNo}
+	   ORDER BY G_MEMBER_NO 
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+ 	
  	
  	
 </mapper>
