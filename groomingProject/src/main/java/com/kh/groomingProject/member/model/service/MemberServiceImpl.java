@@ -96,7 +96,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public ArrayList<Member> GroupMList(String groomingNo) {
-		
+
 		return mDao.GroupMList(groomingNo);
 	}
 

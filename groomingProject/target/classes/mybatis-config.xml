@@ -16,7 +16,6 @@
 		<!-- 홈 -->
 		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeBoard" alias="HomeBoard"/>
 		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeGrooming" alias="HomeGrooming"/>
-	
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>

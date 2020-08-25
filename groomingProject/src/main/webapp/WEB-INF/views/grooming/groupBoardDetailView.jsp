@@ -38,20 +38,17 @@
         body {
             height: 1200px;
         }
-
         /* div의 크기에 맞춤 */
         img {
             max-width: 100%;
             max-height: 100%;
         }
-
         /* 인라인 형식의 출력 */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3 {
             display: block;
         }
-
         /* 각 탭의 메뉴의 내용 */
         section {
             display: none;
@@ -59,19 +56,15 @@
             border: 3px solid #ddd;
             height: auto;
         }
-
         /*라디오버튼 숨김*/
         .radio {
             display: none;
         }
-
-
         /* 탭메뉴 태그 마우스 올릴시 */
         .menu:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
-
         /* 태그 메뉴 css */
         .menu {
             display: inline-block;
@@ -83,9 +76,7 @@
             border: 1px solid #ddd;
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
-
         }
-
         /*input 클릭시, label 스타일*/
         input:checked+label {
             color: #555;
@@ -93,12 +84,10 @@
             /* border-top: 2px solid #2e9cdf; */
             border-bottom: 3px solid #ffffff;
         }
-
         .table th {
             text-align: center;
             vertical-align: middle;
         }
-
       
 		
 		  @font-face { 
