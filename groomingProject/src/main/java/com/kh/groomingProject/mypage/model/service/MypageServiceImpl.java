@@ -9,6 +9,7 @@ import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
@@ -129,4 +130,26 @@ public class MypageServiceImpl implements MypageService{
 	public Grooming selectGroomingTemp(String mNo) {
 		return mpDao.selectGroomingTemp(mNo);
 	}
+
+	@Override
+	public int selectGroomingMemberCount(String mNo) {
+		return mpDao.selectGroomingMemberCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageGrooming> selectMypageGmember(MyPagePageInfo pi,String mNo) {
+		return mpDao.selectMypageGmember(pi,mNo);
+	}
+
+	@Override
+	public int selectGroomingHostCount(String mNo) {
+		return mpDao.selectGroomingHostCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo) {
+		return mpDao.selectMypageGhost(pih,mNo);
+	}
+
+
 }

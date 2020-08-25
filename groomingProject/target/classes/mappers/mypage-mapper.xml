@@ -94,6 +94,34 @@
 		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
 	</resultMap>
 	
+		<resultMap type="MyPageApplicant" id="MyPageGmember">
+		<id property="gApplyNo" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="MyPageGrooming" id="MyPageGroomingSet">
+		<id property="gMemberNo" column="G_MEMBER_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="STUDY_END_DATE"/>
+	
+	
+	</resultMap>
+	
+	
 
 	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
 		SELECT * 
@@ -232,5 +260,38 @@
 		FROM GROOMING
 		WHERE MEMBER_NO =#{mNo} AND GROOMING_STATUS='N'
 	</select>
+	
+	<select id="selectGroomingMemberCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectMypageGmember" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectGroomingHostCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
 
+	<select id="selectMypageGhost" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
 </mapper>

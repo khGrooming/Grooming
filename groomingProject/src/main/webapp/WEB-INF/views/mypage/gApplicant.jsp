@@ -43,7 +43,8 @@
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 <div id="content">
-	<h3>신청 내역</h3>
+	<h3>스터디 그룹 신청 내역</h3>
+	<c:if test="${!empty appList }">
 	<div>
 	 		<c:forEach var="app" items="${appList }">
 	   <c:url var="gdetail" value="groomingDetail.do">
@@ -57,7 +58,7 @@
 	 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
 	 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />	 	 		
 		    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
-		<div id="gCard"onclick="location.href='${groupPage}'">
+		<div id="gCard"onclick="location.href='${gdetail}'">
 			<c:if test="${app.applyStatus eq 'Y' }">
 		
 				<c:if test="${app.groomingEd gt app.groomingNd }">
@@ -177,6 +178,11 @@
 			<a href="${gApplicantAfter }">[이후]</a>
 		</c:if>
 	</div>	
+</c:if>
+<c:if test="${empty appList }">
+신청내역이 없습니다.
+</c:if>
+	
 </div>
 <jsp:include page="../common/footer.jsp" />
 </body>
