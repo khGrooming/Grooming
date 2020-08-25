@@ -10,10 +10,13 @@
 		<!-- 공용 -->
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
-		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
 		<typeAlias type="com.kh.groomingProject.message.model.vo.Message" alias="Message"/>
+		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
+		
+		<!-- 홈 -->
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeBoard" alias="HomeBoard"/>
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeGrooming" alias="HomeGrooming"/>
 	
-
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
@@ -25,6 +28,7 @@
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>		
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageHeart" alias="MyPageHeart"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageApplicant" alias="MyPageApplicant"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageGrooming" alias="MyPageGrooming"/>
 
 		<!-- 커뮤니티 -->
 		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>
@@ -40,7 +44,6 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupMember" alias="GroupM"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupBoard" alias="GroupB"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GReply" alias="GReply"/>
-
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
@@ -58,10 +61,12 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
-
 		<mapper resource="/mappers/declaration-mapper.xml"/>
 
 		<mapper resource="/mappers/message-mapper.xml"/>
+		
+		<!-- 홈 멥퍼 -->
+		<mapper resource="/mappers/home-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
 		<mapper resource="/mappers/member-mapper.xml"/>

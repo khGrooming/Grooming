@@ -11,7 +11,7 @@
 .content-op{
 	width: 70%;
 	height: 1000px;
-	margin: 5% auto;
+	margin: 3% auto;
 }
 
 </style>
@@ -23,12 +23,10 @@
 <c:if test="${listCount ne 0 }">
 
 	<c:forEach var="op" items="${openGroomingList }">
-	   <c:url var="gdetail" value="groomingDetail.do">
-			<c:param name="groomingNo" value="${op.groomingNo }"/>
-			<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
-			<!-- 현재 보던 페이지 정보도 넘기자 -->
-		</c:url>
-		<div style="border:3px solid #17a2b8; width: 23%;float: left; margin-left:5px; margin-right: 10px; border-radius: 20px;" onclick="location.href='${gdetail}'">
+	   <c:url var="groupPage" value="groupPage.do">
+						<c:param name="groomingNo" value="${op.groomingNo}"/>
+					</c:url>
+		<div style="border:3px solid #17a2b8; width: 23%;float: left; margin-left:5px; margin-right: 10px; border-radius: 20px;" onclick="location.href='${groupPage}'">
 			<img src="${contextPath }/resources/views/images/${op.groomingImg}" style="width: 100%;border-bottom: 2px solid #17a2b8"><br><br>
 			<div style="width: 97%; margin-left: auto; margin-right: auto;">
 			<p style="font-size: 20px; ">${op.groomingTitle}</p>

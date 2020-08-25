@@ -655,9 +655,27 @@ public class GroomingController {
 			currentPage = page;
 		}
 			
-		int listCount = gService.getListCount();
+		/* int listCount = gService.getListCount(); */
 	
+		mv.setViewName("grooming/groupBoard");
 		
+		return mv;
+	}
+	
+	@RequestMapping("calendar.do")
+	public ModelAndView calendar(ModelAndView mv,
+			@RequestParam(value="page", required=false) Integer page) {
+		
+		// 페이징 관련 처리부터 하자
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		/*
+		 * int listCount = gService.getListCount();
+		 */
+		
+		mv.setViewName("grooming/groupCalendar");
 		
 		return mv;
 	}

@@ -88,7 +88,6 @@
 			VALUES (#{memberNo}, T.TAG_NO)
 	</update>
 
-
 	<select id="findMemberEmail" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
@@ -121,17 +120,14 @@
 		SET	MEMBER_PASSWORD=#{memberPwd}
 		WHERE MEMBER_EMAIL=#{memberEmail}
 	</update>
-	
+
 	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
-	SELECT *
-	FROM MEMBER M
-	JOIN GROOMING_APPLICANT GA ON GA.MEMBER_NO = M.MEMBER_NO
-	WHERE GA.GROOMING_NO = #{groomingNo}
-	
-	
-	
+		SELECT *
+		FROM MEMBER M
+		JOIN GROOMING_APPLICANT GA ON GA.MEMBER_NO = M.MEMBER_NO
+		WHERE GA.GROOMING_NO = #{groomingNo}
 	</select>
-	
+
 	<select id="selectGroupMList" parameterType="string" resultMap="memberResultSet">
 	   SELECT MEMBER_PHOTO,MEMBER_NICKNAME,MEMBER_EMAIL,M.MEMBER_NO,MEMBER_PHONE,G_MEMBER_NO
        FROM GROMMING_MEMBER GM
@@ -139,6 +135,6 @@
        JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
        WHERE GM.GROOMING_NO = #{groomingNo}
 	   ORDER BY G_MEMBER_NO 
-	
 	</select>
+
 </mapper>

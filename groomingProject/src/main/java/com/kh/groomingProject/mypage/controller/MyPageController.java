@@ -32,6 +32,7 @@ import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
@@ -627,10 +628,11 @@ public class MyPageController {
 	
 	//진행중인 그루밍 보여주기
 	@RequestMapping("mpgrooming.do")
-	public String myPageGroomingPage(HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+	public String myPageGroomingPage(HttpSession session,@RequestParam(value="page",required=false) Integer page
+														,@RequestParam(value="pageh",required=false) Integer pageh) {
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		int listCount = 0;//todo 왕 나중에 할꺼임
+		int listCount = mpService.selectGroomingMemberCount(mNo);
 		int currentPage=1;
 		if(page != null) {
 			currentPage = page;
@@ -638,8 +640,30 @@ public class MyPageController {
 		int GroomingLimit = 4;
 		double f=0.8;
 		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		
+		ArrayList<MyPageGrooming> mpgList = mpService.selectMypageGmember(pi,mNo);
+		System.out.println(mpgList);
+		
+		session.setAttribute("mpgList",mpgList);
+		session.setAttribute("pi", pi);
+		
+		int HlistCount = mpService.selectGroomingHostCount(mNo);
+		int currentPageh=1;
+		if(pageh != null) {
+			currentPageh = pageh;
+		}
+		int GroomingLimith = 4;
+		double fh=0.8;
+		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimit,fh);
+		
+		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,mNo);
+		session.setAttribute("hpgList",hpgList);
+		session.setAttribute("pih", pih);
+		
+		
 		return "mypage/mpgrooming";
 	}
+	
 	
 	@RequestMapping("ginsertTemp.do")
 	public String groomingInsertHistory(HttpSession session) {

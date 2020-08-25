@@ -19,6 +19,7 @@
 
 <style type="text/css">
 * {
+ font-family: 'Jua', sans-serif;
 	margin: 0;
 	padding: 0;
 	/* box-sizind: border-box; */

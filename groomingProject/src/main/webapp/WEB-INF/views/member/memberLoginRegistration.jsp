@@ -46,9 +46,7 @@
 }
 section
 {
-	margin-top: 76px;
 	position: relative;
-	min-height: 86.3vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;

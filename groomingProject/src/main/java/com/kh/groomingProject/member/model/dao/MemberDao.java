@@ -1,7 +1,6 @@
 package com.kh.groomingProject.member.model.dao;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,11 +78,11 @@ public class MemberDao {
 
 	public int updateMemberPwd(Member m) {
 
-		return  sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
+		return sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
 	}
 
 	public ArrayList<Member> GroupMList(String groomingNo) {
-		// TODO Auto-generated method stub
+
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectGroupMList",groomingNo);
 	}
 

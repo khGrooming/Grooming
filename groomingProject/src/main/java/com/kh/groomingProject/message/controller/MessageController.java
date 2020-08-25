@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,6 +24,21 @@ public class MessageController {
 
 	@Autowired
 	private MessageService msgService;
+	
+	// 메시지 페이지 이동
+	@RequestMapping("messagePage.do")
+	public ModelAndView loginPage(ModelAndView mv, Member m) {
+		System.out.println("메시지 접근 유저 : " + m.getMemberNo());
+		
+		ArrayList<Message> mList = msgService.getUserMessageList(m);
+		
+		System.out.println("메시지 대화 리스트 : " + mList);
+		
+		mv.addObject("mList", mList)
+		.setViewName("message/messagePage");
+		
+		return mv;
+	}
 	
 	@RequestMapping("getUserMessagesCount.do")
 	@ResponseBody

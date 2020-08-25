@@ -313,7 +313,7 @@ img {
 												
 												<td>
 												<button data-toggle="modal" data-target="#open_modal_appContent">신청서 열람</button>
-													<div class="modal modal-xl fade" id="open_modal_appContent" tabindex="-1" role="dialog" 
+													<%-- <div class="modal modal-xl fade" id="open_modal_appContent" tabindex="-1" role="dialog" 
 													aria-labelledby="applyContentLabel" aria-hidden="true" >
 
 														<div class="modal-dialog">
@@ -336,7 +336,7 @@ img {
 																
 															</div>
 														</div>
-													</div>
+													</div> --%>
 												</td>
 												
 												<td class="appTd">

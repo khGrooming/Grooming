@@ -35,52 +35,9 @@
             max-height: 100%;
         }
 
-        /* 인라인 형식의 출력 */
-        #tab1:checked~#content1,
-        #tab2:checked~#content2,
-        #tab3:checked~#content3{
-            display: block;
-        }
-
-        /* 각 탭의 메뉴의 내용 */
-        section {
-            display: none;
-            padding: 20px 10px 10px 10px;
-            border: 3px solid #ddd;
-            height: auto;
-        }
-
-        /*라디오버튼 숨김*/
-        input {
-            display: none;
-        }
-
-        /* 탭메뉴 태그 마우스 올릴시 */
-        label:hover {
-            color: #2e9cdf;
-            cursor: pointer;
-        }
-
-        /* 태그 메뉴 css */
-        label {
-            display: inline-block;
-            margin: 0 0 -3px;
-            padding: 15px 25px;
-            font-weight: 600;
-            text-align: center;
-            color: #bbb;
-            border: 1px solid #ddd;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-
-        }
-        /*input 클릭시, label 스타일*/
-        input:checked+label {
-            color: #555;
-            border: 3px solid #ddd;
-            /* border-top: 2px solid #2e9cdf; */
-            border-bottom: 3px solid #ffffff;
-        }
+       
+   
+     
         .table{
             text-align: center;
         }
@@ -107,23 +64,26 @@
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
-    <c:url var="calendar" value="calendar.do"/>
-	<c:url var="gBlist" value="gBlist.do"/>
-	<c:url var="groupP" value="groupPage.do"/>
+    <c:url var="calendar" value="calendar.do">
+    	<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+    </c:url>
+	<c:url var="gBlist" value="gBlist.do">
+			<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	</c:url>
+	<c:url var="groupP" value="groupPage.do">
+			<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	</c:url>
     
         <!--디폴트 메뉴-->
-        <input id="tab1" type="radio" name="tabs" checked>
         <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <input id="tab2" type="radio" name="tabs">
-        <label for="tab2"><a href="${calendar }"></a><i class="fas fa-calendar-alt"></i>캘린더</a></label>
+        <label for="tab2"><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
-        <input id="tab3" type="radio" name="tabs" >
         <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
         <!-- 메인에 들어갈 내용용 -->
-        <section id="content1">
+        <section >
          
                <!-- 그루밍 제목 -->
                 <h2 style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
@@ -114,6 +115,26 @@ public class MypageDao {
 
 	public Grooming selectGroomingTemp(String mNo) {
 		return (Grooming)sqlSessionTemplate.selectOne("MyPageMapper.selectGroomingTemp", mNo);
+	}
+
+	public int selectGroomingMemberCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectGroomingMemberCount",mNo);
+	}
+
+	public ArrayList<MyPageGrooming> selectMypageGmember(MyPagePageInfo pi, String mNo) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMypageGmember",mNo,rowBounds);
+	}
+
+	public int selectGroomingHostCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectGroomingHostCount",mNo);
+	}
+
+	public ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo) {
+		int offset=(pih.getCurrentPage()-1)*pih.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pih.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMypageGhost",mNo,rowBounds);
 	}
 
 }

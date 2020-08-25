@@ -26,6 +26,7 @@
 		SELECT COUNT(*)
 		FROM MESSAGE
 		WHERE TO_MEMBER_NO = #{memberNo}
+		AND MESSAGE_CONFIRM = 'N'
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 
@@ -44,6 +45,15 @@
 		SET MESSAGE_CONFIRM='Y'
 		WHERE MESSAGE_NO=#{messageNo}
 	</update>
+	
+	<select id="getUserMessageList" parameterType="Member" resultMap="messageResultSet">
+		SELECT *
+		FROM VIEW_MESSAGE
+		WHERE TO_MEMBER_NO=#{memberNo}
+		OR (FROM_MEMBER_NO=#{memberNo}
+		    AND TO_MEMBER_NO NOT IN (SELECT FROM_MEMBER_NO FROM VIEW_MESSAGE WHERE TO_MEMBER_NO=#{memberNo}))
+		ORDER BY MESSAGE_DATE DESC
+	</select>
 
 </mapper>
 

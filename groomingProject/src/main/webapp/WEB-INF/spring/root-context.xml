@@ -39,8 +39,7 @@
 		<property name="username" value="Grooming3Team@gmail.com"/>
 		<property name="password" value="Groo!234"/>
 		<property name="defaultEncoding" value="UTF-8"/>
-		<property name="javaMailProperties">
-			
+		<property name="javaMailProperties">		
 		<props>
 			<!-- <prop key="mail.smtp.host">smtp.gmail.com"</prop> -->
 			<prop key="mail.smtp.starttls.enable">true</prop>
