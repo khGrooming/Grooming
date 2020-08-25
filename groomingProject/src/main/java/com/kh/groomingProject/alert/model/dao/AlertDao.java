@@ -1,6 +1,7 @@
 package com.kh.groomingProject.alert.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,20 @@ public class AlertDao {
 		return sqlSessionTemplate.insert("alertMapper.insertAlert", memberAlert);
 	}
 
+	public int getUserAlertCount(Member m) {
+		
+		return sqlSessionTemplate.selectOne("alertMapper.getUserAlertCount", m);
+	}
+
 	public ArrayList<Alert> getUserAlert(Member m) {
 
 		return (ArrayList)sqlSessionTemplate.selectList("alertMapper.getUserAlert", m);
 	}
+
+	public int readUserAlert(String alertNo) {
+
+		return sqlSessionTemplate.update("alertMapper.readUserAlert", alertNo);
+	}
+
 
 }

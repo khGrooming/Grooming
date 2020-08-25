@@ -11,7 +11,8 @@
 		<typeAlias type="com.kh.groomingProject.alert.model.vo.Alert" alias="Alert"/>
 		<typeAlias type="com.kh.groomingProject.tag.model.vo.Tag" alias="Tag"/>
 		<typeAlias type="com.kh.groomingProject.declaration.model.vo.Declaration" alias="Declaration"/>
-
+		<typeAlias type="com.kh.groomingProject.message.model.vo.Message" alias="Message"/>
+	
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
@@ -20,7 +21,9 @@
 
 		<!-- 마이페이지 -->
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
-		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.Spec" alias="Spec"/>		
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageHeart" alias="MyPageHeart"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageApplicant" alias="MyPageApplicant"/>
 
 		<!-- 커뮤니티 -->
 		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>
@@ -55,6 +58,7 @@
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
 		<mapper resource="/mappers/declaration-mapper.xml"/>
+		<mapper resource="/mappers/message-mapper.xml"/>
 
 		<!-- 멤버 멥퍼 -->
 		<mapper resource="/mappers/member-mapper.xml"/>
@@ -73,8 +77,6 @@
 		
 		<!-- 관리자 멥퍼 -->
 		<mapper resource="/mappers/admin-mapper.xml"/>
-
-
 	</mappers>
 	
 </configuration>

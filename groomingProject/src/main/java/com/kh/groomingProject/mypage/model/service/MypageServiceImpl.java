@@ -5,8 +5,12 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
+import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -69,5 +73,60 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public int insertMentor(String mNo) {
 		return mpDao.insertMentor(mNo);
+	}
+
+	@Override
+	public int mpSelectListCount(String mNo) {
+		return mpDao.mpSelectListCount(mNo);
+	}
+
+	@Override
+	public ArrayList<Grooming> selectopenGroomingList(MyPagePageInfo pi, String mNo) {
+		return mpDao.selectopenGroomingList(pi,mNo);
+	}
+
+	@Override
+	public int selectPoint(String mNo) {
+		return mpDao.selectPoint(mNo);
+	}
+
+	@Override
+	public int selectPoint2(String mNo) {
+		return mpDao.selectPoint2(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageHeart> selectMyPageHeart(MyPagePageInfo pi,String mNo) {
+		return mpDao.selectMyPageHeart(pi,mNo);
+	}
+
+	@Override
+	public int heartListCount(String mNo) {
+		return mpDao.heartListCount(mNo);
+	}
+
+	@Override
+	public int heartListDelete(String ghNo) {
+		return mpDao.heartListDelete(ghNo);
+	}
+
+	@Override
+	public int gApplicantListCount(String mNo) {
+		return mpDao.gApplicantListCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageApplicant> selectgApplicant(MyPagePageInfo pi, String mNo) {
+		return mpDao.selectgApplicant(pi,mNo);
+	}
+
+	@Override
+	public int deleteApplicant(String gaNo) {
+		return mpDao.deleteApplicant(gaNo);
+	}
+
+	@Override
+	public Grooming selectGroomingTemp(String mNo) {
+		return mpDao.selectGroomingTemp(mNo);
 	}
 }

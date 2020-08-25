@@ -500,13 +500,15 @@
        WHERE GM.GROOMING_NO = #{groomingNo}
 	   ORDER BY G_MEMBER_NO 
  	
- 	
- 	
- 	
- 	
  	</select>
  	
- 	
+ 	<select id="getListCount" resultType="_int">
+ 		SELECT COUNT(*)
+ 		FROM GBOARD	GB
+ 		JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+ 		JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+ 		
+ 	</select>
  	
  	
  	

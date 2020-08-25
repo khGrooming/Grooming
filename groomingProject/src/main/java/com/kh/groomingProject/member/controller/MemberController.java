@@ -104,7 +104,7 @@ public class MemberController {
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMember(m);
 
-		// if문안에 if로 처리 해야함(트리거 이용하면 신규가입 추가 insert는 전부 가능)
+		// 회원가입 확인
 		if(resultInsertMember > 0) {
 			System.out.println("회원가입 (insert): 성공");
 
@@ -157,14 +157,14 @@ public class MemberController {
 	// 회원 가입 : 카카오 회원
 	@RequestMapping("memberInsertkakao.do")
 	@ResponseBody
-	public String memberKakaoInsert(Member m) {
+	public String memberKakaoInsert(Member m, Model model) {
 		String message = "";
 		System.out.println("회원가입Kakao (프론트정보): " + m);
 
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMemberKakao(m);
 
-		// if문안에 if로 처리 해야함(트리거 이용하면 신규가입 추가 insert는 전부 가능)
+		// 회원가입 확인
 		if(resultInsertMember > 0) {
 			System.out.println("회원가입Kakao (insert): 성공");
 
@@ -190,6 +190,12 @@ public class MemberController {
 
 					if(resultAlertPoint > 0) {
 						System.out.println("회원가입Kakao 확인 : 성공");
+
+						Member loginUser = mService.loginMember(m);
+						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+
+						model.addAttribute("loginUser", loginUser);
+							
 						return "success";
 
 					} else {
@@ -258,22 +264,22 @@ public class MemberController {
 	public String memberOptionUpdate(HttpServletRequest request, Member m
 			,@RequestParam(value="memberTagName", required=false) String memberTagName
 			,@RequestParam(value="profileFile", required=false) MultipartFile file) {
-		System.out.println("회원가입 추가 // 멤버 이메일  : " + m.getMemberEmail()
+		System.out.println("회원가입 추가 ( 멤버 이메일  : " + m.getMemberEmail()
 						+ " 멤버 이름 : " + m.getMemberName()
 						+ " 멤버 전화 : " + m.getMemberPhone()
 						+ " 멤버 성별 : " + m.getMemberGender()
 						+ " 멤버 사진 : " + m.getMemberPhoto()
-						+ " 멤버 메모 : " + m.getMemberMemo());
+						+ " 멤버 메모 : " + m.getMemberMemo() + " )");
 		System.out.println("멤버 Tags : " + memberTagName);
 		
-		System.out.println((m.getMemberEmail()).length() != 0);
-		System.out.println((m.getMemberName()).length() != 0);
-		System.out.println((m.getMemberPhone()).length() != 0);
-		System.out.println(m.getMemberGender() != null);
-		System.out.println(!file.getOriginalFilename().equals(""));
-		System.out.println((m.getMemberMemo()).length() != 0);
+		System.out.println("값 유무 확인 (이멜) : " + ((m.getMemberEmail()).length() != 0));
+		System.out.println("값 유무 확인 (이름) : " +((m.getMemberName()).length() != 0));
+		System.out.println("값 유무 확인 (전화) : " + ((m.getMemberPhone()).length() != 0));
+		System.out.println("값 유무 확인 (성별) : " + (m.getMemberGender() != null));
+		System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
+		System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
 		
-		if((m.getMemberEmail()).length() != 0) {
+		if((m.getMemberEmail()).length() != 0 && ((m.getMemberName()).length() != 0 || (m.getMemberPhone()).length() != 0 || m.getMemberGender() != null || !file.getOriginalFilename().equals("") || (m.getMemberMemo()).length() != 0)) {
 			
 			// 프로필 사진 리네임을 위해 멤버 번호를 DB에서 가져온다
 			Member member = mService.loginMember(m);
@@ -358,16 +364,20 @@ public class MemberController {
 		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
 		
 		Member loginUser = mService.loginMember(m);
+		System.out.println("회원 확인 : " + loginUser);
 		
-		if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-			System.out.println("로그인 확인 : 성공");
-			model.addAttribute("loginUser", loginUser);
-			return "success";
-		} else {
-			System.out.println("로그인 확인 : 실패");
-			return "fail";
+		if(loginUser != null) {
+			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
+				System.out.println("로그인 확인 : 성공");
+				loginUser.setMemberPwd("");
+				model.addAttribute("loginUser", loginUser);
+				return "success";
+			} else {
+				System.out.println("로그인 확인 : 실패");
+				return "fail";
+			}
 		}
-		
+		return "fail";
 	}
 
 	// 카카오 회원 로그인

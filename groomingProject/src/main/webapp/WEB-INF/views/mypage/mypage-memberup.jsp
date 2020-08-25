@@ -48,7 +48,7 @@
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 	
-		<div style="width: 65%; margin-right: auto; margin-left: auto;">
+		<div style="width: 65%; height:900px; margin-right: auto; margin-left: auto;">
 			<br>
 			<br>
 			
@@ -59,11 +59,13 @@
 
 					<!-- 프로필 사진 div -->
 					<div class="profile_my" style="position: relative;">
-						<img src='${contextPath }/resources/views/icons/profileIcon.png' id="profileImgIcon"  style="width: 110px; height:110px; z-index: 3;"class="profile_img">
-						<img
-							src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"  id="profileImg" 
-							class="profile_img"
-							style="width: 100px;">
+
+						<img src='${contextPath }/resources/views/icons/profileIcon.png'  id="profileImgIcon" style="width: 110px; height:110px; z-index: 3;"class="profile_img">
+
+						<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
+							class="profile_img" id="profileImg"
+
+			style="width: 100px;">
 
 						<form id="testForm" action="test1.do" method="post"
 							enctype="multipart/form-data">
@@ -187,9 +189,8 @@
 												alert(content);
 												var save = confirm("상태메시지를 저장하시겠습니까?");
 												if (save) {
-													$
-															.ajax({
-																url : "upMemo.do",
+																					$.ajax({
+Memo.do",
 																type : "post",
 																data : {
 																	memberMemo : $(
@@ -797,10 +798,13 @@
              	</script>
 
 </div>
-<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
+
+<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정
+-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
 
 
-		
+<jsp:include page="../common/footer.js<jsp:include page="../common/footer.jsp" />	
+>	
 
 </body>
 </html>

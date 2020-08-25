@@ -17,6 +17,14 @@
 			, #{alertContent}, SYSDATE, DEFAULT)
 	</insert>
 	
+	<select id="getUserAlertCount" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM ALERT
+		WHERE MEMBER_NO = #{memberNo}
+		AND ALERT_CONFIRM = 'N'
+		ORDER BY ALERT_CREATEDATE DESC
+	</select>
+
 	<select id="getUserAlert" parameterType="Member" resultMap="alertResultSet">
 		SELECT ALERT_NO, MEMBER_NO, ALERT_CONTENT, ALERT_CREATEDATE, ALERT_CONFIRM
 		FROM ALERT
@@ -24,5 +32,11 @@
 		AND ALERT_CONFIRM = 'N'
 		ORDER BY ALERT_CREATEDATE DESC
 	</select>
+
+	<update id="readUserAlert" parameterType="string">
+		UPDATE ALERT
+		SET ALERT_CONFIRM='Y'
+		WHERE ALERT_NO=#{alertNo}
+	</update>
 
 </mapper>

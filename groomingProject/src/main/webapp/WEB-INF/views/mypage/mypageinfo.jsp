@@ -224,17 +224,18 @@ section {
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
+	
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
 
-	<c:if test="${!empty profileInfo }">
+	<c:if test="${!empty loginUser }">
 		
 
 
 
 		<div class="subContent_my"
 			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
-
+			
 			<div class="menubar">
 				<div  id="test">
 					<ul >
@@ -245,12 +246,13 @@ section {
 								<li><a href="memberSecession.do">탈퇴하기</a></li>
 							</ul>
 						</li>
-						<li><a href="opengrooming.do">스터디</a>
+						<li><a href="mpgrooming.do">스터디</a>
 							<ul>
 								<li><a href="opengrooming.do">개설한 스터디</a></li>
-								<li><a href="#">찜목록</a></li>
-								<li><a href="#">신청내역</a></li>
-								<li><a href="#">작성내역</a></li>
+								
+								<li><a href="GHeart.do">찜목록</a></li>
+								<li><a href="gApplicant.do">신청내역</a></li>
+								<li><a href="ginsertTemp.do">작성내역</a></li>
 							</ul>
 						</li>
 						<li><a href="#">활동내역</a>
@@ -303,7 +305,7 @@ section {
 			})
 		</script>
 	</c:if>
-	<c:if test="${empty profileInfo}">
+	<c:if test="${empty loginUser}">
 		<h3>정보 없음</h3>
 	</c:if>
 
@@ -312,6 +314,10 @@ section {
 	<!-- /.container -->
 
 
+
+
+
+		
 
 
 	<!-- Optional JavaScript -->
