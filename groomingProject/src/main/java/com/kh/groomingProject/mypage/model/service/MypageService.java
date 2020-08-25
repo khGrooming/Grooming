@@ -54,5 +54,7 @@ public interface MypageService {
 
 	int deleteApplicant(String gaNo);
 
+	Grooming selectGroomingTemp(String mNo);
+
 
 }

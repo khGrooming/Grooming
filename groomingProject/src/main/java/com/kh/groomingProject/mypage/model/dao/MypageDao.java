@@ -112,4 +112,8 @@ public class MypageDao {
 		return sqlSessionTemplate.delete("MyPageMapper.deleteApplicant",gaNo);
 	}
 
+	public Grooming selectGroomingTemp(String mNo) {
+		return (Grooming)sqlSessionTemplate.selectOne("MyPageMapper.selectGroomingTemp", mNo);
+	}
+
 }

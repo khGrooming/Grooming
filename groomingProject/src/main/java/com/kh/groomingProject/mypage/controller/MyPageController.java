@@ -564,7 +564,7 @@ public class MyPageController {
 	
 //	신청한 스터디 그룹 
 	@RequestMapping("gApplicant.do")
-	public ModelAndView GApplicantPage(ModelAndView mv,HttpServletRequest request
+	public String GApplicantPage(HttpSession session,HttpServletRequest request
 								,@RequestParam(value="page",required=false) Integer page) {
 		String mNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
 		
@@ -580,23 +580,49 @@ public class MyPageController {
 		ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
 		
 		if(gApplicantList != null) {
-			mv.addObject("pi", pi);
-			mv.addObject("appList",gApplicantList);
-			mv.setViewName("mypage/gApplicant");
+			session.setAttribute("pi", pi);
+			session.setAttribute("appList",gApplicantList);
+			return "mypage/gApplicant";
 		}else {
 			throw new MypageException("신청내역 조회 실패");
 		}
 		
 		
-		return mv;
+		
 	}
 
 	//신청한 스터디 그룹 삭제하기
 	@RequestMapping("deleteAppl.do")
-	public void deleteApplicant(String gaNo) {
+	public void deleteApplicant(HttpSession session,String gaNo,HttpServletResponse response,String mNo,@RequestParam(value="page",required=false) Integer page) throws IOException {
 		
 		int result=mpService.deleteApplicant(gaNo);
-		System.out.println("머야?"+gaNo);
+		
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			int listCount = mpService.gApplicantListCount(mNo);
+			int currentPage=1;
+			if(page != null) {
+				currentPage = page;
+			}
+			int GroomingLimit = 4;
+			double f=0.8;
+			MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+			
+			ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
+			
+			if(gApplicantList != null) {
+				session.setAttribute("pi", pi);
+				session.setAttribute("appList",gApplicantList);
+				out.append("Y");
+			
+			}
+		}else {
+			throw new MypageException("신청내역 삭제 실패");
+		}
+		
+		out.flush();
+		out.close();
+		
 	}
 	
 	//진행중인 그루밍 보여주기
@@ -604,7 +630,7 @@ public class MyPageController {
 	public String myPageGroomingPage(HttpSession session,@RequestParam(value="page",required=false) Integer page) {
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		int listCount = 0;//todo 
+		int listCount = 0;//todo 왕 나중에 할꺼임
 		int currentPage=1;
 		if(page != null) {
 			currentPage = page;
@@ -614,4 +640,15 @@ public class MyPageController {
 		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
 		return "mypage/mpgrooming";
 	}
+	
+	@RequestMapping("ginsertTemp.do")
+	public String groomingInsertHistory(HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		Grooming groomingTemp = mpService.selectGroomingTemp(mNo);
+		session.setAttribute("tempList",groomingTemp);
+		System.out.println(groomingTemp);
+		return "mypage/ginsertTemp";
+	}
+	
 }

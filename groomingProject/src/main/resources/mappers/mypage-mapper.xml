@@ -226,5 +226,11 @@
 	<delete id="deleteApplicant" parameterType="string">		
 	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
 	</delete>
+	
+	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
+		SELECT *
+		FROM GROOMING
+		WHERE MEMBER_NO =#{mNo} AND GROOMING_STATUS='N'
+	</select>
 
 </mapper>

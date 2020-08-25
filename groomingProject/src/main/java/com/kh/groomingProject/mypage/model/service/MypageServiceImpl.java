@@ -124,4 +124,9 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteApplicant(String gaNo) {
 		return mpDao.deleteApplicant(gaNo);
 	}
+
+	@Override
+	public Grooming selectGroomingTemp(String mNo) {
+		return mpDao.selectGroomingTemp(mNo);
+	}
 }
