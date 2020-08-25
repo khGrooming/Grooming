@@ -61,6 +61,10 @@ header
 	border-radius: 50%;
 	border: 1px solid grey;
 }
+.main_navbar #memberNickName
+{
+	margin-left: 0;
+}
 .main_navbar ul,
 .main_navbar ul#mainProfileArea
 {
@@ -82,9 +86,9 @@ header
 }
 .main_navbar ul li:hover
 {
-    color: green;
-    border: 1px solid green;
-    border-radius: 5px;
+    border: thin solid green;
+	outline: thin solid lightyellow;
+    border-radius: 3px;
 }
 .main_navbar ul li:hover a
 {
@@ -109,14 +113,6 @@ header
     justify-content: space-between;
 	align-content: center;
 }
-/* .main_navbar_link:hover
-{
-	background-color: #F9F9F9;
-	border-radius: 14% / 50%;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	transition: 0.2s;
-} */
-
 /* 메시지 알림창 */
 .main_messages_icon,
 .main_alerts_icon
@@ -135,14 +131,6 @@ header
 	width: 28px;
 	height: 28px;
 }
-.main_alerts_icon .main_naviIcon > .img_svg:hover,
-.main_messages_icon .main_naviIcon > .img_svg:hover
-{
-	background-color: #F9F9F9;
-	border-radius: 50%;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-	transition: 0.2s;
-}
 .main_messages_txt,
 .main_alerts_txt
 {
@@ -157,7 +145,7 @@ header
 	font-size: 18px;
 	position: absolute;
 	top: -5px;
-	left: 31px;
+	left: 18px;
 }
 .main_dropdown
 {
@@ -202,6 +190,12 @@ header
 	width: 100%;
 	display: block;
 	padding: 8px;
+}
+.main_messages_body_container,
+.main_alerts_body_container
+{
+	overflow: auto;
+    max-height: 300px;
 }
 .main_messages_body > div
 {
@@ -253,6 +247,11 @@ header .main_upIcon
 	outline: none;
 	cursor: pointer;
 }
+header .main_upIcon:hover
+{
+	border-radius: 50%;
+	background-color: yellow;
+}
 header .main_upIcon .img_svg
 {
 	width: 30px;
@@ -262,12 +261,13 @@ header .main_upIcon.show
 {
 	display: block;
 }
-
 </style>
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>
-	<c:url var="groomingMain" value="groomingMain.do"/>
+	<c:url var="groomingMain" value="groomingMain.do">
+		<c:param name="memberNo" value="${loginUser.memberNo}"/>
+	</c:url>
 	<c:url var="communityMain" value="communityMain.do"/>
 	<c:url var="studyCafeMain" value="searchMap.do"/>
 	<c:url var="loginPage" value="loginPage.do">
@@ -279,6 +279,7 @@ header .main_upIcon.show
 	<c:url var="myPage" value="mypage-memberup.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
+<!-- scroll 스크립트 -->
 <script>
 	window.addEventListener("scroll", function(){
 		var header = document.querySelector(".main_navbar");
@@ -322,7 +323,7 @@ header .main_upIcon.show
 						<div class="main_messages_header main_flex_between_center">
 							<span>메시지</span>
 							<div class="main_mIcons_container">
-								<div class="main_mIcon">
+								<div class="main_mIcon messageBtn">
 									<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-comments-thin.svg">
 								</div>
 								<div class="main_mIcon">
@@ -331,7 +332,7 @@ header .main_upIcon.show
 							</div>
 						</div>
 						<div class="main_messages_body_container">
-							<div class="main_messages_body">
+							<div class="mbody_container">
 								<div class="spinner-border text-success" role="status">
 									<span class="sr-only">Loading...</span>
 								</div>
@@ -350,17 +351,20 @@ header .main_upIcon.show
 								<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
 							</div>
 						</div>
-						<div class="main_alerts_body">
-							<div class="spinner-border text-success" role="status">
-								<span class="sr-only">Loading...</span>
+						<div class="main_alerts_body_container">
+							<div class="abody_container">
+								<div class="spinner-border text-success" role="status">
+									<span class="sr-only">Loading...</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</li>
 				<li class="main_navbar_item main_flex_between_center">
+					<a id="memberNickName" class="main_navbar_link" href="${myPage }">
 					<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
 						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-					<a class="main_navbar_link" href="${myPage }">${loginUser.memberNickName }</a>
+					${loginUser.memberNickName }</a>
 				</li>
 				<li class="main_navbar_item">
 					<a class="main_navbar_link" href="${logout }">로그아웃</a>
@@ -390,6 +394,11 @@ header .main_upIcon.show
 	
 	<!-- 메시지 스크립트 -->
  	<script type="text/javascript">
+ 		$(".messageBtn").on("click", function() {
+			location.href="messagePage.do?memberNo=${loginUser.memberNo}";
+			return false;
+		});
+ 	
 		// 메시지 카운트
 		function getUserMessages() {
 			$.ajax({
@@ -400,7 +409,7 @@ header .main_upIcon.show
 					
 					var $messagesIcon = $(".main_messages_icon");
 					
-					if(data > 0) {
+					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
 						var $messagesCountDiv = $("<div>").addClass("main_messages_txt").text(data);
 
@@ -452,12 +461,12 @@ header .main_upIcon.show
 		
 		// 메시지 리스트 생성
 		function refreshMessageBody(data) {
-			$("div").remove(".main_messages_body");
+			$("div").remove(".mbody_container");
 			// 메시지 내용 추가
 			if(data.length > 0) {
 				console.log("메시지 추가");
 				for(var i in data){
-					var $messages_dropdown = $(".main_messages_dropdown");
+					var $main_messages_body_container = $(".main_messages_body_container");
 					var $mbody_container = $('<div>').addClass("mbody_container");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
@@ -473,11 +482,11 @@ header .main_upIcon.show
 					$messages_body.append($messages_bodyTime);
 					$mbody_container.append($messages_body);
 					
-					$messages_dropdown.append($mbody_container);
+					$main_messages_body_container.append($mbody_container);
 				}
 			} else {
 				console.log("메시지 없음");
-				var $messages_dropdown = $(".main_messages_dropdown");
+				var $main_messages_body_container = $(".main_messages_body_container");
 				var $mbody_container = $('<div>').addClass("mbody_container");
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
@@ -487,7 +496,7 @@ header .main_upIcon.show
 				$messages_body.append($messages_bodyContent);
 				$mbody_container.append($messages_body);
 
-				$messages_dropdown.append($mbody_container);
+				$main_messages_body_container.append($mbody_container);
 			}
 			// 클릭 읽음 기능 추가
 			$(".main_messages_body").readMessage();
@@ -532,7 +541,7 @@ header .main_upIcon.show
 
 					var $alertIcon = $(".main_alerts_icon");
 
-					if(data > 0) {
+					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
 						var $alertDiv = $("<div>").addClass("main_alerts_txt").text(data);
 
@@ -584,12 +593,12 @@ header .main_upIcon.show
 
 		// 알림 리스트 생성
 		function refreshAlertBody(data) {
-			$("div").remove(".main_alerts_body");
+			$("div").remove(".abody_container");
 			// 알림 내용 추가
 			if(data.length > 0) {
 				console.log("알림 추가");
 				for(var i in data){
-					var $alerts_dropdown = $(".main_alerts_dropdown");
+					var $main_alerts_body_container = $(".main_alerts_body_container");
 					var $abody_container = $('<div>').addClass("abody_container");
 					var $alerts_body = $('<div>').addClass("main_alerts_body");
 					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
@@ -601,11 +610,11 @@ header .main_upIcon.show
 					$alerts_body.append($alerts_bodyTime);
 					$abody_container.append($alerts_body);
 					
-					$alerts_dropdown.append($abody_container);
+					$main_alerts_body_container.append($abody_container);
 				}
 			} else {
 				console.log("알림 없음");
-				var $alerts_dropdown = $(".main_alerts_dropdown");
+				var $main_alerts_body_container = $(".main_alerts_body_container");
 				var $abody_container = $('<div>').addClass("abody_container");
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
@@ -615,7 +624,7 @@ header .main_upIcon.show
 				$alerts_body.append($alerts_bodyContent);
 				$abody_container.append($alerts_body);
 				
-				$alerts_dropdown.append($abody_container);
+				$main_alerts_body_container.append($abody_container);
 			}
 			// 클릭 읽음 기능 추가
 			$(".main_alerts_body").readAlert();
