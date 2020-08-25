@@ -32,7 +32,7 @@ header
     align-items: center;
     transition: 0.6s;
     padding: 20px 100px;
-	border-bottom: 1px solid lightgrey;
+	border-bottom: thin solid lightgrey;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
 }
@@ -59,7 +59,7 @@ header
 	height: 35px;
 	width: 35px;
 	border-radius: 50%;
-	border: 1px solid grey;
+	border: thin solid lightgrey;
 }
 .main_navbar #memberNickName
 {

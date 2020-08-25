@@ -34,4 +34,9 @@ public class MessageDao {
 
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.getUserMessageList", m);
 	}
+
+	public ArrayList<Message> loadChat(Message me) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.loadChat", me);
+	}
 }

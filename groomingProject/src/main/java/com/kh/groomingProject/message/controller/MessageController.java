@@ -1,6 +1,8 @@
 package com.kh.groomingProject.message.controller;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
-import com.kh.groomingProject.alert.model.vo.Alert;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.message.model.service.MessageService;
 import com.kh.groomingProject.message.model.vo.Message;
@@ -90,7 +91,23 @@ public class MessageController {
 
 		response.setContentType("application/json;charset=utf-8");
 
-		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd'T'HH:mm:ss").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm:ss").create();
+		gson.toJson(mList, response.getWriter());
+		
+	}
+	
+	@RequestMapping("loadChat.do")
+	public void loadChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
+		
+		System.out.println("채팅 로딩 : " + me);
+		
+		ArrayList<Message> mList = msgService.loadChat(me);
+		
+		System.out.println("채팅 로딩 확인 : " + mList);
+				
+		response.setContentType("application/json;charset=utf-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh:mm:ss").create();
 		gson.toJson(mList, response.getWriter());
 		
 	}

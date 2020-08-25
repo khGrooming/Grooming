@@ -38,4 +38,10 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.getUserMessageList(m);
 	}
+
+	@Override
+	public ArrayList<Message> loadChat(Message me) {
+
+		return msgDao.loadChat(me);
+	}
 }

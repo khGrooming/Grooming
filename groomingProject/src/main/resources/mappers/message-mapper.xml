@@ -55,6 +55,14 @@
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 
+	<select id="loadChat" parameterType="Message" resultMap="messageResultSet">
+		SELECT *
+		FROM VIEW_MESSAGE
+		WHERE (FROM_MEMBER_NO=#{fromMemberNo} AND TO_MEMBER_NO=#{toMemberNo})
+		OR (FROM_MEMBER_NO=#{toMemberNo} AND TO_MEMBER_NO=#{fromMemberNo})
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
 </mapper>
 
 

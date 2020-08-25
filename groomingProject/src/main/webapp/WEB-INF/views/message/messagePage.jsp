@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,15 +34,19 @@ section
 {
 	max-width: 1170px;
 	max-height: 750px;
-	margin: auto;
+	margin: 10 px auto;
 }
 .massage_container .chat_img img,
-.massage_container .profile_img img,
+.massage_container .mesgs_header_img img,
 .massage_container .incoming_msg_img img
 {
+	height: 100%;
 	width: 100%;
 	border: thin solid lightgrey;
 	border-radius: 50%;
+    margin-top: auto;
+    margin-bottom: auto;
+	object-fit: cover;
 }
 .inbox_people
 {
@@ -133,7 +138,8 @@ section
 .chat_img
 {
 	float: left;
-	width: 20%;
+	height: 40px;
+	width: 40px;
 }
 .chat_ib
 {
@@ -169,6 +175,7 @@ section
 .incoming_msg_img
 {
 	display: inline-block;
+	height: 30px;
 	width: 30px;
 }
 .received_msg
@@ -197,7 +204,7 @@ section
 }
 .received_withd_msg
 {
-    width: 57%;
+    width: 47%;
 }
 .mesgs_header
 {
@@ -208,14 +215,16 @@ section
 	border-bottom: thin solid lightgrey;
 	border-left: thin solid lightgrey;
 }
-.mesgs_header .profile_img
+.mesgs_header .mesgs_header_img
 {
+    visibility: hidden;
 	display: inline-block;
 	margin-right: 5px;
 	width: 40px;
 }
 .mesgs_header p
 {
+    visibility: hidden;
 	margin: 0;
 	font-size: 30px;
 	line-height: 40px;
@@ -236,9 +245,21 @@ section
     padding: 5px 10px 5px 12px;
     width: 100%;
 }
-.outgoing_msg {
+.outgoing_msg
+{
     overflow: hidden;
     margin: 26px 8px;
+}
+.date_divider_msg
+{
+	position: relative;
+    overflow: hidden;
+    margin: 26px 8px;
+    text-align: center;
+}
+.date_divider_msg .divider_date
+{
+	margin: 0 auto -27px;
 }
 .sent_msg {
     float: right;
@@ -293,7 +314,7 @@ section
                         <div class="recent_heading">
                             <h4>메시지</h4>
                         </div>
-                        <div class="srch_bar">
+                        <%-- <div class="srch_bar">
                             <div class="stylish-input-group">
                                 <input type="text" class="search-bar" placeholder="Search">
                                 <span class="input-group-addon">
@@ -302,41 +323,114 @@ section
 									</button>
                                 </span>
 							</div>
-                        </div>
+                        </div> --%>
                     </div>
 
 					<div class="inbox_chat">
-
+					
+				<c:if test="${empty mList  }">
+					<div class="empty_chat">
+						<h4>나중에 꾸미자...</h4>
+						<h4>대화가 없습니다.</h4>
+						<button type="button"> 메시지 보내기</button>
+					</div>
+				</c:if>
+				<c:if test="${!empty mList }">
                    	<c:forEach var="m" items="${mList }">
 						<div class="chat_list">
+						<c:set var="calcDate" value="${mLresult }"/>
+						<!-- NOW DATE  -->
+						<jsp:useBean id="now" class="java.util.Date"/>
+						<fmt:formatDate var="nowDate" value="${now}" type="time" pattern="yyyyMMdd"/>
+						<fmt:formatDate var="nowYear" value="${now}" type="time" pattern="yyyy"/>
+						<fmt:formatDate var="nowMonth" value="${now}" type="time" pattern="MM"/>
+						<fmt:formatDate var="nowDay" value="${now}" type="time" pattern="dd"/>
+						<fmt:formatDate var="nowHour" value="${now}" type="time" pattern="HH"/>
+						<fmt:formatDate var="nowMinute" value="${now}" type="time" pattern="mm"/>
+						<fmt:formatDate var="nowSecond" value="${now}" type="time" pattern="ss"/>
+						<!-- DB DATE -->
+						<fmt:parseDate var="parseDate" value="${m.messageDate }" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate var="mLDate" value="${parseDate}" type="time" pattern="yyyyMMdd"/>
+						<fmt:formatDate var="mLYear" value="${parseDate}" type="time" pattern="yyyy"/>
+						<fmt:formatDate var="mLMonth" value="${parseDate}" type="time" pattern="MM"/>
+						<fmt:formatDate var="mLDay" value="${parseDate}" type="time" pattern="dd"/>
+						<fmt:formatDate var="mLHour" value="${parseDate}" type="time" pattern="HH"/>
+						<fmt:formatDate var="mLMinute" value="${parseDate}" type="time" pattern="mm"/>
+						<fmt:formatDate var="mLSecond" value="${parseDate}" type="time" pattern="ss"/>
+						<fmt:formatDate var="mLresult" value="${parseDate}" type="both"/>
+						<fmt:formatDate var="mLTime" value="${parseDate}" type="time" pattern="a hh:mm"/>
+		
+						<c:choose>
+ 							<c:when test="${newYear == mLYear }">
+								<c:set var="calcDate" value="${nowYear - mLYear}년 전"/>
+ 							</c:when>
+ 							<c:when test="${nowMonth ne mLMonth}">
+								<c:set var="calcDate" value="${nowMonth - mLMonth}달 전"/>
+ 							</c:when>
+ 							<c:when test="${nowDay ne mLDay}">
+								<c:set var="calcDate" value="${nowDay - mLDay}일 전"/>
+ 							</c:when>
+ 							<%-- <c:when test="${nowHour ne mLHour}">
+								<c:set var="calcDate" value="${nowHour - mLHour}시간 전"/>
+ 							</c:when>
+ 							<c:when test="${nowMinute ne mLMinute}">
+								<c:set var="calcDate" value="${nowMinute - mLMinute}분 전"/>
+ 							</c:when>
+ 							<c:when test="${nowSecond ne mLSecond}">
+								<c:set var="calcDate" value="${nowSecond - mLSecond}초 전"/>
+ 							</c:when> --%>
+							<c:otherwise>
+								<c:set var="calcDate" value="${mLTime }"/>
+							</c:otherwise>
+ 						</c:choose>
+						
+						<c:if test="${m.fromMemberNo eq loginUser.memberNo }">
+							<input type="hidden" class="memberNo" value="${m.toMemberNo}"></input>
+							<input type="hidden" class="memberNickname" value="${m.toMemberNickname}"></input>
+							<div class="chat_people">
+								<div class="chat_img">
+									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${m.toMemberPhoto }"
+										onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+								</div>
+								<div class="chat_ib">
+									<h5>${m.toMemberNickname } <span class="chat_date">${calcDate}</span></h5>
+									<p>${m.messageContent }</p>
+								</div>
+							</div>
+						</c:if>
+						<c:if test="${m.fromMemberNo ne loginUser.memberNo }">
+							<input type="hidden" class="memberNo" value="${m.fromMemberNo}"></input>
+							<input type="hidden" class="memberNickname" value="${m.fromMemberNickname}"></input>
 							<div class="chat_people">
 								<div class="chat_img">
 									<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${m.fromMemberPhoto }"
 										onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
 								</div>
 								<div class="chat_ib">
-									<h5>${m.fromMemberNickname } <span class="chat_date">${m.messageDate }</span></h5>
+									<h5>${m.fromMemberNickname } <span class="chat_date">${calcDate }</span></h5>
 									<p>${m.messageContent }</p>
 								</div>
 							</div>
+						</c:if>
                         </div>
 					</c:forEach>
-
+				</c:if>
                     </div>
                 </div>
-                <div class="mesgs_header">
-                    <div class="profile_img">
-						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
-						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-                    </div>
-                    <p>Tester</p>
-                </div>
+                
+				<div class="mesgs_header">
+					<div class="mesgs_header_img">
+						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG"
+							onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+					</div>
+					<p class="mesgs_nickname">Tester</p>
+				</div>
                 <div class="mesgs">
                     <div class="msg_history">
                     
                         <div class="incoming_msg">
                             <div class="incoming_msg_img">
-								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
+								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG"
 								onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                             </div>
                             <div class="received_msg">
@@ -373,7 +467,111 @@ section
 </section>
 
 	<script type="text/javascript">
-	
+		$(".chat_list").on("click",function(){
+			var el = $(this);
+			
+			var toMemberNo = "${loginUser.memberNo }";
+			var fromMemberNo = el.find("input[type=hidden].memberNo").val();
+			var fromMemberNickname = el.find("input[type=hidden].memberNickname").val();
+			var fromMemberImg = el.find(".proFile_img").attr("src");
+			
+			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
+			
+			$(".incoming_msg_img img.proFile_img").prop("src",fromMemberImg);
+			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
+			$(".mesgs_header_img").css("visibility","visible");
+			$(".mesgs_nickname").css("visibility","visible");
+			
+			$("div").remove(".incoming_msg");
+			$("div").remove(".outgoing_msg");
+			// 채팅 데이터 가져오기  띄우기
+			$.ajax({
+				url:"loadChat.do",
+				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo},
+				success:function(data){
+					console.log("채팅 대화 가져오기 결과 : " + data.length);
+					loadChat(data);
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+		});
+		
+		function loadChat(data) {
+			$("div").remove(".incoming_msg");
+			$("div").remove(".outgoing_msg");
+			$("div").remove(".date_divider_msg");
+
+			// 채팅 내용 추가
+			if(data.length > 0) {
+				console.log("채팅 내용 추가");
+				var memberNo = "${loginUser.memberNo}";
+				var messageDateTemp = "";
+
+				for(var i in data){
+					var $msg_history = $(".msg_history");
+					
+					// 날짜 계산
+					var messageDate = data[i].messageDate.split(',');
+					
+					console.log("messageDateTemp : " + messageDateTemp);
+					console.log("messageDate[0] : " + messageDate[0]);
+					console.log(messageDateTemp == "");
+					console.log("messageDateTemp 2 " + messageDateTemp == messageDate[0]);
+					
+					if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
+						var $date_divider_msg = $('<div>').addClass("date_divider_msg");
+						var $divider_date = $('<div>').addClass("divider_date").text( messageDate[0]);
+						var $hrMessageDate = $('<hr>')
+						
+						$date_divider_msg.append($divider_date);
+						$date_divider_msg.append($hrMessageDate);
+						$msg_history.append($date_divider_msg);
+						
+					}
+
+					if(data[i].fromMemberNo == memberNo){
+						// outgoing	
+						var $outgoing_msg = $('<div>').addClass("outgoing_msg");
+						var $sent_msg = $('<div>').addClass("sent_msg");
+						var $pMessageContent = $('<p>').text(data[i].messageContent);
+						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
+
+						$sent_msg.append($pMessageContent);
+						$sent_msg.append($time_date);
+						$outgoing_msg.append($sent_msg);
+
+						$msg_history.append($outgoing_msg);
+
+					} else {
+						// incoming
+						var $incoming_msg = $('<div>').addClass("incoming_msg");
+						var $incoming_msg_img = $('<div>').addClass("incoming_msg_img");
+						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].fromMemberPhoto,"onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
+						var $received_msg = $('<div>').addClass("received_msg");
+						var $received_withd_msg = $('<div>').addClass("received_withd_msg");
+						var $pMessageContent = $('<p>').text(data[i].messageContent);
+						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
+						
+						$incoming_msg_img.append($proFile_img);
+						$received_withd_msg.append($pMessageContent);
+						$received_withd_msg.append($time_date);
+						$received_msg.append($received_withd_msg);
+						$incoming_msg.append($incoming_msg_img);
+						$incoming_msg.append($received_msg);
+						
+						$msg_history.append($incoming_msg);
+						
+					}
+
+					messageDateTemp = messageDate[0];
+
+				}
+			} else {
+				console.log("내용 없음");
+			}
+		}
 	</script>
 
 	<jsp:include page="../common/footer.jsp" />
