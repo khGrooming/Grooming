@@ -260,6 +260,10 @@ section
 .date_divider_msg .divider_date
 {
 	margin: 0 auto -27px;
+    background-color: darkslategray;
+    width: 138px;
+    color: white;
+    border-radius: 3px;
 }
 .sent_msg {
     float: right;
@@ -512,14 +516,8 @@ section
 				for(var i in data){
 					var $msg_history = $(".msg_history");
 					
-					// 날짜 계산
+					// 날짜 계산 & 추가
 					var messageDate = data[i].messageDate.split(',');
-					
-					console.log("messageDateTemp : " + messageDateTemp);
-					console.log("messageDate[0] : " + messageDate[0]);
-					console.log(messageDateTemp == "");
-					console.log("messageDateTemp 2 " + messageDateTemp == messageDate[0]);
-					
 					if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
 						var $date_divider_msg = $('<div>').addClass("date_divider_msg");
 						var $divider_date = $('<div>').addClass("divider_date").text( messageDate[0]);
@@ -528,9 +526,9 @@ section
 						$date_divider_msg.append($divider_date);
 						$date_divider_msg.append($hrMessageDate);
 						$msg_history.append($date_divider_msg);
-						
 					}
 
+					// 메시지 추가
 					if(data[i].fromMemberNo == memberNo){
 						// outgoing	
 						var $outgoing_msg = $('<div>').addClass("outgoing_msg");
