@@ -60,7 +60,7 @@
     </header>
 
     <!-- 섹션 시작 -->
-
+	
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
 	    <c:url var="calendar" value="calendar.do">
@@ -139,6 +139,7 @@
 				<c:if test="${pi.currentPage gt 1 }">
 				<c:url var="blistBack" value="gBlist.do">
 					<c:param name="page" value="${pi.currentPage - 1 }"/>
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 				</c:url>
 					<a href="${blistBack }">[이전]</a>
 				</c:if>	
@@ -153,6 +154,7 @@
 					<c:if test="${p ne pi.currentPage }">
 						<c:url var="blistCheck" value="gBlist.do">
 							<c:param name="page" value="${p}"/>
+							<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 						</c:url>
 						<a href="${ blistCheck}">${p }</a>
 					</c:if>
@@ -162,10 +164,11 @@
 					&nbsp;[이후]
 				</c:if>			
 				<c:if test="${pi.currentPage lt pi.maxPage }">
-				<c:url var="blistAfter" value="gBlist.do">
-					<c:param name="page" value="${pi.currentPage + 1 }"/>
-				</c:url>
-					<a href="${blistAfter }">[이후]</a>
+					<c:url var="blistAfter" value="gBlist.do">
+						<c:param name="page" value="${pi.currentPage + 1 }"/>
+						<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+					</c:url>
+						<a href="${blistAfter }">[이후]</a>
 				</c:if>	
 			</td>
 		</tr>

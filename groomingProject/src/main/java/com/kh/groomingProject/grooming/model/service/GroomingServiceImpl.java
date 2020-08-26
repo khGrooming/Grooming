@@ -15,6 +15,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("gService")
@@ -257,9 +258,9 @@ public class GroomingServiceImpl implements GroomingService{
 	}
 
 	@Override
-	public ArrayList<GroupBoard> selectGroupBoardList(Map map) {
+	public ArrayList<GroupBoard> selectGroupBoardList(GroupPageInfo pi,String groomingNo) {
 		// TODO Auto-generated method stub
-		return gDao.selectGroupBoardList(map);
+		return gDao.selectGroupBoardList( pi, groomingNo);
 	}
 
 	@Override

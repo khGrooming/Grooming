@@ -679,25 +679,28 @@ public class GroomingController {
 	@RequestMapping("gBlist.do")
 	public ModelAndView gBoardList(ModelAndView mv,
 			@RequestParam(value="page", required=false) Integer page, String groomingNo) {
-		
-		Grooming grooming = gService.selectGrooming(groomingNo);
 		// 페이징 관련 처리부터 하자
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		System.out.println("나 현재 페이지야 : " +currentPage );
 			
 		 int listCount = gService.getListCount(groomingNo); 
 		 GroupPageInfo pi = getPageInfo(currentPage, listCount);
-		 Map map = new HashMap();
+		/*
+		 * Map map = new HashMap();
+		 * 
+		 * map.put("pi", pi); map.put("groomingNo",groomingNo);
+		 */
 		 
-		 map.put("pi", pi);
-		 map.put("groomingNo",groomingNo);
-		 
-		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(map);
+		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(pi,groomingNo);
+		 Grooming grooming = gService.selectGrooming(groomingNo);
 		 if(glist != null) {
 			 mv.addObject("grooming",grooming)
-			 .addObject("glist",glist).setViewName("grooming/groupBoard");
+			 .addObject("glist",glist)
+			 .addObject("pi",pi)
+			 .setViewName("grooming/groupBoard");
 		 
 		 }else {
 			 throw new GroomingException("그룹게시판 조회실패!");

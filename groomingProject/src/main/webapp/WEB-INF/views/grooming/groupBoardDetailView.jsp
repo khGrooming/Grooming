@@ -121,7 +121,7 @@
 										<textarea cols="100" rows="10" placeholder="신고 사유를 입력하세요. " id="summernote" name="dContent" class="form-control" required></textarea>
 									</div>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="sumbit">제출</button>
+										<button type="sumbit" id="singo">제출</button>
 										<button type="button" data-dismiss="modal">취소</button>
 									</div>
 							</div>
@@ -235,6 +235,9 @@
 				
 				
 				
+			})
+			$("#singo").on("click",function(){
+				alert("신고 되었습니다.");
 			})
 	
 		})

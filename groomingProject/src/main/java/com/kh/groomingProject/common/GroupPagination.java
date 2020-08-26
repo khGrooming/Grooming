@@ -11,9 +11,9 @@ public class GroupPagination {
 		int startPage;
 		int endPage;
 		
-		int boardLimit = 5;
+		int boardLimit = 10;
 		
-		maxPage = (int)((double)listCount/boardLimit + 0.9);
+		maxPage = (int)((double)listCount/boardLimit + 1);
 		
 		startPage = ((int)((double)currentPage/pageLimit + 0.9) -1)*pageLimit +1;
 		

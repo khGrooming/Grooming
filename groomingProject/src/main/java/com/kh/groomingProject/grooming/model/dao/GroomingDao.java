@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("gDao")
@@ -227,9 +229,14 @@ public class GroomingDao {
 		return sqlSessionTemplate.selectOne("groomingMapper.getListCount",groomingNo);
 	}
 
-	public ArrayList<GroupBoard> selectGroupBoardList(Map map) {
+	public ArrayList<GroupBoard> selectGroupBoardList(GroupPageInfo pi,String groomingNo) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGroupBoardList",map);
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		Map map = new HashMap();
+		map.put("pi",pi);
+		map.put("groomingNo",groomingNo);
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGroupBoardList",map,rowBounds);
 	}
 
 	public int addBoardReadCount(String gBoardNo) {
