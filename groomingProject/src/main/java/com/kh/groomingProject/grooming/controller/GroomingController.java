@@ -2,7 +2,6 @@ package com.kh.groomingProject.grooming.controller;
 
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,7 +27,15 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
-import com.kh.groomingProject.grooming.model.vo.*;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.tag.model.service.TagService;
@@ -467,6 +474,33 @@ public class GroomingController {
 		}
 	}
 	
+	@RequestMapping("declareG.do")
+	public ModelAndView declareGroup(Declaration d,String memberNo,String gBoardNo, @RequestParam("currentPage") Integer page, ModelAndView mv, String groomingNo) {
+		int currentPage = page;
+		int result = declarationService.declareG(d);
+		Member member = mService.selectGroupMemberNo(gBoardNo);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		Map map = new HashMap();
+		map.put("memberNo", memberNo);
+		map.put("gBoardNo", gBoardNo);
+		
+		Declaration declaration = declarationService.selectGroupDeclare(map);
+		if(result > 0) {
+			GroupBoard gboard = gService.selectGBoard(gBoardNo);
+			if(gboard != null) {
+				mv.addObject("gboard",gboard)
+					.addObject("currentPage" , currentPage)
+					.addObject("grooming",grooming)
+					.addObject("member",member)
+					.addObject("declaration",declaration)
+					.setViewName("grooming/groupBoardDetailView");
+			}
+		} else {
+			throw new GroomingException("게시글 신고 실패!");
+		}
+		
+		return mv;
+	}
 	
 //	찜하기
 	
@@ -691,9 +725,39 @@ public class GroomingController {
 		return "grooming/groupBoardInsertForm";
 	}
 
-	@RequestMapping("groupdetail.do")
-	public String groupBoardDetailView() {
-		return "grooming/groupBoardDetailView";
+	@RequestMapping("groupDetail.do")
+	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam("page") Integer page, ModelAndView mv, String groomingNo) {
+		
+		int	currentPage = page;
+		
+		int result = gService.addBoardReadCount(gBoardNo);
+		Member member = mService.selectGroupMemberNo(gBoardNo);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		Map map = new HashMap();
+		map.put("memberNo", memberNo);
+		map.put("gBoardNo", gBoardNo);
+		
+		Declaration declaration = declarationService.selectGroupDeclare(map);
+		if(result > 0) {
+			GroupBoard gboard = gService.selectGBoard(gBoardNo);
+			if(gboard != null) {
+				mv.addObject("gboard",gboard)
+					.addObject("currentPage" , currentPage)
+					.addObject("grooming",grooming)
+					.addObject("member",member)
+					.addObject("declaration",declaration)
+					.setViewName("grooming/groupBoardDetailView");
+			}else {
+				throw new GroomingException("게시글 조회 실패!");
+			}
+		}else {
+			throw new GroomingException("게시글 조회수 증가 실패!");
+		}
+		
+		
+		
+		
+		return mv;
 	}
 	
 	

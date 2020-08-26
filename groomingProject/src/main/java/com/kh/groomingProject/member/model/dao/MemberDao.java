@@ -88,4 +88,9 @@ public class MemberDao {
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectGroupMList",groomingNo);
 	}
 
+	public Member selectGroupMemberNo(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("memberMapper.selectGroupMemberNo",gBoardNo);
+	}
+
 }

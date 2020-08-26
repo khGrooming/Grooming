@@ -136,5 +136,15 @@
        WHERE GM.GROOMING_NO = #{groomingNo}
 	   ORDER BY G_MEMBER_NO 
 	</select>
+	
+	<select id="selectGroupMemberNo" parameterType="string" resultMap="memberResultSet">
+	      SELECT *
+	      FROM MEMBER M 
+	      JOIN GROMMING_MEMBER GM ON GM.MEMBER_NO = M.MEMBER_NO
+	      JOIN GBOARD GB ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+	      WHERE G_BOARD_NO = #{gBoardNo}
+	
+	</select>
+	
 
 </mapper>

@@ -100,4 +100,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.GroupMList(groomingNo);
 	}
 
+	@Override
+	public Member selectGroupMemberNo(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return mDao.selectGroupMemberNo(gBoardNo);
+	}
+
 }

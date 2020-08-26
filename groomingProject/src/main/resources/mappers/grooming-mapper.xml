@@ -524,4 +524,25 @@
  	
  	</select>
  	
+ 	<update id="addBoardReadCount" parameterType="string">
+ 	   UPDATE GBOARD 
+       SET G_BOARD_VIEW_COUNT = G_BOARD_VIEW_COUNT + 1
+       WHERE G_BOARD_NO = #{gBoardNo}
+ 	 </update>
+ 	
+ 	<select id="selectGBoard" parameterType="string" resultMap="GroupBoardResultSet">
+ 	   SELECT GB.*, M.MEMBER_NICKNAME
+       FROM GBOARD GB
+       JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       JOIN MEMBER M ON M.MEMBER_NO = GM.MEMBER_NO
+       WHERE G_BOARD_NO=#{gBoardNo}
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>

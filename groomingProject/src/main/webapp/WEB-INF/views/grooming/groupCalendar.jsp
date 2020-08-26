@@ -176,7 +176,7 @@
 	
 
 
-    <footer  style="margin-top:100px;">
+    <footer>
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>

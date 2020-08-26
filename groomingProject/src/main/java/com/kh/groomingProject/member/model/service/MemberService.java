@@ -37,4 +37,6 @@ public interface MemberService {
 
 	ArrayList<Member> GroupMList(String groomingNo);
 
+	Member selectGroupMemberNo(String gBoardNo);
+
 }

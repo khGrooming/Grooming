@@ -231,6 +231,16 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGroupBoardList",map);
 	}
+
+	public int addBoardReadCount(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.addBoardReadCount",gBoardNo);
+	}
+
+	public GroupBoard selectGBoard(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGBoard",gBoardNo);
+	}
 	
 	
 	

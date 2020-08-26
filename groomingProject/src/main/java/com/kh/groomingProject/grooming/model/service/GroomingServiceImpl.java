@@ -262,6 +262,18 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectGroupBoardList(map);
 	}
 
+	@Override
+	public int addBoardReadCount(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.addBoardReadCount(gBoardNo);
+	}
+
+	@Override
+	public GroupBoard selectGBoard(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGBoard(gBoardNo);
+	}
+
 
 	
 }

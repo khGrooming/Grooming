@@ -79,9 +79,7 @@
         <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-	<c:url >
-		
-	</c:url>
+	
 
   
     <!--게시판에 들어갈 내용 -->
@@ -100,7 +98,14 @@
             </thead>
             <tbody>
             <c:forEach var="g" items="${glist}">
-              <tr class ="tr" action="">
+            <c:url var="gDetail" value="groupDetail.do">
+				<c:param name="gBoardNo" value="${g.gBoardNo}"/>
+				<c:param name="page" value="${pi.currentPage }"/>
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+				<c:param name="memberNo" value="${loginUser.memberNo }"/>
+			</c:url> 
+            <c:if test="${g.gBoardCategory eq '공지' }">
+              <tr class ="tr" onclick="location.href='${gDetail }'" style="background:#f5f5dc;">
                 <th scope="row">${g.gBoardNo}</th>
                 <td class="category">${g.gBoardCategory}</td>
                 <td>${g.gBoardTitle}</td>
@@ -108,6 +113,20 @@
                 <td>${g.createDate}</td>
                 <td>${g.count}</td>
               </tr>
+             </c:if>
+            <c:if test="${g.gBoardCategory ne '공지' }">
+              <tr class ="tr" onclick="location.href='${gDetail }'">
+                <th scope="row">${g.gBoardNo}</th>
+                <td class="category">${g.gBoardCategory}</td>
+                <td>${g.gBoardTitle}</td>
+                <td>${g.memberNickName}</td>
+                <td>${g.createDate}</td>
+                <td>${g.count}</td>
+              </tr>
+             </c:if>
+             
+             
+             
 			</c:forEach>
 
 				<!-- 페이징 처리 부분 -->
@@ -169,25 +188,12 @@
 
 </div>
 
-	<script>
-		$(function(){
-			var color = $(".tr").children(".category").val();	
-			console.log(color);
-			if(color == "공지"){
-				$(".tr").attr("style","background:blue;");
-			}
-			
-			
-		})
-		
 	
 	
-	
-	</script>
 
 
 
-    <footer  style="margin-top:100px;">
+    <footer>
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>
