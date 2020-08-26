@@ -136,8 +136,9 @@ public class MessageController {
 				// 같은 채팅 방 시간 비교
 				if(jFmNo.equals(iTmNo) && jTmNo.equals(iFmNo)) {
 					if(iTime.getTime() < jTime.getTime()) {
-						System.out.println("시간 비교 : " + (iTime.getTime() > jTime.getTime()) + " / " + i.getMessageNo());
+						System.out.println("시간 비교 < : " + (iTime.getTime() < jTime.getTime()) + " / " + i.getMessageNo());
 						im.remove();
+						break;
 					}
 				}
 			}
