@@ -14,6 +14,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
@@ -221,9 +222,14 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMemberList",groomingNo);
 	}
 
-	public int getListCount() {
+	public int getListCount(String groomingNo) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("groomingMapper.getListCount");
+		return sqlSessionTemplate.selectOne("groomingMapper.getListCount",groomingNo);
+	}
+
+	public ArrayList<GroupBoard> selectGroupBoardList(Map map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGroupBoardList",map);
 	}
 	
 	

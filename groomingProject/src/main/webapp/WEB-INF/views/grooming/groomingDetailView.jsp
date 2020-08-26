@@ -435,12 +435,7 @@ img {
 			</div>
 		</div>
 	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
-	 <c:url var="groupPage" value="groupPage.do">
-						<c:param name="groomingNo" value="${grooming.groomingNo}"/>
-					</c:url>
-					<c:if test="${grooming.memberNo eq loginUser.memberNo }">
-						<button onclick="location.href='${groupPage}'" type="button" > 그룹페이지 가보기 (임시용)</button>
-					</c:if>
+
 	</section>
 	
 	<script>

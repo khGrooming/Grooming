@@ -88,6 +88,7 @@
 		<result property="createDate" column="G_BOARD_CREATE_DATE"/>
 		<result property="modifyDate" column="G_BOARD_MODIFY_DATE"/>
 		<result property="gBoardImg" column="G_BOARD_IMG"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
 	</resultMap>
 	
 	 <resultMap type="GReply" id="GroupReplyResultSet">
@@ -502,14 +503,25 @@
  	
  	</select>
  	
- 	<select id="getListCount" resultType="_int">
+ 	<select id="getListCount" parameterType="string" resultType="_int">
  		SELECT COUNT(*)
  		FROM GBOARD	GB
  		JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
  		JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
- 		
+ 		WHERE GM.GROOMING_NO = #{groomingNo}
  	</select>
  	
+ 	<select id="selectGroupBoardList" parameterType="map" resultMap="GroupBoardResultSet">
+ 	   SELECT GB.*, M.MEMBER_NICKNAME
+       FROM GBOARD GB
+       JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       JOIN MEMBER M ON M.MEMBER_NO = GM.MEMBER_NO
+       WHERE GM.GROOMING_NO=#{groomingNo}
+       ORDER BY G_BOARD_CATEGORY,G_BOARD_NO DESC
  	
+ 	
+ 	
+ 	</select>
  	
 </mapper>

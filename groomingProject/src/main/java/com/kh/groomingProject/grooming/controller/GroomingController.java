@@ -1,5 +1,8 @@
 package com.kh.groomingProject.grooming.controller;
 
+import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
+
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -25,13 +28,7 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
-import com.kh.groomingProject.grooming.model.vo.Grooming;
-import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
-import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
-import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
-import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
-import com.kh.groomingProject.grooming.model.vo.GroomingTag;
-import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.*;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.tag.model.service.TagService;
@@ -647,35 +644,45 @@ public class GroomingController {
 	
 	@RequestMapping("gBlist.do")
 	public ModelAndView gBoardList(ModelAndView mv,
-			@RequestParam(value="page", required=false) Integer page) {
+			@RequestParam(value="page", required=false) Integer page, String groomingNo) {
 		
+		Grooming grooming = gService.selectGrooming(groomingNo);
 		// 페이징 관련 처리부터 하자
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 			
-		/* int listCount = gService.getListCount(); */
-	
-		mv.setViewName("grooming/groupBoard");
-		
+		 int listCount = gService.getListCount(groomingNo); 
+		 GroupPageInfo pi = getPageInfo(currentPage, listCount);
+		 Map map = new HashMap();
+		 
+		 map.put("pi", pi);
+		 map.put("groomingNo",groomingNo);
+		 
+		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(map);
+		 if(glist != null) {
+			 mv.addObject("grooming",grooming)
+			 .addObject("glist",glist).setViewName("grooming/groupBoard");
+		 
+		 }else {
+			 throw new GroomingException("그룹게시판 조회실패!");
+		 }
 		return mv;
 	}
 	
 	@RequestMapping("calendar.do")
 	public ModelAndView calendar(ModelAndView mv,
-			@RequestParam(value="page", required=false) Integer page) {
+			@RequestParam(value="page", required=false) Integer page,String groomingNo) {
 		
+		Grooming grooming = gService.selectGrooming(groomingNo);
 		// 페이징 관련 처리부터 하자
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
-		/*
-		 * int listCount = gService.getListCount();
-		 */
 		
-		mv.setViewName("grooming/groupCalendar");
+		mv.addObject("grooming",grooming).setViewName("grooming/groupCalendar");
 		
 		return mv;
 	}

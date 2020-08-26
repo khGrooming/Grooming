@@ -13,6 +13,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
@@ -250,9 +251,15 @@ public class GroomingServiceImpl implements GroomingService{
 	}
 
 	@Override
-	public int getListCount() {
+	public int getListCount(String groomingNo) {
 		// TODO Auto-generated method stub
-		return gDao.getListCount();
+		return gDao.getListCount(groomingNo);
+	}
+
+	@Override
+	public ArrayList<GroupBoard> selectGroupBoardList(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGroupBoardList(map);
 	}
 
 

@@ -124,7 +124,7 @@
 
 
         <!-- 메인에 들어갈 내용용 -->
-        <section id="content3">
+        <section >
 
             <div style="text-align: right; margin-right: 20px;">
             <a href="#">신고하기</a>
@@ -134,12 +134,10 @@
 
                         <table class="table table-bordered">
 
-                            <form method="post">
                                 <tr>
                                     <th>작성게시판 </th>
                                     <td>
                                         <label>자유게시판</label>
-                                        <label hidden>공지사항</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -148,50 +146,9 @@
                                 </tr>
                                 <tr>
                                     <th>내용 </th>
-                                    <td><textarea cols="100" rows="10" class="form-control" readonly
-                                            style="height:auto;">시곌 보며 속삭이는 비밀들
-						                                    간절한 내 맘속 이야기
-						                                    지금 내 모습을 해쳐도 좋아
-						                                    나를 재촉하면 할수록 좋아
-						                                    내 이름 불러줘
-						                                    
-                                    * 손 틈새로 비치는 내 맘 들킬까 두려워
-						                                    가슴이 막 벅차 서러워
-						                                    조금만 꼭 참고 날 기다려줘
-						                                    너랑 나랑은 지금 안되지
-						                                    시계를 더 보채고 싶지만
-						                                    네가 있던 미래에서
-						                                    내 이름을 불러줘
-						                                    
-						                                    내가 먼저 엿보고 온 시간들
-						                                    너와 내가 함께였었지
-						                                    나랑 놀아주는 그대가 좋아
-						                                    내가 물어보면 그대도 좋아
-						                                    내 이름이 뭐야
-						                                    
-						                                    * Repeat
-						                                    
-						                                    눈 깜박하면 어른이 될 거예요
-						                                    날 알아보겠죠 그댄 기억하겠죠
-						                                    그래 기묘했던 아이
-						                                    손 틈새로 비치는 네 모습 참 좋다
-						                                    
-						                                    손끝으로 돌리며 시곗바늘아 달려봐
-						                                    조금만 더 빨리 날아봐
-						                                    두 눈을 꼭 감고 마법을 건다
-						                                    너랑 나랑은 조금 남았지
-						                                    몇날 몇실진 모르겠지만
-						                                    네가 있을 미래에서
-						                                    혹시 내가 헤맨다면
-						                                    너를 알아볼 수 있게
-						                                    내 이름을 불러줘</textarea></td>
+                                    <td><textarea cols="100" rows="10" class="form-control" readonly style="height:auto;"></textarea></td>
                                 </tr>
 
-
-
-
-
-                            </form>
 
                         </table>
                         

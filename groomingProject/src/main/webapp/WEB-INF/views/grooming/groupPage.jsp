@@ -75,11 +75,11 @@
 	</c:url>
     
         <!--디폴트 메뉴-->
-        <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
+        <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <label for="tab2"><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
+        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
-        <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
+        <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
         <!-- 메인에 들어갈 내용용 -->

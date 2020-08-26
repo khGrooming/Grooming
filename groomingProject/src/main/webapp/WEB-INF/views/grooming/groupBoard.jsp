@@ -74,12 +74,14 @@
 		</c:url>
     
         <!--디폴트 메뉴-->
-        <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
+        <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <label for="tab2"><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
+        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
-        <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-
+        <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
+	<c:url >
+		
+	</c:url>
 
   
     <!--게시판에 들어갈 내용 -->
@@ -97,15 +99,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>공지사항</td>
-                <td>내일 예정이었던 스터디디</td>
-                <td>김성훈</td>
-                <td>2020-07-12</td>
-                <td>2</td>
+            <c:forEach var="g" items="${glist}">
+              <tr class ="tr" action="">
+                <th scope="row">${g.gBoardNo}</th>
+                <td class="category">${g.gBoardCategory}</td>
+                <td>${g.gBoardTitle}</td>
+                <td>${g.memberNickName}</td>
+                <td>${g.createDate}</td>
+                <td>${g.count}</td>
               </tr>
-
+			</c:forEach>
 
 				<!-- 페이징 처리 부분 -->
 		<tr align="center" height="20">	
@@ -165,6 +168,23 @@
     </section>
 
 </div>
+
+	<script>
+		$(function(){
+			var color = $(".tr").children(".category").val();	
+			console.log(color);
+			if(color == "공지"){
+				$(".tr").attr("style","background:blue;");
+			}
+			
+			
+		})
+		
+	
+	
+	
+	</script>
+
 
 
     <footer  style="margin-top:100px;">
