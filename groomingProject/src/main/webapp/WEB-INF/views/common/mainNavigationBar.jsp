@@ -378,7 +378,7 @@ header .main_upIcon.show
 	</header>
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
-		let memberNo = "${loginUser.memberNo}";
+		let headerMemberNo = "${loginUser.memberNo}";
 		$(function() {
 			getUserAlert();
 			getUserMessages();
@@ -403,7 +403,7 @@ header .main_upIcon.show
 		function getUserMessages() {
 			$.ajax({
 				url:"getUserMessagesCount.do",
-				data:{memberNo:memberNo},
+				data:{memberNo:headerMemberNo},
 				success:function(data){
 					console.log("메시지 카운트 : " + data);
 					
@@ -426,11 +426,9 @@ header .main_upIcon.show
 		(function ($) {
             $.fn.readMessage = function() {
                 this.each(function() {
-        			console.log($(this));
                     var el = $(this);
 
                     el.parent().on('click', '.main_messages_body', function(event) {
-                        console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
             				console.log("메시지가 없습니다.");
@@ -444,7 +442,7 @@ header .main_upIcon.show
             			// 메시지 읽음
             			$.ajax({
             				url:"readUserMessage.do",
-            				data:{messageNo:messageNo,memberNo:memberNo},
+            				data:{messageNo:messageNo,memberNo:headerMemberNo},
             				success:function(data){
             					console.log("메시지 읽음 결과 : " + data.length);
             					refreshMessageBody(data);
@@ -502,7 +500,7 @@ header .main_upIcon.show
 			$(".main_messages_body").readMessage();
 		}
 
-		// 알림 리스트 추가
+		// 메시지 리스트 추가
  		$(".main_messages_icon").click(function() {
 			var alt_container = document.querySelector('.main_messages_dropdown');
 			alt_container.classList.toggle('active');
@@ -514,7 +512,7 @@ header .main_upIcon.show
 				console.log("메시지 아이콘 클릭");
 				$.ajax({
 					url:"getUserMessage.do",
-					data:{memberNo:memberNo},
+					data:{memberNo:headerMemberNo},
 					dateType:"json",
 					success:function(data){
 						console.log("메시지 확인 결과 : " + data.length);
@@ -535,7 +533,7 @@ header .main_upIcon.show
 		function getUserAlert() {
 			$.ajax({
 				url:"getUserAlertCount.do",
-				data:{memberNo:memberNo},
+				data:{memberNo:headerMemberNo},
 				success:function(data){
 					console.log("알림 카운트 : " + data);
 
@@ -558,11 +556,9 @@ header .main_upIcon.show
 		(function ($) {
             $.fn.readAlert = function() {
                 this.each(function() {
-        			console.log($(this));
                     var el = $(this);
 
                     el.parent().on('click', '.main_alerts_body', function(event) {
-                        console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
             				console.log("알림이 없습니다.");
@@ -576,7 +572,7 @@ header .main_upIcon.show
             			// 알림 삭제
             			$.ajax({
             				url:"readUserAlert.do",
-            				data:{alertNo:alertNo,memberNo:memberNo},
+            				data:{alertNo:alertNo,memberNo:headerMemberNo},
             				success:function(data){
             					console.log("알림 읽음 결과 : " + data.length);
             					refreshAlertBody(data);
@@ -641,7 +637,7 @@ header .main_upIcon.show
 	
 				$.ajax({
 					url:"getUserAlert.do",
-					data:{memberNo:memberNo},
+					data:{memberNo:headerMemberNo},
 					dateType:"json",
 					success:function(data){
 						console.log("알림 확인 결과 : " + data.length);

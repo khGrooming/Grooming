@@ -44,4 +44,16 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.loadChat(me);
 	}
+
+	@Override
+	public int sendChat(Message me) {
+
+		return msgDao.sendChat(me);
+	}
+
+	@Override
+	public ArrayList<Message> loadChatList(Member m) {
+
+		return msgDao.loadChatList(m);
+	}
 }

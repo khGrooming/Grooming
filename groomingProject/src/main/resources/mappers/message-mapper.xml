@@ -17,7 +17,7 @@
 
 	<insert id="insertMessage" parameterType="Message">
 		INSERT INTO MESSAGE (MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, MESSAGE_CONFIRM)
-			VALUES ('ALE' || LPAD(SEQ_MESSAGE_NO.NEXTVAL,5,0)
+			VALUES ('MSG' || LPAD(SEQ_MESSAGE_NO.NEXTVAL,5,0)
 					, #{fromMemberNo}, #{toMemberNo}, #{messageContent}
 					,SYSDATE, DEFAULT)
 	</insert>
@@ -47,20 +47,28 @@
 	</update>
 	
 	<select id="getUserMessageList" parameterType="Member" resultMap="messageResultSet">
-		SELECT *
-		FROM VIEW_MESSAGE
-		WHERE TO_MEMBER_NO=#{memberNo}
-		OR (FROM_MEMBER_NO=#{memberNo}
-		    AND TO_MEMBER_NO NOT IN (SELECT FROM_MEMBER_NO FROM VIEW_MESSAGE WHERE TO_MEMBER_NO=#{memberNo}))
+		SELECT * FROM VIEW_MESSAGE 
+		WHERE (TO_MEMBER_NO = #{memberNo} OR FROM_MEMBER_NO = #{memberNo})
+		AND TO_MEMBER_NO NOT IN (SELECT FROM_MEMBER_NO FROM VIEW_MESSAGE WHERE TO_MEMBER_NO = #{memberNo})
+		AND ROWID IN (SELECT MIN(ROWID)
+						FROM VIEW_MESSAGE GROUP BY FROM_MEMBER_NO, TO_MEMBER_NO)
+		ORDER BY MESSAGE_DATE DESC
+	</select>
+
+	<select id="loadChatList" parameterType="Member" resultMap="messageResultSet">
+		SELECT * FROM VIEW_MESSAGE 
+		WHERE (TO_MEMBER_NO = #{memberNo} OR FROM_MEMBER_NO = #{memberNo})
+		AND ROWID IN (SELECT MIN(ROWID)
+						FROM VIEW_MESSAGE GROUP BY FROM_MEMBER_NO, TO_MEMBER_NO)
 		ORDER BY MESSAGE_DATE DESC
 	</select>
 
 	<select id="loadChat" parameterType="Message" resultMap="messageResultSet">
 		SELECT *
 		FROM VIEW_MESSAGE
-		WHERE (FROM_MEMBER_NO=#{fromMemberNo} AND TO_MEMBER_NO=#{toMemberNo})
-		OR (FROM_MEMBER_NO=#{toMemberNo} AND TO_MEMBER_NO=#{fromMemberNo})
-		ORDER BY MESSAGE_DATE DESC
+		WHERE (FROM_MEMBER_NO = #{fromMemberNo} AND TO_MEMBER_NO = #{toMemberNo})
+		OR (FROM_MEMBER_NO = #{toMemberNo} AND TO_MEMBER_NO = #{fromMemberNo})
+		ORDER BY MESSAGE_DATE
 	</select>
 
 </mapper>

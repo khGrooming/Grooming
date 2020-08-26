@@ -17,4 +17,8 @@ public interface MessageService {
 
 	ArrayList<Message> loadChat(Message me);
 
+	int sendChat(Message me);
+
+	ArrayList<Message> loadChatList(Member m);
+
 }

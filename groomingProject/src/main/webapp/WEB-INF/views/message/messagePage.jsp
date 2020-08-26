@@ -217,14 +217,12 @@ section
 }
 .mesgs_header .mesgs_header_img
 {
-    visibility: hidden;
 	display: inline-block;
 	margin-right: 5px;
 	width: 40px;
 }
 .mesgs_header p
 {
-    visibility: hidden;
 	margin: 0;
 	font-size: 30px;
 	line-height: 40px;
@@ -269,9 +267,13 @@ section
     float: right;
     width: 46%;
 }
+.input_msg_write
+{
+	width: 100%;	
+}
 .input_msg_write input
 {
-	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	outline: none;
 	border: medium none;
 	color: #4c4c4c;
 	font-size: 15px;
@@ -280,19 +282,20 @@ section
 }
 .type_msg
 {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	border-top: 1px solid #c4c4c4;
-	position: relative;
 }
 .msg_send_btn
 {
 	background: #05728f none repeat scroll 0 0;
 	border: medium none;
-	border-radius: 50%;
+	border-radius: 5%;
 	color: #fff;
 	cursor: pointer;
 	font-size: 5px;
 	height: 33px;
-	position: absolute;
 	right: 0;
 	top: 11px;
 	width: 33px;
@@ -423,44 +426,42 @@ section
                 </div>
                 
 				<div class="mesgs_header">
+					<input type="hidden" class="toMemberNo" value=""></input>
 					<div class="mesgs_header_img">
-						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG"
+						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/views/images/grooming_logo(100x100).png"
 							onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
 					</div>
-					<p class="mesgs_nickname">Tester</p>
+					<p class="mesgs_nickname">그루밍</p>
 				</div>
                 <div class="mesgs">
                     <div class="msg_history">
-                    
-                        <div class="incoming_msg">
-                            <div class="incoming_msg_img">
-								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG"
+
+						<div class="incoming_msg">
+							<div class="incoming_msg_img">
+								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/views/images/grooming_logo(100x100).png"
 								onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
                             </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                    <p>안녕하세요. 회원님~ 공부는 잘되가나요?</p>
+                                    <span class="time_date">AM 10시 30분</span>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="outgoing_msg">
                             <div class="sent_msg">
-                                <p>Test which is a new approach to have all
-                                    solutions</p>
-                                <span class="time_date"> 11:01 AM | June 9</span>
+                                <p>네~ 덕분에 이번에 자격증 취득했어요~ 너무너무 감사해요.</p>
+                                <span class="time_date">PM 01시 30분</span>
                             </div>
                         </div>
-                        
-                        
+
                     </div>
                     <div class="type_msg">
                         <div class="input_msg_write">
-                            <input type="text" class="write_msg" placeholder="Type a message" />
-                            <button class="msg_send_btn" type="button"> 전송 </button>
+                            <input type="text" class="write_msg" placeholder="Type a message" required>
                         </div>
+						<button class="msg_send_btn" type="button"> 전송 </button>
                     </div>
                 </div>
             </div>
@@ -471,37 +472,163 @@ section
 </section>
 
 	<script type="text/javascript">
+		$(function() {
+			loadChatData;
+		});
+	</script>
+
+	<script type="text/javascript">	
+		// 채팅창 열기
 		$(".chat_list").on("click",function(){
 			var el = $(this);
-			
+
 			var toMemberNo = "${loginUser.memberNo }";
 			var fromMemberNo = el.find("input[type=hidden].memberNo").val();
 			var fromMemberNickname = el.find("input[type=hidden].memberNickname").val();
 			var fromMemberImg = el.find(".proFile_img").attr("src");
+			var messageContent = "";
 			
 			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
-			
-			$(".incoming_msg_img img.proFile_img").prop("src",fromMemberImg);
+
+			// 채팅창 해더값 입력
+			$(".mesgs_header input.toMemberNo").val(fromMemberNo);
+			$(".mesgs_header img.proFile_img").attr("src",fromMemberImg);
 			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
-			$(".mesgs_header_img").css("visibility","visible");
-			$(".mesgs_nickname").css("visibility","visible");
 			
-			$("div").remove(".incoming_msg");
-			$("div").remove(".outgoing_msg");
-			// 채팅 데이터 가져오기  띄우기
+			// 채팅 데이터 가져오기
+			loadData(fromMemberNo,toMemberNo,messageContent);
+		});
+
+		// enter키로 메시지 전송
+		$(".write_msg").keyup(function(e){
+			if(e.keyCode == 13){
+				sendMsg();
+			}
+		});
+		
+		// 로드 채팅 리스트
+		function loadChatData() {
+			$.ajax({
+				url:"loadChatList.do",
+				data:{memberNo:memberNo},
+				success:function(data){
+					console.log("채팅 리스트 불러오기 결과 : " + data);
+					if(data == "success"){
+						// 채팅 리스트 추가
+						//loadChatList(data);
+					} else {
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+					}
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+
+		}
+		
+		function loadChatList(data) {
+			$("div").remove(".chat_list");
+
+			// 채팅 리스트 추가
+			if(data.length > 0) {
+				console.log("채팅 리스트 추가");
+				var memberNo = "${loginUser.memberNo}";
+				var messageDateTemp = "";
+
+				for(var i in data){
+					var $msg_history = $(".msg_history");
+					
+					// 날짜 계산 & 추가
+					var messageDate = data[i].messageDate.split(',');
+					if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
+						var $date_divider_msg = $('<div>').addClass("date_divider_msg");
+						var $divider_date = $('<div>').addClass("divider_date").text( messageDate[0]);
+						var $hrMessageDate = $('<hr>')
+						
+						$date_divider_msg.append($divider_date);
+						$date_divider_msg.append($hrMessageDate);
+						$msg_history.append($date_divider_msg);
+					}
+					messageDateTemp = messageDate[0];
+
+					// 메시지 추가
+					if(data[i].fromMemberNo == memberNo){
+						// outgoing	
+						var $outgoing_msg = $('<div>').addClass("outgoing_msg");
+						var $sent_msg = $('<div>').addClass("sent_msg");
+						var $pMessageContent = $('<p>').text(data[i].messageContent);
+						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
+
+						$sent_msg.append($pMessageContent);
+						$sent_msg.append($time_date);
+						$outgoing_msg.append($sent_msg);
+
+						$msg_history.append($outgoing_msg);
+
+					} 
+
+				}
+				$(".write_msg").focus();
+			} else {
+				console.log("내용 없음");
+			}
+			
+		}
+
+		// 채팅 보내기
+		function sendMsg(){
+			if($.trim($(".write_msg").val()) == ""){
+				console.log("내용을 입력해 주세요.");
+				return;
+			}
+			
+			var fromMemberNo = "${loginUser.memberNo }";
+			var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
+			var messageContent = $(".write_msg").val();
+
+			console.log($(".mesgs_header").find("input[type=hidden].memberNo"));
+			
+			console.log("[전송] " + "from: " + fromMemberNo + " to: " + toMemberNo + " 내용: "  + messageContent);
+			
+			// 채팅 보내기
+			$.ajax({
+				url:"sendChat.do",
+				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo,messageContent:messageContent},
+				success:function(data){
+					console.log("채팅 보내기 결과 : " + data);
+					if(data == "success"){
+						$(".write_msg").val("");
+						// 채팅 내용 추가
+						loadChatData(fromMemberNo,toMemberNo,messageContent);
+					} else {
+						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+					}
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+
+		}
+
+		// 채팅 데이터 가져오기
+		function loadChatData(fromMemberNo,toMemberNo,messageContent) {
 			$.ajax({
 				url:"loadChat.do",
 				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo},
 				success:function(data){
 					console.log("채팅 대화 가져오기 결과 : " + data.length);
+					// 채팅 내용 추가
 					loadChat(data);
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-		});
+		}
 		
+		// 채팅 출력
 		function loadChat(data) {
 			$("div").remove(".incoming_msg");
 			$("div").remove(".outgoing_msg");
@@ -527,6 +654,7 @@ section
 						$date_divider_msg.append($hrMessageDate);
 						$msg_history.append($date_divider_msg);
 					}
+					messageDateTemp = messageDate[0];
 
 					// 메시지 추가
 					if(data[i].fromMemberNo == memberNo){
@@ -563,9 +691,8 @@ section
 						
 					}
 
-					messageDateTemp = messageDate[0];
-
 				}
+				$(".write_msg").focus();
 			} else {
 				console.log("내용 없음");
 			}

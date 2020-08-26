@@ -39,4 +39,14 @@ public class MessageDao {
 
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.loadChat", me);
 	}
+
+	public int sendChat(Message me) {
+
+		return sqlSessionTemplate.insert("messageMapper.insertMessage",me);
+	}
+
+	public ArrayList<Message> loadChatList(Member m) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.loadChatList", m);
+	}
 }

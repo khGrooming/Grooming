@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,11 +30,11 @@ public class MessageController {
 	// 메시지 페이지 이동
 	@RequestMapping("messagePage.do")
 	public ModelAndView loginPage(ModelAndView mv, Member m) {
-		System.out.println("메시지 접근 유저 : " + m.getMemberNo());
+		System.out.println("메시지 페이지 접근 유저 : " + m.getMemberNo());
 		
 		ArrayList<Message> mList = msgService.getUserMessageList(m);
 		
-		System.out.println("메시지 대화 리스트 : " + mList);
+		System.out.println("메시지 페이지 대화 리스트 : " + mList);
 		
 		mv.addObject("mList", mList)
 		.setViewName("message/messagePage");
@@ -95,20 +96,58 @@ public class MessageController {
 		gson.toJson(mList, response.getWriter());
 		
 	}
-	
-	@RequestMapping("loadChat.do")
-	public void loadChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
+
+	@RequestMapping("loadChatList.do")
+	public void loadChatList(HttpServletResponse response, Member m) throws JsonIOException, IOException {
 		
-		System.out.println("채팅 로딩 : " + me);
+		System.out.println("채팅 리스트 확인 유저번호 : " + m.getMemberNo());
 		
-		ArrayList<Message> mList = msgService.loadChat(me);
+		ArrayList<Message> mList = msgService.loadChatList(m);
 		
-		System.out.println("채팅 로딩 확인 : " + mList);
+		//TODO 챗 리스트 정리 필요
+		for(Message i : mList) {
+			
+		}
+		
+		System.out.println("채팅 리스트 확인 : " + mList);
 				
 		response.setContentType("application/json;charset=utf-8");
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh:mm:ss").create();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
 		gson.toJson(mList, response.getWriter());
+		
+	}
+
+	@RequestMapping("loadChat.do")
+	public void loadChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
+		
+		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNickname() + "/" + me.getToMemberNo());
+		
+		ArrayList<Message> mList = msgService.loadChat(me);
+		
+		System.out.println("채팅  확인 : " + mList);
+				
+		response.setContentType("application/json;charset=utf-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
+		gson.toJson(mList, response.getWriter());
+		
+	}
+
+	@RequestMapping("sendChat.do")
+	@ResponseBody
+	public String sendChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
+		
+		System.out.println("채팅 전송 : " + me);
+		
+		int result = msgService.sendChat(me);
+		
+		if(result > 0) {
+			System.out.println("채팅 전송 : 성공");
+			return "success";
+		}
+		System.out.println("채팅 전송 : 실패");
+		return "fail";
 		
 	}
 
