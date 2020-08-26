@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.Remove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -102,14 +104,47 @@ public class MessageController {
 		
 		System.out.println("채팅 리스트 확인 유저번호 : " + m.getMemberNo());
 		
-		ArrayList<Message> mList = msgService.loadChatList(m);
+		ArrayList<Message> mListTemp = msgService.loadChatList(m);
+		ArrayList<Message> mList = new ArrayList<Message>();
+		
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
+		
+//		for (Iterator<Character> iter = letters.iterator(); iter.hasNext(); ) {
+//		  Character letter = iter.next();
+//		  if (Character.isDigit(letter)) {
+//		    iter.remove();
+//		  }
+//		}
 		
 		//TODO 챗 리스트 정리 필요
-		for(Message i : mList) {
-			
+		for(Iterator<Message> im = mListTemp.iterator(); im.hasNext();) {
+			Message i = im.next();
+			String iFmNo = i.getFromMemberNo();
+			String iTmNo = i.getToMemberNo();
+			Timestamp iTime = i.getMessageDate();
+
+			for(Iterator<Message> jm = mListTemp.iterator(); jm.hasNext(); ) {
+				Message j = jm.next();
+				String jFmNo = j.getFromMemberNo();
+				String jTmNo = j.getToMemberNo();
+				Timestamp jTime = j.getMessageDate();
+				
+				// 같은 채팅 방 시간 비교
+				if(jFmNo.equals(iTmNo) && jTmNo.equals(iFmNo)) {
+					if(iTime.getTime() < jTime.getTime()) {
+						System.out.println("시간 비교 : " + (iTime.getTime() > jTime.getTime()) + " / " + i.getMessageNo());
+						im.remove();
+					}
+				}
+			}
 		}
 		
+		mList.addAll(mListTemp);
+		
 		System.out.println("채팅 리스트 확인 : " + mList);
+		System.out.println("채팅 리스트 확인 : " + mList.size());
+		System.out.println("채팅 리스트 확인 : " + mListTemp.size());
 				
 		response.setContentType("application/json;charset=utf-8");
 		

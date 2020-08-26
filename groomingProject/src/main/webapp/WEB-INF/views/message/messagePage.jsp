@@ -102,7 +102,8 @@ section
 }
 .srch_bar .input-group-addon button
 {
-	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	outline: none;
+	background: none;
 	border: medium none;
 	padding: 0;
 	color: #707070;
@@ -110,7 +111,7 @@ section
 }
 .srch_bar .input-group-addon
 {
-	margin: 0 0 0 -20px;
+	margin: 0;
 }
 .chat_ib h5
 {
@@ -321,16 +322,16 @@ section
                         <div class="recent_heading">
                             <h4>메시지</h4>
                         </div>
-                        <%-- <div class="srch_bar">
+                        <div class="srch_bar">
                             <div class="stylish-input-group">
-                                <input type="text" class="search-bar" placeholder="Search">
+                                <input type="text" class="search_bar" placeholder="Search">
                                 <span class="input-group-addon">
                                     <button type="button">
-										<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-search-thin.svg">
+										<img class="img_svg" src="${contextPath }/resources/views/images/svg/speech-bubble-plus-thin.svg">
 									</button>
                                 </span>
 							</div>
-                        </div> --%>
+                        </div>
                     </div>
 
 					<div class="inbox_chat">
@@ -473,13 +474,14 @@ section
 
 	<script type="text/javascript">
 		$(function() {
-			loadChatData;
+			console.log("채팅 페이지");
+			loadChatListData();
 		});
 	</script>
 
 	<script type="text/javascript">	
 		// 채팅창 열기
-		$(".chat_list").on("click",function(){
+		$(".chat_list").on("click", function(){
 			var el = $(this);
 
 			var toMemberNo = "${loginUser.memberNo }";
@@ -496,8 +498,46 @@ section
 			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
 			
 			// 채팅 데이터 가져오기
-			loadData(fromMemberNo,toMemberNo,messageContent);
+			loadChatData(fromMemberNo,toMemberNo,messageContent);
 		});
+		
+		// enter키로 채팅방 생성
+		$(".search_bar").keyup(function(e){
+			if(e.keyCode == 13){
+				createChatRoom();
+			}
+		});
+		
+		$(".input-group-addon").on("click", function() {
+			createChatRoom();
+		});
+		
+		// 채팅 생성
+		function createChatRoom() {
+			if($.trim($(".search_bar").val()) == ""){
+				alert("닉네임을 입력해 주세요.");
+				return;
+			}
+			console.log("닉네임 검사 시작 ");
+			memberNickName = $(".search_bar").val();
+			
+			$.ajax({
+				url:"nickNameDuplicateChk.do",
+				data:{memberNickName:memberNickName},
+				success:function(data){
+					if(data == "fail"){
+						//TODO 채팅방 만들기
+						
+					} else {
+						alert("닉넴임을 확인해 주세요.");
+					}
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+		}
+		
 
 		// enter키로 메시지 전송
 		$(".write_msg").keyup(function(e){
@@ -507,14 +547,16 @@ section
 		});
 		
 		// 로드 채팅 리스트
-		function loadChatData() {
+		function loadChatListData() {
+			console.log("채팅 리스트 가져오기 시작");
+			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
 				url:"loadChatList.do",
 				data:{memberNo:memberNo},
 				success:function(data){
-					console.log("채팅 리스트 불러오기 결과 : " + data);
-					if(data == "success"){
-						// 채팅 리스트 추가
+					console.log("채팅 리스트 불러오기 결과 : " + data.length);
+					if(data.length > 0){
+						//TODO 채팅 리스트 추가
 						//loadChatList(data);
 					} else {
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -527,6 +569,7 @@ section
 
 		}
 		
+		//TODO 채팅 리스트 추가
 		function loadChatList(data) {
 			$("div").remove(".chat_list");
 

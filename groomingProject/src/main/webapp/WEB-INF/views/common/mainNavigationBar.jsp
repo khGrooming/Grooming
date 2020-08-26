@@ -378,7 +378,6 @@ header .main_upIcon.show
 	</header>
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
-		let headerMemberNo = "${loginUser.memberNo}";
 		$(function() {
 			getUserAlert();
 			getUserMessages();
@@ -401,9 +400,10 @@ header .main_upIcon.show
  	
 		// 메시지 카운트
 		function getUserMessages() {
+			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
 				url:"getUserMessagesCount.do",
-				data:{memberNo:headerMemberNo},
+				data:{memberNo:memberNo},
 				success:function(data){
 					console.log("메시지 카운트 : " + data);
 					
@@ -438,11 +438,13 @@ header .main_upIcon.show
 						var messageNo = el.find("input[type=hidden]").val();
 
             			console.log("읽을 메시지 번호" + messageNo);
-            			
+
+            			var memberNo = "${loginUser.memberNo}";
+
             			// 메시지 읽음
             			$.ajax({
             				url:"readUserMessage.do",
-            				data:{messageNo:messageNo,memberNo:headerMemberNo},
+            				data:{messageNo:messageNo,memberNo:memberNo},
             				success:function(data){
             					console.log("메시지 읽음 결과 : " + data.length);
             					refreshMessageBody(data);
@@ -508,11 +510,13 @@ header .main_upIcon.show
 			if($(".main_messages_dropdown").hasClass("active") === true){
 				// 메시지 수 삭제
 				$(".main_messages_txt").remove();
-	
+
+				var memberNo = "${loginUser.memberNo}";
+
 				console.log("메시지 아이콘 클릭");
 				$.ajax({
 					url:"getUserMessage.do",
-					data:{memberNo:headerMemberNo},
+					data:{memberNo:memberNo},
 					dateType:"json",
 					success:function(data){
 						console.log("메시지 확인 결과 : " + data.length);
@@ -531,9 +535,11 @@ header .main_upIcon.show
 	<script type="text/javascript">
 		// 알림 카운트
 		function getUserAlert() {
+			var memberNo = "${loginUser.memberNo}";
+
 			$.ajax({
 				url:"getUserAlertCount.do",
-				data:{memberNo:headerMemberNo},
+				data:{memberNo:memberNo},
 				success:function(data){
 					console.log("알림 카운트 : " + data);
 
@@ -566,13 +572,14 @@ header .main_upIcon.show
             			}
 
             			var alertNo = el.find("input[type=hidden]").val();
+            			var memberNo = "${loginUser.memberNo}";
 
             			console.log("읽을 알람 번호 : " + alertNo);
             			
             			// 알림 삭제
             			$.ajax({
             				url:"readUserAlert.do",
-            				data:{alertNo:alertNo,memberNo:headerMemberNo},
+            				data:{alertNo:alertNo,memberNo:memberNo},
             				success:function(data){
             					console.log("알림 읽음 결과 : " + data.length);
             					refreshAlertBody(data);
@@ -634,10 +641,12 @@ header .main_upIcon.show
 			if($(".main_alerts_dropdown").hasClass("active") === true){
 				// 알림 수 삭제
 				$("div").remove(".main_alerts_txt");
-	
+
+				var memberNo = "${loginUser.memberNo}";
+
 				$.ajax({
 					url:"getUserAlert.do",
-					data:{memberNo:headerMemberNo},
+					data:{memberNo:memberNo},
 					dateType:"json",
 					success:function(data){
 						console.log("알림 확인 결과 : " + data.length);
