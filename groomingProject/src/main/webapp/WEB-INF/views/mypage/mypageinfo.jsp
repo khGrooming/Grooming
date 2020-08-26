@@ -262,7 +262,7 @@ section {
 								<li><a href="#">내가 쓴 댓글</a></li>
 							</ul>
 						</li>
-						<li><a href="#">포인트</a></li>
+						<li><a href="mypagePoint.do">포인트</a></li>
 					</ul>
 				</div>
 			</div>

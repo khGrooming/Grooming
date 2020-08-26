@@ -121,7 +121,14 @@
 	
 	</resultMap>
 	
-	
+	<resultMap type="MyPagePoint" id="MyPagePointSet">
+		<id property="pointNo" column="POINT_NO"/>
+		<result property="memberNo" column="MEMBER_NO" />	
+		<result property="addPoint" column="ADD_POINT" />	
+		<result property="sunPoint" column="SUB_POINT" />	
+		<result property="pointList" column="POINT_LIST" />	
+		<result property="pointDate" column="POINT_DATE" />	
+	</resultMap>
 
 	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
 		SELECT * 
@@ -294,4 +301,14 @@
 	WHERE GM. MEMBER_NO = #{mNo} 
             AND GM.MEMBER_NO IN G.MEMBER_NO
 	</select>
+	
+	<select id="selectPointList" parameterType="string" resultMap="MyPagePointSet">
+	SELECT *
+	FROM POINT
+	WHERE MEMBER_NO = #{mNo}
+	</select>
+	
+	<insert id="insertPoint" parameterType="MyPagePoint" >
+		INSERT INTO POINT VALUES('P' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0),#{memberNo},#{addPoint},0,#{pointList},SYSDATE)
+	</insert>
 </mapper>

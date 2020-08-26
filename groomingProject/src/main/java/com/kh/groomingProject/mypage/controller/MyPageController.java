@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +36,13 @@ import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
+
+import jdk.nashorn.api.scripting.JSObject;
+import net.sf.json.JSONObject;
+
 import static com.kh.groomingProject.mypage.controller.MyPagePagination.getPageInfo;
 
 
@@ -70,56 +76,6 @@ public class MyPageController {
 			profileInfo.setNowPoint(memberPoint2);
 		}
 		
-		
-//		int school=0;
-//		String[] schoolList = new String[3];
-//		String[] schoolconfirm = new String[3];
-//		int certificate=0;
-//		String[] certificateList = new String[3];
-//		String[] certificateconfirm = new String[3];
-//		int career=0;
-//		String[] careerList = new String[3];
-//		String[] careerconfirm = new String[3];
-//
-//		
-//		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-//
-//		
-//		for(Spec s : specList) {
-//			switch (s.getSpecCName()) {
-//			case "학교":
-//				schoolList[school]=s.getSpecName();
-//				schoolconfirm[school]=s.getSpecConfirm();
-//				
-//				school+=1;
-//				break;
-//			case "자격증":
-//				certificateList[certificate]=s.getSpecName();
-//				certificateconfirm[certificate]=s.getSpecConfirm();
-//				
-//				certificate+=1;
-//				break;
-//			case "경력":
-//				careerList[career]=s.getSpecName();
-//				careerconfirm[career]=s.getSpecConfirm();
-//				
-//				career+=1;
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//
-//		
-//		session.setAttribute("schoolList",schoolList);
-//		session.setAttribute("schoolconfirm",schoolconfirm);
-//		
-//		session.setAttribute("certificateList",certificateList);
-//		session.setAttribute("certificateconfirm",certificateconfirm);
-//		
-//		
-//		session.setAttribute("careerList",careerList);
-//		session.setAttribute("careerconfirm",careerconfirm);		
 		
 		specSelect(request, mNo);
 		mentorSelect(request, mNo);
@@ -318,9 +274,9 @@ public class MyPageController {
 
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
-		
 		PrintWriter out = response.getWriter(); 
-		System.out.println(m.getMemberPwd());
+		System.out.println(inputPwd);
+		System.out.println(m);
 		if(bcryptPasswordEncoder.matches(inputPwd,m.getMemberPwd())) {
 			System.out.println("비번 확인 : 성공");
 			out.append("Y");
@@ -451,7 +407,8 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("mentor.do")
-	public String mentorPage() {
+	public String mentorPage(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
 		return "mypage/mentor";
 	}
 	
@@ -675,4 +632,42 @@ public class MyPageController {
 		return "mypage/ginsertTemp";
 	}
 	
+	@RequestMapping("mypagePoint.do")
+	public ModelAndView myPagePoint(ModelAndView mv,HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		ArrayList<MyPagePoint> pList = mpService.selectPointList(mNo);
+		mv.addObject("pList",pList);
+		
+		mv.setViewName("mypage/mypagePoint");
+		System.out.println(pList);
+		
+		return mv;
+	}
+	
+	@RequestMapping("pointPay.do")
+	public void pointPay(String mNo, String money,HttpServletResponse response) throws IOException {
+		System.out.println("pointPay.do 클래스: "+mNo+","+money);
+		int intMoney = (Integer.valueOf(money))/10;
+		MyPagePoint insertPoint = new MyPagePoint(mNo, intMoney, "포인트 충전");
+		
+		int result= mpService.insertPoint(insertPoint);
+		
+		if(result > 0) {
+			Date time = new Date();
+			String format1 = (new SimpleDateFormat ( "yyyy-MM-dd")).format(time);
+			System.out.println( insertPoint.getPointList());
+			JSONObject job = new JSONObject();
+			response.setContentType("application/json;charset=utf-8");
+			job.put("addPoint", insertPoint.getAddPoint());
+			job.put("pointList", insertPoint.getPointList());
+			job.put("pointDate", format1);
+			
+			PrintWriter out = response.getWriter();
+			out.print(job);
+			out.flush();
+			out.close();
+		}else {
+			throw new MypageException("포인트 충전 실패");
+		}
+	}
 }

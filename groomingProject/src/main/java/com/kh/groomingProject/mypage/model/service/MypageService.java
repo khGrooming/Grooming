@@ -8,6 +8,7 @@ import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -64,6 +65,10 @@ public interface MypageService {
 	int selectGroomingHostCount(String mNo);
 
 	ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo);
+
+	ArrayList<MyPagePoint> selectPointList(String mNo);
+
+	int insertPoint(MyPagePoint insertPoint);
 
 
 }

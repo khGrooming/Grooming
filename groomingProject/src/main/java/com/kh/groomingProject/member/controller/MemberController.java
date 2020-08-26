@@ -369,7 +369,6 @@ public class MemberController {
 		if(loginUser != null) {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 				System.out.println("로그인 확인 : 성공");
-				loginUser.setMemberPwd("");
 				model.addAttribute("loginUser", loginUser);
 				return "success";
 			} else {

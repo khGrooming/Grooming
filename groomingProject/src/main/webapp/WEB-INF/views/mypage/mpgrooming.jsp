@@ -113,8 +113,18 @@
 	</c:if>
 	<c:if test="${empty hpgList }">
 		<div class="grayBox1" style="height: 300px;">
-			<p>스터디 만들러 가기</p>
+			<p onclick="gotoinsertgrooming();" style="cursor: pointer; font-size:25px; margin-top:120px; text-align: center;">스터디 만들러 가기</p>
 		</div>
+		<script>
+			function gotoinsertgrooming(){
+				var check = confirm("스터디 그룹을 생성하시겠습니까?");
+				if(check){
+					location.href="groomingInsert.do"
+				}else{
+					alert("취소하였씁니다.");
+				}
+			}
+		</script>
 	</c:if>
 		
 	<br>
@@ -191,7 +201,7 @@
 		</c:if>
 		<c:if test="${empty mpgList }">
 		<div class="grayBox1" style="height: 300px;">
-			<p>스터디 가입하러 가기</p>
+			<p onclick="location.href='groomingMain.do'" style="cursor: pointer; font-size:25px; margin-top:120px; text-align: center;">스터디 가입하러 가기</p>
 		</div>
 		</c:if>
 	</div>	

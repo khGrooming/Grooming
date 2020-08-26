@@ -12,6 +12,7 @@ import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -149,6 +150,17 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo) {
 		return mpDao.selectMypageGhost(pih,mNo);
+	}
+
+	@Override
+	public ArrayList<MyPagePoint> selectPointList(String mNo) {
+		return mpDao.selectPointList(mNo);
+	}
+
+
+	@Override
+	public int insertPoint(MyPagePoint insertPoint) {
+		return mpDao.insertPoint(insertPoint);
 	}
 
 

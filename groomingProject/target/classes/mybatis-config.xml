@@ -29,6 +29,7 @@
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageHeart" alias="MyPageHeart"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageApplicant" alias="MyPageApplicant"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageGrooming" alias="MyPageGrooming"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPagePoint" alias="MyPagePoint"/>
 
 		<!-- 커뮤니티 -->
 		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>
