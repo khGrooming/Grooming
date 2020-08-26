@@ -104,8 +104,11 @@ public class MessageController {
 		
 		System.out.println("채팅 리스트 확인 유저번호 : " + m.getMemberNo());
 		
-		ArrayList<Message> mListTemp = msgService.loadChatList(m);
+		ArrayList<Message> mListI = msgService.loadChatList(m);
+		ArrayList<Message> mListJ = new ArrayList<Message>();
 		ArrayList<Message> mList = new ArrayList<Message>();
+
+		mListJ.addAll(mListI);
 		
 		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
@@ -118,13 +121,13 @@ public class MessageController {
 //		}
 		
 		//TODO 챗 리스트 정리 필요
-		for(Iterator<Message> im = mListTemp.iterator(); im.hasNext();) {
+		for(Iterator<Message> im = mListI.iterator(); im.hasNext();) {
 			Message i = im.next();
 			String iFmNo = i.getFromMemberNo();
 			String iTmNo = i.getToMemberNo();
 			Timestamp iTime = i.getMessageDate();
 
-			for(Iterator<Message> jm = mListTemp.iterator(); jm.hasNext(); ) {
+			for(Iterator<Message> jm = mListJ.iterator(); jm.hasNext(); ) {
 				Message j = jm.next();
 				String jFmNo = j.getFromMemberNo();
 				String jTmNo = j.getToMemberNo();
@@ -140,11 +143,11 @@ public class MessageController {
 			}
 		}
 		
-		mList.addAll(mListTemp);
+		mList.addAll(mListI);
 		
 		System.out.println("채팅 리스트 확인 : " + mList);
 		System.out.println("채팅 리스트 확인 : " + mList.size());
-		System.out.println("채팅 리스트 확인 : " + mListTemp.size());
+		System.out.println("채팅 리스트 확인 : " + mListI.size());
 				
 		response.setContentType("application/json;charset=utf-8");
 		
@@ -156,7 +159,7 @@ public class MessageController {
 	@RequestMapping("loadChat.do")
 	public void loadChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
 		
-		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNickname() + "/" + me.getToMemberNo());
+		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
 		
 		ArrayList<Message> mList = msgService.loadChat(me);
 		

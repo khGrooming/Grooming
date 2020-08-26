@@ -481,7 +481,7 @@ section
 
 	<script type="text/javascript">	
 		// 채팅창 열기
-		$(".chat_list").on("click", function(){
+		$(document).on("click", ".chat_list", function(){
 			var el = $(this);
 
 			var toMemberNo = "${loginUser.memberNo }";
@@ -508,6 +508,7 @@ section
 			}
 		});
 		
+		// 생성 버튼으로 채팅방 생성
 		$(".input-group-addon").on("click", function() {
 			createChatRoom();
 		});
@@ -550,14 +551,15 @@ section
 		function loadChatListData() {
 			console.log("채팅 리스트 가져오기 시작");
 			var memberNo = "${loginUser.memberNo}";
+
 			$.ajax({
 				url:"loadChatList.do",
 				data:{memberNo:memberNo},
 				success:function(data){
 					console.log("채팅 리스트 불러오기 결과 : " + data.length);
 					if(data.length > 0){
-						//TODO 채팅 리스트 추가
-						//loadChatList(data);
+						// 채팅 리스트 추가
+						loadChatList(data);
 					} else {
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 					}
@@ -569,50 +571,82 @@ section
 
 		}
 		
-		//TODO 채팅 리스트 추가
+		//채팅 리스트 추가
 		function loadChatList(data) {
 			$("div").remove(".chat_list");
-
+			var messageDateTemp = "";
+			
 			// 채팅 리스트 추가
 			if(data.length > 0) {
 				console.log("채팅 리스트 추가");
 				var memberNo = "${loginUser.memberNo}";
-				var messageDateTemp = "";
-
+				
 				for(var i in data){
-					var $msg_history = $(".msg_history");
+					var $inbox_chat = $(".inbox_chat");
 					
 					// 날짜 계산 & 추가
 					var messageDate = data[i].messageDate.split(',');
 					if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
-						var $date_divider_msg = $('<div>').addClass("date_divider_msg");
-						var $divider_date = $('<div>').addClass("divider_date").text( messageDate[0]);
-						var $hrMessageDate = $('<hr>')
-						
-						$date_divider_msg.append($divider_date);
-						$date_divider_msg.append($hrMessageDate);
-						$msg_history.append($date_divider_msg);
+						//TODO 날짜 정리 해야함 몇일전 이런식
 					}
 					messageDateTemp = messageDate[0];
-
-					// 메시지 추가
+					var showDate = messageDate[1];
+					
+					// 채팅 리스트 추가
 					if(data[i].fromMemberNo == memberNo){
-						// outgoing	
-						var $outgoing_msg = $('<div>').addClass("outgoing_msg");
-						var $sent_msg = $('<div>').addClass("sent_msg");
-						var $pMessageContent = $('<p>').text(data[i].messageContent);
-						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
+						var $chat_list = $('<div>').addClass("chat_list");
+						var $iMessageNo = $('<input>').addClass("messageNo").attr("type","hidden").val(data[i].messageNo);
+						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].toMemberNo);
+						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].toMemberNickname);
+						var $chat_people = $('<div>').addClass("chat_people");
+						var $chat_img = $('<div>').addClass("chat_img");
+						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].toMemberPhoto,"onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
+						var $chat_ib = $('<div>').addClass("chat_ib");
+						var $h5Nickname = $('<h5>').text(data[i].toMemberNickname);
+						var $spanDate = $('<span>').addClass("chat_date").text(showDate);
+						var $pContent = $('<p>').text(data[i].messageContent);
+						
+						$chat_list.append($iMessageNo);
+						$chat_list.append($iMemberNo);
+						$chat_list.append($iNickname);
+						$chat_img.append($proFile_img);
+						$h5Nickname.append($spanDate);
+						$chat_ib.append($h5Nickname);
+						$chat_ib.append($pContent);
+						$chat_people.append($chat_img);
+						$chat_people.append($chat_ib);
+						$chat_list.append($chat_people);
 
-						$sent_msg.append($pMessageContent);
-						$sent_msg.append($time_date);
-						$outgoing_msg.append($sent_msg);
+						$inbox_chat.append($chat_list);
 
-						$msg_history.append($outgoing_msg);
+					} else {
+						var $chat_list = $('<div>').addClass("chat_list");
+						var $iMessageNo = $('<input>').addClass("messageNo").attr("type","hidden").val(data[i].messageNo);
+						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].fromMemberNo);
+						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].fromMemberNickname);
+						var $chat_people = $('<div>').addClass("chat_people");
+						var $chat_img = $('<div>').addClass("chat_img");
+						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].fromMemberPhoto,"onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
+						var $chat_ib = $('<div>').addClass("chat_ib");
+						var $h5Nickname = $('<h5>').text(data[i].fromMemberNickname);
+						var $spanDate = $('<span>').addClass("chat_date").text(showDate);
+						var $pContent = $('<p>').text(data[i].messageContent);
+						
+						$chat_list.append($iMessageNo);
+						$chat_list.append($iMemberNo);
+						$chat_list.append($iNickname);
+						$chat_img.append($proFile_img);
+						$h5Nickname.append($spanDate);
+						$chat_ib.append($h5Nickname);
+						$chat_ib.append($pContent);
+						$chat_people.append($chat_img);
+						$chat_people.append($chat_ib);
+						$chat_list.append($chat_people);
 
-					} 
+						$inbox_chat.append($chat_list);
+					}
 
 				}
-				$(".write_msg").focus();
 			} else {
 				console.log("내용 없음");
 			}
