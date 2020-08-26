@@ -100,4 +100,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.GroupMList(groomingNo);
 	}
 
+	@Override
+	public Member findMember(Member m) {
+
+		return mDao.findMember(m);
+	}
+
 }

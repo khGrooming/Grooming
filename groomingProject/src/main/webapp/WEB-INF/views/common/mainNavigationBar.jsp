@@ -32,7 +32,7 @@ header
     align-items: center;
     transition: 0.6s;
     padding: 20px 100px;
-	border-bottom: 1px solid lightgrey;
+	border-bottom: thin solid lightgrey;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 10;
 }
@@ -59,7 +59,7 @@ header
 	height: 35px;
 	width: 35px;
 	border-radius: 50%;
-	border: 1px solid grey;
+	border: thin solid lightgrey;
 }
 .main_navbar #memberNickName
 {
@@ -378,7 +378,6 @@ header .main_upIcon.show
 	</header>
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
-		let memberNo = "${loginUser.memberNo}";
 		$(function() {
 			getUserAlert();
 			getUserMessages();
@@ -401,6 +400,7 @@ header .main_upIcon.show
  	
 		// 메시지 카운트
 		function getUserMessages() {
+			var memberNo = "${loginUser.memberNo}";
 			$.ajax({
 				url:"getUserMessagesCount.do",
 				data:{memberNo:memberNo},
@@ -426,11 +426,9 @@ header .main_upIcon.show
 		(function ($) {
             $.fn.readMessage = function() {
                 this.each(function() {
-        			console.log($(this));
                     var el = $(this);
 
                     el.parent().on('click', '.main_messages_body', function(event) {
-                        console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
             				console.log("메시지가 없습니다.");
@@ -440,7 +438,9 @@ header .main_upIcon.show
 						var messageNo = el.find("input[type=hidden]").val();
 
             			console.log("읽을 메시지 번호" + messageNo);
-            			
+
+            			var memberNo = "${loginUser.memberNo}";
+
             			// 메시지 읽음
             			$.ajax({
             				url:"readUserMessage.do",
@@ -502,7 +502,7 @@ header .main_upIcon.show
 			$(".main_messages_body").readMessage();
 		}
 
-		// 알림 리스트 추가
+		// 메시지 리스트 추가
  		$(".main_messages_icon").click(function() {
 			var alt_container = document.querySelector('.main_messages_dropdown');
 			alt_container.classList.toggle('active');
@@ -510,7 +510,9 @@ header .main_upIcon.show
 			if($(".main_messages_dropdown").hasClass("active") === true){
 				// 메시지 수 삭제
 				$(".main_messages_txt").remove();
-	
+
+				var memberNo = "${loginUser.memberNo}";
+
 				console.log("메시지 아이콘 클릭");
 				$.ajax({
 					url:"getUserMessage.do",
@@ -533,6 +535,8 @@ header .main_upIcon.show
 	<script type="text/javascript">
 		// 알림 카운트
 		function getUserAlert() {
+			var memberNo = "${loginUser.memberNo}";
+
 			$.ajax({
 				url:"getUserAlertCount.do",
 				data:{memberNo:memberNo},
@@ -558,11 +562,9 @@ header .main_upIcon.show
 		(function ($) {
             $.fn.readAlert = function() {
                 this.each(function() {
-        			console.log($(this));
                     var el = $(this);
 
                     el.parent().on('click', '.main_alerts_body', function(event) {
-                        console.log(el.val());
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
             				console.log("알림이 없습니다.");
@@ -570,6 +572,7 @@ header .main_upIcon.show
             			}
 
             			var alertNo = el.find("input[type=hidden]").val();
+            			var memberNo = "${loginUser.memberNo}";
 
             			console.log("읽을 알람 번호 : " + alertNo);
             			
@@ -638,7 +641,9 @@ header .main_upIcon.show
 			if($(".main_alerts_dropdown").hasClass("active") === true){
 				// 알림 수 삭제
 				$("div").remove(".main_alerts_txt");
-	
+
+				var memberNo = "${loginUser.memberNo}";
+
 				$.ajax({
 					url:"getUserAlert.do",
 					data:{memberNo:memberNo},

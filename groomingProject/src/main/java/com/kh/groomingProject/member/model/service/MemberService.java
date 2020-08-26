@@ -36,4 +36,6 @@ public interface MemberService {
 
 	ArrayList<Member> GroupMList(String groomingNo);
 
+	Member findMember(Member m);
+
 }
