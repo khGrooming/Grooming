@@ -58,7 +58,7 @@
 	<select id="loadChatList" parameterType="Member" resultMap="messageResultSet">
 		SELECT * FROM VIEW_MESSAGE 
 		WHERE (TO_MEMBER_NO = #{memberNo} OR FROM_MEMBER_NO = #{memberNo})
-		AND ROWID IN (SELECT MIN(ROWID)
+		AND ROWID IN (SELECT MAX(ROWID)
 						FROM VIEW_MESSAGE GROUP BY FROM_MEMBER_NO, TO_MEMBER_NO)
 		ORDER BY MESSAGE_DATE DESC
 	</select>
@@ -72,8 +72,3 @@
 	</select>
 
 </mapper>
-
-
-
-
-

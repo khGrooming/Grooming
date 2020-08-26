@@ -86,4 +86,9 @@ public class MemberDao {
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectGroupMList",groomingNo);
 	}
 
+	public Member findMember(Member m) {
+
+		return (Member)sqlSessionTemplate.selectOne("memberMapper.findMember",m);
+	}
+
 }

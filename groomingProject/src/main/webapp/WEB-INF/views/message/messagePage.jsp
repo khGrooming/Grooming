@@ -168,6 +168,14 @@ section
 	height: 630px;
 	overflow-y: auto;
 }
+.empty_chat
+{
+	display: block;
+}
+.empty_chat div
+{
+	margin: 1.5em 1em 0.5em;
+}
 .chat_list:hover
 {
 	background: #ebebeb;
@@ -338,12 +346,12 @@ section
 					
 				<c:if test="${empty mList  }">
 					<div class="empty_chat">
-						<h4>나중에 꾸미자...</h4>
-						<h4>대화가 없습니다.</h4>
-						<button type="button"> 메시지 보내기</button>
+						<div>아직 메시지가 없습니다.</div>
+						<div>닉네임을 검색해<br> 채팅을 시작해 보세요.</div>
 					</div>
 				</c:if>
 				<c:if test="${!empty mList }">
+					<!-- 이건 필요 없어짐... -->
                    	<c:forEach var="m" items="${mList }">
 						<div class="chat_list">
 						<c:set var="calcDate" value="${mLresult }"/>
@@ -456,6 +464,26 @@ section
                                 <span class="time_date">PM 01시 30분</span>
                             </div>
                         </div>
+                        
+                        <div class="incoming_msg">
+							<div class="incoming_msg_img">
+								<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/views/images/grooming_logo(100x100).png"
+								onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+                            </div>
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>아마도 애니메이션 작업 할꺼에요... //TODO </p>
+                                    <span class="time_date">PM 02시 22분</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>닉네임을 검색 후 채팅을 시작해요. </p>
+                                <span class="time_date">PM 03시 33분</span>
+                            </div>
+                        </div>
 
                     </div>
                     <div class="type_msg">
@@ -476,6 +504,11 @@ section
 		$(function() {
 			console.log("채팅 페이지");
 			loadChatListData();
+			
+			// 디버깅 때 테스트
+			/* setInterval(function(){
+				loadChatListData();
+			}, 100000); */
 		});
 	</script>
 
@@ -496,39 +529,54 @@ section
 			$(".mesgs_header input.toMemberNo").val(fromMemberNo);
 			$(".mesgs_header img.proFile_img").attr("src",fromMemberImg);
 			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
-			
+
 			// 채팅 데이터 가져오기
 			loadChatData(fromMemberNo,toMemberNo,messageContent);
 		});
-		
+
 		// enter키로 채팅방 생성
 		$(".search_bar").keyup(function(e){
 			if(e.keyCode == 13){
 				createChatRoom();
 			}
 		});
-		
+
 		// 생성 버튼으로 채팅방 생성
 		$(".input-group-addon").on("click", function() {
 			createChatRoom();
 		});
-		
+
 		// 채팅 생성
 		function createChatRoom() {
+			var memberNickName = "${loginUser.memberNickName}";
 			if($.trim($(".search_bar").val()) == ""){
 				alert("닉네임을 입력해 주세요.");
+				return;
+			} else if($.trim($(".search_bar").val()) == memberNickName){
+				alert("다른 사용자의 닉네임을 입력해 주세요.");
 				return;
 			}
 			console.log("닉네임 검사 시작 ");
 			memberNickName = $(".search_bar").val();
 			
 			$.ajax({
-				url:"nickNameDuplicateChk.do",
+				url:"createChatRoom.do",
 				data:{memberNickName:memberNickName},
 				success:function(data){
-					if(data == "fail"){
+					if(data.fromMemberNo != null){
 						//TODO 채팅방 만들기
+						console.log(memberNickName + " 닉네임 사용자가 있습니다");
+
+						$("div").remove(".incoming_msg");
+						$("div").remove(".outgoing_msg");
+						$("div").remove(".date_divider_msg");
 						
+						$(".mesgs_header input.toMemberNo").val(data.fromMemberNo);
+						$(".mesgs_header img.proFile_img").attr("src","${contextPath }/resources/upprofileFiles/"+data.fromMemberPhoto);
+						$(".mesgs_header p.mesgs_nickname").text(data.fromMemberNickname);
+						
+						$(".write_msg").focus();
+
 					} else {
 						alert("닉넴임을 확인해 주세요.");
 					}
@@ -538,15 +586,7 @@ section
 				}
 			});
 		}
-		
 
-		// enter키로 메시지 전송
-		$(".write_msg").keyup(function(e){
-			if(e.keyCode == 13){
-				sendMsg();
-			}
-		});
-		
 		// 로드 채팅 리스트
 		function loadChatListData() {
 			console.log("채팅 리스트 가져오기 시작");
@@ -561,39 +601,80 @@ section
 						// 채팅 리스트 추가
 						loadChatList(data);
 					} else {
-						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+						console.log("채팅 없음");
 					}
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-
 		}
-		
+
 		//채팅 리스트 추가
 		function loadChatList(data) {
 			$("div").remove(".chat_list");
-			var messageDateTemp = "";
+			$("div").remove(".empty_chat");
 			
 			// 채팅 리스트 추가
 			if(data.length > 0) {
 				console.log("채팅 리스트 추가");
 				var memberNo = "${loginUser.memberNo}";
+				var today = new Date();
+				var year = today.getFullYear();
+				var month = today.getMonth() + 1;
+				var date = today.getDate();
+				var hours = today.getHours();
+				var minutes = today.getMinutes();
+				var seconds = today.getSeconds();
+				
+				if((month + "").length < 2){ 
+			        month = "0" + month;
+			    }
 				
 				for(var i in data){
 					var $inbox_chat = $(".inbox_chat");
 					
 					// 날짜 계산 & 추가
-					var messageDate = data[i].messageDate.split(',');
-					if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
-						//TODO 날짜 정리 해야함 몇일전 이런식
+					var msgDate = data[i].messageDate.split(',');	// 0년, 1달, 2월, 3일, 4시, 5분, 6초
+					var showDate = msgDate[0] + "년" + msgDate[1] + "월" + msgDate[2] + "일 " + msgDate[3] + "시" + msgDate[4] + "분" + msgDate[5] + "초";
+
+					if(year != msgDate[0] || month != msgDate[1] || date != msgDate[2]){
+						// 년도 계산
+						if(year != msgDate[0]){
+							showDate = year - msgDate[0] + " 년 전";
+							if(date - msgDate[0] == 1){
+								showDate = "작년";
+							} else {
+								showDate = year - msgDate[0] + " 년 전";
+							}
+						} else if(month == msgDate[1] && date != msgDate[2]){
+							if(date - msgDate[2] == 1){
+								showDate = "어제";
+							} else {
+								showDate = msgDate[0] + "-" + msgDate[1] + "-" + msgDate[2];
+							}
+						} else {
+							showDate = msgDate[0] + "-" + msgDate[1] + "-" + msgDate[2];
+						}
+					// 시간 계산 부분
+					} else if(hours == msgDate[3] && minutes == msgDate[4] && seconds == msgDate[5]){
+						showDate = "방금 전";
+					} else if(hours == msgDate[3] && minutes != msgDate[4]){
+						showDate = minutes - msgDate[4] + "분 전";
+					} else if(hours == msgDate[3] && minutes == msgDate[4]){
+						showDate = seconds - msgDate[5] + "초 전";
+					} else {
+						showDate = msgDate[3] + msgDate[4] + msgDate[5];
+						if(msgDate[3] > 12){
+							showDate = "오후 " + (msgDate[3]*1 - 12) + ":" + msgDate[4];
+						} else {
+							showDate = "오전 " + msgDate[3] + ":" + msgDate[4];
+						}
 					}
-					messageDateTemp = messageDate[0];
-					var showDate = messageDate[1];
 					
 					// 채팅 리스트 추가
 					if(data[i].fromMemberNo == memberNo){
+						// 받은 메시지 없이
 						var $chat_list = $('<div>').addClass("chat_list");
 						var $iMessageNo = $('<input>').addClass("messageNo").attr("type","hidden").val(data[i].messageNo);
 						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].toMemberNo);
@@ -645,18 +726,32 @@ section
 
 						$inbox_chat.append($chat_list);
 					}
-
 				}
 			} else {
 				console.log("내용 없음");
 			}
-			
 		}
+
+		// enter키로 메시지 전송
+		$(".write_msg").keyup(function(e){
+			if(e.keyCode == 13){
+				sendMsg();
+			}
+		});
+
+		// 전송 버튼
+		$(".msg_send_btn").on("click", function() {
+			sendMsg();
+		});
 
 		// 채팅 보내기
 		function sendMsg(){
 			if($.trim($(".write_msg").val()) == ""){
 				console.log("내용을 입력해 주세요.");
+				return;
+			} if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() == ""){
+				$(".search_bar").focus();
+				alert("닉네임을 적은 후 메시지를 입력하세요.");
 				return;
 			}
 			
@@ -678,6 +773,7 @@ section
 						$(".write_msg").val("");
 						// 채팅 내용 추가
 						loadChatData(fromMemberNo,toMemberNo,messageContent);
+						loadChatListData();
 					} else {
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 					}
@@ -686,7 +782,6 @@ section
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-
 		}
 
 		// 채팅 데이터 가져오기
@@ -765,10 +860,11 @@ section
 						$incoming_msg.append($received_msg);
 						
 						$msg_history.append($incoming_msg);
-						
 					}
-
 				}
+				// 스크롤 내리기
+				$(".msg_history").scrollTop($(".msg_history")[0].scrollHeight);
+				// 글입력창으로 포커스 이동
 				$(".write_msg").focus();
 			} else {
 				console.log("내용 없음");

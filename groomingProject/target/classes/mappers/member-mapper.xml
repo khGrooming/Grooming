@@ -137,4 +137,10 @@
 	   ORDER BY G_MEMBER_NO 
 	</select>
 
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
+	   SELECT MEMBER_NO, MEMBER_NICKNAME, MEMBER_PHOTO
+       FROM MEMBER
+       WHERE MEMBER_NICKNAME = #{memberNickName}
+	</select>
+
 </mapper>
