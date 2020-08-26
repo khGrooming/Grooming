@@ -153,7 +153,7 @@
 
 
                         </table>
-                        
+                        <div style="text-align:center;"><button type="button" onclick="location.href='${gBlist}'">목록으로</button></div>
                         <c:if test="${loginUser.memberNo eq member.memberNo }">
 	                       <!-- 수정 삭제 버튼 -->
 	                        <div align="right">

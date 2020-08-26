@@ -724,9 +724,65 @@ public class GroomingController {
 		return mv;
 	}
 	@RequestMapping("groupBoardInsertForm.do")
-	public String groupBoardInsertForm() {
-		return "grooming/groupBoardInsertForm";
+	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo,String memberNo, ModelAndView mv) {
+		
+		 Grooming grooming = gService.selectGrooming(groomingNo);
+		 Map map = new HashMap();
+		 map.put("groomingNo",groomingNo);
+		 map.put("memberNo",memberNo);
+		 
+		 String gMemberNo = gService.selectGMemberNo(map);
+		mv.addObject("grooming",grooming).addObject("gMemberNo",gMemberNo).addObject("page",page).setViewName("grooming/groupBoardInsertForm");
+		
+		return mv;
 	}
+	
+	
+	@RequestMapping("groupInsert.do")
+	public ModelAndView groupInsert(@RequestParam(value="page", required=false) Integer page,HttpServletRequest request,
+			ModelAndView mv, GroupBoard g, String gMemberNo,  String groomingNo,
+			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+		
+		if (!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file, request);
+
+			if (renameFileName != null) { // 파일이 잘 저장되어 경로가 반환 된다면..
+				g.setgBoardImg(renameFileName);
+			}
+
+		}
+		
+		int result = gService.insertBoard(g);
+	
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		System.out.println("나 현재 페이지야 : " +currentPage );
+			
+		 int listCount = gService.getListCount(groomingNo); 
+		 GroupPageInfo pi = getPageInfo(currentPage, listCount);
+		
+		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(pi,groomingNo);
+		 Grooming grooming = gService.selectGrooming(groomingNo);
+		 
+		if(result > 0) {
+			 mv.addObject("grooming",grooming)
+			 .addObject("glist",glist)
+			 .addObject("pi",pi)
+			 .setViewName("grooming/groupBoard");
+		}else {
+			throw new GroomingException("게시글 등록 실패!");
+		}
+		
+		return mv;
+	
+	}
+	
+	
+	
+	
+	
 
 	@RequestMapping("groupDetail.do")
 	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam("page") Integer page, ModelAndView mv, String groomingNo) {

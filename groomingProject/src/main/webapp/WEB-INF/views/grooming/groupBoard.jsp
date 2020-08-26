@@ -106,7 +106,7 @@
 			</c:url> 
             <c:if test="${g.gBoardCategory eq '공지' }">
               <tr class ="tr" onclick="location.href='${gDetail }'" style="background:#f5f5dc;">
-                <th scope="row">${g.gBoardNo}</th>
+                <th scope="row" class="gNo">${g.gBoardNo}</th>
                 <td class="category">${g.gBoardCategory}</td>
                 <td>${g.gBoardTitle}</td>
                 <td>${g.memberNickName}</td>
@@ -116,7 +116,7 @@
              </c:if>
             <c:if test="${g.gBoardCategory ne '공지' }">
               <tr class ="tr" onclick="location.href='${gDetail }'">
-                <th scope="row">${g.gBoardNo}</th>
+                <th scope="row" class="gNo">${g.gBoardNo}</th>
                 <td class="category">${g.gBoardCategory}</td>
                 <td>${g.gBoardTitle}</td>
                 <td>${g.memberNickName}</td>
@@ -177,11 +177,16 @@
             </tbody>
         
           </table>
-          
+          <c:url var="gbif" value="groupBoardInsertForm.do">
+				
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+					<c:param name="memberNo" value="${loginUser.memberNo }"/>
+					<c:param name="page" value="${pi.currentPage }"/>
+		  </c:url>
           
           <!-- 글작성 버튼 -->
  	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'" >글 작성</button>
+          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='${gbif}'" >글 작성</button>
           </div>
    
     

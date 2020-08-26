@@ -275,6 +275,18 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectGBoard(gBoardNo);
 	}
 
+	@Override
+	public String selectGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGMemberNo(map);
+	}
+
+	@Override
+	public int insertBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return gDao.insertBoard(g);
+	}
+
 
 	
 }

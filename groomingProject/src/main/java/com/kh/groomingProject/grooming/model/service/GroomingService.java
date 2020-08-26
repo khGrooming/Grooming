@@ -96,4 +96,8 @@ public interface GroomingService {
 
 	GroupBoard selectGBoard(String gBoardNo);
 
+	String selectGMemberNo(Map map);
+
+	int insertBoard(GroupBoard g);
+
 }

@@ -541,8 +541,28 @@
  	
  	</select>
  	
+ 	<select id="selectGMemberNo" parameterType="map" resultType="string">  
+ 		SELECT G_MEMBER_NO
+	    FROM GROMMING_MEMBER
+	    WHERE GROOMING_NO=#{groomingNo} AND MEMBER_NO=#{memberNo}
+ 	
+ 	</select>
+ 	
+ 	<insert id="insertBoard" parameterType="GroupB">
+ 	INSERT INTO GBOARD VALUES(
+			'GB' || LPAD(SEQ_G_BOARD_NO.NEXTVAL,5,0)
+			, #{gMemberNo}
+			, #{gBoardCategory}
+			, #{gBoardTitle}
+			, #{gBoardContent}
+			, DEFAULT
+			, DEFAULT
+			, SYSDATE
+			, #{gBoardImg}
+		)
  	
  	
  	
+ 	</insert>
  	
 </mapper>
