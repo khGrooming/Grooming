@@ -19,11 +19,29 @@ public class GroupBoard implements Serializable{
 	private Date createDate;			// 그루밍 소게시판 작성일
 	private Date modifyDate;			// 그루밍 소게시판 수정일
 	private String gBoardImg;			// 그루밍 소게시판 이미지
-	
+	private String memberNickName;		// 작성자 이름
 	public GroupBoard() {
 		super();
 	}
 	
+	
+	public GroupBoard(String gBoardNo, String gMemberNo, String gBoardCategory, String gBoardTitle,
+			String gBoardContent, int count, Date createDate, Date modifyDate, String gBoardImg,
+			String memberNickName) {
+		super();
+		this.gBoardNo = gBoardNo;
+		this.gMemberNo = gMemberNo;
+		this.gBoardCategory = gBoardCategory;
+		this.gBoardTitle = gBoardTitle;
+		this.gBoardContent = gBoardContent;
+		this.count = count;
+		this.createDate = createDate;
+		this.modifyDate = modifyDate;
+		this.gBoardImg = gBoardImg;
+		this.memberNickName = memberNickName;
+	}
+
+
 	public GroupBoard(String gBoardNo, String gMemberNo, String gBoardCategory, String gBoardTitle,
 			String gBoardContent, int count, Date createDate, Date modifyDate, String gBoardImg) {
 		super();
@@ -37,6 +55,17 @@ public class GroupBoard implements Serializable{
 		this.modifyDate = modifyDate;
 		this.gBoardImg = gBoardImg;
 	}
+
+	
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+
+
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
+	}
+
 
 	public String getgBoardNo() {
 		return gBoardNo;
@@ -114,12 +143,16 @@ public class GroupBoard implements Serializable{
 		return serialVersionUID;
 	}
 
+
 	@Override
 	public String toString() {
 		return "GroupBoard [gBoardNo=" + gBoardNo + ", gMemberNo=" + gMemberNo + ", gBoardCategory=" + gBoardCategory
 				+ ", gBoardTitle=" + gBoardTitle + ", gBoardContent=" + gBoardContent + ", count=" + count
-				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", gBoardImg=" + gBoardImg + "]";
+				+ ", createDate=" + createDate + ", modifyDate=" + modifyDate + ", gBoardImg=" + gBoardImg
+				+ ", memberNickName=" + memberNickName + "]";
 	}
+
+	
 	
 	
 	

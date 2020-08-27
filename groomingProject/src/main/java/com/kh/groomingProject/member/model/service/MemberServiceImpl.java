@@ -77,12 +77,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public Member findEmail(Member m) {
-
-		return mDao.findEmail(m);
-	}
-
-	@Override
 	public int insertRandomCode(MemberCertiCode mcc) {
 
 		return mDao.insertRandomCode(mcc);
@@ -107,9 +101,21 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Member selectGroupMemberNo(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return mDao.selectGroupMemberNo(gBoardNo);
+	}
+
+	@Override
 	public Member findMember(Member m) {
 
 		return mDao.findMember(m);
+	}
+
+	@Override
+	public Member findEmail(Member m) {
+
+		return mDao.findEmail(m);
 	}
 
 }

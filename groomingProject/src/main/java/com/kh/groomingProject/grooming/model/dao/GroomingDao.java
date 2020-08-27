@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,9 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("gDao")
@@ -221,9 +224,39 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMemberList",groomingNo);
 	}
 
-	public int getListCount() {
+	public int getListCount(String groomingNo) {
 		// TODO Auto-generated method stub
-		return sqlSessionTemplate.selectOne("groomingMapper.getListCount");
+		return sqlSessionTemplate.selectOne("groomingMapper.getListCount",groomingNo);
+	}
+
+	public ArrayList<GroupBoard> selectGroupBoardList(GroupPageInfo pi,String groomingNo) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		Map map = new HashMap();
+		map.put("pi",pi);
+		map.put("groomingNo",groomingNo);
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGroupBoardList",map,rowBounds);
+	}
+
+	public int addBoardReadCount(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.addBoardReadCount",gBoardNo);
+	}
+
+	public GroupBoard selectGBoard(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGBoard",gBoardNo);
+	}
+
+	public String selectGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGMemberNo",map);
+	}
+
+	public int insertBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertBoard",g);
 	}
 	
 	

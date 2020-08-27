@@ -95,13 +95,6 @@
 		AND MEMBER_STATUS='N'
 	</select>
 
-	<select id="findEmail" parameterType="Member" resultMap="memberResultSet">
-		SELECT *
-		FROM MEMBER
-		WHERE MEMBER_NICKNAME = #{memberNickName}
-		AND MEMBER_STATUS='N'
-	</select>
-
 	<insert id="insertRandomCode" parameterType="MemberCertiCode">
 		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
 		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0), 
@@ -144,10 +137,26 @@
 	   ORDER BY G_MEMBER_NO 
 	</select>
 
+	<select id="selectGroupMemberNo" parameterType="string" resultMap="memberResultSet">
+	      SELECT *
+	      FROM MEMBER M 
+	      JOIN GROMMING_MEMBER GM ON GM.MEMBER_NO = M.MEMBER_NO
+	      JOIN GBOARD GB ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+	      WHERE G_BOARD_NO = #{gBoardNo}
+	
+	</select>
+
 	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
 	   SELECT MEMBER_NO, MEMBER_NICKNAME, MEMBER_PHOTO
        FROM MEMBER
        WHERE MEMBER_NICKNAME = #{memberNickName}
+	</select>
+
+	<select id="findEmail" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{memberNickName}
+		AND MEMBER_STATUS='N'
 	</select>
 
 </mapper>

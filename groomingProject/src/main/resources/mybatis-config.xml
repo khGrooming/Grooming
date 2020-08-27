@@ -63,6 +63,7 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+		<mapper resource="/mappers/declaration-mapper.xml"/>
 		<mapper resource="/mappers/message-mapper.xml"/>
 		
 		<!-- 홈 멥퍼 -->

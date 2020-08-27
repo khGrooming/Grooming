@@ -66,11 +66,6 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.findMemberEmail", m);
 	}
 
-	public Member findEmail(Member m) {
-
-		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
-	}
-
 	public int insertRandomCode(MemberCertiCode mcc) {
 
 		return sqlSessionTemplate.insert("memberMapper.insertRandomCode", mcc);
@@ -91,9 +86,19 @@ public class MemberDao {
 		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectGroupMList",groomingNo);
 	}
 
+	public Member selectGroupMemberNo(String gBoardNo) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.selectGroupMemberNo",gBoardNo);
+	}
+
 	public Member findMember(Member m) {
 
 		return (Member)sqlSessionTemplate.selectOne("memberMapper.findMember",m);
+	}
+
+	public Member findEmail(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
 	}
 
 }

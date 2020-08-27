@@ -1,5 +1,7 @@
 package com.kh.groomingProject.declaration.model.dao;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,6 +17,11 @@ public class DeclarationDao {
 	public int declareG(Declaration d) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("declarationMapper.declareG",d);
+	}
+
+	public Declaration selectGroupDeclare(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("declarationMapper.selectGroupDeclare",map);
 	}
 	
 }

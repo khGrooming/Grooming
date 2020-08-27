@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en">
 
@@ -43,47 +43,7 @@
             max-width: 100%;
             max-height: 100%;
         }
-        /* 인라인 형식의 출력 */
-        #tab1:checked~#content1,
-        #tab2:checked~#content2,
-        #tab3:checked~#content3 {
-            display: block;
-        }
-        /* 각 탭의 메뉴의 내용 */
-        section {
-            display: none;
-            padding: 20px 10px 10px 10px;
-            border: 3px solid #ddd;
-            height: auto;
-        }
-        /*라디오버튼 숨김*/
-        .radio {
-            display: none;
-        }
-        /* 탭메뉴 태그 마우스 올릴시 */
-        .menu:hover {
-            color: #2e9cdf;
-            cursor: pointer;
-        }
-        /* 태그 메뉴 css */
-        .menu {
-            display: inline-block;
-            margin: 0 0 -3px;
-            padding: 15px 25px;
-            font-weight: 600;
-            text-align: center;
-            color: #bbb;
-            border: 1px solid #ddd;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-        }
-        /*input 클릭시, label 스타일*/
-        input:checked+label {
-            color: #555;
-            border: 3px solid #ddd;
-            /* border-top: 2px solid #2e9cdf; */
-            border-bottom: 3px solid #ffffff;
-        }
+      
         .table th {
             text-align: center;
             vertical-align: middle;
@@ -112,141 +72,176 @@
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
+       <c:url var="calendar" value="calendar.do">
+	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	  	</c:url>
+		<c:url var="gBlist" value="gBlist.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+		</c:url>
+		<c:url var="groupP" value="groupPage.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+		</c:url>
+    
         <!--디폴트 메뉴-->
-        <input id="tab1" type="radio" name="tabs" class="radio">
-        <label for="tab1" class="menu"><i class="fas fa-user-graduate"></i>메인</label>
+        <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <input id="tab2" type="radio" name="tabs" class="radio">
-        <label for="tab2" class="menu"><i class="fas fa-calendar-alt"></i>캘린더</label>
+        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
-        <input id="tab3" type="radio" name="tabs" class="radio" checked>
-        <label for="tab3" class="menu"><i class="fas fa-icons"></i>게시판</label>
+        <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
         <!-- 메인에 들어갈 내용용 -->
-        <section id="content3">
+        <section >
 
             <div style="text-align: right; margin-right: 20px;">
-            <a href="#">신고하기</a>
-            <p >작성일 : <label>2020-07-25</label>&nbsp;&nbsp;조회수 : <label>7회</label></p>
+            <button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
+						
+			<!-- 신청폼 모달 -->
+			<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
+			
+				<div class="modal-dialog">
+					<c:url var="declareG" value="declareG.do">
+							<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+							<c:param name="currentPage" value="${currentPage }"/>
+							<c:param name="gBoardNo" value="${gboard.gBoardNo }"/>
+					</c:url>
+					<form action="${declareG}" method="post">
+							<div class="modal-content" style="width: auto; height: auto;">
+								<input type="hidden" value="${gboard.gBoardNo }" name="dnNo">
+								<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+												<!-- 모달 제목 -->
+									<div class="modal-header">
+										<h5 class="modal-title" id="declareModalLabel">신고 사유</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<!-- 모달 본문 내용 -->
+									<div class="modal-body container">
+										<textarea cols="100" rows="10" placeholder="신고 사유를 입력하세요. " id="summernote" name="dContent" class="form-control" required></textarea>
+									</div>
+									<div style="text-align:center; margin-bottom:10px;">
+										<button type="sumbit" id="singo">제출</button>
+										<button type="button" data-dismiss="modal">취소</button>
+									</div>
+							</div>
+					</form>
+				</div>
+
+			</div>
+								
+            <p >작성일 : <label>${gboard.createDate }</label>&nbsp;&nbsp;조회수 : <label>${gboard.count}회</label></p>
             </div>
                     <div class="container">
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="border-radius:10px;">
 
-                            <form method="post">
                                 <tr>
                                     <th>작성게시판 </th>
                                     <td>
-                                        <label>자유게시판</label>
-                                        <label hidden>공지사항</label>
+                                        <label>${gboard.gBoardCategory }</label>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>제목 </th>
-                                    <td><label>너랑나랑은 너랑나랑은 너랑나랑은</label></td>
+                                    <td><label>${gboard.gBoardTitle }</label></td>
                                 </tr>
                                 <tr>
                                     <th>내용 </th>
-                                    <td><textarea cols="100" rows="10" class="form-control" readonly
-                                            style="height:auto;">시곌 보며 속삭이는 비밀들
-						                                    간절한 내 맘속 이야기
-						                                    지금 내 모습을 해쳐도 좋아
-						                                    나를 재촉하면 할수록 좋아
-						                                    내 이름 불러줘
-						                                    
-                                    * 손 틈새로 비치는 내 맘 들킬까 두려워
-						                                    가슴이 막 벅차 서러워
-						                                    조금만 꼭 참고 날 기다려줘
-						                                    너랑 나랑은 지금 안되지
-						                                    시계를 더 보채고 싶지만
-						                                    네가 있던 미래에서
-						                                    내 이름을 불러줘
-						                                    
-						                                    내가 먼저 엿보고 온 시간들
-						                                    너와 내가 함께였었지
-						                                    나랑 놀아주는 그대가 좋아
-						                                    내가 물어보면 그대도 좋아
-						                                    내 이름이 뭐야
-						                                    
-						                                    * Repeat
-						                                    
-						                                    눈 깜박하면 어른이 될 거예요
-						                                    날 알아보겠죠 그댄 기억하겠죠
-						                                    그래 기묘했던 아이
-						                                    손 틈새로 비치는 네 모습 참 좋다
-						                                    
-						                                    손끝으로 돌리며 시곗바늘아 달려봐
-						                                    조금만 더 빨리 날아봐
-						                                    두 눈을 꼭 감고 마법을 건다
-						                                    너랑 나랑은 조금 남았지
-						                                    몇날 몇실진 모르겠지만
-						                                    네가 있을 미래에서
-						                                    혹시 내가 헤맨다면
-						                                    너를 알아볼 수 있게
-						                                    내 이름을 불러줘</textarea></td>
+                                    <td><textarea cols="100" rows="10" class="form-control" readonly style="height:auto; resize:none;" >${gboard.gBoardContent }</textarea></td>
                                 </tr>
 
 
-
-
-
-                            </form>
-
                         </table>
-                        
-                       <!-- 수정 삭제 버튼 -->
-                        <div align="right">
-                            <button type="button">수정</button>
-                            <button type="button">삭제</button>
-                        </div>
-                        
+                        <div style="text-align:center;"><button type="button" onclick="location.href='${gBlist}'">목록으로</button></div>
+                        <c:if test="${loginUser.memberNo eq member.memberNo }">
+	                       <!-- 수정 삭제 버튼 -->
+	                        <div align="right">
+	                            <button type="button">수정</button>
+	                            <button type="button">삭제</button>
+	                        </div>
+                        </c:if>
                         <br><br><br>
+                        <c:choose>
+	                        <c:when test="${gboard.gBoardCategory == '공지'}">
+	                        	<div style="text-align:center; border:1px solid green; border-radius:10px;"><h2>공지사항에는 댓글을 달 수 없습니다!</h2></div>
+	                        </c:when>
+	                        <c:otherwise>
+	                        <!-- 댓글 등록  -->
+	                        <div class="container">
+	                            <table class="table table-bordered">
+	                                <form method="post">
+	
+	                                    <tr>
+	                                        <td class="col-6" style="width: 70%;">
+	                                            <textarea cols="20" rows="2" class="form-control" style="resize: none;">
+	                                             </textarea>
+	                                        </td>
+	                                        <br><br>
+	                                        <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
+	                                            <button>댓글 등록</button>
+	                                        </td>
+	
+	                                    </tr>
+	                                </form>
+	                            </table>
+	                            <!-- 댓글 목록 보기 -->
+	                            <table align="center" width="500" border="1" id="tb2">
+	                                <thead>
+	                                    <tr>
+	                                        <td colspan="2"><b id="rCount"></b></td>
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                </tbody>
+	                            </table>
+	                        </div>
+	                        </c:otherwise>
+                     </c:choose>
                         
-                        <!-- 댓글 등록  -->
-                        <div class="container">
-                            <table class="table table-bordered">
-                                <form method="post">
-
-                                    <tr>
-                                        <td class="col-6" style="width: 70%;">
-                                            <textarea cols="20" rows="2" class="form-control" style="resize: none;">
-                                             </textarea>
-                                        </td>
-                                        <br><br>
-                                        <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-                                            <button>댓글 등록</button>
-                                        </td>
-
-                                    </tr>
-                                </form>
-                            </table>
-                            <!-- 댓글 목록 보기 -->
-                            <table align="center" width="500" border="1" id="tb2">
-                                <thead>
-                                    <tr>
-                                        <td colspan="2"><b id="rCount"></b></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                        
                     </div>
-
-
 
 
 
         </section>
 
 
-
-
-
-
     </div>
-
+	<script>
+		$(function(){
+			var memberNo = "${loginUser.memberNo}";
+			var gmemberNo = "${member.memberNo}";
+			var dmemberNo = "${declaration.memberNo}";
+			var groupBNo = "${declaration.dnNo}";
+			var gBoardNo = "${gboard.gBoardNo }";
+			$("#apply").on("click",function(e){
+				if(memberNo == gmemberNo){
+					alert("자신의 글은 신고할 수 없습니다.");
+					$(this).attr("disabled",true)
+				}
+				
+				if((memberNo == dmemberNo) && (groupBNo == gBoardNo)){
+					alert("이미 신고하신 게시글 입니다.!");
+					$(this).attr("disabled",true)
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+			})
+			$("#singo").on("click",function(){
+				alert("신고 되었습니다.");
+			})
+	
+		})
+	</script>
 
     <footer>
 
@@ -256,9 +251,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
