@@ -13,7 +13,9 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("gService")
@@ -250,9 +252,39 @@ public class GroomingServiceImpl implements GroomingService{
 	}
 
 	@Override
-	public int getListCount() {
+	public int getListCount(String groomingNo) {
 		// TODO Auto-generated method stub
-		return gDao.getListCount();
+		return gDao.getListCount(groomingNo);
+	}
+
+	@Override
+	public ArrayList<GroupBoard> selectGroupBoardList(GroupPageInfo pi,String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGroupBoardList( pi, groomingNo);
+	}
+
+	@Override
+	public int addBoardReadCount(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.addBoardReadCount(gBoardNo);
+	}
+
+	@Override
+	public GroupBoard selectGBoard(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGBoard(gBoardNo);
+	}
+
+	@Override
+	public String selectGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGMemberNo(map);
+	}
+
+	@Override
+	public int insertBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return gDao.insertBoard(g);
 	}
 
 

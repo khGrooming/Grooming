@@ -8,8 +8,8 @@
 <style type="text/css">
 section
 {
-	padding-top: 100px;
-	min-height: calc(100vh - 56px);
+	padding-top: 6.25rem;
+	min-height: calc(100vh - 3.5rem);
 }
 footer
 {
@@ -17,7 +17,7 @@ footer
 }
 .footer_container
 {
-	height: 56px;
+	height: 3.5rem;
 }
 .footer_question
 {

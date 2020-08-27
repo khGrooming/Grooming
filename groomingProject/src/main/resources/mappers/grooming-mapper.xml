@@ -88,6 +88,7 @@
 		<result property="createDate" column="G_BOARD_CREATE_DATE"/>
 		<result property="modifyDate" column="G_BOARD_MODIFY_DATE"/>
 		<result property="gBoardImg" column="G_BOARD_IMG"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
 	</resultMap>
 	
 	 <resultMap type="GReply" id="GroupReplyResultSet">
@@ -500,14 +501,68 @@
        WHERE GM.GROOMING_NO = #{groomingNo}
 	   ORDER BY G_MEMBER_NO 
  	
+ 	</select>
  	
+ 	<select id="getListCount" parameterType="string" resultType="_int">
+ 		SELECT COUNT(*)
+ 		FROM GBOARD	GB
+ 		JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+ 		JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+ 		WHERE GM.GROOMING_NO = #{groomingNo}
+ 	</select>
+ 	
+ 	<select id="selectGroupBoardList" parameterType="map" resultMap="GroupBoardResultSet">
+ 	   SELECT GB.*, M.MEMBER_NICKNAME
+       FROM GBOARD GB
+       JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       JOIN MEMBER M ON M.MEMBER_NO = GM.MEMBER_NO
+       WHERE GM.GROOMING_NO=#{groomingNo}
+       ORDER BY G_BOARD_CATEGORY,G_BOARD_NO DESC
  	
  	
  	
  	</select>
  	
+ 	<update id="addBoardReadCount" parameterType="string">
+ 	   UPDATE GBOARD 
+       SET G_BOARD_VIEW_COUNT = G_BOARD_VIEW_COUNT + 1
+       WHERE G_BOARD_NO = #{gBoardNo}
+ 	 </update>
+ 	
+ 	<select id="selectGBoard" parameterType="string" resultMap="GroupBoardResultSet">
+ 	   SELECT GB.*, M.MEMBER_NICKNAME
+       FROM GBOARD GB
+       JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       JOIN MEMBER M ON M.MEMBER_NO = GM.MEMBER_NO
+       WHERE G_BOARD_NO=#{gBoardNo}
+ 	
+ 	
+ 	</select>
+ 	
+ 	<select id="selectGMemberNo" parameterType="map" resultType="string">  
+ 		SELECT G_MEMBER_NO
+	    FROM GROMMING_MEMBER
+	    WHERE GROOMING_NO=#{groomingNo} AND MEMBER_NO=#{memberNo}
+ 	
+ 	</select>
+ 	
+ 	<insert id="insertBoard" parameterType="GroupB">
+ 	INSERT INTO GBOARD VALUES(
+			'GB' || LPAD(SEQ_G_BOARD_NO.NEXTVAL,5,0)
+			, #{gMemberNo}
+			, #{gBoardCategory}
+			, #{gBoardTitle}
+			, #{gBoardContent}
+			, DEFAULT
+			, DEFAULT
+			, SYSDATE
+			, #{gBoardImg}
+		)
  	
  	
  	
+ 	</insert>
  	
 </mapper>

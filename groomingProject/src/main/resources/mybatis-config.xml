@@ -55,6 +55,8 @@
 
 		<!-- 관리자 -->
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
 	</typeAliases>
 	
 	<mappers>
@@ -62,6 +64,7 @@
 		<mapper resource="/mappers/alert-mapper.xml"/>
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
+		<mapper resource="/mappers/declaration-mapper.xml"/>
 		<mapper resource="/mappers/message-mapper.xml"/>
 		
 		<!-- 홈 멥퍼 -->

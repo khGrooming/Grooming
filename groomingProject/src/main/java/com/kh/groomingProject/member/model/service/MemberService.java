@@ -36,6 +36,10 @@ public interface MemberService {
 
 	ArrayList<Member> GroupMList(String groomingNo);
 
+	Member selectGroupMemberNo(String gBoardNo);
+
 	Member findMember(Member m);
+
+	Member findEmail(Member m);
 
 }

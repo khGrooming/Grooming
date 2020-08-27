@@ -28,8 +28,7 @@
 
 <!-- modal CSS  -->
 <link
-	href="${pageContext.servletContext.contextPath }/resources/views/css/modal.css"
-	rel="stylesheet">
+	href="${pageContext.servletContext.contextPath }/resources/views/css/modal.css" rel="stylesheet">
 <title>Hello, world!</title>
 <style>
 body {
@@ -143,7 +142,7 @@ img {
 								<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 						
 								<!-- 신청폼 모달 -->
-								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
 			
 									<div class="modal-dialog">
 										<form action="declare.do" method="post">
@@ -152,8 +151,8 @@ img {
 											<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
 												<!-- 모달 제목 -->
 												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel">신고 사유</h5>
-													<button type="button" class="close" data-dismiss="modal"aria-label="Close">
+													<h5 class="modal-title" id="declareModalLabel">신고 사유</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 														<span aria-hidden="true">&times;</span>
 													</button>
 												</div>
@@ -273,16 +272,16 @@ img {
 						리스트</button>
 					<!-- 리스트 모달 -->
 					<div class="modal fade" id="applicant" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static">
 
 						<div class="modal-dialog">
 
 							<div class="modal-content" style="width: 800px; height: auto;">
 								<!-- 모달 제목 -->
 								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">신청자 리스트</h5>
+									<h5 class="modal-title" id="applicantModalLabel">신청자 리스트</h5>
 									<button type="button" class="close" data-dismiss="modal"
-										aria-label="Close">
+											aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
@@ -311,32 +310,35 @@ img {
 													</div>
 												</td>
 												<td >${aL.memberNickName }</td>
-												<td><button data-toggle="modal" data-target="#open_modal_appContent">신청서
-														열람</button>
-													<div class="modal2 modal-xl fade" id="open_modal_appContent'+count+'" tabindex="-1"
-														role="dialog" aria-labelledby="exampleModalLabel"
-														aria-hidden="true">
+												
+												<td>
+												<button data-toggle="modal" data-target="#open_modal_appContent">신청서 열람</button>
+													<%-- <div class="modal modal-xl fade" id="open_modal_appContent" tabindex="-1" role="dialog" 
+													aria-labelledby="applyContentLabel" aria-hidden="true" >
 
 														<div class="modal-dialog">
 
-															<div class="modal-content"
-																style="width: 800px; height: auto;">
+															<div class="modal-content" style="width: 800px; height: auto;">
+																
 																<!-- 모달 제목 -->
 																<div class="modal-header">
-																	<h5 class="modal-title" id="exampleModalLabel">신청 내용</h5>
-																	<button type="button" class="close"
-																		data-dismiss="modal2" aria-label="Close">
+																	<h5 class="modal-title" id="applyContentLabel">신청 내용</h5>
+																	<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
 																		<span aria-hidden="true">&times;</span>
 																	</button>
 																</div>
+																
 																<!-- 모달 본문 내용 -->
 																<div class="modal-body">
 																	${aL.groomingAC }
 																</div>
+																
 															</div>
 														</div>
-													</div>
+													</div> --%>
 												</td>
+												
 												<td class="appTd">
 													<button class="accept" >수락</button>&nbsp;&nbsp;
 													<button class="reject" >거절</button>
@@ -392,7 +394,7 @@ img {
 					
 					<!-- 신청폼 모달 -->
 					<div class="modal fade" id="applyForm" tabindex="-1" role="dialog"
-						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						aria-labelledby="exampleModalLabel2" aria-hidden="true" >
 
 						<div class="modal-dialog">
 							<form action="applyContent.do" method="post">
@@ -403,7 +405,7 @@ img {
 	
 									<!-- 모달 제목 -->
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">신청서</h5>
+										<h5 class="modal-title" id="exampleModalLabel2">신청서</h5>
 										<button type="button" class="close" data-dismiss="modal"
 											aria-label="Close">
 											<span aria-hidden="true">&times;</span>
@@ -412,12 +414,12 @@ img {
 									<!-- 모달 본문 내용 -->
 									<div class="modal-body container">
 										
-										<textarea cols="100" rows="10" placeholder="내용을 입력하세요. "
-											id="summernote" name="groomingAC" class="form-control" required></textarea>
+										<textarea cols="100" rows="10" placeholder="신청된 내용은 수정이 불가피하오니 신중하게 적어주시기 바랍니다."
+											name="groomingAC" class="form-control" required></textarea>
 										</td>
 									</div>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="sumbit">제출</button>
+										<button type="sumbit" id="submit" >제출</button>
 										<button type="button" data-dismiss="modal">취소</button>
 									</div>
 								</div>
@@ -433,13 +435,29 @@ img {
 			</div>
 		</div>
 	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
-	 <c:url var="groupPage" value="groupPage.do">
-						<c:param name="groomingNo" value="${grooming.groomingNo}"/>
-					</c:url>
-					<c:if test="${grooming.memberNo eq loginUser.memberNo }">
-						<button onclick="location.href='${groupPage}'" type="button" > 그룹페이지 가보기 (임시용)</button>
-					</c:if>
+
 	</section>
+	
+	<script>
+		$(function(){
+		
+			
+			
+				$("#open_modal_appContent").modal('hide'); 
+				
+		
+				
+			
+		})
+
+	</script>	
+	<script>
+		$("#submit").on("click",function(){
+			alert("신청되었습니다.");
+		})
+	
+	
+	</script>
 	 <script type="text/javascript">
 		 window.history.forward();
 		 function noBack(){window.history.forward();}

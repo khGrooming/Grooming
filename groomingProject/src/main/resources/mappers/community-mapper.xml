@@ -17,23 +17,53 @@
 		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="replyNo" column="REPLY_NO" />
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="replyCreateDate" column="REPLY_CREATE_DATE" />
+		<result property="replyModifyDate" column="REPLY_MODIFY_DATE" />
+		<result property="replySelection" column="PEPLY_SELECTION" />
+		<result property="replyStatus" column="REPLY_STATUS" />
+		<result property="declarationCount" column="DECLARATION_COUNT" />
+	</resultMap>
 		
-	<select id="selectList" resultMap="boardResultSet">
+	<select id="selectList" parameterType="map" resultMap="boardResultSet">
  		SELECT * FROM BOARD
-		JOIN MEMBER USING (MEMBER_NO)
-        WHERE B_CATEGORY_NO = 'BC00001'
+		JOIN MEMBER USING (MEMBER_NO) 
+		<where>
+			<if test="bCategoryNo != null">
+				AND B_CATEGORY_NO=#{bCategoryNo}
+			</if>
+		</where>
         ORDER BY BOARD_NO DESC
 	</select>
 	
-	<insert id="noticeInsert" parameterType="Board">
+	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
+		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<update id="addViewCount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_VCOUNT = BOARD_VCOUNT + 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
+	<insert id="communityInsert" parameterType="map">
 		INSERT INTO BOARD (BOARD_NO, MEMBER_NO, B_CATEGORY_NO, BOARD_TITLE, BOARD_CONTENT,
 							BOARD_CREATE_DATE, BOARD_MODIFY_DATE, BOARD_VCOUNT, BOARD_GCOUNT, BOARD_STATUS,
 							BOARD_REPLY_STATUS, BOARD_SELEC_STATUS)
-		VALUES('B' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
-			, #{memberNo}
-			, 'BC00001'
-			, #{boardTitle}
-			, #{boardContent}
+		VALUES(
+		    'B' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
+			, #{memberNo}			
+			, #{board.bCategoryNo}
+			, #{board.boardTitle}
+			, #{board.boardContent}
 			, SYSDATE
 			, SYSDATE
 			, 0 
@@ -44,29 +74,29 @@
 		)
 	</insert>
 	
-	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
-		SELECT * FROM BOARD
-		JOIN MEMBER USING (MEMBER_NO)
-		WHERE BOARD_NO=#{boardNo}
-	</select>
-
-	<update id="noticeUpdate" parameterType="Board">
+	<update id="communityUpdate" parameterType="map">
 		UPDATE BOARD
-		SET BOARD_TITLE=#{boardTitle}
-			, BOARD_CONTENT=#{boardContent}
+		SET BOARD_TITLE=#{board.boardTitle}
+			, BOARD_CONTENT=#{board.boardContent}
 			, BOARD_MODIFY_DATE=SYSDATE
-		WHERE BOARD_NO=#{boardNo}
+		WHERE BOARD_NO=#{board.boardNo}
 	</update>
 
-	<delete id="noticeDelete" parameterType="string">
+	<delete id="communityDelete" parameterType="string">
 		DELETE FROM BOARD
 		WHERE BOARD_NO=#{boardNo}
 	</delete>
+	
 
-	<update id="addViewCount" parameterType="string">
-		UPDATE BOARD
-		SET BOARD_VCOUNT = BOARD_VCOUNT + 1
-		WHERE BOARD_NO=#{boardNo} 
-	</update>
+	<select id="selectReplyList" parameterType="map" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+		WHERE B_CATEGORY_NO=#{board.bCategoryNo}
+		ORDER BY REPLY_NO DESC
+	</select>
+
+
+
+
 	
 </mapper>

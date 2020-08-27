@@ -9,7 +9,9 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 
 public interface GroomingService {
@@ -86,6 +88,16 @@ public interface GroomingService {
 
 	ArrayList<GroupMember> selectMemberList(String groomingNo);
 
-	int getListCount();
+	int getListCount(String groomingNo);
+
+	ArrayList<GroupBoard> selectGroupBoardList(GroupPageInfo pi,String groomingNo);
+
+	int addBoardReadCount(String gBoardNo);
+
+	GroupBoard selectGBoard(String gBoardNo);
+
+	String selectGMemberNo(Map map);
+
+	int insertBoard(GroupBoard g);
 
 }

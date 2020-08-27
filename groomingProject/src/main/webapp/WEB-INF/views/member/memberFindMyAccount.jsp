@@ -26,13 +26,10 @@
 {
 	margin: 0;
 	padding: 0;
-	/* box-sizind: border-box; */
 }
 section
 {
-	margin-top: 76px;
 	position: relative;
-	min-height: 86.3vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -78,6 +75,7 @@ section .form_container .findAccount .imgBx img
 section .form_container .findAccount .form-group
 {
 	position: relative;
+	flex-wrap: wrap;
 	width: 50%;
 	height: 100%;
 	min-width: 400px;
@@ -88,17 +86,18 @@ section .form_container .findAccount .form-group
 	padding: 40px 60px;
 	transition: 0.5s;
 }
-section .form_container .findAccount .form-group form
+section .form_container .findAccount .form-group .find_container
 {
 	width: 100%;
+	margin: 0;
 }
-section .form_container .findAccount .form-group form p
+section .form_container .findAccount .form-group .find_container form p
 {
 	font-size: 1rem;
 	font-weight: 100;
 }
-section .form_container .findAccount .form-group form a,
-section .form_container .findAccount .form-group form input
+section .form_container .findAccount .form-group .find_container form a,
+section .form_container .findAccount .form-group .find_container form input
 {
 	position: relative;
 	width: 100%;
@@ -113,7 +112,7 @@ section .form_container .findAccount .form-group form input
 	box-shadow: none;
 	font-size: 14px;
 }
-section .form_container .findAccount .form-group form .input-group span
+section .form_container .findAccount .form-group .find_container form .input-group span
 {
     position: absolute;
     top: 10px;
@@ -124,25 +123,36 @@ section .form_container .findAccount .form-group form .input-group span
     background: #fff;
     text-transform: uppercase;
 }
-section .form_container .findAccount .form-group form .input-group .chkVali
+section .form_container .findAccount .form-group .find_container form .input-group.hint
+{
+	margin: 5px;
+	display: none;
+	text-align: center;
+}
+section .form_container .findAccount .form-group .find_container form .input-group #emailHint
+{
+	color: green;
+	font-size: 1.1rem;
+}
+section .form_container .findAccount .form-group .find_container form .input-group .chkVali
 {
 	font-size: 13px;
 	width: 100%;
 	color: red;
 	text-align: left;
-	padding: 0 5px;
+	padding: 5px;
 	display: none;
 }
-section .form_container .findAccount .form-group form .input-group input:focus ~ span,
-section .form_container .findAccount .form-group form .input-group input:valid ~ span
+section .form_container .findAccount .form-group .find_container form .input-group input:focus ~ span,
+section .form_container .findAccount .form-group .find_container form .input-group input:valid ~ span
 {
 	top: -15px;
 	left: 20px;
 	font-size: 13px;
 	padding: 2px 5px;
 }
-section .form_container .findAccount .form-group form a,
-section .form_container .findAccount .form-group form input[type="button"]
+section .form_container .findAccount .form-group .find_container form a,
+section .form_container .findAccount .form-group .find_container form input[type="button"]
 {
 	text-align: center;
 	text-decoration: none;
@@ -156,7 +166,7 @@ section .form_container .findAccount .form-group form input[type="button"]
 	letter-spacing: 1px;
 	transition: 0.5s;
 }
-section .form_container .findAccount .form-group form input[type="button"].btn_next
+section .form_container .findAccount .form-group .find_container form input[type="button"].btn_next
 {
 	background: grey;
 }
@@ -174,37 +184,64 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			<div class="findAccount">
 				<div class="imgBx"><img alt="회원 정보 찾기 이미지" src="${contextPath }/resources/views/images/find_account.png"></div>	
 				<div class="form-group">
-					<form class="row" action="changePwdPage.do" method="post" id="changePwdForm">
-						<div class="col-12">
-							<h2>회원정보 찾기</h2>
-							<p>회원 가입에 사용한 이메일로 인증번호를 보내드립니다.</p>
-						</div>
-						<div class="input-group col-8">
-							<input type="text" id="certiEmail" name="memberEmail" required>
-							<span>이메일 주소</span>
-							<div class="chkVali" id="certiEmailChk">올바른 이메일을 입력해주세요.</div>
-						</div>
-						<!-- <input type="button" class="col-4 btn_send"value=""> -->
-						<a onclick="sendEmail()" tabindex="0" class="col-4 btn_send popover_send_btn" role="button" 
-						data-toggle="popover" data-trigger="focus" data-placement="top" title="인증번호를 발송했습니다." 
-						data-content="인증번호가 오지 않았으면 입력하신 정보가 회원정보와 일치하는지 확인해 주세요.">인증 번호 받기</a>
-						<div class="input-group col-12 m-1">
-							<p class="m-0">인증번호 유지 시간 : &nbsp;</p><p id="timer" class="m-0">10:00</p>
-							<p id="sendmail"></p>
-						</div>
-						<div class="input-group col-8 my-3">
-							<input type="text" id="certiNumberInput" name="certiNumber" required disabled>
-							<span id="certiNumberSpan">인증번호</span>
-							<div class="chkVali" id="certiNumberChk">올바른 인증번호를 입력해주세요.</div>
-						</div>
-						<input type="button" class="btn_next col-4 my-3" onclick="findAccountFn()" value="다음">
-					</form>
+				
+					<div class="find_container">
+						<form>
+							<div>
+								<h2>가입 이메일 찾기</h2>
+								<p>회원 가입에 사용한 닉네임으로<br> 가입한 이메일의 일부 정보를 드립니다.</p>
+							</div>
+							<div class="input-group">
+								<input type="text" id="certiNickName" name="memberNickName" required>
+								<span>닉네임</span>
+								<div class="chkVali" id="certiNickNameChk">올바른 닉네임을 입력해주세요.</div>
+							</div>
+							<div>
+								<input type="button" class="col-12 btn_find" value="이메일 찾기">
+							</div>
+							<div class="input-group hint">
+								<p>이메일은 [ <strong id="emailHint"></strong> ] 입니다.</p>
+							</div>
+						</form>
+					</div>
+					
+					<div class="find_container">
+						<form action="changePwdPage.do" method="post" id="changePwdForm">
+							<div>
+								<h2>비밀번호 변경</h2>
+								<p>회원 가입에 사용한 이메일로 인증번호를 보내드립니다.</p>
+							</div>
+							<div class="email-group">
+								<div class="email-input input-group">
+									<input type="text" id="certiEmail" name="memberEmail" required>
+									<span>이메일 주소</span>
+									<div class="chkVali" id="certiEmailChk">올바른 이메일을 입력해주세요.</div>
+								</div>
+								<div class="input-group">
+									<a tabindex="0" class="btn_send popover_send_btn" role="button" 
+										data-toggle="popover" data-trigger="focus" data-placement="top" title="인증번호를 발송 안내" 
+										data-content="인증번호가 오지 않았으면 입력하신 정보가 회원정보와 일치하는지 확인해 주세요.">인증 번호 받기</a>
+								</div>
+							</div>
+							<div class="input-group">
+								<p>인증번호 유지 시간 : &nbsp;</p><p id="timer">10:00</p>
+								<p id="sendmail"></p>
+							</div>
+							<div class="input-group">
+								<input type="text" id="certiNumberInput" name="certiNumber" required disabled>
+								<span id="certiNumberSpan">인증번호</span>
+								<div class="chkVali" id="certiNumberChk">올바른 인증번호를 입력해주세요.</div>
+							</div>
+							<input type="button" class="btn_next" onclick="findAccountFn()" value="다음">
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<script type="text/javascript">
+		let memberNickName = "";
 		let memberEmail = "";
 		let certiNumber = "";
 		let expireTime = 10;
@@ -214,6 +251,60 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 		let certiEmailpass = false;
 		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
 		let regexCertiNum = /^\d{6,6}$/;
+		
+		// 닉네임 검사
+		function certiNickName() {
+			if ($.trim($("#certiNickName").val()) == "") {
+				$("#certiNickNameChk").css("display","block");
+			} else {
+				$("#certiNickNameChk").css("display","none");
+			}
+		}
+		$("#certiNickName").on("keyup change", function () {
+			certiNickName();
+		});
+		$("#certiNickName").keyup(function(e){
+			if(e.keyCode == 13){
+				$(".btn_find").click();
+			}
+		});
+		
+		// 닉네임 검사
+		$(".btn_find").on("click", function() {
+			if($.trim($("#certiNickName").val()) == ""){
+				console.log("올바른 닉네임을 입력해 주세요.");
+				$("#certiNickNameChk").css("display","block");
+				$("#certiNickName").focus();
+				return;
+			}
+
+			memberNickName = $("#certiNickName").val();
+
+			console.log("닉네임 으로 이메일 찾기 시작");
+
+			//닉네임 찾기
+			$.ajax({ 
+				url:"findEmail.do",
+				data:{memberNickName:memberNickName},
+				success:function(data){
+					console.log("닉네임 확인 결과 : " + data);
+					if(data != ""){
+						console.log("이메일 착기 : 성공");
+	
+						// css 설정
+						$("#emailHint").text(data);
+						$(".hint").css("display","flex");
+						
+					} else {
+						alert("입력하신 닉네임과 일치하는 정보가 없습니다.");
+					}
+				},
+				error:function(request, status, errorData){
+					certiEmailpass = false;
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+		});
 
 		// 이메일 검사
 		function certiEmail() {
@@ -243,15 +334,18 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			certiNumberFn();
 		});
 
+		// 이메일 정보 팝업
+		$('.popover_send_btn').popover({ trigger: 'focus' });
+
+		// 이메일 입력 창에서 엔터키로 이메일 전송
 		$("#certiEmail").keyup(function(e){
 			if(e.keyCode == 13){
-				sendEmail();
+				$(".btn_send").click();
 			}
 		});
 
-		$('.popover_send_btn').popover({ trigger: 'focus' });
-
-		function sendEmail() {
+		// 이메일 전송
+		$(".btn_send").on("click", function() {
 			if(!$("#certiEmail")[0].checkValidity()){
 				console.log("이메일을 입력해 주세요.");
 				certiEmailPass = false;
@@ -272,7 +366,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 			console.log("인증 메일 전송");
 			certiEmailpass = true;
 
-			//TODO email 전송 만들어야함
+			//email 전송
 			$.ajax({ 
 				url:"sendCertiEmail.do",
 				data:{memberEmail:memberEmail},
@@ -280,6 +374,7 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 					console.log("이메일 전송 결과 : " + data);
 					if(data == "success"){
 						console.log("이메일 전송 결과 : 완료");
+
 						// 타이머 설정
 						clearTime(expireTime);
 						setTimer();	
@@ -304,8 +399,9 @@ section .form_container .findAccount .form-group form input[type="button"].btn_n
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-		}
-
+		});
+		
+		// 인증번호 입력창에서 엔터키로 인증번호 확인
 		$("#certiNumberInput").keyup(function(e){
 			if(e.keyCode == 13){
 				findAccountFn();

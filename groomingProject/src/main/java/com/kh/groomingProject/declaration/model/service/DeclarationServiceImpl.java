@@ -1,5 +1,7 @@
 package com.kh.groomingProject.declaration.model.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,11 @@ public class DeclarationServiceImpl implements DeclarationService{
 	public int declareG(Declaration d) {
 		// TODO Auto-generated method stub
 		return dDao.declareG(d);
+	}
+
+	@Override
+	public Declaration selectGroupDeclare(Map map) {
+		// TODO Auto-generated method stub
+		return dDao.selectGroupDeclare(map);
 	}
 }

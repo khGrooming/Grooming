@@ -35,52 +35,8 @@
             max-height: 100%;
         }
 
-        /* 인라인 형식의 출력 */
-        #tab1:checked~#content1,
-        #tab2:checked~#content2,
-        #tab3:checked~#content3{
-            display: block;
-        }
-
-        /* 각 탭의 메뉴의 내용 */
-        section {
-            display: none;
-            padding: 20px 10px 10px 10px;
-            border: 3px solid #ddd;
-            height: auto;
-        }
-
-        /*라디오버튼 숨김*/
-        input {
-            display: none;
-        }
-
-        /* 탭메뉴 태그 마우스 올릴시 */
-        label:hover {
-            color: #2e9cdf;
-            cursor: pointer;
-        }
-
-        /* 태그 메뉴 css */
-        label {
-            display: inline-block;
-            margin: 0 0 -3px;
-            padding: 15px 25px;
-            font-weight: 600;
-            text-align: center;
-            color: #bbb;
-            border: 1px solid #ddd;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
-
-        }
-        /*input 클릭시, label 스타일*/
-        input:checked+label {
-            color: #555;
-            border: 3px solid #ddd;
-            /* border-top: 2px solid #2e9cdf; */
-            border-bottom: 3px solid #ffffff;
-        }
+  
+  
         .table{
             text-align: center;
         }
@@ -104,39 +60,30 @@
     </header>
 
     <!-- 섹션 시작 -->
-
+	
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
-         <c:url var="calendar" value="calendar.do"/>
-	<c:url var="gBlist" value="gBlist.do"/>
-	<c:url var="groupP" value="groupPage.do"/>
+	    <c:url var="calendar" value="calendar.do">
+	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	  	</c:url>
+		<c:url var="gBlist" value="gBlist.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+		</c:url>
+		<c:url var="groupP" value="groupPage.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+		</c:url>
     
         <!--디폴트 메뉴-->
-        <input id="tab1" type="radio" name="tabs" >
-        <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
+        <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <input id="tab2" type="radio" name="tabs">
-        <label for="tab2"><a href="${calendar }"></a><i class="fas fa-calendar-alt"></i>캘린더</a></label>
+        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
 
-        <input id="tab3" type="radio" name="tabs" checked>
-        <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-
-
-        <!-- 메인에 들어갈 내용용 -->
-        <section id="content1">
-         
-           
-    </section>
+        <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 	
-	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
-    <section id="content2">
-       
-  
-       
-    </section>
 
+  
     <!--게시판에 들어갈 내용 -->
-    <section id="content3">
+    <section >
         
         <table class="table table-hover" id="boardId">
             <thead>
@@ -150,15 +97,37 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>공지사항</td>
-                <td>내일 예정이었던 스터디디</td>
-                <td>김성훈</td>
-                <td>2020-07-12</td>
-                <td>2</td>
+            <c:forEach var="g" items="${glist}">
+            <c:url var="gDetail" value="groupDetail.do">
+				<c:param name="gBoardNo" value="${g.gBoardNo}"/>
+				<c:param name="page" value="${pi.currentPage }"/>
+				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+				<c:param name="memberNo" value="${loginUser.memberNo }"/>
+			</c:url> 
+            <c:if test="${g.gBoardCategory eq '공지' }">
+              <tr class ="tr" onclick="location.href='${gDetail }'" style="background:#f5f5dc;">
+                <th scope="row" class="gNo">${g.gBoardNo}</th>
+                <td class="category">${g.gBoardCategory}</td>
+                <td>${g.gBoardTitle}</td>
+                <td>${g.memberNickName}</td>
+                <td>${g.createDate}</td>
+                <td>${g.count}</td>
               </tr>
-
+             </c:if>
+            <c:if test="${g.gBoardCategory ne '공지' }">
+              <tr class ="tr" onclick="location.href='${gDetail }'">
+                <th scope="row" class="gNo">${g.gBoardNo}</th>
+                <td class="category">${g.gBoardCategory}</td>
+                <td>${g.gBoardTitle}</td>
+                <td>${g.memberNickName}</td>
+                <td>${g.createDate}</td>
+                <td>${g.count}</td>
+              </tr>
+             </c:if>
+             
+             
+             
+			</c:forEach>
 
 				<!-- 페이징 처리 부분 -->
 		<tr align="center" height="20">	
@@ -170,6 +139,7 @@
 				<c:if test="${pi.currentPage gt 1 }">
 				<c:url var="blistBack" value="gBlist.do">
 					<c:param name="page" value="${pi.currentPage - 1 }"/>
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 				</c:url>
 					<a href="${blistBack }">[이전]</a>
 				</c:if>	
@@ -184,6 +154,7 @@
 					<c:if test="${p ne pi.currentPage }">
 						<c:url var="blistCheck" value="gBlist.do">
 							<c:param name="page" value="${p}"/>
+							<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 						</c:url>
 						<a href="${ blistCheck}">${p }</a>
 					</c:if>
@@ -193,10 +164,11 @@
 					&nbsp;[이후]
 				</c:if>			
 				<c:if test="${pi.currentPage lt pi.maxPage }">
-				<c:url var="blistAfter" value="gBlist.do">
-					<c:param name="page" value="${pi.currentPage + 1 }"/>
-				</c:url>
-					<a href="${blistAfter }">[이후]</a>
+					<c:url var="blistAfter" value="gBlist.do">
+						<c:param name="page" value="${pi.currentPage + 1 }"/>
+						<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+					</c:url>
+						<a href="${blistAfter }">[이후]</a>
 				</c:if>	
 			</td>
 		</tr>
@@ -205,11 +177,16 @@
             </tbody>
         
           </table>
-          
+          <c:url var="gbif" value="groupBoardInsertForm.do">
+				
+					<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+					<c:param name="memberNo" value="${loginUser.memberNo }"/>
+					<c:param name="page" value="${pi.currentPage }"/>
+		  </c:url>
           
           <!-- 글작성 버튼 -->
  	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'" >글 작성</button>
+          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='${gbif}'" >글 작성</button>
           </div>
    
     
@@ -219,8 +196,12 @@
 
 </div>
 
+	
+	
 
-    <footer  style="margin-top:100px;">
+
+
+    <footer>
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>
