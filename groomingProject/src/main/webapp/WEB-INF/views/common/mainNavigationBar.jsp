@@ -26,6 +26,7 @@ header
     position: fixed;
     top: 0;
     left: 0;
+    max-height: 90px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -94,6 +95,7 @@ header
 .main_navbar.sticky
 {
     padding: 5px 200px;
+    max-height: 40px;
 }
 .main_navbar.sticky ul li a
 {

@@ -104,7 +104,7 @@
 		</div>
 		<c:forEach var="b" items="${hBoardList }">
 		<div class="right_spotlight_body">
-			<a href="?boardNo=${b.boardNo }">
+			<a href="communityDetailView.do?boardNo=${b.boardNo }">
 				<div class="right_spotlight_item">
 					<div class="right_spotlight_category">[ ${b.bCategoryName } ]</div>
 					<div class="right_spotlight_content">
