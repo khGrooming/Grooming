@@ -263,6 +263,16 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.delete("groomingMapper.groupDelete",gBoardNo);
 	}
+
+	public int updateGroupBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateGroupBoard",g);
+	}
+
+	public String selectGboardimg(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGboardimg",gBoardNo);
+	}
 	
 	
 	

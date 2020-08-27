@@ -40,8 +40,9 @@
         }
         /* div의 크기에 맞춤 */
         img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 300px;
+            max-height: 300px;
+           
         }
       
         .table th {
@@ -150,14 +151,22 @@
                                     <th>내용 </th>
                                     <td><textarea cols="100" rows="10" class="form-control" readonly style="height:auto; resize:none;" >${gboard.gBoardContent }</textarea></td>
                                 </tr>
-
+								<tr>
+									<th>첨부파일</th>
+									<td style="text-align:center;"><img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}"></td>
+								</tr>
 
                         </table>
                         <div style="text-align:center;"><button type="button" onclick="location.href='${gBlist}'">목록으로</button></div>
                         <c:if test="${loginUser.memberNo eq member.memberNo }">
+                        <c:url var="groupBoardUpdate" value="groupBoardUpdate.do">
+                        	<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+							<c:param name="page" value="${currentPage }"/>
+							<c:param name="gBoardNo" value="${gboard.gBoardNo }"/>
+                        </c:url>
 	                       <!-- 수정 삭제 버튼 -->
 	                        <div align="right">
-	                            <button type="button">수정</button>
+	                            <button type="button" onclick="location.href='${groupBoardUpdate}'">수정</button>
 	                            <button type="button" id="delete">삭제</button>
 	                        </div>
                         </c:if>

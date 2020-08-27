@@ -102,4 +102,8 @@ public interface GroomingService {
 
 	int groupDelete(String gBoardNo);
 
+	int updateGroupBoard(GroupBoard g);
+
+	String selectGboardimg(String gBoardNo);
+
 }

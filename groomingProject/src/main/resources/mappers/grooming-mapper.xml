@@ -569,4 +569,23 @@
 	 	DELETE FROM GBOARD
 	    WHERE G_BOARD_NO = #{gBoardNo}
  	</delete>
+ 	
+ 	<update id="updateGroupBoard" parameterType="GroupB">
+ 		UPDATE GBOARD SET
+ 		G_BOARD_CATEGORY = #{gBoardCategory},
+ 		G_BOARD_TITLE = #{gBoardTitle},
+ 		G_BOARD_CONTENT = #{gBoardContent},
+ 		G_BOARD_MODIFY_DATE = SYSDATE,
+ 		G_BOARD_IMG = #{gBoardImg}
+ 		WHERE G_BOARD_NO =#{gBoardNo}
+ 	</update>
+ 	<select id="selectGboardimg" parameterType="string" resultType="string">
+ 		SELECT G_BOARD_IMG
+ 		FROM GBOARD
+ 		WHERE G_BOARD_NO = #{gBoardNo}
+ 	
+ 	
+ 	
+ 	</select>
+ 	
 </mapper>

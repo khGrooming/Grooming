@@ -764,7 +764,7 @@ public class GroomingController {
 	}
 
 	@RequestMapping("groupDetail.do")
-	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam("page") Integer page,
+	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam(value = "page", required = false) Integer page,
 			ModelAndView mv, String groomingNo) {
 
 		int currentPage = page;
@@ -818,5 +818,74 @@ public class GroomingController {
 	} 
 	  return mv; }
 	 
+	  @RequestMapping("groupBoardUpdate.do")
+	  public ModelAndView groupBoardUpdate(ModelAndView mv,String groomingNo, String gBoardNo,
+			  @RequestParam(value = "page", required = false) Integer page) {
+		  
+		  GroupBoard g = gService.selectGBoard(gBoardNo);
+		  
+		  Grooming grooming = gService.selectGrooming(groomingNo); 
+		  mv.addObject("g",g).addObject("page",page).addObject("grooming",grooming).setViewName("grooming/groupBoardUpdateForm");
+		  
+		  return mv;
+	  }
 	 
+	  @RequestMapping("groupUpdate.do")
+	  public ModelAndView groupUpdate(@RequestParam(value = "page", required = false) Integer page,String gBoardNo,String memberNo,
+				HttpServletRequest request, ModelAndView mv, GroupBoard g, String groomingNo,
+				@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+		  
+		  String renameFileName = "";
+			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
+			// 그럼 그걸 가지고 기존의 파일을 삭제하자
+			System.out.println(g.getgBoardImg());
+			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
+				if (g.getgBoardImg() != null) { // 기존의 파일이 있느냐
+					deleteFile(g.getgBoardImg(), request);
+					// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
+					// 폴더명만 수정하자
+				}
+				renameFileName = saveFile(file, request);
+
+				// Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
+				if (!renameFileName.equals("")) {
+
+					g.setgBoardImg(renameFileName);
+				}
+
+			} else {
+				g.setgBoardImg(gService.selectGboardimg(gBoardNo));
+			}
+
+	
+			int result = gService.updateGroupBoard(g);
+
+		
+			int currentPage = page;
+
+			Member member = mService.selectGroupMemberNo(gBoardNo);
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			Map map = new HashMap();
+			map.put("memberNo", memberNo);
+			map.put("gBoardNo", gBoardNo);
+
+			Declaration declaration = declarationService.selectGroupDeclare(map);
+		
+			System.out.println("나 수정 됬어요~" + result);
+			if (result > 0) {
+				GroupBoard gboard = gService.selectGBoard(gBoardNo);
+				if (gboard != null) {
+					mv.addObject("gboard", gboard).addObject("currentPage", currentPage).addObject("grooming", grooming)
+							.addObject("member", member).addObject("declaration", declaration)
+							.setViewName("grooming/groupBoardDetailView");
+				} else {
+					throw new GroomingException("게시글 조회 실패!");
+				}
+
+			} else {
+				throw new GroomingException("게시글 수정 실패!");
+			}
+		  return mv;
+	  }
+	  
 }
