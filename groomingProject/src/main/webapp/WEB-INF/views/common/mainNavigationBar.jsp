@@ -14,9 +14,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <!-- style -->
-<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
+<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
 
-<style type="text/css">
+<!-- <style type="text/css">
 header
 {
     font-family: 'Jua', sans-serif;
@@ -318,7 +318,7 @@ header .main_upIcon.show
 {
 	display: block;
 }
-</style>
+</style> -->
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>
