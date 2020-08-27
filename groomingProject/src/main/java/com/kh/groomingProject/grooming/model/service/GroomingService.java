@@ -100,4 +100,6 @@ public interface GroomingService {
 
 	int insertBoard(GroupBoard g);
 
+	int groupDelete(String gBoardNo);
+
 }

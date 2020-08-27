@@ -287,6 +287,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.insertBoard(g);
 	}
 
+	@Override
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.groupDelete(gBoardNo);
+	}
+
 
 	
 }

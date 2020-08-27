@@ -562,7 +562,11 @@
 		)
  	
  	
- 	
  	</insert>
  	
+ 	
+ 	<delete id="groupDelete" parameterType="string">
+	 	DELETE FROM GBOARD
+	    WHERE G_BOARD_NO = #{gBoardNo}
+ 	</delete>
 </mapper>

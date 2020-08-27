@@ -158,7 +158,7 @@
 	                       <!-- 수정 삭제 버튼 -->
 	                        <div align="right">
 	                            <button type="button">수정</button>
-	                            <button type="button">삭제</button>
+	                            <button type="button" id="delete">삭제</button>
 	                        </div>
                         </c:if>
                         <br><br><br>
@@ -227,14 +227,6 @@
 				}
 				
 				
-				
-				
-				
-				
-				
-				
-				
-				
 			})
 			$("#singo").on("click",function(){
 				alert("신고 되었습니다.");
@@ -243,6 +235,23 @@
 		})
 	</script>
 
+	<script>
+		$(function(){
+			var groomingNo="${grooming.groomingNo}";
+			var gBoardNo = "${gboard.gBoardNo }";
+			var page = "${pi.currentPage }";
+			$("#delete").on("click",function(){
+				var result= confirm("삭제하시겠습니까?");
+				if(result){
+					location.href="groupDelete.do?groomingNo="+groomingNo+'&gBoardNo='+gBoardNo+'&page='+page;					
+					alert("삭제되었습니다.");
+				}
+				
+			})
+		})
+	
+	
+	</script>
     <footer>
 
 		<jsp:include page="../common/footer.jsp" />

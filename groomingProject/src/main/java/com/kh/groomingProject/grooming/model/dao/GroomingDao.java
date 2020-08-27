@@ -258,6 +258,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertBoard",g);
 	}
+
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.groupDelete",gBoardNo);
+	}
 	
 	
 	
