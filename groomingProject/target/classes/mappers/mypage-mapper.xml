@@ -261,5 +261,54 @@
 	<delete id="deleteApplicant" parameterType="string">		
 	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
 	</delete>
+	
+	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
+		SELECT *
+		FROM GROOMING
+		WHERE MEMBER_NO =#{mNo} AND GROOMING_STATUS='N'
+	</select>
+	
+	<select id="selectGroomingMemberCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectMypageGmember" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectGroomingHostCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
 
+	<select id="selectMypageGhost" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectPointList" parameterType="string" resultMap="MyPagePointSet">
+	SELECT *
+	FROM POINT
+	WHERE MEMBER_NO = #{mNo}
+	</select>
+	
+	<insert id="insertPoint" parameterType="MyPagePoint" >
+		INSERT INTO POINT VALUES('P' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0),#{memberNo},#{addPoint},0,#{pointList},SYSDATE)
+	</insert>
 </mapper>
