@@ -48,35 +48,35 @@ header
 }
 .main_navbar .proFile_img
 {
-	margin: auto 3px;
-	height: 35px;
-	width: 35px;
+	margin: auto 0.18rem;
+	height: 2.18rem;
+	width: 2.18rem;
 	border-radius: 50%;
 	border: thin solid lightgrey;
 }
 .main_navbar #grooming
 {
-	min-width: 5.9rem;
+	min-width: 5.02rem;
 }
 .main_navbar #community
 {
-	min-width: 7.3rem;
+	min-width: 6.5rem;
 }
 .main_navbar #studyCafe
 {
-	min-width: 8.8rem;
+	min-width: 7.9rem;
 }
 .main_navbar #login_item
 {
-	min-width: 6rem;
+	min-width: 5.2rem;
 }
 .main_navbar #register_item
 {
-	min-width: 7.6rem;
+	min-width: 6.7rem;
 }
 .main_navbar #logout_item
 {
-	min-width: 7.4rem;
+	min-width: 6.6rem;
 }
 .main_navbar #memberNickName_item_con
 {
@@ -147,6 +147,17 @@ header
 	top: -0.273rem;
 	left: 1.12rem;
 }
+.main_navbar.sticky .main_messages_icon .main_naviIcon .img_svg,
+.main_navbar.sticky .main_alerts_icon .main_naviIcon .img_svg
+{
+	width: 1.75rem;
+	height: 1.75rem;
+}
+.main_navbar.sticky .proFile_img
+{
+	height: 1.75rem;
+	width: 1.75rem;
+}
 /* 네비바 기본 스타일 끝 */
 .main_navbar .main_flex
 {
@@ -175,8 +186,8 @@ header
 .main_messages_icon .main_naviIcon .img_svg,
 .main_alerts_icon .main_naviIcon .img_svg
 {
-	width: 1.75rem;
-	height: 1.75rem;
+	width: 2rem;
+	height: 2rem;
 }
 .main_messages_icon .main_messages_txt,
 .main_alerts_icon .main_alerts_txt
@@ -344,10 +355,10 @@ header .main_upIcon.show
 			<li id="grooming" class="main_navbar_item">
 				<a class="main_navbar_link" href="${groomingMain }">그루밍</a>
 			</li>
-			<li id="community" class="main_navbar_item" style="min-width: 7.3rem;">
+			<li id="community" class="main_navbar_item">
 				<a class="main_navbar_link" href="${communityMain }">커뮤니티</a>
 			</li>
-			<li id="studycafe" class="main_navbar_item" style="min-width: 8.8rem;">
+			<li id="studycafe" class="main_navbar_item">
 				<a class="main_navbar_link" href="${studyCafeMain }">스터디카페</a>
 			</li>
 		</ul>

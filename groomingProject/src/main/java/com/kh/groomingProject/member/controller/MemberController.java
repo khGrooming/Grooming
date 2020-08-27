@@ -93,7 +93,7 @@ public class MemberController {
 	// 회원 가입 : 일반 회원
 	@RequestMapping("memberInsert.do")
 	@ResponseBody
-	public String memberInsert(Member m) {
+	public String memberInsert(Model model, Member m) {
 		String message = "";
 		System.out.println("회원가입 (프론트정보): " + m);
 
@@ -130,6 +130,12 @@ public class MemberController {
 
 					if(resultAlertPoint > 0) {
 						System.out.println("회원가입 확인 : 성공");
+						
+						Member loginUser = mService.loginMember(m);
+						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+
+						model.addAttribute("loginUser", loginUser);
+						
 						return "success";
 
 					} else {
