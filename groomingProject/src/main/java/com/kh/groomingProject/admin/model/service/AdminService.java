@@ -3,6 +3,7 @@ package com.kh.groomingProject.admin.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -23,6 +24,10 @@ public interface AdminService {
 	ArrayList<MentoManageView> selectSpareMentoList(ArrayList<MemberManageView> sNo);
 
 	ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i);
+
+	int selectGroomingCount(String category);
+
+	ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category);
 
 	
 

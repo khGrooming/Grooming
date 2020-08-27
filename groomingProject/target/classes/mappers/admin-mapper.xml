@@ -25,6 +25,19 @@
 		<result property="specCName" column="SPEC_C_NAME"/>
 		<result property="specComfirm" column="SPEC_CONFIRM"/>
 	</resultMap>
+	
+	<resultMap type="GroomingManageView" id="groomingViewResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingParticipants" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingCurrentPeople" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="gCalendarStartDate" column="G_CALENDAR_START_DATE"/>
+		<result property="gBoardModifyDate" column="G_BOARD_MODIFY_DATE"/>
+	</resultMap>
+
 
 	
 	<select id="memberListCount" parameterType="string" resultType="_int">
@@ -127,5 +140,25 @@
 				</if>
 		</foreach>
 		ORDER BY SPEC_C_NAME DESC
+	</select>
+	
+	<select id="selectGroomingCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*)
+		FROM GROOMING
+		WHERE GROOMING_STATUS = 'Y'
+		AND STUDY_END_DATE > SYSDATE
+		<if test="category != null">
+			AND GROOMING_TYPE = #{category}
+		</if>
+	</select>
+	
+	<select id="selectGroomingList" parameterType="map" resultMap="groomingViewResultSet">
+		SELECT *
+		FROM GROOMING
+		WHERE GROOMING_STATUS = 'Y'
+		AND STUDY_END_DATE > SYSDATE
+		<if test="category != null">
+			AND GROOMING_TYPE = #{category}
+		</if>
 	</select>
 </mapper>

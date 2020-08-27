@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
+import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -126,8 +127,24 @@ public class AdminController {
 	
 
 	@RequestMapping("groomingManage.do")
-	public String groomingManage() {
-		return "admin/groomingManage";
+	public ModelAndView groomingManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) String category) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int gListCount = adminService.selectGroomingCount(category);
+		
+		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
+		
+		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, category);
+		
+		mv.addObject("glist", glist);
+		mv.setViewName("admin/groomingManage");
+		
+		return mv;
 	}
 	
 	@RequestMapping("declarationManage.do")

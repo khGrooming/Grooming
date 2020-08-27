@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.admin.model.dao.AdminDao;
+import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -57,6 +58,18 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i) {
 
 		return adminDao.selectNo(pi, i);
+	}
+
+	@Override
+	public int selectGroomingCount(String category) {
+
+		return adminDao.selectGroomingCount(category);
+	}
+
+	@Override
+	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
+		
+		return adminDao.selectGroomingList(pi, category);
 	}
 
 	

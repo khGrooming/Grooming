@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -61,6 +62,23 @@ public class AdminDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectNo", num, rowBounds);
+	}
+
+	public int selectGroomingCount(String category) {
+		Map num = new HashMap();
+		num.put("category", category);
+		
+		return sqlSessionTemplate.selectOne("adminMapper.selectGroomingCount", num);
+	}
+
+	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
+		Map num = new HashMap();
+		num.put("category", category);
+		
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", num, rowBounds);
 	}
 
 	

@@ -162,7 +162,7 @@
 						</c:if>
 						<c:if test="${empty mentoList}">
 							<tr>
-								<td colspan="5">멘토가 없습니다.</td>
+								<td colspan="7">멘토가 없습니다.</td>
 							<tr>
 						</c:if>
 	                         <!-- 페이징 처리 부분 -->
