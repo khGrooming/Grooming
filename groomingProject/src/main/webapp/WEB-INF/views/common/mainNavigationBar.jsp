@@ -53,9 +53,7 @@ header
 }
 .main_navbar .proFile_img
 {
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-left: 3px;
+	margin: 0 3px;
 	height: 35px;
 	width: 35px;
 	border-radius: 50%;
@@ -74,6 +72,7 @@ header
 .main_navbar ul li
 {
     list-style: none;
+    padding-bottom: 1px;
 }
 .main_navbar ul li a
 {
@@ -86,9 +85,8 @@ header
 }
 .main_navbar ul li:hover
 {
-    border: thin solid green;
+    border-bottom: thin solid green;
 	outline: thin solid lightyellow;
-    border-radius: 3px;
 }
 .main_navbar ul li:hover a
 {
@@ -361,9 +359,9 @@ header .main_upIcon.show
 					</div>
 				</li>
 				<li class="main_navbar_item main_flex_between_center">
-					<a id="memberNickName" class="main_navbar_link" href="${myPage }">
 					<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
 						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+					<a id="memberNickName" class="main_navbar_link" href="${myPage }">
 					${loginUser.memberNickName }</a>
 				</li>
 				<li class="main_navbar_item">
