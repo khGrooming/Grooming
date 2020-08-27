@@ -78,42 +78,42 @@
 				</div>
 				<!-- ------------------ 정렬 -------------------------- -->
 				<div class="row">
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
       						</a>
     					</div>
   					</div>
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
       						</a>
     					</div>
   					</div>
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
       						</a>
     					</div>
   					</div>
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
       						</a>
     					</div>
   					</div>
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
       						</a>
     					</div>
   					</div>
-  					<div class="col-md-4">
+  					<div class="col-xs-6 col-md-3">
     					<div class="thumbnail">
       						<a href="#">
         						<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:400px; height: 300px">
@@ -126,7 +126,5 @@
 			<!-- ------------------ 내 스터디 인증 ------------------- -->
 		</div>
 		<!-- ----------------------- 메인 화면 테이블 ------------------ -->
-	</div>
-	
 </body>
 </html>

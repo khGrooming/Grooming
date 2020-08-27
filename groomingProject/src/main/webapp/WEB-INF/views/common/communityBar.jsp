@@ -51,7 +51,7 @@
 </head>
 <body>
 
-	<c:url var="communityMain" value="communityMain.do" />
+	<c:url var="communityMainForm2" value="communityMainForm2.do" />
 	<c:url var="communityNotice" value="communityNotice.do" />
 	<c:url var="communityFreeBoard" value="communityFreeBoard.do" />
 	<c:url var="communityStudyPromotion" value="communityStudyPromotion.do" />
@@ -65,12 +65,12 @@
 			<div id="sidebar_ra" class="floating_ra">
 				<h1 align="center">커뮤니티</h1>
 				<hr>
-					<p><a href="${communityMain }">All&nbsp;&nbsp;&nbsp;</a></p>
-					<p><a href="${communityNotice }">공지사항&nbsp;&nbsp;&nbsp;</a></p>
-					<p><a href="${communityFreeBoard }">자유 게시판&nbsp;&nbsp;&nbsp;</a></p>
-					<p><a href="${communityStudyPromotion }">내 스터디 홍보&nbsp;&nbsp;&nbsp;</a></p>
-					<p><a href="${communityStudyConfirm }">스터디 인증&nbsp;&nbsp;&nbsp;</a></p>
-					<p><a href="${communityQnA }">Q&A&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityMainForm2 }">All&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityNotice }?bCategoryNo=BC00001 ">공지사항&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityFreeBoard }?bCategoryNo=BC00002 ">자유 게시판&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityStudyPromotion }?bCategoryNo=BC00003 ">내 스터디 홍보&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityStudyConfirm } ">스터디 인증&nbsp;&nbsp;&nbsp;</a></p>
+					<p><a href="${communityQnA }?bCategoryNo=BC00005 ">Q&A&nbsp;&nbsp;&nbsp;</a></p>
 			</div> 
 		</div>
 		<!-- ----------------------- 사이드 카테고리바 ----------------- -->

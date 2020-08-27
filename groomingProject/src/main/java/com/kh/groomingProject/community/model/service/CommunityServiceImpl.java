@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.community.model.dao.CommunityDao;
 import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
+import com.kh.groomingProject.member.model.vo.Member;
 
 @Service("cService")
 public class CommunityServiceImpl implements CommunityService {
@@ -15,15 +17,9 @@ public class CommunityServiceImpl implements CommunityService {
 	CommunityDao cDao;
 
 	@Override
-	public ArrayList<Board> selectList() {
+	public ArrayList<Board> selectList(String bCategoryNo) {
 		
-		return cDao.selectList();
-	}
-
-	@Override
-	public int noticeInsert(Board b) {
-		
-		return cDao.noticeInsert(b);
+		return cDao.selectList(bCategoryNo);
 	}
 
 	@Override
@@ -31,25 +27,46 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return cDao.selectOne(boardNo);
 	}
-
-	@Override
-	public int noticeUpdate(Board b) {
-		
-		return cDao.noticeUpdate(b);
-	}
-
-	@Override
-	public int noticeDelete(String boardNo) {
-		
-		return cDao.noticeDelete(boardNo);
-	}
-
+	
 	@Override
 	public int addViewCount(String boardNo) {
 		
 		return cDao.addViewCount(boardNo);
 	}
+	
+	@Override
+	public int communityInsert(Board b, Member member) {
+		
+		return cDao.communityInsert(b, member);
+	}
+	
+	@Override
+	public int communityUpdate(Board b, Member member) {
+		
+		return cDao.communityUpdate(b, member);
+	}
+	
+	@Override
+	public int communityDelete(String boardNo) {
+		
+		return cDao.communityDelete(boardNo);
+	}
 
+	@Override
+	public ArrayList<Reply> selectReplyList(String boardNo) {
+		
+		return cDao.selectReplyList(boardNo);
+	}
+
+
+
+
+
+	
+
+	
+
+	
 
 
 
