@@ -77,6 +77,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public Member findEmail(Member m) {
+
+		return mDao.findEmail(m);
+	}
+
+	@Override
 	public int insertRandomCode(MemberCertiCode mcc) {
 
 		return mDao.insertRandomCode(mcc);

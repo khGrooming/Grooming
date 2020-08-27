@@ -66,6 +66,11 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.findMemberEmail", m);
 	}
 
+	public Member findEmail(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
+	}
+
 	public int insertRandomCode(MemberCertiCode mcc) {
 
 		return sqlSessionTemplate.insert("memberMapper.insertRandomCode", mcc);

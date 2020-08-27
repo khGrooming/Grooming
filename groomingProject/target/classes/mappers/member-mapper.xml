@@ -95,6 +95,13 @@
 		AND MEMBER_STATUS='N'
 	</select>
 
+	<select id="findEmail" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{memberNickName}
+		AND MEMBER_STATUS='N'
+	</select>
+
 	<insert id="insertRandomCode" parameterType="MemberCertiCode">
 		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
 		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0), 

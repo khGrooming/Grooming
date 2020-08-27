@@ -38,4 +38,6 @@ public interface MemberService {
 
 	Member findMember(Member m);
 
+	Member findEmail(Member m);
+
 }
