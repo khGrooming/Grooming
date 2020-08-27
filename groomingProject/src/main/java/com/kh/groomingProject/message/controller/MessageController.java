@@ -65,7 +65,7 @@ public class MessageController {
 	}
 	
 	@RequestMapping("getUserMessage.do")
-	public void getUserMessage(HttpServletResponse response,Member m) throws JsonIOException, IOException {
+	public void getUserMessage(HttpServletResponse response, Member m) throws JsonIOException, IOException {
 		
 		System.out.println("메시지 리스트 확인 :" + m.getMemberNo());
 
@@ -81,7 +81,7 @@ public class MessageController {
 	}
 
 	@RequestMapping("readUserMessage.do")
-	public void readUserMessage(HttpServletResponse response,Member m, String messageNo) throws JsonIOException, IOException {
+	public void readUserMessage(HttpServletResponse response, Member m, String messageNo) throws JsonIOException, IOException {
 		
 		System.out.println("메시지 읽음 : " + messageNo);
 		
