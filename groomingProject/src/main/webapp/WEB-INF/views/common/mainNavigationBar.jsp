@@ -63,8 +63,7 @@ header
 {
 	margin-left: 0;
 }
-.main_navbar ul,
-.main_navbar ul#mainProfileArea
+.main_navbar ul
 {
 	margin-top: auto;
 	margin-bottom: auto;
