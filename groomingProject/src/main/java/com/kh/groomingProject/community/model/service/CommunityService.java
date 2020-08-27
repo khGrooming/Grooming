@@ -22,6 +22,8 @@ public interface CommunityService {
 
 	ArrayList<Reply> selectReplyList(String boardNo);
 
+	int replyInsert(Reply r);
+
 
 
 

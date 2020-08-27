@@ -133,44 +133,33 @@ public class CommunityController {
 		}
 		
 	// -------------------------------------------------------------------------------------	
-		
-	/*
-	 * // 1. 댓글 리스트 불러오기
-	 * 
-	 * @RequestMapping("replyList.do") public void getreplyList(HttpServletResponse
-	 * response, String boardNo) throws JsonIOException, IOException {
-	 * ArrayList<Reply> replyList = cService.selectReplyList(boardNo);
-	 * response.setContentType("appalication/json;charset=utf-8");
-	 * 
-	 * Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-	 * gson.toJson(replyList, response.getWriter()); }
-	 */
-		
+		// 댓글 리스트
 		@RequestMapping("replyList.do")
-		public String replyList(Model model, String boardNo, Board b) {
-			ArrayList<Reply> replyList = cService.selectReplyList(boardNo);
+		public void getReplyList(HttpServletResponse response, String boardNo) throws JsonIOException, IOException {
+			ArrayList<Reply> rList = cService.selectReplyList(boardNo);
 			
-			if(replyList != null) { 
-				model.addAttribute("replyList", replyList); 
-			}else { 
-				throw new CommunityException("게시물 상세 보기 실패!"); 
-			} 
-				return "community/communityDetailView";
+			response.setContentType("appalication/json;charset=uth-8");
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(rList, response.getWriter());
+		}
+		// 댓글 달기
+		@RequestMapping("replyAdd.do")
+		@ResponseBody
+		public String replyAdd(Reply r, HttpSession session) {
+			Member loginUser = (Member)session.getAttribute("loginUser");
+			String memberNo = loginUser.getMemberEmail();
+			r.setMemberNo(memberNo);
+			
+			int result = cService.replyInsert(r);
+			
+			if(result > 0) {
+				return "success";
+			}else {
+				throw new CommunityException("댓글 등록 실패!");
 			}
+		}
 		
-	/*
-	 * // 2. 댓글 달기
-	 * 
-	 * @RequestMapping("replyAdd.do")
-	 * 
-	 * @ResponseBody // 스트림 안쓰고 String 형태로 값 보내기 public String replyAdd(Reply r,
-	 * HttpSession session) { Member loginUser =
-	 * (Member)session.getAttribute("loginUser"); String memberNo =
-	 * loginUser.getMemberNickName(); r.setrWriter(memberNo);
-	 * 
-	 * int result = cService.insertReply(r);
-	 * 
-	 * if(result > 0) { return "success"; }else { throw new
-	 * CommunityException("댓글 등록 실패!"); } }
-	 */
+		
+	
 }

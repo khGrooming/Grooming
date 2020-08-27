@@ -87,16 +87,33 @@
 		WHERE BOARD_NO=#{boardNo}
 	</delete>
 	
-
 	<select id="selectReplyList" parameterType="map" resultMap="replyResultSet">
-		SELECT *
-		FROM REPLY
-		WHERE B_CATEGORY_NO=#{board.bCategoryNo}
-		ORDER BY REPLY_NO DESC
+		SELECT * FROM REPLY
+		JOIN MEMBER USING (MEMBER_NO) 
+		<where>
+			<if test="bCategoryNo != null">
+				AND B_CATEGORY_NO=#{bCategoryNo}
+			</if>
+		</where>
+        ORDER BY BOARD_NO DESC
 	</select>
 
+	<insert id="replyInsert" parameterType="Reply">
+		INSERT INTO REPLY (REPLY_NO, BOARD_NO, B_CATEGORY_NO, MEMBER_NO, REPLY_CONTENT
+							REPLY_CREATE_DATE, REPLY_MODIFY_DATE, REPLY_SELECTION,
+							REPLY_STATUS, DECLARATION_COUNT)
+		VALUES(
+			'RR' || LPAD(SEQ_REPLY_NO.NEXTVAL,5,0)
+			, #{boardNo}
+			, #{bCategoryNo}
+			, #{memberNo}
+			, #{replyContent}
+			, SYSDATE
+			, SYSDATE
+			, 'N'
+			, 'Y'
+			, 0
+		)
+	</insert>
 
-
-
-	
 </mapper>

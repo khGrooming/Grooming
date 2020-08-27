@@ -3,11 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset=4"UTF-8">
 <title>Grooming</title>
-</head>
-<body>
-=======
 </head>
 <body>
 	<jsp:forward page="home.do"/>

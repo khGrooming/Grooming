@@ -94,6 +94,86 @@
 					</td>
 				</tr>
 			</table>
+			
+			<script>
+				$(function(){
+					getReplyList();
+					
+					setInterval(function(){
+						getReplyList();
+					}, 10000);	// 실시간
+					
+					$("#replySubmit").on("click",function(){
+						var replyContent = $("#replyContent").val();
+						var replyNo = ${board.boardNo};
+						
+						$.ajax({
+							url:"replyAdd.do",
+							data:{replyContent:replyContent, replyNo:replyNo},
+							
+							success:function(data){
+								if(data == "success"){
+									getReplyList();
+									
+									$("#replyContent").val("");
+									
+								}
+							},
+							error:function(request, status, errorData){
+								alert("error code: " + request.status + "\n"
+										+"message: " + request.responseText
+										+"error: " + errorData);
+							}
+						})
+					})
+				})
+				
+				function getReplyList(){
+					var boardNo = ${board.boardNo};
+					
+					$.ajax({
+						url:"replyList.do",
+						data:{boardNo:boardNo},
+						dataType:"json",
+						
+						success:function(data){
+							$tableBody = ${"#replyList tbody"};
+							$tableBody.html("");
+							
+							var $tr;
+							var $memberNo;
+							var replyContent;
+							var replyCreateDate;
+							
+							if(data.length > 0){
+								for(var i in data){
+									$tr = $("<tr>");
+									$memberNo = $("<td width='400'>").text(data[i].memberNo);
+									$replyContent = $("<td>").text(data[i].replyContent);
+									$replyCreateDate = $("<td width='400'>").text(data[i].replyCreateDate);
+									
+									$tr.append($memberNo);
+									$tr.append($replyContent);
+									$tr.append($replyCreateDate);
+									$tableBody.append($tr);
+								}
+							}else{
+								$tr = $("<tr");
+								$replyContent = $("<td colspan='3'>").text("등록 된 댓글이 없습니다");
+								
+								$tr.append($replyContent);
+								$tableBody.append($tr);
+							}
+						},
+						error:function(request, status, errorData){
+							alert("error code: " + request.status + "\n"
+									+"message: " + request.responseText
+									+"error: " + errorData);
+						}
+					})
+				}	
+			</script>
+			
     	</div>
 	</div>	
 

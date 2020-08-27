@@ -67,6 +67,11 @@ public class CommunityDao {
 		return replyList;
 	}
 
+	public int replyInsert(Reply r) {
+		
+		return sqlSessionTemplate.insert("communityMapper.replyInsert", r);
+	}
+
 
 
 

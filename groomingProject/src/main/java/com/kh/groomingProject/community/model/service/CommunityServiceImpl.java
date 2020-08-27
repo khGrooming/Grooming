@@ -58,6 +58,12 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.selectReplyList(boardNo);
 	}
 
+	@Override
+	public int replyInsert(Reply r) {
+		
+		return cDao.replyInsert(r);
+	}
+
 
 
 
