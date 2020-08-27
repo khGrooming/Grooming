@@ -12,7 +12,7 @@
 #content {
 	width: 75%;
 	height: 800px;
-	margin: 5% auto;
+	margin: 3% auto;
 }
 
 .flip-card {
@@ -96,14 +96,18 @@
 				<th style="width: 25%;text-align: center;">포인트</th>
 			</tr>
 		</table>
-		<div style=" height:400px;width: 100%; overflow:auto; " id="tableDiv">
+		<div style=" height:400px;width: 95%; overflow:auto; " id="tableDiv">
 		<table style="width: 100%;" id="pointListTb">
 			<c:forEach var="p" items="${pList }">
 				<tr style="border-bottom: 1px solid gray; height: 30px; ">
 				<td style="width: 35%;text-align: center;">${p.pointDate }</td>
 				<td>${p.pointList }</td>
-				<td style="width: 25%;text-align: center;">${p.addPoint }</td>
-				
+				<c:if test="${p.addPoint lt 0 }">
+				<td style="width: 25%;text-align: center; color:red;">${p.addPoint }</td>
+				</c:if>
+				<c:if test="${p.addPoint gt 0 }">
+				<td style="width: 25%;text-align: center; color:blue;">${p.addPoint }</td>
+				</c:if>
 				</tr>
 			</c:forEach>
 		
@@ -116,8 +120,18 @@
 		</div>
 		</c:if>
 		<c:if test="${empty pList }">
-		
-		내역이 없습니다.
+		<table style="width: 95%;">
+			<tr style="border-bottom: 1px solid lightgray;">
+				<th style="width: 35%;text-align: center;">날짜</th>
+				<th>내용</th>
+				<th style="width: 25%;text-align: center;">포인트</th>
+			</tr>
+		</table>
+		<div style="margin: 0 auto; width: 95%;  height:400px; border-bottom: 1px solid lightgray; padding:35%;"><p >내역이 없습니다.</p></div>
+		<div style="width: 73%; margin-top:5%; margin-left: 2%;">
+			<span style="font-size:25px;">총 합계:</span><span style="float: right;font-size:25px;" id="nowPoint">0G</span>
+			
+		</div>
 		</c:if>
 		<script>
 			$(function(){
@@ -304,7 +318,7 @@
 	    			    	             	
 	    			    	             })
 	    			                } else {
-	    			                    var msg = '결제에 실패하였습니다.';
+	    			                    var msg = '결제를 취소하였습니다.';
 	    			                }
 	    			                alert(msg);
 	    			            });
