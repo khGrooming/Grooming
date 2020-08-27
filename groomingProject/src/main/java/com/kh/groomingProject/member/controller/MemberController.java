@@ -313,10 +313,12 @@ public class MemberController {
 		if(memberTagName.length() != 0 && !memberTagName.isEmpty()) {
 			String[] tag = memberTagName.split(",");
 
-			for(int i = 0 ; i < tag.length; i++) {
-				String tagTemp = tag[i];
-				resultMergeTags = tagService.mergeTags(tagTemp);
-			}
+//			for(int i = 0 ; i < tag.length; i++) {
+//				String tagTemp = tag[i];
+//				resultMergeTags = tagService.mergeTags(tagTemp);
+//			}
+			resultMergeTags = tagService.mergeTagsArr(tag);
+			
 			if(resultMergeTags > 0) {
 				System.out.println("TAG 업데이트 : 성공");
 

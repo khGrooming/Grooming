@@ -10,4 +10,6 @@ public interface TagService {
 
 	ArrayList<Tag> selectGtagList(String groomingNo);
 
+	int mergeTagsArr(String[] tag);
+
 }

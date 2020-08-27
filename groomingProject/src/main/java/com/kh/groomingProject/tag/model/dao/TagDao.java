@@ -20,7 +20,13 @@ public class TagDao {
 	}
 
 	public ArrayList<Tag> selectGtagList(String groomingNo) {
+
 		return (ArrayList)sqlSessionTemplate.selectList("tagMapper.selectGtagList",groomingNo);
+	}
+
+	public int mergeTagsArr(String[] tag) {
+
+		return sqlSessionTemplate.update("tagMapper.mergeTagsArr", tag);
 	}
 
 }
