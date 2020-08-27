@@ -6,9 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+#content {
+	width: 70%;
+	height: 500px;
+	margin: 5% auto;
+}
+</style>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
-	
+	<div id="content">
 		<div style="width: 65%; margin-right: auto; margin-left: auto;">
 			<div class="MsectionDiv" id="Mcontent3" style="text-align: center;">
 		<div id="pwdCheckDiv" style="margin-top: 12%">
@@ -46,6 +53,7 @@
 
 		</div>
 
+	</div>
 	</div>
 	<script>
       			function pwdCheck(){

@@ -94,6 +94,41 @@
 		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
 	</resultMap>
 	
+		<resultMap type="MyPageApplicant" id="MyPageGmember">
+		<id property="gApplyNo" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="MyPageGrooming" id="MyPageGroomingSet">
+		<id property="gMemberNo" column="G_MEMBER_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="STUDY_END_DATE"/>
+	
+	
+	</resultMap>
+	
+	<resultMap type="MyPagePoint" id="MyPagePointSet">
+		<id property="pointNo" column="POINT_NO"/>
+		<result property="memberNo" column="MEMBER_NO" />	
+		<result property="addPoint" column="ADD_POINT" />	
+		<result property="sunPoint" column="SUB_POINT" />	
+		<result property="pointList" column="POINT_LIST" />	
+		<result property="pointDate" column="POINT_DATE" />	
+	</resultMap>
 
 	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
 		SELECT * 

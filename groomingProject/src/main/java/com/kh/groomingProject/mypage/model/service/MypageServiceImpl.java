@@ -9,8 +9,10 @@ import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -124,4 +126,42 @@ public class MypageServiceImpl implements MypageService{
 	public int deleteApplicant(String gaNo) {
 		return mpDao.deleteApplicant(gaNo);
 	}
+
+	@Override
+	public Grooming selectGroomingTemp(String mNo) {
+		return mpDao.selectGroomingTemp(mNo);
+	}
+
+	@Override
+	public int selectGroomingMemberCount(String mNo) {
+		return mpDao.selectGroomingMemberCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageGrooming> selectMypageGmember(MyPagePageInfo pi,String mNo) {
+		return mpDao.selectMypageGmember(pi,mNo);
+	}
+
+	@Override
+	public int selectGroomingHostCount(String mNo) {
+		return mpDao.selectGroomingHostCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo) {
+		return mpDao.selectMypageGhost(pih,mNo);
+	}
+
+	@Override
+	public ArrayList<MyPagePoint> selectPointList(String mNo) {
+		return mpDao.selectPointList(mNo);
+	}
+
+
+	@Override
+	public int insertPoint(MyPagePoint insertPoint) {
+		return mpDao.insertPoint(insertPoint);
+	}
+
+
 }

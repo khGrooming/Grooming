@@ -43,7 +43,9 @@
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 <div id="content">
-	<h3>신청 내역</h3>
+	<h3>스터디 그룹 신청 내역</h3>
+	<c:if test="${!empty appList }">
+	<div>
 	 		<c:forEach var="app" items="${appList }">
 	   <c:url var="gdetail" value="groomingDetail.do">
 			<c:param name="groomingNo" value="${app.groomingNo }"/>
@@ -56,7 +58,7 @@
 	 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
 	 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />	 	 		
 		    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
-		<div id="gCard"onclick="location.href='${groupPage}'">
+		<div id="gCard"onclick="location.href='${gdetail}'">
 			<c:if test="${app.applyStatus eq 'Y' }">
 		
 				<c:if test="${app.groomingEd gt app.groomingNd }">
@@ -107,36 +109,82 @@
 					<span>${app.groomingType}</span>
 					<span style="float: right;">${app.currentP}/${app.groomingP}</span>
 				
-				</div>
+				</div> 
 			</div>
 			
 
 		</div>
 		
 	</c:forEach> 
+	</div>
+	<br>
+	<br>
+	<br clear="both">
 	<script>
-					function deleteAppli(gaNo){
-						var check = confirm("신청을 취소 하시겠습니까?");
-						if(check){
-							$.ajax({
-								url:"deleteAppl.do",
-								type:"post",
-								data:{gaNo:gaNo},
-								success:function(data) {
-											alert("변경되었습니다");
-										},
-								error:function(data) {
-									alert("code:" +request.status +"\n"+
-											+ "error:"+ error);
-								}
-
-							})
-						
-						}else{
-							alert("취소하였습니다.");
+		function deleteAppli(gaNo){
+			var check = confirm("신청을 취소 하시겠습니까?");
+			if(check){
+				$.ajax({
+					url:"deleteAppl.do",
+					type:"post",
+					data:{gaNo:gaNo,mNo:"${loginUser.memberNo}",page:"${pi.currentPage }"},
+					success:function(data) {
+						if(data == "Y"){
+							alert("삭제되었습니다");
 						}
+					},
+					error:function(data) {
+						alert("code:" +request.status +"\n"+
+								+ "error:"+ error);
 					}
-				</script>
+
+				})
+			
+			}else{
+				alert("취소하였습니다.");
+			}
+		}
+	</script>
+	
+	<div style="margin-left: auto; margin-right: auto; width: 100%; text-align: center; margin-top:5%;">
+	
+		<c:if test="${pi.currentPage eq 1 }">
+			[이전]&nbsp;
+		</c:if>
+		<c:if test="${pi.currentPage gt 1 }">
+			<c:url var="gApplicantBack" value="gApplicant.do">
+				<c:param name="page" value="${pi.currentPage -1 }"/>
+			</c:url>
+			<a href="${gApplicantBack }">[이전]</a>
+		</c:if>
+		<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+			<c:if test="${p eq pi.currentPage }">
+				<font color="red" size="4"><b>[${p }]</b></font>
+			</c:if>
+			<c:if test="${p ne pi.currentPage }">
+				<c:url var="gApplicantCheck" value="gApplicant.do">
+				<c:param name="page" value="${p }"/>
+				</c:url>
+				<a href="${gApplicantCheck }">${p }</a>
+			</c:if>
+		</c:forEach>
+		<c:if test="${pi.currentPage eq pi.maxPage }">
+			&nbsp;[이후]
+		</c:if>
+		<c:if test="${pi.currentPage lt pi.maxPage }">
+			<c:url var="gApplicantAfter" value="gApplicant.do">
+				<c:param name="page" value="${pi.currentPage +1 }"/>
+			</c:url>
+			<a href="${gApplicantAfter }">[이후]</a>
+		</c:if>
+	</div>	
+</c:if>
+<c:if test="${empty appList }">
+
+<p style="cursor: pointer; font-size:25px; margin-top:120px; text-align: center;">신청내역이 없습니다.</p>
+<p onclick="location.href='groomingMain.do'" style="cursor: pointer; text-align: center;">스터디 가입하러 가기</p>
+</c:if>
+	
 </div>
 <jsp:include page="../common/footer.jsp" />
 </body>

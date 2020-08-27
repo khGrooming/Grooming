@@ -19,6 +19,7 @@
 
 <style type="text/css">
 * {
+ font-family: 'Jua', sans-serif;
 	margin: 0;
 	padding: 0;
 	/* box-sizind: border-box; */
@@ -252,7 +253,7 @@ section {
 								
 								<li><a href="GHeart.do">찜목록</a></li>
 								<li><a href="gApplicant.do">신청내역</a></li>
-								<li><a href="#">작성내역</a></li>
+								<li><a href="ginsertTemp.do">작성내역</a></li>
 							</ul>
 						</li>
 						<li><a href="#">활동내역</a>
@@ -261,7 +262,7 @@ section {
 								<li><a href="#">내가 쓴 댓글</a></li>
 							</ul>
 						</li>
-						<li><a href="#">포인트</a></li>
+						<li><a href="mypagePoint.do">포인트</a></li>
 					</ul>
 				</div>
 			</div>

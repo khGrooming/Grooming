@@ -115,10 +115,13 @@ text-align: center;
 		
 		</table>
 	</c:if>
-	</div>
-	<script>
+	<c:if test="${empty hlist }">
+		<p style="font-size: 25px; text-align: center;">찜 목록이 없습니다.</p>
+		<p style="text-align: center; cursor: pointer;" onclick="location.href='groomingMain.do'">그루밍 메인으로 가기</p>
 
-	</script>
+	</c:if>
+	</div>
+	
 <br>
 
 <div style="width: 80%; margin: 0 auto;">
