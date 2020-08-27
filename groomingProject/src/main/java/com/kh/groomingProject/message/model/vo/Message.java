@@ -1,7 +1,6 @@
 package com.kh.groomingProject.message.model.vo;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Message implements Serializable{

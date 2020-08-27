@@ -13,4 +13,12 @@ public interface MessageService {
 
 	int readUserMessage(String messageNo);
 
+	ArrayList<Message> getUserMessageList(Member m);
+
+	ArrayList<Message> loadChat(Message me);
+
+	int sendChat(Message me);
+
+	ArrayList<Message> loadChatList(Member m);
+
 }

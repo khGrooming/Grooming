@@ -95,6 +95,13 @@
 		AND MEMBER_STATUS='N'
 	</select>
 
+	<select id="findEmail" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{memberNickName}
+		AND MEMBER_STATUS='N'
+	</select>
+
 	<insert id="insertRandomCode" parameterType="MemberCertiCode">
 		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
 		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0), 
@@ -120,5 +127,27 @@
 		SET	MEMBER_PASSWORD=#{memberPwd}
 		WHERE MEMBER_EMAIL=#{memberEmail}
 	</update>
+
+	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER M
+		JOIN GROOMING_APPLICANT GA ON GA.MEMBER_NO = M.MEMBER_NO
+		WHERE GA.GROOMING_NO = #{groomingNo}
+	</select>
+
+	<select id="selectGroupMList" parameterType="string" resultMap="memberResultSet">
+	   SELECT MEMBER_PHOTO,MEMBER_NICKNAME,MEMBER_EMAIL,M.MEMBER_NO,MEMBER_PHONE,G_MEMBER_NO
+       FROM GROMMING_MEMBER GM
+       JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       WHERE GM.GROOMING_NO = #{groomingNo}
+	   ORDER BY G_MEMBER_NO 
+	</select>
+
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
+	   SELECT MEMBER_NO, MEMBER_NICKNAME, MEMBER_PHOTO
+       FROM MEMBER
+       WHERE MEMBER_NICKNAME = #{memberNickName}
+	</select>
 
 </mapper>

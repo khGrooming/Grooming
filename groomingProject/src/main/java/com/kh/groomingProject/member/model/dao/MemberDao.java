@@ -1,6 +1,6 @@
 package com.kh.groomingProject.member.model.dao;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +66,11 @@ public class MemberDao {
 		return sqlSessionTemplate.selectOne("memberMapper.findMemberEmail", m);
 	}
 
+	public Member findEmail(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
+	}
+
 	public int insertRandomCode(MemberCertiCode mcc) {
 
 		return sqlSessionTemplate.insert("memberMapper.insertRandomCode", mcc);
@@ -78,7 +83,17 @@ public class MemberDao {
 
 	public int updateMemberPwd(Member m) {
 
-		return  sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
+		return sqlSessionTemplate.update("memberMapper.updateMemberPwd", m);
+	}
+
+	public ArrayList<Member> GroupMList(String groomingNo) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectGroupMList",groomingNo);
+	}
+
+	public Member findMember(Member m) {
+
+		return (Member)sqlSessionTemplate.selectOne("memberMapper.findMember",m);
 	}
 
 }

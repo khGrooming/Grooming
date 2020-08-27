@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -25,13 +26,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
+import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
+import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
+import jdk.nashorn.api.scripting.JSObject;
+import net.sf.json.JSONObject;
+
+import static com.kh.groomingProject.mypage.controller.MyPagePagination.getPageInfo;
 
 
 @Controller
@@ -52,60 +64,18 @@ public class MyPageController {
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
 		String mNo =m.getMemberNo();
-		System.out.println(mNo);
 		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
+		int memberPoint = mpService.selectPoint(mNo);
+		System.out.println("memberPoint:"+memberPoint);
 		System.out.println("myPage.do"+profileInfo);
+		if(memberPoint==0) {
+			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
+			profileInfo.setNowPoint("0");
+		}else {
+			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
+			profileInfo.setNowPoint(memberPoint2);
+		}
 		
-		
-//		int school=0;
-//		String[] schoolList = new String[3];
-//		String[] schoolconfirm = new String[3];
-//		int certificate=0;
-//		String[] certificateList = new String[3];
-//		String[] certificateconfirm = new String[3];
-//		int career=0;
-//		String[] careerList = new String[3];
-//		String[] careerconfirm = new String[3];
-//
-//		
-//		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-//
-//		
-//		for(Spec s : specList) {
-//			switch (s.getSpecCName()) {
-//			case "학교":
-//				schoolList[school]=s.getSpecName();
-//				schoolconfirm[school]=s.getSpecConfirm();
-//				
-//				school+=1;
-//				break;
-//			case "자격증":
-//				certificateList[certificate]=s.getSpecName();
-//				certificateconfirm[certificate]=s.getSpecConfirm();
-//				
-//				certificate+=1;
-//				break;
-//			case "경력":
-//				careerList[career]=s.getSpecName();
-//				careerconfirm[career]=s.getSpecConfirm();
-//				
-//				career+=1;
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//
-//		
-//		session.setAttribute("schoolList",schoolList);
-//		session.setAttribute("schoolconfirm",schoolconfirm);
-//		
-//		session.setAttribute("certificateList",certificateList);
-//		session.setAttribute("certificateconfirm",certificateconfirm);
-//		
-//		
-//		session.setAttribute("careerList",careerList);
-//		session.setAttribute("careerconfirm",careerconfirm);		
 		
 		specSelect(request, mNo);
 		mentorSelect(request, mNo);
@@ -304,9 +274,9 @@ public class MyPageController {
 
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
-		
 		PrintWriter out = response.getWriter(); 
-		System.out.println(m.getMemberPwd());
+		System.out.println(inputPwd);
+		System.out.println(m);
 		if(bcryptPasswordEncoder.matches(inputPwd,m.getMemberPwd())) {
 			System.out.println("비번 확인 : 성공");
 			out.append("Y");
@@ -369,7 +339,7 @@ public class MyPageController {
 			System.out.println("수정 실패:memberUpdate 반드시 throw 할것");
 		}
 		
-		return "mypage/mypageinfo";
+		return "mypage/mypage-memberup";
 	}
 	
 	@RequestMapping(value="insertSpec.do",method=RequestMethod.POST)
@@ -437,7 +407,8 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("mentor.do")
-	public String mentorPage() {
+	public String mentorPage(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
 		return "mypage/mentor";
 	}
 	
@@ -449,6 +420,7 @@ public class MyPageController {
 	
 	@RequestMapping("mentorApply")
 	public String mentorApply(HttpSession session) {
+		
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		int result = mpService.insertMentor(mNo);
@@ -462,10 +434,240 @@ public class MyPageController {
 	}
 	
 	
-	
+//	개설한 스터디 그룹 리스트
 	@RequestMapping("opengrooming.do")
-	public String opengroomingPage() {
-		return "mypage/opengrooming";
+	public ModelAndView opengroomingPage(ModelAndView mv,HttpSession session
+										, @RequestParam(value="page", required=false) Integer page) {
+		
+		String mNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
+		System.out.println(mNo);
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = mpService.mpSelectListCount(mNo);
+		int GroomingLimit = 4;
+		double f=0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		
+		ArrayList<Grooming> openGroomingList = mpService.selectopenGroomingList(pi,mNo);
+		
+		
+		if(openGroomingList != null) {
+			mv.addObject("pi", pi);
+			mv.addObject("openGroomingList", openGroomingList);
+			
+		}
+
+		mv.addObject("listCount",listCount);
+		
+		mv.setViewName("mypage/opengrooming");
+		
+		return mv;
 	}
 	
+	
+//	찜 목록 리스트
+	@RequestMapping("GHeart.do")
+	public ModelAndView GHeartPage(ModelAndView mv,HttpSession session
+								   ,@RequestParam(value="page", required=false) Integer page) {
+		String mNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
+		System.out.println(mNo);
+		System.out.println("GHeart.do에서 mNo :"+mNo);
+		
+		int currentPage =1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = mpService.heartListCount(mNo);
+		System.out.println("GHeart.do에서 listCount:"+listCount);
+		int GroomingLimit = 5;
+		double f = 0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		
+		
+		ArrayList<MyPageHeart> hlist = mpService.selectMyPageHeart(pi,mNo);
+		
+		if(hlist != null) {
+			mv.addObject("pi", pi);
+			mv.addObject("hlist", hlist);
+		}else {
+			throw new MypageException("찜목록 조회 실패");
+		}
+		System.out.println(hlist);
+		mv.addObject("listCount",listCount);
+		mv.setViewName("mypage/gHeart");
+		return mv;
+	}
+	
+	
+//	찜 목록 지우기
+	@RequestMapping("heartDele.do")
+	public ModelAndView HeartDelete(HttpServletRequest request,ModelAndView mv) {
+		String[] checkList =(request.getParameter("checkList")).split(",");
+		
+		System.out.println("하트 지우러 옴:");
+		int result=0;
+		for(int a=0;a<checkList.length;a++) {
+			System.out.println(checkList[a]);
+			result = mpService.heartListDelete(checkList[a]);
+			if(result <0) {
+				throw new MypageException("찜목록 삭제 실패");
+			}
+		}
+		mv = GHeartPage(mv,request.getSession(),1);
+		mv.setViewName("mypage/gHeart");
+		return mv;
+	}
+	
+//	신청한 스터디 그룹 
+	@RequestMapping("gApplicant.do")
+	public String GApplicantPage(HttpSession session,HttpServletRequest request
+								,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		
+		int listCount = mpService.gApplicantListCount(mNo);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int GroomingLimit = 4;
+		double f=0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		
+		ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
+		
+		if(gApplicantList != null) {
+			session.setAttribute("pi", pi);
+			session.setAttribute("appList",gApplicantList);
+			return "mypage/gApplicant";
+		}else {
+			throw new MypageException("신청내역 조회 실패");
+		}
+		
+		
+		
+	}
+
+	//신청한 스터디 그룹 삭제하기
+	@RequestMapping("deleteAppl.do")
+	public void deleteApplicant(HttpSession session,String gaNo,HttpServletResponse response,String mNo,@RequestParam(value="page",required=false) Integer page) throws IOException {
+		
+		int result=mpService.deleteApplicant(gaNo);
+		
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			int listCount = mpService.gApplicantListCount(mNo);
+			int currentPage=1;
+			if(page != null) {
+				currentPage = page;
+			}
+			int GroomingLimit = 4;
+			double f=0.8;
+			MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+			
+			ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
+			
+			if(gApplicantList != null) {
+				session.setAttribute("pi", pi);
+				session.setAttribute("appList",gApplicantList);
+				out.append("Y");
+			
+			}
+		}else {
+			throw new MypageException("신청내역 삭제 실패");
+		}
+		
+		out.flush();
+		out.close();
+		
+	}
+	
+	//진행중인 그루밍 보여주기
+	@RequestMapping("mpgrooming.do")
+	public String myPageGroomingPage(HttpSession session,@RequestParam(value="page",required=false) Integer page
+														,@RequestParam(value="pageh",required=false) Integer pageh) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		int listCount = mpService.selectGroomingMemberCount(mNo);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int GroomingLimit = 4;
+		double f=0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
+		
+		ArrayList<MyPageGrooming> mpgList = mpService.selectMypageGmember(pi,mNo);
+		System.out.println(mpgList);
+		
+		session.setAttribute("mpgList",mpgList);
+		session.setAttribute("pi", pi);
+		
+		int HlistCount = mpService.selectGroomingHostCount(mNo);
+		int currentPageh=1;
+		if(pageh != null) {
+			currentPageh = pageh;
+		}
+		int GroomingLimith = 4;
+		double fh=0.8;
+		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimit,fh);
+		
+		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,mNo);
+		session.setAttribute("hpgList",hpgList);
+		session.setAttribute("pih", pih);
+		
+		
+		return "mypage/mpgrooming";
+	}
+	
+	
+	@RequestMapping("ginsertTemp.do")
+	public String groomingInsertHistory(HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		Grooming groomingTemp = mpService.selectGroomingTemp(mNo);
+		session.setAttribute("tempList",groomingTemp);
+		System.out.println(groomingTemp);
+		return "mypage/ginsertTemp";
+	}
+	
+	@RequestMapping("mypagePoint.do")
+	public ModelAndView myPagePoint(ModelAndView mv,HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		ArrayList<MyPagePoint> pList = mpService.selectPointList(mNo);
+		mv.addObject("pList",pList);
+		
+		mv.setViewName("mypage/mypagePoint");
+		System.out.println(pList);
+		
+		return mv;
+	}
+	
+	@RequestMapping("pointPay.do")
+	public void pointPay(String mNo, String money,HttpServletResponse response) throws IOException {
+		System.out.println("pointPay.do 클래스: "+mNo+","+money);
+		int intMoney = (Integer.valueOf(money))/10;
+		MyPagePoint insertPoint = new MyPagePoint(mNo, intMoney, "포인트 충전");
+		
+		int result= mpService.insertPoint(insertPoint);
+		
+		if(result > 0) {
+			Date time = new Date();
+			String format1 = (new SimpleDateFormat ( "yyyy-MM-dd")).format(time);
+			System.out.println( insertPoint.getPointList());
+			JSONObject job = new JSONObject();
+			response.setContentType("application/json;charset=utf-8");
+			job.put("addPoint", insertPoint.getAddPoint());
+			job.put("pointList", insertPoint.getPointList());
+			job.put("pointDate", format1);
+			
+			PrintWriter out = response.getWriter();
+			out.print(job);
+			out.flush();
+			out.close();
+		}else {
+			throw new MypageException("포인트 충전 실패");
+		}
+	}
 }

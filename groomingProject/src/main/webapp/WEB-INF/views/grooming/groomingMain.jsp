@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -50,6 +50,8 @@
             display:table-cell;
             vertical-align:middle;
             line-height: 50px;
+            top: 0;
+    		left: 0;
             position:absolute;
         }
         
@@ -83,6 +85,10 @@
 	   	margin-left:auto;
 	   	width: 100%;
 	   }
+	   
+	   #end, #now{
+	   	display:hidden;
+	   }
     </style>
 </head>
 
@@ -94,6 +100,9 @@
 
     <!-- 섹션 시작 -->
     <section>
+    
+ 
+
         <!-- 컨테이너 -->
         <div class="container" style="margin-top: 150px;">
             <!-- 필터와 검색 -->
@@ -109,9 +118,14 @@
                         <option value="writer" id="writer">작성자</option>
                         <option value="content" id="content">내용</option>
                     </select>
-                    <input type="text" size="30px" id="keyword">
+                    <input type="text" size="30px" id="keyword" required>
                     <button id="find">검색</button>
-                    <button type="button" onclick="location.href='groomingInsertForm.do'">글쓰기</button>
+                    
+                    <c:if test="${!empty loginUser }">
+                  	
+                    <button type="button" id="writeG">글쓰기</button>
+                 	  
+                    </c:if>
                 </div>
             </div>
             <!-- 스터디 그룹 리스트 -->
@@ -132,6 +146,7 @@
  	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />
  	 		
 	    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
+	
 	    	
   			
  				
@@ -140,14 +155,14 @@
 		                    <div class="card">
 		                        <!-- 그룹 이미지 -->
 		                        <div class="top-img">
-		                            <img src="${contextPath }/resources/views/images/${g.groomingImg}">
+		                            <img src="${contextPath }/resources/upGroomingFiles/${g.groomingImg}">
+		                          
 		                            <!-- 그룹 d-day 태그 -->
-		                            
 		                            <div id="circle" >
-		                            <c:if test="${g.groomingEd gt g.groomingNd }">
+		                            <c:if test="${(g.groomingEd gt g.groomingNd) && (g.groomingP gt g.currentP) && (g.status eq 'Y') }">
 		                                <span id="d-day">D-</span><span id="day" >${difDate }</span>
 		                            </c:if>
-		                            <c:if test="${g.groomingEd lt g.groomingNd }">
+		                            <c:if test="${(g.groomingEd lt g.groomingNd) || (g.groomingP eq g.currentP) || (g.status eq 'B')}">
 		                               <span id="day">마감</span>
 		                            </c:if>
 		                          
@@ -158,6 +173,7 @@
 		                            <!-- 그룹 제목 -->
 		                            <c:url var="gdetail" value="groomingDetail.do">
 										<c:param name="groomingNo" value="${g.groomingNo }"/>
+										<c:param name="memberNo" value="${loginUser.memberNo }"/> 
 										<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
 										<!-- 현재 보던 페이지 정보도 넘기자 -->
 									</c:url>
@@ -182,21 +198,42 @@
   
         </div>
        </div>
+       <input type="hidden" value="${selectG }" id="selectG">
     </section>
     <!-- 필터 -->
+    
+    <script>
+   	$(function(){
+    		
+   	
+    	var gmemberNo = $("#selectG").val();
+    	$("#writeG").on("click",function(){
+    	
+    		if(gmemberNo != ""){
+    			alert("이미 작성하신 스터디 게시글이 있습니다.");
+    		
+    		}else{
+    			
+    			location.href='groomingInsert.do';
+    		}
+    	})
+   	})
+    
+    </script>
 	<script>
 		$(function(){
-			
+	
+			 
 			$("#mentor").click(function(){
-			
+				
 				$.ajax({
 					url : 'groomingMe.do',
 					type : 'post',
 					dataType:"json",
 					success : function (data){
-				
 					    $divRow = $("#row");
 					    $divRow.html("");
+					    
 						var $divCardDeck ;
 						var $divCard;
 						var $divTopImg ;
@@ -215,16 +252,25 @@
 						var $small3 ;
 						var $span3;
 						var $img;
+						
+						
 						if(data.length >0){ 
 							for(var i in data){
-						
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
 								 $divCard = $("<div class='card'>");
 								 $divTopImg = $("<div class='top-img'>");
-								 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								 $img = $("<img src=/groomingProject/resources/upGroomingFiles/"+data[i].groomingImg+">");
 								 $divCircle = $("<div id='circle'>");
 								 if(data[i].groomingEd > data[i].groomingNd){
-									 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									
+									 $dDay = $("<span id='d-day'>").text("D-");
+									 $day = $("<span id='day'>").text(difDate);
 									 $divCircle.append($dDay);
 									 $divCircle.append($day);
 								 }else{
@@ -270,10 +316,6 @@
 						}
 					
 					
-					
-					
-					
-					
 			
 					},error:function(request, status, errorData){
 						alert("error code: " + request.status + "\n"
@@ -296,7 +338,6 @@
 					type : 'post',
 					dataType:"json",
 					success : function (data){
-						console.log(data[0]);
 					    $divRow = $("#row");
 					    $divRow.html("");
 						var $divCardDeck ;
@@ -317,18 +358,24 @@
 						var $small3 ;
 						var $span3;
 						var $img;
-								 console.log(data[0].groomingImg);
+
 						if(data.length >0){ 
 							for(var i in data){
 								console.log(data[i].groomingNo);
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								 $divCardDeck = $("<div class='card-deck col-lg-3'>");
 								 $divCard = $("<div class='card'>");
 								 $divTopImg = $("<div class='top-img'>");
-								 $img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								 $img = $("<img src=/groomingProject/resources/upGroomingFiles/"+data[i].groomingImg+">");
 								 $divCircle = $("<div id='circle'>");
 								 if(data[i].groomingEd > data[i].groomingNd){
 									 $dDay = $("<span id='d-day'>").text("D-");
-									 $day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									 $day = $("<span id='day'>").text(difDate);
 									 $divCircle.append($dDay);
 									 $divCircle.append($day);
 								 }else{
@@ -390,12 +437,12 @@
 				var search = $('#search').val();
 				var keyword = $('#keyword').val();
 	
-				/* if(search == null || keyword == null){
-					alert("빈칸없이 검색해주세요!");
+				if(keyword == ""){
+					alert("한 글자 이상 검색해주세요!");
 				}else{
-					location.href="search.do";
-				}
-				 */
+					
+				
+				 
 				$.ajax({
 					url:'search.do',
 					type:'post',
@@ -427,14 +474,21 @@
 						if(data.length > 0) {
 							for(var i in data) {
 								console.log(data[i].groomingNo);
+								// D-day 계산을 위한 것
+								var endDate = new Date(data[i].groomingEd);
+								var nowDate = new Date(data[i].groomingNd);
+								var difDate = endDate.getTime() - nowDate.getTime();
+								difDate = difDate/(1000*60*60*24);
+								
 								$divCardDeck = $("<div class='card-deck col-lg-3'>");
 								$divCard = $("<div class='card'>");
 								$divTopImg = $("<div class='top-img'>");
-								$img = $("<img src=/groomingProject/resources/views/images/"+data[i].groomingImg+">");
+								$img = $("<img src=/groomingProject/resources/upGroomingFiles/"+data[i].groomingImg+">");
 								$divCircle = $("<div id='circle'>");
+								
 								if (data[i].groomingEd > data[i].groomingNd) {
 									$dDay = $("<span id='d-day'>").text("D-");
-									$day = $("<span id='day'>").text(data[i].groomingEd - data[i].groomingNd);
+									$day = $("<span id='day'>").text(difDate);
 									$divCircle.append($dDay);
 									$divCircle.append($day);
 								} else {
@@ -486,8 +540,8 @@
 
 				}); // ajax end
 	
+			}
 			}); // click end
-	
 		});
 	</script> 
 

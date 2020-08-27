@@ -247,18 +247,6 @@ public class MemberController {
 
 	}
 
-	// 프로필 사진 파일 삭제
-//	private void deleteFile(String fileName, HttpServletRequest request) {
-//		String root=request.getSession().getServletContext().getRealPath("resources");
-//		String savePath = root+"\\upprofileFiles";
-//
-//		File f = new File(savePath + "\\" + fileName);
-//		if(f.exists()) {
-//			f.delete();
-//		}
-//
-//	}
-
 	// 회원 가입 : 추가 사항 업데이트
 	@RequestMapping("memberOptionUpdate.do")
 	public String memberOptionUpdate(HttpServletRequest request, Member m
@@ -369,7 +357,6 @@ public class MemberController {
 		if(loginUser != null) {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 				System.out.println("로그인 확인 : 성공");
-				loginUser.setMemberPwd("");
 				model.addAttribute("loginUser", loginUser);
 				return "success";
 			} else {
@@ -464,6 +451,64 @@ public class MemberController {
 			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용 중 )");
 			return "fail";
 		}
+
+	}
+
+	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
+	@RequestMapping("findEmail.do")
+	@ResponseBody
+	public String findEmail(Member m) {
+		String memberEmail = "";
+		System.out.println("닉네임 확인 : " + m.getMemberNickName());
+		
+		Member member = mService.findEmail(m);
+		
+		if(member != null) {
+			String emailTemp = member.getMemberEmail();
+
+			int index = emailTemp.indexOf("@");
+			
+			String id = emailTemp.substring(0, index);
+			String at = emailTemp.substring(index, emailTemp.length());
+			
+			int idLength = id.length();
+			int atLength = at.length();
+			
+			int cutIndex = 2;
+			
+			// 자를 id 길이 계산
+			if(idLength < 2) {
+				cutIndex = idLength/2;
+			}
+			
+			// 보여줄 아이디 빼고 자르기
+			String idTemp = id.substring(0, cutIndex);
+			
+			// 자른 만큼 *을 뒤에 붙이기
+			for(int i = cutIndex; i < idLength; i++) {
+				idTemp += "*";
+			}
+
+			// at을 위해 초기화
+			cutIndex = 3;
+			
+			// 자를 at 길이 계산
+			if(atLength < 3) {
+				cutIndex = atLength/2;
+			}
+
+			// 보여줄 at 빼고 자르기
+			String atTemp = at.substring(0, cutIndex);
+			
+			// 자른 만큼 *을 뒤에 붙이기
+			for(int i = cutIndex; i < atLength; i++) {
+				atTemp += "*";
+			}
+			
+			memberEmail = (idTemp + atTemp);
+		}
+
+		return memberEmail;
 
 	}
 

@@ -1,14 +1,20 @@
 package com.kh.groomingProject.grooming.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Repository("gDao")
@@ -70,7 +76,7 @@ public class GroomingDao {
 
 	public ArrayList<GroomingTag> selectTag(String groomingNo) {
 		// TODO Auto-generated method stub
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectTag",groomingNo);
+		return (ArrayList)sqlSessionTemplate.selectList("tagMapper.selectTag",groomingNo);
 	}
 
 	public ArrayList<GroomingSpec> selectSpec(String groomingNo) {
@@ -81,6 +87,143 @@ public class GroomingDao {
 	public Member selectMember(String groomingNo) {
 		
 		return sqlSessionTemplate.selectOne("memberMapper.selectHost",groomingNo);
+	}
+
+	public int insertGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertGrooming",g);
+	}
+
+	public ArrayList<Member> selectAppMember(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("memberMapper.selectAppMember",groomingNo);
+	}
+
+	public ArrayList<GroomingAppList> selectAppContent(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectAppContent",groomingNo);
+	}
+
+	public int selectApplyOne(String applyNo) {
+		Map<String, String> map = new HashMap<>();
+		map.put("applyNo", applyNo);
+		System.out.println(map);
+		return sqlSessionTemplate.update("groomingMapper.selectApplyOne",map);
+	}
+
+	public int addGroomingP(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.addGroomingP",groomingNo);
+	}
+
+	public int selectRejectApp(String applyNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.rejectApp",applyNo);
+	}
+
+	public int updateGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateGrooming",g);
+	}
+
+	public int groomingDelete(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.groomingDelete",groomingNo);
+	}
+
+	public int statusUpdate(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.statusUpdate",groomingNo);
+	}
+
+	public int applyContent(GroomingApplicant ga) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.applyContent",ga);
+	}
+
+	public GroomingApplicant selectAppMemberNo(Map info) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectAppMemberNo",info);
+	}
+
+	public GroomingHeart selectHeartMember(Map info) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectHeartMember",info);
+	}
+
+	public int addHeart(Map info) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addHeart",info);
+	}
+
+	public int cancelHeart(Map info) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.cancelHeart",info);
+	}
+
+	public String selectGimg(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGimg",groomingNo);
+	}
+
+	public String findAppMemberNo(String applyNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.findAppMemberNo",applyNo);
+	}
+
+	public int addGroomingMember(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addGroomingMember",map);
+	}
+
+	public String getGroomingNo(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGroomingNo",memberNo);
+	}
+
+	public String findTagNo(String tagTemp) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.findTagNo",tagTemp);
+	}
+
+	public int insertGtag(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertGtag",map);
+	}
+
+	public Grooming select(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.select",memberNo);
+	}
+
+	public int insertSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertSave",g);
+	}
+
+	public int GroupHostIn(Map map1) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.GroupHostIn",map1);
+	}
+
+	public int deleteGtag(String groomingNo) {
+		
+		return sqlSessionTemplate.delete("groomingMapper.deleteGtag",groomingNo);
+	}
+
+	public int deleteGmember(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.deleteGmember",memberNo);
+	}
+
+	public ArrayList<GroupMember> selectMemberList(String groomingNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectMemberList",groomingNo);
+	}
+
+	public int getListCount() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getListCount");
 	}
 	
 	

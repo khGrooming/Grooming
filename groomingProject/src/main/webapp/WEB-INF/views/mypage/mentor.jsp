@@ -9,10 +9,15 @@
 <title>Insert title here</title>
 </head>
 <style>
-
+#content {
+	width: 70%;
+	height: 1000px;
+	margin: 3% auto;
+}
 </style>
 <body>
-<jsp:include page="./mypageinfo.jsp" />
+<jsp:include page="./mypageinfo.jsp" /> 
+<div id="content">
 <div style="width: 65%; margin-right: auto; margin-left: auto;">
 	<c:if test="${mentor eq 'F' }">
 	<div class="MsectionDiv" id="Mcontent2">
@@ -203,7 +208,7 @@
 						alert("체크하세요");
 					}         
 				}
-			</script></div>
+			</script></div></div>
 			</c:if>
 			<c:if test="${mentor eq 'N' }">
 				<div style="width: 100%; text-align: center; margin-top: 20%">
@@ -216,6 +221,7 @@
 				</div>
 			</c:if>
 	</div>
-</div>
+	</div>
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

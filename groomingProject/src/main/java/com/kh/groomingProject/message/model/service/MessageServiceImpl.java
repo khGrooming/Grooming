@@ -32,4 +32,28 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.readUserMessage(messageNo);
 	}
+
+	@Override
+	public ArrayList<Message> getUserMessageList(Member m) {
+
+		return msgDao.getUserMessageList(m);
+	}
+
+	@Override
+	public ArrayList<Message> loadChat(Message me) {
+
+		return msgDao.loadChat(me);
+	}
+
+	@Override
+	public int sendChat(Message me) {
+
+		return msgDao.sendChat(me);
+	}
+
+	@Override
+	public ArrayList<Message> loadChatList(Member m) {
+
+		return msgDao.loadChatList(m);
+	}
 }

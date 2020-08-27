@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="ko">
 
@@ -7,10 +8,13 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+	crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
      integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
    
@@ -25,20 +29,20 @@
         body{
             height: 1200px;
         }
-        /* divÀÇ Å©±â¿¡ ¸ÂÃã */
+        /* divì˜ í¬ê¸°ì— ë§ì¶¤ */
         img {
             max-width: 100%;
             max-height: 100%;
         }
 
-        /* ÀÎ¶óÀÎ Çü½ÄÀÇ Ãâ·Â */
+        /* ì¸ë¼ì¸ í˜•ì‹ì˜ ì¶œë ¥ */
         #tab1:checked~#content1,
         #tab2:checked~#content2,
         #tab3:checked~#content3{
             display: block;
         }
 
-        /* °¢ ÅÇÀÇ ¸Ş´ºÀÇ ³»¿ë */
+        /* ê° íƒ­ì˜ ë©”ë‰´ì˜ ë‚´ìš© */
         section {
             display: none;
             padding: 20px 10px 10px 10px;
@@ -46,18 +50,18 @@
             height: auto;
         }
 
-        /*¶óµğ¿À¹öÆ° ¼û±è*/
+        /*ë¼ë””ì˜¤ë²„íŠ¼ ìˆ¨ê¹€*/
         input {
             display: none;
         }
 
-        /* ÅÇ¸Ş´º ÅÂ±× ¸¶¿ì½º ¿Ã¸±½Ã */
+        /* íƒ­ë©”ë‰´ íƒœê·¸ ë§ˆìš°ìŠ¤ ì˜¬ë¦´ì‹œ */
         label:hover {
             color: #2e9cdf;
             cursor: pointer;
         }
 
-        /* ÅÂ±× ¸Ş´º css */
+        /* íƒœê·¸ ë©”ë‰´ css */
         label {
             display: inline-block;
             margin: 0 0 -3px;
@@ -70,7 +74,7 @@
             border-top-right-radius: 6px;
 
         }
-        /*input Å¬¸¯½Ã, label ½ºÅ¸ÀÏ*/
+        /*input í´ë¦­ì‹œ, label ìŠ¤íƒ€ì¼*/
         input:checked+label {
             color: #555;
             border: 3px solid #ddd;
@@ -94,41 +98,45 @@
 </head>
 
 <body>
-    <!-- Çì´õ½ÃÀÛ -->
+    <!-- í—¤ë”ì‹œì‘ -->
     <header>
       	<jsp:include page="../common/mainNavigationBar.jsp" />
     </header>
 
-    <!-- ¼½¼Ç ½ÃÀÛ -->
+    <!-- ì„¹ì…˜ ì‹œì‘ -->
 
-    <!-- ÄÁÅ×ÀÌ³Ê·Î ¾ç¿·¿¡ °ø¹é »ı¼º -->
+    <!-- ì»¨í…Œì´ë„ˆë¡œ ì–‘ì˜†ì— ê³µë°± ìƒì„± -->
     <div class=container style="margin-top:150px ; ">
-        <!--µğÆúÆ® ¸Ş´º-->
-        <input id="tab1" type="radio" name="tabs" >
-        <label for="tab1"><i class="fas fa-user-graduate"></i>¸ŞÀÎ</label>
+    <c:url var="calendar" value="calendar.do"/>
+	<c:url var="gBlist" value="gBlist.do"/>
+	<c:url var="groupP" value="groupPage.do"/>
+    
+        <!--ë””í´íŠ¸ ë©”ë‰´-->
+        <input id="tab1" type="radio" name="tabs" checked>
+        <label for="tab1"><a href="${groupP }"><i class="fas fa-user-graduate"></i>ë©”ì¸</a></label>
 
-        <input id="tab2" type="radio" name="tabs" checked>
-        <label for="tab2"><i class="fas fa-calendar-alt"></i>Ä¶¸°´õ</label>
+        <input id="tab2" type="radio" name="tabs">
+        <label for="tab2"><a href="${calendar }"></a><i class="fas fa-calendar-alt"></i>ìº˜ë¦°ë”</a></label>
 
         <input id="tab3" type="radio" name="tabs" >
-        <label for="tab3"><i class="fas fa-icons"></i>°Ô½ÃÆÇ</label>
+        <label for="tab3"><a href="${gBlist }"><i class="fas fa-icons"></i>ê²Œì‹œíŒ</a></label>
 
 
-        <!-- ¸ŞÀÎ¿¡ µé¾î°¥ ³»¿ë¿ë -->
+        <!-- ë©”ì¸ì— ë“¤ì–´ê°ˆ ë‚´ìš©ìš© -->
         <section id="content1">
          
-               <!-- ±×·ç¹Ö Á¦¸ñ -->
-                <h2 style="margin-top:20px; margin-left:20px;" align="left">Spring Project Fighting</h2>
-                <!-- ±×·ç¹Ö ÇÑÁÙ ¼Ò°³ -->
-                <p  style="margin-top:20px; margin-left:20px;" align="left">½ºÇÁ¸µ ÇÁ·ÎÁ§Æ® ¿­½ÉÈ÷ÇØ¼­ Æ÷Æ®Æú¸®¿À¿¡ ÀÚ½ÅÀÖ°Ô ¾¹½Ã´Ù~~~~~~~~~~~~~~~~</p>
+               <!-- ê·¸ë£¨ë° ì œëª© -->
+                <h2 style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
+                <!-- ê·¸ë£¨ë° í•œì¤„ ì†Œê°œ -->
+                <p  style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingIntroduce }</p>
                 <div class="row">
                     <div class="col-4" style="width: 20%;">
                         <table>
                             <tr>
                                 <div class="gimg"
                                     style="width: 300px; height:300px;  margin-left: 50px; margin-top: 50px; position: relative;">
-                                    <!-- ±×·ì ÀÌ¹ÌÁö µé¾î°¥ °÷ -->
-                                    <img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"> 
+                                    <!-- ê·¸ë£¹ ì´ë¯¸ì§€ ë“¤ì–´ê°ˆ ê³³ -->
+                                    <img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}"> 
                                 </div>
                             </tr>
 
@@ -138,241 +146,206 @@
                     <div class="col-8" style=" margin-top: 50px; width:80%; ">
                         <table class="table">
                             <thead>
-                                <!-- ¸â¹ö Á¤º¸ ¸ñ·Ï -->
+                                <!-- ë©¤ë²„ ì •ë³´ ëª©ë¡ -->
                                 <tr>
-                                    <th scope="col" style="width: 200px;">ÇÁ·ÎÇÊ</th> 
-                                    <th scope="col" style="width: 200px;">´Ğ³×ÀÓ</th>
-                                    <th scope="col" style="width: 200px;">ÀÌ¸ŞÀÏ</th>
-                                    <th scope="col" style="width: 200px;">¿¬¶ôÃ³</th>
-                                    <th scope="col" style="width:200px;">È¸¿ø</th>
+                                    <th scope="col" style="width: 200px;">í”„ë¡œí•„</th> 
+                                    <th scope="col" style="width: 200px;">ë‹‰ë„¤ì„</th>
+                                    <th scope="col" style="width: 200px;">ì´ë©”ì¼</th>
+                                    <th scope="col" style="width: 200px;">ì—°ë½ì²˜</th>
+                                    <th scope="col" style="width:200px;">íšŒì›</th>
+                                    <th scope="col" style="width:200px;">ì œëª…</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
+                            <tbody class="tbody">
+                            <c:forEach var="m" items="${mlist }">
+                                <tr class="appTr">
+                                	<input type="hidden" value="${m.memberNo }" class="memberNo">
                                     <td>
-                                        <div class="pimg" style="width:40px; height:40px; "><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
+                                        <div class="pimg" style="width:40px; height:40px; ">
+                                        	<img src="${contextPath }/resources/upprofileFiles/${m.memberPhoto}">
+                                        </div>
                                     </td>
-                                    <td>¾ÆÀÌÀ¯</td>
-                                    <td>gdoeb@naver.com</td>
-                                    <td>01051704587</td>
-                                    <td>¸àÅä</td>
+                                    <td class="nick">${m.memberNickName}</td>
+                                    <td>${m.memberEmail}</td>
+                                    <td>${m.memberPhone}</td>
+                                    <c:if test="${grooming.memberNo eq m.memberNo }">
+                                    	<td>${grooming.groomingType }</td>
+                                    </c:if>
+	                                <c:if test="${grooming.memberNo ne m.memberNo }">
+                                  	 	 <td>ìŠ¤í„°ë””ì›</td>
+                                    </c:if>
+                                    <c:if test="${grooming.memberNo eq m.memberNo }">
+                                   	 <td><button class="kickout" value="ì œëª…" disabled></button></td>
+                                    </c:if>
+                                    <c:if test="${grooming.memberNo ne m.memberNo }">
+                                   	 <td><button type="button" class="kickout" ><i class="fas fa-user-minus"></i></button></td>
+                                    </c:if>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px; "><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
-                                    </th>
-
-                                    <td>Jacob</td>
-                                    <td>2323@naver.com</td>
-                                    <td>02616161</td>
-                                    <td>½ºÅÍµğ¿ø</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
-                                    </th>
-                                    <td>maroon5</td>
-                                    <td>sugar@naver.com</td>
-                                    <td>01051876123</td>
-                                    <td>½ºÅÍµğ¿ø</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
-                                    </th>
-                                    <td>¼Õ´ãºñ</td>
-                                    <td>¹ÌÃÆ¾î@naver.com</td>
-                                    <td>1515111531</td>
-                                    <td>½ºÅÍµğ¿ø</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
-                                    </th>
-                                    <td>¿øºó</td>
-                                    <td>Onebin@naver.com</td>
-                                    <td>1531313513</td>
-                                    <td>½ºÅÍµğ¿ø</td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        <div class="pimg" style="width:40px; height:40px;"><img src="${contextPath }/resources/views/images/¹ÚÀç¹ü.jpg"></div>
-                                    </th>
-                                    <td>¹æÅºÀ¯¸®</td>
-                                    <td>Yuri@naver.com</td>
-                                    <td>777888877777</td>
-                                    <td>½ºÅÍµğ¿ø</td>
-                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
                 </div>
-            
+            <input type="hidden" value="${grooming.groomingNo }" id="groomingNo">
     
     </section>
+	<script>
+		$(function(){
+			
+			
+			
+			getGroupList();
+			
+			setInterval(function(){
+				getGroupList();
+			},10000);   
+			
+			$(document).on("click",".kickout",function(){
+			var appTemp = $(this);
+			var memberNo = appTemp.parents(".appTr").children(".memberNo").val();
+			var nick = appTemp.parents(".appTr").children(".nick").text();
+			
+				var result = confirm(nick+"ë‹˜ì„ ì œëª…í•˜ì‹œê² ìŠµë‹ˆê¹Œ?");
+		
+				if(result){
+					
+					$.ajax({
+						url:'kickOut.do',
+						type:'post',
+						data:{memberNo:memberNo},
+						success:function(data) {
+							if(data=="success"){
+							getGroupList();
+							alert(nick+"ë‹˜ì„ ê·¸ë£¹ì—ì„œ ì œëª…í•˜ì…¨ìŠµë‹ˆë‹¤.");
+							}
+						
+							
+
+						},
+						error : function(request, status, errorData) {
+							alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+						}
+
+					}); // ajax end
+				
+				
+				}
+				
+				
+			
+			
+			})
+			
+			
+			function getGroupList(){
+				var groomingNo = $("#groomingNo").val();
+				var groomingType = "${grooming.groomingType}";
+				
+				$.ajax({
+					url:'groupList.do',
+					type:'post',
+					data:{groomingNo:groomingNo},
+					dataType:"json",
+					success:function(data) {
+						
+						$tableBody = $(".tbody");
+						$tableBody.html("");
+						
+						var $tr;
+						var $input;
+						var $inputVal;
+						var $td1;
+						var $div1;
+						var $img1;
+						
+						var $td3;
+						var $td4;
+						var $td5;
+						var $td6;
+						var $td7;
+						var $button;							
+						var $icon;
+						if(data.length > 0) {
+							for(var i in data) {
+								console.log(data[i].gMemberNo);
+							$tr = $("<tr class='appTr'>");
+							$input = $("<input type='hidden' class='memberNo'>");
+							$inputVal = $input.val(data[i].memberNo);            
+							$td1 = $("<td>");
+							$div1 = $("<div class='pimg' style='width:40px; height:40px; '>");
+							$img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+							
+							$td3 = $("<td class='nick'>").text(data[i].memberNickName);
+							$td4 = $("<td>").text(data[i].email);
+							$td5 = $("<td>").text(data[i].phone);
+							
+								if(data[i].memberNo == data[i].gMemberNo){
+									$td6 = $("<td>").text(groomingType);
+								}else if(data[i].memberNo != data[i].gMemberNo){
+									$td6 = $("<td>").text("ìŠ¤í„°ë””ì›");
+								}
+							$icon =$("<i class='fas fa-user-minus'>");
+							$td7 = $("<td>");
+								if(data[i].memberNo == data[i].gMemberNo){
+									$button = $("<button class='kickout' disabled>");
+									$button.append($icon);
+									$td7.append($button);
+								}else if(data[i].memberNo != data[i].gMemberNo){
+									$button = $("<button class='kickout'>");
+									$button.append($icon);
+									$td7.append($button);
+								}
+								
+								
+								$div1.append($img1);
+								$td1.append($div1);
+								$tr.append($inputVal);
+								$tr.append($td1);
+								$tr.append($td3);
+								$tr.append($td4);
+								$tr.append($td5);
+								$tr.append($td6);
+								$tr.append($td7);
+								
+								$tableBody.append($tr);
+								
+							} //for end
+						}
+
+					},
+					error : function(request, status, errorData) {
+						alert("error code: " + request.status + "\n"
+							+ "message: " + request.responseText
+							+ "error: " + errorData);
+					}
+
+				}); // ajax end
+				
+			}
+		})
+		
+	</script>
 	
-	<!-- Ä¶¸°´õ ³»¿ë (ÀÏÁ¤ °ü¸®/Ãâ¼® Ã¼Å©) -->
+	<!-- ìº˜ë¦°ë” ë‚´ìš© (ì¼ì • ê´€ë¦¬/ì¶œì„ ì²´í¬) -->
     <section id="content2">
        
-           <div id='calendar'></div>
-       
-       
-       
-       
-      <!-- Ä¶¸°´õ script -->
-     <script>
-		
-        document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-
-          initialView: 'dayGridMonth',
-          selectable: true
-         
-        });
-        calendar.render();
-      });
-
-    </script>
+          
        
     </section>
 
-    <!--°Ô½ÃÆÇ¿¡ µé¾î°¥ ³»¿ë -->
+    <!--ê²Œì‹œíŒì— ë“¤ì–´ê°ˆ ë‚´ìš© -->
     <section id="content3">
         
-        <table class="table table-hover" id="boardId">
-            <thead>
-              <tr>
-                <th scope="col">±Û¹øÈ£</th>	
-                <th scope="col">±ÛÀ¯Çü</th><!-- °øÁö»çÇ×/ÀÚÀ¯°Ô½ÃÆÇ -->
-                <th scope="col">Á¦¸ñ</th>
-                <th scope="col">ÀÛ¼ºÀÚ</th>
-                <th scope="col">ÀÛ¼ºÀÏ</th>
-                <th scope="col">Á¶È¸¼ö</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr onclick="location.href='groupdetail.do'">
-                <th scope="row">1</th>
-                <td>°øÁö»çÇ×</td>
-                <td>³»ÀÏ ¿¹Á¤ÀÌ¾ú´ø ½ºÅÍµğµğ</td>
-                <td>±è¼ºÈÆ</td>
-                <td>2020-07-12</td>
-                <td>2</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>°øÁö»çÇ×</td>
-                <td>³»ÀÏ ´ÊÀ¸¸é °úÁ¦ 2¹è¿¡¿ä¿ä</td>
-                <td>±è¼ºÈÆ</td>
-                <td>2020-07-17</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>°øÁö»çÇ×</td>
-                <td>½ÃÇèÀÌ ÀÏÁÖÀÏ ³²¾Ò³×¿ä¿ä</td>
-                <td>±è¼ºÈÆ</td>
-                <td>2020-07-27</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>±İ¿äÀÏ¿¡ ¸¸³ª¿ä</td>
-                <td>¾ÆÀÌÀ¯À¯</td>
-                <td>2020-07-12</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">5</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>¹¦ÇØ ³Ê¿Í</td>
-                <td>µğ¿¡ÀÌµå</td>
-                <td>2020-07-22</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <th scope="row">6</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>purpose</td>
-                <td>etham</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">7</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>³Ê¶û³ª</td>
-                <td>¾ÆÀÌÀ¯</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>ºñµµ ¿À°í ±×·¡¼­</td>
-                <td>ÇìÀÌÁî</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">9</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇ</td>
-                <td>µğÅ°Áî Å©·ç ¸ğÁı</td>
-                <td>¾çÈ«¿ø</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-              <tr>
-                <th scope="row">10</th>
-                <td>ÀÚÀ¯°Ô½ÃÆÇÆÇ</td>
-                <td>³»ÀÏ ½ºÅÍµğ ¹Ù³ªÇÁ·¹¼Ò¿¡¼­ ¸ğ¿©¿ä</td>
-                <td>±è¼ºÈÆ</td>
-                <td>2020-07-12</td>
-                <td>12</td>
-              </tr>
-
-            </tbody>
+          
         
-          </table>
-          
-          <!-- ±ÛÀÛ¼º ¹öÆ° -->
- 	       <div class="col-12" align="right">
-          	<button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='groupBoardInsertForm.do'" >±Û ÀÛ¼º</button>
-          </div>
-         <!--     <script>
-                $(function () {
-                    var td = $("#boardId tbody tr td").eq(0).text();
-                    if (td.equals("°øÁö»çÇ×")) {
-                        $('#boardId tbody tr td').css({
-                            "background-color": "blue"
-                        });
-                    }
-                })
-            </script> -->
-    
-          
-          <!-- ÆäÀÌÁö³×ÀÌ¼Ç -->
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-              </li>
-            </ul>
-          </nav>
     </section>
 
 </div>
 
 
-    <footer>
+    <footer  style="margin-top:100px;">
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>
@@ -380,9 +353,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+  
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
