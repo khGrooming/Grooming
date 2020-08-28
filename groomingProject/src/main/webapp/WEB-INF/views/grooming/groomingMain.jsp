@@ -33,10 +33,6 @@
             text-align: center;
             color: black;
         }
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
         #circle {
             width: 50px;
             height: 50px;
@@ -65,6 +61,12 @@
             border: 2px solid skyblue;
             border-radius: 15px 15px 0px 0px;
         }
+        .top-img img{
+			object-fit: cover;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
         .groupType{
             margin-left: 100px;
         }
@@ -190,11 +192,11 @@
 		           
 	                 </div>
 					</c:forEach>
-                 </div>
+				</div>
                   
              
                    
-                </div>
+			</div>
   
         </div>
        </div>

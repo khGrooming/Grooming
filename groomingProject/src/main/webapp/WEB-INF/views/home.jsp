@@ -28,17 +28,11 @@
 <!-- Custom styles for this css -->
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/main.css" rel="stylesheet"> --%>
 
+<!-- 오른쪽 컨테이너 스타일 -->
 <style type="text/css">
-*
+/* *
 {
-    margin: 0;
-    padding: 0;
     font-family: 'Jua', sans-serif;
-}
-/* section
-{
-	padding-top: 150px;
-	min-height: calc(100vh - 56px);
 } */
 .right_container .right_spotlight_body .right_spotlight_category,
 .right_container .right_spotlight_body .right_spotlight_content strong
@@ -90,8 +84,165 @@
 	overflow: hidden;
 	text-overflow: ellipsis; 
 }
+</style>
+
+<!-- 메인 컨테이너 -->
+<style type="text/css">
+.main_container
+{
+	margin-bottom: 3rem;
+	font-family: 'Jua', sans-serif;
+}
+.main_container .container_header
+{
+	margin: 3.5rem 0 2.5rem; 
+}
+</style>
+<!-- 카드 스타일 -->
+<style>
+.cards_bundle
+{
+	text-align: center
+}
+.cards_bundle .card_container .card_box
+{
+    cursor: pointer;
+    width: 100%;
+	border-radius: 1rem;
+	border: 0.2rem solid skyblue;
+    transition: 0.4s;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+.cards_bundle .card_container .card_box:hover .card_header
+{
+	border-bottom: 0.1rem solid darkorange;
+    transition: 0.4s;
+}
+.cards_bundle .card_container .card_box:hover
+{
+	border: 0.2rem solid darkorange;
+    transition: 0.6s;
+}
+.cards_bundle .card_container .card_header
+{
+	position: relative;
+	height: 12.5rem;
+	border-bottom: 0.1rem solid skyblue;
+	border-radius: 15px 15px 0px 0px;
+    transition: 0.4s;
+}
+.cards_bundle .card_container .card_header img
+{
+	object-fit: scale-down;
+	height: 100%;
+	width: 100%;
+}
+.cards_bundle .card_container .card_header .card_dDay
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2.5rem;
+	height: 2.5rem;
+	margin: 0.8rem;
+	background: white;
+	border-radius: 50%;
+	text-align: center;
+	line-height: 2.5rem;
+	border: thin solid blue;
+}
+.cards_bundle .card_container .card_body
+{
+    height: 11rem;
+    width: 100%;
+}
+.cards_bundle .card_container .card_body .card_title
+{
+	text-align: left;
+	font-size: 1.5rem;
+	line-height: 1.5rem;
+	margin: 0;
+	padding: 0.5rem 0.3rem 0.3rem;
+    color: #007bff;
+   	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.cards_bundle .card_container .card_body .card_tags
+{
+	text-align: left;
+	margin: 0;
+	padding: 0.3rem;
+   	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.cards_bundle .card_container .card_body .card_tags .badge
+{
+	margin: 0 3px;
+    font-weight: lighter;
+    padding: 5px 8px;
+	color: #fff;
+    background-color: #17a2b8;
+	display: inline-block;
+    padding: .25em .4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25rem;
+	font-family: 'Nanum Gothic', sans-serif;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.cards_bundle .card_container .card_body .card_intro
+{
+	text-align: left;
+	margin: 0;
+	padding: 0 0.3rem;
+	min-height: 4.5rem;
+	max-height: 4.5rem;
+	overflow-y: auto;
+}
+.cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar
+{
+	width: 0.45rem;
+}
+.cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar-thumb
+{
+	background-color: darkorange;
+    border-radius: 0.4rem;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+.cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar-track {
+    background-color: skyblue;
+    border-radius: 0.225rem;
+    box-shadow: inset 0px 0px 5px white;
+}
+.cards_bundle .card_container .card_body .card_between
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.cards_bundle .card_container .card_body .card_between p
+{
+	margin: 0.3rem;
+	padding: 0;
+}
+.cards_bundle .card_container .card_body .card_between .card_np
+{
+
+}
+.cards_bundle .card_container .card_body .card_between .card_gt
+{
+
+}
 
 </style>
+
 </head>
 <body>
 	<jsp:include page="common/mainNavigationBar.jsp" />
@@ -123,70 +274,51 @@
 			<h6 class="font-weight-lighter">실력있는 멘토와 함께하는 스터디 그룹입니다.</h6>
 		</div>
 
-		<!-- 그루밍 카드 -->
-		<div class="row text-center">
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
+			<!-- 그루밍 카드 -->
+			<div class="cards_bundle row text-center">
+				
+				<div class="card_container col-md-3">
+					<div class="card_box">
+						<!-- 그룹 이미지 -->
+						<div class="card_header">
+							<img src="${contextPath }/resources/upGroomingFiles/test.png">
+							<!-- 그룹 d-day 태그 -->
+							<div class="card_dDay">
+								<span>D-1</span>
+							</div>
+						</div>
+						<!-- 그룹 본문 -->
+						<div class="card_body">
+							<!-- 그룹 제목 -->
+							<div class="card_title">제목제목제목제목제목제목제목제목</div>
+							<div class="card_tags">
+								<span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span>
+							</div>
+							<!-- 그룹 한줄 소개  -->
+							<div class="card_intro">한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄</div>
+							<div class="card_between mt-0">
+								<p class="card_np">참여인원 1/3</p>
+								<p class="card_gt">멘토</p>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-lg-3 col-md-6 mb-4">
-				<div class="card h-100">
-					<img class="card-img-top" src="http://placehold.it/500x325" alt="">
-					<div class="card-body">
-						<h4 class="card-title">Card title</h4>
-						<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-							adipisicing elit. Sapiente esse necessitatibus neque.</p>
-					</div>
-					<div class="card-footer">
-						<a href="#" class="btn btn-primary">Find Out More!</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> <!-- 컨테이너 끝 -->
 
-	<div class="main_lst_container container"></div>
+			</div>
+		</div> <!-- 컨테이너 끝 -->
+
+</section>
+
 <script type="text/javascript">
+
+
+
+/* 주소 변경 */
 	$(document).ready(function() {
 		history.replaceState(null, null, '${contextPath }/home.do');
 	});
 </script>
-</section>
+
 	<jsp:include page="common/footer.jsp" />
 </body>
 </html>
