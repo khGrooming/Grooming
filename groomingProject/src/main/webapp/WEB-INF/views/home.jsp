@@ -145,11 +145,37 @@
 	width: 2.5rem;
 	height: 2.5rem;
 	margin: 0.8rem;
-	background: white;
 	border-radius: 50%;
 	text-align: center;
 	line-height: 2.5rem;
-	border: thin solid blue;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_green
+{
+	font-size: 0.8rem;
+	background: white;
+	color: green;
+	border: thin solid green;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_red
+{
+	font-size: 1rem;
+	background: white;
+	color: red;
+	border: thin solid red;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_orange
+{
+	font-size: 0.8rem;
+	background: white;
+	color: orange;
+	border: thin solid orange;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_black
+{
+	font-size: 0.8rem;
+	background: white;
+	color: black;
+	border: thin solid black;
 }
 .cards_bundle .card_container .card_body
 {
@@ -198,6 +224,7 @@
 }
 .cards_bundle .card_container .card_body .card_intro
 {
+	font-family: 'Nanum Gothic', sans-serif;
 	text-align: left;
 	margin: 0;
 	padding: 0 0.3rem;
@@ -232,14 +259,7 @@
 	margin: 0.3rem;
 	padding: 0;
 }
-.cards_bundle .card_container .card_body .card_between .card_np
-{
 
-}
-.cards_bundle .card_container .card_body .card_between .card_gt
-{
-
-}
 
 </style>
 
@@ -283,7 +303,7 @@
 						<div class="card_header">
 							<img src="${contextPath }/resources/upGroomingFiles/test.png">
 							<!-- 그룹 d-day 태그 -->
-							<div class="card_dDay">
+							<div class="card_dDay card_dDay_green">
 								<span>D-1</span>
 							</div>
 						</div>
@@ -297,7 +317,7 @@
 							<!-- 그룹 한줄 소개  -->
 							<div class="card_intro">한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄</div>
 							<div class="card_between mt-0">
-								<p class="card_np">참여인원 1/3</p>
+								<p class="card_np">인원 1/3</p>
 								<p class="card_gt">멘토</p>
 							</div>
 						</div>
