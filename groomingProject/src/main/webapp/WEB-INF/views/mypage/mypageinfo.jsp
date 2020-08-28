@@ -154,6 +154,7 @@ section {
 #test {
 	margin-top:5px;
 	text-align: center;
+	
 }
 
 #test ul ul {
@@ -220,22 +221,23 @@ section {
 	
 	border-bottom:1px solid gray; 
 }
+.myPage_navbar{
+	display: inline-block;
+	margin:2% 15%;
+}
 
 </style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
-	
+	 
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
 
 	<c:if test="${!empty loginUser }">
-		
 
-
-
-		<div class="subContent_my"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
+		<div class="subContent_my myPage_navbar"
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; ">
 			
 			<div class="menubar">
 				<div  id="test">
@@ -263,7 +265,6 @@ section {
 							</ul>
 						</li>
 						<li><a href="mypagePoint.do">포인트</a></li>
-						<li><a href="test.do">테스트</a></li>
 					</ul>
 				</div>
 			</div>
@@ -311,7 +312,7 @@ section {
 		<h3>정보 없음</h3>
 	</c:if>
 
-
+	
 
 	<!-- /.container -->
 
