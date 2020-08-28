@@ -235,7 +235,7 @@ section {
 
 
 		<div class="subContent_my"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; /* margin-top: 6%; */ margin-left: auto; margin-right: auto; position: r">
 			
 			<div class="menubar">
 				<div  id="test">

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>footer</title>
 <style type="text/css">
+/* 풋터 최하단에 위치하도록 하는 css */
 section
 {
 	padding-top: 6.25rem;

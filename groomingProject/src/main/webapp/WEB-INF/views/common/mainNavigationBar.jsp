@@ -10,20 +10,16 @@
 
 <title>main navigation bar</title>
 
-<!-- 폰트 (https://fonts.google.com/specimen/Jua?subset=korean&sidebar.open=true&selection.family=Jua) -->
+<!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <!-- style -->
 <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
-
-<!-- <style type="text/css">
-header
-{
-    font-family: 'Jua', sans-serif;
-}
+<style type="text/css">
 .main_navbar
 {
     position: fixed;
+    font-family: 'Jua', sans-serif;
     width: 100%;
     display: flex;
     transition: 0.6s;
@@ -295,7 +291,6 @@ header
 header .main_upIcon
 {
 	display: none;
-	position: fixed;
 	bottom: 1.87rem;
 	right: 1.87rem;
 	z-index: 99;
@@ -318,7 +313,7 @@ header .main_upIcon.show
 {
 	display: block;
 }
-</style> -->
+</style>
 </head>
 <body>
 	<c:url var="mainPage" value="home.do"/>
@@ -342,10 +337,15 @@ header .main_upIcon.show
 		var header = document.querySelector(".main_navbar");
 		var topBtn = document.querySelector(".main_upIcon");
 		header.classList.toggle("sticky", window.scrollY > 0);
-		topBtn.classList.toggle("show", window.scrollY > 100);
+		
+		topBtn.classList.toggle("show", window.scrollY > 10);
     });
 </script>
-	<header>
+<header>
+	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
+		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
+	</div>
+</header>
 	<!-- Navigation -->
 	<nav class="main_navbar">
 		<a class="main_navbar_logo" href="${mainPage }">
@@ -429,10 +429,7 @@ header .main_upIcon.show
 			</c:if>
 		</ul>
 	</nav>
-	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
-		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
-	</div>
-	</header>
+
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
 		$(function() {
