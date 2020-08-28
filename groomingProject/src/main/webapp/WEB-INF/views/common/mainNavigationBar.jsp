@@ -167,27 +167,27 @@
 	align-items: center;
 }
 /* 메시지 알림창 */
-.main_messages_icon,
-.main_alerts_icon
+.main_navbar .main_messages_icon,
+.main_navbar .main_alerts_icon
 {
 	cursor: pointer;
 	margin: 0.2rem 0.4rem;
 	padding: 0.18rem;
 	position: relative;
 }
-.main_messages_icon .main_naviIcon,
-.main_alerts_icon .main_naviIcon
+.main_navbar .main_messages_icon .main_naviIcon,
+.main_navbar .main_alerts_icon .main_naviIcon
 {
 	margin-bottom: 1px;
 }
-.main_messages_icon .main_naviIcon .img_svg,
-.main_alerts_icon .main_naviIcon .img_svg
+.main_navbar .main_messages_icon .main_naviIcon .img_svg,
+.main_navbar .main_alerts_icon .main_naviIcon .img_svg
 {
 	width: 2rem;
 	height: 2rem;
 }
-.main_messages_icon .main_messages_txt,
-.main_alerts_icon .main_alerts_txt
+.main_navbar .main_messages_icon .main_messages_txt,
+.main_navbar .main_alerts_icon .main_alerts_txt
 {
 	line-height: 1.37rem;
 	padding: 0.25rem;
@@ -203,7 +203,7 @@
 	top: -0.3rem;
 	left: 1.12rem;
 }
-.main_dropdown
+.main_navbar .main_dropdown
 {
 	display: none;
 	overflow: auto;
@@ -214,31 +214,31 @@
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	z-index: 10000;
 }
-.main_messages_dropdown
+.main_navbar .main_messages_dropdown
 {
 	right: 0.62rem;
 }
-.main_messages_dropdown.active,
-.main_alerts_dropdown.active
+.main_navbar .main_messages_dropdown.active,
+.main_navbar .main_alerts_dropdown.active
 {
 	display: block;
 }
-.main_messages_header,
-.main_alerts_header
+.main_navbar .main_messages_header,
+.main_navbar .main_alerts_header
 {
 	padding: 0 0.5rem;
 	border-bottom: 1px solid grey; 
 }
-.main_mIcons_container
+.main_navbar .main_mIcons_container
 {
 	display: flex;
 }
-.main_mIcons_container .main_mIcon
+.main_navbar .main_mIcons_container .main_mIcon
 {
 	margin-left: 0.32rem;
 }
-.main_messages_body,
-.main_alerts_body
+.main_navbar .main_messages_body,
+.main_navbar .main_alerts_body
 {
 	font-weight: lighter;
 	font-size: 1rem;
@@ -246,44 +246,44 @@
 	display: block;
 	padding: 0.5rem;
 }
-.main_messages_body_container,
-.main_alerts_body_container
+.main_navbar .main_messages_body_container,
+.main_navbar .main_alerts_body_container
 {
 	overflow: auto;
     max-height: 18.75rem;
 }
-.main_messages_body > div
+.main_navbar .main_messages_body > div
 {
 	padding: 0 0 0.19rem 0;
 }
-.main_messages_img
+.main_navbar .main_messages_img
 {
 	padding: 0.25rem 0.25rem 0 0;
 	height: 1.56rem;
 	width: 1.56rem;
 	object-fit: contain;
 }
-.main_mBody_time,
-.main_aBody_time
+.main_navbar .main_mBody_time,
+.main_navbar .main_aBody_time
 {
 	font-size: 0.75rem;
 	min-width: auto;
 	color: grey;
 }
-.main_messages_body:hover,
-.main_alerts_body:hover
+.main_navbar .main_messages_body:hover,
+.main_navbar .main_alerts_body:hover
 {
 	background-color: #cbcbcb;
 }
-.main_messages_header .main_mIcon .img_svg,
-.main_alerts_header .main_aIcon .img_svg
+.main_navbar .main_messages_header .main_mIcon .img_svg,
+.main_navbar .main_alerts_header .main_aIcon .img_svg
 {
 	width: 1.25rem;
 	height: 1.25rem;
 	margin: 0 0 0.62rem 0;
 }
-.main_messages_header .main_mIcon > .img_svg:hover,
-.main_alerts_header .main_aIcon > .img_svg:hover
+.main_navbar .main_messages_header .main_mIcon > .img_svg:hover,
+.main_navbar .main_alerts_header .main_aIcon > .img_svg:hover
 {
 	background-color: lightgrey;
 	border-radius: 50%;
@@ -303,18 +303,17 @@
 	font-size: 1.25rem;
 	border: none;
 	outline: none;
-	background-color: white;
-	border-radius: 50%;
 	cursor: pointer;
 }
 .main_upIcon .img_svg
 {
 	width: 100%;
 	height: 100%;
-}
-.main_upIcon:hover
-{
+	background-color: white;
 	border-radius: 50%;
+}
+.main_upIcon:hover .img_svg
+{
 	background-color: lightgreen;
 }
 .main_upIcon.show

@@ -37,7 +37,7 @@ footer
 {
 	color: white;
 	margin: 0.2rem 0.5rem 0.2rem auto;
-    padding: .5rem 1rem;
+    padding: .3rem 1rem;
     display: block;
     deco
 }
