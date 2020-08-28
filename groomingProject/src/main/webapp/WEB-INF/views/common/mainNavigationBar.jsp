@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <!-- style -->
-<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
+<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
 <style type="text/css">
 .main_navbar
 {
@@ -30,10 +30,11 @@
 }
 .main_navbar .main_navbar_logo
 {
-	margin: auto 0;
+	margin: 0.2rem;
 }
 .main_navbar .mainNavImg
 {
+	margin: 0.2rem;
 	padding: 0.3rem;
 	height: 3rem;
     transition: 0.6s;
@@ -99,7 +100,7 @@
 .main_navbar ul li a
 {
 	font-size: 1.625rem;
-    margin: 0 0.5rem;
+    margin: 0.2rem 0.5rem;
     text-decoration: none;
     color: black;
     letter-spacing: 1px;
@@ -170,7 +171,7 @@
 .main_alerts_icon
 {
 	cursor: pointer;
-	margin: auto 1rem auto 0;
+	margin: 0.2rem 0.4rem;
 	padding: 0.18rem;
 	position: relative;
 }
@@ -190,6 +191,7 @@
 {
 	line-height: 1.37rem;
 	padding: 0.25rem;
+	margin: 0.2rem;
 	color: white;
 	width: 1.58rem;
 	height: 1.58rem;
@@ -288,28 +290,34 @@
 	box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-header .main_upIcon
+.main_upIcon
 {
-	display: none;
-	bottom: 1.87rem;
-	right: 1.87rem;
+    position: fixed;
+	display: block;
+	width: 1.87rem;
+	height: 1.87rem;
+	bottom: 1rem;
+	right: 1rem;
+	float:right;
 	z-index: 99;
 	font-size: 1.25rem;
 	border: none;
 	outline: none;
+	background-color: white;
+	border-radius: 50%;
 	cursor: pointer;
 }
-header .main_upIcon:hover
+.main_upIcon .img_svg
+{
+	width: 100%;
+	height: 100%;
+}
+.main_upIcon:hover
 {
 	border-radius: 50%;
-	background-color: grey;
+	background-color: lightgreen;
 }
-header .main_upIcon .img_svg
-{
-	width: 1.87rem;
-	height: 1.87rem;
-}
-header .main_upIcon.show
+.main_upIcon.show
 {
 	display: block;
 }
@@ -341,11 +349,10 @@ header .main_upIcon.show
 		topBtn.classList.toggle("show", window.scrollY > 10);
     });
 </script>
-<header>
 	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
 	</div>
-</header>
+
 	<!-- Navigation -->
 	<nav class="main_navbar">
 		<a class="main_navbar_logo" href="${mainPage }">
