@@ -37,26 +37,26 @@
 	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
 		SELECT *
 		FROM MEMBER
-		WHERE MEMBER_EMAIL=#{memberEmail}
+		WHERE MEMBER_EMAIL = #{memberEmail}
 		AND MEMBER_STATUS='N'
 	</select>
 
 	<select id="emailDuplicateChk" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEMBER_EMAIL=#{memberEmail}
+		WHERE MEMBER_EMAIL = #{memberEmail}
 	</select>
 
 	<select id="nickNameDuplicateChk" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEMBER_NICKNAME=#{memberNickName}
+		WHERE MEMBER_NICKNAME = #{memberNickName}
 	</select>
 
 	<select id="phoneDuplicateChk" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEMBER_PHONE=#{memberPhone}
+		WHERE MEMBER_PHONE = #{memberPhone}
 	</select>
 
 	<update id="updateMemberOption" parameterType="Member">
@@ -68,7 +68,7 @@
 			<if test="memberMemo !=null">MEMBER_MEMO=#{memberMemo},</if>
 			<if test="memberPhoto !=null">MEMBER_PHOTO=#{memberPhoto}</if>
 		</set>
-		WHERE MEMBER_NO=#{memberNo}
+		WHERE MEMBER_NO=(SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail})
 	</update>
 
 	<select id="selectHost" parameterType="string" resultMap="memberResultSet">
@@ -81,25 +81,27 @@
 	
 	<update id="mergeMemberTags" parameterType="MemberTag">
 		MERGE INTO MEMBER_TAG M
-		USING (SELECT TAG_NO FROM TAG WHERE TAG_NAME=#{tagName}) T
-			ON (TRIM(M.TAG_NO)= T.TAG_NO)
+		USING (SELECT (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail}) MEMBER_NO
+					, (SELECT TAG_NO FROM TAG WHERE TAG_NAME = #{tagName}) TAG_NO
+				FROM DUAL) D
+			ON (TRIM(M.TAG_NO) = D.TAG_NO AND M.MEMBER_NO = D.MEMBER_NO)
 		WHEN NOT MATCHED THEN
 			INSERT (MEMBER_NO, TAG_NO) 
-			VALUES (#{memberNo}, T.TAG_NO)
+		    VALUES (D.MEMBER_NO, D.TAG_NO)
 	</update>
 
 	<select id="findMemberEmail" parameterType="Member" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER
-		WHERE MEMBER_EMAIL=#{memberEmail}
+		WHERE MEMBER_EMAIL = #{memberEmail}
 		AND MEMBER_STATUS='N'
 	</select>
 
 	<insert id="insertRandomCode" parameterType="MemberCertiCode">
 		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
-		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0), 
-				(SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}), 
-				#{certiNumber}, SYSDATE)	
+		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0)
+			, (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail})
+			, #{certiNumber}, SYSDATE)	
 	</insert>
 
 	<select id="certiChk" parameterType="MemberCertiCode" resultType="_int">
@@ -117,8 +119,8 @@
 	
 	<update id="updateMemberPwd" parameterType="Member">
 		UPDATE MEMBER
-		SET	MEMBER_PASSWORD=#{memberPwd}
-		WHERE MEMBER_EMAIL=#{memberEmail}
+		SET	MEMBER_PASSWORD = #{memberPwd}
+		WHERE MEMBER_EMAIL = #{memberEmail}
 	</update>
 
 	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
@@ -138,12 +140,11 @@
 	</select>
 
 	<select id="selectGroupMemberNo" parameterType="string" resultMap="memberResultSet">
-	      SELECT *
-	      FROM MEMBER M 
-	      JOIN GROMMING_MEMBER GM ON GM.MEMBER_NO = M.MEMBER_NO
-	      JOIN GBOARD GB ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
-	      WHERE G_BOARD_NO = #{gBoardNo}
-	
+      SELECT *
+      FROM MEMBER M 
+      JOIN GROMMING_MEMBER GM ON GM.MEMBER_NO = M.MEMBER_NO
+      JOIN GBOARD GB ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+      WHERE G_BOARD_NO = #{gBoardNo}
 	</select>
 
 	<select id="findMember" parameterType="Member" resultMap="memberResultSet">

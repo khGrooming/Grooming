@@ -273,14 +273,11 @@ public class MemberController {
 		System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
 		System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
 		
+		Member member = mService.loginMember(m);
+		m.setMemberNo(member.getMemberNo());
+
 		if((m.getMemberEmail()).length() != 0 && ((m.getMemberName()).length() != 0 || (m.getMemberPhone()).length() != 0 || m.getMemberGender() != null || !file.getOriginalFilename().equals("") || (m.getMemberMemo()).length() != 0)) {
 			
-			// 프로필 사진 리네임을 위해 멤버 번호를 DB에서 가져온다
-			Member member = mService.loginMember(m);
-			System.out.println("회원가입(추가입력) 하려는 회원 : " + member);
-	
-			m.setMemberNo(member.getMemberNo());
-	
 			// 파일 저장 및 리네임
 			if(!file.getOriginalFilename().equals("")) {
 				String renameFileName = saveFile(member.getMemberNo(), file, request);
@@ -313,25 +310,26 @@ public class MemberController {
 		if(memberTagName.length() != 0 && !memberTagName.isEmpty()) {
 			String[] tag = memberTagName.split(",");
 
-//			for(int i = 0 ; i < tag.length; i++) {
-//				String tagTemp = tag[i];
-//				resultMergeTags = tagService.mergeTags(tagTemp);
-//			}
-			resultMergeTags = tagService.mergeTagsArr(tag);
-			
+			for(String i : tag) {
+				resultMergeTags = tagService.mergeTags(i);
+			}
+
 			if(resultMergeTags > 0) {
 				System.out.println("TAG 업데이트 : 성공");
 
 				// 멤버태그 테이블 추가
 				int resultMemberTag = 0;
 
-				for(int i = 0 ; i < tag.length; i++) {
-					String tagTemp = tag[i];
-					MemberTag memberTag = new MemberTag(m.getMemberNo(), tagTemp);
-					resultMemberTag = mService.mergeMemberTags(memberTag);
+				for(String i : tag) {
+					MemberTag memberTag = new MemberTag(m.getMemberNo(), m.getMemberEmail(), i);
+					System.out.println(memberTag);
+					int result = mService.mergeMemberTags(memberTag);
+					resultMemberTag += result;
 				}
-
-				if(resultMemberTag > 0) {
+				
+				System.out.println("MemberTag 횟수 : " + tag.length + " / 결과 "+ resultMemberTag );
+				
+				if(resultMemberTag == tag.length) {
 					System.out.println("MemberTag 업데이트 : 성공");
 
 					return "home";

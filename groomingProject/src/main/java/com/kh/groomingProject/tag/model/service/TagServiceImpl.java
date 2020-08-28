@@ -25,10 +25,4 @@ public class TagServiceImpl implements TagService {
 		return tagDao.selectGtagList(groomingNo);
 	}
 
-	@Override
-	public int mergeTagsArr(String[] tag) {
-
-		return tagDao.mergeTagsArr(tag);
-	}
-
 }
