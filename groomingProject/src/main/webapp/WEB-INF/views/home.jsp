@@ -181,7 +181,11 @@
 	</div> <!-- 컨테이너 끝 -->
 
 	<div class="main_lst_container container"></div>
-
+<script type="text/javascript">
+	$(document).ready(function() {
+		history.replaceState(null, null, '${contextPath }/home.do');
+	});
+</script>
 </section>
 	<jsp:include page="common/footer.jsp" />
 </body>
