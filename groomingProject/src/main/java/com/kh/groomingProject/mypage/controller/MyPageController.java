@@ -670,4 +670,10 @@ public class MyPageController {
 			throw new MypageException("포인트 충전 실패");
 		}
 	}
+	
+	@RequestMapping("test.do")
+	public String testPage() {
+		return "mypage/test";
+	}
+	
 }

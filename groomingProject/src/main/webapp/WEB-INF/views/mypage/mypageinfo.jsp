@@ -263,6 +263,7 @@ section {
 							</ul>
 						</li>
 						<li><a href="mypagePoint.do">포인트</a></li>
+						<li><a href="test.do">테스트</a></li>
 					</ul>
 				</div>
 			</div>

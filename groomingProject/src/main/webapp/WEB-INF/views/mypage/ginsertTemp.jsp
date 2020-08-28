@@ -11,7 +11,7 @@
 #content {
 width: 70%;
 height: 1000px;
-margin: 2% auto;
+margin: 1% auto;
 }
 
 input {
@@ -105,7 +105,7 @@ input {
 
 <jsp:include page="./mypageinfo.jsp" />
 
-    <section>
+    <section style="padding-top:20px;">
     	<div id="content">
     	<c:if test="${!empty tempList  }">
 
