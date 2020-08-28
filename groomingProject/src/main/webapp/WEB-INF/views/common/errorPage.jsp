@@ -13,14 +13,14 @@
 	    color:#fff;
 	    font-family: 'Nanum Gothic', sans-serif;
 	    max-height: 100vh;
-	    overflow: hidden;
+	    overflow-x: hidden;
 	}
 	.c{
 	    text-align: center;
 	    display: block;
 	    position: relative;
-	    width:80%;
-	    margin:100px auto;
+	    width: 100%;
+	    margin: 8rem auto;
 	}
 	._404{
 	    font-size: 220px;
@@ -218,16 +218,16 @@
 	}
 	
 	@-webkit-keyframes moveclouds {
-	    0% {margin-left: 1000px;}
-	    100% {margin-left: -1000px;}
+	    0% {margin-left: 100vw;}
+	    100% {margin-left: -100vh;}
 	}
 	@-moz-keyframes moveclouds {
-	    0% {margin-left: 1000px;}
-	    100% {margin-left: -1000px;}
+	    0% {margin-left: 100vw;}
+	    100% {margin-left: -100vw;}
 	}
 	@-o-keyframes moveclouds {
-	    0% {margin-left: 1000px;}
-	    100% {margin-left: -1000px;}
+	    0% {margin-left: 100vw;}
+	    100% {margin-left: -100vw;}
 	}
 </style>
 </head>
