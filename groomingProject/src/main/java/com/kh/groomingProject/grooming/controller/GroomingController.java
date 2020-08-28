@@ -27,6 +27,7 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
+import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -887,5 +888,40 @@ public class GroomingController {
 			}
 		  return mv;
 	  }
+	  
+		@RequestMapping("groupReply.do")
+		public void groupReply(HttpServletResponse response,String gBoardNo) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+
+			ArrayList<GReply> rlist = gService.selectReplyList(gBoardNo);
+
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(rlist, response.getWriter());
+		}
+
+		@RequestMapping("addGroupReply.do")
+		@ResponseBody
+		public String addReply(GReply g, String memberNo,String groomingNo) {
+			Map map = new HashMap();
+			map.put("memberNo", memberNo);
+			map.put("groomingNo",groomingNo);
+			
+			String gMemberNo = gService.selectGMemberNo(map);
+			System.out.println("나 gMemberNo야" +gMemberNo);
+			g.setgMemberNo(gMemberNo);
+			int result = gService.addReply(g);
+			
+			
+			if(result > 0) {
+				return "success";
+			}else{
+				return "false";
+			}
+			
+			
+			
+		}
+	  
+	  
 	  
 }

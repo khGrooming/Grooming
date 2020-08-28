@@ -3,6 +3,7 @@ package com.kh.groomingProject.grooming.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -105,5 +106,11 @@ public interface GroomingService {
 	int updateGroupBoard(GroupBoard g);
 
 	String selectGboardimg(String gBoardNo);
+
+	ArrayList<GReply> selectReplyList(String gBoardNo);
+
+	int addReply(GReply g);
+
+	String selectGBoardNo(Map map);
 
 }

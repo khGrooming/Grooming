@@ -60,6 +60,20 @@
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
+	   .mImg{
+	   	max-width:100%;
+	   	max-height:100%;
+	   }
+	   #tb2 tbody tr td{
+	   	text-align:center;
+	   	border:none;
+	   	border-bottom:1px solid green;
+	   }
+	    #tb2 tbody{
+	    	border-radius:15px;
+	    	background:lightsteelblue;
+	    }
+	    
     </style>
 </head>
 
@@ -153,7 +167,10 @@
                                 </tr>
 								<tr>
 									<th>첨부파일</th>
-									<td style="text-align:center;"><img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}"></td>
+									<td style="text-align:center;">
+									<a href="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" download="${gboard.gBoardImg}">
+									<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}"><br>
+									</a></td>
 								</tr>
 
                         </table>
@@ -179,30 +196,25 @@
 	                        <!-- 댓글 등록  -->
 	                        <div class="container">
 	                            <table class="table table-bordered">
-	                                <form method="post">
-	
 	                                    <tr>
 	                                        <td class="col-6" style="width: 70%;">
-	                                            <textarea cols="20" rows="2" class="form-control" style="resize: none;">
+	                                            <textarea cols="20" rows="2" class="form-control" style="resize: none;" id="gReplyContent">
 	                                             </textarea>
 	                                        </td>
 	                                        <br><br>
 	                                        <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-	                                            <button>댓글 등록</button>
+	                                            <button id="sumbitReply">댓글 등록</button>
 	                                        </td>
 	
 	                                    </tr>
-	                                </form>
 	                            </table>
 	                            <!-- 댓글 목록 보기 -->
-	                            <table align="center" width="500" border="1" id="tb2">
-	                                <thead>
+	                            <table align="center" width="1050" border="1" id="tb2">
+	                                   <tbody>
 	                                    <tr>
-	                                        <td colspan="2"><b id="rCount"></b></td>
+	                                        
 	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                </tbody>
+	                                    </tbody>
 	                            </table>
 	                        </div>
 	                        </c:otherwise>
@@ -217,6 +229,106 @@
 
 
     </div>
+    
+    <script>
+    $(function(){
+		getReplyList();
+		
+		setInterval(function(){
+			getReplyList();
+		},5000);
+		
+		$("#sumbitReply").on("click",function(){
+			var gReplyContent = $("#gReplyContent").val();	// 선택자
+			var gBoardNo = "${gboard.gBoardNo}";
+			var memberNo = "${loginUser.memberNo}";
+			var groomingNo = "${grooming.groomingNo}";
+			if(gReplyContent == ""){
+				alert("한글자 이상 입력해주세요");
+			}else{
+			$.ajax({
+				url:"addGroupReply.do",
+				data:{gReplyContent:gReplyContent, gBoardNo:gBoardNo,memberNo:memberNo,groomingNo:groomingNo},
+				success:function(data){
+					if(data=="success"){
+						getReplyList();
+						
+						$("#gReplyContent").val("");	
+						
+						
+					}
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+			})
+			}
+		})
+		
+		
+	})
+	
+	function getReplyList(){
+		var gBoardNo = "${gboard.gBoardNo}";
+		
+		$.ajax({
+			url:"groupReply.do",
+			data:{gBoardNo:gBoardNo},
+			dataType:"json",
+			success:function(data){
+				$tableBody = $("#tb2 tbody");
+				$tableBody.html("");
+				
+				var $tr;
+				var $memberPhoto;
+				var $memberNickName;
+				var $td1;
+				var $gReplyContent;
+				var $gReplyCreateDate;
+				var $img;
+		
+				
+				if(data.length > 0){	// 댓글이 하나 이상 존재하면
+					for(var i in data){
+						$tr = $("<tr>");
+						$memberPhoto = $("<td style='width:50px; height:50px;'>");
+						$memberNickName = $("<td style='width:100px;'>").text(data[i].memberNickName);
+						$img = $("<img class='mImg' src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+						$gReplyContent = $("<td style='width:600px; height:auto;'>").text(data[i].gReplyContent);
+						$gReplyCreateDate = $("<td width='100'>").text(data[i].gReplyCreateDate);
+						
+						$tr.append($memberPhoto);
+						$tr.append($memberNickName);
+						$memberPhoto.append($img);
+						$tr.append($td1);
+						$tr.append($gReplyContent);
+						$tr.append($gReplyCreateDate);
+						$tableBody.append($tr);
+					}
+				}else{					// 댓글이 없으면
+					$tr = $("<tr>");
+					$gReplyContent = $("<td colspan='3'>").text("등록 된 댓글이 없습니다.회원님이라도 작성해주세요!");
+					
+					$tr.append($gReplyContent);
+					$tableBody.append($tr);
+				}
+				
+				
+			},
+			error:function(request, status, errorData){
+				alert("error code: " + request.status + "\n"
+						+"message: " + request.responseText
+						+"error: " + errorData);
+			}
+		})
+	}
+    
+    
+    
+    
+    </script>
 	<script>
 		$(function(){
 			var memberNo = "${loginUser.memberNo}";
@@ -261,7 +373,20 @@
 	
 	
 	</script>
-    <footer>
+	<script>
+			
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+    <footer style="margin-top:100px;">
 
 		<jsp:include page="../common/footer.jsp" />
     </footer>

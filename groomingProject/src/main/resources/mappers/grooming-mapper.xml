@@ -584,8 +584,38 @@
  		FROM GBOARD
  		WHERE G_BOARD_NO = #{gBoardNo}
  	
- 	
- 	
  	</select>
+ 	
+ 	<select id="selectReplyList" parameterType="string" resultMap="GroupReplyResultSet">
+ 	SELECT GR.*,MEMBER_NICKNAME,MEMBER_PHOTO
+	FROM G_REPLY GR
+	JOIN GBOARD GB ON GB.G_BOARD_NO = GR.G_BOARD_NO 
+	JOIN GROMMING_MEMBER GM ON GM.G_MEMBER_NO = GR.GROOMING_MEMBER_NO
+	JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+	WHERE GR.G_BOARD_NO = #{gBoardNo}
+ 	</select>
+ 	
+ 	
+ 	<select id="selectGBoardNo" parameterType="map" resultType="string">
+ 		SELECT GROOMING_MEMBER_NO
+	    FROM GBOARD GB
+	 	JOIN GROMMING_MEMBER GM ON GM.G_MEMBER_NO = GB.GROOMING_MEMBER_NO
+	    WHERE GM.MEMBER_NO = #{memberNo} AND GB.G_BOARD_NO=#{gBoardNo}
+ 	</select>
+ 	
+ 	
+ 	<insert id="addReply" parameterType="GReply">
+ 		INSERT INTO G_REPLY VALUES(
+ 		'GBR' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		,#{gBoardNo}
+ 		,#{gMemberNo}
+ 		,#{gReplyContent}
+ 		,DEFAULT
+ 		)
+ 	
+ 	
+ 	</insert>
+ 	
+ 	
  	
 </mapper>

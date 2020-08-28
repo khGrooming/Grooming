@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
+import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -303,6 +304,24 @@ public class GroomingServiceImpl implements GroomingService{
 	public String selectGboardimg(String gBoardNo) {
 		// TODO Auto-generated method stub
 		return gDao.selectGboardimg(gBoardNo);
+	}
+
+	@Override
+	public ArrayList<GReply> selectReplyList(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectReplyList(gBoardNo);
+	}
+
+	@Override
+	public int addReply(GReply g) {
+		// TODO Auto-generated method stub
+		return gDao.addReply(g);
+	}
+
+	@Override
+	public String selectGBoardNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGBoardNo(map);
 	}
 
 
