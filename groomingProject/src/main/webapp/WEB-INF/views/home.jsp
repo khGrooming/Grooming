@@ -98,6 +98,7 @@
 	margin: 3.5rem 0 2.5rem; 
 }
 </style>
+
 <!-- 카드 스타일 -->
 <style>
 .cards_bundle
@@ -259,8 +260,6 @@
 	margin: 0.3rem;
 	padding: 0;
 }
-
-
 </style>
 
 </head>
