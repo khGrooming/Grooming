@@ -39,24 +39,24 @@ public class MemberController {
 
 	@Autowired
 	private TagService tagService;
-	
+
 	@Autowired
 	private AlertService alertService;
-	
+
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
+
 	// 로그인 페이지 이동
 	@RequestMapping("loginPage.do")
 	public ModelAndView loginPage(ModelAndView mv, String url) {
-		
+
 		mv.addObject("url", url)
 		.addObject("loginCheck", "login")
 		.setViewName("member/memberLoginRegistration");
-		
+
 		return mv;
 	}
 
@@ -79,14 +79,14 @@ public class MemberController {
 
 		return mv;
 	}
-	
+
 	// 회원정보 변경 페이지 이동
 	@RequestMapping("changePwdPage.do")
 	public ModelAndView changePwd(ModelAndView mv, Member m) {
-		
+
 		mv.addObject("memberEmail", m.getMemberEmail())
 		.setViewName("member/memberChangePwd");
-		
+
 		return mv;
 	}
 
@@ -135,7 +135,7 @@ public class MemberController {
 						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
 
 						model.addAttribute("loginUser", loginUser);
-						
+
 						return "success";
 
 					} else {
@@ -201,7 +201,7 @@ public class MemberController {
 						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
 
 						model.addAttribute("loginUser", loginUser);
-							
+
 						return "success";
 
 					} else {
@@ -272,24 +272,21 @@ public class MemberController {
 		System.out.println("값 유무 확인 (성별) : " + (m.getMemberGender() != null));
 		System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
 		System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
-		
+
+		Member member = mService.loginMember(m);
+		m.setMemberNo(member.getMemberNo());
+
 		if((m.getMemberEmail()).length() != 0 && ((m.getMemberName()).length() != 0 || (m.getMemberPhone()).length() != 0 || m.getMemberGender() != null || !file.getOriginalFilename().equals("") || (m.getMemberMemo()).length() != 0)) {
-			
-			// 프로필 사진 리네임을 위해 멤버 번호를 DB에서 가져온다
-			Member member = mService.loginMember(m);
-			System.out.println("회원가입(추가입력) 하려는 회원 : " + member);
-	
-			m.setMemberNo(member.getMemberNo());
-	
+
 			// 파일 저장 및 리네임
 			if(!file.getOriginalFilename().equals("")) {
 				String renameFileName = saveFile(member.getMemberNo(), file, request);
-	
+
 				m.setMemberPhoto(renameFileName);
 			} else {
 				m.setMemberPhoto("MEMBER_SAMPLE_IMG.JPG");
 			}
-	
+
 			System.out.println("member update data : " + m);
 
 			// 회원가입(추가 update)
@@ -297,7 +294,7 @@ public class MemberController {
 
 			if(resultUpdateMemberOption > 0) {
 				System.out.println("회원가입 추가정보 업데이트 : 성공");
-	
+
 			} else {
 				System.out.println("회원가입 추가정보 업데이트 : 실패");
 				throw new MemberException("회원가입 추가정보 업데이트 : 실패");
@@ -306,30 +303,33 @@ public class MemberController {
 		} else {
 			System.out.println("회원 추가입력(사진,이름,성별,한줄) : skip");
 		}
-		
+
 		// 태그 테이블 업데이트
 		int resultMergeTags = 0;
-		
+
 		if(memberTagName.length() != 0 && !memberTagName.isEmpty()) {
 			String[] tag = memberTagName.split(",");
 
-			for(int i = 0 ; i < tag.length; i++) {
-				String tagTemp = tag[i];
-				resultMergeTags = tagService.mergeTags(tagTemp);
+			for(String i : tag) {
+				resultMergeTags = tagService.mergeTags(i);
 			}
+
 			if(resultMergeTags > 0) {
 				System.out.println("TAG 업데이트 : 성공");
 
 				// 멤버태그 테이블 추가
 				int resultMemberTag = 0;
 
-				for(int i = 0 ; i < tag.length; i++) {
-					String tagTemp = tag[i];
-					MemberTag memberTag = new MemberTag(m.getMemberNo(), tagTemp);
-					resultMemberTag = mService.mergeMemberTags(memberTag);
+				for(String i : tag) {
+					MemberTag memberTag = new MemberTag(m.getMemberNo(), m.getMemberEmail(), i);
+					System.out.println(memberTag);
+					int result = mService.mergeMemberTags(memberTag);
+					resultMemberTag += result;
 				}
 
-				if(resultMemberTag > 0) {
+				System.out.println("MemberTag 횟수 : " + tag.length + " / 결과 "+ resultMemberTag );
+
+				if(resultMemberTag == tag.length) {
 					System.out.println("MemberTag 업데이트 : 성공");
 
 					return "home";
@@ -345,7 +345,7 @@ public class MemberController {
 			}
 
 		}
-		
+
 		return "home";
 
 	}
@@ -354,12 +354,12 @@ public class MemberController {
 	@RequestMapping("memberLogin.do")
 	@ResponseBody
 	public String memberLogin(Member m, Model model, String idSaveCheck) {
-		
+
 		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
-		
+
 		Member loginUser = mService.loginMember(m);
 		System.out.println("회원 확인 : " + loginUser);
-		
+
 		if(loginUser != null) {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 				System.out.println("로그인 확인 : 성공");
@@ -377,11 +377,11 @@ public class MemberController {
 	@RequestMapping("kakaoLogin.do")
 	@ResponseBody
 	public String kakaoLogin(Member m, Model model) {
-		
+
 		System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
-		
+
 		Member loginUser = mService.loginMember(m);
-		
+
 		if(loginUser != null) {
 			System.out.println("kakao로그인 확인 : 성공");
 			model.addAttribute("loginUser", loginUser);
@@ -391,7 +391,7 @@ public class MemberController {
 			model.addAttribute("loginUser", m);
 			return "fail";
 		}
-		
+
 	}
 
 	// 회원 로그아웃
@@ -401,17 +401,18 @@ public class MemberController {
 		status.setComplete();
 
 		return "home";
+
 	}
 
 	// 회원 가입 : 이메일 중복 확인
 	@RequestMapping("emailDuplicateChk.do")
 	@ResponseBody
 	public String emailDuplicateChk(Member m) {
-		
+
 		System.out.println("이메일 중복 확인 : " + m.getMemberEmail());
-		
+
 		int result = mService.emailDuplicateChk(m);
-		
+
 		if(result == 0) {
 			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용가능 )");
 			return "success";
@@ -426,11 +427,11 @@ public class MemberController {
 	@RequestMapping("nickNameDuplicateChk.do")
 	@ResponseBody
 	public String nickNameDuplicateChk(Member m) {
-		
+
 		System.out.println("닉네임 중복 확인 : " + m.getMemberNickName());
-		
+
 		int result = mService.nickNameDuplicateChk(m);
-		
+
 		if(result == 0) {
 			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용가능 )");
 			return "success";
@@ -438,18 +439,18 @@ public class MemberController {
 			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용 중 )");
 			return "fail";
 		}
-		
+
 	}
 
 	// 회원 가입 : 전화번호 중복 확인
 	@RequestMapping("phoneDuplicateChk.do")
 	@ResponseBody
 	public String phoneDuplicateChk(Member m) {
-	
+
 		System.out.println("전화번호 중복 확인 : " + m.getMemberPhone());
-	
+
 		int result = mService.phoneDuplicateChk(m);
-	
+
 		if(result == 0) {
 			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용가능 )");
 			return "success";
@@ -466,30 +467,30 @@ public class MemberController {
 	public String findEmail(Member m) {
 		String memberEmail = "";
 		System.out.println("닉네임 확인 : " + m.getMemberNickName());
-		
+
 		Member member = mService.findEmail(m);
-		
+
 		if(member != null) {
 			String emailTemp = member.getMemberEmail();
 
 			int index = emailTemp.indexOf("@");
-			
+
 			String id = emailTemp.substring(0, index);
 			String at = emailTemp.substring(index, emailTemp.length());
-			
+
 			int idLength = id.length();
 			int atLength = at.length();
-			
+
 			int cutIndex = 2;
-			
+
 			// 자를 id 길이 계산
 			if(idLength < 2) {
 				cutIndex = idLength/2;
 			}
-			
+
 			// 보여줄 아이디 빼고 자르기
 			String idTemp = id.substring(0, cutIndex);
-			
+
 			// 자른 만큼 *을 뒤에 붙이기
 			for(int i = cutIndex; i < idLength; i++) {
 				idTemp += "*";
@@ -497,7 +498,7 @@ public class MemberController {
 
 			// at을 위해 초기화
 			cutIndex = 3;
-			
+
 			// 자를 at 길이 계산
 			if(atLength < 3) {
 				cutIndex = atLength/2;
@@ -505,12 +506,12 @@ public class MemberController {
 
 			// 보여줄 at 빼고 자르기
 			String atTemp = at.substring(0, cutIndex);
-			
+
 			// 자른 만큼 *을 뒤에 붙이기
 			for(int i = cutIndex; i < atLength; i++) {
 				atTemp += "*";
 			}
-			
+
 			memberEmail = (idTemp + atTemp);
 		}
 
@@ -538,10 +539,10 @@ public class MemberController {
 		System.out.println("인증코드 : " + randomCode);
 
 		MemberCertiCode mcc = new MemberCertiCode();
-		
+
 		mcc.setCertiNumber(randomCode);
 		mcc.setMemberEmail(m.getMemberEmail());
-		
+
 		result = mService.insertRandomCode(mcc);
 		if(result == 0) {
 			System.out.println("회원 정보 찾기 : 인증코드 저장 실패");
@@ -614,6 +615,7 @@ public class MemberController {
 		mailSender.send(mmp);
 
 		return "success";
+
 	}
 
 	// 회원정보 찾기 : 인증번호 확인
@@ -629,6 +631,7 @@ public class MemberController {
 		}
 		System.out.println("회원 정보 찾기 : 인증번호 불일치");
 		return "fail";
+
 	}
 
 	// 회원 가입 : 일반 회원
@@ -669,4 +672,5 @@ public class MemberController {
 		}
 
 	}
+
 }

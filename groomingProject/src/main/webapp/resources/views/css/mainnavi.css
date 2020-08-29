@@ -4,7 +4,6 @@ header
 }
 .main_navbar
 {
-    position: fixed;
     width: 100%;
     display: flex;
     transition: 0.6s;

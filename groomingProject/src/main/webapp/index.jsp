@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Grooming</title>
-
 </head>
 <body>
 	<jsp:forward page="home.do"/>

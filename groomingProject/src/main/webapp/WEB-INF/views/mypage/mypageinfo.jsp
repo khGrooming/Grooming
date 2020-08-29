@@ -45,9 +45,17 @@ section {
 }
 
 .subContent_my {
-	height: 100%;
+	/* height: 100%; */
 }
 
+
+
+#memo {
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 100px;
+}
 
 
 

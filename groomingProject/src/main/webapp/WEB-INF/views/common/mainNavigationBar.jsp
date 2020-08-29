@@ -10,20 +10,16 @@
 
 <title>main navigation bar</title>
 
-<!-- 폰트 (https://fonts.google.com/specimen/Jua?subset=korean&sidebar.open=true&selection.family=Jua) -->
+<!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <!-- style -->
-<link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet">
-
-<!-- <style type="text/css">
-header
-{
-    font-family: 'Jua', sans-serif;
-}
+<%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
+<style type="text/css">
 .main_navbar
 {
     position: fixed;
+    font-family: 'Jua', sans-serif;
     width: 100%;
     display: flex;
     transition: 0.6s;
@@ -34,10 +30,11 @@ header
 }
 .main_navbar .main_navbar_logo
 {
-	margin: auto 0;
+	margin: 0.2rem;
 }
 .main_navbar .mainNavImg
 {
+	margin: 0.2rem;
 	padding: 0.3rem;
 	height: 3rem;
     transition: 0.6s;
