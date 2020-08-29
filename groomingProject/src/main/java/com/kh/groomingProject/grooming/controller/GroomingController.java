@@ -251,7 +251,7 @@ public class GroomingController {
 			Map info = new HashMap();
 			info.put("groomingNo", groomingNo);
 			info.put("memberNo", memberNo);
-
+			Declaration declaration = declarationService.selectGroomingDeclare(info);
 			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
 			GroomingHeart heart = gService.selectHeartMember(info);
 //			System.out.println("나 tag야 " +tag);
@@ -455,15 +455,35 @@ public class GroomingController {
 	}
 
 	@RequestMapping("declare.do")
-	public String declareG(Declaration d) {
+	public ModelAndView declareG(ModelAndView mv, Declaration d,String groomingNo, String memberNo) {
 
 		int result = declarationService.declareG(d);
 
 		if (result > 0) {
-			return "redirect:groomingMain.do";
+			Grooming grooming = gService.selectGrooming(groomingNo);
+
+			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+			Member member = gService.selectMember(groomingNo);
+			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+
+			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+			Map info = new HashMap();
+			info.put("groomingNo", groomingNo);
+			info.put("memberNo", memberNo);
+
+			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+			GroomingHeart heart = gService.selectHeartMember(info);
+			
+			mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+			.addObject("member", member).addObject("appList", appList)
+			.addObject("memberNoList", memberNoList).addObject("heart", heart)
+			.setViewName("grooming/groomingDetailView");
 		} else {
 			throw new GroomingException("게시글 신고 실패!");
 		}
+		
+		return mv;
 	}
 
 	@RequestMapping("declareG.do")
