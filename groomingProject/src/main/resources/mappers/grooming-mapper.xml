@@ -616,6 +616,13 @@
  	
  	</insert>
  	
+ 	<select id="selectSave" parameterType="string" resultMap="groomingResultSet">
+	 	SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+		WHERE GROOMING_STATUS = 'N' AND G.MEMBER_NO = #{memberNo}
+ 	
+ 	</select>
  	
  	
 </mapper>

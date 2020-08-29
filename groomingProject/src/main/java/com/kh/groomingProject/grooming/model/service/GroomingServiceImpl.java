@@ -324,6 +324,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectGBoardNo(map);
 	}
 
+	@Override
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectSave(memberNo);
+	}
+
 
 	
 }

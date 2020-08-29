@@ -113,4 +113,6 @@ public interface GroomingService {
 
 	String selectGBoardNo(Map map);
 
+	Grooming selectSave(String memberNo);
+
 }

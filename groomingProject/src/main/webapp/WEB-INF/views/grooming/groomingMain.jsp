@@ -199,6 +199,7 @@
         </div>
        </div>
        <input type="hidden" value="${selectG }" id="selectG">
+       <input type="hidden" value="${selectS }" id="selectS">
     </section>
     <!-- 필터 -->
     
@@ -207,15 +208,28 @@
     		
    	
     	var gmemberNo = $("#selectG").val();
+    	var smemberNo = $("#selectS").val();
+    	var memberNo = "${loginUser.memberNo}";
     	$("#writeG").on("click",function(){
     	
     		if(gmemberNo != ""){
     			alert("이미 작성하신 스터디 게시글이 있습니다.");
     		
+    		}else if(smemberNo != ""){
+    			var result = confirm("임시저장된 글이 있습니다. 불러오시겠습니까?");
+    			
+    			if(result){
+    				location.href='groomingSaveInsert.do?memberNo='+memberNo;
+    			}else{
+    				event.preventDefault();
+    			}
+    			
     		}else{
     			
     			location.href='groomingInsert.do';
     		}
+    		
+    		
     	})
    	})
     

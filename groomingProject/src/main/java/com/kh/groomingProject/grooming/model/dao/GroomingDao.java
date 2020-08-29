@@ -289,6 +289,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("groomingMapper.selectGBoardNo",map);
 	}
+
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectSave",memberNo);
+	}
 	
 	
 	
