@@ -100,6 +100,7 @@ header
 /* 스티키 설정 */
 .main_navbar.sticky
 {
+    position: fixed;
     padding: 0.3125rem 12.5rem;
 }
 .main_navbar.sticky ul li a
