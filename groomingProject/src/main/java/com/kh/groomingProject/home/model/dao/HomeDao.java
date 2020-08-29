@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.home.model.vo.HomeBoard;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
 
 @Repository("homeDao")
 public class HomeDao {
@@ -18,6 +19,24 @@ public class HomeDao {
 	public ArrayList<HomeBoard> getBoardTopList() {
 
 		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getBoardTopList");
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ArrayList<HomeGrooming> getGMentoTopList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getGMentoTopList");
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ArrayList<HomeGrooming> getGPopulTopList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getGPopulTopList");
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ArrayList<HomeGrooming> getGDeadlineTopList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getGDeadlineTopList");
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.home.model.dao.HomeDao;
 import com.kh.groomingProject.home.model.vo.HomeBoard;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
 
 @Service("homeService")
 public class HomeServiceImpl implements HomeService{
@@ -18,6 +19,24 @@ public class HomeServiceImpl implements HomeService{
 	public ArrayList<HomeBoard> getBoardTopList() {
 
 		return homeDao.getBoardTopList();
+	}
+
+	@Override
+	public ArrayList<HomeGrooming> getGMentoTopList() {
+
+		return homeDao.getGMentoTopList();
+	}
+
+	@Override
+	public ArrayList<HomeGrooming> getGPopulTopList() {
+
+		return homeDao.getGPopulTopList();
+	}
+
+	@Override
+	public ArrayList<HomeGrooming> getGDeadlineTopList() {
+
+		return homeDao.getGDeadlineTopList();
 	}
 
 }

@@ -18,6 +18,8 @@
 <style type="text/css">
 .main_navbar
 {
+    /* background-color: lightseagreen; */
+    background-color: #fff;
     position: fixed;
     font-family: 'Jua', sans-serif;
     width: 100%;
@@ -25,7 +27,7 @@
     transition: 0.6s;
     padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+/* 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 10;
 }
 .main_navbar .main_navbar_logo
@@ -94,15 +96,20 @@
 }
 .main_navbar ul li
 {
+	text-align: center;
     list-style: none;
-    padding-bottom: 1px;
+    border-bottom: thin solid white;
+}
+.main_navbar ul li#logout_item
+{
+	line-height: 2.8rem;
 }
 .main_navbar ul li a
 {
 	font-size: 1.625rem;
     margin: 0.2rem 0.5rem;
     text-decoration: none;
-    color: black;
+    color: darkslategrey;
     letter-spacing: 1px;
     transition: 0.6s;
 }
@@ -125,8 +132,32 @@
 }
 .main_navbar.sticky .mainNavImg
 {
-	height: 1.5rem;
+	height: 2.2rem;
 	padding: 0;
+}
+.main_navbar.sticky #grooming
+{
+	min-width: 4.5rem;
+}
+.main_navbar.sticky #community
+{
+	min-width: 5.7rem;
+}
+.main_navbar.sticky #studycafe
+{
+	min-width: 6.9rem;
+}
+.main_navbar.sticky #login_item
+{
+	min-width: 5.2rem;
+}
+.main_navbar.sticky #register_item
+{
+	min-width: 6.7rem;
+}
+.main_navbar.sticky #logout_item
+{
+	min-width: 5.8rem;
 }
 .main_navbar.sticky .main_messages_txt,
 .main_navbar.sticky .main_alerts_txt
@@ -144,16 +175,21 @@
 	top: -0.273rem;
 	left: 1.12rem;
 }
+.main_navbar.sticky .main_messages_icon,
+.main_navbar.sticky .main_alerts_icon
+{
+    margin: 0.2rem 0.7rem;
+}
 .main_navbar.sticky .main_messages_icon .main_naviIcon .img_svg,
 .main_navbar.sticky .main_alerts_icon .main_naviIcon .img_svg
 {
-	width: 1.75rem;
-	height: 1.75rem;
+	width: 2rem;
+	height: 2rem;
 }
 .main_navbar.sticky .proFile_img
 {
-	height: 1.75rem;
-	width: 1.75rem;
+	height: 2rem;
+	width: 2rem;
 }
 /* 네비바 기본 스타일 끝 */
 .main_navbar .main_flex
@@ -171,15 +207,11 @@
 .main_navbar .main_alerts_icon
 {
 	cursor: pointer;
-	margin: 0.2rem 0.4rem;
+    margin: 0.2rem 0.7rem;
 	padding: 0.18rem;
 	position: relative;
 }
-.main_navbar .main_messages_icon .main_naviIcon,
-.main_navbar .main_alerts_icon .main_naviIcon
-{
-	margin-bottom: 1px;
-}
+
 .main_navbar .main_messages_icon .main_naviIcon .img_svg,
 .main_navbar .main_alerts_icon .main_naviIcon .img_svg
 {

@@ -21,6 +21,10 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+<!-- Bootstrap4 TagsInput -->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
+<link href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css" rel="stylesheet">
+
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
@@ -30,10 +34,7 @@
 
 <!-- 오른쪽 컨테이너 스타일 -->
 <style type="text/css">
-/* *
-{
-    font-family: 'Jua', sans-serif;
-} */
+section{ background-color: #f2f2f2; }
 .right_container .right_spotlight_body .right_spotlight_category,
 .right_container .right_spotlight_body .right_spotlight_content strong
 {
@@ -41,18 +42,18 @@
 }
 .right_container
 {
-	margin-right: 5%;
+	background-color: white;
+	margin: 2.5rem 5% 0;
 	float: right;
-	padding: 2px;
-    width: 160px;
-    border-radius: 3px;
+    width: 10rem;
+    border-radius: 0.25rem;
 	border: 1px solid lightgrey;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	/* box-shadow: 0px 0.5rem 1rem 0px rgba(0,0,0,0.2); */
 }
 .right_container .right_spotlight_title
 {
 	text-align: center;
-	padding: 10px;
+	padding: 0.6rem;
 	border-bottom: thin dashed;
 }
 .right_container .right_spotlight_item:hover
@@ -65,13 +66,13 @@
 }
 .right_container .right_spotlight_body
 {
-	font-size: 9pt;
-	margin: 5px 0;
+	font-size: 0.7rem;
+	margin: 0.25rem 0;
 }
 .right_container .right_spotlight_body .right_spotlight_item
 {
 	display: block;
-    margin: 10px 3px;
+    margin: 0.8rem 0.2rem;
 	color: black;
     text-decoration: none;
     letter-spacing: 1px;
@@ -90,12 +91,14 @@
 <style type="text/css">
 .main_container
 {
-	margin-bottom: 3rem;
+	padding: 1rem 1rem 2rem;
+	background-color: #fff;
+	margin-bottom: 1rem;
 	font-family: 'Jua', sans-serif;
 }
-.main_container .container_header
+.main_container.main_fst_container
 {
-	margin: 3.5rem 0 2.5rem; 
+	margin-top: 2.5rem;
 }
 </style>
 
@@ -105,23 +108,27 @@
 {
 	text-align: center
 }
+.cards_bundle .card_container
+{
+	padding: 0.5rem;
+}
 .cards_bundle .card_container .card_box
 {
     cursor: pointer;
     width: 100%;
-	border-radius: 1rem;
+	border-radius: 0.3rem;
 	border: 0.2rem solid skyblue;
     transition: 0.4s;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 }
 .cards_bundle .card_container .card_box:hover .card_header
 {
-	border-bottom: 0.1rem solid darkorange;
+	border-bottom: 0.1rem solid #7991E8;
     transition: 0.4s;
 }
 .cards_bundle .card_container .card_box:hover
 {
-	border: 0.2rem solid darkorange;
+	border: 0.2rem solid #7991E8;
     transition: 0.6s;
 }
 .cards_bundle .card_container .card_header
@@ -145,17 +152,10 @@
 	left: 0;
 	width: 2.5rem;
 	height: 2.5rem;
-	margin: 0.8rem;
+	margin: 0.3rem;
 	border-radius: 50%;
 	text-align: center;
 	line-height: 2.5rem;
-}
-.cards_bundle .card_container .card_header .card_dDay.card_dDay_green
-{
-	font-size: 0.8rem;
-	background: white;
-	color: green;
-	border: thin solid green;
 }
 .cards_bundle .card_container .card_header .card_dDay.card_dDay_red
 {
@@ -170,6 +170,13 @@
 	background: white;
 	color: orange;
 	border: thin solid orange;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_green
+{
+	font-size: 0.8rem;
+	background: white;
+	color: green;
+	border: thin solid green;
 }
 .cards_bundle .card_container .card_header .card_dDay.card_dDay_black
 {
@@ -188,8 +195,8 @@
 	text-align: left;
 	font-size: 1.5rem;
 	line-height: 1.5rem;
-	margin: 0;
-	padding: 0.5rem 0.3rem 0.3rem;
+	margin: 0.5rem 0;
+	padding: 0.5rem 0.4rem 0.3rem;
     color: #007bff;
    	white-space: nowrap;
 	overflow: hidden;
@@ -213,7 +220,7 @@
     background-color: #17a2b8;
 	display: inline-block;
     padding: .25em .4em;
-    font-size: 75%;
+    font-size: 0.7rem;
     font-weight: 700;
     line-height: 1;
     text-align: center;
@@ -223,16 +230,31 @@
 	font-family: 'Nanum Gothic', sans-serif;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
+.cards_bundle .card_container .card_body .card_tags .bootstrap-tagsinput
+{
+	margin: 0;
+	padding: 0;
+	border: none;
+    box-shadow: none;
+	
+}
+.cards_bundle .card_container .card_body .card_tags .bootstrap-tagsinput span:not(.badge),
+.cards_bundle .card_container .card_body .card_tags .bootstrap-tagsinput input
+{
+	display: none;
+}
 .cards_bundle .card_container .card_body .card_intro
 {
 	font-family: 'Nanum Gothic', sans-serif;
+	font-size: 0.7rem;
 	text-align: left;
 	margin: 0;
-	padding: 0 0.3rem;
+	padding: 0.3rem;
 	min-height: 4.5rem;
 	max-height: 4.5rem;
 	overflow-y: auto;
 }
+/* 스크롤바 css */
 .cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar
 {
 	width: 0.45rem;
@@ -244,7 +266,8 @@
     background-clip: padding-box;
     border: 2px solid transparent;
 }
-.cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar-track {
+.cards_bundle .card_container .card_body .card_intro::-webkit-scrollbar-track
+{
     background-color: skyblue;
     border-radius: 0.225rem;
     box-shadow: inset 0px 0px 5px white;
@@ -257,9 +280,10 @@
 }
 .cards_bundle .card_container .card_body .card_between p
 {
-	margin: 0.3rem;
+	margin: 0.4rem;
 	padding: 0;
 }
+.
 </style>
 
 </head>
@@ -286,52 +310,263 @@
 		</c:forEach>
 	</div>
 </c:if>
+
+<c:if test="${!empty gMList }">
 	<!-- 멘토 그루밍 컨테이너 -->
-	<div class="main_container mento_container container">
+	<div class="main_container main_fst_container container">
 		<div class="container_header">
 			<h2 class="mt-auto mb-auto">멘토 그루밍</h2>
 			<h6 class="font-weight-lighter">실력있는 멘토와 함께하는 스터디 그룹입니다.</h6>
 		</div>
 
-			<!-- 그루밍 카드 -->
-			<div class="cards_bundle row text-center">
-				
-				<div class="card_container col-md-3">
-					<div class="card_box">
-						<!-- 그룹 이미지 -->
-						<div class="card_header">
-							<img src="${contextPath }/resources/upGroomingFiles/test.png">
-							<!-- 그룹 d-day 태그 -->
-							<div class="card_dDay card_dDay_green">
-								<span>D-1</span>
+		<!-- 그루밍 카드 -->
+		<div class="cards_bundle row text-center">
+			
+		<c:forEach var="g" items="${gMList }">
+			<div class="card_container col-lg-3">
+				<input type="hidden" value="${g.groomingNo}"></input>
+				<div class="card_box">
+					<!-- 그룹 이미지 -->
+					<div class="card_header">
+						<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${g.groomingImg }"
+							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
+						<!-- 그룹 d-day 태그 -->
+						<c:choose>
+ 							<c:when test="${g.groomingDday le 7 }">
+								<c:set var="card_dDay_color" value="card_dDay_red"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 15 }">
+								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 25 }">
+								<c:set var="card_dDay_color" value="card_dDay_green"/>
+ 							</c:when>
+							<c:otherwise>
+								<c:set var="card_dDay_color" value="card_dDay_black"/>
+							</c:otherwise>
+ 						</c:choose>
+						<div class="card_dDay ${card_dDay_color}">
+							<span>D-${g.groomingDday }</span>
+						</div>
+					</div>
+					<!-- 그룹 본문 -->
+					<div class="card_body">
+						<!-- 그룹 제목 -->
+						<div class="card_title">${g.groomingTitle }</div>
+						<div class="card_tags">
+							<div>
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
 							</div>
 						</div>
-						<!-- 그룹 본문 -->
-						<div class="card_body">
-							<!-- 그룹 제목 -->
-							<div class="card_title">제목제목제목제목제목제목제목제목</div>
-							<div class="card_tags">
-								<span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span><span class="badge">#태그</span>
-							</div>
-							<!-- 그룹 한줄 소개  -->
-							<div class="card_intro">한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄한줄</div>
-							<div class="card_between mt-0">
-								<p class="card_np">인원 1/3</p>
-								<p class="card_gt">멘토</p>
-							</div>
+						<!-- 그룹 한줄 소개  -->
+						<div class="card_intro">${g.groomingIntroduce }</div>
+						<div class="card_between mt-0">
+							<p class="card_np">인원 ${g.groomingMemberCount }/${g.groomingParti }</p>
+							<p class="card_gt">${g.groomingType }</p>
 						</div>
 					</div>
 				</div>
-
 			</div>
-		</div> <!-- 컨테이너 끝 -->
+		</c:forEach>
+		</div>
+	</div> <!-- 컨테이너 끝 -->
+</c:if>
+
+
+<c:if test="${!empty gPList }">
+	<!-- 인기 그루밍 컨테이너 -->
+	<div class="main_container container">
+		
+		<div class="container_header">
+			<h2 class="mt-auto mb-auto">인기 그루밍</h2>
+			<h6 class="font-weight-lighter">요즘 화제의 스터디 그룹입니다.</h6>
+		</div>
+
+		<!-- 그루밍 카드 -->
+		<div class="cards_bundle row text-center">
+			
+		<c:forEach var="g" items="${gPList }">
+			<div class="card_container col-lg-3">
+				<input type="hidden" value="${g.groomingNo}"></input>
+				<div class="card_box">
+					<!-- 그룹 이미지 -->
+					<div class="card_header">
+						<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${g.groomingImg }"
+							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
+						<!-- 그룹 d-day 태그 -->
+						<c:choose>
+ 							<c:when test="${g.groomingDday le 7 }">
+								<c:set var="card_dDay_color" value="card_dDay_red"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 15 }">
+								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 25 }">
+								<c:set var="card_dDay_color" value="card_dDay_green"/>
+ 							</c:when>
+							<c:otherwise>
+								<c:set var="card_dDay_color" value="card_dDay_black"/>
+							</c:otherwise>
+ 						</c:choose>
+						<div class="card_dDay ${card_dDay_color}">
+							<span>D-${g.groomingDday }</span>
+						</div>
+					</div>
+					<!-- 그룹 본문 -->
+					<div class="card_body">
+						<!-- 그룹 제목 -->
+						<div class="card_title">${g.groomingTitle }</div>
+						<div class="card_tags">
+							<div>
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+							</div>
+						</div>
+						<!-- 그룹 한줄 소개  -->
+						<div class="card_intro">${g.groomingIntroduce }</div>
+						<div class="card_between mt-0">
+							<p class="card_np">인원 ${g.groomingMemberCount }/${g.groomingParti }</p>
+							<p class="card_gt">${g.groomingType }</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
+	</div> <!-- 컨테이너 끝 -->
+</c:if>
+
+<c:if test="${!empty gDList }">
+	<!-- 마감임박 그루밍 컨테이너 -->
+	<div class="main_container container">
+		
+		<div class="container_header">
+			<h2 class="mt-auto mb-auto">마감임박 그루밍</h2>
+			<h6 class="font-weight-lighter">모집기간이 얼마 안남은 스터디 그룹입니다.</h6>
+		</div>
+
+		<!-- 그루밍 카드 -->
+		<div class="cards_bundle row text-center">
+			
+		<c:forEach var="g" items="${gDList }">
+			<div class="card_container col-lg-3">
+				<input type="hidden" value="${g.groomingNo}"></input>
+				<div class="card_box">
+					<!-- 그룹 이미지 -->
+					<div class="card_header">
+						<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${g.groomingImg }"
+							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
+						<!-- 그룹 d-day 태그 -->
+						<c:choose>
+ 							<c:when test="${g.groomingDday le 7 }">
+								<c:set var="card_dDay_color" value="card_dDay_red"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 15 }">
+								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 25 }">
+								<c:set var="card_dDay_color" value="card_dDay_green"/>
+ 							</c:when>
+							<c:otherwise>
+								<c:set var="card_dDay_color" value="card_dDay_black"/>
+							</c:otherwise>
+ 						</c:choose>
+						<div class="card_dDay ${card_dDay_color}">
+							<span>D-${g.groomingDday }</span>
+						</div>
+					</div>
+					<!-- 그룹 본문 -->
+					<div class="card_body">
+						<!-- 그룹 제목 -->
+						<div class="card_title">${g.groomingTitle }</div>
+						<div class="card_tags">
+							<div>
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+							</div>
+						</div>
+						<!-- 그룹 한줄 소개  -->
+						<div class="card_intro">${g.groomingIntroduce }</div>
+						<div class="card_between mt-0">
+							<p class="card_np">인원 ${g.groomingMemberCount }/${g.groomingParti }</p>
+							<p class="card_gt">${g.groomingType }</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
+	</div> <!-- 컨테이너 끝 -->
+</c:if>
 
 </section>
 
 <script type="text/javascript">
+	$(function() {
+		console.log("메인 페이지");
+		//loadChatListData();
+	
+	});
 
+	//TODO 그루밍 데이터 가져오기(스크롤)
+	function loadGroomingData() {
+		$.ajax({
+			url:"loadGroomingData.do",
+			data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo},
+			success:function(data){
+				console.log("그루밍 가져오기 결과 : " + data.length);
+				// 그루밍 내용 추가
+				loadGrooming(data);
+			},
+			error:function(request, status, errorData){
+				alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+			}
+		});
+	}
+	
+	//TODO 그루밍 출력
+	function loadGrooming(data) {
+	
+		// 그루밍 내용 추가
+		if(data.length > 0) {
+			console.log("채팅 내용 추가");
+			var memberNo = "${loginUser.memberNo}";
+			var messageDateTemp = "";
+	
+			for(var i in data){
+				var $msg_history = $(".msg_history");
+				
+				// 날짜 계산 & 추가
+				var messageDate = data[i].messageDate.split(',');
+				if(messageDateTemp == "" || messageDateTemp != messageDate[0]){
+					var $date_divider_msg = $('<div>').addClass("date_divider_msg");
+					var $divider_date = $('<div>').addClass("divider_date").text( messageDate[0]);
+					var $hrMessageDate = $('<hr>')
+					
+					$date_divider_msg.append($divider_date);
+					$date_divider_msg.append($hrMessageDate);
+					$msg_history.append($date_divider_msg);
+				}
+				messageDateTemp = messageDate[0];
 
+				// outgoing	
+				var $outgoing_msg = $('<div>').addClass("outgoing_msg");
+				var $sent_msg = $('<div>').addClass("sent_msg");
+				var $pMessageContent = $('<p>').text(data[i].messageContent);
+				var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
 
+				$sent_msg.append($pMessageContent);
+				$sent_msg.append($time_date);
+				$outgoing_msg.append($sent_msg);
+
+				$msg_history.append($outgoing_msg);
+
+			}
+		} else {
+			console.log("내용 없음");
+		}
+	}
+</script>
+
+<script type="text/javascript">
 /* 주소 변경 */
 	$(document).ready(function() {
 		history.replaceState(null, null, '${contextPath }/home.do');
