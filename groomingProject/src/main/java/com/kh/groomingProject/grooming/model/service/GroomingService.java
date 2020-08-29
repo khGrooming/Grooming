@@ -115,4 +115,6 @@ public interface GroomingService {
 
 	Grooming selectSave(String memberNo);
 
+	int updateSaveGrooming(Grooming g);
+
 }

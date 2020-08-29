@@ -241,6 +241,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 			<c:url var="groomingSaveUpdate" value="gSaveUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
+				<c:param name="memberNo" value="${loginUser.memberNo }"/>
 			</c:url>
 			
 			<form action="${groomingSaveUpdate }" method="post" enctype="multipart/form-data">
@@ -516,7 +517,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			function save() {
-				var result = confirm("등록을 취소하시겠습니까? 취소하면 임시저장 되어있는 내용이 사라집니다.");
+				var result = confirm("등록을 취소하시겠습니까? ");
 				if (result) {
 					alert("취소되었습니다.");
 					location.href="groomingMain.do"; 

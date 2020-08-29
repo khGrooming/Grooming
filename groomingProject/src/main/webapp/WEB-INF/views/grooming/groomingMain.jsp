@@ -206,7 +206,6 @@
     <script>
    	$(function(){
     		
-   	
     	var gmemberNo = $("#selectG").val();
     	var smemberNo = $("#selectS").val();
     	var memberNo = "${loginUser.memberNo}";
@@ -220,6 +219,7 @@
     			
     			if(result){
     				location.href='groomingSaveInsert.do?memberNo='+memberNo;
+    			
     			}else{
     				event.preventDefault();
     			}

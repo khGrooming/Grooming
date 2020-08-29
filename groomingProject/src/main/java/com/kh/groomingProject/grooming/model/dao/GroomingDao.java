@@ -294,6 +294,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("groomingMapper.selectSave",memberNo);
 	}
+
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateSaveGrooming",g);
+	}
 	
 	
 	

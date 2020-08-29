@@ -330,6 +330,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.selectSave(memberNo);
 	}
 
+	@Override
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.updateSaveGrooming(g);
+	}
+
 
 	
 }

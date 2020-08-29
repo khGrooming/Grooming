@@ -83,8 +83,7 @@ public class GroomingController {
 		}
 		System.out.println("나 result" + result);
 		if (glist != null) {
-			mv.addObject("glist", glist).addObject("selectG", selectG).addObject("selectS", selectS);
-			mv.setViewName("grooming/groomingMain");
+			mv.addObject("glist", glist).addObject("selectG", selectG).addObject("selectS", selectS).setViewName("grooming/groomingMain");
 		} else {
 			throw new GroomingException("리스트 불러오기 실패!");
 		}
@@ -969,55 +968,74 @@ public class GroomingController {
 			return mv;
 		}
 
-	/*
-	 * @RequestMapping("gUpdate.do") public ModelAndView
-	 * groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv,
-	 * String groomingNo, Grooming g, @RequestParam(value = "uploadFile", required =
-	 * false) MultipartFile file) {
-	 * 
-	 * String renameFileName = ""; // 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
-	 * // 그럼 그걸 가지고 기존의 파일을 삭제하자 System.out.println(g.getGroomingImg()); if
-	 * (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐 if
-	 * (g.getGroomingImg() != null) { // 기존의 파일이 있느냐 deleteFile(g.getGroomingImg(),
-	 * request); // deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서 // 폴더명만 수정하자 }
-	 * renameFileName = saveFile(file, request);
-	 * 
-	 * // Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update) if
-	 * (!renameFileName.equals("")) {
-	 * 
-	 * g.setGroomingImg(renameFileName); }
-	 * 
-	 * } else { g.setGroomingImg(gService.selectGimg(groomingNo)); }
-	 * 
-	 * g.setGroomingNo(groomingNo); System.out.println("수정controller" + g);
-	 * 
-	 * int result = gService.updateGrooming(g);
-	 * 
-	 * int result1 = 0;
-	 * 
-	 * // 기존에 GTAG에 존재해있던 값을 지우자 int result2 = gService.deleteGtag(groomingNo);
-	 * 
-	 * if (tagName.length() != 0) { String[] tag = tagName.split(","); String[]
-	 * tagNo = new String[tag.length];
-	 * 
-	 * for (int i = 0; i < tag.length; i++) { // TAG 테이블에 값넣기 String tagTemp =
-	 * tag[i]; result = tagService.mergeTags(tagTemp); // GTAG 테이블에 값넣기 tagNo[i] =
-	 * gService.findTagNo(tagTemp); String GtagNo = tagNo[i];
-	 * 
-	 * Map map = new HashMap(); map.put("GtagNo", GtagNo); map.put("groomingNo",
-	 * groomingNo);
-	 * 
-	 * // db 갔다 오기 result1 = gService.insertGtag(map);
-	 * 
-	 * } }
-	 * 
-	 * System.out.println("나 수정 됬어요~" + result); if (result > 0 && result1 > 0 &&
-	 * result2 > 0) { mv.setViewName("redirect:groomingMain.do");
-	 * 
-	 * } else { throw new GroomingException("게시글 수정 실패!"); } return mv; }
-	 */
-		
-		
+		@RequestMapping("gSaveUpdate.do")
+		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
+				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+
+			String renameFileName = "";
+			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
+			// 그럼 그걸 가지고 기존의 파일을 삭제하자
+			System.out.println(g.getGroomingImg());
+			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
+				if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
+					deleteFile(g.getGroomingImg(), request);
+					// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
+					// 폴더명만 수정하자
+				}
+				renameFileName = saveFile(file, request);
+
+				// Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
+				if (!renameFileName.equals("")) {
+
+					g.setGroomingImg(renameFileName);
+				}
+
+			} else {
+				g.setGroomingImg(gService.selectGimg(groomingNo));
+			}
+
+			g.setGroomingNo(groomingNo);
+			System.out.println("수정controller" + g);
+
+			int result = gService.updateSaveGrooming(g);
+
+			int result1 = 0;
+
+			// 기존에 GTAG에 존재해있던 값을 지우자
+			int result2 = gService.deleteGtag(groomingNo);
+
+			if (tagName.length() != 0) {
+				String[] tag = tagName.split(",");
+				String[] tagNo = new String[tag.length];
+
+				for (int i = 0; i < tag.length; i++) {
+					// TAG 테이블에 값넣기
+					String tagTemp = tag[i];
+					result = tagService.mergeTags(tagTemp);
+					// GTAG 테이블에 값넣기
+					tagNo[i] = gService.findTagNo(tagTemp);
+					String GtagNo = tagNo[i];
+
+					Map map = new HashMap();
+					map.put("GtagNo", GtagNo);
+					map.put("groomingNo", groomingNo);
+
+					// db 갔다 오기
+					result1 = gService.insertGtag(map);
+
+				}
+			}
+			
+			System.out.println("나 수정 됬어요~" + result);
+			if (result > 0 && result1 > 0 && result2 > 0) {
+				mv.setViewName("redirect:groomingMain.do");
+
+			} else {
+				throw new GroomingException("게시글 수정 실패!");
+			}
+			return mv;
+		}
+	
 		
 		
 		
