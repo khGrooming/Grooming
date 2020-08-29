@@ -48,54 +48,10 @@ section {
 	height: 100%;
 }
 
-.profile_my {
-	margin-top: 10%;
-	height: 110px;
-}
 
-#memo {
-	width: 75%;
-	margin-left: auto;
-	margin-right: auto;
-	height: 100px;
-}
 
-#memoTextArea {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	height: 90px;
-	font-size: 12px;
-}
-
-#expBox {
-	width: 75%;
-	height: 15px;
-	margin-top: 1%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-bottom: 3%;
-	border: 1px solid gray;
-	text-align: center;
-}
-
-#expBar {
-	width: 25%;
-	height: 13px;
-	background-color: yellow;
-	position: absolute;
-}
-
-.profile_img {
-	width: 100px;
-	transform: translate(-50%);
-	height: 100px;
-	border-radius: 50%;
-	position: absolute;
-}
 
 .grayBox {
-	height: 50px;
 	border: 1px solid lightgray;
 	border-radius: 12px;
 }
@@ -143,13 +99,7 @@ section {
 	margin-right: auto;
 }
 
-#fileView {
-	width: 155px;
-	height: 155px;
-	margin-left: auto;
-	margin-right: auto;
-	border: 1px solid gray;
-}
+
 
 #test {
 	margin-top:5px;
@@ -223,7 +173,7 @@ section {
 }
 .myPage_navbar{
 	display: inline-block;
-	margin:2% 15%;
+	margin:3% 15%;
 }
 
 </style>
@@ -237,7 +187,7 @@ section {
 	<c:if test="${!empty loginUser }">
 
 		<div class="subContent_my myPage_navbar"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; ">
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 7%; ">
 			
 			<div class="menubar">
 				<div  id="test">
