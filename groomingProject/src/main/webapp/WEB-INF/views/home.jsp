@@ -34,7 +34,7 @@
 
 <!-- 오른쪽 컨테이너 스타일 -->
 <style type="text/css">
-section{ background-color: #f2f2f2; }
+body{ background-color: #f2f2f2; }
 .right_container .right_spotlight_body .right_spotlight_category,
 .right_container .right_spotlight_body .right_spotlight_content strong
 {
@@ -48,7 +48,6 @@ section{ background-color: #f2f2f2; }
     width: 10rem;
     border-radius: 0.25rem;
 	border: 1px solid lightgrey;
-	/* box-shadow: 0px 0.5rem 1rem 0px rgba(0,0,0,0.2); */
 }
 .right_container .right_spotlight_title
 {
@@ -119,7 +118,6 @@ section{ background-color: #f2f2f2; }
 	border-radius: 0.3rem;
 	border: 0.2rem solid skyblue;
     transition: 0.4s;
-	/* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 }
 .cards_bundle .card_container .card_box:hover .card_header
 {
@@ -236,6 +234,7 @@ section{ background-color: #f2f2f2; }
 	padding: 0;
 	border: none;
     box-shadow: none;
+    cursor: pointer;
 	
 }
 .cards_bundle .card_container .card_body .card_tags .bootstrap-tagsinput span:not(.badge),
@@ -316,7 +315,7 @@ section{ background-color: #f2f2f2; }
 	<div class="main_container main_fst_container container">
 		<div class="container_header">
 			<h2 class="mt-auto mb-auto">멘토 그루밍</h2>
-			<h6 class="font-weight-lighter">실력있는 멘토와 함께하는 스터디 그룹입니다.</h6>
+			<h6 class="font-weight-lighter"><small>실력있는 멘토와 함께하는 스터디 그룹입니다.</small></h6>
 		</div>
 
 		<!-- 그루밍 카드 -->
@@ -334,19 +333,23 @@ section{ background-color: #f2f2f2; }
 						<c:choose>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 15 }">
 								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 25 }">
 								<c:set var="card_dDay_color" value="card_dDay_green"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
 							<c:otherwise>
 								<c:set var="card_dDay_color" value="card_dDay_black"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
 							</c:otherwise>
  						</c:choose>
 						<div class="card_dDay ${card_dDay_color}">
-							<span>D-${g.groomingDday }</span>
+							<span>${card_dDay_text }</span>
 						</div>
 					</div>
 					<!-- 그룹 본문 -->
@@ -355,7 +358,7 @@ section{ background-color: #f2f2f2; }
 						<div class="card_title">${g.groomingTitle }</div>
 						<div class="card_tags">
 							<div>
-								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" style="display: none;">
 							</div>
 						</div>
 						<!-- 그룹 한줄 소개  -->
@@ -379,7 +382,7 @@ section{ background-color: #f2f2f2; }
 		
 		<div class="container_header">
 			<h2 class="mt-auto mb-auto">인기 그루밍</h2>
-			<h6 class="font-weight-lighter">요즘 화제의 스터디 그룹입니다.</h6>
+			<!-- <h6 class="font-weight-lighter">요즘 화제의 스터디 그룹입니다.</h6> -->
 		</div>
 
 		<!-- 그루밍 카드 -->
@@ -397,19 +400,23 @@ section{ background-color: #f2f2f2; }
 						<c:choose>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 15 }">
 								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 25 }">
 								<c:set var="card_dDay_color" value="card_dDay_green"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
 							<c:otherwise>
 								<c:set var="card_dDay_color" value="card_dDay_black"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
 							</c:otherwise>
  						</c:choose>
 						<div class="card_dDay ${card_dDay_color}">
-							<span>D-${g.groomingDday }</span>
+							<span>${card_dDay_text }</span>
 						</div>
 					</div>
 					<!-- 그룹 본문 -->
@@ -418,7 +425,7 @@ section{ background-color: #f2f2f2; }
 						<div class="card_title">${g.groomingTitle }</div>
 						<div class="card_tags">
 							<div>
-								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" style="display: none;">
 							</div>
 						</div>
 						<!-- 그룹 한줄 소개  -->
@@ -441,7 +448,7 @@ section{ background-color: #f2f2f2; }
 		
 		<div class="container_header">
 			<h2 class="mt-auto mb-auto">마감임박 그루밍</h2>
-			<h6 class="font-weight-lighter">모집기간이 얼마 안남은 스터디 그룹입니다.</h6>
+			<!-- <h6 class="font-weight-lighter">모집기간이 얼마 안남은 스터디 그룹입니다.</h6> -->
 		</div>
 
 		<!-- 그루밍 카드 -->
@@ -459,19 +466,23 @@ section{ background-color: #f2f2f2; }
 						<c:choose>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 15 }">
 								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
  							<c:when test="${g.groomingDday le 25 }">
 								<c:set var="card_dDay_color" value="card_dDay_green"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
  							</c:when>
 							<c:otherwise>
 								<c:set var="card_dDay_color" value="card_dDay_black"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
 							</c:otherwise>
  						</c:choose>
 						<div class="card_dDay ${card_dDay_color}">
-							<span>D-${g.groomingDday }</span>
+							<span>${card_dDay_text }</span>
 						</div>
 					</div>
 					<!-- 그룹 본문 -->
@@ -480,7 +491,73 @@ section{ background-color: #f2f2f2; }
 						<div class="card_title">${g.groomingTitle }</div>
 						<div class="card_tags">
 							<div>
-								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" id="tagName" style="display: none;">
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" style="display: none;">
+							</div>
+						</div>
+						<!-- 그룹 한줄 소개  -->
+						<div class="card_intro">${g.groomingIntroduce }</div>
+						<div class="card_between mt-0">
+							<p class="card_np">인원 ${g.groomingMemberCount }/${g.groomingParti }</p>
+							<p class="card_gt">${g.groomingType }</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
+	</div> <!-- 컨테이너 끝 -->
+</c:if>
+
+<c:if test="${!empty gAList }">
+	<!-- all 그루밍 컨테이너 -->
+	<div class="main_container container">
+		
+		<div class="container_header">
+			<h2 class="mt-auto mb-auto">그루밍</h2>
+			<!-- <h6 class="font-weight-lighter">스터디 그룹입니다.</h6> -->
+		</div>
+
+		<!-- 그루밍 카드 -->
+		<div class="cards_bundle row text-center">
+			
+		<c:forEach var="g" items="${gAList }">
+			<div class="card_container col-lg-3">
+				<input type="hidden" value="${g.groomingNo}"></input>
+				<div class="card_box">
+					<!-- 그룹 이미지 -->
+					<div class="card_header">
+						<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${g.groomingImg }"
+							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
+						<!-- 그룹 d-day 태그 -->
+						<c:choose>
+ 							<c:when test="${g.groomingDday le 7 }">
+								<c:set var="card_dDay_color" value="card_dDay_red"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 15 }">
+								<c:set var="card_dDay_color" value="card_dDay_orange"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
+ 							</c:when>
+ 							<c:when test="${g.groomingDday le 25 }">
+								<c:set var="card_dDay_color" value="card_dDay_green"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
+ 							</c:when>
+							<c:otherwise>
+								<c:set var="card_dDay_color" value="card_dDay_black"/>
+								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
+							</c:otherwise>
+ 						</c:choose>
+						<div class="card_dDay ${card_dDay_color}">
+							<span>${card_dDay_text }</span>
+						</div>
+					</div>
+					<!-- 그룹 본문 -->
+					<div class="card_body">
+						<!-- 그룹 제목 -->
+						<div class="card_title">${g.groomingTitle }</div>
+						<div class="card_tags">
+							<div>
+								<input type="text" name="memberTagName" value="${g.groomingTagName }" placeholder="Tags," data-role="tagsinput" class="form-control" style="display: none;">
 							</div>
 						</div>
 						<!-- 그룹 한줄 소개  -->

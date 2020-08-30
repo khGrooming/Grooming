@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 public interface HomeService {
 
@@ -16,5 +17,9 @@ public interface HomeService {
 	ArrayList<HomeGrooming> getGPopulTopList();
 
 	ArrayList<HomeGrooming> getGDeadlineTopList();
+
+	int getGListCount();
+
+	ArrayList<HomeGrooming> getGroomingList(HomePageInfo pi);
 
 }

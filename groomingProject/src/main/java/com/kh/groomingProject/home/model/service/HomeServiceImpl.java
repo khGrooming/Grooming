@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.groomingProject.home.model.dao.HomeDao;
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 @Service("homeService")
 public class HomeServiceImpl implements HomeService{
@@ -37,6 +38,18 @@ public class HomeServiceImpl implements HomeService{
 	public ArrayList<HomeGrooming> getGDeadlineTopList() {
 
 		return homeDao.getGDeadlineTopList();
+	}
+
+	@Override
+	public int getGListCount() {
+
+		return homeDao.getGListCount();
+	}
+
+	@Override
+	public ArrayList<HomeGrooming> getGroomingList(HomePageInfo pi) {
+
+		return homeDao.getGroomingList(pi);
 	}
 
 }
