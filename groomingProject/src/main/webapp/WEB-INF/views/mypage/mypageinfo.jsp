@@ -183,7 +183,6 @@ section {
 .myPage_navbar{
 	display: inline-block;
 	margin:3% 15%;
-
 }
 
 </style>
@@ -196,11 +195,9 @@ section {
 
 	<c:if test="${!empty loginUser }">
 
-
 		<div class="subContent_my myPage_navbar"
 			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 7%; ">
 
-			
 			<div class="menubar">
 				<div  id="test">
 					<ul >
