@@ -43,7 +43,7 @@ body{ background-color: #f2f2f2; }
 .right_container
 {
 	background-color: white;
-	margin: 2.5rem 5% 0;
+	margin: 2.5rem 5% 0 0;
 	float: right;
     width: 10rem;
     border-radius: 0.25rem;
@@ -83,6 +83,24 @@ body{ background-color: #f2f2f2; }
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis; 
+}
+@media (min-width: 1551px) and (max-width: 1625px)
+{
+.right_container{ margin: 2.5rem 3% 0 0; }
+}
+@media (min-width: 1421px) and (max-width: 1551px)
+{
+.right_container{ margin: 2.5rem 1% 0 0; width: 8rem; }
+.right_container .right_spotlight_title h3 {font-size: 1.5rem;}
+}
+@media (min-width: 1321px) and (max-width: 1420px)
+{
+.right_container{ margin: 2.5rem 0 0 0; width: 6rem; }
+.right_container .right_spotlight_title h3 {font-size: 1.1rem; }
+}
+@media (min-width: 0px) and (max-width: 1320px)
+{
+.right_container{ display: none; }
 }
 </style>
 
@@ -322,7 +340,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row text-center">
 			
 		<c:forEach var="g" items="${gMList }">
-			<div class="card_container col-lg-3">
+			<div class="card_container col-md-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -389,7 +407,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row text-center">
 			
 		<c:forEach var="g" items="${gPList }">
-			<div class="card_container col-lg-3">
+			<div class="card_container col-md-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -455,7 +473,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row text-center">
 			
 		<c:forEach var="g" items="${gDList }">
-			<div class="card_container col-lg-3">
+			<div class="card_container col-md-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -521,7 +539,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row text-center">
 			
 		<c:forEach var="g" items="${gAList }">
-			<div class="card_container col-lg-3">
+			<div class="card_container col-md-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -581,6 +599,19 @@ body{ background-color: #f2f2f2; }
 		console.log("메인 페이지");
 		//loadChatListData();
 	
+	});
+	
+	// 그루밍 디테일 페이지 이동
+	$(document).on("click", ".card_container", function(){
+		var el = $(this);
+
+		var gMemberNo = "${loginUser.memberNo }";
+		var groomingNo = el.find("input[type=hidden]").val();
+		
+		console.log("그루밍 번호 : " + groomingNo + " / gMemberNo : " + gMemberNo);
+		
+		location.href = "groomingDetail.do?groomingNo=" + groomingNo + "&memberNo="+ gMemberNo;
+
 	});
 
 	//TODO 그루밍 데이터 가져오기(스크롤)

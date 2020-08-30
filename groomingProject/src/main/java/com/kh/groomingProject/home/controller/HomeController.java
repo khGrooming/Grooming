@@ -70,9 +70,11 @@ public class HomeController {
 
 		int listCount = homeService.getGListCount();
 
-		int pageLimit = 8;
+		System.out.println("전체 그루밍 : " + listCount);
+		
+		int boardLimit = 8;
 
-		HomePageInfo pi = getPageInfo(currentPage, listCount, pageLimit);
+		HomePageInfo pi = getPageInfo(currentPage, listCount, boardLimit);
 
 		ArrayList<HomeGrooming> gAList = homeService.getGroomingList(pi);
 

@@ -4,15 +4,15 @@ import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 public class HomePagination {
 
-	public static HomePageInfo getPageInfo(int currentPage, int listCount, int pageLimit) {
+	public static HomePageInfo getPageInfo(int currentPage, int listCount, int boardLimit) {
 		HomePageInfo pi = null;
 		
-		//int pageLimit = 10;
+		int pageLimit = 10;
 		int maxPage;
 		int startPage;
 		int endPage;
 		
-		int boardLimit = 10;
+		//int boardLimit = 8;
 		
 		maxPage = (int)((double)listCount/boardLimit + 1);
 		
