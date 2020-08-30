@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -257,6 +258,46 @@ public class GroomingDao {
 	public int insertBoard(GroupBoard g) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertBoard",g);
+	}
+
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.groupDelete",gBoardNo);
+	}
+
+	public int updateGroupBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateGroupBoard",g);
+	}
+
+	public String selectGboardimg(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGboardimg",gBoardNo);
+	}
+
+	public ArrayList<GReply> selectReplyList(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectReplyList",gBoardNo);
+	}
+
+	public int addReply(GReply g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addReply",g);
+	}
+
+	public String selectGBoardNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGBoardNo",map);
+	}
+
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectSave",memberNo);
+	}
+
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateSaveGrooming",g);
 	}
 	
 	
