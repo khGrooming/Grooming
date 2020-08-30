@@ -2,6 +2,7 @@ package com.kh.groomingProject.community.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,135 +32,139 @@ public class CommunityController {
 	@Autowired
 	CommunityService cService;
 	
-	@RequestMapping(value= {"communityMain.do","communityNotice.do","communityFreeBoard.do","communityStudyPromotion.do",
-							"communityStudyConfirm.do","communityQnA.do"})
+	@RequestMapping(value= "communityMain.do")
 	public ModelAndView communityMain(HttpServletRequest request, ModelAndView mav, String bCategoryNo) {
-		if((request.getServletPath().equals("/communityMain.do"))) {
-			ArrayList<Board> list = cService.selectList(bCategoryNo);
-			mav.addObject("list", list);
-			mav.setViewName("community/communityMain");
-			
-		}else if(request.getServletPath().equals("/communityNotice.do")){
-			ArrayList<Board> nlist = cService.selectList(bCategoryNo);
-			mav.addObject("nlist", nlist);
-			mav.setViewName("community/communityNotice");
-			
-		}else if(request.getServletPath().equals("/communityFreeBoard.do")){
-			ArrayList<Board> flist = cService.selectList(bCategoryNo);
-			mav.addObject("flist", flist);
-			mav.setViewName("community/communityFreeBoard");
-			
-		}else if(request.getServletPath().equals("/communityStudyPromotion.do")){
-			ArrayList<Board> plist = cService.selectList(bCategoryNo);
-			mav.addObject("plist", plist);
-			mav.setViewName("community/communityStudyPromotion");
-			
-		}else if(request.getServletPath().equals("/communityQnA.do")){
-			ArrayList<Board> qlist = cService.selectList(bCategoryNo);
-			mav.addObject("qlist", qlist);
-			mav.setViewName("community/communityQnA");
-			
-		}else{
-			throw new CommunityException("전체 화면 조회 실패!");
-		}
+		String bCate = request.getParameter("bCategoryNo");
+		
+		System.out.println("파라미터 되니? : " + bCate);
+		ArrayList<Board> list = cService.selectList(null);
+		mav.addObject("list", list);
+		
+		ArrayList<Board> nlist = cService.selectList("BC00001");
+		mav.addObject("nlist", nlist);
+		
+		ArrayList<Board> flist = cService.selectList("BC00002");
+		mav.addObject("flist", flist);
+		
+		ArrayList<Board> plist = cService.selectList("BC00003");
+		mav.addObject("plist", plist);
+		
+		ArrayList<Board> qlist = cService.selectList("BC00005");
+		mav.addObject("qlist", qlist);
+		
+		mav.setViewName("community/communityMain");
+		mav.addObject("bCategoryNo", bCate);
 		return mav;
 	}
+	
 	// -------------------------------------------------------------------------------------
 	
 	@RequestMapping("communityDetailView.do")
-	public String communityDetailView(Model model, String boardNo, Board b) {
-		b = cService.selectOne(boardNo); 
+	public String communityDetailView(Model model, String boardNo) {
+		Board b = cService.selectOne(boardNo); 
+		ArrayList<Reply> replyList = cService.replySelectList(boardNo);
 		
 		int result = cService.addViewCount(boardNo);
 		
 		if(b != null) { 
 			model.addAttribute("board", b); 
+			model.addAttribute("replyList", replyList);
+			
 		}else { 
 			throw new CommunityException("게시물 상세 보기 실패!"); 
 		} 
 			return "community/communityDetailView";
 		}	
+	
 	// -------------------------------------------------------------------------------------
-		@RequestMapping("communityInsertView.do") 
-		public String communityInsertView(String bCategoryNo, Model model) {
-			if(bCategoryNo != null) {
-				model.addAttribute("bCategoryNo", bCategoryNo);
-			}	
-			return "community/communityInsertView"; 
-		}
+		
+	@RequestMapping("communityInsertView.do") 
+	public String communityInsertView(String bCategoryNo, Model model) {
+		if(bCategoryNo != null) {
+			model.addAttribute("bCategoryNo", bCategoryNo);
+		}	
+		return "community/communityInsertView"; 
+	}
 		 
-		@RequestMapping(value="communityInsert.do", method=RequestMethod.POST) 
-		public String communityInsert(HttpServletRequest request, Board b) { 
-			Member member = (Member)request.getSession().getAttribute("loginUser");
-						
-			int result = cService.communityInsert(b, member);
-			
-			if(result > 0) { 
-				return "redirect:communityMain.do"; 
-			}else { 
-				throw new CommunityException("게시물 등록 실패!"); 
-			} 
-		}
-	// -------------------------------------------------------------------------------------
-		@RequestMapping("communityUpdateView.do") 
-		public String communityUpdateView(String boardNo, Model model, String bCategoryNo) { 
-			model.addAttribute("board", cService.selectOne(boardNo));
-			return "community/communityUpdateView"; 
-		}
+	@RequestMapping(value="communityInsert.do", method=RequestMethod.POST) 
+	public String communityInsert(HttpServletRequest request, Board b, Model model) { 
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+					
+		int result = cService.communityInsert(b, member);
+//		model.addAttribute("bCategoryNo", b.getbCategoryNo());
 		
-		@RequestMapping(value="communityUpdate.do", method=RequestMethod.POST)
-		public String communityUpdate(HttpServletRequest request, Board b) {
-			Member member = (Member)request.getSession().getAttribute("loginUser");
-			int result = cService.communityUpdate(b, member);
-			
-			if(result > 0) { 
-				return "redirect:communityMain.do"; 
-			}else { 
-				throw new CommunityException("게시물 수정 실패!"); 
-			} 
-		}
-	// -------------------------------------------------------------------------------------
-		@RequestMapping("communityDelete.do")
-		public String communityDelete(String boardNo, HttpServletRequest request) { 
-			Board b = cService.selectOne(boardNo);
+		if(result > 0) { 
+			return "redirect:communityMain.do?bCategoryNo="+b.getbCategoryNo(); 
+		}else { 
+			throw new CommunityException("게시물 등록 실패!"); 
+		} 
+	}
+	
+	// -------------------------------------------------------------------------------------	
 		
-			int result = cService.communityDelete(boardNo);
-				 
-			if(result > 0) { 
-				return "redirect:communityMain.do"; 
-			}else { 
-				throw new CommunityException("게시물 삭제 실패!"); 
-			} 
-		}
+	@RequestMapping(value="replyInsert.do", method=RequestMethod.POST) 
+	public String replyInsert(HttpServletRequest request, Board b, Reply reply, Model model) { 
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		
+		System.out.println("댓글" + reply);
+		int result = cService.replyInsert(reply, member);
+		
+		if(result > 0) { 
+			return "redirect:communityMain.do?bCategoryNo="+b.getbCategoryNo(); 
+		}else { 
+			throw new CommunityException("댓글 등록 실패!"); 
+		} 
+	}
+	
+	// -------------------------------------------------------------------------------------
+	
+	@RequestMapping("communityUpdateView.do") 
+	public String communityUpdateView(String boardNo, Model model, String bCategoryNo) { 
+		model.addAttribute("board", cService.selectOne(boardNo));
+		return "community/communityUpdateView"; 
+	}
+		
+	@RequestMapping(value="communityUpdate.do", method=RequestMethod.POST)
+	public String communityUpdate(HttpServletRequest request, Board b) {
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println("1 " + b);
+		int result = cService.communityUpdate(b, member);
+		System.out.println("2 " + b);
+		if(result > 0) { 
+			return "redirect:communityMain.do?bCategoryNo="+b.getbCategoryNo();  
+		}else { 
+			throw new CommunityException("게시물 수정 실패!"); 
+		} 
+	}
+
+	// -------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// -------------------------------------------------------------------------------------
+	
+	@RequestMapping("communityDelete.do")
+	public String communityDelete(String boardNo, HttpServletRequest request) { 
+		Board b = cService.selectOne(boardNo);
+	
+		int result = cService.communityDelete(boardNo);
+			 
+		if(result > 0) { 
+			return "redirect:communityMain.do?bCategoryNo="+b.getbCategoryNo(); 
+		}else { 
+			throw new CommunityException("게시물 삭제 실패!"); 
+		} 
+	}
 		
 	// -------------------------------------------------------------------------------------	
-		// 댓글 리스트
-		@RequestMapping("replyList.do")
-		public void getReplyList(HttpServletResponse response, String boardNo) throws JsonIOException, IOException {
-			ArrayList<Reply> rList = cService.selectReplyList(boardNo);
-			
-			response.setContentType("appalication/json;charset=uth-8");
-			
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-			gson.toJson(rList, response.getWriter());
-		}
-		// 댓글 달기
-		@RequestMapping("replyAdd.do")
-		@ResponseBody
-		public String replyAdd(Reply r, HttpSession session) {
-			Member loginUser = (Member)session.getAttribute("loginUser");
-			String memberNo = loginUser.getMemberEmail();
-			r.setMemberNo(memberNo);
-			
-			int result = cService.replyInsert(r);
-			
-			if(result > 0) {
-				return "success";
-			}else {
-				throw new CommunityException("댓글 등록 실패!");
-			}
-		}
-		
 		
 	
 }

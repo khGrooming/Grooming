@@ -53,16 +53,24 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public ArrayList<Reply> selectReplyList(String boardNo) {
+	public ArrayList<Reply> replySelectList(String boardNo) {
 		
-		return cDao.selectReplyList(boardNo);
+		return cDao.replySelectList(boardNo);
 	}
 
 	@Override
-	public int replyInsert(Reply r) {
+	public int replyInsert(Reply reply, Member member) {
 		
-		return cDao.replyInsert(r);
+		return cDao.replyInsert(reply, member);
 	}
+
+	
+
+	
+
+	
+
+
 
 
 

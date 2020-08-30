@@ -19,12 +19,8 @@ public class CommunityDao {
 	SqlSessionTemplate sqlSessionTemplate;
 
 	public ArrayList<Board> selectList(String bCategoryNo) {
-		ArrayList list = new ArrayList();
-		HashMap<String, String> hashMap = new HashMap<>();
-		hashMap.put("bCategoryNo",bCategoryNo);
-		list = (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectList", hashMap);
-		
-		return list;
+	
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectList", bCategoryNo);
 	}
 
 	public Board selectOne(String boardNo) {
@@ -58,19 +54,22 @@ public class CommunityDao {
 		return sqlSessionTemplate.delete("communityMapper.communityDelete", boardNo);
 	}
 
-	public ArrayList<Reply> selectReplyList(String boardNo) {
-		ArrayList replyList = new ArrayList();
-		HashMap<String, String> hashMap = new HashMap<>();
-		hashMap.put("boardNo",boardNo);
-		replyList = (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectReplyList", hashMap);
+	public ArrayList<Reply> replySelectList(String boardNo) {
 		
-		return replyList;
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.replySelectList", boardNo);
 	}
 
-	public int replyInsert(Reply r) {
-		
-		return sqlSessionTemplate.insert("communityMapper.replyInsert", r);
+	public int replyInsert(Reply reply, Member member) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reply", reply);
+		map.put("memberNo", member.getMemberNo());
+		System.out.println("dao " + reply);
+		return sqlSessionTemplate.insert("communityMapper.replyInsert", map);
 	}
+
+
+
+
 
 
 

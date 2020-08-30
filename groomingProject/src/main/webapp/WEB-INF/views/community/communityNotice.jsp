@@ -19,11 +19,11 @@
 		<div class="container" align="center">
 			<input type="button" value="글쓰기" class="btn btn-info" style="margin-left: 640px;"
 					onclick="location.href='communityInsertView.do?bCategoryNo=BC00001'">
-			<br><br>
 		</div>
+		<br>
 	</c:if>
 		<div class="container" align="center">
-			<table class="table table_ra">
+			<table class="table table-hover table_ra">
 				<thead>
 					<tr>
 						<th>글 번호</th>
