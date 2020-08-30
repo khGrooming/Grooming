@@ -370,7 +370,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td>
-										<input id="insert" class="btn-3d green" type="submit" value="등록하기">
+										<input id="insert" class="btn-3d green" value="등록하기">
 										<button class="btn-3d green" onclick="save();">취소하기</button>
 									</td>
 								</tr>
@@ -380,7 +380,24 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				</div>
 			</form>
 		</div>
+		<script>
+			$(function(){
+				$(document).on("click","#insert",function(){
+					var result= confirm("등록하시겠습니까?");
+					if(result){
+						$("form").submit();
+					}else{
+						event.preventDefault();
+					}
+				
+				})
+				
+				
+			})
 		
+		
+		
+		</script>
 		<!-- textarea에 값을 넣을 script -->
 		 <script>
 			$(function(){
@@ -400,9 +417,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				};
 			});
 			
-			  window.onbeforeunload = function(e) {
+			/*   window.onbeforeunload = function(e) {
 			        return false;
-			    };
+			    }; */
 		</script>
 		<script>
 			// 파일 업로드 관련 script

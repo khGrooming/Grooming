@@ -969,7 +969,7 @@ public class GroomingController {
 		}
 
 		@RequestMapping("gSaveUpdate.do")
-		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
+		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
 				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
 
 			String renameFileName = "";
@@ -1026,8 +1026,8 @@ public class GroomingController {
 				}
 			}
 			
-			System.out.println("나 수정 됬어요~" + result);
-			if (result > 0 && result1 > 0 && result2 > 0) {
+			System.out.println("나 수정 됬어요~" + result +result1+ result2);
+			if (result > 0 && result1 > 0) {
 				mv.setViewName("redirect:groomingMain.do");
 
 			} else {
@@ -1036,8 +1036,25 @@ public class GroomingController {
 			return mv;
 		}
 	
-		
-		
+		@RequestMapping("groomingDecide.do")
+		@ResponseBody
+		public String groomingDecide(String memberNo) {
+			
+			// 글쓴 내역이 있는가
+			Grooming selectG = gService.select(memberNo);
+			
+			// 임시저장 글 내역이 있는가
+			Grooming selectS = gService.selectSave(memberNo);
+			
+			if(selectG != null) {
+				return "success";
+			}else if(selectS != null) {
+				return "false";
+			}
+			
+			return "else";
+			
+		}
 		
 		
 		
