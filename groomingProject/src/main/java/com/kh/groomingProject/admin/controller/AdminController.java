@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
+import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
+import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
@@ -69,7 +71,7 @@ public class AdminController {
 		}else {
 			p.setPointList("포인트 지급");
 		}
-		System.out.println(p);
+		
 		int result = adminService.pointCalculation(p);
 		
 		if(result > 0) {
@@ -81,14 +83,68 @@ public class AdminController {
 	}
 	
 	@RequestMapping("mentoManage.do")
-	public String mentoManage() {
-		return "admin/mentoManage";
+	public ModelAndView mentoManage(ModelAndView mv, @RequestParam(value="mpage", required=false) Integer mpage, @RequestParam(value="spage", required=false) Integer spage, String category, String searchMento) {
+
+		int scurrentPage = 1;
+		int mcurrentPage = 1;
+		
+		if(mpage != null) {
+			mcurrentPage = mpage;
+		}
+		if(spage != null) {
+			scurrentPage = spage;
+		}
+
+		int listCount = adminService.selectmentoCount(1);
+		int spareCount = adminService.selectmentoCount(2);
+
+		
+		AdminPageInfo pi = getPageInfo(mcurrentPage, listCount);
+		AdminPageInfo spi = getPageInfo(scurrentPage, spareCount);
+
+		
+		ArrayList<MemberManageView> mNo = adminService.selectNo(pi, 1);
+		ArrayList<MemberManageView> sNo = adminService.selectNo(spi, 2);
+
+
+		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(mNo);
+		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(sNo);
+
+		
+		mv.addObject("pi", pi);
+		mv.addObject("spi", spi);
+		
+		mv.addObject("mNo",mNo);
+		mv.addObject("sNo", sNo);
+		
+		mv.addObject("mentoList", mentoList);
+		mv.addObject("spareMentoList", spareList);
+		
+		mv.setViewName("admin/mentoManage");
+
+		return mv;
 	}
 	
 
 	@RequestMapping("groomingManage.do")
-	public String groomingManage() {
-		return "admin/groomingManage";
+	public ModelAndView groomingManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) String category) {
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int gListCount = adminService.selectGroomingCount(category);
+		
+		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
+		
+		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, category);
+		
+		mv.addObject("glist", glist);
+		mv.setViewName("admin/groomingManage");
+		
+		return mv;
 	}
 	
 	@RequestMapping("declarationManage.do")

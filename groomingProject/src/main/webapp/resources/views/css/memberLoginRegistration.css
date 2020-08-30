@@ -1,4 +1,4 @@
-*
+/* *
 {
 	margin: 0;
 	padding: 0;
@@ -8,12 +8,12 @@ section
 {
 	position: relative;
 	min-height: 100vh;
-	/* background: #fee648; */
+	background: #fee648;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 20px;
-}
+} */
 section .form_container
 {
 	margin-top: 100px;

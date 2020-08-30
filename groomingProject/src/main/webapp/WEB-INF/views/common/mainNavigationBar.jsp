@@ -10,41 +10,35 @@
 
 <title>main navigation bar</title>
 
-<!-- 폰트 (https://fonts.google.com/specimen/Jua?subset=korean&sidebar.open=true&selection.family=Jua) -->
+<!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
 <!-- style -->
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/mainnavi.css" rel="stylesheet"> --%>
-
 <style type="text/css">
-header
-{
-    font-family: 'Jua', sans-serif;
-}
 .main_navbar
 {
+    /* background-color: lightseagreen; */
+    background-color: #fff;
     position: fixed;
-    top: 0;
-    left: 0;
+    font-family: 'Jua', sans-serif;
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     transition: 0.6s;
-    padding: 20px 100px;
+    padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+/* 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 10;
 }
 .main_navbar .main_navbar_logo
 {
-	margin-top: auto;
-	margin-bottom: auto;
+	margin: 0.2rem;
 }
 .main_navbar .mainNavImg
 {
-	padding: 3px;
-	height: 50px;
+	margin: 0.2rem;
+	padding: 0.3rem;
+	height: 3rem;
     transition: 0.6s;
 }
 .main_navbar #mainProfileArea
@@ -53,211 +47,336 @@ header
 }
 .main_navbar .proFile_img
 {
-	margin: 0 3px;
-	height: 35px;
-	width: 35px;
+	margin: auto 0.18rem;
+	height: 2.18rem;
+	width: 2.18rem;
 	border-radius: 50%;
 	border: thin solid lightgrey;
 }
-.main_navbar #memberNickName
+.main_navbar #grooming
+{
+	min-width: 5.02rem;
+}
+.main_navbar #community
+{
+	min-width: 6.5rem;
+}
+.main_navbar #studycafe
+{
+	min-width: 7.9rem;
+}
+.main_navbar #login_item
+{
+	min-width: 5.2rem;
+}
+.main_navbar #register_item
+{
+	min-width: 6.7rem;
+}
+.main_navbar #logout_item
+{
+	min-width: 6.6rem;
+}
+.main_navbar #memberNickName_item_con
+{
+	min-width: 6rem;
+}
+.main_navbar #memberNickName_item
 {
 	margin-left: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 6rem;
 }
-.main_navbar ul,
-.main_navbar ul#mainProfileArea
+.main_navbar ul
 {
 	margin-top: auto;
 	margin-bottom: auto;
 }
 .main_navbar ul li
 {
+	text-align: center;
     list-style: none;
-    padding-bottom: 1px;
+    border-bottom: thin solid white;
+}
+.main_navbar ul li#memberNickName_item_con
+{
+	line-height: 2.3rem;
+}
+.main_navbar ul li#logout_item
+{
+	line-height: 2.8rem;
 }
 .main_navbar ul li a
 {
-	font-size: 26px;
-    margin: 0 15px;
+	font-size: 1.625rem;
+    margin: 0.2rem 0.5rem;
     text-decoration: none;
-    color: black;
+    color: darkslategrey;
     letter-spacing: 1px;
-    transition: 0.6s;
+    /* transition: 0.6s; */
 }
 .main_navbar ul li:hover
 {
     border-bottom: thin solid green;
-	outline: thin solid lightyellow;
 }
 .main_navbar ul li:hover a
 {
     color: green;
 }
+/* 스티키 설정 */
 .main_navbar.sticky
 {
-    padding: 5px 200px;
+    padding: 0.3125rem 12.5rem;
 }
 .main_navbar.sticky ul li a
 {
-	font-size: 22px;
+	font-size: 1.375rem;
 }
 .main_navbar.sticky .mainNavImg
 {
-	height: 25px;
+	height: 2.2rem;
+	padding: 0;
 }
-/* 네비바 기본 스타일 끝 */
-.main_navbar .main_flex_between_center
+.main_navbar.sticky #grooming
 {
-    display: flex;
-    justify-content: space-between;
-	align-content: center;
+	min-width: 4.5rem;
 }
-/* 메시지 알림창 */
-.main_messages_icon,
-.main_alerts_icon
+.main_navbar.sticky #community
 {
-	cursor: pointer;
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-left: 15px;
-	margin-right: 15px;
-	padding: 3px;
-	position: relative;
+	min-width: 5.7rem;
 }
-.main_messages_icon .main_naviIcon .img_svg,
-.main_alerts_icon .main_naviIcon .img_svg
+.main_navbar.sticky #studycafe
 {
-	width: 28px;
-	height: 28px;
+	min-width: 6.9rem;
 }
-.main_messages_txt,
-.main_alerts_txt
+.main_navbar.sticky #login_item
 {
-	line-height: 20px;
-	padding: 4px;
+	min-width: 5.2rem;
+}
+.main_navbar.sticky #register_item
+{
+	min-width: 6.7rem;
+}
+.main_navbar.sticky #logout_item
+{
+	min-width: 5.8rem;
+}
+.main_navbar.sticky .main_messages_txt,
+.main_navbar.sticky .main_alerts_txt
+{
+	line-height: 0.85rem;
+	padding: 0.25rem;
 	color: white;
-	width: 25px;
-	height: 25px;
+	width: 1.2rem;
+	height: 1.2rem;
 	background: #cc0000;
 	border-radius: 50%;
 	text-align: center;
-	font-size: 18px;
+	font-size: 1rem;
 	position: absolute;
-	top: -5px;
-	left: 18px;
+	top: -0.273rem;
+	left: 1.12rem;
 }
-.main_dropdown
+.main_navbar.sticky .main_messages_icon,
+.main_navbar.sticky .main_alerts_icon
+{
+    margin: 0.2rem 0.7rem;
+}
+.main_navbar.sticky .main_messages_icon .main_naviIcon .img_svg,
+.main_navbar.sticky .main_alerts_icon .main_naviIcon .img_svg
+{
+	width: 2rem;
+	height: 2rem;
+}
+.main_navbar.sticky .proFile_img
+{
+	height: 2rem;
+	width: 2rem;
+}
+/* 네비바 기본 스타일 끝 */
+.main_navbar .main_flex
+{
+    display: flex;
+}
+.main_navbar .main_flex_between
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+/* 메시지 알림창 */
+.main_navbar .main_messages_icon,
+.main_navbar .main_alerts_icon
+{
+	cursor: pointer;
+    margin: 0.2rem 0.7rem;
+	padding: 0.18rem;
+	position: relative;
+}
+
+.main_navbar .main_messages_icon .main_naviIcon .img_svg,
+.main_navbar .main_alerts_icon .main_naviIcon .img_svg
+{
+	width: 2rem;
+	height: 2rem;
+}
+.main_navbar .main_messages_icon .main_messages_txt,
+.main_navbar .main_alerts_icon .main_alerts_txt
+{
+	line-height: 1.37rem;
+	padding: 0.25rem;
+	margin: 0.2rem;
+	color: white;
+	width: 1.58rem;
+	height: 1.58rem;
+	background: #cc0000;
+	border-radius: 50%;
+	text-align: center;
+	font-size: 1.125rem;
+	position: absolute;
+	top: -0.3rem;
+	left: 1.12rem;
+}
+.main_navbar .main_dropdown
 {
 	display: none;
 	overflow: auto;
 	position: absolute;
-	border-radius: 5px;
 	background-color: #F9F9F9;
-	min-width: 300px;
-	padding: 8px 0;
+	min-width: 18.75rem;
+	padding: 0.5rem 0;
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	z-index: 10000;
 }
-.main_messages_dropdown
+.main_navbar .main_messages_dropdown
 {
-	right: 10px;
+	right: 0.62rem;
 }
-.main_messages_dropdown.active,
-.main_alerts_dropdown.active
+.main_navbar .main_messages_dropdown.active,
+.main_navbar .main_alerts_dropdown.active
 {
 	display: block;
 }
-.main_messages_header,
-.main_alerts_header
+.main_navbar .main_messages_header,
+.main_navbar .main_alerts_header
 {
-	padding: 0 8px;
+	padding: 0 0.5rem;
 	border-bottom: 1px solid grey; 
 }
-.main_mIcons_container
+.main_navbar .main_mIcons_container
 {
 	display: flex;
 }
-.main_mIcons_container .main_mIcon
+.main_navbar .main_mIcons_container .main_mIcon
 {
-	margin-left: 5px;
+	margin-left: 0.32rem;
 }
-.main_messages_body,
-.main_alerts_body
+.main_navbar .main_messages_body,
+.main_navbar .main_alerts_body
 {
 	font-weight: lighter;
-	font-size: 16px;
+	font-size: 1rem;
 	width: 100%;
 	display: block;
-	padding: 8px;
+	padding: 0.5rem;
 }
-.main_messages_body_container,
-.main_alerts_body_container
+.main_navbar .main_messages_body_container,
+.main_navbar .main_alerts_body_container
 {
 	overflow: auto;
-    max-height: 300px;
+    max-height: 18.75rem;
 }
-.main_messages_body > div
+.main_navbar .main_messages_body > div
 {
-	padding: 0 0 3px 0;
+	padding: 0 0 0.19rem 0;
 }
-.main_messages_img
+.main_navbar .main_messages_img
 {
-	padding: 4px 4px 0 0;
-	height: 25px;
-	width: 25px;
+	padding: 0.25rem 0.25rem 0 0;
+	height: 1.56rem;
+	width: 1.56rem;
 	object-fit: contain;
 }
-.main_mBody_time,
-.main_aBody_time
+.main_navbar .main_mBody_time,
+.main_navbar .main_aBody_time
 {
-	font-size: 12px;
+	font-size: 0.75rem;
 	min-width: auto;
 	color: grey;
 }
-.main_messages_body:hover,
-.main_alerts_body:hover
+.main_navbar .main_messages_body:hover,
+.main_navbar .main_alerts_body:hover
 {
 	background-color: #cbcbcb;
 }
-.main_messages_header .main_mIcon .img_svg,
-.main_alerts_header .main_aIcon .img_svg
+.main_navbar .main_messages_header .main_mIcon .img_svg,
+.main_navbar .main_alerts_header .main_aIcon .img_svg
 {
-	width: 20px;
-	height: 20px;
-	margin: 0 0 10px 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	margin: 0 0 0.62rem 0;
 }
-.main_messages_header .main_mIcon > .img_svg:hover,
-.main_alerts_header .main_aIcon > .img_svg:hover
+.main_navbar .main_messages_header .main_mIcon > .img_svg:hover,
+.main_navbar .main_alerts_header .main_aIcon > .img_svg:hover
 {
 	background-color: lightgrey;
 	border-radius: 50%;
-	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-header .main_upIcon
+.main_upIcon
 {
-	display: none;
-	position: fixed;
-	bottom: 30px;
-	right: 30px;
+    position: fixed;
+	display: block;
+	width: 1.87rem;
+	height: 1.87rem;
+	bottom: 1rem;
+	right: 1rem;
+	float:right;
 	z-index: 99;
-	font-size: 18px;
+	font-size: 1.25rem;
 	border: none;
 	outline: none;
 	cursor: pointer;
 }
-header .main_upIcon:hover
+.main_upIcon .img_svg
 {
+	width: 100%;
+	height: 100%;
+	background-color: white;
 	border-radius: 50%;
-	background-color: yellow;
 }
-header .main_upIcon .img_svg
+.main_upIcon:hover .img_svg
 {
-	width: 30px;
-	height: 30px;
+	background-color: lightgreen;
 }
-header .main_upIcon.show
+.main_upIcon.show
 {
 	display: block;
+}
+@media (min-width: 751px) and (max-width: 991px)
+{
+	.main_navbar { padding: 1rem 3rem; }
+	.main_navbar.sticky { padding: 0.3125rem  3rem; }
+}
+@media (min-width: 651px) and (max-width: 750px)
+{
+	.main_navbar { padding: 1rem 0; }
+	.main_navbar.sticky { padding: 0.3125rem 0; }
+}
+@media (min-width: 0px) and (max-width: 650px)
+{
+	.main_navbar { padding: 1rem 0; }
+	.main_navbar.sticky { padding: 0.3125rem 0; }
+	.main_navbar ul li a { font-size: 1rem; }
+	.main_navbar .main_flex { padding-left: 0; }
+	.main_navbar .mainNavImg { height: 1.8rem; }
+	.main_navbar #grooming { min-width: 3.6rem; }
+	.main_navbar #community { min-width: 4.5rem; }
+	.main_navbar #studycafe { min-width: 5.4rem; }
+	.main_navbar #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
 }
 </style>
 </head>
@@ -283,32 +402,36 @@ header .main_upIcon.show
 		var header = document.querySelector(".main_navbar");
 		var topBtn = document.querySelector(".main_upIcon");
 		header.classList.toggle("sticky", window.scrollY > 0);
-		topBtn.classList.toggle("show", window.scrollY > 100);
+		
+		topBtn.classList.toggle("show", window.scrollY > 10);
     });
 </script>
-	<header>
+	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
+		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
+	</div>
+
 	<!-- Navigation -->
 	<nav class="main_navbar">
 		<a class="main_navbar_logo" href="${mainPage }">
 			<img class="mainNavImg" alt="Groominglogo" src="${contextPath }/resources/views/images/grooming_logo(100x100).png">
 		</a>
-		<ul class="main_flex_between_center">
-			<li class="main_navbar_item">
+		<ul class="main_flex">
+			<li id="grooming" class="main_navbar_item">
 				<a class="main_navbar_link" href="${groomingMain }">그루밍</a>
 			</li>
-			<li class="main_navbar_item">
+			<li id="community" class="main_navbar_item">
 				<a class="main_navbar_link" href="${communityMain }">커뮤니티</a>
 			</li>
-			<li class="main_navbar_item">
+			<li id="studycafe" class="main_navbar_item">
 				<a class="main_navbar_link" href="${studyCafeMain }">스터디카페</a>
 			</li>
 		</ul>
-		<ul id="mainProfileArea" class="main_flex_between_center">
+		<ul id="mainProfileArea" class="main_flex">
 			<c:if test="${empty sessionScope.loginUser }">
-				<li class="main_navbar_item">
+				<li id="login_item" class="main_navbar_item">
 					<a class="main_navbar_link" href="${loginPage }">로그인</a>
 				</li>
-				<li class="main_navbar_item">
+				<li id="register_item" class="main_navbar_item">
 					<a class="main_navbar_link" href="${registerPage }">회원가입</a>
 				</li>
 			</c:if>
@@ -318,7 +441,7 @@ header .main_upIcon.show
 						<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-speech-bubble-thin.svg">
 					</div>
 					<div class="main_messages_dropdown main_dropdown">
-						<div class="main_messages_header main_flex_between_center">
+						<div class="main_messages_header main_flex_between">
 							<span>메시지</span>
 							<div class="main_mIcons_container">
 								<div class="main_mIcon messageBtn">
@@ -343,7 +466,7 @@ header .main_upIcon.show
 						<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-cat-4.svg">
 					</div>
 					<div class="main_alerts_dropdown main_dropdown">
-						<div class="main_alerts_header main_flex_between_center">
+						<div class="main_alerts_header main_flex_between">
 							<span>알림</span>
 							<div class="main_aIcon">
 								<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-x-mark-1.svg">
@@ -358,22 +481,19 @@ header .main_upIcon.show
 						</div>
 					</div>
 				</li>
-				<li class="main_navbar_item main_flex_between_center">
+				<li id="memberNickName_item_con" class="main_navbar_item main_flex">
 					<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/upprofileFiles/${loginUser.memberPhoto }"
 						onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-					<a id="memberNickName" class="main_navbar_link" href="${myPage }">
+					<a id="memberNickName_item" class="main_navbar_link" href="${myPage }">
 					${loginUser.memberNickName }</a>
 				</li>
-				<li class="main_navbar_item">
+				<li id="logout_item" class="main_navbar_item">
 					<a class="main_navbar_link" href="${logout }">로그아웃</a>
 				</li>
 			</c:if>
 		</ul>
 	</nav>
-	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
-		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
-	</div>
-	</header>
+
 	<script type="text/javascript">
 		<c:if test="${!empty sessionScope.loginUser }">
 		$(function() {

@@ -1,5 +1,7 @@
 package com.kh.groomingProject.grooming.controller;
 
+import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,7 +33,9 @@ import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
+import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.tag.model.service.TagService;
@@ -470,6 +474,33 @@ public class GroomingController {
 		}
 	}
 	
+	@RequestMapping("declareG.do")
+	public ModelAndView declareGroup(Declaration d,String memberNo,String gBoardNo, @RequestParam("currentPage") Integer page, ModelAndView mv, String groomingNo) {
+		int currentPage = page;
+		int result = declarationService.declareG(d);
+		Member member = mService.selectGroupMemberNo(gBoardNo);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		Map map = new HashMap();
+		map.put("memberNo", memberNo);
+		map.put("gBoardNo", gBoardNo);
+		
+		Declaration declaration = declarationService.selectGroupDeclare(map);
+		if(result > 0) {
+			GroupBoard gboard = gService.selectGBoard(gBoardNo);
+			if(gboard != null) {
+				mv.addObject("gboard",gboard)
+					.addObject("currentPage" , currentPage)
+					.addObject("grooming",grooming)
+					.addObject("member",member)
+					.addObject("declaration",declaration)
+					.setViewName("grooming/groupBoardDetailView");
+			}
+		} else {
+			throw new GroomingException("게시글 신고 실패!");
+		}
+		
+		return mv;
+	}
 	
 //	찜하기
 	
@@ -647,28 +678,145 @@ public class GroomingController {
 	
 	@RequestMapping("gBlist.do")
 	public ModelAndView gBoardList(ModelAndView mv,
-			@RequestParam(value="page", required=false) Integer page) {
-		
+			@RequestParam(value="page", required=false) Integer page, String groomingNo) {
 		// 페이징 관련 처리부터 하자
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		System.out.println("나 현재 페이지야 : " +currentPage );
 			
-		int listCount = gService.getListCount();
+		 int listCount = gService.getListCount(groomingNo); 
+		 GroupPageInfo pi = getPageInfo(currentPage, listCount);
+		/*
+		 * Map map = new HashMap();
+		 * 
+		 * map.put("pi", pi); map.put("groomingNo",groomingNo);
+		 */
+		 
+		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(pi,groomingNo);
+		 Grooming grooming = gService.selectGrooming(groomingNo);
+		 if(glist != null) {
+			 mv.addObject("grooming",grooming)
+			 .addObject("glist",glist)
+			 .addObject("pi",pi)
+			 .setViewName("grooming/groupBoard");
+		 
+		 }else {
+			 throw new GroomingException("그룹게시판 조회실패!");
+		 }
+		return mv;
+	}
 	
+	@RequestMapping("calendar.do")
+	public ModelAndView calendar(ModelAndView mv,
+			@RequestParam(value="page", required=false) Integer page,String groomingNo) {
 		
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		// 페이징 관련 처리부터 하자
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		mv.addObject("grooming",grooming).setViewName("grooming/groupCalendar");
 		
 		return mv;
 	}
 	@RequestMapping("groupBoardInsertForm.do")
-	public String groupBoardInsertForm() {
-		return "grooming/groupBoardInsertForm";
+	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo,String memberNo, ModelAndView mv) {
+		
+		 Grooming grooming = gService.selectGrooming(groomingNo);
+		 Map map = new HashMap();
+		 map.put("groomingNo",groomingNo);
+		 map.put("memberNo",memberNo);
+		 
+		 String gMemberNo = gService.selectGMemberNo(map);
+		mv.addObject("grooming",grooming).addObject("gMemberNo",gMemberNo).addObject("page",page).setViewName("grooming/groupBoardInsertForm");
+		
+		return mv;
 	}
+	
+	
+	@RequestMapping("groupInsert.do")
+	public ModelAndView groupInsert(@RequestParam(value="page", required=false) Integer page,HttpServletRequest request,
+			ModelAndView mv, GroupBoard g, String gMemberNo,  String groomingNo,
+			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+		
+		if (!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file, request);
 
-	@RequestMapping("groupdetail.do")
-	public String groupBoardDetailView() {
-		return "grooming/groupBoardDetailView";
+			if (renameFileName != null) { // 파일이 잘 저장되어 경로가 반환 된다면..
+				g.setgBoardImg(renameFileName);
+			}
+
+		}
+		
+		int result = gService.insertBoard(g);
+	
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		System.out.println("나 현재 페이지야 : " +currentPage );
+			
+		 int listCount = gService.getListCount(groomingNo); 
+		 GroupPageInfo pi = getPageInfo(currentPage, listCount);
+		
+		 ArrayList<GroupBoard> glist = gService.selectGroupBoardList(pi,groomingNo);
+		 Grooming grooming = gService.selectGrooming(groomingNo);
+		 
+		if(result > 0) {
+			 mv.addObject("grooming",grooming)
+			 .addObject("glist",glist)
+			 .addObject("pi",pi)
+			 .setViewName("grooming/groupBoard");
+		}else {
+			throw new GroomingException("게시글 등록 실패!");
+		}
+		
+		return mv;
+	
+	}
+	
+	
+	
+	
+	
+
+	@RequestMapping("groupDetail.do")
+	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam("page") Integer page, ModelAndView mv, String groomingNo) {
+		
+		int	currentPage = page;
+		
+		int result = gService.addBoardReadCount(gBoardNo);
+		Member member = mService.selectGroupMemberNo(gBoardNo);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		Map map = new HashMap();
+		map.put("memberNo", memberNo);
+		map.put("gBoardNo", gBoardNo);
+		
+		Declaration declaration = declarationService.selectGroupDeclare(map);
+		if(result > 0) {
+			GroupBoard gboard = gService.selectGBoard(gBoardNo);
+			if(gboard != null) {
+				mv.addObject("gboard",gboard)
+					.addObject("currentPage" , currentPage)
+					.addObject("grooming",grooming)
+					.addObject("member",member)
+					.addObject("declaration",declaration)
+					.setViewName("grooming/groupBoardDetailView");
+			}else {
+				throw new GroomingException("게시글 조회 실패!");
+			}
+		}else {
+			throw new GroomingException("게시글 조회수 증가 실패!");
+		}
+		
+		
+		
+		
+		return mv;
 	}
 	
 	

@@ -10,7 +10,7 @@
 </head>
 <style>
 #content {
-	width: 70%;
+	width: 75%;
 	height: 1000px;
 	margin: 3% auto;
 }
@@ -22,9 +22,9 @@
 	<c:if test="${mentor eq 'F' }">
 	<div class="MsectionDiv" id="Mcontent2">
 		<div
-			style="margin-right: 50px; width: 80%; margin-left: auto; margin-top: 5%; margin-right: auto;">
+			style="margin-right: 50px; width: 100%; margin-left: auto; margin-top: 5%; margin-right: auto;">
 			<h4>멘토 신청</h4>
-			<p style="font-size: 11px;">
+			<p style="font-size: 13px;">
 				멘토 신청에 관한 설명 약관 어쩌구 신청할 경우 요금? <br>이 있고 신고 당할경우 다시 멘토신청 할 수 없고
 				등등 <br>승인이 완료 될 때 까지 몇일이 걸린다~
 			</p>

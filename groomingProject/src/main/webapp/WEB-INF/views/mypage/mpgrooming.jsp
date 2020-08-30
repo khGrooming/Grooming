@@ -12,7 +12,7 @@
 #content {
 	width: 70%;
 	height: 1000px;
-	margin: 3% auto;
+	margin: 1% auto;
 }
 .grayBox1{
 	position:relative;

@@ -20,6 +20,7 @@ public class TagDao {
 	}
 
 	public ArrayList<Tag> selectGtagList(String groomingNo) {
+
 		return (ArrayList)sqlSessionTemplate.selectList("tagMapper.selectGtagList",groomingNo);
 	}
 

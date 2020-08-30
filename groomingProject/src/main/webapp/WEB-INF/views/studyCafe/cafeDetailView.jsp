@@ -16,7 +16,7 @@
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<style>
-		section{margin-top:10%}
+		/* section{margin-top:10%} */
 		p{margin:0px;}
 		
 		.sideMenu{height:300px;background-color:blue;border-radius:10%;}

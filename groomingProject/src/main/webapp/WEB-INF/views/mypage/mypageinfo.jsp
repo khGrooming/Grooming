@@ -45,7 +45,7 @@ section {
 }
 
 .subContent_my {
-	height: 100%;
+	/* height: 100%; */
 }
 
 .profile_my {
@@ -220,6 +220,11 @@ section {
 	
 	border-bottom:1px solid gray; 
 }
+.myPage_navbar
+{
+    display: inline-block;
+    margin: 6% 15% 0 15%;
+}
 
 </style>
 </head>
@@ -234,8 +239,8 @@ section {
 
 
 
-		<div class="subContent_my"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 6%; margin-left: auto; margin-right: auto; position: r">
+		<div class="subContent_my myPage_navbar"
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; ">
 			
 			<div class="menubar">
 				<div  id="test">
@@ -263,6 +268,7 @@ section {
 							</ul>
 						</li>
 						<li><a href="mypagePoint.do">포인트</a></li>
+						<li><a href="test.do">테스트</a></li>
 					</ul>
 				</div>
 			</div>
