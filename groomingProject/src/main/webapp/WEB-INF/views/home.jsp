@@ -43,7 +43,7 @@ body{ background-color: #f2f2f2; }
 .right_container
 {
 	background-color: white;
-	margin: 2.5rem 5% 0 0;
+	margin: 2.5rem 8% 0 0;
 	float: right;
     width: 10rem;
     border-radius: 0.25rem;
@@ -71,6 +71,7 @@ body{ background-color: #f2f2f2; }
 .right_container .right_spotlight_body .right_spotlight_item
 {
 	display: block;
+    cursor: pointer;
     margin: 0.8rem 0.2rem;
 	color: black;
     text-decoration: none;
@@ -83,6 +84,10 @@ body{ background-color: #f2f2f2; }
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis; 
+}
+@media (min-width: 1621px) and (max-width: 1740px)
+{
+.right_container{ margin: 2.5rem 5% 0 0; }
 }
 @media (min-width: 1551px) and (max-width: 1625px)
 {
@@ -309,6 +314,21 @@ body{ background-color: #f2f2f2; }
 	display: none;
 	margin: 0 auto;
 }
+@media (min-width: 0px) and (max-width: 991px)
+{
+.cards_bundle .card_container .card_box
+{ 
+	display: flex;
+	justify-content: space-between;
+	align-items: center; 
+}
+.cards_bundle .card_container .card_box .card_header{ border: none; }
+.cards_bundle .card_container .card_box .card_header,
+.cards_bundle .card_container .card_box .card_body
+{
+	width: 50%;
+}
+}
 </style>
 
 </head>
@@ -323,14 +343,15 @@ body{ background-color: #f2f2f2; }
 		</div>
 		<c:forEach var="b" items="${hBoardList }">
 		<div class="right_spotlight_body">
-			<a href="communityDetailView.do?boardNo=${b.boardNo }">
-				<div class="right_spotlight_item">
-					<div class="right_spotlight_category">[ ${b.bCategoryName } ]</div>
-					<div class="right_spotlight_content">
-						<strong>${b.boardTitle }</strong>
-					</div>
+			<%-- <a href="communityDetailView.do?boardNo=${b.boardNo }"> --%>
+			<div class="right_spotlight_item">
+				<input type="hidden" value="${b.boardNo}"></input>
+				<div class="right_spotlight_category">[ ${b.bCategoryName } ]</div>
+				<div class="right_spotlight_content">
+					<strong>${b.boardTitle }</strong>
 				</div>
-			</a>
+			</div>
+			<!-- </a> -->
 		</div>
 		</c:forEach>
 	</div>
@@ -348,7 +369,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row">
 			
 		<c:forEach var="g" items="${gMList }">
-			<div class="card_container col-md-3">
+			<div class="card_container col-lg-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -415,7 +436,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row">
 			
 		<c:forEach var="g" items="${gPList }">
-			<div class="card_container col-md-3">
+			<div class="card_container col-lg-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -481,7 +502,7 @@ body{ background-color: #f2f2f2; }
 		<div class="cards_bundle row">
 			
 		<c:forEach var="g" items="${gDList }">
-			<div class="card_container col-md-3">
+			<div class="card_container col-lg-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -547,7 +568,7 @@ body{ background-color: #f2f2f2; }
 		<div id="allGroooming_bundle" class="cards_bundle row">
 			
 		<c:forEach var="g" items="${gAList }">
-			<div class="card_container col-md-3">
+			<div class="card_container col-lg-3">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
@@ -609,8 +630,16 @@ body{ background-color: #f2f2f2; }
 	var page = 1;
 	$(function() {
 		console.log("메인 페이지");
-		//loadChatListData();
+	});
 	
+	// 커뮤니티 디테일 페이지 이동
+	$(document).on("click", ".right_spotlight_item", function(){
+		var el = $(this);
+
+		var boardNo = el.find("input[type=hidden]").val();
+
+		location.href = "communityDetailView.do?boardNo=" + boardNo;
+
 	});
 	
 	// 그루밍 디테일 페이지 이동
@@ -619,9 +648,7 @@ body{ background-color: #f2f2f2; }
 
 		var gMemberNo = "${loginUser.memberNo }";
 		var groomingNo = el.find("input[type=hidden]").val();
-		
-		console.log("그루밍 번호 : " + groomingNo + " / gMemberNo : " + gMemberNo);
-		
+
 		location.href = "groomingDetail.do?groomingNo=" + groomingNo + "&memberNo="+ gMemberNo;
 
 	});
@@ -681,7 +708,7 @@ body{ background-color: #f2f2f2; }
 				var $allGroooming_bundle = $("#allGroooming_bundle");
 				
 				// container
-				var $card_container = $('<div>').addClass("card_container col-md-3");
+				var $card_container = $('<div>').addClass("card_container col-lg-3");
 				var $iGroomingNo = $('<input>').attr("type","hidden").val(data[i].groomingNo);
 				$card_container.append($iGroomingNo);
 				

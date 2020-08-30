@@ -61,7 +61,7 @@
 {
 	min-width: 6.5rem;
 }
-.main_navbar #studyCafe
+.main_navbar #studycafe
 {
 	min-width: 7.9rem;
 }
@@ -100,6 +100,10 @@
     list-style: none;
     border-bottom: thin solid white;
 }
+.main_navbar ul li#memberNickName_item_con
+{
+	line-height: 2.3rem;
+}
 .main_navbar ul li#logout_item
 {
 	line-height: 2.8rem;
@@ -111,7 +115,7 @@
     text-decoration: none;
     color: darkslategrey;
     letter-spacing: 1px;
-    transition: 0.6s;
+    /* transition: 0.6s; */
 }
 .main_navbar ul li:hover
 {
@@ -351,6 +355,28 @@
 .main_upIcon.show
 {
 	display: block;
+}
+@media (min-width: 751px) and (max-width: 991px)
+{
+	.main_navbar { padding: 1rem 3rem; }
+	.main_navbar.sticky { padding: 0.3125rem  3rem; }
+}
+@media (min-width: 651px) and (max-width: 750px)
+{
+	.main_navbar { padding: 1rem 0; }
+	.main_navbar.sticky { padding: 0.3125rem 0; }
+}
+@media (min-width: 0px) and (max-width: 650px)
+{
+	.main_navbar { padding: 1rem 0; }
+	.main_navbar.sticky { padding: 0.3125rem 0; }
+	.main_navbar ul li a { font-size: 1rem; }
+	.main_navbar .main_flex { padding-left: 0; }
+	.main_navbar .mainNavImg { height: 1.8rem; }
+	.main_navbar #grooming { min-width: 3.6rem; }
+	.main_navbar #community { min-width: 4.5rem; }
+	.main_navbar #studycafe { min-width: 5.4rem; }
+	.main_navbar #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
 }
 </style>
 </head>
