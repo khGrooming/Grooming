@@ -6,12 +6,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -26,9 +28,9 @@ public class GroomingServiceImpl implements GroomingService{
 	GroomingDao gDao;
 
 	@Override
-	public ArrayList<Grooming> selectList() {
+	public ArrayList<Grooming> selectList(GroomingPageInfo pi) {
 		// TODO Auto-generated method stub
-		return gDao.selectList();
+		return gDao.selectList(pi);
 	}
 
 	@Override
@@ -334,6 +336,12 @@ public class GroomingServiceImpl implements GroomingService{
 	public int updateSaveGrooming(Grooming g) {
 		// TODO Auto-generated method stub
 		return gDao.updateSaveGrooming(g);
+	}
+
+	@Override
+	public int getGroomingListCount() {
+		// TODO Auto-generated method stub
+		return gDao.getGroomingListCount();
 	}
 
 

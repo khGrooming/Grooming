@@ -3,6 +3,7 @@ package com.kh.groomingProject.grooming.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
@@ -17,7 +18,7 @@ import com.kh.groomingProject.member.model.vo.Member;
 
 public interface GroomingService {
 
-	ArrayList<Grooming> selectList();
+	ArrayList<Grooming> selectList(GroomingPageInfo pi);
 
 	ArrayList<Grooming> selectMentorList( );
 
@@ -116,5 +117,7 @@ public interface GroomingService {
 	Grooming selectSave(String memberNo);
 
 	int updateSaveGrooming(Grooming g);
+
+	int getGroomingListCount();
 
 }

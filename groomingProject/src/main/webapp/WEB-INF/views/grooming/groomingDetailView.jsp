@@ -361,9 +361,7 @@ img {
 
 				<c:url var="gupdate" value="groomingUpdate.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
-				</c:url>
-				<c:url var="gdelete" value="groomingDelete.do" >
-					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
+					<c:param name="page" value="${currentPage }"/>						
 				</c:url>
 				<c:url var="limit" value="groomingLimit.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
@@ -371,12 +369,16 @@ img {
 				<!-- 글의 상태 버튼 -->
 				<div class="col-6" style="text-align: center">
 					<button onclick="location.href='${gupdate}'">수정</button>
-					<button onclick="location.href='${gdelete}'">삭제</button>
+					<button id="deleteGrooming" type="button">삭제</button>
 					<button onclick="location.href='${limit}'">마감</button>
 				</div>
 				</c:if>
+				<c:url var="goMain" value="groomingMain.do" >
+					<c:param name="memberNo" value="${loginUser.memberNo}"/> 
+					<c:param name="page" value="${currentPage }"/>
+				</c:url> 
 				<div>
-					<button onclick="location.href='groomingMain.do'">목록으로</button>
+					<button onclick="location.href='${goMain}'">목록으로</button>
 				</div>
 				<c:if test="${grooming.status eq 'Y' }">
 					<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
@@ -401,6 +403,7 @@ img {
 							<form action="applyContent.do" method="post">
 								<div class="modal-content" style="width: auto; height: auto;">
 								<input type="hidden" value="${grooming.groomingNo }" name="groomingNo">
+								<input type="hidden" value="${grooming.money }" name="money">
 								<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
 								
 	
@@ -438,17 +441,28 @@ img {
 	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
 
 	</section>
-	
 	<script>
 		$(function(){
+			var groomingNo = "${grooming.groomingNo}";
+			$("#deleteGrooming").on("click",function(){
+				var result = confirm("삭제하시겠습니까?");
+				
+				if(result){
+					location.href="groomingDelete.do?groomingNo="+groomingNo;
+				}
+			
+			})
 		
-			
-			
+		})
+		
+	
+	
+	
+	
+	</script>
+	<script>
+		$(function(){
 				$("#open_modal_appContent").modal('hide'); 
-				
-		
-				
-			
 		})
 
 	</script>	
@@ -456,8 +470,6 @@ img {
 		$("#submit").on("click",function(){
 			alert("신청되었습니다.");
 		})
-	
-	
 	</script>
 	 <script type="text/javascript">
 		 window.history.forward();

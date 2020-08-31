@@ -101,10 +101,13 @@
 		<result property="memberPhoto" column="MEMBER_PHOTO"/>
 	</resultMap>
 	
-	
-	
-	
-	
+	 <resultMap type="GCheck" id="GroupCheckResultSet">
+	 	<id property="gCheckNo" column="G_CHECK_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="gMemberNo" column="G_MEMBER_NO"/>
+		<result property="gCheckStatus" column="G_CHECK"/>
+		<result property="gCheckDate" column="G_CHECK_DATE"/>
+	</resultMap>
 	
 	
  	<select id="selectList" resultMap="groomingResultSet">
@@ -112,6 +115,7 @@
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
  			OR GROOMING_STATUS = 'B'
+ 		ORDER BY GROOMING_CREATE_DATE DESC,GROOMING_STATUS DESC
  		
  	</select>
  	
@@ -311,7 +315,7 @@
  	
  	<insert id="addHeart" parameterType="map">
  		INSERT INTO GROOMING_HEART VALUES(
- 		'GH' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GH' || LPAD(SEQ_G_HEART_NO.NEXTVAL,5,0)
  		,#{groomingNo}
  		,#{memberNo}
  		)
@@ -343,7 +347,7 @@
  	</select>
  	<insert id="addGroomingMember" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 		'GM' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  		,#{memberNo}
  		,#{groomingNo}
  	)
@@ -472,7 +476,7 @@
  	
  	<insert id="GroupHostIn" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 			'GM' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  			,#{memberNo}
  			,#{groomingNo}
  	)
@@ -606,7 +610,7 @@
  	
  	<insert id="addReply" parameterType="GReply">
  		INSERT INTO G_REPLY VALUES(
- 		'GBR' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GBR' || LPAD(SEQ_G_REPLY_NO.NEXTVAL,5,0)
  		,#{gBoardNo}
  		,#{gMemberNo}
  		,#{gReplyContent}
@@ -642,4 +646,22 @@
  		WHERE GROOMING_NO =#{groomingNo}
  	
  	</update>
+ 	
+ 	<select id="getGroomingListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROOMING
+	WHERE GROOMING_STATUS ='Y' OR GROOMING_STATUS = 'B'
+	</select>
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>
