@@ -21,4 +21,6 @@ public interface MessageService {
 
 	ArrayList<Message> loadChatList(Member m);
 
+	int readChat(Message me);
+
 }
