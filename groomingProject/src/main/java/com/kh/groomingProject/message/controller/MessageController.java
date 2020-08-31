@@ -155,6 +155,8 @@ public class MessageController {
 		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
 		
 		int result = msgService.readChat(me);
+		
+		System.out.println("채팅 읽음 표시 결과 : " + result);
 
 		if(result > 0) {
 			ArrayList<Message> mList = msgService.loadChat(me);
