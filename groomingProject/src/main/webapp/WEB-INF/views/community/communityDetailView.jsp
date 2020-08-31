@@ -148,6 +148,7 @@
         				<td>${r.memberNickName}</td>
         				<td>${r.replyContent }</td>
         				<td>${r.replyModifyDate }</td>
+        	
         				<td>
 							<i class="fas fa-bars" onclick="replyUD();"></i>		
 								<ul class="layer_list">
