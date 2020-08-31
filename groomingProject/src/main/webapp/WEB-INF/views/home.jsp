@@ -323,18 +323,22 @@ body{ background-color: #f2f2f2; }
 }
 @media (min-width: 0px) and (max-width: 991px)
 {
-.cards_bundle .card_container .card_box
-{ 
-	display: flex;
-	justify-content: space-between;
-	align-items: center; 
-}
-.cards_bundle .card_container .card_box .card_header{ border: none; }
-.cards_bundle .card_container .card_box .card_header,
-.cards_bundle .card_container .card_box .card_body
-{
-	width: 50%;
-}
+	.cards_bundle .card_container .card_box:hover .card_header
+	{
+		border-bottom: none;
+	}
+	.cards_bundle .card_container .card_box
+	{ 
+		display: flex;
+		justify-content: space-between;
+		align-items: center; 
+	}
+	.cards_bundle .card_container .card_box .card_header{ border: none; }
+	.cards_bundle .card_container .card_box .card_header,
+	.cards_bundle .card_container .card_box .card_body
+	{
+		width: 50%;
+	}
 }
 </style>
 
@@ -744,7 +748,7 @@ body{ background-color: #f2f2f2; }
 				
 				// header
 				var $card_header = $('<div>').addClass("card_header");
-				var $imgGroomingImg = $('<img>').attr({"alt":"그루밍 사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].groomingImg,"onerror":"this.src='${contextPath }/resources/views/images/grooming_logo.png'"});
+				var $imgGroomingImg = $('<img>').attr({"alt":"그루밍 사진","src":"${contextPath }/resources/upGroomingFiles/"+data[i].groomingImg,"onerror":"this.src='${contextPath }/resources/views/images/grooming_logo.png'"});
 				var $card_dDay = $('<div>').addClass("card_dDay " + card_dDay_color);
 				var $card_dDay_text = $('<span>').text(card_dDay_text);
 				$card_box.append($card_header);

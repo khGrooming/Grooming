@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.groomingProject.home.model.dao.HomeDao;
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomeHelp;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 @Service("homeService")
@@ -50,6 +51,12 @@ public class HomeServiceImpl implements HomeService{
 	public ArrayList<HomeGrooming> getGroomingList(HomePageInfo pi) {
 
 		return homeDao.getGroomingList(pi);
+	}
+
+	@Override
+	public int siteQuestion(HomeHelp homehelp) {
+
+		return homeDao.siteQuestion(homehelp);
 	}
 
 }

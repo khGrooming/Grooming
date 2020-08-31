@@ -311,7 +311,7 @@
  	
  	<insert id="addHeart" parameterType="map">
  		INSERT INTO GROOMING_HEART VALUES(
- 		'GH' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GH' || LPAD(SEQ_G_HEART_NO.NEXTVAL,5,0)
  		,#{groomingNo}
  		,#{memberNo}
  		)
@@ -343,7 +343,7 @@
  	</select>
  	<insert id="addGroomingMember" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 		'GM' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  		,#{memberNo}
  		,#{groomingNo}
  	)
@@ -472,7 +472,7 @@
  	
  	<insert id="GroupHostIn" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 			'GM' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  			,#{memberNo}
  			,#{groomingNo}
  	)
@@ -606,7 +606,7 @@
  	
  	<insert id="addReply" parameterType="GReply">
  		INSERT INTO G_REPLY VALUES(
- 		'GBR' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GBR' || LPAD(SEQ_G_REPLY_NO.NEXTVAL,5,0)
  		,#{gBoardNo}
  		,#{gMemberNo}
  		,#{gReplyContent}

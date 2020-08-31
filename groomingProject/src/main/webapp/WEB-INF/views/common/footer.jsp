@@ -178,7 +178,17 @@ footer .modal .modal-footer {
 				<div class="modal-body">
 					<p>이메일 <small>답변 받을 이메일을 정확하게 적어주세요.</small></p>
 					<input type="text" id="footer_qModal_email" required>
-					<p>문의 내용<small>답변 받을 이메일을 적어주세요.</small></p>
+					<p>카테고리를 선택해 주세요.</p>
+					<select id="footer_qModal_cate" name="helpcategory">
+					    <option value="HC00001" selected>계정</option>
+					    <option value="HC00002">그루밍</option>
+					    <option value="HC00003">커뮤니티</option>
+					    <option value="HC00004">스터디카페</option>
+					    <option value="HC00005">맨토</option>
+					    <option value="HC00006">환불</option>
+					</select>
+	
+					<p>문의 내용</p>
 					<textarea id="footer_qModal_content" onkeyup="this.style.height='5rem'; this.style.height = this.scrollHeight/16 + 'rem';" required></textarea>
 				</div>
 				<div class="modal-footer">
@@ -197,49 +207,63 @@ footer .modal .modal-footer {
 	</footer>
 
 <script>
-var footer_qModal = document.getElementById("footer_qModal");
-var footer_qModal_Btn = document.getElementById("footer_qModal_Btn");
-var footer_qModal_Btn_close = document.getElementById("footer_qModal_Btn_close");
-
-footer_qModal_Btn.onclick = function() {
-	footer_qModal.style.display = "block";
-}
-
-footer_qModal_Btn_close.onclick = function() {
-	footer_qModal.style.display = "none";
-}
-
-window.onclick = function(event) {
-	if (event.target == footer_qModal) {
-	 footer_qModal.style.display = "none";
-	}
-}
-
-$("#footer_siteQuestion").on("click", function() {
-	var footer_qModal_email = $("#footer_qModal_email").val();
-	var footer_qModal_content = $("#footer_qModal_content").html();
-
-	console.log(footer_qModal_email);
-	console.log(footer_qModal_content);
+	var footer_qModal = document.getElementById("footer_qModal");
+	var footer_qModal_Btn = document.getElementById("footer_qModal_Btn");
+	var footer_qModal_Btn_close = document.getElementById("footer_qModal_Btn_close");
 	
-	footer_qModal.style.display = "none";
-
-	$.ajax({
-		url:"siteQuestion.do",
-		data:{footer_qModal_email:footer_qModal_email,footer_qModal_content:footer_qModal_content},
-		success:function(data){
-			console.log("회원가입 이메일 결과 : " + data)
-			if(data == "success"){
-				alert("문의가 전송 되었습니다.");
-			} else {
+	footer_qModal_Btn.onclick = function() {
+		footer_qModal.style.display = "block";
+	}
+	
+	footer_qModal_Btn_close.onclick = function() {
+		footer_qModal.style.display = "none";
+	}
+	
+	window.onclick = function(event) {
+		if (event.target == footer_qModal) {
+		 footer_qModal.style.display = "none";
+		}
+	}
+	
+	$("#footer_siteQuestion").on("click", function() {
+		let regexEmail = new RegExp("[a-zA-Z0-9]+[@][a-zA-Z0-9]+[.]+[a-zA-Z]+[.]*[a-zA-Z]*");
+		var helpEmail = $("#footer_qModal_email").val();
+		var hCategoryNo = $("#footer_qModal_cate option:selected").val();
+		var helpContent = $("#footer_qModal_content").val();
+		var memberNo = "${loginUser.memberNo }";
+		console.log(helpEmail);
+		console.log(hCategoryNo);
+		console.log(helpContent);
+		console.log(memberNo);
+		
+		if ($.trim($("#footer_qModal_content").val()) == "") {
+			alert("내용을 입력해 주세요.");
+			return;
+		} else if (!regexEmail.test($("#footer_qModal_email").val())) {
+			alert("연락 받을 이메일을 입력해 주세요.");
+			return;
+		}
+	
+		$.ajax({
+			url:"siteQuestion.do",
+			data:{memberNo:memberNo
+				,helpEmail:helpEmail
+				,hCategoryNo:hCategoryNo
+				,helpContent:helpContent},
+			success:function(data){
+				console.log("문의 전송 결과 : " + data)
+				if(data == "success"){
+					alert("문의가 전수 되었습니다.");
+				} else {
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			},
+			error:function(request, status, errorData){
 				alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 			}
-		},
-		error:function(request, status, errorData){
-			alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-		}
+		});
+		footer_qModal.style.display = "none";
 	});
-});
 
 </script>
 </body>
