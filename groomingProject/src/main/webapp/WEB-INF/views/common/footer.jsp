@@ -5,8 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>footer</title>
-<!-- jQuery -->
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <style type="text/css">
 /* 풋터 최하단에 위치하도록 하는 css */
 section

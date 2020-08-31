@@ -178,6 +178,13 @@ body{ background-color: #f2f2f2; }
 	text-align: center;
 	line-height: 2.5rem;
 }
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_deadline
+{
+	font-size: 0.65rem;
+	background: white;
+	color: red;
+	border: thin solid red;
+}
 .cards_bundle .card_container .card_header .card_dDay.card_dDay_red
 {
 	font-size: 1rem;
@@ -378,6 +385,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -445,6 +456,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -511,6 +526,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -577,6 +596,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -694,7 +717,10 @@ body{ background-color: #f2f2f2; }
 				var card_dDay_text = "D-" + data[i].groomingDday;
 
 				// d-day에 따른 css 클래스명 선택
-				if(data[i].groomingDday <= 7){
+				if(data[i].groomingDday == 0){
+					card_dDay_color = "card_dDay_deadline";
+					card_dDay_text = "마감임박";
+				} else if(data[i].groomingDday <= 7){
 					card_dDay_color = "card_dDay_red";
 				} else if(data[i].groomingDday <= 15){
 					card_dDay_color = "card_dDay_orange";
