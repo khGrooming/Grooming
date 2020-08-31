@@ -162,7 +162,7 @@ body{ background-color: #f2f2f2; }
 }
 .cards_bundle .card_container .card_header img
 {
-	object-fit: scale-down;
+	object-fit: cover;
 	height: 100%;
 	width: 100%;
 }
