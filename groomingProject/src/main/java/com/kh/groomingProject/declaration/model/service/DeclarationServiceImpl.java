@@ -25,4 +25,10 @@ public class DeclarationServiceImpl implements DeclarationService{
 		// TODO Auto-generated method stub
 		return dDao.selectGroupDeclare(map);
 	}
+
+	@Override
+	public Declaration selectGroomingDeclare(Map info) {
+		// TODO Auto-generated method stub
+		return dDao.selectGroomingDeclare(info);
+	}
 }

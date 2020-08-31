@@ -34,5 +34,14 @@
   	
   	
   	</select>
+  	
+  	<select id="selectGroomingDeclare" parameterType="map" resultMap="dResultSet">
+	  SELECT * 
+      FROM DECLARATION
+      WHERE MEMBER_NO=#{memberNo} AND DECLARATION_N_NO=#{groomingNo}
+  	
+  	
+  	
+  	</select>
   
 </mapper>

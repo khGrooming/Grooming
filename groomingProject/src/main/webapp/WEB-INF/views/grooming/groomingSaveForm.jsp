@@ -239,11 +239,12 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<div class="form_container container">
 			<!-- style=" "> -->
 
-			<c:url var="groomingUpdate" value="gUpdate.do">
+			<c:url var="groomingSaveUpdate" value="gSaveUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
+				<c:param name="memberNo" value="${loginUser.memberNo }"/>
 			</c:url>
 			
-			<form action="${groomingUpdate }" method="post" enctype="multipart/form-data">
+			<form action="${groomingSaveUpdate }" method="post" enctype="multipart/form-data">
 				
 				<input type="hidden" value="${grooming.groomingNo }">
 				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
@@ -369,7 +370,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td>
-										<input id="insert" class="btn-3d green" type="submit" value="수정하기">
+										<input id="insert" class="btn-3d green" value="등록하기">
 										<button class="btn-3d green" onclick="save();">취소하기</button>
 									</td>
 								</tr>
@@ -379,7 +380,24 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				</div>
 			</form>
 		</div>
+		<script>
+			$(function(){
+				$(document).on("click","#insert",function(){
+					var result= confirm("등록하시겠습니까?");
+					if(result){
+						$("form").submit();
+					}else{
+						event.preventDefault();
+					}
+				
+				})
+				
+				
+			})
 		
+		
+		
+		</script>
 		<!-- textarea에 값을 넣을 script -->
 		 <script>
 			$(function(){
@@ -399,7 +417,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				};
 			});
 			
-		
+			/*   window.onbeforeunload = function(e) {
+			        return false;
+			    }; */
 		</script>
 		<script>
 			// 파일 업로드 관련 script
@@ -514,7 +534,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			function save() {
-				var result = confirm("수정을 취소하시겠습니까?");
+				var result = confirm("등록을 취소하시겠습니까? ");
 				if (result) {
 					alert("취소되었습니다.");
 					location.href="groomingMain.do"; 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
+import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -285,6 +286,54 @@ public class GroomingServiceImpl implements GroomingService{
 	public int insertBoard(GroupBoard g) {
 		// TODO Auto-generated method stub
 		return gDao.insertBoard(g);
+	}
+
+	@Override
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.groupDelete(gBoardNo);
+	}
+
+	@Override
+	public int updateGroupBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return gDao.updateGroupBoard(g);
+	}
+
+	@Override
+	public String selectGboardimg(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGboardimg(gBoardNo);
+	}
+
+	@Override
+	public ArrayList<GReply> selectReplyList(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectReplyList(gBoardNo);
+	}
+
+	@Override
+	public int addReply(GReply g) {
+		// TODO Auto-generated method stub
+		return gDao.addReply(g);
+	}
+
+	@Override
+	public String selectGBoardNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGBoardNo(map);
+	}
+
+	@Override
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectSave(memberNo);
+	}
+
+	@Override
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.updateSaveGrooming(g);
 	}
 
 
