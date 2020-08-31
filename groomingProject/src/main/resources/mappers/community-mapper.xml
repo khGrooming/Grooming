@@ -29,14 +29,15 @@
 		<result property="replySelection" column="PEPLY_SELECTION" />
 		<result property="replyStatus" column="REPLY_STATUS" />
 		<result property="declarationCount" column="DECLARATION_COUNT" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
 	</resultMap>
 		
-	<select id="selectList" parameterType="map" resultMap="boardResultSet">
+	<select id="selectList" parameterType="string" resultMap="boardResultSet">
  		SELECT * FROM BOARD
 		JOIN MEMBER USING (MEMBER_NO) 
 		<where>
-			<if test="bCategoryNo != null">
-				AND B_CATEGORY_NO=#{bCategoryNo}
+			<if test="value != null and value != '' ">
+				AND B_CATEGORY_NO=#{value}
 			</if>
 		</where>
         ORDER BY BOARD_NO DESC
@@ -87,16 +88,34 @@
 		WHERE BOARD_NO=#{boardNo}
 	</delete>
 	
-
-	<select id="selectReplyList" parameterType="map" resultMap="replyResultSet">
+	<!-- 댓글 관련 쿼리 -->
+	
+	<select id="replySelectList" parameterType="string" resultMap="replyResultSet">
 		SELECT *
 		FROM REPLY
-		WHERE B_CATEGORY_NO=#{board.bCategoryNo}
-		ORDER BY REPLY_NO DESC
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO = #{boardNo}
 	</select>
-
-
-
+	
+	<insert id="replyInsert" parameterType="map">	
+		INSERT INTO REPLY (REPLY_NO, BOARD_NO, B_CATEGORY_NO, MEMBER_NO, REPLY_CONTENT,
+							REPLY_CREATE_DATE, REPLY_MODIFY_DATE, PEPLY_SELECTION,
+							REPLY_STATUS, DECLARATION_COUNT)
+		VALUES(
+			'RR' || LPAD(SEQ_REPLY_NO.NEXTVAL,5,0)
+			, #{reply.boardNo}
+			, #{reply.bCategoryNo}
+			, #{reply.memberNo}
+			, #{reply.replyContent}
+			, SYSDATE
+			, SYSDATE
+			, 'N'
+			, 'Y'
+			, 0
+        )
+	</insert>
 
 	
+
+
 </mapper>
