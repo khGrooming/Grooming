@@ -645,9 +645,6 @@ body{ background-color: #f2f2f2; }
 			</div>
 		</c:forEach>
 		</div>
-		<div class="spinner-border text-success" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
 	</div> <!-- 컨테이너 끝 -->
 </c:if>
 
@@ -655,6 +652,7 @@ body{ background-color: #f2f2f2; }
 
 <script type="text/javascript">
 	var page = 1;
+	var pageloading = true;
 	$(function() {
 		console.log("메인 페이지");
 	});
@@ -683,12 +681,11 @@ body{ background-color: #f2f2f2; }
 	// 스크롤 로딩
 	window.onscroll = function(e) {
 	    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-	    	// 로딩 css on
-	    	$(".spinner-border").css("pisplay","tabel");
 	    	// ajax + 카드 추가
-	    	loadGroomingData();
-	    	// 로딩 css off
-	    	$(".spinner-border").hide();
+	    	if(pageloading){
+	    		pageloading = false;
+		    	loadGroomingData();
+	    	}
 	    }
 	};
 
@@ -789,6 +786,7 @@ body{ background-color: #f2f2f2; }
 		} else {
 			console.log("내용 없음");
 		}
+		pageloading = true;
 	}
 </script>
 

@@ -276,6 +276,7 @@
 .main_navbar .main_messages_body,
 .main_navbar .main_alerts_body
 {
+    text-align: left;
 	font-weight: lighter;
 	font-size: 1rem;
 	width: 100%;
