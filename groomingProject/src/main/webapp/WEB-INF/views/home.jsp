@@ -160,10 +160,6 @@ body{ background-color: #f2f2f2; }
 	border-radius: 15px 15px 0px 0px;
     transition: 0.4s;
 }
-.cards_bundle .card_container .card_box:hover .card_header img
-{
-	object-fit: scale-down;
-}
 .cards_bundle .card_container .card_header img
 {
 	object-fit: cover;
