@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
@@ -144,6 +145,10 @@ public class MypageDao {
 
 	public int insertPoint(MyPagePoint insertPoint) {
 		return sqlSessionTemplate.insert("MyPageMapper.insertPoint",insertPoint);
+	}
+
+	public int insertMemberReport(MemberReport mr) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertMemberReport",mr);
 	}
 
 }

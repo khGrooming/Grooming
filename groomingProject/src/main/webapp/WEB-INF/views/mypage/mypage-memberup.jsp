@@ -96,7 +96,7 @@ margin-bottom: 5px;
 font-size: 20px;
 }
 #specTb td{
-font-size: 18px;
+font-size: 14px;
 }
 #memberInfoTb{
     border-collapse: separate;
@@ -133,6 +133,7 @@ font-size: 18px;
 	<section style="padding-top: 0.05rem;">
 	<div id="content">
 		<div class="subcontent">
+		
 			<h4 class="subTitle">프로필 수정</h4>
 			<div class="profile_my">
 				<!--toEJ 클릭하면 모달창 띄우고 사진편집할 수 있으면 넣고 못하면 미리보기로 대체 모달창에서 프로필사진 등록/삭제로 해서 고치셈 -->
@@ -250,7 +251,7 @@ font-size: 18px;
 			<br>
 			<div style="margin-left:35%">
 				<c:if test="${mentor eq 'Y' }">
-				<span><img src='${contextPath }/resources/views/icons/mentorIcon.png' style="width: 25px;"></span>&nbsp;
+				<span><img src='${contextPath }/resources/views/icons/mentorIcon.png' style="width: 25px;margin-bottom: 10px;"></span>&nbsp;
 				</c:if>		
 				<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
 				<span>&nbsp;&nbsp;</span> <span style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
@@ -521,7 +522,7 @@ font-size: 18px;
 											
 											$tdId.text(certificate[i]).css("color","lightgrey");
 										}else{
-											$tdId.text(school[i]).css("color","black");
+											$tdId.text(certificate[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");
@@ -571,7 +572,7 @@ font-size: 18px;
 											
 											$tdId.text(career[i]).css("color","lightgrey");
 										}else{
-											$tdId.text(school[i]).css("color","black");
+											$tdId.text(career[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");
@@ -874,7 +875,7 @@ font-size: 18px;
 	
 	
 	</div>
-</section>h
+</section>
 <jsp:include page="../common/footer.jsp" />	
 
 </body>
