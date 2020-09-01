@@ -235,13 +235,42 @@ section
 {
 	color: #747474;
 	display: block;
-	font-size: 12px;
-	margin: 8px 0 0;
+	font-size: 0.75rem;
+	margin: 0.5rem 0 0;
 }
 .received_withd_msg
 {
     width: 47%;
 }
+.sent_msg,
+.received_withd_msg
+{
+    position: relative;
+}
+.sent_msg .msgBox_add,
+.received_withd_msg .msgBox_add
+{
+    position: absolute;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+.sent_msg .msgBox_add
+{
+	top: 0.3rem;
+    right: -0.3rem;
+    background-color: #05728f;
+}
+.received_withd_msg .msgBox_add
+{
+	top: 0.45rem;
+    left: -0.3rem;
+    background-color: #ebebeb;
+}
+
+
 .mesgs_header
 {
 	float: left;
@@ -254,8 +283,8 @@ section
 .mesgs_header .mesgs_header_img
 {
 	display: inline-block;
-	margin-right: 5px;
-	width: 40px;
+	margin-right: 0.31rem;
+	width: 2.5rem;
 }
 .mesgs_header p
 {
@@ -272,8 +301,8 @@ section
 }
 .sent_msg p {
     background: #05728f;
-    border-radius: 3px;
-    font-size: 14px;
+    border-radius: 0.18rem;
+    font-size: 0.875rem;
     margin: 0;
     color: #fff;
     padding: 5px 10px 5px 12px;
@@ -282,22 +311,23 @@ section
 .outgoing_msg
 {
     overflow: hidden;
-    margin: 26px 8px;
+    margin: 1.625rem 0;
+    padding: 0 1rem;
 }
 .date_divider_msg
 {
 	position: relative;
     overflow: hidden;
-    margin: 26px 8px;
+    margin: 1.625rem 1rem;
     text-align: center;
 }
 .date_divider_msg .divider_date
 {
 	margin: 0 auto -27px;
     background-color: darkslategray;
-    width: 138px;
+    width: 8.625rem;
     color: white;
-    border-radius: 3px;
+    border-radius: 0.18rem;
 }
 .sent_msg {
     float: right;
@@ -335,6 +365,7 @@ section
 	right: 0;
 	top: 0.8rem;
 	width: 2rem;
+    min-width: 2rem;
 }
 .msg_history
 {
@@ -490,6 +521,7 @@ section
                             </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
+                                	<div class="msgBox_add"></div>
                                     <p>안녕하세요. 회원님~ 공부는 잘되가나요?</p>
                                     <span class="time_date">AM 10시 30분</span>
                                 </div>
@@ -498,6 +530,7 @@ section
 
                         <div class="outgoing_msg">
                             <div class="sent_msg">
+                               	<div class="msgBox_add"></div>
                                 <p>네~ 덕분에 이번에 자격증 취득했어요~ 너무너무 감사해요.</p>
                                 <span class="time_date">PM 01시 30분</span>
                             </div>
@@ -510,6 +543,7 @@ section
                             </div>
                             <div class="received_msg">
                                 <div class="received_withd_msg">
+                                	<div class="msgBox_add"></div>
                                     <p>아마도 애니메이션 작업 할꺼에요... //TODO </p>
                                     <span class="time_date">PM 02시 22분</span>
                                 </div>
@@ -518,6 +552,7 @@ section
                         
                         <div class="outgoing_msg">
                             <div class="sent_msg">
+                                	<div class="msgBox_add"></div>
                                 <p>닉네임을 검색 후 채팅을 시작해요. </p>
                                 <span class="time_date">PM 03시 33분</span>
                             </div>
@@ -545,8 +580,8 @@ section
 			console.log("채팅 페이지");
 			loadChatListData();
 			
-			// 디버깅 때 테스트
-			setInterval(function(){
+			// 테스트 중
+			/* setInterval(function(){
 				loadChatListData();
 				
 				if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() != ""){
@@ -555,7 +590,7 @@ section
 					var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000);
+			}, 5000); */
 		});
 	</script>
 
@@ -838,10 +873,6 @@ section
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-			// 스크롤 내리기 + 스크롤 에니메이션
-			$(".msg_history").animate({
-				scrollTop:$(".msg_history")[0].scrollHeight
-			}, 500);
 			// 글입력창으로 포커스 이동
 			$(".write_msg").focus();
 		}
@@ -892,12 +923,16 @@ section
 
 					// 메시지 추가
 					if(data[i].fromMemberNo == memberNo){
-						// outgoing	
+						// outgoing
+						var $iMessageNo = $('<input>').addClass("messageNo").attr("type","hidden").val(data[i].messageNo);
 						var $outgoing_msg = $('<div>').addClass("outgoing_msg");
 						var $sent_msg = $('<div>').addClass("sent_msg");
+						var $msgBox_add = $('<div>').addClass("msgBox_add");
 						var $pMessageContent = $('<p>').text(data[i].messageContent);
 						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
 
+						$sent_msg.append($iMessageNo);
+						$sent_msg.append($msgBox_add);
 						$sent_msg.append($pMessageContent);
 						$sent_msg.append($time_date);
 						$outgoing_msg.append($sent_msg);
@@ -906,15 +941,19 @@ section
 
 					} else {
 						// incoming
+						var $iMessageNo = $('<input>').addClass("messageNo").attr("type","hidden").val(data[i].messageNo);
 						var $incoming_msg = $('<div>').addClass("incoming_msg");
 						var $incoming_msg_img = $('<div>').addClass("incoming_msg_img");
 						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/" + data[i].fromMemberPhoto, "onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
 						var $received_msg = $('<div>').addClass("received_msg");
 						var $received_withd_msg = $('<div>').addClass("received_withd_msg");
+						var $msgBox_add = $('<div>').addClass("msgBox_add");
 						var $pMessageContent = $('<p>').text(data[i].messageContent);
 						var $time_date = $('<span>').addClass("time_date").text(messageDate[1]);
 						
+						$incoming_msg_img.append($iMessageNo);
 						$incoming_msg_img.append($proFile_img);
+						$received_withd_msg.append($msgBox_add);
 						$received_withd_msg.append($pMessageContent);
 						$received_withd_msg.append($time_date);
 						$received_msg.append($received_withd_msg);
@@ -928,6 +967,11 @@ section
 			} else {
 				console.log("내용 없음");
 			}
+			
+			// 스크롤 내리기
+			var his_height = $(".msg_history")[0].scrollHeight;
+			console.log(his_height);
+			$(".msg_history").scrollTop(his_height);
 		}
 	</script>
 
