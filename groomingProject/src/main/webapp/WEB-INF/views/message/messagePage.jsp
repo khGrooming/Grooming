@@ -581,7 +581,7 @@ section
 			loadChatListData();
 			
 			// 테스트 중
-			/* setInterval(function(){
+			setInterval(function(){
 				loadChatListData();
 				
 				if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() != ""){
@@ -590,7 +590,7 @@ section
 					var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000); */
+			}, 5000);
 		});
 	</script>
 

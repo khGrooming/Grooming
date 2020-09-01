@@ -502,10 +502,10 @@
 			getUserMessages();
 			
 			// 디버깅 때 테스트
-			/* setInterval(function(){
+			setInterval(function(){
 				getUserAlert();
 				getUserMessages();
-			}, 100000); */
+			}, 5000);
 		});
 		</c:if>
 	</script>
