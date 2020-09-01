@@ -765,11 +765,11 @@ body{ background-color: #f2f2f2; }
 				var $tag_wrap = $('<div>');
 				
 				var $bTagsinput = $('<div>').addClass("bootstrap-tagsinput");
-	
-				var tagName = data[i].groomingTagName.split(",");
+
+				var tagName = (data[i].groomingTagName).split(",");
 				for(var i in tagName){
-					var $card_tags = $('<span>').addClass("badge badge-info");
-					$bTagsinput.append($card_tags);
+					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[i]);
+					$bTagsinput.append($sBadge);
 				}
 				
 				$card_body.append($card_tags);
