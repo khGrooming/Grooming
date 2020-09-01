@@ -351,12 +351,7 @@ section
     background-clip: padding-box;
     border: 0.1rem solid transparent;
 }
-.msg_history::-webkit-scrollbar-track
-{
-    /* background-color: skyblue;
-    border-radius: 0.225rem;
-    box-shadow: inset 0px 0px 5px white; */
-}
+.msg_history::-webkit-scrollbar-track {}
 </style>
 </head>
 <body>
@@ -551,15 +546,21 @@ section
 			loadChatListData();
 			
 			// 디버깅 때 테스트
-			/* setInterval(function(){
+			setInterval(function(){
 				loadChatListData();
-			}, 100000); */
+				
+				if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() != ""){
+					// 전송 값 변수 저장
+					var fromMemberNo = "${loginUser.memberNo }";
+					var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
+					loadChatData(fromMemberNo,toMemberNo);
+				}
+			}, 5000);
 		});
 	</script>
 
 	<!-- 채팅방 생성 스크립트 -->
-	<script type="text/javascript">	
-
+	<script type="text/javascript">
 		// 검색 창에서 enter키로 채팅방 생성
 		$(".search_bar").keyup(function(e){
 			if(e.keyCode == 13){
@@ -623,7 +624,6 @@ section
 			var fromMemberNo = el.find("input[type=hidden].memberNo").val();
 			var fromMemberNickname = el.find("input[type=hidden].memberNickname").val();
 			var fromMemberImg = el.find(".proFile_img").attr("src");
-			var messageContent = "";
 			
 			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
 
@@ -639,7 +639,7 @@ section
 			console.log("활성 챗 : " + activeChat);
 			
 			// 채팅 데이터 가져오기
-			loadChatData(fromMemberNo,toMemberNo,messageContent);
+			loadChatData(fromMemberNo,toMemberNo);
 		});
 
 		// 로드 채팅 리스트(ajax)
@@ -828,7 +828,7 @@ section
 					if(data == "success"){
 						$(".write_msg").val("");
 						// 채팅 내용 추가
-						loadChatData(fromMemberNo,toMemberNo,messageContent);
+						loadChatData(fromMemberNo,toMemberNo);
 						loadChatListData();
 					} else {
 						alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
@@ -838,7 +838,7 @@ section
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 				}
 			});
-			// 스크롤 내리기
+			// 스크롤 내리기 + 스크롤 에니메이션
 			$(".msg_history").animate({
 				scrollTop:$(".msg_history")[0].scrollHeight
 			}, 500);
@@ -847,7 +847,7 @@ section
 		}
 
 		// 채팅 데이터 가져오기
-		function loadChatData(fromMemberNo,toMemberNo,messageContent) {
+		function loadChatData(fromMemberNo,toMemberNo) {
 			$.ajax({
 				url:"loadChat.do",
 				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo},
