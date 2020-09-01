@@ -107,6 +107,7 @@
 		<result property="gMemberNo" column="G_MEMBER_NO"/>
 		<result property="gCheckStatus" column="G_CHECK"/>
 		<result property="gCheckDate" column="G_CHECK_DATE"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
 	</resultMap>
 	
 	
@@ -654,14 +655,21 @@
 	</select>
  	
  	
+ 	<select id="getGMemberNo" parameterType="map" resultType="String">
+		SELECT G_MEMBER_NO
+		FROM GROMMING_MEMBER GM 
+		JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+		WHERE MEMBER_NICKNAME=#{memberNickName} AND GM.GROOMING_NO = #{groomingNo}
+ 	</select>
  	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ 	<select id="checkList" parameterType="map" resultMap="GroupCheckResultSet">
+		 	
+	  SELECT *
+      FROM G_CHECK
+      WHERE GROOMING_NO= #{groomingNo}
+      AND G_MEMBER_NO=#{gMemberNo} 
+      
+
+ 	</select>
  	
 </mapper>

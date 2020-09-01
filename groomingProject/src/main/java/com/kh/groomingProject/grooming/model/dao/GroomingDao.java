@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
@@ -305,6 +306,16 @@ public class GroomingDao {
 	public int getGroomingListCount() {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("groomingMapper.getGroomingListCount");
+	}
+
+	public String getGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGMemberNo",map);
+	}
+
+	public ArrayList<GCheck> checkList(Map hashmap) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.checkList",hashmap);
 	}
 	
 	

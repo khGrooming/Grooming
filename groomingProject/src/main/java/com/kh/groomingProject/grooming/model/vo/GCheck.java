@@ -16,7 +16,7 @@ public class GCheck implements Serializable{
 	private String gMemberNo;
 	private String gCheckStatus;
 	private Date gCheckDate;
-
+	private String memberNickName;
 	public GCheck() {
 		super();
 	}
@@ -28,6 +28,25 @@ public class GCheck implements Serializable{
 		this.gMemberNo = gMemberNo;
 		this.gCheckStatus = gCheckStatus;
 		this.gCheckDate = gCheckDate;
+	}
+	
+	public GCheck(String gCheckNo, String groomingNo, String gMemberNo, String gCheckStatus, Date gCheckDate,
+			String memberNickName) {
+		super();
+		this.gCheckNo = gCheckNo;
+		this.groomingNo = groomingNo;
+		this.gMemberNo = gMemberNo;
+		this.gCheckStatus = gCheckStatus;
+		this.gCheckDate = gCheckDate;
+		this.memberNickName = memberNickName;
+	}
+
+	public String getMemberNickName() {
+		return memberNickName;
+	}
+
+	public void setMemberNickName(String memberNickName) {
+		this.memberNickName = memberNickName;
 	}
 
 	public String getgCheckNo() {
@@ -79,9 +98,10 @@ public class GCheck implements Serializable{
 	@Override
 	public String toString() {
 		return "GCheck [gCheckNo=" + gCheckNo + ", groomingNo=" + groomingNo + ", gMemberNo=" + gMemberNo
-				+ ", gCheckStatus=" + gCheckStatus + ", gCheckDate=" + gCheckDate
+				+ ", gCheckStatus=" + gCheckStatus + ", gCheckDate=" + gCheckDate + ", memberNickName=" + memberNickName
 				+ "]";
 	}
-	
+
+
 	
 }

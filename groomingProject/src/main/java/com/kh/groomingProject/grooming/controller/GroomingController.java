@@ -28,6 +28,7 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
+import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
@@ -723,20 +724,7 @@ public class GroomingController {
 		return mv;
 	}
 
-	@RequestMapping("calendar.do")
-	public ModelAndView calendar(ModelAndView mv, String groomingNo) {
-
-		Grooming grooming = gService.selectGrooming(groomingNo);
-		
-		grooming.getStudyEd();
-		grooming.getStudySd();
-		
-		ArrayList<Member> member = mService.GroupMList(groomingNo);
 	
-		mv.addObject("grooming", grooming).addObject("member", member).setViewName("grooming/groupCalendar");
-
-		return mv;
-	}
 
 	@RequestMapping("groupBoardInsertForm.do")
 	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo, String memberNo,
@@ -1066,7 +1054,49 @@ public class GroomingController {
 			
 		}
 		
+		@RequestMapping("calendar.do")
+		public ModelAndView calendar(ModelAndView mv, String groomingNo) {
+
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			
 		
 		
+		 
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+
+			  
+			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+
+			return mv;
+		}
+		@RequestMapping("checkList.do")
+		@ResponseBody
+		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+		/*	for(int i=0; i<memberNickName.length; i++) {*/
+			Map map  = new HashMap();
+			map.put("groomingNo",groomingNo);
+			map.put("memberNickName", memberNickName);
+			
+			String gMemberNo = gService.getGMemberNo(map);
+			
+			Map hashmap  = new HashMap();
+			hashmap.put("groomingNo",groomingNo);
+			hashmap.put("gMemberNo", gMemberNo);
+			 
+			ArrayList<GCheck> gCheck = gService.checkList(hashmap);
+		 
+			Gson gson = new GsonBuilder().setDateFormat("yyyy MM-dd").create();
+			gson.toJson(gCheck, response.getWriter());
+			
+		}
 	  
 }

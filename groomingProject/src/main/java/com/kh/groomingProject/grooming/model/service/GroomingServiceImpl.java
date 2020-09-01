@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
+import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
@@ -342,6 +343,18 @@ public class GroomingServiceImpl implements GroomingService{
 	public int getGroomingListCount() {
 		// TODO Auto-generated method stub
 		return gDao.getGroomingListCount();
+	}
+
+	@Override
+	public String getGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.getGMemberNo(map);
+	}
+
+	@Override
+	public ArrayList<GCheck> checkList(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.checkList(hashmap);
 	}
 
 
