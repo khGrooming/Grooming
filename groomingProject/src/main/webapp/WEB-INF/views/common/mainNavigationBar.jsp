@@ -425,8 +425,8 @@
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
 	</div>
 	
-	<c:if test="${sessionScope.loginUser.memberAdmin eq 'Y' }">
 	<!-- 관리자 버튼 -->
+	<c:if test="${sessionScope.loginUser.memberAdmin eq 'Y' }">
 	<div class="main_adminIcon" onclick="location.href='adminMain.do'">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-gear-thin.svg">
 	</div>
