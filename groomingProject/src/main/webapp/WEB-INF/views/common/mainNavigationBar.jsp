@@ -420,13 +420,17 @@
 		topBtn.classList.toggle("show", window.scrollY > 10);
     });
 </script>
+	<!-- 탑버튼 -->
 	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
 	</div>
+	
+	<c:if test="${sessionScope.loginUser.memberAdmin eq 'Y' }">
+	<!-- 관리자 버튼 -->
 	<div class="main_adminIcon" onclick="location.href='adminMain.do'">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-gear-thin.svg">
 	</div>
-
+	</c:if>
 	<!-- Navigation -->
 	<nav class="main_navbar">
 		<a class="main_navbar_logo" href="${mainPage }">
