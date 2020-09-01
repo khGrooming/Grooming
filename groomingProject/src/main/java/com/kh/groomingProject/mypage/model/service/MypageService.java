@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
@@ -69,6 +70,8 @@ public interface MypageService {
 	ArrayList<MyPagePoint> selectPointList(String mNo);
 
 	int insertPoint(MyPagePoint insertPoint);
+
+	int insertMemberReport(MemberReport mr);
 
 
 }

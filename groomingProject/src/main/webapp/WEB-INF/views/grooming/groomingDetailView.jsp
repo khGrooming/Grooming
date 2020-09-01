@@ -212,9 +212,12 @@ img {
 
 							<tr>
 								<td style="padding-right: 20px;">
+									<c:url var="profilePage" value="profilePage.do">
+										<c:param name="pfMemberNo" value="${member.memberNo}" />
+									</c:url>
 									<div class="pimg">
 										<img
-											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}">
+											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}" onclick="location.href='${profilePage}'">
 									</div>
 								</td>
 								<td>호스트 : <span>${member.memberNickName }</span><br> 태그:<c:forEach
