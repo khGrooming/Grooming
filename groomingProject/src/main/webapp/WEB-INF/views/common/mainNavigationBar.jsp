@@ -327,7 +327,8 @@
 	box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-.main_upIcon
+.main_upIcon,
+.main_adminIcon
 {
     position: fixed;
 	display: block;
@@ -342,7 +343,12 @@
 	outline: none;
 	cursor: pointer;
 }
-.main_upIcon .img_svg
+.main_adminIcon
+{
+	bottom: 4rem;
+}
+.main_upIcon .img_svg,
+.main_adminIcon .img_svg
 {
 	width: 100%;
 	height: 100%;
@@ -350,6 +356,7 @@
 	border-radius: 50%;
 }
 .main_upIcon:hover .img_svg
+.main_adminIcon:hover .img_svg
 {
 	background-color: lightgreen;
 }
@@ -359,7 +366,7 @@
 }
 @media (min-width: 751px) and (max-width: 991px)
 {
-	.main_navbar { padding: 1rem 3rem; }
+	.main_navbar { padding: 1rem 0; }
 	.main_navbar.sticky { padding: 0.3125rem  3rem; }
 }
 @media (min-width: 651px) and (max-width: 750px)
@@ -372,12 +379,18 @@
 	.main_navbar { padding: 1rem 0; }
 	.main_navbar.sticky { padding: 0.3125rem 0; }
 	.main_navbar ul li a { font-size: 1rem; }
+	.main_navbar.sticky ul li a { font-size: 1rem; }
 	.main_navbar .main_flex { padding-left: 0; }
 	.main_navbar .mainNavImg { height: 1.8rem; }
+	.main_navbar.sticky .mainNavImg { height: 1.8rem; }
 	.main_navbar #grooming { min-width: 3.6rem; }
+	.main_navbar.sticky #grooming { min-width: 3.6rem; }
 	.main_navbar #community { min-width: 4.5rem; }
+	.main_navbar.sticky #community { min-width: 4.5rem; }
 	.main_navbar #studycafe { min-width: 5.4rem; }
+	.main_navbar.sticky #studycafe { min-width: 5.4rem; }
 	.main_navbar #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
+	.main_navbar.sticky #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
 }
 </style>
 </head>
@@ -409,6 +422,9 @@
 </script>
 	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
+	</div>
+	<div class="main_adminIcon" onclick="location.href='adminMain.do'">
+		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-gear-thin.svg">
 	</div>
 
 	<!-- Navigation -->
@@ -520,7 +536,9 @@
 				url:"refreshLoginUser.do",
 				data:{memberNo:memberNo},
 				success:function(data){
-					console.log("로그인 유저 세션 새로고침");
+					if(data == "success"){
+						console.log("로그인 유저 세션 새로고침");
+					}
 				},
 				error:function(request, status, errorData){
 					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");

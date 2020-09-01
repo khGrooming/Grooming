@@ -676,7 +676,8 @@ public class MemberController {
 
 	// 회원 로그인
 	@RequestMapping("refreshLoginUser.do")
-	public void memberLogin(Member m, Model model) {
+	@ResponseBody
+	public String memberLogin(Member m, Model model) {
 		
 		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberNo());
 		
@@ -685,7 +686,9 @@ public class MemberController {
 		
 		if(loginUser != null) {
 			model.addAttribute("loginUser", loginUser);
+			return "success";
 		}
+		return "fail";
 	}
 
 }

@@ -79,6 +79,7 @@ public class HomeController {
 		return mv;
 	}
 
+	// 전체 그루밍
 	public ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 
 		int listCount = homeService.getGListCount();
@@ -94,7 +95,8 @@ public class HomeController {
 		return gAList;
 
 	}
-	
+
+	// 스크롤 로딩 전체 구루밍
 	@RequestMapping("addAllGroomingList.do")
 	public void getAllGroomingList(HttpServletResponse response
 			, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
