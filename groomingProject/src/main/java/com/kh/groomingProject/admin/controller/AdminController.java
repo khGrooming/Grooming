@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
+import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
@@ -110,6 +111,9 @@ public class AdminController {
 		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(mNo);
 		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(sNo);
 
+		System.out.println("listCount : "+listCount);
+		System.out.println("mNo : "+mNo);
+		System.out.println("mentoList : "+mentoList);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("spi", spi);
@@ -148,12 +152,54 @@ public class AdminController {
 	}
 	
 	@RequestMapping("declarationManage.do")
-	public String declationManage() {
-		return "admin/declarationManage";
+	public ModelAndView declationManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		
+		int dListCount = adminService.selectDeclarationCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, dListCount);
+		
+		ArrayList<MemberManageView> dMemberList = adminService.selectDMemberCount();
+		ArrayList<DeclarationManageView> dList = adminService.selectDeclarationList(dMemberList);
+		
+		ArrayList<MemberManageView> mList = adminService.selectDeclarationMember(pi, dMemberList);
+		
+		ArrayList<MemberManageView> dCount = adminService.selectDCount(dMemberList);
+		ArrayList<MemberManageView> totalCount = adminService.selectTotalCount(dMemberList);
+		
+		System.out.println("dListCount : "+dListCount);
+		System.out.println("dMemberList : " + dMemberList);
+		System.out.println("dList : "+dList);
+		System.out.println("mList : "+mList);
+		System.out.println("dCount : "+dCount);
+		System.out.println("totalCount : "+totalCount);
+		
+		mv.addObject("pi", pi);
+		mv.addObject("dList", dList);
+		mv.addObject("mList", mList);
+		mv.addObject("dCount", dCount);
+		mv.addObject("totalCount", totalCount);
+		mv.setViewName("admin/declarationManage");
+		
+		return mv;
 	}
 	
 	@RequestMapping("boardManage.do")
-	public String boardManage() {
-		return "admin/boardManage";
+	public ModelAndView boardManage(ModelAndView mv) {
+		
+		
+		mv.setViewName("admin/boardDeclarationManage");
+		
+		return mv;
+	}
+	
+	@RequestMapping("cafeManage.do")
+	public String cafeManage() {
+		return "admin/cafeManage";
 	}
 }

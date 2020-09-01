@@ -18,6 +18,7 @@
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
 	</typeAliases>
 	
 	<mappers>
