@@ -496,18 +496,37 @@
 	</nav>
 
 	<script type="text/javascript">
-		<c:if test="${!empty sessionScope.loginUser }">
 		$(function() {
-			getUserAlert();
-			getUserMessages();
-			
-			// 디버깅 때 테스트
-			setInterval(function(){
+			var loginUser = "${sessionScope.loginUser}";
+			if(loginUser != ""){
+				console.log("네비바 인터벌");
 				getUserAlert();
 				getUserMessages();
-			}, 5000);
+				
+				// 테스트
+				setInterval(function(){
+					getUserAlert();
+					getUserMessages();
+					refreshLoginUser();
+				}, 30000);
+			}
 		});
-		</c:if>
+	</script>
+	
+	<script type="text/javascript">
+		function refreshLoginUser() {
+			var memberNo = "${loginUser.memberNo}";
+			$.ajax({
+				url:"refreshLoginUser.do",
+				data:{memberNo:memberNo},
+				success:function(data){
+					console.log("로그인 유저 세션 새로고침");
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+		}
 	</script>
 	
 	<!-- 메시지 스크립트 -->

@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -671,6 +672,20 @@ public class MemberController {
 			throw new MemberException("비밀번호 재설정 : 실패");
 		}
 
+	}
+
+	// 회원 로그인
+	@RequestMapping("refreshLoginUser.do")
+	public void memberLogin(Member m, Model model) {
+		
+		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberNo());
+		
+		Member loginUser = mService.loginMember(m);
+		System.out.println("로그인 회원 새로고침 확인 : " + loginUser);
+		
+		if(loginUser != null) {
+			model.addAttribute("loginUser", loginUser);
+		}
 	}
 
 }
