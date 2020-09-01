@@ -311,7 +311,7 @@
  	
  	<insert id="addHeart" parameterType="map">
  		INSERT INTO GROOMING_HEART VALUES(
- 		'GH' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GH' || LPAD(SEQ_G_HEART_NO.NEXTVAL,5,0)
  		,#{groomingNo}
  		,#{memberNo}
  		)
@@ -343,7 +343,7 @@
  	</select>
  	<insert id="addGroomingMember" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 		'GM' || LPAD(SEQ_GROOMING_APPLY_NO.NEXTVAL,5,0)
+ 		'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  		,#{memberNo}
  		,#{groomingNo}
  	)
@@ -379,7 +379,7 @@
  		SELECT *
  		FROM GROOMING G
  		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
- 		WHERE M.MEMBER_NO = #{memberNo}
+ 		WHERE M.MEMBER_NO = #{memberNo} AND GROOMING_STATUS = 'Y'
  		
  	</select>
  	
@@ -472,7 +472,7 @@
  	
  	<insert id="GroupHostIn" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
- 			'GM' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+ 			'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)
  			,#{memberNo}
  			,#{groomingNo}
  	)
@@ -562,7 +562,84 @@
 		)
  	
  	
+ 	</insert>
+ 	
+ 	
+ 	<delete id="groupDelete" parameterType="string">
+	 	DELETE FROM GBOARD
+	    WHERE G_BOARD_NO = #{gBoardNo}
+ 	</delete>
+ 	
+ 	<update id="updateGroupBoard" parameterType="GroupB">
+ 		UPDATE GBOARD SET
+ 		G_BOARD_CATEGORY = #{gBoardCategory},
+ 		G_BOARD_TITLE = #{gBoardTitle},
+ 		G_BOARD_CONTENT = #{gBoardContent},
+ 		G_BOARD_MODIFY_DATE = SYSDATE,
+ 		G_BOARD_IMG = #{gBoardImg}
+ 		WHERE G_BOARD_NO =#{gBoardNo}
+ 	</update>
+ 	<select id="selectGboardimg" parameterType="string" resultType="string">
+ 		SELECT G_BOARD_IMG
+ 		FROM GBOARD
+ 		WHERE G_BOARD_NO = #{gBoardNo}
+ 	
+ 	</select>
+ 	
+ 	<select id="selectReplyList" parameterType="string" resultMap="GroupReplyResultSet">
+ 	SELECT GR.*,MEMBER_NICKNAME,MEMBER_PHOTO
+	FROM G_REPLY GR
+	JOIN GBOARD GB ON GB.G_BOARD_NO = GR.G_BOARD_NO 
+	JOIN GROMMING_MEMBER GM ON GM.G_MEMBER_NO = GR.GROOMING_MEMBER_NO
+	JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+	WHERE GR.G_BOARD_NO = #{gBoardNo}
+ 	</select>
+ 	
+ 	
+ 	<select id="selectGBoardNo" parameterType="map" resultType="string">
+ 		SELECT GROOMING_MEMBER_NO
+	    FROM GBOARD GB
+	 	JOIN GROMMING_MEMBER GM ON GM.G_MEMBER_NO = GB.GROOMING_MEMBER_NO
+	    WHERE GM.MEMBER_NO = #{memberNo} AND GB.G_BOARD_NO=#{gBoardNo}
+ 	</select>
+ 	
+ 	
+ 	<insert id="addReply" parameterType="GReply">
+ 		INSERT INTO G_REPLY VALUES(
+ 		'GBR' || LPAD(SEQ_G_REPLY_NO.NEXTVAL,5,0)
+ 		,#{gBoardNo}
+ 		,#{gMemberNo}
+ 		,#{gReplyContent}
+ 		,DEFAULT
+ 		)
+ 	
  	
  	</insert>
  	
+ 	<select id="selectSave" parameterType="string" resultMap="groomingResultSet">
+	 	SELECT *
+		FROM GROOMING G
+		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
+		WHERE GROOMING_STATUS = 'N' AND G.MEMBER_NO = #{memberNo}
+ 	
+ 	</select>
+ 	
+ 	<update id="updateSaveGrooming" parameterType="Grooming">
+ 		UPDATE GROOMING
+ 		SET GROOMING_TYPE = #{groomingType},
+ 		GROOMING_TITLE = #{groomingTitle},
+ 		GROOMING_CONTENT = #{groomingContent},
+ 		GROOMING_INTRODUCE = #{groomingIntroduce},
+ 		GROOMING_PARTICIPANTS = #{groomingP},
+ 		STUDY_START_DATE = #{studySd},
+ 		STUDY_END_DATE = #{studyEd},
+ 		GROOMING_START_DATE = #{groomingSd},
+ 		GROOMING_END_DATE = #{groomingEd},
+ 		DEPOSIT_MONEY = #{money},
+ 		GROOMING_IMG = #{groomingImg},
+ 		GROOMING_MODIFY_DATE = SYSDATE,
+ 		GROOMING_STATUS = 'Y' 		
+ 		WHERE GROOMING_NO =#{groomingNo}
+ 	
+ 	</update>
 </mapper>

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <!-- Required meta tags -->
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        
 <!-- jQuery -->
 <script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-      
+        
 <!--datatable-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
       
@@ -39,7 +39,7 @@
     	<div class="row">
     		<div class="col-12">
         		<div class="container">
-					<div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons" style="margin:100px 0;">
+					<div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons" style="margin:100px 0; margin-bottom: 50px;" id="buttonGroup">
   						<label class="btn btn-outline-info active">
     						<input type="radio" id="showcommunityMain" onclick="showBoard(0);" autocomplete="off" checked> 커뮤니티
   						</label>
@@ -79,7 +79,7 @@
        				</div>		
        				
        				<div class="container"  id="StudyConfirm" style="display:none;">
- 						
+ 						<jsp:include page="../community/communityStudyConfirm.jsp" />
        				</div>	
        				
        				<div class="container"  id="QnA" style="display:none;">
@@ -95,8 +95,53 @@
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/r-2.2.5/sc-2.0.2/datatables.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
- 
+
+<input type="hidden" id="bCategoryNo" value="${bCategoryNo}">
+
 <script>
+	$(document).ready(function() {
+		var categoryVal = $("#bCategoryNo").val(),
+			showcommunityMain = $("#showcommunityMain"),
+			showNotice = $("#showNotice"),
+			showFreeBoard = $("#showFreeBoard"),
+			showStudyPromotion = $("#showStudyPromotion"),
+			showStudyConfirm = $("#showStudyConfirm"),
+			showQnA = $("#showQnA");
+		
+		[
+			showcommunityMain,
+			showNotice,
+			showFreeBoard,
+			showStudyPromotion,
+			showStudyConfirm,
+			showQnA
+		].forEach(function(btn){
+			btn.parents().removeClass('active');
+		})
+		
+		if(categoryVal == 'BC00001'){
+			showNotice.parents().addClass('active');
+			showBoard(1);
+			
+		}else if(categoryVal == 'BC00002'){
+			showFreeBoard.parents().addClass('active');
+			showBoard(2);
+			
+		}else if(categoryVal == 'BC00003'){
+			showStudyPromotion.parents().addClass('active');
+			showBoard(3);
+		
+		}else if(categoryVal == 'BC00005'){
+			showStudyConfirm.parents().addClass('active');
+			showBoard(4);
+		}else{
+			showcommunityMain.parents().addClass('active');
+			showBoard(0);
+		}
+		
+	});
+	
+
 	function showBoard(num){
 		if(num==0){
 			$("#communityMain").css("display","block");
@@ -105,6 +150,8 @@
 			$("#StudyPromotion").css("display","none");
 			$("#StudyConfirm").css("display","none");
 			$("#QnA").css("display","none");
+			
+			
 		}else if(num==1){
 			$("#Notice").css("display","block");
 			$("#communityMain").css("display","none");
@@ -112,6 +159,8 @@
 			$("#StudyPromotion").css("display","none");
 			$("#StudyConfirm").css("display","none");
 			$("#QnA").css("display","none");
+			
+			
 		}else if(num==2){
 			$("#FreeBoard").css("display","block");
 			$("#communityMain").css("display","none");
@@ -119,6 +168,7 @@
 			$("#StudyPromotion").css("display","none");
 			$("#StudyConfirm").css("display","none");
 			$("#QnA").css("display","none");
+			
 		}else if(num==3){
 			$("#StudyPromotion").css("display","block");
 			$("#communityMain").css("display","none");
@@ -126,6 +176,7 @@
 			$("#FreeBoard").css("display","none");
 			$("#StudyConfirm").css("display","none");
 			$("#QnA").css("display","none");
+			
 		}else if(num==4){
 			$("#StudyConfirm").css("display","block");
 			$("#communityMain").css("display","none");
@@ -133,6 +184,7 @@
 			$("#FreeBoard").css("display","none");
 			$("#StudyPromotion").css("display","none");
 			$("#QnA").css("display","none");
+			
 		}else{
 			$("#QnA").css("display","block");
 			$("#communityMain").css("display","none");
@@ -143,6 +195,15 @@
 		};
 	}
 </script>
+
+<%
+	
+	System.out.println("리스트 : " + request.getAttribute("list"));
+System.out.println("n리스트 : " + request.getAttribute("nlist"));
+System.out.println("f리스트 : " + request.getAttribute("flist"));
+System.out.println("q리스트 : " + request.getAttribute("qlist"));
+
+%>
 
 </body>
 </html>

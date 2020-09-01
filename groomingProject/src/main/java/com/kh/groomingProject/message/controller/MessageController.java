@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.message.model.exception.MessageException;
 import com.kh.groomingProject.message.model.service.MessageService;
 import com.kh.groomingProject.message.model.vo.Message;
 
@@ -153,14 +154,22 @@ public class MessageController {
 		
 		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
 		
-		ArrayList<Message> mList = msgService.loadChat(me);
+		int result = msgService.readChat(me);
 		
-		System.out.println("채팅  확인 : " + mList);
-				
-		response.setContentType("application/json;charset=utf-8");
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
-		gson.toJson(mList, response.getWriter());
+		System.out.println("채팅 읽음 표시 결과 : " + result);
+
+		if(result > 0) {
+			ArrayList<Message> mList = msgService.loadChat(me);
+			
+			System.out.println("채팅  확인 : " + mList);
+					
+			response.setContentType("application/json;charset=utf-8");
+			
+			Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
+			gson.toJson(mList, response.getWriter());
+		} else {
+			throw new MessageException("메시지 업데이트 실패");
+		}
 		
 	}
 

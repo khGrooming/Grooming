@@ -20,7 +20,13 @@ public interface CommunityService {
 
 	int communityDelete(String boardNo);
 
-	ArrayList<Reply> selectReplyList(String boardNo);
+	ArrayList<Reply> replySelectList(String boardNo);
+
+	int replyInsert(Reply reply, Member member);
+
+
+
+
 
 
 

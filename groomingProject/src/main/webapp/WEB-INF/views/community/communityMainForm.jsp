@@ -69,7 +69,7 @@
 	<!-- ------------------ 정렬 ------------------------- -->
 	<!-- ------------------ 게시글 리스트 ------------------- -->
 		<div class="container" align="center">
-			<table class="table table_ra">
+			<table class="table table-hover table_ra">
 				<thead>
 					<tr>
 						<th>글 번호</th>

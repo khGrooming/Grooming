@@ -399,9 +399,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				};
 			});
 			
-			  window.onbeforeunload = function(e) {
-			        return false;
-			    };
+		
 		</script>
 		<script>
 			// 파일 업로드 관련 script

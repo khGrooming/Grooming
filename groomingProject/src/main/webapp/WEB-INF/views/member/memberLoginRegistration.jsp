@@ -350,6 +350,12 @@ section .form_container .hideItem
 {
 	display: none;
 }
+@media (min-width: 0px) and (max-width: 750px)
+{
+	.form_container .imgBx { display: none; }
+	section .form_container .user .form-group { width: 100%; 
+	transition: 0s;}
+}
 </style>
 </head>
 <body>

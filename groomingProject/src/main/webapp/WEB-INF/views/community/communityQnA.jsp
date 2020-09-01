@@ -31,12 +31,13 @@
 			<input type="radio" id="rf_2_ra" name="filter_ra"><label for="rf_2_ra">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
 			<input type="radio" id="rf_3_ra" name="filter_ra"><label for="rf_3_ra">&nbsp;댓글순</label>&nbsp;&nbsp;&nbsp;
 			<input type="radio" id="rf_4_ra" name="filter_ra"><label for="rf_4_ra">&nbsp;채택순</label>&nbsp;&nbsp;&nbsp;
-			<input type="button" value="질문하기" class="btn btn-info" style="margin-left: 600px;"
+			<input type="button" value="질문하기" class="btn btn-info" style="float: right;"
 					onclick="location.href='communityInsertView.do?bCategoryNo=BC00005'">
 		</div>
+		<br>
 	<!-- ------------------ 게시판 -------------------------- -->
 		<div class="container" align="center">
-			<table class="table table_ra">
+			<table class="table table-hover table_ra">
 				<thead>
 					<tr>
 						<th>글 번호</th>

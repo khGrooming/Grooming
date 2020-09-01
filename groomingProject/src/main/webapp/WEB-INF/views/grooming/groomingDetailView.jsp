@@ -148,6 +148,7 @@ img {
 										<form action="declare.do" method="post">
 											<div class="modal-content" style="width: auto; height: auto;">
 											<input type="hidden" value="${grooming.groomingNo }" name="dnNo">
+											<input type="hidden" value="${grooming.groomingNo }" name="groomingNo">
 											<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
 												<!-- 모달 제목 -->
 												<div class="modal-header">
@@ -212,12 +213,9 @@ img {
 
 							<tr>
 								<td style="padding-right: 20px;">
-									<c:url var="profilePage" value="profilePage.do">
-										<c:param name="pfMemberNo" value="${member.memberNo}" />
-									</c:url>
 									<div class="pimg">
 										<img
-											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}" onclick="location.href='${profilePage}'">
+											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}">
 									</div>
 								</td>
 								<td>호스트 : <span>${member.memberNickName }</span><br> 태그:<c:forEach
@@ -472,6 +470,8 @@ img {
 			var groomingNo = "${grooming.groomingNo}";
 			var memberNo = "${loginUser.memberNo}";
 			var gmemberNo="${grooming.memberNo}";
+			var dmemberNo = "${declaration.memberNo}";
+			var dgroomingNo = "${declaration.dnNo}";
 			
 			if(gheart==""){
 				$("#nheart").on("click",function(){
@@ -500,9 +500,20 @@ img {
 		
 		
 			$("#apply").on("click",function(e){
-				if(memberNo == gmemberNo){
-					alert("자신의 글은 신고할 수 없습니다.");
-					$(this).attr("disabled",true)
+				var result = confirm("신고하시겠습니까?");
+				
+				if(result){
+					if(memberNo == gmemberNo){
+						alert("자신의 글은 신고할 수 없습니다.");
+						$(this).attr("disabled",true)
+					}
+					
+					if((memberNo == dmemberNo) && (groomingNo == dgroomingNo)){
+						alert("이미 신고하신 게시글 입니다.!");
+						$(this).attr("disabled",true)
+					}
+				}else{
+					event.stopImmediatePropagation();
 				}
 			})
 			

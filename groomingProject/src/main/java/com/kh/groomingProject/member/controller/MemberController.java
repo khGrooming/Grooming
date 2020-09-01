@@ -400,7 +400,7 @@ public class MemberController {
 		//TODO session 처리 방식 수정 필요할까?
 		status.setComplete();
 
-		return "home";
+		return "redirect:home.do";
 
 	}
 

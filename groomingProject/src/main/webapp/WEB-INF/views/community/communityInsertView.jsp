@@ -18,14 +18,22 @@
 <title>Grooming</title>
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-     
-<title>Insert title here</title>
+<script type="text/javascript"
+	src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
+<link
+	href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css"
+	rel="stylesheet">
+
 <style>
     /*datatable css*/
     div.dataTables_wrapper {
         width: 70rem;
         margin: 0 auto;
     }
+    section .form_container .study .bootstrap-tagsinput .badge {
+		margin: 0 3px;
+		font-weight: lighter;
+	}
 </style>
 </head>
 <body>
@@ -36,18 +44,27 @@
 				<form id="fm-notice" action="communityInsert.do" method="post" enctype="Multipart/form-data">
 					<table align="center">
 						<tr>
-							<td>제목</td>
+							<td style="text-align:left; vertical-align: middle;">제목</td>
 							<td><input type="text" class="form-control" size="50" name="boardTitle" placeholder="제목을 입력해 주세요"></td>
 						</tr>
 						<tr>
-							<td>작성자</td>
+							<td style="text-align:left; vertical-align: middle;">작성자</td>
 							<td><input type="text" class="form-control" name="memberNickName" value="${loginUser.memberNickName }" readonly></td>
 						</tr>
 						<tr>
-							<td>작성내용</td>
+							<td style="text-align:left; vertical-align: middle;">작성내용</td>
 							<td><textarea name="boardContent" id="summernote" rows="10" cols="80"></textarea></td>
 							<td><input type="hidden" name="memberNo" value="${loginUser.memberNo }"></td>
 							<td><input type="hidden" name="bCategoryNo" value="${bCategoryNo}"></td>
+						</tr>
+						<tr>
+							<td style="text-align:left; vertical-align: baseline;">해시 태그</td>
+							<td>	
+								<input type="text" name="tagName" value="" placeholder="Tags,"
+										data-role="tagsinput" class="form-control" id="tagName"
+										style="display: none;" required>
+										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small>
+							</td>				
 						</tr>
 						
 						<tr>
