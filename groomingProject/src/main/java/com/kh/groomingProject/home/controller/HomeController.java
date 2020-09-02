@@ -3,13 +3,9 @@ package com.kh.groomingProject.home.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.groomingProject.home.model.exception.HomeException;
 import com.kh.groomingProject.home.model.service.HomeService;
@@ -26,9 +21,6 @@ import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.home.model.vo.HomeHelp;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
-import com.kh.groomingProject.member.model.vo.Member;
-import com.kh.groomingProject.member.model.vo.MemberCertiCode;
-import com.kh.groomingProject.message.model.vo.Message;
 
 import static com.kh.groomingProject.common.HomePagination.getPageInfo;
 
@@ -134,5 +126,5 @@ public class HomeController {
 		}
 
 	}
-	
+
 }
