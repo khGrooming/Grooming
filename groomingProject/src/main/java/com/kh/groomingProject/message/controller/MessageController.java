@@ -191,21 +191,18 @@ public class MessageController {
 		
 		System.out.println("채팅 시작 유저번호 : " + m.getMemberNo());
 		
-		Member member = new Member();
-		
-		member = mService.findMember(m);
+		Member member = mService.findMember(m);
 		
 		Message message = new Message();
 		if(member != null) {
-			message.setFromMemberNickname(member.getMemberName());
+			message.setFromMemberNickname(member.getMemberNickName());
 			message.setFromMemberPhoto(member.getMemberPhoto());
 			message.setFromMemberNo(member.getMemberNo());
 		}
 		
 		response.setContentType("application/json;charset=utf-8");
 		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
-		gson.toJson(message, response.getWriter());
+		new Gson().toJson(message, response.getWriter());
 
 	}
 
