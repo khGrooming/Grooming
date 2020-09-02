@@ -658,8 +658,9 @@ section
 			var toMemberNo = "${loginUser.memberNo }";
 			var fromMemberNo = el.find("input[type=hidden].memberNo").val();
 			var fromMemberNickname = el.find("input[type=hidden].memberNickname").val();
+			var fromToChk = el.find("input[type=hidden].fromTo").val();
 			var fromMemberImg = el.find(".proFile_img").attr("src");
-			
+
 			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
 
 			// 채팅창 해더값 입력
@@ -672,6 +673,14 @@ section
 			el.addClass("active");
 
 			console.log("활성 챗 : " + activeChat);
+			console.log("fromToChk 챗 : " + fromToChk);
+
+			// 보내기만한 채팅방의 값을 변경해서 데이터 가져오기
+			if(fromToChk == "T"){
+				var temp = fromMemberNo;
+				fromMemberNo = toMemberNo;
+				toMemberNo = temp;
+			}
 			
 			// 채팅 데이터 가져오기
 			loadChatData(fromMemberNo,toMemberNo);
@@ -781,6 +790,7 @@ section
 						// 받은 메시지 없이
 						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].toMemberNo);
 						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].toMemberNickname);
+						var $ifromTo = $('<input>').addClass("fromTo").attr("type","hidden").val("T");	// 채팅방 구별용
 						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].toMemberPhoto,"onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
 						var $h5Nickname = $('<h5>').text(data[i].toMemberNickname);
 					} else {	// 상호 채팅
@@ -789,6 +799,7 @@ section
 						}
 						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].fromMemberNo);
 						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].fromMemberNickname);
+						var $ifromTo = $('<input>').addClass("fromTo").attr("type","hidden").val("F");
 						var $proFile_img = $('<img>').addClass("proFile_img").attr({"alt":"프로필사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].fromMemberPhoto,"onerror":"this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'"});
 						var $h5Nickname = $('<h5>').text(data[i].fromMemberNickname);
 					}
