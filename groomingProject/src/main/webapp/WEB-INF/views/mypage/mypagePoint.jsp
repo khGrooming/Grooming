@@ -12,7 +12,7 @@
 #content {
 	width: 75%;
 	height: 800px;
-	margin: 3% auto;
+	margin: 0 auto;
 }
 
 .flip-card {

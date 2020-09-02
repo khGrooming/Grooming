@@ -2,6 +2,8 @@ package com.kh.groomingProject.mypage.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
@@ -72,6 +74,14 @@ public interface MypageService {
 	int insertPoint(MyPagePoint insertPoint);
 
 	int insertMemberReport(MemberReport mr);
+
+	ArrayList<Board> selectMemberBoardList(String mNo, MyPagePageInfo pi);
+
+	int selectMyCommunityCount(String mNo);
+
+	int selectMyReplyCount(String mNo);
+
+	ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi);
 
 
 }
