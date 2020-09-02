@@ -9,11 +9,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -28,10 +30,11 @@ public class GroomingDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	public ArrayList<Grooming> selectList() {
+	public ArrayList<Grooming> selectList(GroomingPageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList");
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList",null,rowBounds);
 	}
 
 	public ArrayList<Grooming> selectMentorList( ) {
@@ -298,6 +301,21 @@ public class GroomingDao {
 	public int updateSaveGrooming(Grooming g) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.updateSaveGrooming",g);
+	}
+
+	public int getGroomingListCount() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGroomingListCount");
+	}
+
+	public String getGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGMemberNo",map);
+	}
+
+	public ArrayList<GCheck> checkList(Map hashmap) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.checkList",hashmap);
 	}
 	
 	

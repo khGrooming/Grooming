@@ -3,7 +3,7 @@ package com.kh.groomingProject.common;
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 
 public class GroomingPagination {
-	public static GroomingPageInfo getPageInfo(int currentPage, int listCount) {
+	public static GroomingPageInfo getPageInfoG(int currentPage, int listCount) {
 		GroomingPageInfo pi = null;
 		
 		int pageLimit = 10;
@@ -11,7 +11,7 @@ public class GroomingPagination {
 		int startPage;
 		int endPage;
 		
-		int boardLimit = 5;
+		int boardLimit = 8;
 		
 		maxPage = (int)((double)listCount/boardLimit + 0.9);
 		

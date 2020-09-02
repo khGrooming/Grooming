@@ -77,7 +77,7 @@
         <!--디폴트 메뉴-->
         <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label>
 
-        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>캘린더</a></label>
+        <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>출석부</a></label>
 
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
