@@ -504,7 +504,7 @@ section
                 </div>
                 
 				<div class="mesgs_header">
-					<input type="hidden" class="toMemberNo" value=""></input>
+					<input type="hidden" class="memberNo" value=""></input>
 					<div class="mesgs_header_img">
 						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/views/images/grooming_logo(100x100).png"
 							onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
@@ -581,16 +581,18 @@ section
 			loadChatListData();
 			
 			// 테스트 중
-			/* setInterval(function(){
+			setInterval(function(){
 				loadChatListData();
 				
-				if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() != ""){
+				if($(".mesgs_header").find("input[type=hidden].memberNo").val() != ""){
+					console.log("인터벌 챗 가져오기");
 					// 전송 값 변수 저장
-					var fromMemberNo = "${loginUser.memberNo }";
-					var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
+					var fromMemberNo = $(".mesgs_header").find("input[type=hidden].memberNo").val();
+					var toMemberNo = "${loginUser.memberNo }";
+					
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000); */
+			}, 5000);
 		});
 	</script>
 
@@ -632,7 +634,7 @@ section
 						$("div").remove(".outgoing_msg");
 						$("div").remove(".date_divider_msg");
 						
-						$(".mesgs_header input.toMemberNo").val(data.fromMemberNo);
+						$(".mesgs_header input.memberNo").val(data.fromMemberNo);
 						$(".mesgs_header img.proFile_img").attr("src","${contextPath }/resources/upprofileFiles/"+data.fromMemberPhoto);
 						$(".mesgs_header p.mesgs_nickname").text(data.fromMemberNickname);
 						
@@ -664,7 +666,7 @@ section
 			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
 
 			// 채팅창 해더값 입력
-			$(".mesgs_header input.toMemberNo").val(fromMemberNo);
+			$(".mesgs_header input.memberNo").val(fromMemberNo);
 			$(".mesgs_header img.proFile_img").attr("src",fromMemberImg);
 			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
 			
@@ -859,7 +861,7 @@ section
 			if($.trim($(".write_msg").val()) == ""){
 				console.log("내용을 입력해 주세요.");
 				return;
-			} if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() == ""){
+			} if($(".mesgs_header").find("input[type=hidden].memberNo").val() == ""){
 				$(".search_bar").focus();
 				alert("닉네임을 적은 후 메시지를 입력하세요.");
 				return;
@@ -867,10 +869,10 @@ section
 
 			// 전송 값 변수 저장
 			var fromMemberNo = "${loginUser.memberNo }";
-			var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
+			var toMemberNo = $(".mesgs_header").find("input[type=hidden].memberNo").val();
 			var messageContent = $(".write_msg").val();
 
-			console.log("[전송] " + "from: " + fromMemberNo + " to: " + toMemberNo + " 내용: "  + messageContent);
+			console.log("[전송] " + fromMemberNo + "이 " + toMemberNo + "에게 "  + messageContent);
 
 			// 채팅 보내기
 			$.ajax({

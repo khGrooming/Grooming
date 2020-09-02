@@ -20,7 +20,7 @@
 		INSERT INTO MESSAGE (MESSAGE_NO, FROM_MEMBER_NO, TO_MEMBER_NO, MESSAGE_CONTENT, MESSAGE_DATE, FROM_M_CONFIRM, TO_M_CONFIRM)
 			VALUES ('MSG' || LPAD(SEQ_MESSAGE_NO.NEXTVAL,5,0)
 					, #{fromMemberNo}, #{toMemberNo}, #{messageContent}
-					,SYSDATE, DEFAULT, DEFAULT)
+					,SYSDATE, 'Y', DEFAULT)
 	</insert>
 
 	<select id="getUserMessagesCount" parameterType="Member" resultType="_int">
