@@ -125,4 +125,6 @@ public interface GroomingService {
 
 	ArrayList<GCheck> checkList(Map hashmap);
 
+	int insertCheck(GCheck g);
+
 }

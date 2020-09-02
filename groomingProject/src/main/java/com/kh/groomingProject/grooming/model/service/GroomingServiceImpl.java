@@ -357,6 +357,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.checkList(hashmap);
 	}
 
+	@Override
+	public int insertCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return gDao.insertCheck(g);
+	}
+
 
 	
 }

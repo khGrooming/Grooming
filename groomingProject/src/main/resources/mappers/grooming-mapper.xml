@@ -672,4 +672,19 @@
 
  	</select>
  	
+ 	<insert id="insertCheck" parameterType="GCheck" >
+ 	INSERT INTO G_CHECK VALUES(
+ 			'GN' || LPAD(SEQ_G_CHECK_NO.NEXTVAL,5,0)
+ 			, #{groomingNo}
+ 			, #{gMemberNo}
+ 			, #{gCheckStatus}
+ 			, #{gCheckDate}
+ 		)
+ 	
+	</insert>
+ 	
+ 	
+ 	
+ 	
+ 	
 </mapper>
