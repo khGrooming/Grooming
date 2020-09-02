@@ -533,6 +533,7 @@
 		});
 	</script>
 	
+	<!-- 로그인 유저 세션 갱신 -->
 	<script type="text/javascript">
 		function refreshLoginUser() {
 			var memberNo = "${loginUser.memberNo}";
@@ -553,11 +554,12 @@
 	
 	<!-- 메시지 스크립트 -->
  	<script type="text/javascript">
+ 		// 채팅 페이지로 이동
  		$(".messageBtn").on("click", function() {
 			location.href="messagePage.do?memberNo=${loginUser.memberNo}";
 			return false;
 		});
- 	
+
 		// 메시지 카운트
 		function getUserMessages() {
 			var memberNo = "${loginUser.memberNo}";
@@ -566,11 +568,10 @@
 				data:{memberNo:memberNo},
 				success:function(data){
 					console.log("메시지 카운트 : " + data);
-					
-					var $messagesIcon = $(".main_messages_icon");
-					
+
 					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
+						var $messagesIcon = $(".main_messages_icon");
 						var $messagesCountDiv = $("<div>").addClass("main_messages_txt").text(data);
 
 						$messagesIcon.prepend($messagesCountDiv);
@@ -581,7 +582,7 @@
 				}
 			});
 		}
-		
+
 		// 메시지 읽음 fn & ajax
 		(function ($) {
             $.fn.readMessage = function() {
@@ -618,37 +619,34 @@
                 });
             };
         })(jQuery);
-		
+
 		// 메시지 리스트 생성
 		function refreshMessageBody(data) {
 			$("div").remove(".mbody_container");
+			var $main_messages_body_container = $(".main_messages_body_container");
+			var $mbody_container = $('<div>').addClass("mbody_container");
+			var $messages_body = $('<div>').addClass("main_messages_body");
 			// 메시지 내용 추가
 			if(data.length > 0) {
 				console.log("메시지 추가");
 				for(var i in data){
-					var $main_messages_body_container = $(".main_messages_body_container");
-					var $mbody_container = $('<div>').addClass("mbody_container");
-					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
 					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
 					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
-					
+
 					$messages_bodyFrom.prepend($messages_Img);
 					$messages_body.append($messages_bodyInput);
 					$messages_body.append($messages_bodyFrom);
 					$messages_body.append($messages_bodyContent);
 					$messages_body.append($messages_bodyTime);
 					$mbody_container.append($messages_body);
-					
+
 					$main_messages_body_container.append($mbody_container);
 				}
 			} else {
 				console.log("메시지 없음");
-				var $main_messages_body_container = $(".main_messages_body_container");
-				var $mbody_container = $('<div>').addClass("mbody_container");
-				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $messages_bodyContent = $('<div>').text("아직 메시지가 없습니다!");
 				
@@ -735,7 +733,7 @@
             			var memberNo = "${loginUser.memberNo}";
 
             			console.log("읽을 알람 번호 : " + alertNo);
-            			
+
             			// 알림 삭제
             			$.ajax({
             				url:"readUserAlert.do",
@@ -757,13 +755,13 @@
 		// 알림 리스트 생성
 		function refreshAlertBody(data) {
 			$("div").remove(".abody_container");
+			var $main_alerts_body_container = $(".main_alerts_body_container");
+			var $abody_container = $('<div>').addClass("abody_container");
+			var $alerts_body = $('<div>').addClass("main_alerts_body");
 			// 알림 내용 추가
 			if(data.length > 0) {
 				console.log("알림 추가");
 				for(var i in data){
-					var $main_alerts_body_container = $(".main_alerts_body_container");
-					var $abody_container = $('<div>').addClass("abody_container");
-					var $alerts_body = $('<div>').addClass("main_alerts_body");
 					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
 					var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
 					var $alerts_bodyTime = $('<div>').addClass("main_aBody_time").text(data[i].alertCreateDate);
@@ -777,9 +775,6 @@
 				}
 			} else {
 				console.log("알림 없음");
-				var $main_alerts_body_container = $(".main_alerts_body_container");
-				var $abody_container = $('<div>').addClass("abody_container");
-				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
 				
