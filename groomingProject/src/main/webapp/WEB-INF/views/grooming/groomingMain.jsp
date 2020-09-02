@@ -174,7 +174,7 @@
 		                            <c:url var="gdetail" value="groomingDetail.do">
 										<c:param name="groomingNo" value="${g.groomingNo }"/>
 										<c:param name="memberNo" value="${loginUser.memberNo }"/> 
-										<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
+									 	<c:param name="page" value="${pi.currentPage }"/> 
 										<!-- 현재 보던 페이지 정보도 넘기자 -->
 									</c:url>
 		                            <h5 class="card-title"><a href="${gdetail }">${g.groomingTitle }</a></h5>
@@ -198,8 +198,51 @@
   
         </div>
         
-        
-        
+        <table align="center">
+        	<!-- 페이징 처리 부분 -->
+		<tr align="center" height="20">	
+			<td colspan="6">
+		<!-- [이전] -->
+				<c:if test="${pi.currentPage eq 1 }">
+					[이전]&nbsp;
+				</c:if>			
+				<c:if test="${pi.currentPage gt 1 }">
+				<c:url var="glistBack" value="groomingMain.do">
+					<c:param name="page" value="${pi.currentPage - 1 }"/>
+					<c:param name="memberNo" value="${loginUser.memberNo}"/>
+				</c:url>
+					<a href="${glistBack }">[이전]</a>
+				</c:if>	
+		<!-- [번호들] -->
+				<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
+					<c:if test="${p eq pi.currentPage }">
+						<font color="red" size="4">
+							<b>[${p}]</b>
+						</font>
+					</c:if>
+					
+					<c:if test="${p ne pi.currentPage }">
+						<c:url var="glistCheck" value="groomingMain.do">
+							<c:param name="page" value="${p}"/>
+							<c:param name="memberNo" value="${loginUser.memberNo}"/>
+						</c:url>
+						<a href="${ glistCheck}">${p }</a>
+					</c:if>
+				</c:forEach>
+		<!-- [이후] -->
+				<c:if test="${pi.currentPage eq pi.maxPage }">
+					&nbsp;[이후]
+				</c:if>			
+				<c:if test="${pi.currentPage lt pi.maxPage }">
+				<c:url var="glistAfter" value="groomingMain.do">
+					<c:param name="page" value="${pi.currentPage + 1 }"/>
+					<c:param name="memberNo" value="${loginUser.memberNo}"/>
+				</c:url>
+					<a href="${glistAfter }">[이후]</a>
+				</c:if>	
+			</td>
+		</tr>
+	</table>
         
         
         

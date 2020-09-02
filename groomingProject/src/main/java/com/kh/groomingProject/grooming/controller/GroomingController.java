@@ -1,6 +1,7 @@
 package com.kh.groomingProject.grooming.controller;
 
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
+import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +28,13 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
+import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -59,11 +62,17 @@ public class GroomingController {
 
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
-	public ModelAndView groomingList(ModelAndView mv, String memberNo) {
-
-		ArrayList<Grooming> glist = gService.selectList();
-		Grooming selectG = gService.select(memberNo);
-		Grooming selectS = gService.selectSave(memberNo);
+	public ModelAndView groomingList(ModelAndView mv, String memberNo,@RequestParam(value="page", required=false) Integer page) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = gService.getGroomingListCount();
+		
+		GroomingPageInfo pi = getPageInfoG(currentPage, listCount);
+		
+		ArrayList<Grooming> glist = gService.selectList(pi);
+	
 		/* System.out.println("나 glist야 " +glist); */
 		int result = 0;
 		for (int i = 0; i < glist.size(); i++) {
@@ -83,7 +92,7 @@ public class GroomingController {
 		}
 		System.out.println("나 result" + result);
 		if (glist != null) {
-			mv.addObject("glist", glist).addObject("selectG", selectG).addObject("selectS", selectS).setViewName("grooming/groomingMain");
+			mv.addObject("glist", glist).addObject("pi", pi).setViewName("grooming/groomingMain");
 		} else {
 			throw new GroomingException("리스트 불러오기 실패!");
 		}
@@ -234,9 +243,10 @@ public class GroomingController {
 
 	// 그루밍 상세보기
 	@RequestMapping("groomingDetail.do")
-	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo) {
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo,@RequestParam("page") Integer page) {
 
 		int result = gService.addReadCount(groomingNo);
+		int	currentPage = page;
 		System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
@@ -258,7 +268,7 @@ public class GroomingController {
 			if (grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
 						.addObject("member", member).addObject("appList", appList)
-						.addObject("memberNoList", memberNoList).addObject("heart", heart)
+						.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
 						.setViewName("grooming/groomingDetailView");
 			} else {
 				throw new GroomingException("조회실패!");
@@ -319,7 +329,7 @@ public class GroomingController {
 	}
 
 	@RequestMapping("groomingUpdate.do")
-	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo) {
+	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
 //		System.out.println("나 tlist야" +tlist);
 		Grooming grooming = gService.selectGrooming(groomingNo);
@@ -331,7 +341,7 @@ public class GroomingController {
 			}
 		}
 		if (grooming != null && tlist != null) {
-			mv.addObject("grooming", grooming).addObject("tlist", str).setViewName("grooming/groomingUpdateForm");
+			mv.addObject("grooming", grooming).addObject("tlist", str).addObject("currentPage",page).setViewName("grooming/groomingUpdateForm");
 		} else {
 			throw new GroomingException("수정 게시글 불러오기 실패!");
 		}
@@ -341,7 +351,7 @@ public class GroomingController {
 
 	@RequestMapping("gUpdate.do")
 	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
-			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
 
 		String renameFileName = "";
 		// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
@@ -399,7 +409,7 @@ public class GroomingController {
 
 		System.out.println("나 수정 됬어요~" + result);
 		if (result > 0 && result1 > 0 && result2 > 0) {
-			mv.setViewName("redirect:groomingMain.do");
+			mv.addObject("page",page).setViewName("redirect:groomingMain.do");
 
 		} else {
 			throw new GroomingException("게시글 수정 실패!");
@@ -437,15 +447,17 @@ public class GroomingController {
 		if (result > 0) {
 			return "redirect:groomingMain.do";
 		} else {
-			throw new GroomingException("게시글 삭제 실패!");
+			throw new GroomingException("게시글 마감 실패!");
 		}
 	}
 
 	@RequestMapping("applyContent.do")
-	public String applyContent(GroomingApplicant ga) {
+	public String applyContent(GroomingApplicant ga,String money) {
 		System.out.println("나 ga" + ga);
 		int result = gService.applyContent(ga);
-
+		/*
+		 * if(money != "") { int result1 = gService.minusMoney() }
+		 */
 		if (result > 0) {
 			return "redirect:groomingMain.do";
 		} else {
@@ -712,21 +724,7 @@ public class GroomingController {
 		return mv;
 	}
 
-	@RequestMapping("calendar.do")
-	public ModelAndView calendar(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
-			String groomingNo) {
-
-		Grooming grooming = gService.selectGrooming(groomingNo);
-		// 페이징 관련 처리부터 하자
-		int currentPage = 1;
-		if (page != null) {
-			currentPage = page;
-		}
-
-		mv.addObject("grooming", grooming).setViewName("grooming/groupCalendar");
-
-		return mv;
-	}
+	
 
 	@RequestMapping("groupBoardInsertForm.do")
 	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo, String memberNo,
@@ -1056,7 +1054,49 @@ public class GroomingController {
 			
 		}
 		
+		@RequestMapping("calendar.do")
+		public ModelAndView calendar(ModelAndView mv, String groomingNo) {
+
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			
 		
 		
+		 
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+
+			  
+			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+
+			return mv;
+		}
+		@RequestMapping("checkList.do")
+		@ResponseBody
+		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+		/*	for(int i=0; i<memberNickName.length; i++) {*/
+			Map map  = new HashMap();
+			map.put("groomingNo",groomingNo);
+			map.put("memberNickName", memberNickName);
+			
+			String gMemberNo = gService.getGMemberNo(map);
+			
+			Map hashmap  = new HashMap();
+			hashmap.put("groomingNo",groomingNo);
+			hashmap.put("gMemberNo", gMemberNo);
+			 
+			ArrayList<GCheck> gCheck = gService.checkList(hashmap);
+		 
+			Gson gson = new GsonBuilder().setDateFormat("yyyy MM-dd").create();
+			gson.toJson(gCheck, response.getWriter());
+			
+		}
 	  
 }

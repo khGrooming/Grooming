@@ -158,18 +158,14 @@ public class MessageController {
 		
 		System.out.println("채팅 읽음 표시 결과 : " + result);
 
-		if(result > 0) {
-			ArrayList<Message> mList = msgService.loadChat(me);
-			
-			System.out.println("채팅  확인 : " + mList);
-					
-			response.setContentType("application/json;charset=utf-8");
-			
-			Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
-			gson.toJson(mList, response.getWriter());
-		} else {
-			throw new MessageException("메시지 업데이트 실패");
-		}
+		ArrayList<Message> mList = msgService.loadChat(me);
+		
+		System.out.println("채팅  확인 : " + mList);
+				
+		response.setContentType("application/json;charset=utf-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일,a hh시mm분").create();
+		gson.toJson(mList, response.getWriter());
 		
 	}
 

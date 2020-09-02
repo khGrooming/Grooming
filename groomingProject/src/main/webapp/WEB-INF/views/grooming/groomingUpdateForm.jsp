@@ -241,6 +241,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 			<c:url var="groomingUpdate" value="gUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
+				<c:param name="page" value="${currentPage }"/>
 			</c:url>
 			
 			<form action="${groomingUpdate }" method="post" enctype="multipart/form-data">

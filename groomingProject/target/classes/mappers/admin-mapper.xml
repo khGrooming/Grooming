@@ -10,6 +10,8 @@
 		<result property="memberPhone" column="MEMBER_PHONE"/>
 		<result property="point" column="POINT"/>
 		<result property="sanctions" column="SANCTIONS"/>
+		<result property="dCount" column="DCOUNT"/>
+		<result property="totalCount" column="TOTALCOUNT"/>
 	</resultMap>
 	
 	<resultMap type="MentoManageView" id="mentoViewResultSet">
@@ -37,9 +39,17 @@
 		<result property="gCalendarStartDate" column="G_CALENDAR_START_DATE"/>
 		<result property="gBoardModifyDate" column="G_BOARD_MODIFY_DATE"/>
 	</resultMap>
-
-
 	
+	<resultMap type="DeclarationManageView" id="declarationViewResultSet">
+		<id property="declarationNo" column="DECLARATION_NO"/>
+		
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="declarationCNo" column="DECLARATION_C_NO"/>
+		<result property="declarationNNo" column="DECLARATION_N_NO"/>
+		<result property="declarationContent" column="DECLARATION_CONTENT"/>
+		<result property="declarationCheck" column="DECLARATION_CHECK"/>
+	</resultMap>
+
 	<select id="memberListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER_MANAGE
@@ -160,5 +170,71 @@
 		<if test="category != null">
 			AND GROOMING_TYPE = #{category}
 		</if>
+	</select>
+	
+	<select id="selectDeclarationMember" parameterType="java.util.List" resultMap="memberViewResultSet">
+		SELECT DISTINCT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, M.POINT, COUNT(D.DECLARATION_N_NO)
+		FROM MEMBER_MANAGE M
+		JOIN DECLARATION D ON(M.MEMBER_NO=D.DECLARATION_N_NO)
+		WHERE D.DECLARATION_CHECK = 'N'
+			<foreach item="dMemberList" index="index" collection="list"
+					open="AND (" separator="OR" close=")">
+					<if test="dMemberList.memberNo != null">
+						D.DECLARATION_N_NO = #{dMemberList.memberNo} 
+					</if>
+			</foreach>
+		GROUP BY M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, M.POINT
+		ORDER BY COUNT(D.DECLARATION_N_NO) DESC
+	</select>
+	
+	<select id="selectDMemberCount" resultMap="memberViewResultSet">
+		SELECT DISTINCT DECLARATION_N_NO AS MEMBER_NO
+		FROM DECLARATION
+		WHERE DECLARATION_CHECK = 'N'
+	</select>
+	
+	<select id="selectDeclarationCount" resultType="_int">
+		SELECT COUNT(DISTINCT DECLARATION_N_NO)
+		FROM DECLARATION
+		WHERE DECLARATION_CHECK = 'N'
+	</select>
+	
+	<select id="selectDeclarationList" resultMap="declarationViewResultSet">
+		SELECT *
+		FROM DECLARATION
+		WHERE DECLARATION_CHECK = 'N'
+		<foreach item="dMemberList" index="index" collection="list"
+				open="AND (" separator="OR" close=")">
+				<if test="dMemberList.memberNo != null">
+					DECLARATION_N_NO = #{dMemberList.memberNo} 
+				</if>
+		</foreach>
+	</select>
+	
+	<select id="selectTotalCount" parameterType="java.util.List" resultMap="memberViewResultSet">
+		SELECT DECLARATION_N_NO MEMBER_NO, COUNT(DECLARATION_N_NO) AS TOTALCOUNT
+		FROM DECLARATION
+		<where>
+			<foreach item="dMemberList" index="index" collection="list"
+					open="(" separator="OR" close=")">
+					<if test="dMemberList.memberNo != null">
+						DECLARATION_N_NO = #{dMemberList.memberNo} 
+					</if>
+			</foreach>
+		</where>
+		GROUP BY DECLARATION_N_NO
+	</select>
+	
+	<select id="selectDCount" parameterType="java.util.List" resultMap="memberViewResultSet">
+		SELECT DECLARATION_N_NO MEMBER_NO, COUNT(DECLARATION_N_NO) AS DCOUNT
+		FROM DECLARATION
+		WHERE DECLARATION_CHECK = 'N'
+			<foreach item="dMemberList" index="index" collection="list"
+					open="AND (" separator="OR" close=")">
+					<if test="dMemberList.memberNo != null">
+						DECLARATION_N_NO = #{dMemberList.memberNo} 
+					</if>
+			</foreach>
+		GROUP BY DECLARATION_N_NO
 	</select>
 </mapper>

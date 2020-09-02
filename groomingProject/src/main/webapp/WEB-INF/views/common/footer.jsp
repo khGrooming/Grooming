@@ -39,7 +39,7 @@ footer
 	margin: 0.2rem 0.5rem 0.2rem auto;
     padding: .3rem 1rem;
     display: block;
-   	border: thin solid #343a40;
+   	/* border: thin solid #343a40; */
 }
 .footer_container .footer_navbar .footer_question
 {
@@ -91,73 +91,78 @@ footer .modal .modal-content {
 footer .modal .close {
 	color: white;
 	float: right;
-	font-size: 28px;
+	font-size: 2rem;
 	font-weight: bold;
 }
 
 footer .modal .close:hover,
-footer .modal .close:focus {
+footer .modal .close:focus
+{
 	color: #000;
 	text-decoration: none;
 	cursor: pointer;
 }
-
-footer .modal .modal-header {
-	padding: 2px 16px;
+footer .modal .modal_header
+{
+    padding: 0.4rem;
+    display: flex;
+    justify-content: space-between;
 	background-color: #5cb85c;
 	color: white;
 }
-
-footer .modal .modal-body
+footer .modal .modal_header h2
+{
+    margin: 0;
+}
+footer .modal .modal_header #footer_qModal_Btn_close
+{
+	line-height: 1rem;
+    font-size: 2rem;
+    margin: 0.4rem;
+	cursor: pointer;
+}
+footer .modal .modal_body
 {
 	display: grid;
 	padding: 2px 16px;
 	margin: 1rem;
 }
-footer .modal .modal-body p
+footer .modal .modal_body p
 {
 	margin: 1rem 0 0.3rem;
 }
-footer .modal .modal-body textarea
+footer .modal .modal_body textarea
 {
 	resize:none;
 	line-height: 1.2rem;
-	/* overflow-y:hidden; */
 	height: 5rem;
 	max-height: 20rem;
 }
-
-footer .modal .modal-footer {
-	padding: 2px 16px;
+footer .modal .modal_footer
+{
+	padding: 0.2rem 1rem;
 	background-color: #5cb85c;
 	color: white;
 }
-footer .modal .modal-footer button {
+footer .modal .modal_footer button {
     border: none;
     outline: none;
+	display: flex;
+    margin-left: auto;
 }
-footer .modal .modal-footer {
-	padding: 2px 16px;
-	background-color: #5cb85c;
-	color: white;
-}
-
 /* Add Animation */
 @-webkit-keyframes slideIn {
 	from {bottom: -300px; opacity: 0} 
 	to {bottom: 0; opacity: 1}
 }
-
 @keyframes slideIn {
 	from {bottom: -300px; opacity: 0}
 	to {bottom: 0; opacity: 1}
 }
-
 @-webkit-keyframes fadeIn {
 	from {opacity: 0} 
 	to {opacity: 1}
 }
-
 @keyframes fadeIn {
 	from {opacity: 0} 
 	to {opacity: 1}
@@ -171,11 +176,11 @@ footer .modal .modal-footer {
 		
 			<!-- Modal content -->
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal_header">
 					<h2>문의 하기</h2>
 					<span id="footer_qModal_Btn_close">&times;</span>
 				</div>
-				<div class="modal-body">
+				<div class="modal_body">
 					<p>이메일 <small>답변 받을 이메일을 정확하게 적어주세요.</small></p>
 					<input type="text" id="footer_qModal_email" required>
 					<p>카테고리를 선택해 주세요.</p>
@@ -191,7 +196,7 @@ footer .modal .modal-footer {
 					<p>문의 내용</p>
 					<textarea id="footer_qModal_content" onkeyup="this.style.height='5rem'; this.style.height = this.scrollHeight/16 + 'rem';" required></textarea>
 				</div>
-				<div class="modal-footer">
+				<div class="modal_footer">
 					<button type="button" id="footer_siteQuestion">전송</button>
 				</div>
 			</div>

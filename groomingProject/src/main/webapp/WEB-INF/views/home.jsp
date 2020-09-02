@@ -763,10 +763,18 @@ body{ background-color: #f2f2f2; }
 				// tags
 				var $card_tags = $('<div>').addClass("card_tags");
 				var $tag_wrap = $('<div>');
-				var $tagsinput = $('<input>').addClass("form-control").attr({"type":"text","name":"memberTagName","placeholder":"Tags,","data-role":"tagsinput"}).val(data[i].groomingTagName);
+				
+				var $bTagsinput = $('<div>').addClass("bootstrap-tagsinput");
+
+				var tagName = (data[i].groomingTagName).split(",");
+				for(var j in tagName){
+					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[j]);
+					$bTagsinput.append($sBadge);
+				}
+				
 				$card_body.append($card_tags);
 				$card_tags.append($tag_wrap);
-				$tag_wrap.append($tagsinput);
+				$tag_wrap.append($bTagsinput);
 
 				// intro
 				var $card_intro = $('<div>').addClass("card_intro").text(data[i].groomingIntroduce);

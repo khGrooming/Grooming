@@ -48,6 +48,7 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupMember" alias="GroupM"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupBoard" alias="GroupB"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GReply" alias="GReply"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GCheck" alias="GCheck"/>
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
@@ -60,6 +61,7 @@
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
 	</typeAliases>
 	
 	<mappers>
