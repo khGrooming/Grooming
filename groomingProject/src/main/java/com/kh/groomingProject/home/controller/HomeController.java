@@ -103,6 +103,8 @@ public class HomeController {
 
 		ArrayList<HomeGrooming> gAList = getAllGroomingList(currentPage);
 
+		System.out.println("메시지 리스트 확인 :" + gAList);
+		
 		response.setContentType("application/json;charset=utf-8");
 
 		new Gson().toJson(gAList, response.getWriter());

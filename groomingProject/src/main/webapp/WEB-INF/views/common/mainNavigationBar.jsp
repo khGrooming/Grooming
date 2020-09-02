@@ -524,13 +524,13 @@
 				getUserMessages();
 
 				// 테스트 중
-				setInterval(function(){
+				/* setInterval(function(){
 					getUserAlert();
 					getUserMessages();
 				}, 10000);
 				setInterval(function(){
 					refreshLoginUser();
-				}, 100000);
+				}, 100000); */
 			}
 		});
 	</script>

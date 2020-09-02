@@ -767,8 +767,8 @@ body{ background-color: #f2f2f2; }
 				var $bTagsinput = $('<div>').addClass("bootstrap-tagsinput");
 
 				var tagName = (data[i].groomingTagName).split(",");
-				for(var i in tagName){
-					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[i]);
+				for(var j in tagName){
+					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[j]);
 					$bTagsinput.append($sBadge);
 				}
 				
