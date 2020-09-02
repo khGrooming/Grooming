@@ -14,6 +14,7 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 @Repository
@@ -114,6 +115,34 @@ public class AdminDao {
 	public ArrayList<MemberManageView> selectDCount(ArrayList<MemberManageView> dMemberList) {
 
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectDCount", dMemberList);
+	}
+
+	public int cafeInfoChange(CafeInfo cafe) {
+		int num1 = sqlSessionTemplate.update("adminMapper.cafeInfoChange", cafe);
+		
+		int num2 = sqlSessionTemplate.update("adminMapper.cafePriceInfoChange", cafe);
+		
+		if(num1 < 0 || num2 < 0) {
+			return 0;
+		}else {
+			return 1;
+		}
+	}
+
+	public int insertCafeInfo(CafeInfo cafe) {
+		int num1 = sqlSessionTemplate.insert("adminMapper.insertCafeInfo",cafe);
+		
+		String cafeNo = sqlSessionTemplate.selectOne("adminMapper.selectCafeNo", cafe);
+		cafe.setCafeNo(cafeNo);
+		System.out.println("Dao에서 cafeInfo : "+cafe);
+		
+		int num2 = sqlSessionTemplate.insert("adminMapper.insertCafePriceInfo", cafe);
+		
+		if(num1 < 0 || num2 < 0) {
+			return 0;
+		}else {
+			return 1;
+		}
 	}
 
 	

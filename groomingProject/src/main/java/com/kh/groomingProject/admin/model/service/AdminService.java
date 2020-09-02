@@ -8,6 +8,7 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 public interface AdminService {
@@ -41,6 +42,10 @@ public interface AdminService {
 	ArrayList<MemberManageView> selectTotalCount(ArrayList<MemberManageView> dMemberList);
 
 	ArrayList<MemberManageView> selectDCount(ArrayList<MemberManageView> dMemberList);
+
+	int cafeInfoChange(CafeInfo cafe);
+
+	int insertCafeInfo(CafeInfo cafe);
 
 	
 

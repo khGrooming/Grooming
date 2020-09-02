@@ -2,9 +2,12 @@ package com.kh.groomingProject.admin.controller;
 
 import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
@@ -19,12 +25,18 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
+import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
+import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 @Controller
 public class AdminController {
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	StudyCafeService studyCafeService;
 	
 	@RequestMapping("adminMain.do")
 	public String goMain() {
@@ -171,14 +183,7 @@ public class AdminController {
 		
 		ArrayList<MemberManageView> dCount = adminService.selectDCount(dMemberList);
 		ArrayList<MemberManageView> totalCount = adminService.selectTotalCount(dMemberList);
-		
-		System.out.println("dListCount : "+dListCount);
-		System.out.println("dMemberList : " + dMemberList);
-		System.out.println("dList : "+dList);
-		System.out.println("mList : "+mList);
-		System.out.println("dCount : "+dCount);
-		System.out.println("totalCount : "+totalCount);
-		
+
 		mv.addObject("pi", pi);
 		mv.addObject("dList", dList);
 		mv.addObject("mList", mList);
@@ -189,17 +194,51 @@ public class AdminController {
 		return mv;
 	}
 	
-	@RequestMapping("boardManage.do")
-	public ModelAndView boardManage(ModelAndView mv) {
+	@RequestMapping("cafeManage.do")
+	public ModelAndView cafeManage(ModelAndView mv) {
+		ArrayList<StudyCafe> cafeList = studyCafeService.selectCafeList();
 		
-		
-		mv.setViewName("admin/boardDeclarationManage");
+		mv.addObject("cafeList", cafeList);
+		mv.setViewName("admin/cafeManage");
 		
 		return mv;
 	}
 	
-	@RequestMapping("cafeManage.do")
-	public String cafeManage() {
-		return "admin/cafeManage";
+	@RequestMapping("cafeinfo.do")
+	public void cafeDetail(HttpServletResponse response, CafeInfo cafe) throws JsonIOException, IOException {
+		System.out.println(cafe);
+		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafe);
+		System.out.println(info);
+		response.setContentType("application/json;charset=UTF-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
+		gson.toJson(info, response.getWriter());
+	}
+	
+	@RequestMapping("cafeInfoChange.do")
+	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe) {
+		System.out.println(cafe);
+		
+		int result = adminService.cafeInfoChange(cafe);
+		
+		if(result > 0) {
+			ArrayList<StudyCafe> cafeList = studyCafeService.selectCafeList();
+			
+			mv.addObject("cafeList", cafeList);
+			mv.setViewName("admin/cafeManage");
+			
+			return mv;
+		}else {
+			throw new AdminException("카페 정보 변경 실패!");
+		}
+	}
+	
+	@RequestMapping("insertCafeInfo.do")
+	public String insertCafeInfo(CafeInfo cafe) {
+		System.out.println(cafe);
+		
+		int result = adminService.insertCafeInfo(cafe);
+		
+		return "redirect:cafeManage.do";
 	}
 }

@@ -17,7 +17,7 @@ public interface StudyCafeService {
 
 	ArrayList<StudyCafe> selectCafeList();
 
-	ArrayList<CafeInfo> selectCafeInfo(String cafeNo);
+	ArrayList<CafeInfo> selectCafeInfo(CafeInfo cafe);
 
 	ArrayList<Reservation> selectCheckRoom(Map str);
 

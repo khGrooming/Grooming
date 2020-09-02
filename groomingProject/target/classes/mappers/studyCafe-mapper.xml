@@ -17,6 +17,7 @@
 		<result property="cafeContent" column="CAFE_CONTENT"/>
 		<result property="cafePhone" column="CAFE_PHONE"/>
 		<result property="cafeAddress" column="CAFE_ADDRESS"/>
+		<result property="cafeImg" column="CAFE_IMG"/>
 		<result property="cPriceNo" column="C_PRICE_NO"/>
 		<result property="cRoomName" column="C_ROOM_NAME"/>
 		<result property="cRoomAvailableTime" column="C_ROOM_AVAILABLE_TIME"/>
@@ -84,7 +85,7 @@
 		FROM STUDYCAFE
 	</select>
 	
-	<select id="selectCafeInfo" parameterType="string" resultMap="CafeInfoResultSet">
+	<select id="selectCafeInfo" parameterType="CafeInfo" resultMap="CafeInfoResultSet">
 		SELECT *
 		FROM CAFEINFO
 		WHERE CAFE_NO = #{cafeNo}

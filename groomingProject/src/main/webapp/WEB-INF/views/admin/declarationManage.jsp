@@ -36,7 +36,6 @@
                     <div class="admin"><a href="groomingManage.do">그루밍 관리</a></div>
                     <div class="admin"><a href="declarationManage.do">신고 관리</a></div>
                     <div class="sub"><a href="declarationManage.do">회원 신고 관리</a></div>
-                    <div class="sub"><a href="boardManage.do">커뮤니티 신고 관리</a></div>
                     <div class="admin"><a href="cafeManage.do">카페 관리</a></div>
             </div>
         </div>
