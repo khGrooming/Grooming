@@ -355,7 +355,7 @@
 	background-color: white;
 	border-radius: 50%;
 }
-.main_upIcon:hover .img_svg
+.main_upIcon:hover .img_svg,
 .main_adminIcon:hover .img_svg
 {
 	background-color: lightgreen;
@@ -527,8 +527,10 @@
 				setInterval(function(){
 					getUserAlert();
 					getUserMessages();
+				}, 10000);
+				setInterval(function(){
 					refreshLoginUser();
-				}, 30000);
+				}, 100000);
 			}
 		});
 	</script>
@@ -536,10 +538,10 @@
 	<!-- 로그인 유저 세션 갱신 -->
 	<script type="text/javascript">
 		function refreshLoginUser() {
-			var memberNo = "${loginUser.memberNo}";
+			var memberEmail = "${loginUser.memberEmail}";
 			$.ajax({
 				url:"refreshLoginUser.do",
-				data:{memberNo:memberNo},
+				data:{memberEmail:memberEmail},
 				success:function(data){
 					if(data == "success"){
 						console.log("로그인 유저 세션 새로고침");

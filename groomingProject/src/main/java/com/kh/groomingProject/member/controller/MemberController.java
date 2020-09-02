@@ -678,7 +678,7 @@ public class MemberController {
 	@ResponseBody
 	public String memberLogin(Member m, Model model) {
 		
-		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberNo());
+		System.out.println("로그인 한 회원 (이메일) : " + m.getMemberEmail());
 		
 		Member loginUser = mService.loginMember(m);
 		System.out.println("로그인 회원 새로고침 확인 : " + loginUser);

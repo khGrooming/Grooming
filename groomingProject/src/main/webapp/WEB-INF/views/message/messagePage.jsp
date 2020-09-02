@@ -581,7 +581,7 @@ section
 			loadChatListData();
 			
 			// 테스트 중
-			setInterval(function(){
+			/* setInterval(function(){
 				loadChatListData();
 				
 				if($(".mesgs_header").find("input[type=hidden].toMemberNo").val() != ""){
@@ -590,7 +590,7 @@ section
 					var toMemberNo = $(".mesgs_header").find("input[type=hidden].toMemberNo").val();
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000);
+			}, 5000); */
 		});
 	</script>
 
@@ -671,6 +671,8 @@ section
 			activeChat = fromMemberNo;
 			$(".chat_list").removeClass("active");
 			el.addClass("active");
+
+			el.find('.new_icon').css("display","none");
 
 			console.log("활성 챗 : " + activeChat);
 			console.log("fromToChk 챗 : " + fromToChk);
@@ -787,6 +789,10 @@ section
 						if(activeChat == data[i].toMemberNo){
 							$chat_list = $('<div>').addClass("chat_list active");
 						}
+						// 읽지 않은 메시지라면 new 아이콘 추가
+						if(data[i].toMConfirm == "N") {
+							$chat_list.append($new_icon);
+						}
 						// 받은 메시지 없이
 						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].toMemberNo);
 						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].toMemberNickname);
@@ -796,6 +802,10 @@ section
 					} else {	// 상호 채팅
 						if(activeChat == data[i].fromMemberNo){
 							$chat_list = $('<div>').addClass("chat_list active");
+						}
+						// 읽지 않은 메시지라면 new 아이콘 추가
+						if(data[i].fromMConfirm == "N") {
+							$chat_list.append($new_icon);
 						}
 						var $iMemberNo = $('<input>').addClass("memberNo").attr("type","hidden").val(data[i].fromMemberNo);
 						var $iNickname = $('<input>').addClass("memberNickname").attr("type","hidden").val(data[i].fromMemberNickname);
@@ -808,11 +818,8 @@ section
 					$chat_list.append($iMessageNo);
 					$chat_list.append($iMemberNo);
 					$chat_list.append($iNickname);
+					$chat_list.append($ifromTo);
 
-					// 읽지 않은 메시지라면 new 아이콘 추가
-					if(data[i].messageConfirm == "N") {
-						$chat_list.append($new_icon);
-					}
 
 					$chat_img.append($proFile_img);
 					$h5Nickname.append($spanDate);
@@ -981,7 +988,6 @@ section
 			
 			// 스크롤 내리기
 			var his_height = $(".msg_history")[0].scrollHeight;
-			console.log(his_height);
 			$(".msg_history").scrollTop(his_height);
 		}
 	</script>
