@@ -35,6 +35,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
+import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -129,27 +130,32 @@ public class GroomingController {
 
 	// 검색
 	@RequestMapping("search.do")
-	public void gSearchWriter(HttpServletResponse response, String search, String keyword)
+	public void gSearchWriter(HttpServletResponse response, GroomingSearch gs)
 			throws JsonIOException, IOException {
 		response.setContentType("application/json; charset=utf-8");
 
-		ArrayList<Grooming> glist = new ArrayList<>();
-		if (search.equals("title")) {
-			ArrayList<Grooming> list = gService.gSearchTitle(keyword);
-			glist = list;
-		} else if (search.equals("writer")) {
-			ArrayList<Grooming> list = gService.gSearchWriter(keyword);
-			glist = list;
-		} else {
-			ArrayList<Grooming> list = gService.gSearchContent(keyword);
-			glist = list;
-		}
+//		ArrayList<Grooming> glist = new ArrayList<>();
+//		if (search.equals("title")) {
+//			ArrayList<Grooming> list = gService.gSearchTitle(keyword);
+//			glist = list;
+//		} else if (search.equals("writer")) {
+//			ArrayList<Grooming> list = gService.gSearchWriter(keyword);
+//			glist = list;
+//		} else {
+//			ArrayList<Grooming> list = gService.gSearchContent(keyword);
+//			glist = list;
+//		}
+		
+		ArrayList<Grooming> glist = gService.groomingSearch(gs);
 
-		System.out.println("gSearchWriter // search : " + search);
-		System.out.println("gSearchWriter // keyword : " + keyword);
-		System.out.println("gSearchWriter // glist : " + glist);
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(glist, response.getWriter());
+		System.out.println("검색 내용 " + glist);
+		
+//		System.out.println("gSearchWriter // search : " + search);
+//		System.out.println("gSearchWriter // keyword : " + keyword);
+//		System.out.println("gSearchWriter // glist : " + glist);
+//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//		gson.toJson(glist, response.getWriter());
+		new Gson().toJson(glist, response.getWriter());
 	}
 
 	@RequestMapping("groomingInsert.do")

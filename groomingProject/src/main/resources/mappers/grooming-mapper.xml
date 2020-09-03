@@ -750,4 +750,36 @@
 		]]>
 	</select>
  	
+	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
+		    ON(G.MEMBER_NO = M.MEMBER_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
+		<choose>
+		    <when test="search == 'title'">
+				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="search == 'writer'">
+				AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <otherwise>
+				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
+		    </otherwise>
+		  </choose>
+	</select>
+ 	
 </mapper>

@@ -332,12 +332,12 @@
 				<div class="cols-9"
 					style="width: 80%; text-align: right; padding-right: 5pxx">
 					<select id="search">
-						<option value="title" id="title">제목</option>
+						<option value="title" id="title" selected>제목</option>
 						<option value="writer" id="writer">작성자</option>
 						<option value="content" id="content">내용</option>
-					</select> <input type="text" size="30px" id="keyword" required>
+					</select>
+					<input type="text" size="30px" id="keyword" required>
 					<button id="find">검색</button>
-
 					<c:if test="${!empty loginUser }">
 
 						<button type="button" id="writeG">글쓰기</button>
@@ -552,6 +552,52 @@ $(function(){
 		});
 	});
 	
+	$("#keyword").keyup(function(e){
+		if(e.keyCode == 13){
+			search();
+		}
+	});
+	
+	$("#find").on("click", function() {
+		search();
+	});
+	// 검색
+	function search() {
+		var search = $('#search option:selected').val();
+		var keyword = $('#keyword').val();
+
+		console.log("구르밍 검색 : " + search + " / " + keyword);
+		
+		if(keyword == "") {
+			alert("한 글자 이상 검색해주세요!");
+		} else {
+			$.ajax({
+				url:'search.do',
+				type:'post',
+				data:{search : search, keyword : keyword},
+				dataType:"json",
+				success:function(data) {
+					console.log("그루밍 가져오기 결과 : " + data.length);
+					if(data.length > 0){
+						// 그루밍 내용 추가
+						loadGrooming(data);
+						$(".paging").css("display","none");
+					} else {
+						alert("검색한 그루밍이 없습니다.");
+					}
+
+				},
+				error : function(request, status, errorData) {
+					alert("error code: " + request.status + "\n"
+						+ "message: " + request.responseText
+						+ "error: " + errorData);
+				}
+
+			}); // ajax end
+
+		}
+	} // click end
+	
 	// 그루밍 출력
 	function loadGrooming(data) {
 		// 그루밍 내용 추가
@@ -650,139 +696,7 @@ $(function(){
 });
 	
 </script>
-	<script>
-		$(function() {
-			$('#find').on("click", function() {
-	
-				var search = $('#search').val();
-				var keyword = $('#keyword').val();
-	
-				if(keyword == ""){
-					alert("한 글자 이상 검색해주세요!");
-				}else{
-					
-				
-				 
-				$.ajax({
-					url:'search.do',
-					type:'post',
-					data:{search : search, keyword : keyword},
-					dataType:"json",
-					success:function(data) {
-						$('#keyword').val("");
-						$divRow = $("#row");
-						$divRow.html("");
-						var $divCardDeck;
-						var $divCard;
-						var $divTopImg;
-						var $divCircle;
-						var $dDay;
-						var $day;
-						var $cardBody;
-						var $cardTitle;
-						var $gDetail;
-						var $cardText1;
-						var $cardText2;
-						var $small1;
-						var $small2;
-						var $span1;
-						var $span2;
-						var $small3;
-						var $span3;
-						var $img;
-						console.log(data[0].groomingImg);
-						if(data.length > 0) {
-							for(var i in data) {
-								console.log(data[i].groomingNo);
-								// D-day 계산을 위한 것
-								var endDate = new Date(data[i].groomingEd);
-								var nowDate = new Date(data[i].groomingNd);
-								var difDate = endDate.getTime() - nowDate.getTime();
-								difDate = difDate/(1000*60*60*24);
-								
-								$divCardDeck = $("<div class='card-deck col-lg-3'>");
-								$divCard = $("<div class='card'>");
-								$divTopImg = $("<div class='top-img'>");
-								$img = $("<img src=/groomingProject/resources/upGroomingFiles/"+data[i].groomingImg+">");
-								$divCircle = $("<div id='circle'>");
-								
-								if (data[i].groomingEd > data[i].groomingNd) {
-									$dDay = $("<span id='d-day'>").text("D-");
-									$day = $("<span id='day'>").text(difDate);
-									$divCircle.append($dDay);
-									$divCircle.append($day);
-								} else {
-									$day = $("<span id='day'>").text("마감");
-									$divCircle.append($day);
-								}
 
-								$cardBody = $("<div class='card-body'>");
-								$cardTitle = $("<h5 class='card-title'>");
-								$gDetail = $("<a href='groomingDetail.do?groomingNo=" + data[i].groomingNo + "'>").text(data[i].groomingTitle);
-								$cardText1 = $("<p class='card-text'>").text(data[i].groomingIntroduce);
-								$cardText2 = $("<p class='card-text'>");
-								$small1 = $("<small class='text-muted'>").text("참여인원&nbsp;");
-								$small2 = $("<small>");
-								$span1 = $("<span>").text(data[i].currentP + "/");
-								$span2 = $("<span>").text(data[i].groomingP);
-								$small3 = $("<small class='text-muted'>");
-								$span3 = $("<span class='groupType'>").text(data[i].groomingType);
-
-								$divTopImg.append($divCircle);
-								$divTopImg.append($img);
-
-								$cardTitle.append($gDetail);
-
-								$small2.append($span1);
-								$small2.append($span2);
-								$small3.append($span3);
-								$cardText2.append($small2);
-								$cardText2.append($small3);
-
-								$cardBody.append($cardTitle);
-								$cardBody.append($cardText1);
-								$cardBody.append($cardText2);
-
-								$divCard.append($divTopImg);
-								$divCard.append($cardBody);
-
-								$divCardDeck.append($divCard);
-								$divRow.append($divCardDeck);
-							} //for end
-						}
-
-					},
-					error : function(request, status, errorData) {
-						alert("error code: " + request.status + "\n"
-							+ "message: " + request.responseText
-							+ "error: " + errorData);
-					}
-
-				}); // ajax end
-	
-			}
-			}); // click end
-		});
-	</script>
-
-
-	<footer>
-		<jsp:include page="../common/footer.jsp" />
-
-	</footer>
-
-
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-		crossorigin="anonymous"></script>
+	<jsp:include page="../common/footer.jsp" />
 </body>
-
 </html>
