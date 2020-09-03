@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="communityMapper">
+
+	<resultMap type="Board" id="boardResultSet">
+		<id property="boardNo" column="BOARD_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NO" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="boardCreateDate" column="BOARD_CREATE_DATE" />
+		<result property="boardModifyDate" column="BOARD_MODIFY_DATE" />
+		<result property="boardVcount" column="BOARD_VCOUNT" />
+		<result property="boardGcount" column="BOARD_GCOUNT" />
+		<result property="boardStatus" column="BOARD_STATUS" />
+		<result property="boardReplyStatus" column="BOARD_REPLY_STATUS" />
+		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+		<result property="boardCount" column="BOARDCOUNT"/>
+	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="replyNo" column="REPLY_NO" />
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="replyCreateDate" column="REPLY_CREATE_DATE" />
+		<result property="replyModifyDate" column="REPLY_MODIFY_DATE" />
+		<result property="replySelection" column="PEPLY_SELECTION" />
+		<result property="replyStatus" column="REPLY_STATUS" />
+		<result property="declarationCount" column="DECLARATION_COUNT" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+	</resultMap>
+		
+	<select id="selectList" parameterType="string" resultMap="boardResultSet">
+ 		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO) 
+		<where>
+			<if test="value != null and value != '' ">
+				AND B_CATEGORY_NO=#{value}
+			</if>
+		</where>
+        ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
+		SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO=#{boardNo}
+	</select>
+	
+	<update id="addViewCount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_VCOUNT = BOARD_VCOUNT + 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
+	<insert id="communityInsert" parameterType="map">
+		INSERT INTO BOARD (BOARD_NO, MEMBER_NO, B_CATEGORY_NO, BOARD_TITLE, BOARD_CONTENT,
+							BOARD_CREATE_DATE, BOARD_MODIFY_DATE, BOARD_VCOUNT, BOARD_GCOUNT, BOARD_STATUS,
+							BOARD_REPLY_STATUS, BOARD_SELEC_STATUS)
+		VALUES(
+		    'B' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
+			, #{memberNo}			
+			, #{board.bCategoryNo}
+			, #{board.boardTitle}
+			, #{board.boardContent}
+			, SYSDATE
+			, SYSDATE
+			, 0 
+			, 0
+			, 'Y'
+			, 'N'
+			, 'N'
+		)
+	</insert>
+	
+	<update id="communityUpdate" parameterType="map">
+		UPDATE BOARD
+		SET BOARD_TITLE=#{board.boardTitle}
+			, BOARD_CONTENT=#{board.boardContent}
+			, BOARD_MODIFY_DATE=SYSDATE
+		WHERE BOARD_NO=#{board.boardNo}
+	</update>
+
+	<delete id="communityDelete" parameterType="string">
+		DELETE FROM BOARD
+		WHERE BOARD_NO=#{boardNo}
+	</delete>
+	
+	<!-- 댓글 관련 쿼리 -->
+	
+	<select id="replySelectList" parameterType="string" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<insert id="replyInsert" parameterType="map">	
+		INSERT INTO REPLY (REPLY_NO, BOARD_NO, B_CATEGORY_NO, MEMBER_NO, REPLY_CONTENT,
+							REPLY_CREATE_DATE, REPLY_MODIFY_DATE, PEPLY_SELECTION,
+							REPLY_STATUS, DECLARATION_COUNT)
+		VALUES(
+			'RR' || LPAD(SEQ_REPLY_NO.NEXTVAL,5,0)
+			, #{reply.boardNo}
+			, #{reply.bCategoryNo}
+			, #{reply.memberNo}
+			, #{reply.replyContent}
+			, SYSDATE
+			, SYSDATE
+			, 'N'
+			, 'Y'
+			, 0
+        )
+	</insert>
+
+	
+
+
+</mapper>

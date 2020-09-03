@@ -294,4 +294,19 @@
 		INSERT INTO CAFEPRICE
 		VALUES (SEQ_C_PRICE_NO.NEXTVAL, #{cafeNo}, #{cRoomName}, #{cRoomAvailableTime}, #{cRoomTime}, #{cRoomPrice}, #{cRoomHeadCount})
 	</insert>
+	
+	<select id="adminBoardList" resultType="Board">
+		SELECT BOARD_CREATE_DATE boardCreateDate, COUNT(*) BOARDCOUNT, SYSDATE-10 boardModifyDate
+		FROM BOARD
+		WHERE BOARD_CREATE_DATE > SYSDATE-10
+		GROUP BY BOARD_CREATE_DATE
+	</select>
+	
+	<select id="adminGroomingList" resultType="Grooming">
+		SELECT GROOMING_CREATE_DATE groomingCd, COUNT(*) GROOMINGCOUNT
+		FROM GROOMING
+		WHERE GROOMING_CREATE_DATE > SYSDATE-10
+		GROUP BY GROOMING_CREATE_DATE
+	</select>
+	
 </mapper>

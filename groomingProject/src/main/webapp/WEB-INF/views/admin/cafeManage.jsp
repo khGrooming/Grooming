@@ -55,7 +55,7 @@
     </style>
 </head>
 <body>
-    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+    <jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
             <h1 align="center">카페 관리</h1>

@@ -2,4 +2,162 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
 
+	<resultMap type="Member" id="memberResultSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberPwd" column="MEMBER_PASSWORD"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="memberName" column="MEMBER_NAME"/>
+		<result property="memberGender" column="MEMBER_GENDER"/>
+		<result property="memberPhone" column="MEMBER_PHONE"/>
+		<result property="lvlNo" column="LVL_NO"/>
+		<result property="memberExp" column="MEMBER_EXP"/>
+		<result property="memberMemo" column="MEMBER_MEMO"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberAdmin" column="MEMBER_ADMIN"/>
+		<result property="memberStatus" column="MEMBER_STATUS"/>
+		<result property="memberKakao" column="MEMBER_KAKAO"/>
+		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
+	</resultMap>
+
+	<insert id="insertMember" parameterType="Member">
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberPwd}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, DEFAULT, SYSDATE)
+	</insert>
+	
+	<insert id="insertMemberKakao" parameterType="Member">
+		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_NICKNAME
+			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
+		VALUES('M' || LPAD(SEQ_MEMBER_NO.NEXTVAL,5,0), #{memberEmail}, #{memberNickName}
+			, DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'K', SYSDATE)
+	</insert>
+	
+	<select id="loginMember" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail}
+		AND MEMBER_STATUS='N'
+	</select>
+
+	<select id="emailDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</select>
+
+	<select id="nickNameDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{memberNickName}
+	</select>
+
+	<select id="phoneDuplicateChk" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_PHONE = #{memberPhone}
+	</select>
+
+	<update id="updateMemberOption" parameterType="Member">
+		UPDATE MEMBER
+		<set>
+			<if test="memberName !=null">MEMBER_NAME=#{memberName},</if>
+			<if test="memberGender !=null">MEMBER_GENDER=#{memberGender},</if>
+			<if test="memberPhone !=null">MEMBER_PHONE=#{memberPhone},</if>
+			<if test="memberMemo !=null">MEMBER_MEMO=#{memberMemo},</if>
+			<if test="memberPhoto !=null">MEMBER_PHOTO=#{memberPhoto}</if>
+		</set>
+		WHERE MEMBER_NO=(SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail})
+	</update>
+
+	<select id="selectHost" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER M
+		JOIN GROOMING G ON M.MEMBER_NO = G.MEMBER_NO
+		WHERE GROOMING_NO = #{groomingNo}
+		AND MEMBER_STATUS='N'
+	</select>
+	
+	<update id="mergeMemberTags" parameterType="MemberTag">
+		MERGE INTO MEMBER_TAG M
+		USING (SELECT (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail}) MEMBER_NO
+					, (SELECT TAG_NO FROM TAG WHERE TAG_NAME = #{tagName}) TAG_NO
+				FROM DUAL) D
+			ON (TRIM(M.TAG_NO) = D.TAG_NO AND M.MEMBER_NO = D.MEMBER_NO)
+		WHEN NOT MATCHED THEN
+			INSERT (MEMBER_NO, TAG_NO) 
+		    VALUES (D.MEMBER_NO, D.TAG_NO)
+	</update>
+
+	<select id="findMemberEmail" parameterType="Member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_EMAIL = #{memberEmail}
+		AND MEMBER_STATUS='N'
+	</select>
+
+	<insert id="insertRandomCode" parameterType="MemberCertiCode">
+		INSERT INTO CERTIFICATION (CERTI_NO, MEMBER_NO, CERTI_CODE, CERTI_C_DATE)
+		VALUES ('CER' || LPAD(SEQ_CERTI_NO.NEXTVAL,5,0)
+			, (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail})
+			, #{certiNumber}, SYSDATE)	
+	</insert>
+
+	<select id="certiChk" parameterType="MemberCertiCode" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*) 
+		FROM (SELECT CERTI_NO, ROUND((SYSDATE-CERTI_C_DATE)*24*60) CERTI_TIME, CERTI_CODE, CERTI_MEMO 
+		FROM CERTIFICATION
+			    WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_EMAIL = #{memberEmail}) 
+			    ORDER BY CERTI_C_DATE DESC) 
+		WHERE ROWNUM = 1
+		AND CERTI_CODE = #{certiNumber}
+		AND CERTI_TIME < #{expireTime}
+		]]>
+	</select>
+	
+	<update id="updateMemberPwd" parameterType="Member">
+		UPDATE MEMBER
+		SET	MEMBER_PASSWORD = #{memberPwd}
+		WHERE MEMBER_EMAIL = #{memberEmail}
+	</update>
+
+	<select id="selectAppMember" parameterType="string" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER M
+		JOIN GROOMING_APPLICANT GA ON GA.MEMBER_NO = M.MEMBER_NO
+		WHERE GA.GROOMING_NO = #{groomingNo}
+	</select>
+
+	<select id="selectGroupMList" parameterType="string" resultMap="memberResultSet">
+	   SELECT MEMBER_PHOTO,MEMBER_NICKNAME,MEMBER_EMAIL,M.MEMBER_NO,MEMBER_PHONE,G_MEMBER_NO
+       FROM GROMMING_MEMBER GM
+       JOIN MEMBER M ON GM.MEMBER_NO = M.MEMBER_NO
+       JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
+       WHERE GM.GROOMING_NO = #{groomingNo}
+	   ORDER BY G_MEMBER_NO 
+	</select>
+
+	<select id="selectGroupMemberNo" parameterType="string" resultMap="memberResultSet">
+      SELECT *
+      FROM MEMBER M 
+      JOIN GROMMING_MEMBER GM ON GM.MEMBER_NO = M.MEMBER_NO
+      JOIN GBOARD GB ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
+      WHERE G_BOARD_NO = #{gBoardNo}
+	</select>
+
+	<select id="findMember" parameterType="Member" resultMap="memberResultSet">
+	   SELECT MEMBER_NO, MEMBER_NICKNAME, MEMBER_PHOTO
+       FROM MEMBER
+       WHERE MEMBER_NICKNAME = #{memberNickName}
+	</select>
+
+	<select id="findEmail" parameterType="Member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NICKNAME = #{memberNickName}
+		AND MEMBER_STATUS='N'
+	</select>
+
 </mapper>

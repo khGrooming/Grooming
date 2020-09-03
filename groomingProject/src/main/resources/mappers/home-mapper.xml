@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="homeMapper">
+
+	<resultMap type="HomeBoard" id="homeBoardResultSet">
+		<id property="boardNo" column="BOARD_NO"/>
+		<result property="bCategoryName" column="B_CATEGORY_NAME"/>
+		<result property="boardTitle" column="BOARD_TITLE"/>
+	</resultMap>
+
+ 	<resultMap type="HomeGrooming" id="homeGroomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
+		<result property="groomingViewCount" column="GROOMING_COUNT"/>
+	</resultMap>
+	
+	
+	<select id="getBoardTopList" resultMap="homeBoardResultSet">
+		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
+		FROM BOARD B
+		JOIN BCATEGORY BC ON (B.B_CATEGORY_NO = BC.B_CATEGORY_NO)
+		WHERE BOARD_STATUS = 'Y'
+		AND B.B_CATEGORY_NO != 'BC00001'
+		ORDER BY BOARD_VCOUNT DESC
+	</select>
+
+	<select id="getGMentoTopList" resultMap="homeGroomingResultSet">
+		<![CDATA[
+		SELECT ROWNUM,
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_TYPE = '멘토'
+		AND G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		AND ROWNUM < 5
+		]]>
+	</select>
+
+	<select id="getGPopulTopList" resultMap="homeGroomingResultSet">
+		<![CDATA[
+		SELECT ROWNUM,
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		AND ROWNUM < 5 
+		ORDER BY GROOMING_COUNT DESC
+		]]>
+	</select>
+
+	<select id="getGDeadlineTopList" resultMap="homeGroomingResultSet">
+		<![CDATA[
+		SELECT ROWNUM
+			, ALLG.GROOMING_NO, ALLG.GROOMING_TITLE, ALLG.GROOMING_INTRODUCE, ALLG.GROOMING_IMG, ALLG.GROOMING_TYPE
+			, ALLG.D_DAY, ALLG.TAG_NAME, ALLG.GROOMING_PARTICIPANTS, ALLG.GMEMBER_COUNT , ALLG.GROOMING_COUNT
+		FROM (
+		    SELECT G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		ORDER BY GROOMING_END_DATE) ALLG
+		WHERE ROWNUM < 5
+		ORDER BY ALLG.D_DAY
+		]]>
+	</select>
+
+	<select id="getGListCount" resultType="_int">
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		]]>
+	</select>
+
+	<select id="getGroomingList" resultMap="homeGroomingResultSet">
+		<![CDATA[
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		]]>
+	</select>
+	
+	<insert id="siteQuestion" parameterType="HomeHelp">
+		INSERT INTO HELP (HELP_NO
+						, HCATEGORY_NO
+						<if test="memberNo != null">
+						, MEMBER_NO
+						</if>
+						, HELP_EMAIL
+						, HELP_CONTENT
+						, HELP_CDATE)
+		VALUES('HEL' || LPAD(SEQ_HELP_NO.NEXTVAL,5,0)
+			, #{hCategoryNo}
+			<if test="memberNo != null">
+			, #{memberNo}
+			</if>
+			, #{helpEmail}
+			, #{helpContent}
+			, DEFAULT)
+	</insert>
+
+</mapper>

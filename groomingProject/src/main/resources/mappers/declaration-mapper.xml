@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="declarationMapper">
+  
+  
+  	<resultMap type="Declaration" id="dResultSet">
+		<id property="dNo" column="DECLARATION_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="dCategoryNo" column="DECLARATION_C_NO"/>
+		<result property="dnNo" column="DECLARATION_N_NO"/>
+		<result property="dContent" column="DECLARATION_CONTENT"/>
+		<result property="dCheck" column="DECLARATION_CHECK"/>
+		
+		
+	</resultMap>
+  
+  	<insert id="declareG" parameterType="Declaration">
+	  	INSERT INTO DECLARATION VALUES(
+	 			'DEC' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
+	 			, #{memberNo}
+	 			, '4'
+	 			, #{dnNo}
+	 			, #{dContent}
+	 			, DEFAULT
+	 		
+	 			)
+  	</insert>
+  	
+  	<select id="selectGroupDeclare" parameterType="map" resultMap="dResultSet">
+	  SELECT * 
+      FROM DECLARATION
+      WHERE MEMBER_NO=#{memberNo} AND DECLARATION_N_NO=#{gBoardNo}
+  	
+  	
+  	
+  	</select>
+  	
+  	<select id="selectGroomingDeclare" parameterType="map" resultMap="dResultSet">
+	  SELECT * 
+      FROM DECLARATION
+      WHERE MEMBER_NO=#{memberNo} AND DECLARATION_N_NO=#{groomingNo}
+  	
+  	
+  	
+  	</select>
+  
+</mapper>
