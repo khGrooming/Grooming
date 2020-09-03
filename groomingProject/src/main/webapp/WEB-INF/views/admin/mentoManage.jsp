@@ -66,7 +66,7 @@
 	            <br><br>
 	            <div class="container col-sm-3"></div>
 	                <div class="sideMenu col-sm-7">
-	                    <div class="admin"><a href="admingMain.do">통계</a></div>
+	                    <div class="admin"><a href="adminMain.do">통계</a></div>
 	                     <div class="admin"><a href="memberManage.do">회원 관리</a></div>
 	                     <div class="sub"><a href="memberManage.do">회원 검색</a></div>
 	                     <div class="sub"><a href="mentoManage.do">멘토 관리</a></div>
