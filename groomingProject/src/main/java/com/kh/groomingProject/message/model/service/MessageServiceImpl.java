@@ -40,6 +40,12 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
+	public int readChat(Message me) {
+
+		return msgDao.readChat(me);
+	}
+
+	@Override
 	public ArrayList<Message> loadChat(Message me) {
 
 		return msgDao.loadChat(me);
@@ -56,4 +62,5 @@ public class MessageServiceImpl implements MessageService{
 
 		return msgDao.loadChatList(m);
 	}
+
 }

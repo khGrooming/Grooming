@@ -43,10 +43,73 @@
 }
 
 
+<<<<<<< HEAD
+=======
+#memo {
+	width: 100%;
+	height: 100px;
+}
+
+#memoTextArea {
+	width: 100%;
+	height: 50px;
+	font-size: 12px;
+}
+
+.sstitle{
+font-size: 20px; 
+font-weight: 900; 
+margin-bottom: 5px; 
+}
+
+#specTb{
+	width: 100%;
+}
+
+#specTb tr{
+	text-align: center;
+	font-size: 20px;
+} 
+#specTb th{
+font-size: 20px;
+}
+#specTb td{
+font-size: 14px;
+}
+#memberInfoTb{
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+#memberInfoTb tr > td:first-child {
+	text-align: right;
+	font-size:15px;
+
+}
+.infoInput{
+	width: 100%;
+	border-radius: 7px;
+}
+
+#fileView {
+	width: 155px;
+	height: 155px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid gray;
+}
+
+#profileFile{
+	width: 200px;
+	height: 200px;
+	margin: 0 auto;
+	border: 1px solid gray;
+}
+>>>>>>> refs/remotes/origin/master
 </style>
 </head>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
+<<<<<<< HEAD
 	
 		<div style="width: 65%; height:900px; margin-right: auto; margin-left: auto;">
 			<br>
@@ -55,6 +118,22 @@
 			<h3>개인정보 수정</h3>
 				<!-- active toggle -->
 				<div class="subContent_my" style="width: 30%; margin-right: 1%; text-align: center; float: left;">
+=======
+	<section style="padding-top: 0.05rem;">
+	<div id="content">
+		<div class="subcontent">
+		
+			<h4 class="subTitle">프로필 수정</h4>
+			<div class="profile_my">
+				<!--toEJ 클릭하면 모달창 띄우고 사진편집할 수 있으면 넣고 못하면 미리보기로 대체 모달창에서 프로필사진 등록/삭제로 해서 고치셈 -->
+				
+				<img src='${contextPath }/resources/views/icons/profileIcon.png'   style="height:130px; z-index: 3;"class="profile_img" data-toggle="modal" data-target="#mtProfile">
+				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }" class="profile_img" id="profileImg">	
+				<div class="modal fade" id="mtProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+>>>>>>> refs/remotes/origin/master
 
 
 					<!-- 프로필 사진 div -->
@@ -117,6 +196,18 @@
 						});
 					}
 				</script>
+<<<<<<< HEAD
+=======
+			</div>
+			<br>
+			<br>
+			<div style="margin-left:35%">
+				<c:if test="${mentor eq 'Y' }">
+				<span><img src='${contextPath }/resources/views/icons/mentorIcon.png' style="width: 25px;margin-bottom: 10px;"></span>&nbsp;
+				</c:if>		
+				<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
+				<span>&nbsp;&nbsp;</span> <span style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
+>>>>>>> refs/remotes/origin/master
 				<br>
 					<!-- 프로필 사진 div_end -->
 
@@ -463,7 +554,7 @@
 											
 											$tdId.text(certificate[i]).css("color","lightgrey");
 										}else{
-											$tdId.text(school[i]).css("color","black");
+											$tdId.text(certificate[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");
@@ -513,7 +604,7 @@
 											
 											$tdId.text(career[i]).css("color","lightgrey");
 										}else{
-											$tdId.text(school[i]).css("color","black");
+											$tdId.text(career[i]).css("color","black");
 										}
 									} else {
 										$tdId.attr("valign", "top");
@@ -796,12 +887,19 @@
              	
              	
              	</script>
+<<<<<<< HEAD
 
 </div>
 
 <!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
 
 
+=======
+	
+	
+	</div>
+</section>
+>>>>>>> refs/remotes/origin/master
 <jsp:include page="../common/footer.jsp" />	
 
 </body>

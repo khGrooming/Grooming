@@ -114,7 +114,8 @@
 		<result property="groomingNo" column="GROOMING_NO"/>
 		<result property="groomingImg" column="GROOMING_IMG"/>
 		<result property="groomingType" column="GROOMING_TYPE"/>
-		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>		
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
 		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
 		<result property="groomingEd" column="STUDY_END_DATE"/>
 	
@@ -294,7 +295,7 @@
 	</select>
 
 	<select id="selectMypageGhost" parameterType="string" resultMap="MyPageGroomingSet">
-	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
         ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
 	FROM GROMMING_MEMBER GM
 	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
@@ -311,4 +312,9 @@
 	<insert id="insertPoint" parameterType="MyPagePoint" >
 		INSERT INTO POINT VALUES('P' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0),#{memberNo},#{addPoint},0,#{pointList},SYSDATE)
 	</insert>
+	
+	<insert id="insertMemberReport" parameterType="MemberReport">
+		INSERT INTO DECLARATION VALUES('DE'||LPAD(SEQ_DECLARATION_NO.NEXTVAL,5,0),#{memberNo},#{declarationCNo},#{declarationNNo},#{declarationContent},DEFAULT)
+	</insert>
+	
 </mapper>

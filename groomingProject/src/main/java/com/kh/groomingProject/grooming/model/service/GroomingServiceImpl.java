@@ -6,11 +6,18 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
+<<<<<<< HEAD
+=======
+import com.kh.groomingProject.grooming.model.vo.GCheck;
+import com.kh.groomingProject.grooming.model.vo.GReply;
+>>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -25,9 +32,9 @@ public class GroomingServiceImpl implements GroomingService{
 	GroomingDao gDao;
 
 	@Override
-	public ArrayList<Grooming> selectList() {
+	public ArrayList<Grooming> selectList(GroomingPageInfo pi) {
 		// TODO Auto-generated method stub
-		return gDao.selectList();
+		return gDao.selectList(pi);
 	}
 
 	@Override
@@ -287,6 +294,75 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.insertBoard(g);
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.groupDelete(gBoardNo);
+	}
+
+	@Override
+	public int updateGroupBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return gDao.updateGroupBoard(g);
+	}
+
+	@Override
+	public String selectGboardimg(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGboardimg(gBoardNo);
+	}
+
+	@Override
+	public ArrayList<GReply> selectReplyList(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectReplyList(gBoardNo);
+	}
+
+	@Override
+	public int addReply(GReply g) {
+		// TODO Auto-generated method stub
+		return gDao.addReply(g);
+	}
+
+	@Override
+	public String selectGBoardNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.selectGBoardNo(map);
+	}
+
+	@Override
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectSave(memberNo);
+	}
+
+	@Override
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return gDao.updateSaveGrooming(g);
+	}
+
+	@Override
+	public int getGroomingListCount() {
+		// TODO Auto-generated method stub
+		return gDao.getGroomingListCount();
+	}
+
+	@Override
+	public String getGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.getGMemberNo(map);
+	}
+
+	@Override
+	public ArrayList<GCheck> checkList(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.checkList(hashmap);
+	}
+
+>>>>>>> refs/remotes/origin/master
 
 	
 }

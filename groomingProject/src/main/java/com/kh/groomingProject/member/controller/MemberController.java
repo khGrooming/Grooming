@@ -1,4 +1,4 @@
-package com.kh.groomingProject.member.controller;
+ package com.kh.groomingProject.member.controller;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -671,6 +671,23 @@ public class MemberController {
 			throw new MemberException("비밀번호 재설정 : 실패");
 		}
 
+	}
+
+	// 회원 로그인
+	@RequestMapping("refreshLoginUser.do")
+	@ResponseBody
+	public String memberLogin(Member m, Model model) {
+		
+		System.out.println("로그인 한 회원 (이메일) : " + m.getMemberEmail());
+		
+		Member loginUser = mService.loginMember(m);
+		System.out.println("로그인 회원 새로고침 확인 : " + loginUser);
+		
+		if(loginUser != null) {
+			model.addAttribute("loginUser", loginUser);
+			return "success";
+		}
+		return "fail";
 	}
 
 }

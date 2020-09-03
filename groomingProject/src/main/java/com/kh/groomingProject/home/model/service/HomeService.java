@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomeHelp;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 public interface HomeService {
@@ -21,5 +22,7 @@ public interface HomeService {
 	int getGListCount();
 
 	ArrayList<HomeGrooming> getGroomingList(HomePageInfo pi);
+
+	int siteQuestion(HomeHelp homehelp);
 
 }

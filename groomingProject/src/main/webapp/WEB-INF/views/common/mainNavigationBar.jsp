@@ -276,6 +276,7 @@
 .main_navbar .main_messages_body,
 .main_navbar .main_alerts_body
 {
+    text-align: left;
 	font-weight: lighter;
 	font-size: 1rem;
 	width: 100%;
@@ -326,7 +327,8 @@
 	box-shadow: 0 0.5rem 1rem 0 rgba(0,0,0,0.2);
 	transition: 0.2s;
 }
-.main_upIcon
+.main_upIcon,
+.main_adminIcon
 {
     position: fixed;
 	display: block;
@@ -341,14 +343,20 @@
 	outline: none;
 	cursor: pointer;
 }
-.main_upIcon .img_svg
+.main_adminIcon
+{
+	bottom: 4rem;
+}
+.main_upIcon .img_svg,
+.main_adminIcon .img_svg
 {
 	width: 100%;
 	height: 100%;
 	background-color: white;
 	border-radius: 50%;
 }
-.main_upIcon:hover .img_svg
+.main_upIcon:hover .img_svg,
+.main_adminIcon:hover .img_svg
 {
 	background-color: lightgreen;
 }
@@ -358,7 +366,7 @@
 }
 @media (min-width: 751px) and (max-width: 991px)
 {
-	.main_navbar { padding: 1rem 3rem; }
+	.main_navbar { padding: 1rem 0; }
 	.main_navbar.sticky { padding: 0.3125rem  3rem; }
 }
 @media (min-width: 651px) and (max-width: 750px)
@@ -371,12 +379,18 @@
 	.main_navbar { padding: 1rem 0; }
 	.main_navbar.sticky { padding: 0.3125rem 0; }
 	.main_navbar ul li a { font-size: 1rem; }
+	.main_navbar.sticky ul li a { font-size: 1rem; }
 	.main_navbar .main_flex { padding-left: 0; }
 	.main_navbar .mainNavImg { height: 1.8rem; }
+	.main_navbar.sticky .mainNavImg { height: 1.8rem; }
 	.main_navbar #grooming { min-width: 3.6rem; }
+	.main_navbar.sticky #grooming { min-width: 3.6rem; }
 	.main_navbar #community { min-width: 4.5rem; }
+	.main_navbar.sticky #community { min-width: 4.5rem; }
 	.main_navbar #studycafe { min-width: 5.4rem; }
+	.main_navbar.sticky #studycafe { min-width: 5.4rem; }
 	.main_navbar #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
+	.main_navbar.sticky #mainProfileArea .img_svg { height: 1.8rem; width: 1.8rem; }
 }
 </style>
 </head>
@@ -406,10 +420,17 @@
 		topBtn.classList.toggle("show", window.scrollY > 10);
     });
 </script>
+	<!-- 탑버튼 -->
 	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">
 	</div>
-
+	
+	<!-- 관리자 버튼 -->
+	<c:if test="${sessionScope.loginUser.memberAdmin eq 'Y' }">
+	<div class="main_adminIcon" onclick="location.href='adminMain.do'">
+		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-gear-thin.svg">
+	</div>
+	</c:if>
 	<!-- Navigation -->
 	<nav class="main_navbar">
 		<a class="main_navbar_logo" href="${mainPage }">
@@ -495,27 +516,52 @@
 	</nav>
 
 	<script type="text/javascript">
-		<c:if test="${!empty sessionScope.loginUser }">
 		$(function() {
-			getUserAlert();
-			getUserMessages();
-			
-			// 디버깅 때 테스트
-			/* setInterval(function(){
+			var loginUser = "${sessionScope.loginUser}";
+			if(loginUser != ""){
+				console.log("네비바 인터벌");
 				getUserAlert();
 				getUserMessages();
-			}, 100000); */
+
+				// 테스트 중
+				/* setInterval(function(){
+					getUserAlert();
+					getUserMessages();
+				}, 10000);
+				setInterval(function(){
+					refreshLoginUser();
+				}, 100000); */
+			}
 		});
-		</c:if>
 	</script>
-	
+
+	<!-- 로그인 유저 세션 갱신 -->
+	<script type="text/javascript">
+		function refreshLoginUser() {
+			var memberEmail = "${loginUser.memberEmail}";
+			$.ajax({
+				url:"refreshLoginUser.do",
+				data:{memberEmail:memberEmail},
+				success:function(data){
+					if(data == "success"){
+						console.log("로그인 유저 세션 새로고침");
+					}
+				},
+				error:function(request, status, errorData){
+					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+				}
+			});
+		}
+	</script>
+
 	<!-- 메시지 스크립트 -->
  	<script type="text/javascript">
+ 		// 채팅 페이지로 이동
  		$(".messageBtn").on("click", function() {
 			location.href="messagePage.do?memberNo=${loginUser.memberNo}";
 			return false;
 		});
- 	
+
 		// 메시지 카운트
 		function getUserMessages() {
 			var memberNo = "${loginUser.memberNo}";
@@ -524,11 +570,10 @@
 				data:{memberNo:memberNo},
 				success:function(data){
 					console.log("메시지 카운트 : " + data);
-					
-					var $messagesIcon = $(".main_messages_icon");
-					
+
 					if(data > 0 || data == '9+') {
 						// 알림 숫자 표시
+						var $messagesIcon = $(".main_messages_icon");
 						var $messagesCountDiv = $("<div>").addClass("main_messages_txt").text(data);
 
 						$messagesIcon.prepend($messagesCountDiv);
@@ -539,7 +584,7 @@
 				}
 			});
 		}
-		
+
 		// 메시지 읽음 fn & ajax
 		(function ($) {
             $.fn.readMessage = function() {
@@ -576,7 +621,7 @@
                 });
             };
         })(jQuery);
-		
+
 		// 메시지 리스트 생성
 		function refreshMessageBody(data) {
 			$("div").remove(".mbody_container");
@@ -592,14 +637,14 @@
 					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
-					
+
 					$messages_bodyFrom.prepend($messages_Img);
 					$messages_body.append($messages_bodyInput);
 					$messages_body.append($messages_bodyFrom);
 					$messages_body.append($messages_bodyContent);
 					$messages_body.append($messages_bodyTime);
 					$mbody_container.append($messages_body);
-					
+
 					$main_messages_body_container.append($mbody_container);
 				}
 			} else {
@@ -609,7 +654,7 @@
 				var $messages_body = $('<div>').addClass("main_messages_body");
 				var $messages_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $messages_bodyContent = $('<div>').text("아직 메시지가 없습니다!");
-				
+
 				$messages_body.append($messages_bodyInput);
 				$messages_body.append($messages_bodyContent);
 				$mbody_container.append($messages_body);
@@ -693,7 +738,7 @@
             			var memberNo = "${loginUser.memberNo}";
 
             			console.log("읽을 알람 번호 : " + alertNo);
-            			
+
             			// 알림 삭제
             			$.ajax({
             				url:"readUserAlert.do",
@@ -725,7 +770,7 @@
 					var $alerts_bodyInput = $('<input>').attr("type","hidden").val(data[i].alertNo);
 					var $alerts_bodyContent = $('<div>').text(data[i].alertContent);
 					var $alerts_bodyTime = $('<div>').addClass("main_aBody_time").text(data[i].alertCreateDate);
-					
+
 					$alerts_body.append($alerts_bodyInput);
 					$alerts_body.append($alerts_bodyContent);
 					$alerts_body.append($alerts_bodyTime);
@@ -740,11 +785,11 @@
 				var $alerts_body = $('<div>').addClass("main_alerts_body");
 				var $alerts_bodyInput = $('<input>').attr("type","hidden").val(null);
 				var $alerts_bodyContent = $('<div>').text("아직 알림이 없습니다!");
-				
+
 				$alerts_body.append($alerts_bodyInput);
 				$alerts_body.append($alerts_bodyContent);
 				$abody_container.append($alerts_body);
-				
+
 				$main_alerts_body_container.append($abody_container);
 			}
 			// 클릭 읽음 기능 추가

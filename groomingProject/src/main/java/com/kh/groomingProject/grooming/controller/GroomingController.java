@@ -1,6 +1,7 @@
 package com.kh.groomingProject.grooming.controller;
 
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
+import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,10 +28,16 @@ import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.service.GroomingService;
+<<<<<<< HEAD
+=======
+import com.kh.groomingProject.grooming.model.vo.GCheck;
+import com.kh.groomingProject.grooming.model.vo.GReply;
+>>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -58,11 +65,25 @@ public class GroomingController {
 	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
+<<<<<<< HEAD
 	public ModelAndView groomingList(ModelAndView mv,String memberNo) {
 
 		ArrayList<Grooming> glist = gService.selectList();
 		Grooming selectG = gService.select(memberNo);
 		
+=======
+	public ModelAndView groomingList(ModelAndView mv, String memberNo,@RequestParam(value="page", required=false) Integer page) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = gService.getGroomingListCount();
+		
+		GroomingPageInfo pi = getPageInfoG(currentPage, listCount);
+		
+		ArrayList<Grooming> glist = gService.selectList(pi);
+	
+>>>>>>> refs/remotes/origin/master
 		/* System.out.println("나 glist야 " +glist); */
 		int result = 0;
 		for (int i = 0; i < glist.size(); i++) {
@@ -83,9 +104,14 @@ public class GroomingController {
 
 		}
 		System.out.println("나 result" + result);
+<<<<<<< HEAD
 		if (glist != null ) {
 			mv.addObject("glist", glist).addObject("selectG",selectG);
 			mv.setViewName("grooming/groomingMain");
+=======
+		if (glist != null) {
+			mv.addObject("glist", glist).addObject("pi", pi).setViewName("grooming/groomingMain");
+>>>>>>> refs/remotes/origin/master
 		} else {
 			throw new GroomingException("리스트 불러오기 실패!");
 		}
@@ -241,9 +267,14 @@ public class GroomingController {
 
 	// 그루밍 상세보기
 	@RequestMapping("groomingDetail.do")
+<<<<<<< HEAD
 	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo,String memberNo) {
+=======
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo,@RequestParam("page") Integer page) {
+>>>>>>> refs/remotes/origin/master
 
 		int result = gService.addReadCount(groomingNo);
+		int	currentPage = page;
 		System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
@@ -265,7 +296,12 @@ public class GroomingController {
 			
 			if (grooming != null && tag != null && spec != null && member != null) {
 				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+<<<<<<< HEAD
 						.addObject("member", member).addObject("appList", appList).addObject("memberNoList",memberNoList).addObject("heart",heart)
+=======
+						.addObject("member", member).addObject("appList", appList)
+						.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
+>>>>>>> refs/remotes/origin/master
 						.setViewName("grooming/groomingDetailView");
 			} else {
 				throw new GroomingException("조회실패!");
@@ -326,7 +362,7 @@ public class GroomingController {
 	}
 
 	@RequestMapping("groomingUpdate.do")
-	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo) {
+	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
 //		System.out.println("나 tlist야" +tlist);
 		Grooming grooming = gService.selectGrooming(groomingNo);
@@ -338,7 +374,7 @@ public class GroomingController {
 			}
 		}
 		if (grooming != null && tlist != null) {
-			mv.addObject("grooming", grooming).addObject("tlist", str).setViewName("grooming/groomingUpdateForm");
+			mv.addObject("grooming", grooming).addObject("tlist", str).addObject("currentPage",page).setViewName("grooming/groomingUpdateForm");
 		} else {
 			throw new GroomingException("수정 게시글 불러오기 실패!");
 		}
@@ -347,8 +383,13 @@ public class GroomingController {
 	}
 
 	@RequestMapping("gUpdate.do")
+<<<<<<< HEAD
 	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo, Grooming g,
 			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+=======
+	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
+			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
+>>>>>>> refs/remotes/origin/master
 
 		String renameFileName = "";
 		// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
@@ -408,7 +449,7 @@ public class GroomingController {
 		
 		System.out.println("나 수정 됬어요~" + result);
 		if (result > 0 && result1 > 0 && result2 > 0) {
-			mv.setViewName("redirect:groomingMain.do");
+			mv.addObject("page",page).setViewName("redirect:groomingMain.do");
 
 		} else {
 			throw new GroomingException("게시글 수정 실패!");
@@ -446,15 +487,26 @@ public class GroomingController {
 		if (result > 0) {
 			return "redirect:groomingMain.do";
 		} else {
-			throw new GroomingException("게시글 삭제 실패!");
+			throw new GroomingException("게시글 마감 실패!");
 		}
 	}
 	
 	@RequestMapping("applyContent.do")
+<<<<<<< HEAD
 	public String applyContent(GroomingApplicant ga) {
 		System.out.println("나 ga" +ga);
+=======
+	public String applyContent(GroomingApplicant ga,String money) {
+		System.out.println("나 ga" + ga);
+>>>>>>> refs/remotes/origin/master
 		int result = gService.applyContent(ga);
+<<<<<<< HEAD
 		
+=======
+		/*
+		 * if(money != "") { int result1 = gService.minusMoney() }
+		 */
+>>>>>>> refs/remotes/origin/master
 		if (result > 0) {
 			return "redirect:groomingMain.do";
 		} else {
@@ -707,6 +759,7 @@ public class GroomingController {
 		 }
 		return mv;
 	}
+<<<<<<< HEAD
 	
 	@RequestMapping("calendar.do")
 	public ModelAndView calendar(ModelAndView mv,
@@ -723,6 +776,11 @@ public class GroomingController {
 		
 		return mv;
 	}
+=======
+
+	
+
+>>>>>>> refs/remotes/origin/master
 	@RequestMapping("groupBoardInsertForm.do")
 	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo,String memberNo, ModelAndView mv) {
 		
@@ -821,5 +879,229 @@ public class GroomingController {
 	
 	
 
+<<<<<<< HEAD
+=======
+		
+			int currentPage = page;
+
+			Member member = mService.selectGroupMemberNo(gBoardNo);
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			Map map = new HashMap();
+			map.put("memberNo", memberNo);
+			map.put("gBoardNo", gBoardNo);
+
+			Declaration declaration = declarationService.selectGroupDeclare(map);
+		
+			System.out.println("나 수정 됬어요~" + result);
+			if (result > 0) {
+				GroupBoard gboard = gService.selectGBoard(gBoardNo);
+				if (gboard != null) {
+					mv.addObject("gboard", gboard).addObject("currentPage", currentPage).addObject("grooming", grooming)
+							.addObject("member", member).addObject("declaration", declaration)
+							.setViewName("grooming/groupBoardDetailView");
+				} else {
+					throw new GroomingException("게시글 조회 실패!");
+				}
+
+			} else {
+				throw new GroomingException("게시글 수정 실패!");
+			}
+		  return mv;
+	  }
+	  
+		@RequestMapping("groupReply.do")
+		public void groupReply(HttpServletResponse response,String gBoardNo) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+
+			ArrayList<GReply> rlist = gService.selectReplyList(gBoardNo);
+
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(rlist, response.getWriter());
+		}
+
+		@RequestMapping("addGroupReply.do")
+		@ResponseBody
+		public String addReply(GReply g, String memberNo,String groomingNo) {
+			Map map = new HashMap();
+			map.put("memberNo", memberNo);
+			map.put("groomingNo",groomingNo);
+			
+			String gMemberNo = gService.selectGMemberNo(map);
+			System.out.println("나 gMemberNo야" +gMemberNo);
+			g.setgMemberNo(gMemberNo);
+			int result = gService.addReply(g);
+			
+			
+			if(result > 0) {
+				return "success";
+			}else{
+				return "false";
+			}
+			
+		}
+	  
+	  
+		@RequestMapping("groomingSaveInsert.do")
+		public ModelAndView groomingSaveView(ModelAndView mv, String memberNo) {
+			// 임시저장된 그루밍 글번호 가져오자!
+			String groomingNo = gService.getGroomingNo(memberNo);
+			
+			ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
+//			System.out.println("나 tlist야" +tlist);
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			
+			// 해쉬태그값을 안적었을 수도 있다.
+			String str = "";
+			if(tlist != null) {
+				for (int i = 0; i < tlist.size(); i++) {
+					str += tlist.get(i).getTagName();
+					if ((i + 1) < tlist.size()) {
+						str += ',';
+					}
+				}
+			}
+			if (grooming != null ) {
+				mv.addObject("grooming", grooming).addObject("tlist", str).setViewName("grooming/groomingSaveForm");
+			} else {
+				throw new GroomingException("수정 게시글 불러오기 실패!");
+			}
+
+			return mv;
+		}
+
+		@RequestMapping("gSaveUpdate.do")
+		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
+				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+
+			String renameFileName = "";
+			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
+			// 그럼 그걸 가지고 기존의 파일을 삭제하자
+			System.out.println(g.getGroomingImg());
+			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
+				if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
+					deleteFile(g.getGroomingImg(), request);
+					// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
+					// 폴더명만 수정하자
+				}
+				renameFileName = saveFile(file, request);
+
+				// Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
+				if (!renameFileName.equals("")) {
+
+					g.setGroomingImg(renameFileName);
+				}
+
+			} else {
+				g.setGroomingImg(gService.selectGimg(groomingNo));
+			}
+
+			g.setGroomingNo(groomingNo);
+			System.out.println("수정controller" + g);
+
+			int result = gService.updateSaveGrooming(g);
+
+			int result1 = 0;
+
+			// 기존에 GTAG에 존재해있던 값을 지우자
+			int result2 = gService.deleteGtag(groomingNo);
+
+			if (tagName.length() != 0) {
+				String[] tag = tagName.split(",");
+				String[] tagNo = new String[tag.length];
+
+				for (int i = 0; i < tag.length; i++) {
+					// TAG 테이블에 값넣기
+					String tagTemp = tag[i];
+					result = tagService.mergeTags(tagTemp);
+					// GTAG 테이블에 값넣기
+					tagNo[i] = gService.findTagNo(tagTemp);
+					String GtagNo = tagNo[i];
+
+					Map map = new HashMap();
+					map.put("GtagNo", GtagNo);
+					map.put("groomingNo", groomingNo);
+
+					// db 갔다 오기
+					result1 = gService.insertGtag(map);
+
+				}
+			}
+			
+			System.out.println("나 수정 됬어요~" + result +result1+ result2);
+			if (result > 0 && result1 > 0) {
+				mv.setViewName("redirect:groomingMain.do");
+
+			} else {
+				throw new GroomingException("게시글 수정 실패!");
+			}
+			return mv;
+		}
+	
+		@RequestMapping("groomingDecide.do")
+		@ResponseBody
+		public String groomingDecide(String memberNo) {
+			
+			// 글쓴 내역이 있는가
+			Grooming selectG = gService.select(memberNo);
+			
+			// 임시저장 글 내역이 있는가
+			Grooming selectS = gService.selectSave(memberNo);
+			
+			if(selectG != null) {
+				return "success";
+			}else if(selectS != null) {
+				return "false";
+			}
+			
+			return "else";
+			
+		}
+		
+		@RequestMapping("calendar.do")
+		public ModelAndView calendar(ModelAndView mv, String groomingNo) {
+
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			
+		
+		
+		 
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+
+			  
+			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+
+			return mv;
+		}
+		@RequestMapping("checkList.do")
+		@ResponseBody
+		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+		/*	for(int i=0; i<memberNickName.length; i++) {*/
+			Map map  = new HashMap();
+			map.put("groomingNo",groomingNo);
+			map.put("memberNickName", memberNickName);
+			
+			String gMemberNo = gService.getGMemberNo(map);
+			
+			Map hashmap  = new HashMap();
+			hashmap.put("groomingNo",groomingNo);
+			hashmap.put("gMemberNo", gMemberNo);
+			 
+			ArrayList<GCheck> gCheck = gService.checkList(hashmap);
+		 
+			Gson gson = new GsonBuilder().setDateFormat("yyyy MM-dd").create();
+			gson.toJson(gCheck, response.getWriter());
+			
+		}
+	  
+>>>>>>> refs/remotes/origin/master
 }
 

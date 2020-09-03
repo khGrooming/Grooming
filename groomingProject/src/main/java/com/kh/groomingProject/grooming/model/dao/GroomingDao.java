@@ -9,10 +9,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+<<<<<<< HEAD
+=======
+import com.kh.groomingProject.grooming.model.vo.GCheck;
+import com.kh.groomingProject.grooming.model.vo.GReply;
+>>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -27,10 +33,11 @@ public class GroomingDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	public ArrayList<Grooming> selectList() {
+	public ArrayList<Grooming> selectList(GroomingPageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		
-		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList");
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectList",null,rowBounds);
 	}
 
 	public ArrayList<Grooming> selectMentorList( ) {
@@ -258,6 +265,64 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertBoard",g);
 	}
+<<<<<<< HEAD
+=======
+
+	public int groupDelete(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.delete("groomingMapper.groupDelete",gBoardNo);
+	}
+
+	public int updateGroupBoard(GroupBoard g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateGroupBoard",g);
+	}
+
+	public String selectGboardimg(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGboardimg",gBoardNo);
+	}
+
+	public ArrayList<GReply> selectReplyList(String gBoardNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectReplyList",gBoardNo);
+	}
+
+	public int addReply(GReply g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addReply",g);
+	}
+
+	public String selectGBoardNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectGBoardNo",map);
+	}
+
+	public Grooming selectSave(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectSave",memberNo);
+	}
+
+	public int updateSaveGrooming(Grooming g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateSaveGrooming",g);
+	}
+
+	public int getGroomingListCount() {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGroomingListCount");
+	}
+
+	public String getGMemberNo(Map map) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getGMemberNo",map);
+	}
+
+	public ArrayList<GCheck> checkList(Map hashmap) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.checkList",hashmap);
+	}
+>>>>>>> refs/remotes/origin/master
 	
 	
 	

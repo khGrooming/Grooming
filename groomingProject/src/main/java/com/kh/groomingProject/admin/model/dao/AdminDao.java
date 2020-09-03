@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
@@ -79,6 +80,40 @@ public class AdminDao {
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", num, rowBounds);
+	}
+
+	public int selectDeclarationCount() {
+
+		return sqlSessionTemplate.selectOne("adminMapper.selectDeclarationCount");
+	}
+
+	public ArrayList<DeclarationManageView> selectDeclarationList(ArrayList<MemberManageView> dMemberList) {
+//		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+//		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectDeclarationList", dMemberList);
+	}
+
+	public ArrayList<MemberManageView> selectDeclarationMember(AdminPageInfo pi, ArrayList<MemberManageView> dMemberList) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectDeclarationMember", dMemberList, rowBounds);
+	}
+
+	public ArrayList<MemberManageView> selectDMemberCount() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectDMemberCount");
+	}
+
+	public ArrayList<MemberManageView> selectTotalCount(ArrayList<MemberManageView> dMemberList) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectTotalCount", dMemberList);
+	}
+
+	public ArrayList<MemberManageView> selectDCount(ArrayList<MemberManageView> dMemberList) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectDCount", dMemberList);
 	}
 
 	

@@ -32,6 +32,7 @@ import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
@@ -116,6 +117,7 @@ public class MyPageController {
 				certificateList[certificate]=s.getSpecName();
 				certificateconfirm[certificate]=s.getSpecConfirm();
 				
+				System.out.println(s.getSpecName());
 				certificate+=1;
 				break;
 			case "경력":
@@ -375,7 +377,6 @@ public class MyPageController {
 	public void mentorA(MultipartHttpServletRequest request, Spec s,
 			HttpServletRequest request1,
 			HttpServletResponse response) throws IOException {
-		System.out.println("Sdfasdf"+s);
 		String folderName = "//upSpecFiles";
 		
 		if(request1.getAttribute("mentorFome") == "Y") {
@@ -654,7 +655,7 @@ public class MyPageController {
 		
 		if(result > 0) {
 			Date time = new Date();
-			String format1 = (new SimpleDateFormat ( "yyyy-MM-dd")).format(time);
+			String format1 = (new SimpleDateFormat ("yyyy-MM-dd")).format(time);
 			System.out.println( insertPoint.getPointList());
 			JSONObject job = new JSONObject();
 			response.setContentType("application/json;charset=utf-8");
@@ -671,9 +672,88 @@ public class MyPageController {
 		}
 	}
 	
-	@RequestMapping("test.do")
-	public String testPage() {
-		return "mypage/test";
+
+	@RequestMapping("profilePage.do")
+	public ModelAndView profilePage(ModelAndView mv,HttpSession session,String pfMemberNo ,@RequestParam(value="pageh",required=false) Integer pageh) {
+		ProfileMember profileInfo = mpService.testLoginUser2(pfMemberNo);
+		String mentor = mpService.mentorUserSelect(pfMemberNo);
+		 if(mentor==null) {
+			 mentor="F";
+		 }
+		 
+		 int school=0;
+		String[] schoolList = new String[3];
+		int certificate=0;
+		String[] certificateList = new String[3];
+		int career=0;
+		String[] careerList = new String[3];
+		
+		
+		ArrayList<Spec> specList = mpService.selectSpecList(pfMemberNo);
+		
+		for(Spec s : specList) {
+			switch (s.getSpecCName()) {
+			case "학교":				
+				if(s.getSpecConfirm().equals("Y")) {
+					schoolList[school]=s.getSpecName();
+					school+=1;
+				}
+				break;
+			case "자격증":
+				if(s.getSpecConfirm().equals("Y")) {
+				certificateList[certificate]=s.getSpecName();
+				certificate+=1;
+				}
+				
+				break;
+			case "경력":
+				if(s.getSpecConfirm().equals("Y")) {
+				careerList[career]=s.getSpecName();
+				career+=1;
+				}
+				
+				break;
+			default:
+				break;
+			}
+		}
+		
+		int HlistCount = mpService.selectGroomingHostCount(pfMemberNo);
+		int currentPageh=1;
+		if(pageh != null) {
+			currentPageh = pageh;
+		}
+		int GroomingLimith = 4;
+		double fh=0.8;
+		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimith,fh);
+		
+		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,pfMemberNo);
+
+		
+		
+		mv.addObject("pih", pih);
+		mv.addObject("hpgList", hpgList);
+		mv.addObject("profileInfo", profileInfo);
+		mv.addObject("schoolList", schoolList);
+		mv.addObject("certificateList", certificateList);
+		mv.addObject("careerList", careerList);
+		mv.addObject("mentor", mentor);
+		mv.setViewName("mypage/profilePage");
+		return mv;
 	}
-	
+	@RequestMapping(value="memberReport.do",method=RequestMethod.POST)
+	public void memberReport(MemberReport mr,HttpServletResponse response) throws IOException {
+		System.out.println(mr);
+		int result = mpService.insertMemberReport(mr);
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.append("Y");
+			
+		}else {
+			System.out.println("에러처리");
+		}
+		out.flush();
+		out.close();
+				
+	}
 }

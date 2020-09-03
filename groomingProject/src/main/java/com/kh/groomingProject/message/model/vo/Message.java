@@ -19,14 +19,15 @@ public class Message implements Serializable{
 	private String toMemberPhoto;		// 받는사람 프로필 사진
 	private String messageContent;		// 메시지 내용
 	private Timestamp messageDate;		// 메시지 생성일
-	private String messageConfirm;		// 메시지 확인 유무
+	private String fromMConfirm;		// 보낸 사람 메시지 확인 유무
+	private String toMConfirm;			// 받은 사람 메시지 확인 유무
 
 	public Message() {
 		super();
 	}
 	public Message(String messageNo, String fromMemberNo, String fromMemberNickname, String fromMemberPhoto,
-			String toMemberNo, String toMemberNickname, String toMemberPhoto, String messageContent, Timestamp messageDate,
-			String messageConfirm) {
+			String toMemberNo, String toMemberNickname, String toMemberPhoto, String messageContent,
+			Timestamp messageDate, String fromMConfirm, String toMConfirm) {
 		super();
 		this.messageNo = messageNo;
 		this.fromMemberNo = fromMemberNo;
@@ -37,7 +38,8 @@ public class Message implements Serializable{
 		this.toMemberPhoto = toMemberPhoto;
 		this.messageContent = messageContent;
 		this.messageDate = messageDate;
-		this.messageConfirm = messageConfirm;
+		this.fromMConfirm = fromMConfirm;
+		this.toMConfirm = toMConfirm;
 	}
 	public String getMessageNo() {
 		return messageNo;
@@ -93,11 +95,17 @@ public class Message implements Serializable{
 	public void setMessageDate(Timestamp messageDate) {
 		this.messageDate = messageDate;
 	}
-	public String getMessageConfirm() {
-		return messageConfirm;
+	public String getFromMConfirm() {
+		return fromMConfirm;
 	}
-	public void setMessageConfirm(String messageConfirm) {
-		this.messageConfirm = messageConfirm;
+	public void setFromMConfirm(String fromMConfirm) {
+		this.fromMConfirm = fromMConfirm;
+	}
+	public String getToMConfirm() {
+		return toMConfirm;
+	}
+	public void setToMConfirm(String toMConfirm) {
+		this.toMConfirm = toMConfirm;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -107,7 +115,8 @@ public class Message implements Serializable{
 		return "Message [messageNo=" + messageNo + ", fromMemberNo=" + fromMemberNo + ", fromMemberNickname="
 				+ fromMemberNickname + ", fromMemberPhoto=" + fromMemberPhoto + ", toMemberNo=" + toMemberNo
 				+ ", toMemberNickname=" + toMemberNickname + ", toMemberPhoto=" + toMemberPhoto + ", messageContent="
-				+ messageContent + ", messageDate=" + messageDate + ", messageConfirm=" + messageConfirm + "]";
+				+ messageContent + ", messageDate=" + messageDate + ", fromMConfirm=" + fromMConfirm + ", toMConfirm="
+				+ toMConfirm + "]";
 	}
 
 }

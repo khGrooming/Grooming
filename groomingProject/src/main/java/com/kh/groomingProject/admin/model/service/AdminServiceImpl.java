@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.admin.model.dao.AdminDao;
+import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
@@ -70,6 +71,42 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
 		
 		return adminDao.selectGroomingList(pi, category);
+	}
+
+	@Override
+	public int selectDeclarationCount() {
+
+		return adminDao.selectDeclarationCount();
+	}
+
+	@Override
+	public ArrayList<DeclarationManageView> selectDeclarationList(ArrayList<MemberManageView> dMemberList) {
+
+		return adminDao.selectDeclarationList(dMemberList);
+	}
+
+	@Override
+	public ArrayList<MemberManageView> selectDeclarationMember(AdminPageInfo pi, ArrayList<MemberManageView> dMemberList) {
+
+		return adminDao.selectDeclarationMember(pi, dMemberList);
+	}
+
+	@Override
+	public ArrayList<MemberManageView> selectDMemberCount() {
+
+		return adminDao.selectDMemberCount();
+	}
+
+	@Override
+	public ArrayList<MemberManageView> selectTotalCount(ArrayList<MemberManageView> dMemberList) {
+
+		return adminDao.selectTotalCount(dMemberList);
+	}
+
+	@Override
+	public ArrayList<MemberManageView> selectDCount(ArrayList<MemberManageView> dMemberList) {
+
+		return adminDao.selectDCount(dMemberList);
 	}
 
 	

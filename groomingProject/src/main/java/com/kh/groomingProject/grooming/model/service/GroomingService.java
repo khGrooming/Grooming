@@ -3,6 +3,12 @@ package com.kh.groomingProject.grooming.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
+import com.kh.groomingProject.grooming.model.vo.GCheck;
+import com.kh.groomingProject.grooming.model.vo.GReply;
+>>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -16,7 +22,7 @@ import com.kh.groomingProject.member.model.vo.Member;
 
 public interface GroomingService {
 
-	ArrayList<Grooming> selectList();
+	ArrayList<Grooming> selectList(GroomingPageInfo pi);
 
 	ArrayList<Grooming> selectMentorList( );
 
@@ -100,4 +106,29 @@ public interface GroomingService {
 
 	int insertBoard(GroupBoard g);
 
+<<<<<<< HEAD
+=======
+	int groupDelete(String gBoardNo);
+
+	int updateGroupBoard(GroupBoard g);
+
+	String selectGboardimg(String gBoardNo);
+
+	ArrayList<GReply> selectReplyList(String gBoardNo);
+
+	int addReply(GReply g);
+
+	String selectGBoardNo(Map map);
+
+	Grooming selectSave(String memberNo);
+
+	int updateSaveGrooming(Grooming g);
+
+	int getGroomingListCount();
+
+	String getGMemberNo(Map map);
+
+	ArrayList<GCheck> checkList(Map hashmap);
+
+>>>>>>> refs/remotes/origin/master
 }

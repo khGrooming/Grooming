@@ -343,7 +343,7 @@
 											<c:param name="spage" value="${spi.currentPage - 1}"/>
 											<c:param name="mpage" value="${pi.currentPage}"/>
 										</c:url>
-										<a class="hover" href="${slistBack }">[이전]</a>&nbsp;
+										<a class="hover" onclick="slistBack()">[이전]</a>&nbsp;
 									</c:if>
 						<!-- [번호들] -->
 									<c:forEach var="p" begin="${spi.startPage}" end="${spi.endPage}">
@@ -355,7 +355,7 @@
 												<c:param name="spage" value="${p}"/>
 												<c:param name="mpage" value="${pi.currentPage}"/>
 											</c:url>
-											<a class="hover" href="${slistCheck }">${p}</a>
+											<a class="hover" onclick="slistCheck()">${p}</a>
 										</c:if>
 									</c:forEach>
 						<!-- [이후] -->
@@ -367,7 +367,7 @@
 											<c:param name="spage" value="${spi.currentPage + 1}"/>
 											<c:param name="mpage" value="${pi.currentPage}"/>
 										</c:url>
-										&nbsp;<a class="hover" href="${slistAfter }">[이후]</a>
+										&nbsp;<a class="hover" onclick="slistAfter()"">[이후]</a>
 									</c:if>
 								</td>
 							</tr>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomeHelp;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
 
 @Repository("homeDao")
@@ -51,8 +52,13 @@ public class HomeDao {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		System.out.println(" " + offset + " / " + pi.getBoardLimit());
+		System.out.println("페이지 오프셋 : " + offset + " / 페이지 리밋 : " + pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getGroomingList", null, rowBounds);
+	}
+
+	public int siteQuestion(HomeHelp homehelp) {
+
+		return sqlSessionTemplate.insert("homeMapper.siteQuestion", homehelp);
 	}
 
 }

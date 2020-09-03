@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.message.model.exception.MessageException;
 import com.kh.groomingProject.message.model.service.MessageService;
 import com.kh.groomingProject.message.model.vo.Message;
 
@@ -153,6 +154,10 @@ public class MessageController {
 		
 		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
 		
+		int result = msgService.readChat(me);
+		
+		System.out.println("채팅 읽음 표시 결과 : " + result);
+
 		ArrayList<Message> mList = msgService.loadChat(me);
 		
 		System.out.println("채팅  확인 : " + mList);

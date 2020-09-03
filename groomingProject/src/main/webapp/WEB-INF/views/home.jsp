@@ -162,7 +162,7 @@ body{ background-color: #f2f2f2; }
 }
 .cards_bundle .card_container .card_header img
 {
-	object-fit: scale-down;
+	object-fit: cover;
 	height: 100%;
 	width: 100%;
 }
@@ -177,6 +177,13 @@ body{ background-color: #f2f2f2; }
 	border-radius: 50%;
 	text-align: center;
 	line-height: 2.5rem;
+}
+.cards_bundle .card_container .card_header .card_dDay.card_dDay_deadline
+{
+	font-size: 0.65rem;
+	background: white;
+	color: red;
+	border: thin solid red;
 }
 .cards_bundle .card_container .card_header .card_dDay.card_dDay_red
 {
@@ -316,18 +323,22 @@ body{ background-color: #f2f2f2; }
 }
 @media (min-width: 0px) and (max-width: 991px)
 {
-.cards_bundle .card_container .card_box
-{ 
-	display: flex;
-	justify-content: space-between;
-	align-items: center; 
-}
-.cards_bundle .card_container .card_box .card_header{ border: none; }
-.cards_bundle .card_container .card_box .card_header,
-.cards_bundle .card_container .card_box .card_body
-{
-	width: 50%;
-}
+	.cards_bundle .card_container .card_box:hover .card_header
+	{
+		border-bottom: none;
+	}
+	.cards_bundle .card_container .card_box
+	{ 
+		display: flex;
+		justify-content: space-between;
+		align-items: center; 
+	}
+	.cards_bundle .card_container .card_box .card_header{ border: none; }
+	.cards_bundle .card_container .card_box .card_header,
+	.cards_bundle .card_container .card_box .card_body
+	{
+		width: 50%;
+	}
 }
 </style>
 
@@ -378,6 +389,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -445,6 +460,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -511,6 +530,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -577,6 +600,10 @@ body{ background-color: #f2f2f2; }
 							onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'">
 						<!-- 그룹 d-day 태그 -->
 						<c:choose>
+ 							<c:when test="${g.groomingDday eq 0 }">
+								<c:set var="card_dDay_color" value="card_dDay_deadline"/>
+								<c:set var="card_dDay_text" value="마감임박"/>
+ 							</c:when>
  							<c:when test="${g.groomingDday le 7 }">
 								<c:set var="card_dDay_color" value="card_dDay_red"/>
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
@@ -618,9 +645,6 @@ body{ background-color: #f2f2f2; }
 			</div>
 		</c:forEach>
 		</div>
-		<div class="spinner-border text-success" role="status">
-			<span class="sr-only">Loading...</span>
-		</div>
 	</div> <!-- 컨테이너 끝 -->
 </c:if>
 
@@ -628,6 +652,7 @@ body{ background-color: #f2f2f2; }
 
 <script type="text/javascript">
 	var page = 1;
+	var pageloading = true;
 	$(function() {
 		console.log("메인 페이지");
 	});
@@ -656,12 +681,11 @@ body{ background-color: #f2f2f2; }
 	// 스크롤 로딩
 	window.onscroll = function(e) {
 	    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-	    	// 로딩 css on
-	    	$(".spinner-border").css("pisplay","tabel");
 	    	// ajax + 카드 추가
-	    	loadGroomingData();
-	    	// 로딩 css off
-	    	$(".spinner-border").hide();
+	    	if(pageloading){
+	    		pageloading = false;
+		    	loadGroomingData();
+	    	}
 	    }
 	};
 
@@ -694,7 +718,10 @@ body{ background-color: #f2f2f2; }
 				var card_dDay_text = "D-" + data[i].groomingDday;
 
 				// d-day에 따른 css 클래스명 선택
-				if(data[i].groomingDday <= 7){
+				if(data[i].groomingDday == 0){
+					card_dDay_color = "card_dDay_deadline";
+					card_dDay_text = "마감임박";
+				} else if(data[i].groomingDday <= 7){
 					card_dDay_color = "card_dDay_red";
 				} else if(data[i].groomingDday <= 15){
 					card_dDay_color = "card_dDay_orange";
@@ -718,7 +745,7 @@ body{ background-color: #f2f2f2; }
 				
 				// header
 				var $card_header = $('<div>').addClass("card_header");
-				var $imgGroomingImg = $('<img>').attr({"alt":"그루밍 사진","src":"${contextPath }/resources/upprofileFiles/"+data[i].groomingImg,"onerror":"this.src='${contextPath }/resources/views/images/grooming_logo.png'"});
+				var $imgGroomingImg = $('<img>').attr({"alt":"그루밍 사진","src":"${contextPath }/resources/upGroomingFiles/"+data[i].groomingImg,"onerror":"this.src='${contextPath }/resources/views/images/grooming_logo.png'"});
 				var $card_dDay = $('<div>').addClass("card_dDay " + card_dDay_color);
 				var $card_dDay_text = $('<span>').text(card_dDay_text);
 				$card_box.append($card_header);
@@ -736,10 +763,18 @@ body{ background-color: #f2f2f2; }
 				// tags
 				var $card_tags = $('<div>').addClass("card_tags");
 				var $tag_wrap = $('<div>');
-				var $tagsinput = $('<input>').addClass("form-control").attr({"type":"text","name":"memberTagName","placeholder":"Tags,","data-role":"tagsinput"}).val(data[i].groomingTagName);
+				
+				var $bTagsinput = $('<div>').addClass("bootstrap-tagsinput");
+
+				var tagName = (data[i].groomingTagName).split(",");
+				for(var j in tagName){
+					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[j]);
+					$bTagsinput.append($sBadge);
+				}
+				
 				$card_body.append($card_tags);
 				$card_tags.append($tag_wrap);
-				$tag_wrap.append($tagsinput);
+				$tag_wrap.append($bTagsinput);
 
 				// intro
 				var $card_intro = $('<div>').addClass("card_intro").text(data[i].groomingIntroduce);
@@ -759,6 +794,7 @@ body{ background-color: #f2f2f2; }
 		} else {
 			console.log("내용 없음");
 		}
+		pageloading = true;
 	}
 </script>
 

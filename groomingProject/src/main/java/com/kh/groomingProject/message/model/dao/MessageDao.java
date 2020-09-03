@@ -35,6 +35,11 @@ public class MessageDao {
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.getUserMessageList", m);
 	}
 
+	public int readChat(Message me) {
+
+		return sqlSessionTemplate.update("messageMapper.readChat", me);
+	}
+
 	public ArrayList<Message> loadChat(Message me) {
 
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.loadChat", me);
@@ -49,4 +54,5 @@ public class MessageDao {
 
 		return (ArrayList)sqlSessionTemplate.selectList("messageMapper.loadChatList", m);
 	}
+
 }
