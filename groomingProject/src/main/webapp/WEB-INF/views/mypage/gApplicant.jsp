@@ -11,7 +11,7 @@
 #content {
 	width: 70%;
 	height: 1000px;
-	margin: 5% auto;
+	margin: 0 auto;
 }
 
 #dday_div {
