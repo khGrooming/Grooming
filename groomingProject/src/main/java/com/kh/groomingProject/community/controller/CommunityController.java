@@ -140,7 +140,7 @@ public class CommunityController {
 		}else { 
 			throw new CommunityException("게시물 등록 실패!"); 
 		} 
-	}
+	} 
 	
 	// -------------------------------------------------------------------------------------	
 		
