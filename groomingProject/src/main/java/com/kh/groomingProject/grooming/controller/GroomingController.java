@@ -1151,6 +1151,38 @@ public class GroomingController {
 			return mv;
 		}
 
+		@RequestMapping("confirmCheck.do")
+		@ResponseBody
+		public String confirmCheck(String gCheckDate, String groomingNo) throws ParseException {
+			
 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date to = sdf.parse(gCheckDate);
+			
+			Map map = new HashMap(); 
+			map.put("gCheckDate", to);
+			map.put("groomingNo", groomingNo);
+		 
+			
+			ArrayList<GCheck> g = gService.confirmCheck(map); 
+			System.out.println("나 check확인하는 g야" + g); 
+		
+			if(!g.isEmpty()) {
+				return "success"; 
+			}else {
+				return "false"; 
+			}
+		 
+		}
 	  
 }
+
+
+
+
+
+
+
+
+

@@ -363,6 +363,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.insertCheck(g);
 	}
 
+	@Override
+	public ArrayList<GCheck> confirmCheck(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.confirmCheck(map);
+	}
+
 
 	
 }

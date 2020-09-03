@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
@@ -13,11 +13,7 @@
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 	
-	<!-- datapicker  -->
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 <!-- Bootstrap CSS -->
 <link href="https://www.cssscript.com/wp-includes/css/sticky.css"
@@ -69,6 +65,11 @@ table tr {
 h1{
 	margin-top:50px;
 }
+
+.ui-datepicker-trigger {
+	width: 25px;
+	height: 25px;
+}
 </style>
 </head>
 
@@ -109,7 +110,7 @@ h1{
 			<div class="table-responsive container"
 				style="text-align: center; height: 300px;">
 
-				<table class="table table-bordered" id="tb1" style="width: 3000px;">
+				<table class="table table-bordered" id="tb1" style="width: 5000px;">
 					<tbody>
 
 
@@ -128,7 +129,9 @@ h1{
 							<tr>
 								<th style="width: auto;">멤버 이름</th>
 								<!-- <th colspan="3" style="width: auto;"><input type="date" name="gCheckDate" id="checkDate" required></th> -->
-	 							<th colspan="3" style="width: auto;"><input type="date" min="${grooming.studySd }" max="${today }" id="checkDate" name="gCheckDate" ></th> 
+	 							<th colspan="3" style="width: auto;">
+	 								<input type="date" min="${grooming.studySd }" max="${today }" id="checkDate" name="gCheckDate" required>
+	 							</th> 
 							</tr>
 	
 						</thead>
@@ -145,29 +148,96 @@ h1{
 											    <option value="N">결석</option>
 										</select>
 									</td>
-								<!-- 	<td><label>결석&nbsp;<input type="radio" class="chulseok" value="N"></label></td>
-									<td><label>지각&nbsp;<input type="radio" class="chulseok" value="L"></label></td> -->
+								
 								</tr>
 							</c:forEach>
 							<tr>
 									<td colspan="4">
-										<button type="submit">저장</button>
-										<button type="">수정하기</button>
+										<button type="button" id="save" >저장</button>
+										<button type="button" id="update">수정하기</button>
 									</td>
 									
 							</tr>
 						</tbody>
 	
 					</table>
-					</form>
+				</form>
 			</div>
 
 
 
 		</div>
 	</section>
-<script>
+<script >
+	$(function(){
+		
+		
 
+	/* 	//datepicker 한국어로 사용하기 위한 언어설정
+		$.datepicker.setDefaults($.datepicker.regional['ko']);
+
+		// 시작일은 종료일이후 날짜 선택 불가
+		// 종료일은 시작일 이전 날짜 선택 불가
+
+		//시작일.
+		$('#checkDate').datepicker({
+							showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
+							buttonImage : "${contextPath }/resources/views/images/calendar.png", // 버튼 이미지
+							buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
+							buttonText : "날짜선택", // 버튼의 대체 텍스트
+							dateFormat : "yy-mm-dd", // 날짜의 형식
+							changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
+							onClose : function(selectedDate) {
+							
+							
+						}
+		}); */
+	$("#checkDate").change(function(){
+		var gCheckDate =$("#checkDate").val();
+		$('#save').unbind('click');
+		$("#save").on("click",function(){
+			if(gCheckDate == ""){
+				console.log("날짜를 선택해주세요");
+			}
+			var groomingNo = "${grooming.groomingNo}";
+				 $.ajax({
+					url:'confirmCheck.do',
+					type:'post',
+					data:{gCheckDate:gCheckDate,groomingNo:groomingNo},
+					success : function (data){
+						if(data == "success"){
+			    			alert("이미 출석하신 날짜입니다. 수정을 원하시면 오른쪽에 수정버튼을 눌러주세요!");
+			    		}else {
+			    			
+			    			$("form").submit();
+			    			alert("출석체크 됬어요~");
+			    		}
+						
+					
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+				
+				})   
+				
+				
+				// ajax끝
+			
+			
+			
+			
+			
+			
+			
+			})
+	
+			
+		
+	})
+	})
 </script>
 	
 	</script>
@@ -179,8 +249,7 @@ h1{
 			setInterval(function(){
 				$("#tb1 tbody").html("");
 				checkList();
-				console.log("나 깜빡임");
-			},3000);
+			},10000);
 			
 		
 		})

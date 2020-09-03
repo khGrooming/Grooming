@@ -127,4 +127,6 @@ public interface GroomingService {
 
 	int insertCheck(GCheck g);
 
+	ArrayList<GCheck> confirmCheck(Map map);
+
 }

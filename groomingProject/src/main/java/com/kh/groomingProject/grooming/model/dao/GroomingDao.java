@@ -322,6 +322,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertCheck",g);
 	}
+
+	public ArrayList<GCheck> confirmCheck(Map map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.confirmCheck",map);
+	}
 	
 	
 	
