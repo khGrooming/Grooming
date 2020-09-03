@@ -73,24 +73,24 @@ public class GroomingController {
 		
 		ArrayList<Grooming> glist = gService.selectList(pi);
 	
-		/* System.out.println("나 glist야 " +glist); */
-		int result = 0;
-		for (int i = 0; i < glist.size(); i++) {
-
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			String endDate = sdf.format(glist.get(i).getGroomingEd());
-			String nowDate = sdf.format(glist.get(i).getGroomingNd());
-
-			System.out.println("나 endDate야 " + endDate);
-			System.out.println("나 nowDate야 " + nowDate);
-
-			if (endDate.compareTo(nowDate) < 0) {
-				String groomingNo = glist.get(i).getGroomingNo();
-				result = gService.statusUpdate(groomingNo);
-			}
-
-		}
-		System.out.println("나 result" + result);
+		System.out.println("나 glist야 " +glist);
+//		int result = 0;
+//		for (int i = 0; i < glist.size(); i++) {
+//
+//			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//			String endDate = sdf.format(glist.get(i).getGroomingEd());
+//			String nowDate = sdf.format(glist.get(i).getGroomingNd());
+//
+//			System.out.println("나 endDate야 " + endDate);
+//			System.out.println("나 nowDate야 " + nowDate);
+//
+//			if (endDate.compareTo(nowDate) < 0) {
+//				String groomingNo = glist.get(i).getGroomingNo();
+//				result = gService.statusUpdate(groomingNo);
+//			}
+//
+//		}
+//		System.out.println("나 result" + result);
 		if (glist != null) {
 			mv.addObject("glist", glist).addObject("pi", pi).setViewName("grooming/groomingMain");
 		} else {
@@ -106,20 +106,25 @@ public class GroomingController {
 
 		ArrayList<Grooming> glist = gService.selectMentorList();
 
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(glist, response.getWriter());
+		System.out.println("그루밍 멘토 : " + glist);
+		
+//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//		gson.toJson(glist, response.getWriter());
+		new Gson().toJson(glist, response.getWriter());
 	}
 
 // 예치금 필터 적용
 	@RequestMapping("groomingMo.do")
 	public void groomingMoneyList(HttpServletResponse response) throws JsonIOException, IOException {
-
 		response.setContentType("application/json; charset=utf-8");
 
 		ArrayList<Grooming> glist = gService.selectMoneyList();
-
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(glist, response.getWriter());
+		
+		System.out.println("그루밍 멘토 : " + glist);
+		
+//		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+//		gson.toJson(glist, response.getWriter());
+		new Gson().toJson(glist, response.getWriter());
 	}
 
 	// 검색
