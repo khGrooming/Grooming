@@ -684,6 +684,23 @@
 
  	</select>
  	
+	<insert id="insertCheck" parameterType="GCheck" >
+	 	INSERT INTO G_CHECK VALUES(
+	 			'GN' || LPAD(SEQ_G_CHECK_NO.NEXTVAL,5,0)
+	 			, #{groomingNo}
+	 			, #{gMemberNo}
+	 			, #{gCheckStatus}
+	 			, #{gCheckDate}
+	 	)
+ 	
+	</insert>
+ 	
+ 	<select id="confirmCheck" parameterType="map" resultMap="GroupCheckResultSet">
+ 		SELECT *
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
+ 	</select>
+ 							  
 	<select id="selectList" resultMap="groomingMainResultSet">
 		<![CDATA[
 		SELECT 

@@ -5,6 +5,8 @@ import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1071,13 +1073,12 @@ public class GroomingController {
 		}
 		
 		@RequestMapping("calendar.do")
-		public ModelAndView calendar(ModelAndView mv, String groomingNo) {
+		public ModelAndView calendar(ModelAndView mv, String groomingNo) throws ParseException {
 
 			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
 			
-		
-		
-		 
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
 			
 
@@ -1088,7 +1089,7 @@ public class GroomingController {
 				  if((i+1)<member.size()) { str +=','; }
 			  }
 
-			  
+			  System.out.println("나 시작일 : "+grooming.getStudySd());
 			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
 
 			return mv;
@@ -1113,6 +1114,82 @@ public class GroomingController {
 			Gson gson = new GsonBuilder().setDateFormat("yyyy MM-dd").create();
 			gson.toJson(gCheck, response.getWriter());
 			
+		}
+		
+		@RequestMapping("insertCheck.do")
+		@ResponseBody
+		public ModelAndView insertCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus)  {
+
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
+			
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+			
+			String[] nickname = memberNickName.split(",");
+			String[] status = gCheckStatus.split(",");
+			String gMemberNo = null;
+			int result = 0;
+			for(int i=0; i<nickname.length; i++) {
+				
+				Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName", nickname[i]);
+				
+				gMemberNo = gService.getGMemberNo(map);
+				
+				g.setgMemberNo(gMemberNo);
+				g.setgCheckStatus(status[i]);
+				result = gService.insertCheck(g);
+			}
+	
+			
+			System.out.println("나 memberNickName : " + memberNickName);
+			System.out.println("나 groomingNo : " + groomingNo);
+			System.out.println("나 gCheckStatus : " + gCheckStatus);
+			
+			
+			if (result > 0) {
+				
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				
+			} else {
+				throw new GroomingException("출석 체크 실패!");
+			}
+			return mv;
+		}
+
+		@RequestMapping("confirmCheck.do")
+		@ResponseBody
+		public String confirmCheck(String gCheckDate, String groomingNo) throws ParseException {
+			
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date to = sdf.parse(gCheckDate);
+			
+			Map map = new HashMap(); 
+			map.put("gCheckDate", to);
+			map.put("groomingNo", groomingNo);
+		 
+			
+			ArrayList<GCheck> g = gService.confirmCheck(map); 
+			System.out.println("나 check확인하는 g야" + g); 
+		
+			if(!g.isEmpty()) {
+				return "success"; 
+			}else {
+				return "false"; 
+			}
+		 
 		}
 	  
 }

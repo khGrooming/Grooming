@@ -319,6 +319,16 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.checkList",hashmap);
 	}
 
+	public int insertCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.insertCheck",g);
+	}
+
+	public ArrayList<GCheck> confirmCheck(Map map) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.confirmCheck",map);
+	}
+
 	public ArrayList<Grooming> groomingSearch(GroomingSearch gs) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.groomingSearch", gs);

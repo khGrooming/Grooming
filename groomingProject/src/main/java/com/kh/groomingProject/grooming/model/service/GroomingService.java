@@ -1,7 +1,6 @@
 package com.kh.groomingProject.grooming.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
@@ -126,6 +125,10 @@ public interface GroomingService {
 	String getGMemberNo(Map map);
 
 	ArrayList<GCheck> checkList(Map hashmap);
+	
+	int insertCheck(GCheck g);
+
+	ArrayList<GCheck> confirmCheck(Map map);
 
 	ArrayList<Grooming> groomingSearch(GroomingSearch gs);
 

@@ -1,12 +1,12 @@
 package com.kh.groomingProject.grooming.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
 import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
@@ -356,6 +356,18 @@ public class GroomingServiceImpl implements GroomingService{
 	public ArrayList<GCheck> checkList(Map hashmap) {
 		// TODO Auto-generated method stub
 		return gDao.checkList(hashmap);
+	}
+
+	@Override
+	public int insertCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return gDao.insertCheck(g);
+	}
+
+	@Override
+	public ArrayList<GCheck> confirmCheck(Map map) {
+		// TODO Auto-generated method stub
+		return gDao.confirmCheck(map);
 	}
 
 	@Override
