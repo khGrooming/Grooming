@@ -327,6 +327,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.confirmCheck",map);
 	}
+
+	public int updateCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateCheck",g);
+	}
 	
 	
 	

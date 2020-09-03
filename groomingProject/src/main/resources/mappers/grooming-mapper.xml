@@ -690,6 +690,14 @@
  	
  	</select>
  	
+ 	<update id="updateCheck" parameterType="GCheck">
+ 		UPDATE G_CHECK
+		SET G_CHECK = #{gCheckStatus}
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo} AND G_CHECK_DATE=#{gCheckDate}
+ 	
+ 	
+ 	
+ 	</update>
  	
  	
 </mapper>

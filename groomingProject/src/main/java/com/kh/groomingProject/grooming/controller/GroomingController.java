@@ -1176,6 +1176,58 @@ public class GroomingController {
 		 
 		}
 	  
+		@RequestMapping("updateCheck.do")
+		@ResponseBody
+		public ModelAndView updateCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus) {
+			
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
+			
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+			
+			String[] nickname = memberNickName.split(",");
+			String[] status = gCheckStatus.split(",");
+			String gMemberNo = null;
+			int result = 0;
+			for(int i=0; i<nickname.length; i++) {
+				
+				Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName", nickname[i]);
+				
+				gMemberNo = gService.getGMemberNo(map);
+				
+				g.setgMemberNo(gMemberNo);
+				g.setgCheckStatus(status[i]);
+				result = gService.updateCheck(g);
+			}
+	
+			
+//			System.out.println("나 memberNickName : " + memberNickName);
+//			System.out.println("나 groomingNo : " + groomingNo);
+//			System.out.println("나 gCheckStatus : " + gCheckStatus);
+			
+			
+			if (result > 0) {
+				
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				
+			} else {
+				throw new GroomingException("출석 수정 실패!");
+			}
+			return mv;
+		
+			
+		}
 }
 
 

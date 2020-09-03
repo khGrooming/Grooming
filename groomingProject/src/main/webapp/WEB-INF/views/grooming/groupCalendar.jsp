@@ -122,7 +122,7 @@ h1{
 
 			<h1>출석 체크</h1>
 			<div style="text-align: center;" >
-				<form action="insertCheck.do">
+				<form action="insertCheck.do" id="form">
 				<input type="hidden" name="groomingNo" value="${grooming.groomingNo }"/>
 					<table class="table table-bordered" id="#tb2">
 						<thead>
@@ -168,79 +168,8 @@ h1{
 
 		</div>
 	</section>
-<script >
-	$(function(){
-		
-		
 
-	/* 	//datepicker 한국어로 사용하기 위한 언어설정
-		$.datepicker.setDefaults($.datepicker.regional['ko']);
-
-		// 시작일은 종료일이후 날짜 선택 불가
-		// 종료일은 시작일 이전 날짜 선택 불가
-
-		//시작일.
-		$('#checkDate').datepicker({
-							showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
-							buttonImage : "${contextPath }/resources/views/images/calendar.png", // 버튼 이미지
-							buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
-							buttonText : "날짜선택", // 버튼의 대체 텍스트
-							dateFormat : "yy-mm-dd", // 날짜의 형식
-							changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
-							onClose : function(selectedDate) {
-							
-							
-						}
-		}); */
-	$("#checkDate").change(function(){
-		var gCheckDate =$("#checkDate").val();
-		$('#save').unbind('click');
-		$("#save").on("click",function(){
-			if(gCheckDate == ""){
-				console.log("날짜를 선택해주세요");
-			}
-			var groomingNo = "${grooming.groomingNo}";
-				 $.ajax({
-					url:'confirmCheck.do',
-					type:'post',
-					data:{gCheckDate:gCheckDate,groomingNo:groomingNo},
-					success : function (data){
-						if(data == "success"){
-			    			alert("이미 출석하신 날짜입니다. 수정을 원하시면 오른쪽에 수정버튼을 눌러주세요!");
-			    		}else {
-			    			
-			    			$("form").submit();
-			    			alert("출석체크 됬어요~");
-			    		}
-						
-					
-						
-					},error:function(request, status, errorData){
-						alert("error code: " + request.status + "\n"
-							+"message: " + request.responseText
-							+"error: " + errorData);
-				}
-				
-				})   
-				
-				
-				// ajax끝
-			
-			
-			
-			
-			
-			
-			
-			})
 	
-			
-		
-	})
-	})
-</script>
-	
-	</script>
 	
 	
 	<script>
@@ -249,7 +178,7 @@ h1{
 			setInterval(function(){
 				$("#tb1 tbody").html("");
 				checkList();
-			},10000);
+			},20000);
 			
 		
 		})
@@ -332,7 +261,133 @@ h1{
 			}
 		}
 	</script>
+<script >
+	$(function(){
+		
+		
 
+	/* 	//datepicker 한국어로 사용하기 위한 언어설정
+		$.datepicker.setDefaults($.datepicker.regional['ko']);
+
+		// 시작일은 종료일이후 날짜 선택 불가
+		// 종료일은 시작일 이전 날짜 선택 불가
+
+		//시작일.
+		$('#checkDate').datepicker({
+							showOn : "both", // 달력을 표시할 타이밍 (both: focus or button)
+							buttonImage : "${contextPath }/resources/views/images/calendar.png", // 버튼 이미지
+							buttonImageOnly : true, // 버튼 이미지만 표시할지 여부
+							buttonText : "날짜선택", // 버튼의 대체 텍스트
+							dateFormat : "yy-mm-dd", // 날짜의 형식
+							changeMonth : true, // 월을 이동하기 위한 선택상자 표시여부
+							onClose : function(selectedDate) {
+							
+							
+						}
+		}); */
+	$("#checkDate").change(function(){
+		var gCheckDate =$("#checkDate").val();
+		$('#save').unbind('click');
+		$("#save").on("click",function(){
+	
+			var groomingNo = "${grooming.groomingNo}";
+				 $.ajax({
+					url:'confirmCheck.do',
+					type:'post',
+					data:{gCheckDate:gCheckDate,groomingNo:groomingNo},
+					success : function (data){
+						if(data == "success"){
+			    			alert("이미 출석하신 날짜입니다. 수정을 원하시면 오른쪽에 수정버튼을 눌러주세요!");
+			    		}else {
+			    			
+			    			$("#form").submit();
+			    			alert("출석체크 됬어요~");
+			    		}
+						
+					
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+				
+				})   
+				
+				
+				// ajax끝
+			
+			
+			
+			
+			
+			
+			
+			})
+	
+		$('#update').unbind('click');
+		$("#update").on("click",function(){
+	
+			var groomingNo = "${grooming.groomingNo}";
+				 $.ajax({
+					url:'confirmCheck.do',
+					type:'post',
+					data:{gCheckDate:gCheckDate,groomingNo:groomingNo},
+					success : function (data){
+						if(data == "success"){
+							console.log("일단 액션 바꾸기전");
+							$("#form").attr("action","updateCheck.do");
+							console.log("액션바꾸고 나서");
+							$("#form").submit();
+							alert("수정되었습니다.");
+					/* 		$("#update").submit(); */
+			    		}else {
+			    			alert("출석체크 하지않은 날짜입니다. 출석체크 해주세요!");
+			    		}
+						
+					
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+				
+				})   
+				
+				
+				// ajax끝
+			
+			
+			
+			
+			
+			
+			
+			})
+			
+		
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	})
+	})
+</script>
 	<footer>
 
 		<jsp:include page="../common/footer.jsp" />

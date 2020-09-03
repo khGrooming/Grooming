@@ -369,6 +369,12 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.confirmCheck(map);
 	}
 
+	@Override
+	public int updateCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return gDao.updateCheck(g);
+	}
+
 
 	
 }
