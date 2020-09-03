@@ -32,7 +32,7 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<StudyCafe> selectCafeList() {
+	public ArrayList<CafeInfo> selectCafeList() {
 		
 		return studyCafeDao.selectCafeList();
 	}

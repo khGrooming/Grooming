@@ -258,32 +258,30 @@
 	</update>
 	
 	<insert id="insertCafeInfo" parameterType="CafeInfo">
-		 INSERT INTO STUDYCAFE (
-		  CAFE_NO
+		MERGE INTO STUDYCAFE
+		USING DUAL
+		ON (CAFE_NAME = #{cafeName}
+		  AND CAFE_CONTENT = #{cafeContent}
+		  AND CAFE_PHONE = #{cafePhone}
+		  AND CAFE_ADDRESS = #{cafeAddress})
+		WHEN NOT MATCHED THEN
+		INSERT (CAFE_NO
 		  ,CAFE_NAME
 		  ,CAFE_CONTENT
 		  ,CAFE_PHONE
 		  ,CAFE_ADDRESS
 		  ,CAFE_IMG
 		  ,CAFE_MAP_Y
-		  ,CAFE_MAP_X )
-		SELECT SEQ_CAFE_NO.NEXTVAL
+		  ,CAFE_MAP_X)
+		VALUES (SEQ_CAFE_NO.NEXTVAL
 			  , #{cafeName}
 			  , #{cafeContent}
 			  , #{cafePhone}
 			  , #{cafeAddress}
 			  , #{cafeImg}
 			  , NULL
-			  , NULL
-		FROM STUDYCAFE
-		WHERE NOT EXISTS (
-		  SELECT CAFE_NAME,CAFE_CONTENT,CAFE_PHONE,CAFE_ADDRESS
-		  FROM STUDYCAFE
-		  WHERE 
-		  CAFE_NAME = #{cafeName}
-		  AND CAFE_CONTENT = #{cafeContent}
-		  AND CAFE_PHONE = #{cafePhone}
-		  AND CAFE_ADDRESS = #{cafeAddress} )
+			  , NULL)
+
 	</insert>
 	
 	<select id="selectCafeNo" parameterType="CafeInfo" resultType="string">

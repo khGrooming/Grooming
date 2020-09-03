@@ -29,7 +29,7 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
 	}
 
-	public ArrayList<StudyCafe> selectCafeList() {
+	public ArrayList<CafeInfo> selectCafeList() {
 
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList");
 	}

@@ -47,6 +47,8 @@ public interface AdminService {
 
 	int insertCafeInfo(CafeInfo cafe);
 
+	int insertSanctions(String sanctions);
+
 	
 
 

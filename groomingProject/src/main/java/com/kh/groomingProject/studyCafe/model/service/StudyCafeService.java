@@ -15,7 +15,7 @@ public interface StudyCafeService {
 
 	ArrayList<StudyCafe> selectCafeLocalList(String name);
 
-	ArrayList<StudyCafe> selectCafeList();
+	ArrayList<CafeInfo> selectCafeList();
 
 	ArrayList<CafeInfo> selectCafeInfo(CafeInfo cafe);
 

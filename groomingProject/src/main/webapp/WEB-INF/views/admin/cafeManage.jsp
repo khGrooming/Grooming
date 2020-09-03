@@ -89,7 +89,7 @@
 		                <c:forEach var="cafe" varStatus="i" items="${cafeList}">
 		                <div class="panel panel-default" onclick="openDetail(${i.index}, 0);">
 		                	<input type="hidden" class="cafeNo${i.index}" value="${cafe.cafeNo}">
-		                    <img src="${contextPath}/resources/views/images/study.jpg" class="thumbnail">
+		                    <img src="${contextPath}/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
 		                </div>
@@ -118,18 +118,18 @@
 			</div>
 		</form>
 		<!-- 카페 추가 폼 -->
-		<form action="insertCafeInfo.do">
             <div id="insertCafe" class="modal">
 				      <!-- Modal content -->
 				<div class="modal-content">
 					<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">카페 추가</span></b></span></p>
 					<p id="insertInfo" style="text-align: center; line-height: 1.5;"><br />
+					<form action="insertCafeInfo.do" method="post" enctype="multipart/form-data">
 						<label>카페 이름</label><input type="text" name="cafeName" class="modalInfo">
 						<label>카페 소개</label><textarea name="cafeContent" class="modalInfo"></textarea>
 						<label>카페 연락처</label><input type="text" name="cafePhone" class="modalInfo">
 						<label>카페 주소</label><input type="text" name="cafeAddress" class="modalInfo">
 						<label>카페 이미지</label><div id="image_container"></div>
-						<input type="file" name="cafeImg" id="image" accept="image/*" onchange="setThumbnail(event);"/>
+						<input type="file" name="uploadFile" id="image" accept="image/*" onchange="setThumbnail(event);">
 						<label>카페 룸 이름</label><input type="text" name="cRoomName" class="modalInfo">
 						<label>카페 이용 시간</label><input type="text" name="cRoomAvailableTime" class="modalInfo">
 						<label>카페 최소 예약 시간</label><input type="text" name="cRoomTime" class="modalInfo">
@@ -139,12 +139,12 @@
 			     	<p><br /></p>
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
-						<button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">추가</button>
+						<input type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;" value="추가">
 						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
 					</div>
+					</form>
 				</div>
 			</div>
-		</form>
 		 <script> 
 			
 		 </script>
@@ -186,51 +186,12 @@
 					$infoCheck.append("<labe>카페 룸 가격 </label><input class='modalInfo' name='cRoomPrice' type='text' value='"+$cRoomPrice+"'><br><br>");
 					$infoCheck.append("<labe>카페 룸 이용가능 수 </label><input class='modalInfo' name='cRoomHeadCount' type='text' value='"+$cRoomHeadCount+"'><br><br>");
 					
-					for(j in data){
-						$infoCheck.append("<a onclick='openDetail("+i+","+j+");'> ["+j+"] </a>");
-					}
-				},
-				error:function(data){
-					console.log("실패!");
-				}
-			})
-		}
-		
-		function changeRoom(e){
-			$cPriceNo = $(e).prop("class");
-			$cafeNo = $(e).prop("id");
-			$("#infoCheck");
-			$.ajax({
-				url:"cafeinfo.do",
-				data:{cafeNo:$cafeNo, cPriceNo:$cPriceNo},
-				type:"post",
-				dataType:"json",
-				success:function(data){
-					$cPriceNo = data[0].cPriceNo;
-					$cafeName = data[0].cafeName;
-					$cafeContent = data[0].cafeContent;
-					$cafePhone = data[0].cafePhone;
-					$cafeAddress = data[0].cafeAddress;
-					$cRoomName = data[0].cRoomName;
-					$cRoomAvailableTime = data[0].cRoomAvailableTime;
-					$cRoomTime = data[0].cRoomTime;
-					$cRoomPrice = data[0].cRoomPrice;
-					$cRoomHeadCount = data[0].cRoomHeadCount;
-					
-					$infoCheck.append("<input class='modalInfo' name='cafeNo' type='hidden' value='"+$cafeNo+"'>");
-					$infoCheck.append("<input class='modalInfo' name='cPriceNo' type='hidden' value='"+$cPriceNo+"'>");
-					$infoCheck.append("<labe>카페 이름 </label><input class='modalInfo' name='cafeName' type='text' value='"+$cafeName+"'><br><br>");
-					$infoCheck.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
-					$infoCheck.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
-					$infoCheck.append("<labe>카페 주소 </label><input class='modalInfo' name='cafeAddress' type='text' value='"+$cafeAddress+"'><br><br>");
-					$infoCheck.append("<labe>카페 룸 이름 </label><input class='modalInfo' name='cRoomName' type='text' value='"+$cRoomName+"'><br><br>");
-					$infoCheck.append("<labe>카페 이용 시간 </label><input class='modalInfo' name='cRoomAvailableTime' type='text' value='"+$cRoomAvailableTime+"'><br><br>");
-					$infoCheck.append("<labe>카페 최소 예약 시간 </label><input class='modalInfo' name='cRoomTime' type='text' value='"+$cRoomTime+"'><br><br>");
-					$infoCheck.append("<labe>카페 룸 가격 </label><input class='modalInfo' name='cRoomPrice' type='text' value='"+$cRoomPrice+"'><br><br>");
-					$infoCheck.append("<labe>카페 룸 이용가능 수 </label><input class='modalInfo' name='cRoomHeadCount' type='text' value='"+$cRoomHeadCount+"'><br><br>");
-					
-					for(i in data){
-						$infoCheck.append("<a class='"+data[i].cPriceNo+"' onclick='changeRoom(this);'> ["+i+"] </a>");
+					for(l in data){
+						if(l == j){
+							$infoCheck.append("<a style='color:green;' onclick='openDetail("+i+","+l+");'> ["+l+"] </a>");
+						}else{
+							$infoCheck.append("<a style='color:blue;' onclick='openDetail("+i+","+l+");'> ["+l+"] </a>");
+						}
 					}
 				},
 				error:function(data){

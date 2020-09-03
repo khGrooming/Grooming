@@ -21,6 +21,29 @@
 
         .declarationInfo{width: 70%;border-collapse: collapse;margin-left:20%;}
         .declarationInfo th,td{height:50px;text-align:center;}
+        
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
     </style>
 </head>
 <body>
@@ -85,7 +108,7 @@
 		                        	<td rowspan="4">${totalCount.totalCount}</td>
 	                        	</c:if>
                         	</c:forEach>
-							<td rowspan="4"><button type="button" id="sanctions">처리</button></td>
+							<td rowspan="4"><button type="button" onclick="sanctionsPlus();">제재</button></td>
                         	<%-- <c:url var="profilePage" value="profilePage.do">
 						       <c:param name="pfMemberNo" value="프로필보고싶은사람의 memberNo" />
 						    </c:url> --%>
@@ -176,9 +199,33 @@
                 </tbody>
             </table>
             <br><br>
-            
+            <form >
+            <div id="myModal" class="modal">
+				      <!-- Modal content -->
+				<div class="modal-content">
+					<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">제재</span></b></span></p>
+					<p id="infoCheck" style="text-align: center; line-height: 1.5;"><br />
+					<input type="radio" name="sanctions" value="0">경고 &nbsp;
+					<input type="radio" name="sanctions" value="7">7일 정지 &nbsp;
+					<input type="radio" name="sanctions" value="30">한달 정지 &nbsp;
+					<input type="radio" name="sanctions" value="99">영구 정지 &nbsp;
+					</p>
+			     	<p><br /></p>
+			     	
+					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+						<button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">추가</button>
+						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+					</div>
+				</div>
+			</div>
+		</form>
         <br clear="both">
     </section>
-
+	<script>
+		function sanctionsPlus(){
+			$("#myModal").css("display","block");
+			
+		}
+	</script>
 </body>
 </html>

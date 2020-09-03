@@ -122,6 +122,12 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.insertCafeInfo(cafe);
 	}
 
+	@Override
+	public int insertSanctions(String sanctions) {
+
+		return adminDao.insertSanctions(sanctions);
+	}
+
 	
 
 	
