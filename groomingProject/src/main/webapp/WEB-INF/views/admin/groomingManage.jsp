@@ -13,10 +13,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
         <style>
-            html,body{margin:0px;padding:0px;}
-            header{width:100%;height:100px;background-color:yellowgreen;}
-            footer{height:50px; background-color: grey;}
-
             .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
             .admin{height:80px;text-align:center;padding:30px;}
             .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
@@ -30,7 +26,7 @@
         </style>
 </head>
 <body>
-    <header></header>
+    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
     <section>
         <br><br>
         <div class="container col-sm-3">
@@ -47,8 +43,8 @@
             <h1 align="center">그루밍 관리</h1>
             <form action="groomingManage.do">
 	            <button type="submit" id="search">검색</button>
-	            <input type="text" id="groomingName" name="groomingName">
 	            <select class="dropDown" name="category">
+	            	<option value="null">전체</option>
 	            	<option value="호스트">호스트</option>
 	            	<option value="멘토">멘토</option>
 	            </select>

@@ -157,7 +157,7 @@
 		FROM GROOMING
 		WHERE GROOMING_STATUS = 'Y'
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null">
+		<if test="category != null and category != 'null'">
 			AND GROOMING_TYPE = #{category}
 		</if>
 	</select>
@@ -167,7 +167,7 @@
 		FROM GROOMING
 		WHERE GROOMING_STATUS = 'Y'
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null">
+		<if test="category != null and category != 'null'">
 			AND GROOMING_TYPE = #{category}
 		</if>
 	</select>

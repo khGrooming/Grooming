@@ -292,6 +292,8 @@ public class AdminController {
 	@RequestMapping
 	public String insertSanctions(String sanctions) {
 		
+		System.out.println();
+		
 		int result = adminService.insertSanctions(sanctions);
 		
 		return "redirect:declarationManage.do";
