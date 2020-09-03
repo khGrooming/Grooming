@@ -477,6 +477,8 @@
     	var gmemberNo = $("#selectG").val();
     	var smemberNo = $("#selectS").val();
     	var memberNo = $("#memberNo").val();
+    	
+    	// 그루밍 작성
     	$("#writeG").on("click",function(){
     	
     		$.ajax({
@@ -510,6 +512,18 @@
 
 <script>
 $(function(){
+	
+	// 그루밍 디테일 페이지 이동
+	$(document).on("click", ".card_container", function(){
+		var el = $(this);
+
+		var gMemberNo = "${loginUser.memberNo }";
+		var groomingNo = el.find("input[type=hidden]").val();
+
+		location.href = "groomingDetail.do?groomingNo=" + groomingNo + "&memberNo="+ gMemberNo;
+
+	});
+	
 	// 멘토 표시
 	$("#mentor").click(function(){
 		$("div").remove(".card_container");

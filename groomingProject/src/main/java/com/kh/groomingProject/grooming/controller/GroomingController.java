@@ -254,10 +254,15 @@ public class GroomingController {
 
 	// 그루밍 상세보기
 	@RequestMapping("groomingDetail.do")
-	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo,@RequestParam("page") Integer page) {
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo
+			, @RequestParam(value = "page", required = false) Integer page) {
 
 		int result = gService.addReadCount(groomingNo);
-		int	currentPage = page;
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		
 		System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
