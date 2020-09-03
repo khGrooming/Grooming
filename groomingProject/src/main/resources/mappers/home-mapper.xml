@@ -22,7 +22,7 @@
 	</resultMap>
 	
 	
-	<select id="getBoardTopList" resultMap="homeBoardResultSet">
+	 <select id="getBoardTopList" resultMap="homeBoardResultSet">
 		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
 		FROM BOARD B
 		JOIN BCATEGORY BC ON (B.B_CATEGORY_NO = BC.B_CATEGORY_NO)
