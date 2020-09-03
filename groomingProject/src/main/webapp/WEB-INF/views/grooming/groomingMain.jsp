@@ -325,13 +325,12 @@
 		<div class="main_container main_fst_container container">
 			<!-- 필터와 검색 -->
 			<div class="row">
-				<div class="cols-3 search_filter" style="width: 20%; text-align: right;">
-					<input type="radio" name="search_filter" id="mentor">&nbsp;<label for="mentor">멘토 타입</label>
-					<input type="radio" name="search_filter" id="money">&nbsp;<label for="money">예치금 존재</label>
+				<div class="cols-3 search_filter" style="width: 20%; text-align: right; line-height: 30px;">
+					<input type="radio" name="search_filter" id="mentor">&nbsp;<label for="mentor" style="margin: 0;">멘토 타입</label>
+					<input type="radio" name="search_filter" id="money">&nbsp;<label for="money" style="margin: 0;">예치금 존재</label>
 				</div>
-				<div class="cols-9"
-					style="width: 80%; text-align: right; padding-right: 5pxx">
-					<select id="search">
+				<div class="cols-9" style="width: 80%; text-align: right; padding-right: 5px;">
+					<select id="search"  style="height: 30px;">
 						<option value="title" id="title" selected>제목</option>
 						<option value="writer" id="writer">작성자</option>
 						<option value="content" id="content">내용</option>
