@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.common.CommunityPageInfo;
 import com.kh.groomingProject.community.model.dao.CommunityDao;
+import com.kh.groomingProject.community.model.vo.Bimages;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -17,9 +19,9 @@ public class CommunityServiceImpl implements CommunityService {
 	CommunityDao cDao;
 
 	@Override
-	public ArrayList<Board> selectList(String bCategoryNo) {
+	public ArrayList<Board> selectList(String bCategoryNo, CommunityPageInfo pi) {
 		
-		return cDao.selectList(bCategoryNo);
+		return cDao.selectList(bCategoryNo, pi);
 	}
 
 	@Override
@@ -62,6 +64,18 @@ public class CommunityServiceImpl implements CommunityService {
 	public int replyInsert(Reply reply, Member member) {
 		
 		return cDao.replyInsert(reply, member);
+	}
+
+	@Override
+	public int getListCount() {
+		
+		return cDao.getListCount();
+	}
+
+	@Override
+	public int communityFileInsert(Bimages imgFile) {
+		// TODO Auto-generated method stub
+		return cDao.communityFileInsert(imgFile);
 	}
 
 	

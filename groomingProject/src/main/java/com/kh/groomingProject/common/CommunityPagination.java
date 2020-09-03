@@ -2,10 +2,10 @@ package com.kh.groomingProject.common;
 
 import com.kh.groomingProject.community.model.vo.PageInfo;
 
-public class Pagination {
-	public static PageInfo getPageInfo(int currentPage, int listCount) {
-		PageInfo pi = null;
-		
+public class CommunityPagination {
+	public static CommunityPageInfo getPageInfo(int currentPage, int listCount) {
+		CommunityPageInfo pi = null;
+	      
 		int pageLimit = 10;
 		int maxPage;
 		int startPage;
@@ -23,7 +23,7 @@ public class Pagination {
 			endPage = maxPage;
 		}
 		
-		pi = new PageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
+		pi = new CommunityPageInfo(currentPage, listCount, pageLimit, maxPage, startPage, endPage, boardLimit);
 		
 		return pi;
 	}

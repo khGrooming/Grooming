@@ -52,7 +52,7 @@
 							<td>${n.boardVcount }</td>
 							<td>${n.boardCreateDate }</td>
 						</tr>
-					</c:forEach>
+					</c:forEach>	
 				</tbody>
 			</table>
 		</div>

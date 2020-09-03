@@ -134,15 +134,12 @@
 	                                <c:if test="${grooming.memberNo ne m.memberNo }">
                                   	 	 <td>스터디원</td>
                                     </c:if>
-                                    <c:if test="${loginUser.memberNo eq grooming.memberNo}">
-	                                    <c:if test="${grooming.memberNo eq m.memberNo}">
-	                                   	 <td><button class="kickout" value="제명" disabled><i class="fas fa-user-minus"></i></button></td>
-	                                    </c:if>
-	                                    <c:if test="${grooming.memberNo ne m.memberNo }">
-	                                   	 <td><button type="button" class="kickout" ><i class="fas fa-user-minus"></i></button></td>
-	                                    </c:if>
+                                    <c:if test="${grooming.memberNo eq m.memberNo }">
+                                   	 <td><button class="kickout" value="제명" disabled></button></td>
                                     </c:if>
-                                  
+                                    <c:if test="${grooming.memberNo ne m.memberNo }">
+                                   	 <td><button type="button" class="kickout" ><i class="fas fa-user-minus"></i></button></td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -205,8 +202,7 @@
 			function getGroupList(){
 				var groomingNo = $("#groomingNo").val();
 				var groomingType = "${grooming.groomingType}";
-				var groomingMemberNo = "${grooming.memberNo}";
-				var memberNo = "${loginUser.memberNo}";
+				
 				$.ajax({
 					url:'groupList.do',
 					type:'post',
@@ -252,7 +248,6 @@
 								}
 							$icon =$("<i class='fas fa-user-minus'>");
 							$td7 = $("<td>");
-							if(groomingMemberNo == memberNo){
 								if(data[i].memberNo == data[i].gMemberNo){
 									$button = $("<button class='kickout' disabled>");
 									$button.append($icon);
@@ -262,11 +257,7 @@
 									$button.append($icon);
 									$td7.append($button);
 								}
-							}else{
-								$button = $("<button class='kickout' disabled>");
-								$button.append($icon);
-								$td7.append($button);
-							}	
+								
 								
 								$div1.append($img1);
 								$td1.append($div1);

@@ -48,7 +48,10 @@ section {
 	/* height: 100%; */
 }
 
-
+.profile_my {
+	margin-top: 10%;
+	height: 110px;
+}
 
 #memo {
 	width: 75%;
@@ -57,9 +60,42 @@ section {
 	height: 100px;
 }
 
+#memoTextArea {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	height: 90px;
+	font-size: 12px;
+}
 
+#expBox {
+	width: 75%;
+	height: 15px;
+	margin-top: 1%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 3%;
+	border: 1px solid gray;
+	text-align: center;
+}
+
+#expBar {
+	width: 25%;
+	height: 13px;
+	background-color: yellow;
+	position: absolute;
+}
+
+.profile_img {
+	width: 100px;
+	transform: translate(-50%);
+	height: 100px;
+	border-radius: 50%;
+	position: absolute;
+}
 
 .grayBox {
+	height: 50px;
 	border: 1px solid lightgray;
 	border-radius: 12px;
 }
@@ -107,12 +143,17 @@ section {
 	margin-right: auto;
 }
 
-
+#fileView {
+	width: 155px;
+	height: 155px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 1px solid gray;
+}
 
 #test {
 	margin-top:5px;
 	text-align: center;
-	
 }
 
 #test ul ul {
@@ -179,25 +220,28 @@ section {
 	
 	border-bottom:1px solid gray; 
 }
-
-.myPage_navbar{
-	display: inline-block;
-	margin:3% 15%;
+.myPage_navbar
+{
+    display: inline-block;
+    margin: 6% 15% 0 15%;
 }
 
 </style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
-	 
+	
 	<c:set var="contextPath"
 		value="${pageContext.servletContext.contextPath }" scope="application" />
 
 	<c:if test="${!empty loginUser }">
+		
+
+
 
 		<div class="subContent_my myPage_navbar"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 7%; ">
-
+			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; ">
+			
 			<div class="menubar">
 				<div  id="test">
 					<ul >
@@ -224,6 +268,7 @@ section {
 							</ul>
 						</li>
 						<li><a href="mypagePoint.do">포인트</a></li>
+						<li><a href="test.do">테스트</a></li>
 					</ul>
 				</div>
 			</div>
@@ -271,7 +316,7 @@ section {
 		<h3>정보 없음</h3>
 	</c:if>
 
-	
+
 
 	<!-- /.container -->
 

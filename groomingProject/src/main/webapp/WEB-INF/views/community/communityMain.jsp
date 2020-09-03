@@ -131,16 +131,20 @@
 			showStudyPromotion.parents().addClass('active');
 			showBoard(3);
 		
-		}else if(categoryVal == 'BC00005'){
+		}else if(categoryVal == 'BC00004'){
 			showStudyConfirm.parents().addClass('active');
 			showBoard(4);
+			
+		}else if(categoryVal == 'BC00005'){
+			showQnA.parents().addClass('active');
+			showBoard(5);
+			
 		}else{
 			showcommunityMain.parents().addClass('active');
 			showBoard(0);
 		}
 		
 	});
-	
 
 	function showBoard(num){
 		if(num==0){
@@ -195,15 +199,6 @@
 		};
 	}
 </script>
-
-<%
-	
-	System.out.println("리스트 : " + request.getAttribute("list"));
-System.out.println("n리스트 : " + request.getAttribute("nlist"));
-System.out.println("f리스트 : " + request.getAttribute("flist"));
-System.out.println("q리스트 : " + request.getAttribute("qlist"));
-
-%>
 
 </body>
 </html>

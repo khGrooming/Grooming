@@ -389,7 +389,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			});
 			
 			
-		
+			  window.onbeforeunload = function(e) {
+			        return false;
+			    };
 		</script>
 		
 			<!--  파일 업로드 관련 script -->
@@ -536,16 +538,16 @@ section .form_container .study .bootstrap-tagsinput .badge {
 						
 						if (result) {
 								
-							if(groomingP == ""  ){
+							if(groomingP == null  ){
 								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
-							}else if(startG == ""){
+							}else if(startG == null){
 								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
 							
-							}else if(endG == ""){
+							}else if(endG == null){
 								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
-							}else if(start == ""){
+							}else if(start == null){
 								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
-							}else if(end == ""){
+							}else if(end == null){
 								alert("참가인원, 모집기간, 스터디 기간은 체크해주셔야 임시저장 가능합니다.!");
 							}else {
 							

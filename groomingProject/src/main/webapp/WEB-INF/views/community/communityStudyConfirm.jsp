@@ -21,6 +21,23 @@
     	margin-left: 30px;
     	font-size: 13px;
 	}
+	/* item page */
+	.item-container {margin-top:10rem;}
+	.item-card {margin:auto;}
+	#item-card {width:15rem; height:19rem; border-radius:0px; border:none; text-align:center;}
+	#item-card:focus,
+	#item-card:hover {cursor:pointer;}
+	.item-row {padding-left:1rem; padding-right:1rem; }
+	.item-order {margin:0; padding:0; list-style:none; display:inline-flex;}
+	.item-order li {padding:0 0.5rem;}
+	.item-card-text {margin-bottom:0rem; color:gray;}
+	#keyword-badge {margin-bottom:0.5rem;}
+	.card-image-zoom {overflow: hidden;}
+	.card-image-zoom img {transition-duration: 0.3s; transition-timing-function: ease;}
+	.card-image-zoom:hover img {transform: scale(1.1);}
+	#all-item-order li::hover {font-color:black; !important}
+	#keyword-badge {background-color:#5b89a6;}
+	/* item page end */
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
@@ -38,31 +55,157 @@
 		</div>
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->	
-		<div class="container" align="center">
-			<div class="row">
-				<div class="col-xs-6 col-md-3">
-      				<a href="#" class="thumbnail">
-        				<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:245px; height: 245px">
-      				</a>
-  				</div>
-				<div class="col-xs-6 col-md-3">
-      				<a href="#" class="thumbnail">
-        				<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:245px; height: 245px">
-      				</a>
-  				</div>
-  				<div class="col-xs-6 col-md-3">
-      				<a href="#" class="thumbnail">
-        				<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:245px; height: 245px">
-      				</a>
-  				</div>
-  				<div class="col-xs-6 col-md-3">
-      				<a href="#" class="thumbnail">
-        				<img src="${contextPath }/resources/views/images/studyImg.jpg" style="width:245px; height: 245px">
-      				</a>
-  				</div>
-			</div>
+		<div class="container item-container" align="center" style="margin-top: 30px;">
+			<form>		
+				
+				<div class="row item-row">		
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${imgFile.imgName }" class="card-img-top" alt="..."
+												data-toggle="modal" data-target="#confirmDetailView">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="row item-row">		
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="row item-row">		
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+					<input type="hidden" value="">
+					<div class="col-3 col-sm item-col" id="item-col">
+						<div class="card item-card" id="item-card">
+							<input type="hidden" value="">
+							<div class="card-image-zoom">
+								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+							</div>
+						</div>
+					</div>
+					
+				</div>
+					
+			</form>
 		</div>
 	</div>
 	
+	<!-- Modal 스터디 인증 상세보기 -->
+	<div id="confirmDetailView" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+
+    		<!-- Modal 내용-->
+    		<div class="modal-content">
+      			<div class="modal-header">
+        			<h4 class="modal-title">작성자</h4>
+        			<button type="button" class="close" data-dismiss="modal">x</button>
+      			</div>
+      			<div class="modal-body">
+        			<p>Some text in the modal.</p>
+      			</div>
+      			<div class="modal-footer">
+      				<!-- 좋아요 -->
+					<div class="iteminfo-icons" id="iteminfo-icons">
+						<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
+							<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
+								<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
+							</button>
+							<!-- 신고 -->
+							<a href="#declareForm" data-toggle='modal'>
+								<img style="vertical-align: middle;" alt="dep" 
+									src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
+							</a>
+							<input type="hidden" id="goWish-real-btn" data-toggle="modal" href="#goWish">
+						</span>
+					
+					<script>
+						$(function(){			
+							if(0==0){
+								$(".fa-heart").css("color","gray");
+							}else{
+								$(".fa-heart").css("color","pink");
+							}
+						})
+					</script>
+      			</div>
+    		</div>
+  		</div>
+	</div>
+	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
 </body>
 </html>

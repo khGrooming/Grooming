@@ -10,6 +10,4 @@ public interface DeclarationService {
 
 	Declaration selectGroupDeclare(Map map);
 
-	Declaration selectGroomingDeclare(Map info);
-
 }
