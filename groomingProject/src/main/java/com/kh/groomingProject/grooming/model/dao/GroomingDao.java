@@ -332,6 +332,31 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.updateCheck",g);
 	}
+
+	public int getCheckY(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckY",hashmap);
+	}
+
+	public int getCheckL(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckL",hashmap);
+	}
+
+	public int getDifDate(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getDifDate",groomingNo);
+	}
+
+	public String getMemberNickName(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getMemberNickName",memberNo);
+	}
+
+	public int getCheckN(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckN",hashmap);
+	}
 	
 	
 	

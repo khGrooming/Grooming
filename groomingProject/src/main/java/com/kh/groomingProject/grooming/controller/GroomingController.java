@@ -1057,27 +1057,81 @@ public class GroomingController {
 		}
 		
 		@RequestMapping("calendar.do")
-		public ModelAndView calendar(ModelAndView mv, String groomingNo) throws ParseException {
+		public ModelAndView calendar(ModelAndView mv, String groomingNo,String memberNo) throws ParseException {
 
 			Grooming grooming = gService.selectGrooming(groomingNo);
 			System.out.println("groomingNo:" + groomingNo);
 		
 			
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
-			
-
 		
 			  String str = ""; 
 			  for(int i=0; i<member.size(); i++) {
 				  str += member.get(i).getMemberNickName();
 				  if((i+1)<member.size()) { str +=','; }
 			  }
-
-			  System.out.println("나 시작일 : "+grooming.getStudySd());
-			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+			  System.out.println("memberNo: " + memberNo);
+			  String checkLate = "";
+			  int checkY = 0;
+			  int checkL = 0;
+			  int checkN = 0;
+			  int difDay = 0;
+			  difDay = gService.getDifDate(groomingNo);
+			  System.out.println("difDay : " + difDay);
+			
+			  
+			  String memberNickName = gService.getMemberNickName(memberNo) ;
+		
+			    Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName",memberNickName );
+				
+				String gMemberNo = gService.getGMemberNo(map);
+				
+				Map hashmap  = new HashMap();
+				hashmap.put("groomingNo",groomingNo);
+				hashmap.put("gMemberNo", gMemberNo);
+			  
+				 checkY = gService.getCheckY(hashmap);
+				 checkL = gService.getCheckL(hashmap);
+				 checkN = gService.getCheckN(hashmap);
+				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
+				 System.out.println("checkLate: " + checkLate);
+//			  for(int i=0; i<member.size(); i++) {
+//				 
+//				    Map map  = new HashMap();
+//					map.put("groomingNo",groomingNo);
+//					map.put("memberNickName", member.get(i).getMemberNickName());
+//					
+//					String gMemberNo = gService.getGMemberNo(map);
+//					
+//					Map hashmap  = new HashMap();
+//					hashmap.put("groomingNo",groomingNo);
+//					hashmap.put("gMemberNo", gMemberNo);
+//				  
+//					 checkY = gService.getCheckY(hashmap);
+//					 checkL = gService.getCheckL(hashmap);
+//					System.out.println("checkY :" +checkY);
+//					System.out.println("checkL :" +checkL);
+//					System.out.println("difDay :" +difDay);
+//					checkLate[i] = String.format("%.2f", ((checkY+checkL -(int)(checkL/2.0))/difDay) * 100); 
+//					System.out.println("checkLate["+i+"] : " + checkLate[i] );
+//					memberNick[i] = member.get(i).getMemberNickName();
+//				  
+//			  }
+//			  ArrayList<String[]> list = new ArrayList<String[]>();
+//		
+//			  for(int i=0; i<member.size(); i++) {
+//				  list.add(checkLate);
+//				  list.add(memberNick);
+//			  }
+//			  System.out.println("나 list야 : " +list.forEach(checkLate));
+			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("checkLate",checkLate).addObject("memberNickName",memberNickName)
+			  .addObject("grooming",grooming).addObject("checkY",checkY).addObject("checkL",checkL).addObject("checkN",checkN).setViewName("grooming/groupCalendar");
 
 			return mv;
 		}
+		
 		@RequestMapping("checkList.do")
 		@ResponseBody
 		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
@@ -1175,7 +1229,6 @@ public class GroomingController {
 			}
 		 
 		}
-	  
 		@RequestMapping("updateCheck.do")
 		@ResponseBody
 		public ModelAndView updateCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus) {
@@ -1228,6 +1281,51 @@ public class GroomingController {
 		
 			
 		}
+		
+		
+		@RequestMapping("checkLate.do")
+		@ResponseBody
+		public void checkLate(HttpServletResponse response, String memberNo, String groomingNo) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+
+				 
+			  String checkLate = "";
+			  int checkY = 0;
+			  int checkL = 0;
+			  int checkN = 0;
+			  int difDay = 0;
+			  difDay = gService.getDifDate(groomingNo);
+			  System.out.println("difDay : " + difDay);
+			
+			  
+			  String memberNickName = gService.getMemberNickName(memberNo) ;
+		
+			    Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName",memberNickName );
+				
+				String gMemberNo = gService.getGMemberNo(map);
+				
+				Map hashmap  = new HashMap();
+				hashmap.put("groomingNo",groomingNo);
+				hashmap.put("gMemberNo", gMemberNo);
+			  
+				 checkY = gService.getCheckY(hashmap);
+				 checkL = gService.getCheckL(hashmap);
+				 checkN = gService.getCheckN(hashmap);
+				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
+				 System.out.println("checkLate: " + checkLate);
+				 GCheck g = new GCheck(memberNickName,checkLate,checkL,checkN,checkY,difDay);
+				 g.setCheckLate(checkLate);
+				 g.setCheckL(checkL);
+				 g.setCheckN(checkN);
+				 g.setCheckY(checkY);
+				 g.setDifDay(difDay);
+				 
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+				gson.toJson(g, response.getWriter());
+	}
+  
 }
 
 

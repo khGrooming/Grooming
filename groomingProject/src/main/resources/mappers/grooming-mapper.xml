@@ -694,10 +694,50 @@
  		UPDATE G_CHECK
 		SET G_CHECK = #{gCheckStatus}
 		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo} AND G_CHECK_DATE=#{gCheckDate}
- 	
- 	
- 	
  	</update>
  	
+ 	<select id="getCheckY" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND G_CHECK ='Y'
+ 	</select>
+ 	
+ 	<select id="getCheckL" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND  G_CHECK='L'
+ 	</select>
+ 	
+ 	<select id="getDifDate" parameterType="map" resultType="_int">
+	 	SELECT TO_DATE(STUDY_END_DATE,'YYYY-MM-DD')-TO_DATE(STUDY_START_DATE,'YYYY-MM-DD')
+		FROM GROOMING
+		WHERE GROOMING_NO=#{groomingNo}
+ 	</select>
+ 	
+ 	<select id="getMemberNickName" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NICKNAME
+ 		FROM MEMBER
+ 		WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<select id="getCheckN" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND  G_CHECK='N'
+ 	</select>
  	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -375,6 +375,38 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.updateCheck(g);
 	}
 
+	@Override
+	public int getCheckY(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckY(hashmap);
+	}
+
+	@Override
+	public int getCheckL(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckL(hashmap);
+	}
+
+	@Override
+	public int getDifDate(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.getDifDate(groomingNo);
+	}
+
+	@Override
+	public String getMemberNickName(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.getMemberNickName(memberNo);
+	}
+
+
+
+	@Override
+	public int getCheckN(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckN(hashmap);
+	}
+
 
 	
 }

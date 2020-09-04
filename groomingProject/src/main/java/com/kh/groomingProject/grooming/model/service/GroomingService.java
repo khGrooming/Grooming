@@ -131,4 +131,14 @@ public interface GroomingService {
 
 	int updateCheck(GCheck g);
 
+	int getCheckY(Map hashmap);
+
+	int getCheckL(Map hashmap);
+
+	int getDifDate(String groomingNo);
+
+	String getMemberNickName(String memberNo);
+
+	int getCheckN(Map hashmap);
+
 }

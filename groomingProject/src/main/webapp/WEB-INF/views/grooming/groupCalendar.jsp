@@ -59,8 +59,11 @@ table tr {
 }
 
 #tb1 tbody tr td {
-	
+	border: 3px double green;
 }
+
+
+
 
 h1{
 	margin-top:50px;
@@ -92,6 +95,7 @@ h1{
 		<div class=container style="margin-top: 100px;">
 			<c:url var="calendar" value="calendar.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}" />
+				<c:param name="memberNo" value="${loginUser.memberNo}" />
 			</c:url>
 			<c:url var="gBlist" value="gBlist.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}" />
@@ -106,7 +110,11 @@ h1{
 
 
 			<!-- 캘린더 내용 출석 체크 -->
-			<h1>출석부</h1>
+			
+						<div id="div1">
+							<h1>출석부<small>(${memberNickName }님의 현재 출석률은 ${checkLate }% 입니다. <label style="color:lightgreen;">출석:${checkY }</label>&nbsp;&nbsp;<label style="color:yellow;">지각:${checkL }</label>&nbsp;&nbsp;<label  style="color:red;">결석:${checkN }</label>)</small></h1>
+						</div>
+			
 			<div class="table-responsive container"
 				style="text-align: center; height: 300px;">
 
@@ -119,7 +127,7 @@ h1{
 
 
 			</div>
-
+	<c:if test="${loginUser.memberNo eq grooming.memberNo }">
 			<h1>출석 체크</h1>
 			<div style="text-align: center;" >
 				<form action="insertCheck.do" id="form">
@@ -127,7 +135,7 @@ h1{
 					<table class="table table-bordered" id="#tb2">
 						<thead>
 							<tr>
-								<th style="width: auto;">멤버 이름</th>
+								<th style="width: auto; border: 3px double green;">멤버 이름</th>
 								<!-- <th colspan="3" style="width: auto;"><input type="date" name="gCheckDate" id="checkDate" required></th> -->
 	 							<th colspan="3" style="width: auto;">
 	 								<input type="date" min="${grooming.studySd }" max="${today }" id="checkDate" name="gCheckDate" required>
@@ -141,7 +149,7 @@ h1{
 								<tr>
 									<input type="hidden" name="memberNickName" value="${m.memberNickName }"/>
 									<td style="width: auto;">${m.memberNickName }</td>
-									<td>
+									<td style="	border: 3px double green;">
 										<select name="gCheckStatus" class="check-select">
 											    <option value="Y" selected>출석</option>
 											    <option value="L">지각</option>
@@ -164,8 +172,8 @@ h1{
 				</form>
 			</div>
 
-
-
+</c:if>
+		
 		</div>
 	</section>
 
@@ -174,9 +182,11 @@ h1{
 	
 	<script>
 		$(function() {
+			 checkLate();
 			checkList();
 			setInterval(function(){
 				$("#tb1 tbody").html("");
+				 checkLate()
 				checkList();
 			},20000);
 			
@@ -260,6 +270,55 @@ h1{
 
 			}
 		}
+		
+		function checkLate(){
+			var groomingNo = "${grooming.groomingNo}";
+			var memberNo = "${loginUser.memberNo}";
+			var memberNickName = "${memberNickName }";
+			$.ajax({
+				url : "checkLate.do",
+				data : {
+					groomingNo : groomingNo,
+					memberNo : memberNo
+				},
+				dataType : "json",
+				async : false,
+				success : function(data) {
+					var $label1;
+					var $label2;
+					var $label3;
+					var $div;
+					var $small;
+					var $h1;
+					$div = $("#div1");
+					$div.html("");
+					if(data != null){
+					$h1 = $("<h1>").text("출석부");
+					$small=$("<small>").text("("+data.memberNickName+"님의 현재 출석률은 "+data.checkLate+"% 입니다.)");
+					$label1=$("<label style='color:lightgreen;'>").text("출석:"+data.checkY);
+					$label2=$("<label style='color:yellow'>").text("지각:"+data.checkL);
+					$label3=$("<label  style='color:red;'>").text("결석:"+data.checkN);
+					
+					$small.append($label1);
+					$small.append($label2);
+					$small.append($label3);
+					$h1.append($small);
+					$div.append($h1);
+					}
+				},error : function(request, status, errorData) {
+					alert("error code: " + request.status
+							+ "\n" + "message: "
+							+ request.responseText + "error: "
+							+ errorData);
+				}
+			});
+			
+			
+			
+			
+		}
+		
+		
 	</script>
 <script >
 	$(function(){
@@ -360,30 +419,9 @@ h1{
 			
 			
 			
-			
-			
-			
-			
 			})
 			
 		
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 	})
 	})
