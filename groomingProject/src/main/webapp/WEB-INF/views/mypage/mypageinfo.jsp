@@ -217,10 +217,10 @@ section {
 								<li><a href="ginsertTemp.do">작성내역</a></li>
 							</ul>
 						</li>
-						<li><a href="#">활동내역</a>
+						<li><a href="mypageCommunity.do">활동내역</a>
 							<ul>
-								<li><a href="#">내가 쓴 글</a></li>
-								<li><a href="#">내가 쓴 댓글</a></li>
+								<li><a href="mypageCommunity.do">내가 쓴 글</a></li>
+								<li><a href="mypageReply.do">내가 쓴 댓글</a></li>
 							</ul>
 						</li>
 						<li><a href="mypagePoint.do">포인트</a></li>

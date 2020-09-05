@@ -331,7 +331,7 @@
 .main_adminIcon
 {
     position: fixed;
-	display: block;
+    display: none;
 	width: 1.87rem;
 	height: 1.87rem;
 	bottom: 1rem;
@@ -346,6 +346,7 @@
 .main_adminIcon
 {
 	bottom: 4rem;
+    display: block;
 }
 .main_upIcon .img_svg,
 .main_adminIcon .img_svg
@@ -410,6 +411,7 @@
 	<c:url var="myPage" value="mypage-memberup.do"/>
 	<c:url var="logout" value="logout.do"/>
 	<c:set var="contextPath" value="${pageContext.servletContext.contextPath }" scope="application" />
+
 <!-- scroll 스크립트 -->
 <script>
 	window.addEventListener("scroll", function(){
@@ -417,9 +419,10 @@
 		var topBtn = document.querySelector(".main_upIcon");
 		header.classList.toggle("sticky", window.scrollY > 0);
 		
-		topBtn.classList.toggle("show", window.scrollY > 10);
+		topBtn.classList.toggle("show", window.scrollY > 100);
     });
 </script>
+
 	<!-- 탑버튼 -->
 	<div class="main_upIcon" onclick="$('html, body').stop().animate({scrollTop:'0'});">
 		<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-angel-up-circle-thin.svg">

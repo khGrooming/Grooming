@@ -269,8 +269,6 @@ section
     left: -0.3rem;
     background-color: #ebebeb;
 }
-
-
 .mesgs_header
 {
 	float: left;
@@ -291,6 +289,23 @@ section
 	margin: 0;
 	font-size: 30px;
 	line-height: 40px;
+}
+.mesgs_header .mesgs_header_serviceIcon
+{
+	display: none;
+	margin-left: auto;
+	width: 2.5rem;
+	cursor: pointer;
+	border: thin solid white;
+}
+.mesgs_header .mesgs_header_serviceIcon:hover
+{
+	border-bottom: thin solid green;
+}
+.mesgs_header .mesgs_header_serviceIcon .img_svg
+{
+	width: 100%;
+	height: 100%;
 }
 .mesgs
 {
@@ -504,12 +519,15 @@ section
                 </div>
                 
 				<div class="mesgs_header">
-					<input type="hidden" class="memberNo" value=""></input>
+					<input type="hidden" class="header_memberNo" value=""></input>
 					<div class="mesgs_header_img">
 						<img class="proFile_img" alt="프로필사진" src="${contextPath }/resources/views/images/grooming_logo(100x100).png"
 							onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
 					</div>
-					<p class="mesgs_nickname">그루밍</p>
+					<p class="msgs_nickname">그루밍</p>
+					<div class="mesgs_header_serviceIcon">
+						<img class="img_svg" src="${contextPath }/resources/views/images/svg/iconmonstr-id-card-thin.svg">
+					</div>
 				</div>
                 <div class="mesgs">
                     <div class="msg_history">
@@ -581,18 +599,28 @@ section
 			loadChatListData();
 			
 			// 테스트 중
-			setInterval(function(){
+			/* setInterval(function(){
 				loadChatListData();
 				
-				if($(".mesgs_header").find("input[type=hidden].memberNo").val() != ""){
+				if($(".mesgs_header").find("input[type=hidden].header_memberNo").val() != ""){
 					console.log("인터벌 챗 가져오기");
 					// 전송 값 변수 저장
-					var fromMemberNo = $(".mesgs_header").find("input[type=hidden].memberNo").val();
+					var fromMemberNo = $(".mesgs_header").find("input[type=hidden].header_memberNo").val();
 					var toMemberNo = "${loginUser.memberNo }";
 					
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000);
+			}, 5000); */
+		});
+	</script>
+
+	<!-- 프로필 페이지 이동 -->
+	<script type="text/javascript">
+		$(".mesgs_header_serviceIcon").on("click", function() {
+			if($(".mesgs_header input.header_memberNo").val() != ""){
+				var memberNo = $(".mesgs_header input.header_memberNo").val();
+				location.href="profilePage.do?pfMemberNo="+memberNo;
+			}
 		});
 	</script>
 
@@ -629,17 +657,32 @@ section
 				success:function(data){
 					if(data.fromMemberNo != null){
 						console.log(memberNickName + " 닉네임 사용자가 있습니다");
-	
-						$("div").remove(".incoming_msg");
-						$("div").remove(".outgoing_msg");
-						$("div").remove(".date_divider_msg");
-						
-						$(".mesgs_header input.memberNo").val(data.fromMemberNo);
+
+						// 채팅 리스트에 있으면 채팅리스트 활성화 + 데이터 가져오기
+						$(".memberNo").each(function() {
+							if(this.value == data.fromMemberNo){
+								$(".chat_list").removeClass("active");
+								console.log(this);
+								console.log(this.closest(".chat_list"));
+								$(this).closest(".chat_list").addClass("active");
+							}
+						});
+
+						// 화면에 값 추가
+						$(".mesgs_header input.header_memberNo").val(data.fromMemberNo);
 						$(".mesgs_header img.proFile_img").attr("src","${contextPath }/resources/upprofileFiles/"+data.fromMemberPhoto);
-						$(".mesgs_header p.mesgs_nickname").text(data.fromMemberNickname);
-						
+						$(".mesgs_header p.msgs_nickname").text(data.fromMemberNickname);
+
+						// 변수 저장
+						var fromMemberNo = "${loginUser.memberNo }";
+						var toMemberNo = $(".mesgs_header").find("input[type=hidden].header_memberNo").val();
+
+						// 채팅 불러오기
+						loadChatData(fromMemberNo,toMemberNo);
+
+						$(".search_bar").val("");
 						$(".write_msg").focus();
-	
+
 					} else {
 						alert("닉넴임을 확인해 주세요.");
 					}
@@ -666,9 +709,9 @@ section
 			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
 
 			// 채팅창 해더값 입력
-			$(".mesgs_header input.memberNo").val(fromMemberNo);
+			$(".mesgs_header input.header_memberNo").val(fromMemberNo);
 			$(".mesgs_header img.proFile_img").attr("src",fromMemberImg);
-			$(".mesgs_header p.mesgs_nickname").text(fromMemberNickname);
+			$(".mesgs_header p.msgs_nickname").text(fromMemberNickname);
 			
 			activeChat = fromMemberNo;
 			$(".chat_list").removeClass("active");
@@ -861,7 +904,7 @@ section
 			if($.trim($(".write_msg").val()) == ""){
 				console.log("내용을 입력해 주세요.");
 				return;
-			} if($(".mesgs_header").find("input[type=hidden].memberNo").val() == ""){
+			} if($(".mesgs_header").find("input[type=hidden].header_memberNo").val() == ""){
 				$(".search_bar").focus();
 				alert("닉네임을 적은 후 메시지를 입력하세요.");
 				return;
@@ -869,7 +912,7 @@ section
 
 			// 전송 값 변수 저장
 			var fromMemberNo = "${loginUser.memberNo }";
-			var toMemberNo = $(".mesgs_header").find("input[type=hidden].memberNo").val();
+			var toMemberNo = $(".mesgs_header").find("input[type=hidden].header_memberNo").val();
 			var messageContent = $(".write_msg").val();
 
 			console.log("[전송] " + fromMemberNo + "이 " + toMemberNo + "에게 "  + messageContent);
@@ -988,6 +1031,7 @@ section
 				console.log("내용 없음");
 			}
 			
+			$(".mesgs_header_serviceIcon").css("display", "flex");
 			// 스크롤 내리기
 			var his_height = $(".msg_history")[0].scrollHeight;
 			$(".msg_history").scrollTop(his_height);

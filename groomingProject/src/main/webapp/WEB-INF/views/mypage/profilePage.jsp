@@ -269,62 +269,7 @@ border-radius: 20px;
 						</div> 
 					</div>
 				</div>
-				<!-- -================================================================================================ -->
-					<div class="gCard" onclick="location.href='${groupPage}'">
-		
-					<div style="width: 100%;border-bottom: 2px solid #17a2b8;">
-						<br>
-						<img src="${contextPath }/resources/views/images/${hpg.groomingImg}" style=" width:70%; margin-left: 13%;"><br><br>
-					</div>
-					<div style="width: 97%; margin-left: auto; margin-right: auto;">
-					<p style="font-size: 20px; ">${hpg.groomingTitle}</p>
-						<div style="width: 97%; height: 70px; overflow:auto;">
-					
-						<p style="font-size: 10px;height: 70px;">${hpg.groomingIntroduce}</p><br>
-					</div>
-						<div style="margin:2px 5px; position: absolute; bottom:0;">
-							<span>${hpg.groomingType}</span>
-						
-						</div> 
-					</div>
-				</div>
-					<div class="gCard" onclick="location.href='${groupPage}'">
-		
-					<div style="width: 100%;border-bottom: 2px solid #17a2b8;">
-						<br>
-						<img src="${contextPath }/resources/views/images/${hpg.groomingImg}" style=" width:70%; margin-left: 13%;"><br><br>
-					</div>
-					<div style="width: 97%; margin-left: auto; margin-right: auto;">
-					<p style="font-size: 20px; ">${hpg.groomingTitle}</p>
-						<div style="width: 97%; height: 70px; overflow:auto;">
-					
-						<p style="font-size: 10px;height: 70px;">${hpg.groomingIntroduce}</p><br>
-					</div>
-						<div style="margin:2px 5px; position: absolute; bottom:0;">
-							<span>${hpg.groomingType}</span>
-						
-						</div> 
-					</div>
-				</div>
-					<div class="gCard" onclick="location.href='${groupPage}'">
-		
-					<div style="width: 100%;border-bottom: 2px solid #17a2b8;">
-						<br>
-						<img src="${contextPath }/resources/views/images/${hpg.groomingImg}" style=" width:70%; margin-left: 13%;"><br><br>
-					</div>
-					<div style="width: 97%; margin-left: auto; margin-right: auto;">
-					<p style="font-size: 20px; ">${hpg.groomingTitle}</p>
-						<div style="width: 97%; height: 70px; overflow:auto;">
-					
-						<p style="font-size: 10px;height: 70px;">${hpg.groomingIntroduce}</p><br>
-					</div>
-						<div style="margin:2px 5px; position: absolute; bottom:0;">
-							<span>${hpg.groomingType}</span>
-						
-						</div> 
-					</div>
-				</div>
-				<!-- ================================================================================================================ -->
+				
 		
 				
 					</c:forEach>
@@ -338,42 +283,39 @@ border-radius: 20px;
 						[이전]&nbsp;
 					</c:if>
 					<c:if test="${pih.currentPage gt 1 }">
-						<c:url var="gApplicantBack" value="gApplicant.do">
+						<c:url var="profilePageBack" value="profilePage.do">
 							<c:param name="pageh" value="${pih.currentPage -1 }"/>
-							<c:param name="page" value="${pi.currentPage}"/>
 						</c:url>
-						<a href="${gApplicantBack }">[이전]</a>
+						<a href="${profilePageBack }">[이전]</a>
 					</c:if>
 					<c:forEach var="p" begin="${pih.startPage }" end="${pih.endPage }">
 						<c:if test="${p eq pih.currentPage }">
 							<font color="red" size="4"><b>[${p }]</b></font>
 						</c:if>
 						<c:if test="${p ne pih.currentPage }">
-							<c:url var="gApplicantCheck" value="gApplicant.do">
+							<c:url var="profilePageCheck" value="profilePage.do">
 							<c:param name="pageh" value="${p }"/>
-							<c:param name="page" value="${pi.currentPage}"/>
 							</c:url>
-							<a href="${gApplicantCheck }">${p }</a>
+							<a href="${profilePageCheck }">${p }</a>
 						</c:if>
 					</c:forEach>
 					<c:if test="${pih.currentPage eq pih.maxPage }">
 						&nbsp;[이후]
 					</c:if>
 					<c:if test="${pih.currentPage lt pih.maxPage }">
-						<c:url var="gApplicantAfter" value="gApplicant.do">
+						<c:url var="profilePageAfter" value="profilePage.do">
 							<c:param name="pageh" value="${pih.currentPage +1 }"/>
-							<c:param name="page" value="${pi.currentPage}"/>
 						</c:url>
-						<a href="${gApplicantAfter }">[이후]</a>
+						<a href="${profilePageAfter }">[이후]</a>
 					</c:if>
 				</div>	
 				
 			
 			</c:if>
 			</c:if>
-			
-			
-			
+			<c:if test="${empty hpgList }">
+				<h4>개설한 스터디가 없습니다.</h4>
+			</c:if>
 			</div>
 		</div>
 		<br clear="both">

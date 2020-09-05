@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
@@ -752,7 +754,7 @@ public class MyPageController {
 	}
 	@RequestMapping(value="memberReport.do",method=RequestMethod.POST)
 	public void memberReport(MemberReport mr,HttpServletResponse response) throws IOException {
-		System.out.println(mr);
+	
 		int result = mpService.insertMemberReport(mr);
 		PrintWriter out = response.getWriter();
 		if(result > 0) {
@@ -765,4 +767,47 @@ public class MyPageController {
 		out.close();
 				
 	}
+	
+	@RequestMapping("mypageCommunity.do")
+	public ModelAndView mypageCommunity(ModelAndView mv,HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int bCount = mpService.selectMyCommunityCount(mNo);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;	
+		}
+		int GroomingLimit= 10;
+		double f=0.9;
+		MyPagePageInfo pi = getPageInfo(currentPage, bCount, GroomingLimit,f);
+		ArrayList<Board> blist = mpService.selectMemberBoardList(mNo,pi);
+		System.out.println(blist);
+		
+		mv.addObject("blist",blist);
+		mv.addObject("pi",pi);
+		mv.setViewName("mypage/mypageCommunity");
+		return mv;
+	}
+	
+	@RequestMapping("mypageReply.do")
+	public ModelAndView mypageReply(ModelAndView mv,HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int rCount = mpService.selectMyReplyCount(mNo);
+		System.out.println(rCount);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;	
+		}
+		int GroomingLimit= 10;
+		double f=0.9;
+		MyPagePageInfo pi = getPageInfo(currentPage, rCount, GroomingLimit,f);
+		
+		ArrayList<Reply> rlist = mpService.selectMemberReplyList(mNo,pi);
+		System.out.println(rlist);
+		mv.addObject("pi", pi);
+		mv.addObject("rlist", rlist);
+		mv.setViewName("mypage/mypageReply");
+		
+		return mv;
+	}
+	
 }

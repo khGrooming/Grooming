@@ -14,7 +14,6 @@ width: 80%;
 height:100%;
 margin-right: auto; 
 margin-left: auto; 
-margin-top:5%;
 }
 #ta{
 	width: 80%;

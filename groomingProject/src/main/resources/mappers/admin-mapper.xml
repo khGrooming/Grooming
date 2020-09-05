@@ -237,4 +237,61 @@
 			</foreach>
 		GROUP BY DECLARATION_N_NO
 	</select>
+	
+	<update id="cafeInfoChange" parameterType="CafeInfo">
+		UPDATE STUDYCAFE
+		SET CAFE_NAME = #{cafeName}
+			,CAFE_CONTENT = #{cafeContent}
+			,CAFE_PHONE = #{cafePhone}
+			,CAFE_ADDRESS = #{cafeAddress}
+		WHERE CAFE_NO = #{cafeNo}
+	</update>
+	
+	<update id="cafePriceInfoChange" parameterType="CafeInfo">
+		UPDATE CAFEPRICE
+		SET C_ROOM_NAME = #{cRoomName}
+			,C_ROOM_AVAILABLE_TIME = #{cRoomAvailableTime}
+			,C_ROOM_TIME = #{cRoomTime}
+			,C_ROOM_PRICE = #{cRoomPrice}
+			,C_ROOM_HEAD_COUNT = #{cRoomHeadCount}
+		WHERE C_PRICE_NO = #{cPriceNo}
+	</update>
+	
+	<insert id="insertCafeInfo" parameterType="CafeInfo">
+		MERGE INTO STUDYCAFE
+		USING DUAL
+		ON (CAFE_NAME = #{cafeName}
+		  AND CAFE_CONTENT = #{cafeContent}
+		  AND CAFE_PHONE = #{cafePhone}
+		  AND CAFE_ADDRESS = #{cafeAddress})
+		WHEN NOT MATCHED THEN
+		INSERT (CAFE_NO
+		  ,CAFE_NAME
+		  ,CAFE_CONTENT
+		  ,CAFE_PHONE
+		  ,CAFE_ADDRESS
+		  ,CAFE_IMG
+		  ,CAFE_MAP_Y
+		  ,CAFE_MAP_X)
+		VALUES (SEQ_CAFE_NO.NEXTVAL
+			  , #{cafeName}
+			  , #{cafeContent}
+			  , #{cafePhone}
+			  , #{cafeAddress}
+			  , #{cafeImg}
+			  , NULL
+			  , NULL)
+
+	</insert>
+	
+	<select id="selectCafeNo" parameterType="CafeInfo" resultType="string">
+		SELECT DISTINCT CAFE_NO
+		FROM STUDYCAFE
+		WHERE CAFE_NAME = #{cafeName} AND CAFE_CONTENT = #{cafeContent} AND CAFE_PHONE = #{cafePhone} AND CAFE_ADDRESS = #{cafeAddress}
+	</select>
+	
+	<insert id="insertCafePriceInfo" parameterType="CafeInfo">
+		INSERT INTO CAFEPRICE
+		VALUES (SEQ_C_PRICE_NO.NEXTVAL, #{cafeNo}, #{cRoomName}, #{cRoomAvailableTime}, #{cRoomTime}, #{cRoomPrice}, #{cRoomHeadCount})
+	</insert>
 </mapper>

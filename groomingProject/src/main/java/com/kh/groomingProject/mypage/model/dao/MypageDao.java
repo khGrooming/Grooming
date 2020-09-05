@@ -7,6 +7,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
@@ -149,6 +151,26 @@ public class MypageDao {
 
 	public int insertMemberReport(MemberReport mr) {
 		return sqlSessionTemplate.insert("MyPageMapper.insertMemberReport",mr);
+	}
+
+	public ArrayList<Board> selectMemberBoardList(String mNo, MyPagePageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMemberBoardList",mNo,rowBounds);
+	}
+
+	public int selectMyCommunityCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectMyCommunityCount", mNo);
+	}
+
+	public int selectMyReplyCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectMyReplyCount", mNo);
+	}
+
+	public ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyReplyList",mNo,rowBounds);
 	}
 
 }
