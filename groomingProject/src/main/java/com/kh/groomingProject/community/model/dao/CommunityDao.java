@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.common.CommunityPageInfo;
-import com.kh.groomingProject.community.model.vo.Bimages;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -72,14 +71,33 @@ public class CommunityDao {
 		return sqlSessionTemplate.insert("communityMapper.replyInsert", map);
 	}
 
-	public int getListCount() {
-		
-		return sqlSessionTemplate.selectOne("communityMapper.getListCount");
+	public ArrayList<Board> communityTopList() {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.communityTopList");
 	}
 
-	public int communityFileInsert(Bimages imgFile) {
-		// TODO Auto-generated method stub
-		return sqlSessionTemplate.insert("communityMapper.communityFileInsert", imgFile);
+	public ArrayList<Board> communitySearch(String communitySearch) {
+		
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.communitySearch", communitySearch);
+	}
+
+	public int getListCount(String bCategoryNo) {
+		
+		return sqlSessionTemplate.selectOne("communityMapper.getListCount", bCategoryNo);
+	}
+
+	public int replyUpdate(Reply reply, Member member) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reply", reply);
+		map.put("memberNo", member.getMemberNo());
+		return sqlSessionTemplate.update("communityMapper.replyUpdate", map);
+	}
+
+	public int replyDelete(Reply reply, Member member) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("reply", reply);
+		map.put("memberNo", member.getMemberNo());
+		return sqlSessionTemplate.delete("communityMapper.replyDelete", map);
 	}
 
 

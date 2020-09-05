@@ -78,13 +78,14 @@
  						<jsp:include page="../community/communityStudyPromotion.jsp" />
        				</div>		
        				
+       				<div class="container"  id="QnA" style="display:none;">
+ 						<jsp:include page="../community/communityQnA.jsp" />
+       				</div>		
+       				
        				<div class="container"  id="StudyConfirm" style="display:none;">
  						<jsp:include page="../community/communityStudyConfirm.jsp" />
        				</div>	
        				
-       				<div class="container"  id="QnA" style="display:none;">
- 						<jsp:include page="../community/communityQnA.jsp" />
-       				</div>		
 				</div>
     		</div>
 		</div>

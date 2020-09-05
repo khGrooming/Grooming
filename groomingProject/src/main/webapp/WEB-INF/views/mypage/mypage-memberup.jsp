@@ -10,41 +10,63 @@
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-
-#member_tb {
-	height: 330px;
+#content {
+	width: 75%;
+	margin: 0 auto;
 }
 
-#member_tb th label {
-	width: 180px;
-	padding-right: 10%;
-}
 
-#member_tb th {
-	text-align: right;
-}
 
-#member_tb tr {
-	margin-bottom: 10px;
-}
-
-#memberupForm input {
-	width: 50%;
-}
-
-.mLabel {
-	text-align: right;
-	width: 35%;
-	margin-right: 2%;
-}
 
 .spacIconTd {
 	width: 50px;
 }
+.subcontent {
+	position: relative;
+	width: 48%;
+	height : 650px;
+	float: left;
+	margin-right: 2%;
+	border: 1px solid lightgray;
+	padding: 3%;
+	border-radius: 20px;
+}
+.subTitle{
+position: absolute; 
+top:-10px; 
+background: white;
+width: 150px;
+text-align: center;
+}
+.profile_my {
+	position: relative;
+	margin-top: 3%;
+	width: 30%;
+	float: left;
+}
+.profile_img {
+	width: 125px;
+	height: 125px;
+	border-radius: 50%;
+	position: absolute;
+}
+#expBox {
+	position: relative;
+	width: 75%;
+	height: 15px;
+	margin-top: 1%;
+	margin-bottom: 3%;
+	border: 1px solid gray;
+	text-align: center;
+}
 
+#expBar {
+	width: 25%;
+	height: 13px;
+	background-color: yellow;
+	position: absolute;
+}
 
-<<<<<<< HEAD
-=======
 #memo {
 	width: 100%;
 	height: 100px;
@@ -104,21 +126,10 @@ font-size: 14px;
 	margin: 0 auto;
 	border: 1px solid gray;
 }
->>>>>>> refs/remotes/origin/master
 </style>
 </head>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
-<<<<<<< HEAD
-	
-		<div style="width: 65%; height:900px; margin-right: auto; margin-left: auto;">
-			<br>
-			<br>
-			
-			<h3>개인정보 수정</h3>
-				<!-- active toggle -->
-				<div class="subContent_my" style="width: 30%; margin-right: 1%; text-align: center; float: left;">
-=======
 	<section style="padding-top: 0.05rem;">
 	<div id="content">
 		<div class="subcontent">
@@ -133,45 +144,77 @@ font-size: 14px;
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
->>>>>>> refs/remotes/origin/master
 
-
-					<!-- 프로필 사진 div -->
-					<div class="profile_my" style="position: relative;">
-
-						<img src='${contextPath }/resources/views/icons/profileIcon.png'  id="profileImgIcon" style="width: 110px; height:110px; z-index: 3;"class="profile_img">
-
-						<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }"
-							class="profile_img" id="profileImg"
-
-							style="width: 100px;">
-
-						<form id="testForm" action="test1.do" method="post"
-							enctype="multipart/form-data">
-							<input type="hidden" name="memberPhoto" id="memberPhoto"
-								value="${profileInfo.memberPhoto }">
-							 <input
-								type="hidden" name="memberNo" id="memberNo"
-								value="${profileInfo.memberNo}"> 
-							<input type="file" accept=".gif, .jpg, .png"
-								name="profileFile" id="profileFile" style="display: none;"
-								onchange="test2();">
-						</form>
-
+								<h4 class="modal-title" id="myModalLabel">프로필 사진 변경</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+						<form id="testForm" action="upproimg.do" method="post" enctype="multipart/form-data">
+							<div class="modal-body">
+								
+								<div id="profileFile" style="position: relative;">
+									<img src='${contextPath }/resources/views/images/testProfile.png' id="profileImgIcon2" width="200px" style="z-index: 3; position: absolute;" >
+									<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }" style="position: absolute; width: 200px; height: 200px;" id="profileView">	
+									
+								</div>
+										<input type="hidden" name="memberPhoto" id="memberPhoto" value="${profileInfo.memberPhoto }">
+										<input type="hidden" name="memberNo" id="memberNo" value="${profileInfo.memberNo}"> 
+										<input type="file" accept=".gif, .jpg, .png" name="profileFile" id="profileFile0" style="display: none;" onchange="test2();">
+								<br>
+							
+								<button type="button" onclick="srcReset();" style="width: 200px; height: 50px;  border-radius: 10px; margin-left:30%;">프로필 삭제하기</button>
+							
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary">확인</button>
+								<button type="button" id="btn-delete" class="btn btn-default" data-dismiss="modal">취소</button>
+							</div>
+							</form>
+						</div>
 					</div>
-					<script>
-					$(function() {
-						$("#profileImgIcon").on("click", function() {
-							$("#profileFile").click();
-
-						})
-
+				</div>	
+								
+				<script>
+				/*이미지 클릭해도 파일첨부 뜨도록  */
+				$(function(){
+					$("#profileImgIcon2").on("click",function(){
+						$("#profileFile0").click();
+						
 					})
+				})
+				function resetInputFile($input, $preview) {
+						var agent = navigator.userAgent.toLowerCase();
+						if ((navigator.appName == 'Netscape' && navigator.userAgent
+								.search('Trident') != -1)
+								|| (agent.indexOf("msie") != -1)) {
+							// ie 일때
+							$input.replaceWith($input.clone(true));
+							$preview.empty();
+						} else {
+							//other
+							$input.val("");
+							$preview.empty();
+						}
+					}
 
-					function test2() {
+
+							// 등록 이미지 등록 미리보기
+							function readInputFile1(input) {
+								if (input.files && input.files[0]) {
+									var reader = new FileReader();
+									reader.onload = function(e) {
+										$('#profileView').attr("src",e.target.result);
+									}
+									reader.readAsDataURL(input.files[0]);
+								}
+							}
+							$("#profileFile0").on('change', function() {
+								readInputFile1(this);
+							});
+					function profilechange(){
 						var formData = new FormData($('#testForm')[0]);
-
-						alert("dgjd");
 						$.ajax({
 							type : 'POST',
 							url : "upproimg.do",
@@ -194,10 +237,15 @@ font-size: 14px;
 										+ "error:" + error);
 							}
 						});
+						
 					}
+					
+					/* 프로필사진 삭제하기 */
+					function srcReset(){
+						$("#profileView").attr("src","${contextPath}/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG");
+					}
+					
 				</script>
-<<<<<<< HEAD
-=======
 			</div>
 			<br>
 			<br>
@@ -207,182 +255,108 @@ font-size: 14px;
 				</c:if>		
 				<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
 				<span>&nbsp;&nbsp;</span> <span style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
->>>>>>> refs/remotes/origin/master
 				<br>
-					<!-- 프로필 사진 div_end -->
+				<div id="expBox">
+				<div style="font-size: 10px; position: absolute; z-index: 100; margin-left:35%"> ${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
+				<div id="expBar"></div>
+				<script>
+					$(function() {
+						var maxExp = "${profileInfo.lvlMaxExp }";
+						var memberExp = "${profileInfo.memberExp }";
+						var empPercent = 2;
+						empPercent = (100 / maxExp) * memberExp;
+						if (empPercent < 5) {
+							/* 5%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
+							$("#expBar").css("width", "5%");
+						} else {
+							$("#expBar").css("width", empPercent + "%");
+						}
 
-
-					<!-- 닉네임/ 레벨 영역-->
-					<c:if test="${mentor eq 'Y' }">
-					<span><img src='${contextPath }/resources/views/icons/mentorIcon.png' style="width: 25px;"></span>&nbsp;
-					</c:if>
-					<span style="font-size: 25px; font-weight: 800; margin-right: 2%;">${profileInfo.memberNickName}</span>
-					<span>&nbsp;&nbsp;</span> <span
-						style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
-					<!-- 레벨에 대한 설명을 보여줄 툴팁 추가해야함!!! -->
-					<br>
-
-					<!-- 경험치_div -->
-					<div id="expBox" style="position: relative;">
-						<div
-							style="font-size: 10px; position: absolute; z-index: 100; margin-left: 45%;">
-							${profileInfo.memberExp } / ${profileInfo.lvlMaxExp }</div>
-						<div id="expBar"></div>
-						<script>
-							$(function() {
-								var maxExp = "${profileInfo.lvlMaxExp }";
-								var memberExp = "${profileInfo.memberExp }";
-								var empPercent = 2;
-								empPercent = (100 / maxExp) * memberExp;
-								if (empPercent < 1) {
-									/* 1%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
-									$("#expBar").css("width", "1%");
-								} else {
-									$("#expBar").css("width", empPercent + "%");
-								}
-
-							})
-						</script>
-					</div>
-					<!-- 경험치 div_end -->
-
-					<!-- 이메일 영역-->
-					<p id="MemberEmail"
-						style="color: rgba(120, 120, 120, 1); letter-spacing: 0.3em">${profileInfo.memberEmail }</p>
-
-					<!-- 상태메시지 -->
-					<div id="memo" style="position: relative;">
-						<textarea id="memoTextArea" style="letter-spacing: 0.3em"
-							maxlength="100"><c:if
-								test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
-						<span id="counter"
-							style="position: absolute; top: 70%; left: 70%;">###</span>
-					</div>
-					<script>
+					})
+				</script>
+				</div>
+				<p id="MemberEmail" style="color: rgba(120, 120, 120, 1); letter-spacing: 0.3em">${profileInfo.memberEmail }</p>
+			</div>
+			<br clear="both">
+			<div id="memo" style="position: relative;">
+				<p class="sstitle">상태메시지</p>
+				<textarea id="memoTextArea" style="letter-spacing: 0.3em" maxlength="100"><c:if test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
+				<span id="counter" style="position: absolute; top: 70%; left: 90%;">###</span>
+				<script>
 						$(function() {
-
 							var content = $("#memoTextArea").val();
-
 							$('#counter').html(content.length + '/100');
-
 							$('#memoTextArea').keyup(function(e) {
 								content = $(this).val();
-
 								$('#counter').html(content.length + '/100');
-
 							});
-
 							$('#content').keyup();
-
-							$('#memoTextArea')
-									.change(
-											function() {
-												alert(content);
-												var save = confirm("상태메시지를 저장하시겠습니까?");
-												if (save) {
-													$.ajax({
-																url : "upMemo.do",
-																type : "post",
-																data : {
-																	memberMemo : $(
-																			this)
-																			.val()
-																},
-																success : function(
-																		data) {
-																	alert("변경되었습니다");
-																},
-																error : function(
-																		data) {
-																	alert("code:"
-																			+ request.status
-																			+ "\n"
-																			+ "error:"
-																			+ error);
-																}
-
-															})
-												} else {
-													alert("취소하였습니다");
-													if ("${profileInfo.memberMemo}" == "NULL") {
-														$('#memoTextArea').val(
-																"");
-													} else {
-
-														$('#memoTextArea')
-																.val(
-																		"${profileInfo.memberMemo}");
-													}
+							$('#memoTextArea').change(
+									function() {
+										alert(content);
+										var save = confirm("상태메시지를 저장하시겠습니까?");
+										if (save) {
+											$.ajax({
+												url : "upMemo.do",
+												type : "post",
+												data : {memberMemo : $(this).val()},
+												success : function(data) {
+													alert("변경되었습니다");
+												},
+												error : function(data) {
+													alert("code:"+ request.status+ "\n"
+															+ "error:"+ error);
 												}
 
 											})
+										} else {
+											alert("취소하였습니다");
+											if ("${profileInfo.memberMemo}" == "NULL") {
+												$('#memoTextArea').val("");
+											} else {
+												$('#memoTextArea').val("${profileInfo.memberMemo}");
+											}
+										}
+
+									})
 
 						});
 					</script>
+			</div>
+			<div style="margin-top: 2%;">
+				<p class="sstitle" >G포인트</p>
+				<p style="font-size: 30px; font-weight: bold; margin-bottom: auto; height: 50px; letter-spacing: 0.3em;">${profileInfo.nowPoint } G</p>
+			</div>
 
-					<!-- 포인트 div -->
-					<div style="width: 75%; margin-left: auto; margin-right: auto;">
-						<p
-							style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">포인트</p>
-
-
-						<p
-							style="font-size: 18px; font-weight: bold; margin-bottom: auto; height: 50px; letter-spacing: 0.3em;">
-							${profileInfo.nowPoint } G</p>
-
-
-					</div>
-
-
-					<!-- 스펙div -->
-					<div style="width: 70%; margin-left: auto; margin-right: auto;">
-						<p
-							style="font-size: 20px; font-weight: 900; margin-bottom: 5px; float: left;">스펙</p>
-						<br clear="both">
-						<div class="grayBox" style="height: 250px;">
-							<div id="specTable"
-								style="margin-top: 5%; margin-left: auto; height: 100%; margin-right: auto; width: 85%;">
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">학교</th>
-										<td class="specTd" id="school0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="school1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="school2"></td>
-									</tr>
-								</table>
-								<br>
-
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">자격증</th>
-										<td class="specTd" id="certificate0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="certificate1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="certificate2"></td>
-									</tr>
-								</table>
-								<br>
-								<table style="text-align: left;">
-									<tr>
-										<th rowspan="3" valign=top style="width: 50px;">경력</th>
-										<td class="specTd" id="career0"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="career1"></td>
-									</tr>
-									<tr>
-										<td class="specTd" id="career2"></td>
-									</tr>
-								</table>
-								<!-- 스펙 추가 모달창 -->
-								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			<br clear="both">
+			<div>
+				<p class="sstitle">스펙</p>
+					<div class="grayBox" style="padding:2%;">
+						<table id="specTb">
+							<tr>
+								<th valign=top style="width: 35%;">학교</th>
+								<th valign=top style="width: 35%;">자격증</th>
+								<th valign=top style="width: 35%;">경력</th>
+							</tr>
+							<tr>
+								<td class="specTd" id="school0"></td>
+								<td class="specTd" id="certificate0"></td>
+								<td class="specTd" id="career0"></td>
+							
+							</tr>
+							<tr>
+								<td class="specTd" id="school1"></td>
+								<td class="specTd" id="certificate1"></td>
+								<td class="specTd" id="career1"></td>
+							</tr>
+							
+							<tr>
+								<td class="specTd" id="school2"></td>
+								<td class="specTd" id="certificate2"></td>
+								<td class="specTd" id="career2"></td>
+							</tr>
+						</table>
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 									aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
 										<div class="modal-content">
@@ -399,8 +373,7 @@ font-size: 14px;
 												<p>파일 미리보기</p>
 												<div id="fileView"></div>
 													<input type="hidden" id="specCName" name="specCName"><br>
-													<input type="hidden" id="memberNo" name="memberNo"
-														value="${loginUser.memberNo }"><br>
+													<input type="hidden" id="memberNo" name="memberNo"	value="${loginUser.memberNo }"><br>
 													<table style="width: 300px; text-align: left; margin-left:auto; margin-right: auto;">
 														<tr>
 															<td style="width: 150px;"><label id="specNameLable"></label></td>
@@ -409,9 +382,7 @@ font-size: 14px;
 														</tr>
 														<tr>
 															<td><label id="specFileNameLable">파일첨부</label></td>
-															<td><input type="file" accept=".gif, .jpg, .png"
-																id="specFileName" name="specFileName1"
-																style="width: 100%;" required onchange="setThumbnail(event);" /></td>
+															<td><input type="file" accept=".gif, .jpg, .png" id="specFileName" name="specFileName1" style="width: 100%;" required onchange="setThumbnail(event);" /></td>
 														<tr>
 													</table>
 													<br>
@@ -427,10 +398,7 @@ font-size: 14px;
 										</div>
 									</div>
 								</div>
-							</div>
-
-						</div>
-						<!-- 스펙 추가 스크립트 -->
+								
 						<script>
 							function resetInputFile($input, $preview) {
 								var agent = navigator.userAgent.toLowerCase();
@@ -626,70 +594,90 @@ font-size: 14px;
 
 							})
 						</script>
-
-
-					</div>
-				</div>
-	
-			
-				<br>
-				<br>
-		<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
-		<div style="width: 60%;float: left; margin-top: 3%; ">
-
+					</div>	
+					
+			</div>		
+		</div>
+		
+		
+		
+		
+		<div class="subcontent">
+			<h4 class="subTitle">개인정보 수정</h4>
+			<br>
+			<br>
 			<form id="memberupForm" action="memberup.do" method="get" onsubmit="return memberInfoSubmit()">
 				<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
-				<label class="mLabel">이메일</label> 
-				<input type="text" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"><br> <br>
-				<label
-					class="mLabel" id="pwdlabel">비밀번호</label> <input type="password"
-					id="memberPwdBefor" name="memberPwdBefor"><br>
-				<!-- PasswordErrorMsg -->
-				<div style="width: 56%; float: right; text-align: left; height: 10%;">
-					<p id="pwderror" style="font-size: 10px; margin: 0;">※비밀번호를 변경하기 위하여 현재 비밀번호를 입력해주세요.</p>
-				</div>
-				<br clear="both">
-				<label class="mLabel" id="pwdchecklabel">변경할
-					비밀번호</label> <input type="password" id="pwdRevised" name="pwdRevised"
-					readonly><br>
-
-				<!-- PasswordErrorMsg -->
-				<div id="pwdCheckErrorDiv"
-					style="width: 56%; float: right; text-align: left; display: none;">
-					<p id="pwdCheckerror" style="font-size: 10px;"></p>
-				</div><br>
-				<br id="pwdCheckBr" style="width: 0; margin: 0; display: none;"
-					clear="both"> <label class="mLabel" id="pwdchecklabel2">변경할
-					비밀번호 확인</label> <input type="password" id="memberPwd" name="memberPwd"
-					readonly><br><br>
-
-				<!-- PasswordErrorMsg -->
-				<div id="pwdCheckErrorDiv2"
-					style="width: 56%; float: right; text-align: left; display: none;">
-					<p id="pwdCheckerror2" style="font-size: 10px;"></p>
-				</div>
-				<br id="pwdCheckBr2" style="width: 0; margin: 0; display: none;" clear="both"> 
-				<label class="mLabel">닉네임</label> <input type="text" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }" required><br> <br>
-				<label class="mLabel">이름</label> <input type="text" id="memberName" name="memberName" value="${loginUser.memberName }"><br><br>
-
-
-				<label class="mLabel">성별</label>
-				<div style="width: 50%; margin: 0; float: right; text-align: left;">
-					<input type="radio" id="genderM" name="memberGender" value="M"
-						style="width: 5%;"><label for="genderM">남</label> <input
-						type="radio" id="genderF" name="memberGender" value="F"
-						style="width: 5%; margin-left: 20%;"><label for="genderF">여</label>
-				</div><br>
-				<br> <label class="mLabel">휴대전화 번호</label> <input type="text"
-					id="memberPhone" name="memberPhone"
-					value="${loginUser.memberPhone }"> <br> <br>
-				<button style="margin-left: 50%;">수정하기</button>
+				<table id="memberInfoTb"style="width: 100%">
+					<tr>
+						<td style="width: 30%;" valign="middle">이메일</td>
+						<td style="width: 5%;"></td>
+						<td><input type="text" class="infoInput" id="memberEmail" name="memberEmail" readonly value="${loginUser.memberEmail }"></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">비밀번호</td>
+						<td style="width: 5%;"></td>
+						<td><input type="password"  class="infoInput" id="memberPwdBefor" name="memberPwdBefor"></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle"></td>
+						<td style="width: 5%;"></td>
+						<td><p id="pwderror" style="font-size: 11px;">※비밀번호를 변경하기 위하여 현재 비밀번호를 입력해주세요</p></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">변경할 비밀번호</td>
+						<td style="width: 5%;"></td>
+						<td><input type="password"  class="infoInput" id="pwdRevised" name="pwdRevised" readonly></td>
+					</tr>
+					<!-- PasswordErrorMsg -->
+					<tr>
+						<td style="width: 30%;" valign="middle"></td>
+						<td style="width: 5%;"></td>
+						<td><p id="pwdCheckerror"style="font-size: 11px;"></p></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">변경할 비밀번호 확인</td>
+						<td style="width: 5%;"></td>
+						<td><input type="password"  class="infoInput" id="memberPwd" name="memberPwd" readonly></td>
+					</tr>
+					<!-- PasswordErrorMsg -->
+					<tr>
+						<td style="width: 30%;" valign="middle"></td>
+						<td style="width: 5%;"></td>
+						<td><p id="pwdCheckerror2" style="font-size: 11px;"></p></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">닉네임</td>
+						<td style="width: 5%;"></td>
+						<td><input type="text" class="infoInput" id="memberNickName" name="memberNickName" value="${loginUser.memberNickName }" required></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">이름</td>
+						<td style="width: 5%;"></td>
+						<td><input type="text"  class="infoInput" id="memberName" name="memberName" value="${loginUser.memberName }"></td>
+					</tr>
+					<tr>
+						<td style="width: 30%;" valign="middle">성별</td>
+						<td style="width: 5%;"></td>
+						<td style="padding-top:5px; height: 30px;" valign="middle"><input type="radio" id="genderM" name="memberGender" value="M" style="width: 5%;"><label for="genderM">남</label>
+											<input	type="radio" id="genderF" name="memberGender" value="F"	style="width: 5%; margin-left:15%;"><label for="genderF">여</label></td>
+					</tr>
+				
+					<tr>
+						<td style="width: 30%;" valign="middle">휴대전화 번호</td>
+						<td style="width: 5%;"></td>
+						<td><input type="text"  class="infoInput" id="memberPhone" name="memberPhone" value="${loginUser.memberPhone }"></td>
+					</tr>
+					<tr>
+						
+						<td colspan="3" style="text-align: center; padding:10%;"><button style=" width:50%;height:40px; border-radius:10px; margin: 0 auto;">수정하기</button></td>
+					</tr>
+				
+				</table>
 
 			</form>
-			<br>
 		</div>
-
-	<script>
+			<script>
              		var changeinfo="N";
              	$(function(){
              		var genderChecked = "${loginUser.memberGender}";
@@ -733,7 +721,6 @@ font-size: 14px;
              			return false;
              		}
              	}
-
              	$(function(){
              		
              		$("#memberPwdBefor").keyup(function(){
@@ -786,8 +773,7 @@ font-size: 14px;
              				$("#pwdRevised").val("");
              			}
              			else{
-             				$("#pwdCheckBr").css("display","none");
-         					$("#pwdCheckErrorDiv").css("display","none");   
+             				$("#pwdCheckerror").text("사용 가능한 비밀번호 입니다").css("color","green");
       						$("#memberPwd").attr("readonly",false);
       						$("#memberPwd").css("background"," white");
       						
@@ -801,7 +787,7 @@ font-size: 14px;
          					$("#pwdCheckErrorDiv2").css("display","none");  
          					if($("#memberPwd").val() != $("#memberPwdBefor").val()){
                  				changeinfo="Y";
-                 				alert("비번 변경됨"+changeinfo);
+                 				$("#pwdCheckerror2").text("");
                  			}
              			}else{
              				$("#pwdCheckBr2").css("display","block");
@@ -856,7 +842,6 @@ font-size: 14px;
              	$("#memberPhone").keyup(function(){
              	// 전화번호 - 제거
         			memberPhone = ($("#memberPhone").val()).replace(/-/gi,"");
-
         			if (!regexPhone.test(memberPhone)) {
         				$("#memberPhone").css("color","red");
         			} else {
@@ -887,19 +872,10 @@ font-size: 14px;
              	
              	
              	</script>
-<<<<<<< HEAD
-
-</div>
-
-<!-- 회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정-------회원정보 수정--------회원정보 수정-----회원정보 수정---회원정보 수정--- -->
-
-
-=======
 	
 	
 	</div>
 </section>
->>>>>>> refs/remotes/origin/master
 <jsp:include page="../common/footer.jsp" />	
 
 </body>

@@ -18,7 +18,7 @@ footer
 }
 .footer_container
 {
-	height: 3.5rem;
+	height: 3.75rem;
 	width: 100%;
 	background-color: #343a40;
 }
@@ -39,14 +39,11 @@ footer
 	margin: 0.2rem 0.5rem 0.2rem auto;
     padding: .3rem 1rem;
     display: block;
-<<<<<<< HEAD
-    deco
-=======
    	/* border: thin solid #343a40; */
->>>>>>> refs/remotes/origin/master
 }
 .footer_container .footer_navbar .footer_question
 {
+	cursor: pointer;
 	margin: 0.2rem auto 0.2rem 0.5rem;
 }
 .footer_container .footer_navbar .footer_item:hover,
@@ -59,8 +56,6 @@ footer
 	color: green;
     border-bottom: thin solid green;
 }
-<<<<<<< HEAD
-=======
 
 /* The Modal (background) */
 footer .modal {
@@ -172,13 +167,10 @@ footer .modal .modal_footer button {
 	from {opacity: 0} 
 	to {opacity: 1}
 }
->>>>>>> refs/remotes/origin/master
 </style>
 </head>
 <body>
 	<footer>
-<<<<<<< HEAD
-=======
 		<!-- 문의 하기 Modal -->
 		<div id="footer_qModal" class="modal">
 		
@@ -211,16 +203,13 @@ footer .modal .modal_footer button {
 		
 		</div>
 
->>>>>>> refs/remotes/origin/master
 		<div class="footer_container">
 			<div class="footer_navbar">
 				<a class="footer_item">Copyright &copy; Grooming 2020</a>
-				<a class="footer_question" href="#">문의 하기</a>
+				<a id="footer_qModal_Btn" class="footer_question">문의 하기</a>
 			</div>
 		</div>
 	</footer>
-<<<<<<< HEAD
-=======
 
 <script>
 	var footer_qModal = document.getElementById("footer_qModal");
@@ -282,6 +271,5 @@ footer .modal .modal_footer button {
 	});
 
 </script>
->>>>>>> refs/remotes/origin/master
 </body>
 </html>

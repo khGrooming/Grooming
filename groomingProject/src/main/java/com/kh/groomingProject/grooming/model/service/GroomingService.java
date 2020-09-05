@@ -3,12 +3,9 @@ package com.kh.groomingProject.grooming.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
-<<<<<<< HEAD
-=======
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
 import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
->>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -106,8 +103,6 @@ public interface GroomingService {
 
 	int insertBoard(GroupBoard g);
 
-<<<<<<< HEAD
-=======
 	int groupDelete(String gBoardNo);
 
 	int updateGroupBoard(GroupBoard g);
@@ -130,5 +125,4 @@ public interface GroomingService {
 
 	ArrayList<GCheck> checkList(Map hashmap);
 
->>>>>>> refs/remotes/origin/master
 }

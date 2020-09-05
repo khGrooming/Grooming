@@ -37,7 +37,7 @@
 	<!-- ------------------ 랭킹 시스템 -------------------- -->
 		<div class="col-sm-3"></div>
 		<div class="col-sm-6">
-			<table class="table table_ra">
+			<table class="table table_ra" id="communityTopList">
 				<thead>
 					<tr>
 						<th>순위</th>
@@ -48,23 +48,70 @@
 				<tbody>
 					<tr>
 						<td><img class="Img_ra" alt="1st" src="${contextPath }/resources/views/images/1st.PNG"></td>
-						<td>이아라</td>
-						<td>100</td>
+
 					</tr>
 					<tr>
 						<td><img class="Img_ra" alt="2st" src="${contextPath }/resources/views/images/2st.PNG"></td>
-						<td>이아라</td>
-						<td>100</td>
+
 					</tr>
 					<tr>
 						<td><img class="Img_ra" alt="3st" src="${contextPath }/resources/views/images/3st.PNG"></td>
-						<td>이아라</td>
-						<td>100</td>
+
 					</tr>
 				</tbody>
 			</table>	
 		</div>
 		<div class="col-sm-3"></div>
+		
+		<script>
+
+			function communityTopList(){
+				// ajax 관련 코드
+				$.ajax({
+					url:"topList.do", 
+					dataType:"json",
+				
+					success:function(data){
+						$tableBody = $("#communityTopList tbody");
+						$tableBody.html(
+								'<tr id="ranking1">' +
+								'<td><img class="Img_ra" alt="1st" src="${contextPath }/resources/views/images/1st.PNG"></td>' +
+								'</tr>' +
+								
+								'<tr id="ranking2">' +
+								'<td><img class="Img_ra" alt="2st" src="${contextPath }/resources/views/images/2st.PNG"></td>' +
+								'</tr>' +
+								
+								'<tr id="ranking3">' +
+								'<td><img class="Img_ra" alt="3st" src="${contextPath }/resources/views/images/3st.PNG"></td>'+
+								'</tr>');	// tbody 부분 리셋
+						
+						for(var i = 0; i < data.length; i++){							
+							var $memberNickName = $("<td>").text(data[i].memberNickName);
+							var $boardVcount = $("<td>").text(data[i].boardVcount);
+							
+							if(i ==0) $("#ranking1").append($memberNickName).append($boardVcount);
+							if(i ==1) $("#ranking2").append($memberNickName).append($boardVcount);
+							if(i ==2) $("#ranking3").append($memberNickName).append($boardVcount);
+						}
+					},
+					error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+				})		
+			}
+			
+			$(function(){
+				communityTopList();
+				
+				setInterval(function(){
+					communityTopList();
+				}, 600000);
+			})
+			
+		</script>		
 	<!-- ------------------ 랭킹 시스템 -------------------- -->
 	
 	<!-- ------------------ 정렬 ------------------------- -->
@@ -91,23 +138,21 @@
 						<tr>
 							<td>${n.boardNo }</td>
 							<td>															
-								<c:if test="${!empty loginUser }">
-									<c:url var="communityDetailView" value="communityDetailView.do">
-										<c:param name="boardNo" value="${n.boardNo }" />
-									</c:url>
-									<a href="${communityDetailView }">${n.boardTitle }</a>
-								</c:if>
-								<c:if test="${empty loginUser }">
-									${n.boardTitle }
-								</c:if>
+								<c:url var="communityDetailView" value="communityDetailView.do">
+									<c:param name="boardNo" value="${n.boardNo }" />
+								</c:url>
+								<a href="${communityDetailView }">${n.boardTitle }</a>
 							</td>
 							<td>${n.memberNickName }</td>
 							<td>${n.boardVcount }</td>
 							<td>${n.boardModifyDate }</td>
 						</tr>
 					</c:forEach>
-					
-					<!-- 페이징 처리 부분 -->
+				</tbody>
+			</table>
+			
+			<!-- 페이징 처리 부분 -->
+			<table>
 					<tr class="paginationCSS" height="20">
 						<td colspan="5">
 					<!-- [이전] -->
@@ -147,8 +192,6 @@
 							</c:if>	
 						</td>
 					</tr>
-						
-				</tbody>
 			</table>
 		</div>
 	</div>

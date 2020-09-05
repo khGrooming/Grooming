@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.common.CommunityPageInfo;
 import com.kh.groomingProject.community.model.dao.CommunityDao;
-import com.kh.groomingProject.community.model.vo.Bimages;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -67,16 +66,36 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public int getListCount() {
-		
-		return cDao.getListCount();
+	public ArrayList<Board> communityTopList() {
+		// TODO Auto-generated method stub
+		return cDao.communityTopList();
 	}
 
 	@Override
-	public int communityFileInsert(Bimages imgFile) {
+	public ArrayList<Board> communitySearch(String communitySearch) {
 		// TODO Auto-generated method stub
-		return cDao.communityFileInsert(imgFile);
+		return cDao.communitySearch(communitySearch);
 	}
+
+	@Override
+	public int getListCount(String bCategoryNo) {
+		// TODO Auto-generated method stub
+		return cDao.getListCount(bCategoryNo);
+	}
+
+	@Override
+	public int replyUpdate(Reply reply, Member member) {
+		// TODO Auto-generated method stub
+		return cDao.replyUpdate(reply, member);
+	}
+
+	@Override
+	public int replyDelete(Reply reply, Member member) {
+		// TODO Auto-generated method stub
+		return cDao.replyDelete(reply, member);
+	}
+
+	
 
 	
 

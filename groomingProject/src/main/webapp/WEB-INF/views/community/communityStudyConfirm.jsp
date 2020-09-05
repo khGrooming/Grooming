@@ -56,8 +56,7 @@
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->	
 		<div class="container item-container" align="center" style="margin-top: 30px;">
-			<form>		
-				
+			<c:forEach var="n" items="${clist }">
 				<div class="row item-row">		
 					
 					<input type="hidden" value="">
@@ -65,120 +64,33 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="">
 							<div class="card-image-zoom">
-								<img src="${imgFile.imgName }" class="card-img-top" alt="..."
-												data-toggle="modal" data-target="#confirmDetailView">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
+								<img src="${contextPath}/resources/buploadFiles/${n.boardImg}" class="card-img-top" alt="..."
+											data-toggle="modal" data-target="#confirmDetailView">
 							</div>
 						</div>
 					</div>
 					
 				</div>
 				
-				<div class="row item-row">		
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				
-				<div class="row item-row">		
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath }/resources/views/images/studyImg.jpg" class="card-img-top" alt="...">
-							</div>
-						</div>
-					</div>
-					
-				</div>
-					
-			</form>
-		</div>
-	</div>
-	
-	<!-- Modal 스터디 인증 상세보기 -->
+				<!-- Modal 스터디 인증 상세보기 -->
 	<div id="confirmDetailView" class="modal fade" role="dialog">
   		<div class="modal-dialog">
 
     		<!-- Modal 내용-->
-    		<div class="modal-content">
+     		<div class="modal-content">
       			<div class="modal-header">
-        			<h4 class="modal-title">작성자</h4>
+        			<h5 class="modal-title">${n.boardNo }</h5>
         			<button type="button" class="close" data-dismiss="modal">x</button>
       			</div>
       			<div class="modal-body">
-        			<p>Some text in the modal.</p>
+<%--       				<c:forEach var="n" items="${clist }">				
+        				<img src="" alt=".."><br>
+        				<p>${n.boardNo }</p>
+      				</c:forEach> --%>
+        			<p>${n.boardNo }</p>
       			</div>
       			<div class="modal-footer">
+      				<p>${n.boardNo }</p> 
       				<!-- 좋아요 -->
 					<div class="iteminfo-icons" id="iteminfo-icons">
 						<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
@@ -203,9 +115,17 @@
 						})
 					</script>
       			</div>
-    		</div>
+    			</div>
+  			</div>
   		</div>
+  	</div>
+				
+				
+			</c:forEach>
+		</div>
 	</div>
+	
+	
 	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
 </body>
 </html>

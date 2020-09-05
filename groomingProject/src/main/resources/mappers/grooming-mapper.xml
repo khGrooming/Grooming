@@ -384,7 +384,7 @@
  		SELECT *
  		FROM GROOMING G
  		JOIN MEMBER M ON G.MEMBER_NO = M.MEMBER_NO
- 		WHERE M.MEMBER_NO = #{memberNo}
+ 		WHERE M.MEMBER_NO = #{memberNo} AND GROOMING_STATUS = 'Y'
  		
  	</select>
  	
@@ -567,8 +567,6 @@
 		)
  	
  	
-<<<<<<< HEAD
-=======
  	</insert>
  	
  	
@@ -620,12 +618,9 @@
  		,DEFAULT
  		)
  	
->>>>>>> refs/remotes/origin/master
  	
  	</insert>
  	
-<<<<<<< HEAD
-=======
  	<select id="selectSave" parameterType="string" resultMap="groomingResultSet">
 	 	SELECT *
 		FROM GROOMING G
@@ -677,5 +672,4 @@
 
  	</select>
  	
->>>>>>> refs/remotes/origin/master
 </mapper>

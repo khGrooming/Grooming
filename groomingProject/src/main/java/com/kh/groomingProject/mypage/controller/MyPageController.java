@@ -159,12 +159,15 @@ public class MyPageController {
 	//==========================================================================
 	
 	@RequestMapping(value="upproimg.do", method=RequestMethod.POST)
-	public void updateProfileIMG(MultipartHttpServletRequest request, ProfileMember m,
+	public String updateProfileIMG(MultipartHttpServletRequest request, ProfileMember m,
 			HttpServletRequest request1,
 			HttpSession session,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response){
 	
 		MultipartFile profileFile = request.getFile("profileFile");
+		if(profileFile.getOriginalFilename() == "") {
+			System.out.println("파일이 업습니다.");
+		}
 		System.out.println(profileFile.getOriginalFilename());
 		System.out.println(m.getMemberNo());
 		String folderName = "\\upprofileFiles";
@@ -174,25 +177,31 @@ public class MyPageController {
 		if(!(loginUser2.getMemberPhoto()).equals("MEMBER_SAMPLE_IMG.JPG")) {
 			System.out.println("파일 지우기"+loginUser2.getMemberPhoto());
 			deleteFile(loginUser2.getMemberPhoto(), request1,folderName);
+			
+			
 		}
+		if(profileFile.getOriginalFilename() == "") {
+			renameFileName="MEMBER_SAMPLE_IMG.JPG";
+		}else {
+			
 			renameFileName=saveFile(m.getMemberNo(),profileFile, request1,folderName);
-			m.setMemberPhoto(renameFileName);
+		}
+		m.setMemberPhoto(renameFileName);
+		
+		
 		
 		System.out.println(renameFileName);
-		
 		int result = mpService.updateProfileIMG(m);
 		
-		PrintWriter out = response.getWriter();
+		ProfileMember profileMember = mpService.testLoginUser2(m.getMemberNo());
+		String memberPoint2 = Integer.toString( mpService.selectPoint2(m.getMemberNo()));
+		profileMember.setNowPoint(memberPoint2);
+		session.setAttribute("profileInfo",profileMember);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		loginUser.setMemberPhoto(renameFileName);
+		session.setAttribute("loginUser",loginUser);
 		
-		if(result > 0) {
-			
-			
-			out.print(renameFileName);
-			out.flush();
-			out.close();
-		}else {
-			System.out.println("오륭다");
-		}
+		return "mypage/mypage-memberup";
 	}
 	
 	//==========================================================================

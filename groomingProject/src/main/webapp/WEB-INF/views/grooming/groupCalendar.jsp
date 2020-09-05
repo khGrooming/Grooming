@@ -42,8 +42,6 @@
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
-<<<<<<< HEAD
-=======
 	 
 		table tr{
 			border : 3px double green;
@@ -52,7 +50,6 @@
 		#tb1 tbody tr td{
 			
 		}
->>>>>>> refs/remotes/origin/master
     </style>
 </head>
 
@@ -106,11 +103,6 @@
             			<th style="width:auto;">멤버 이름</th>
             		</tr>
     
-<<<<<<< HEAD
-
-	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
-    <section >
-=======
             		</thead>
 	            	<tbody>
 	            		<c:forEach var="m" items="${member }" >
@@ -145,115 +137,17 @@
             	</table>
             	</div>
             	</div>
->>>>>>> refs/remotes/origin/master
        
-<<<<<<< HEAD
-           <div id='calendar'></div>
-       
-       
-       
-       
-      <!-- 캘린더 script -->
-     <script>
-
-			
-     document.addEventListener('DOMContentLoaded', function() {
-    	    var calendarEl = document.getElementById('calendar');
-
-    	    var calendar = new FullCalendar.Calendar(calendarEl, {
-    	      initialDate: '2020-06-12',
-    	      initialView: 'timeGridWeek',
-    	      nowIndicator: true,
-    	      headerToolbar: {
-    	        left: 'prev,next today',
-    	        center: 'title',
-    	        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    	      },
-    	      navLinks: true, // can click day/week names to navigate views
-    	      editable: true,
-    	      selectable: true,
-    	      selectMirror: true,
-    	      dayMaxEvents: true, // allow "more" link when too many events
-    	      events: [
-    	        {
-    	          title: 'All Day Event',
-    	          start: '2020-06-01',
-    	        },
-    	        {
-    	          title: 'Long Event',
-    	          start: '2020-06-07',
-    	          end: '2020-06-10'
-    	        },
-    	        {
-    	          groupId: 999,
-    	          title: 'Repeating Event',
-    	          start: '2020-06-09T16:00:00'
-    	        },
-    	        {
-    	          groupId: 999,
-    	          title: 'Repeating Event',
-    	          start: '2020-06-16T16:00:00'
-    	        },
-    	        {
-    	          title: 'Conference',
-    	          start: '2020-06-11',
-    	          end: '2020-06-13'
-    	        },
-    	        {
-    	          title: 'Meeting',
-    	          start: '2020-06-12T10:30:00',
-    	          end: '2020-06-12T12:30:00'
-    	        },
-    	        {
-    	          title: 'Lunch',
-    	          start: '2020-06-12T12:00:00'
-    	        },
-    	        {
-    	          title: 'Meeting',
-    	          start: '2020-06-12T14:30:00'
-    	        },
-    	        {
-    	          title: 'Happy Hour',
-    	          start: '2020-06-12T17:30:00'
-    	        },
-    	        {
-    	          title: 'Dinner',
-    	          start: '2020-06-12T20:00:00'
-    	        },
-    	        {
-    	          title: 'Birthday Party',
-    	          start: '2020-06-13T07:00:00'
-    	        },
-    	        {
-    	          title: 'Click for Google',
-    	          url: 'http://google.com/',
-    	          start: '2020-06-28'
-    	        }
-    	      ]
-    	    });
-
-    	    calendar.render();
-    	  });
-		
-    </script>
-       
-=======
 
   
     </div>
->>>>>>> refs/remotes/origin/master
     </section>
   <script>
 
-<<<<<<< HEAD
-
-</div>
-=======
 	$(function(){
 		
 		
 		checkList();
->>>>>>> refs/remotes/origin/master
 	
 	})
 
@@ -351,5 +245,4 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.grooming.model.dao.GroomingDao;
-<<<<<<< HEAD
-=======
 import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
->>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -294,8 +291,6 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.insertBoard(g);
 	}
 
-<<<<<<< HEAD
-=======
 	@Override
 	public int groupDelete(String gBoardNo) {
 		// TODO Auto-generated method stub
@@ -362,7 +357,6 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.checkList(hashmap);
 	}
 
->>>>>>> refs/remotes/origin/master
 
 	
 }

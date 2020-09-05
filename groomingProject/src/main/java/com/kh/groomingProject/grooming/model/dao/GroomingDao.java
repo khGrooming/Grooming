@@ -9,11 +9,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-<<<<<<< HEAD
-=======
 import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
->>>>>>> refs/remotes/origin/master
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
@@ -265,8 +262,6 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.insertBoard",g);
 	}
-<<<<<<< HEAD
-=======
 
 	public int groupDelete(String gBoardNo) {
 		// TODO Auto-generated method stub
@@ -322,7 +317,6 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.checkList",hashmap);
 	}
->>>>>>> refs/remotes/origin/master
 	
 	
 	

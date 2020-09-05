@@ -3,7 +3,6 @@ package com.kh.groomingProject.community.model.service;
 import java.util.ArrayList;
 
 import com.kh.groomingProject.common.CommunityPageInfo;
-import com.kh.groomingProject.community.model.vo.Bimages;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -26,9 +25,17 @@ public interface CommunityService {
 
 	int replyInsert(Reply reply, Member member);
 
-	int getListCount();
+	ArrayList<Board> communityTopList();
 
-	int communityFileInsert(Bimages imgFile);
+	ArrayList<Board> communitySearch(String communitySearch);
+
+	int getListCount(String bCategoryNo);
+
+	int replyUpdate(Reply reply, Member member);
+
+	int replyDelete(Reply reply, Member member);
+
+	
 
 	
 

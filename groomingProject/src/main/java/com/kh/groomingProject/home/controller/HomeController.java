@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-import org.springframework.mail.javamail.JavaMailSenderImpl;
-=======
->>>>>>> refs/remotes/origin/master
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,11 +21,6 @@ import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.home.model.vo.HomeHelp;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
-<<<<<<< HEAD
-import com.kh.groomingProject.member.model.vo.Member;
-import com.kh.groomingProject.message.model.vo.Message;
-=======
->>>>>>> refs/remotes/origin/master
 
 import static com.kh.groomingProject.common.HomePagination.getPageInfo;
 
@@ -118,8 +110,6 @@ public class HomeController {
 		new Gson().toJson(gAList, response.getWriter());
 
 	}
-<<<<<<< HEAD
-=======
 
 	// 문의 메일 보내기
 	@RequestMapping("siteQuestion.do")
@@ -138,6 +128,5 @@ public class HomeController {
 		}
 
 	}
->>>>>>> refs/remotes/origin/master
 
 }
