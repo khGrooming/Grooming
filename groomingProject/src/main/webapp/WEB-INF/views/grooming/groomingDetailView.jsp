@@ -232,13 +232,13 @@ img {
 						</tbody>
 					</table>
 					<br>
-					<table>
+				<table>
+					<tbody id="people">
 						<tr>
-							<td><span>그룹 타입 : </span><span>${grooming.groomingType }</span>
+							<td><span>그룹 타입 : </span><span>${grooming.groomingType }</span></td>
 						</tr>
 						<tr>
-							<td><span>스터디 기간 :</span><span>${grooming.studySd } ~
-									${grooming.studyEd }</span></td>
+							<td><span>스터디 기간 :</span><span>${grooming.studySd } ~ ${grooming.studyEd }</span></td>
 						</tr>
 
 						<tr>
@@ -259,7 +259,8 @@ img {
 								<p>${grooming.groomingContent }</p>
 							</td>
 						</tr>
-					</table>
+					</tbody>
+				</table>
 
 				</div>
 			</div>
@@ -269,8 +270,7 @@ img {
 			<c:if test="${loginUser.memberNo eq grooming.memberNo }">
 				<div class="col-3">
 					<!-- 신청자 리스트  확인 버튼 -->
-					<button data-toggle="modal" data-target="#applicant">신청자
-						리스트</button>
+					<button data-toggle="modal" id="applicantList">신청자 리스트</button><!-- data-target="#applicant" -->
 					<!-- 리스트 모달 -->
 					<div class="modal fade" id="applicant" tabindex="-1" role="dialog"
 						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static">
@@ -281,8 +281,7 @@ img {
 								<!-- 모달 제목 -->
 								<div class="modal-header">
 									<h5 class="modal-title" id="applicantModalLabel">신청자 리스트</h5>
-									<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
+									<button type="button" class="close" id="close" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 									</button>
 								</div>
@@ -313,7 +312,7 @@ img {
 												<td >${aL.memberNickName }</td>
 												
 												<td>
-												<button data-toggle="modal" data-target="#open_modal_appContent">신청서 열람</button>
+												<button data-toggle="modal" id="contentOpen">신청서 열람</button>
 													<%-- <div class="modal modal-xl fade" id="open_modal_appContent" tabindex="-1" role="dialog" 
 													aria-labelledby="applyContentLabel" aria-hidden="true" >
 
@@ -363,14 +362,12 @@ img {
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
 					<c:param name="page" value="${currentPage }"/>						
 				</c:url>
-				<c:url var="limit" value="groomingLimit.do" >
-					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
-				</c:url>
+			
 				<!-- 글의 상태 버튼 -->
 				<div class="col-6" style="text-align: center">
 					<button onclick="location.href='${gupdate}'">수정</button>
 					<button id="deleteGrooming" type="button">삭제</button>
-					<button onclick="location.href='${limit}'">마감</button>
+					<button id="limit" type="button">마감</button>
 				</div>
 				</c:if>
 				<c:url var="goMain" value="groomingMain.do" >
@@ -443,6 +440,25 @@ img {
 	</section>
 	<script>
 		$(function(){
+			$("#applicantList").on("click",function(){
+				$("#applicant").modal("show");
+			})
+			
+			$("#close").on("click",function(){
+				$("#applicant").modal("hide");
+			})
+			
+			$(".close").on("click",function(){
+				$(".modal modal-xl fade app").modal("hide");
+			})
+			
+			
+		})
+	
+	
+	</script>
+	<script>
+		$(function(){
 			var groomingNo = "${grooming.groomingNo}";
 			$("#deleteGrooming").on("click",function(){
 				var result = confirm("삭제하시겠습니까?");
@@ -452,7 +468,36 @@ img {
 				}
 			
 			})
-		
+			
+			
+			$("#limit").on("click",function(){
+				var result = confirm("글을 마감하시겠습니까?");
+				
+				if(result){
+				
+					$.ajax({
+						url:"groomingLimit.do",
+						data:{groomingNo:groomingNo},
+						success:function(data){
+							if(data=="success"){
+								alert("마감 되었습니다.");
+								location.reload();
+							}
+						
+							
+						},error:function(request, status, errorData){
+							alert("error code: " + request.status + "\n"
+									+"message: " + request.responseText
+									+"error: " + errorData);
+						}
+						})
+					
+					
+				
+				
+				}
+				
+			})
 		})
 		
 	
@@ -460,12 +505,7 @@ img {
 	
 	
 	</script>
-	<script>
-		$(function(){
-				$("#open_modal_appContent").modal('hide'); 
-		})
-
-	</script>	
+	
 	<script>
 		$("#submit").on("click",function(){
 			alert("신청되었습니다.");
@@ -541,10 +581,9 @@ img {
 			
 			
 			getAppList();
-			
-		/* 	 setInterval(function(){
-				getAppList();
-			},10000);   */
+		 	 setInterval(function(){
+				currentPeole()
+			},1000);   
 			
 			$(document).on("click",".accept",function(){
 				var groomingNo = "${grooming.groomingNo}";
@@ -553,28 +592,45 @@ img {
 				var groomingP = "${grooming.groomingP}" ;
 				var currentP = "${grooming.currentP}";
 				
-				if(currentP == groomingP){
-					event.stopImmediatePropagation();
-					alert("참여인원이 꽉 찼습니다.!");
-				}else{
-					
 				$.ajax({
-					url:"gaccept.do",
-					data:{applyNo:applyNo,groomingNo:groomingNo},
+					url:"checkPeople.do",
+					data:{groomingNo:groomingNo},
 					success:function(data){
-						if(data=="success"){
-						location.reload();
-						getAppList();
+						if(data.groomingP == data.currentP){
+							event.stopImmediatePropagation();
+							alert("참여인원이 꽉 찼습니다.!");
+						}	else{
+							
+							$.ajax({
+								url:"gaccept.do",
+								data:{applyNo:applyNo,groomingNo:groomingNo},
+								success:function(data){
+									if(data=="success"){
+									getAppList();
+								}
+									
+								},error:function(request, status, errorData){
+									alert("error code: " + request.status + "\n"
+											+"message: " + request.responseText
+											+"error: " + errorData);
+								}
+								})
+						}
+						
 					}
 						
-					},error:function(request, status, errorData){
+					,error:function(request, status, errorData){
 						alert("error code: " + request.status + "\n"
 								+"message: " + request.responseText
 								+"error: " + errorData);
 					}
 					})
-				}
-			})
+				
+				
+				
+			
+				});
+			
 			
 			
 			$(document).on("click",".reject",function(){
@@ -649,12 +705,12 @@ img {
 							 $td2 = $("<td>").text(data[i].memberNickName);
 							 $td3 = $("<td>");
 							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent"+i+"'>").text("신청서열람");
-							 $div2 = $("<div class='modal modal-xl fade' id='open_modal_appContent"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
+							 $div2 = $("<div class='modal modal-xl fade app' id='open_modal_appContent"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
 							 $div3 = $("<div class='modal-dialog'>");
 							 $div4 = $("<div class='modal-content' style='width: 800px; height: auto;'>");
 							 $div5 = $("<div class='modal-header'>");
 							 $h5 = $("<h5 class='modal-title' id='exampleModalLabel'>").text("신청 내용");
-							 $button2 = $("<button type='button' class='close' data-dismiss='modal' aria-label='Close'>");
+							 $button2 = $("<button type='button' class='close' data-target='#applicant' aria-label='Close'>");
 							 $span1 = $("<span aria-hidden='true'>").text("X");
 							
 							 $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
@@ -704,6 +760,110 @@ img {
 				}
 			}) 
 		}
+		
+		
+		function currentPeole(){
+			var groomingNo = "${grooming.groomingNo}";
+			
+			$.ajax({
+				url:"checkPeople.do",
+				data:{groomingNo:groomingNo},
+				dataType:"json",
+				success:function(data){
+					$tableBody = $("#people");
+					$tableBody.html("");
+					
+					var $tr1;
+					var $tr2;
+					var $tr3;
+					var $tr4;
+					var $tr5;
+					var $tr6;
+				
+					var $td1;
+					var $td2;
+					var $td3;
+					var $td4;
+					var $td5;
+					var $td6;
+				
+					var $span1;
+					var $span2;
+					var $span3;
+					var $span4;
+					var $span5;
+					var $span6;
+					var $span7;
+					
+					var $br;
+					var $h4;
+					var $p;
+				
+						$tr1 = $("<tr>");
+						$tr2 = $("<tr>");
+						$tr3 = $("<tr>");
+						$tr4 = $("<tr>");
+						$tr5 = $("<tr>");
+						$tr6 = $("<tr>");
+						
+						$td1 = $("<td>"); 
+						$td2 = $("<td>"); 
+						$td3 = $("<td>"); 
+						$td4 = $("<td>"); 
+						$td5 = $("<td>"); 
+						$td6 = $("<td>"); 
+						
+						$span1 = $("<span>").text("그룹 타입 : ");
+						$span2 = $("<span>").text(data.groomingType);
+						$span3 = $("<span>").text("스터디 기간 : ");
+						$span4 = $("<span>").text(data.studySd+" ~ "+data.studyEd);
+						$span5 = $("<span>").text("예치금 : ");
+						$span6 = $("<span>").text(data.money);
+						$span7 = $("<span>").text("모집 인원 : "+data.currentP+"/"+data.groomingP+"명");
+						
+						$br = $("<br>");
+						$h4 = $("<h4>").text(data.groomingIntroduce);
+						$p = $("<p>").text(data.groomingContent);
+						
+						$td1.append($span1);
+						$td1.append($span2);
+						$td2.append($span3);
+						$td2.append($span4);
+						$td3.append($span5);
+						$td3.append($span6);
+						$td4.append($span7);
+						$td5.append($br);
+						$td5.append($h4);
+						$td6.append($p);
+						
+						$tr1.append($td1);
+						$tr2.append($td2);
+						$tr3.append($td3);
+						$tr4.append($td4);
+						$tr5.append($td5);
+						$tr6.append($td6);
+						
+						$tableBody.append($tr1);
+						$tableBody.append($tr2);
+						$tableBody.append($tr3);
+						$tableBody.append($tr4);
+						$tableBody.append($tr5);
+						$tableBody.append($tr6);
+						
+					
+					
+				},
+				error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
+			}) 
+
+			
+			
+		}
+		
 		
 	</script>
 	

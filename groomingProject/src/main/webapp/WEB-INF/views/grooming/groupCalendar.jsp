@@ -297,7 +297,7 @@ h1{
 					$small=$("<small>").text("("+data.memberNickName+"님의 현재 출석률은 "+data.checkLate+"% 입니다.)");
 					$label1=$("<label style='color:lightgreen;'>").text("출석:"+data.checkY);
 					$label2=$("<label style='color:yellow'>").text("지각:"+data.checkL);
-					$label3=$("<label  style='color:red;'>").text("결석:"+data.checkN);
+					$label3=$("<label style='color:red;'>").text("결석:"+data.checkN);
 					
 					$small.append($label1);
 					$small.append($label2);

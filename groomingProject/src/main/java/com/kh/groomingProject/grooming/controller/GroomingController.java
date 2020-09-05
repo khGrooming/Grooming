@@ -50,6 +50,7 @@ import com.kh.groomingProject.tag.model.vo.Tag;
 @Controller
 public class GroomingController {
 
+	// 
 	@Autowired
 	private GroomingService gService;
 
@@ -57,7 +58,7 @@ public class GroomingController {
 	private TagService tagService;
 
 	@Autowired
-	private DeclarationService declarationService;
+	private DeclarationService declarationService;	
 
 	@Autowired
 	private MemberService mService;
@@ -149,11 +150,13 @@ public class GroomingController {
 		gson.toJson(glist, response.getWriter());
 	}
 
+	// 그루밍 글쓰기 페이지 이동
 	@RequestMapping("groomingInsert.do")
 	public String groomingInsert() {
 		return "grooming/groomingInsertForm";
 	}
 
+	// 그루밍 글쓰기
 	@RequestMapping("groomingInsertForm.do")
 	public String groomingInsertForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
 			@RequestParam(value = "uploadFile", required = true) MultipartFile file) {
@@ -283,6 +286,9 @@ public class GroomingController {
 		return mv;
 	}
 
+
+	
+	// 그루밍 신청자 list ajax
 	@RequestMapping("gacceptList.do")
 	@ResponseBody
 	public void groomingAppAccept(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
@@ -295,6 +301,7 @@ public class GroomingController {
 
 	}
 
+	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
 	public String groomingAccept(String applyNo, String groomingNo) {
@@ -316,7 +323,7 @@ public class GroomingController {
 		}
 
 	}
-
+	// 그루밍 신청자 거절 ajax
 	@RequestMapping("greject.do")
 	@ResponseBody
 	public String groomingReject(String applyNo) {
@@ -330,6 +337,7 @@ public class GroomingController {
 
 	}
 
+	// 그루밍 글 수정 페이지 이동
 	@RequestMapping("groomingUpdate.do")
 	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
@@ -351,6 +359,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 그루밍 글 수정
 	@RequestMapping("gUpdate.do")
 	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
 			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
@@ -362,8 +371,6 @@ public class GroomingController {
 		if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
 			if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
 				deleteFile(g.getGroomingImg(), request);
-				// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
-				// 폴더명만 수정하자
 			}
 			renameFileName = saveFile(file, request);
 
@@ -419,6 +426,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 기존에 파일 삭제
 	private void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\upGroomingFiles";
@@ -429,6 +437,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 게시글 삭제
 	@RequestMapping("groomingDelete.do")
 	public String groomingDelete(String groomingNo) {
 
@@ -441,18 +450,21 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 게시글 마감 처리
 	@RequestMapping("groomingLimit.do")
+	@ResponseBody
 	public String groomingLimit(String groomingNo) {
 
 		int result = gService.statusUpdate(groomingNo);
 
 		if (result > 0) {
-			return "redirect:groomingMain.do";
+			return "success";
 		} else {
-			throw new GroomingException("게시글 마감 실패!");
+			return "false";
 		}
 	}
 
+	// 그루밍 신청서 작성
 	@RequestMapping("applyContent.do")
 	public String applyContent(GroomingApplicant ga,String money) {
 		System.out.println("나 ga" + ga);
@@ -467,6 +479,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 신고
 	@RequestMapping("declare.do")
 	public ModelAndView declareG(ModelAndView mv, Declaration d,String groomingNo, String memberNo) {
 
@@ -499,6 +512,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 그루밍 소그룹 게시판 신고
 	@RequestMapping("declareG.do")
 	public ModelAndView declareGroup(Declaration d, String memberNo, String gBoardNo,
 			@RequestParam("currentPage") Integer page, ModelAndView mv, String groomingNo) {
@@ -563,6 +577,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 찜취소
 	@RequestMapping("cancelHeart.do")
 	public ModelAndView cancelHeart(ModelAndView mv, String groomingNo, String memberNo) {
 
@@ -599,6 +614,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 임시저장 페이지 
 	@RequestMapping("save.do")
 	public String groomingSaveForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
 			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
@@ -650,7 +666,8 @@ public class GroomingController {
 			throw new GroomingException("게시글 임시저장 실패!");
 		}
 	}
-
+	
+	// 소그룹 페이지 이동
 	@RequestMapping("groupPage.do")
 	public ModelAndView groupPage(ModelAndView mv, String groomingNo) {
 
@@ -666,6 +683,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 소그룹 메인
 	@RequestMapping("groupList.do")
 	@ResponseBody
 	public void groupList(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
@@ -683,6 +701,7 @@ public class GroomingController {
 
 	}
 
+	// 스터디원 추방
 	@RequestMapping("kickOut.do")
 	@ResponseBody
 	public String kickOut(String memberNo) {
@@ -696,6 +715,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그룹게시판 불러오기
 	@RequestMapping("gBlist.do")
 	public ModelAndView gBoardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			String groomingNo) {
@@ -727,7 +747,7 @@ public class GroomingController {
 	}
 
 	
-
+	// 그룹 게시판 글작성페이지로 이동
 	@RequestMapping("groupBoardInsertForm.do")
 	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo, String memberNo,
 			ModelAndView mv) {
@@ -743,7 +763,8 @@ public class GroomingController {
 
 		return mv;
 	}
-
+	
+	// 그룹페이지 글쓰기
 	@RequestMapping("groupInsert.do")
 	public ModelAndView groupInsert(@RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, ModelAndView mv, GroupBoard g, String gMemberNo, String groomingNo,
@@ -782,7 +803,8 @@ public class GroomingController {
 		return mv;
 
 	}
-
+	
+	// 그룹게시판 상세보기
 	@RequestMapping("groupDetail.do")
 	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam(value = "page", required = false) Integer page,
 			ModelAndView mv, String groomingNo) {
@@ -813,7 +835,7 @@ public class GroomingController {
 		return mv;
 	}
 
-	
+	// 그룹 게시글 삭제하기
 	  @RequestMapping("groupDelete.do") public ModelAndView
 	  groupDelete(ModelAndView mv,String groomingNo, String gBoardNo,@RequestParam(value = "page", required = false) Integer page) {
 	 
@@ -838,6 +860,7 @@ public class GroomingController {
 	} 
 	  return mv; }
 	 
+	  // 그룹 게시글 수정 페이지
 	  @RequestMapping("groupBoardUpdate.do")
 	  public ModelAndView groupBoardUpdate(ModelAndView mv,String groomingNo, String gBoardNo,
 			  @RequestParam(value = "page", required = false) Integer page) {
@@ -850,6 +873,7 @@ public class GroomingController {
 		  return mv;
 	  }
 	 
+	  // 게시글 수정
 	  @RequestMapping("groupUpdate.do")
 	  public ModelAndView groupUpdate(@RequestParam(value = "page", required = false) Integer page,String gBoardNo,String memberNo,
 				HttpServletRequest request, ModelAndView mv, GroupBoard g, String groomingNo,
@@ -908,6 +932,7 @@ public class GroomingController {
 		  return mv;
 	  }
 	  
+	  // 게시글 댓글
 		@RequestMapping("groupReply.do")
 		public void groupReply(HttpServletResponse response,String gBoardNo) throws JsonIOException, IOException {
 			response.setContentType("application/json; charset=utf-8");
@@ -918,6 +943,7 @@ public class GroomingController {
 			gson.toJson(rlist, response.getWriter());
 		}
 
+		// 게시글 댓글 추가
 		@RequestMapping("addGroupReply.do")
 		@ResponseBody
 		public String addReply(GReply g, String memberNo,String groomingNo) {
@@ -939,7 +965,7 @@ public class GroomingController {
 			
 		}
 	  
-	  
+		// 임시저장 글 가져오기
 		@RequestMapping("groomingSaveInsert.do")
 		public ModelAndView groomingSaveView(ModelAndView mv, String memberNo) {
 			// 임시저장된 그루밍 글번호 가져오자!
@@ -968,6 +994,7 @@ public class GroomingController {
 			return mv;
 		}
 
+		// 임시저장 페이지 등록
 		@RequestMapping("gSaveUpdate.do")
 		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
 				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
@@ -1036,6 +1063,7 @@ public class GroomingController {
 			return mv;
 		}
 	
+		// 글내역확인
 		@RequestMapping("groomingDecide.do")
 		@ResponseBody
 		public String groomingDecide(String memberNo) {
@@ -1056,6 +1084,7 @@ public class GroomingController {
 			
 		}
 		
+		// 그룹페이지 출석부로 이동
 		@RequestMapping("calendar.do")
 		public ModelAndView calendar(ModelAndView mv, String groomingNo,String memberNo) throws ParseException {
 
@@ -1132,6 +1161,7 @@ public class GroomingController {
 			return mv;
 		}
 		
+		// 그룹페이지 출석 현황
 		@RequestMapping("checkList.do")
 		@ResponseBody
 		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
@@ -1154,6 +1184,7 @@ public class GroomingController {
 			
 		}
 		
+		// 출석 저장
 		@RequestMapping("insertCheck.do")
 		@ResponseBody
 		public ModelAndView insertCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus)  {
@@ -1204,10 +1235,12 @@ public class GroomingController {
 			}
 			return mv;
 		}
-
+		
+		// 출석 가능한 날짜 확인
 		@RequestMapping("confirmCheck.do")
 		@ResponseBody
 		public String confirmCheck(String gCheckDate, String groomingNo) throws ParseException {
+
 			
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -1229,6 +1262,7 @@ public class GroomingController {
 			}
 		 
 		}
+		// 출석 수정
 		@RequestMapping("updateCheck.do")
 		@ResponseBody
 		public ModelAndView updateCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus) {
@@ -1282,7 +1316,7 @@ public class GroomingController {
 			
 		}
 		
-		
+		// 출석률 및 현황 리스트
 		@RequestMapping("checkLate.do")
 		@ResponseBody
 		public void checkLate(HttpServletResponse response, String memberNo, String groomingNo) throws JsonIOException, IOException {
@@ -1326,7 +1360,39 @@ public class GroomingController {
 				gson.toJson(g, response.getWriter());
 	}
   
+		
+		
+		@RequestMapping("checkPeople.do")
+		@ResponseBody
+		public void checkPeople(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
+
+			response.setContentType("application/json; charset=utf-8");
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(grooming, response.getWriter());
+
+		}	
+		
+		
+		
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
