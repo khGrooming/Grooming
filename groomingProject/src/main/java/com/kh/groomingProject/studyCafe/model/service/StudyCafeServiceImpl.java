@@ -32,15 +32,15 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<StudyCafe> selectCafeList() {
+	public ArrayList<CafeInfo> selectCafeList() {
 		
 		return studyCafeDao.selectCafeList();
 	}
 
 	@Override
-	public ArrayList<CafeInfo> selectCafeInfo(String cafeNo) {
+	public ArrayList<CafeInfo> selectCafeInfo(CafeInfo cafe) {
 		
-		return studyCafeDao.selectCafeInto(cafeNo);
+		return studyCafeDao.selectCafeInto(cafe);
 	}
 
 	@Override

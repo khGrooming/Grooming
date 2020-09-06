@@ -12,6 +12,7 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
 @Service
@@ -107,6 +108,24 @@ public class AdminServiceImpl implements AdminService {
 	public ArrayList<MemberManageView> selectDCount(ArrayList<MemberManageView> dMemberList) {
 
 		return adminDao.selectDCount(dMemberList);
+	}
+
+	@Override
+	public int cafeInfoChange(CafeInfo cafe) {
+		
+		return adminDao.cafeInfoChange(cafe);
+	}
+
+	@Override
+	public int insertCafeInfo(CafeInfo cafe) {
+
+		return adminDao.insertCafeInfo(cafe);
+	}
+
+	@Override
+	public int insertSanctions(String sanctions) {
+
+		return adminDao.insertSanctions(sanctions);
 	}
 
 	
