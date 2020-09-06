@@ -306,7 +306,7 @@ border-radius: 20px;
 					<div class="modal-header">
 	
 						<h4 class="modal-title" id="myModalLabel">신고하기</h4><br><br>
-						<p>어떤 문제가 있나요?</p>
+						
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">×</span>
@@ -315,16 +315,17 @@ border-radius: 20px;
 						<form id="reportForm" name="reportForm" action="memberReport.do" method="post">
 							<div class="modal-body">
 								<div style="margin-left: 2%;">
+								<p>어떤 문제가 있나요?</p>
 								<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
 								<input type="hidden" name="declarationCNo" value="1">
 								<input type="hidden" name="declarationNNo" value="${profileInfo.memberNo  }">
-								<textarea rows="3" cols="50" id="dContent" name="declarationContent" style="display: none;"></textarea>
 								<input type="radio" name="reRadio" class="reRadio" id="r1" value="r1"><label for="r1">괴롭힘 및 사이버 폭력</label><br>
 								<input type="radio" name="reRadio" class="reRadio" id="r2" value="r2"><label for="r2">개인정보 침해</label><br>
 								<input type="radio" name="reRadio" class="reRadio" id="r3" value="r3"><label for="r3">명의 도용</label><br>
 								<input type="radio" name="reRadio" class="reRadio" id="r4" value="r4"><label for="r4">폭력적 위헙</label><br>
 								<input type="radio" name="reRadio" class="reRadio" id="r5" value="r5"><label for="r5">스팸 및 사기</label><br>
 								<input type="radio" name="reRadio" class="reRadio" id="r6" value="r6"><label for="r6">기타</label><br>
+								<textarea rows="3" cols="50" id="dContent" name="declarationContent" style="display: none;"></textarea>
 								</div>
 								<script>
 									$(function(){
@@ -334,22 +335,22 @@ border-radius: 20px;
 											
 											switch (check) {
 											case "r1":
-												$("#dContent").val("괴롭힘 및 사이버 폭력");
+												$("#dContent").val("괴롭힘 및 사이버 폭력").css("display","none");												
 												break;
 											case "r2":
-												$("#dContent").val("개인정보 침해");
+												$("#dContent").val("개인정보 침해").css("display","none");		
 												break;
 											case "r3":
-												$("#dContent").val("명의 도용");
+												$("#dContent").val("명의 도용").css("display","none");		
 												break;
 											case "r4":
-												$("#dContent").val("폭력적 위헙");
+												$("#dContent").val("폭력적 위헙").css("display","none");		
 												break;
 											case "r5":
-												$("#dContent").val("스팸 및 사기");
+												$("#dContent").val("스팸 및 사기").css("display","none");		
 												break;
 											case "r6":
-												$("#dContent").css("display","block");
+												$("#dContent").val("").css("display","block");
 												break;
 											default:
 												break;
