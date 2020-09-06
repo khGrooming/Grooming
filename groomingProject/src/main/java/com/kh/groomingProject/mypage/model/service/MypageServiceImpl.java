@@ -202,5 +202,10 @@ public class MypageServiceImpl implements MypageService{
 		return mpDao.selectMemberReplyList(mNo, pi);
 	}
 
+	@Override
+	public String selectTempGroomingNo(String mNo) {
+		return mpDao.selectTempGroomingNo(mNo);
+	}
+
 
 }

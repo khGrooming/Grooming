@@ -323,6 +323,12 @@
 	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
 	</delete>
 	
+	<select id="selectTempGroomingNo" parameterType="string" resultType="string">
+		SELECT GROOMING_NO
+		FROM GROOMING G
+		WHERE G.MEMBER_NO=#{mNo}
+	</select>
+	
 	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
 		SELECT *
 		FROM GROOMING

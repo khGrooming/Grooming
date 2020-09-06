@@ -10,7 +10,7 @@
 </head>
 <style>
 #content {
-	width: 75%;
+	width: 1050px;
 	height: 1000px;
 	margin: 0 auto;
 }
@@ -155,6 +155,7 @@
 			</c:if>
 			<c:if test="${mentor eq 'N' }">
 			<div style="width: 100%; text-align: center; margin-top: 20%">
+				<img src='${contextPath }/resources/views/images/outmemtor.jpg' width="200px"><br><br>
 				<h3>멘토 신청에 탈락하셨습니다.</h3>
 				</div>
 			</c:if>

@@ -43,7 +43,10 @@ import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
+import com.kh.groomingProject.tag.model.service.TagService;
+import com.kh.groomingProject.tag.model.vo.Tag;
 
+import javafx.scene.control.Tab;
 import jdk.nashorn.api.scripting.JSObject;
 import net.sf.json.JSONObject;
 
@@ -59,7 +62,8 @@ public class MyPageController {
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	
+	@Autowired
+	private TagService tagService;
 
 	@RequestMapping("mypage-memberup.do")
 	public String myPageView(HttpServletRequest request) {
@@ -634,14 +638,30 @@ public class MyPageController {
 		return "mypage/mpgrooming";
 	}
 	
-	
+	//임시저장 페이지 이동 및 데이터 불러오기
 	@RequestMapping("ginsertTemp.do")
 	public String groomingInsertHistory(HttpSession session) {
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String TempGno = mpService.selectTempGroomingNo(mNo);
 		
 		Grooming groomingTemp = mpService.selectGroomingTemp(mNo);
-		session.setAttribute("tempList",groomingTemp);
-		System.out.println(groomingTemp);
+		String str = "";
+		
+		if(groomingTemp != null){
+			ArrayList<Tag> tlist = tagService.selectGtagList(TempGno);
+		
+			if(tlist != null) {
+				for (int i = 0; i < tlist.size(); i++) {
+					str += tlist.get(i).getTagName();
+					if ((i + 1) < tlist.size()) {
+						str += ',';
+					}
+				}
+			}
+		
+		}
+		session.setAttribute("grooming",groomingTemp);
+		session.setAttribute("tlist", str);
 		return "mypage/ginsertTemp";
 	}
 	
@@ -739,12 +759,13 @@ public class MyPageController {
 		double fh=0.8;
 		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimith,fh);
 		
-		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,pfMemberNo);
+		ArrayList<HomeGrooming> openGroomingList = mpService.selectopenGroomingList(pih,profileInfo.getMemberNo());
+		System.out.println("개설한 스터디 리스트"+openGroomingList);
 
 		
 		
 		mv.addObject("pih", pih);
-		mv.addObject("hpgList", hpgList);
+		mv.addObject("hpgList", openGroomingList);
 		mv.addObject("profileInfo", profileInfo);
 		mv.addObject("schoolList", schoolList);
 		mv.addObject("certificateList", certificateList);
@@ -810,5 +831,32 @@ public class MyPageController {
 		
 		return mv;
 	}
-	
+	@RequestMapping("test.do")
+	public String test(HttpServletRequest request) {
+		
+		
+		HttpSession session = request.getSession();
+		Member m = (Member)session.getAttribute("loginUser");
+		String mNo =m.getMemberNo();
+		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
+		int memberPoint = mpService.selectPoint(mNo);
+		System.out.println("memberPoint:"+memberPoint);
+		System.out.println("myPage.do"+profileInfo);
+		if(memberPoint==0) {
+			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
+			profileInfo.setNowPoint("0");
+		}else {
+			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
+			profileInfo.setNowPoint(memberPoint2);
+		}
+		
+		
+		specSelect(request, mNo);
+		mentorSelect(request, mNo);
+		
+		session.setAttribute("profileInfo",profileInfo);
+		
+		
+		return "mypage/test";
+	}
 }

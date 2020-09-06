@@ -31,11 +31,11 @@ margin-left: auto;
 #ta th{
 	text-align: center;
 }
-#ta tr td:nth-child(-n+2){
+#ta tr td{
 text-align: center;
 }
-#ta tr td:nth-child(n+2){
-text-align: center;
+#ta tr td:nth-child(3){
+text-align: left;
 }
 </style>
 </head>

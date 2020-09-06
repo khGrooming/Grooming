@@ -7,7 +7,6 @@
 <title>Grooming</title>
 </head>
 <body>
-
 	<jsp:forward page="home.do"/>
 	<h1>파이널 프로젝트 화이팅!</h1>
 </body>

@@ -174,4 +174,8 @@ public class MypageDao {
 		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyReplyList",mNo,rowBounds);
 	}
 
+	public String selectTempGroomingNo(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectTempGroomingNo",mNo);
+	}
+
 }
