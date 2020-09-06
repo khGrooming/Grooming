@@ -325,13 +325,13 @@ public class GroomingController {
 	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
-	public String groomingAccept(String applyNo, String groomingNo,String money) {
+	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType) {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
 		String memberNo = gService.findAppMemberNo(applyNo);
-		System.out.println("나 memberNo 야  :" + memberNo);
+	
 		
 		Map map = new HashMap();
 		map.put("memberNo", memberNo);
@@ -340,7 +340,7 @@ public class GroomingController {
 		int result2 = gService.addGroomingMember(map);
 	
 
-		int tmoney = Integer.parseInt(money);
+		int tmoney = Integer.parseInt(money)*(-1);
 
 
 
@@ -351,8 +351,22 @@ public class GroomingController {
 		System.out.println("나 map1 : " +map1);
 		
 		int result3 = gService.addPointMember(map1);
-
-		if (result > 0 && result1 > 0 && result2 > 0 && result3 > 0) {
+		
+		String mNo = gService.selectMemberNo(groomingNo);
+		
+		tmoney = tmoney * (-1);
+		Map map2 = new HashMap();
+		map2.put("memberNo", mNo);
+		map2.put("money", tmoney);
+		
+		int result4 = 0;
+		System.out.println("groomingType : " + groomingType);
+		System.out.println("tmoney :" + tmoney);
+		if(groomingType.equals("멘토")) {
+			 result4 = gService.addMentorPoint(map2);
+		}
+		System.out.println("result4 : " + result4);
+		if (result > 0 && result1 > 0 && result2 > 0 && result3 > 0 && result4 >= 0) {
 			return "success";
 		} else {
 			return "false";

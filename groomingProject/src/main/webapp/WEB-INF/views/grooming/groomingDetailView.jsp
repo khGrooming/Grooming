@@ -616,6 +616,7 @@ img {
 				var groomingP = "${grooming.groomingP}" ;
 				var currentP = "${grooming.currentP}";
 				var money = $("#hiddenmoney").val();
+				var groomingType = "${grooming.groomingType }";
 				$.ajax({
 					url:"checkPeople.do",
 					data:{groomingNo:groomingNo},
@@ -634,6 +635,7 @@ img {
 									if(data.length>0){
 										for(var i in data){
 											 allmoney += data[i].addPoint; 
+											 
 										}
 									}else{
 										event.stopImmediatePropagation();
@@ -641,13 +643,15 @@ img {
 										return false;
 									}
 									if(allmoney < money){
+										console.log(allmoney);
+										console.log(money);
 										event.stopImmediatePropagation();
 										alert("신청자의 포인트가 부족합니다.!");
 										return false;
 									}else{
 										$.ajax({
 											url:"gaccept.do",
-											data:{applyNo:applyNo,groomingNo:groomingNo,money:money},
+											data:{applyNo:applyNo,groomingNo:groomingNo,money:money,groomingType:groomingType},
 											success:function(data){
 												if(data=="success"){
 												getAppList();

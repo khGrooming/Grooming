@@ -860,7 +860,7 @@
  		INSERT INTO POINT VALUES(
  		'P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0)
  		,#{memberNo}
- 		, -#{money}
+ 		, #{money}
  		,0
  		,'예치금'
  		,SYSDATE)
@@ -875,6 +875,24 @@
  	
  	</select>
  	
+ 	<select id="selectMemberNo" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NO
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO=#{groomingNo}
+ 	</select>
+ 	
+ 	
+ 	<insert id="addMentorPoint" parameterType="map">
+ 		INSERT INTO POINT VALUES(
+ 		'P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0)
+ 		,#{memberNo}
+ 		, #{money}
+ 		,0
+ 		,'예치금'
+ 		,SYSDATE)
+ 	
+ 	
+ 	</insert>
  	
 </mapper>
 

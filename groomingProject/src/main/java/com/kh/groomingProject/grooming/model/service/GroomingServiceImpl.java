@@ -432,5 +432,17 @@ public class GroomingServiceImpl implements GroomingService{
 		// TODO Auto-generated method stub
 		return gDao.limitCheck(groomingNo);
 	}
+
+	@Override
+	public String selectMemberNo(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectMemberNo(groomingNo);
+	}
+
+	@Override
+	public int addMentorPoint(Map map2) {
+		// TODO Auto-generated method stub
+		return gDao.addMentorPoint(map2);
+	}
 	
 }

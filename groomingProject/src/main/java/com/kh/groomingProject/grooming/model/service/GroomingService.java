@@ -150,4 +150,8 @@ public interface GroomingService {
 	int addPointMember(Map map1);
 
 	Grooming limitCheck(String groomingNo);
+
+	String selectMemberNo(String groomingNo);
+
+	int addMentorPoint(Map map2);
 }

@@ -380,6 +380,16 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("groomingMapper.limitCheck",groomingNo);
 	}
+
+	public String selectMemberNo(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectMemberNo",groomingNo);
+	}
+
+	public int addMentorPoint(Map map2) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addMentorPoint",map2) ;
+	}
 	
 	
 }
