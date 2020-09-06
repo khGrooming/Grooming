@@ -8,7 +8,7 @@
 		<result property="tagCount" column="TAG_COUNT"/>
 		<result property="tagDate" column="TAG_DATE"/>
 	</resultMap>
-	
+
 	<update id="mergeTags" parameterType="string">
 		MERGE INTO TAG
 		USING DUAL
@@ -19,7 +19,7 @@
 		    INSERT (TAG_NO, TAG_NAME, TAG_COUNT, TAG_DATE) 
 		    VALUES ('TAG' || LPAD(SEQ_TAG_NO.NEXTVAL,5,0), #{tagTemp}, 1, SYSDATE)
 	</update>
-	
+
 	<select id="selectTag" parameterType="string" resultMap="tagResultSet">
  		SELECT TAG_NAME
         FROM TAG T
@@ -27,15 +27,14 @@
         JOIN GROOMING GR ON G.GROOMING_NO = GR.GROOMING_NO
         JOIN MEMBER M ON M.MEMBER_NO = GR.MEMBER_NO
         WHERE GR.GROOMING_NO= #{groomingNo}
- 	
  	</select>
- 	
+ 
  	<select id="selectGtagList" parameterType="string" resultMap="tagResultSet">
 	 	SELECT *
 		FROM TAG T
 		JOIN GTAG GT ON T.TAG_NO = GT.TAG_NO
 		JOIN GROOMING G ON G.GROOMING_NO = GT.GROOMING_NO
 		WHERE G.GROOMING_NO = #{groomingNo}
- 	
  	</select>
+ 
 </mapper>

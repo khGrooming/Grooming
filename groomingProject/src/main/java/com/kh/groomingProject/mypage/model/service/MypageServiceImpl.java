@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -149,6 +153,42 @@ public class MypageServiceImpl implements MypageService{
 	@Override
 	public ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo) {
 		return mpDao.selectMypageGhost(pih,mNo);
+	}
+
+	@Override
+	public ArrayList<MyPagePoint> selectPointList(String mNo) {
+		return mpDao.selectPointList(mNo);
+	}
+
+
+	@Override
+	public int insertPoint(MyPagePoint insertPoint) {
+		return mpDao.insertPoint(insertPoint);
+	}
+
+	@Override
+	public int insertMemberReport(MemberReport mr) {
+		return mpDao.insertMemberReport(mr);
+	}
+
+	@Override
+	public ArrayList<Board> selectMemberBoardList(String mNo, MyPagePageInfo pi) {
+		return mpDao.selectMemberBoardList(mNo,pi);
+	}
+
+	@Override
+	public int selectMyCommunityCount(String mNo) {
+		return mpDao.selectMyCommunityCount(mNo);
+	}
+
+	@Override
+	public int selectMyReplyCount(String mNo) {
+		return mpDao.selectMyReplyCount(mNo);
+	}
+
+	@Override
+	public ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi) {
+		return mpDao.selectMemberReplyList(mNo, pi);
 	}
 
 

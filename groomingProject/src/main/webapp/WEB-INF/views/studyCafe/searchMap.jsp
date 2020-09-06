@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f23df3d72e20cc3d63e0de5a303f1054"></script>
 	<script src="https://www.w3.org/TR/geolocation-API/"/></script>
 	<style>
-	section{margin-top:10%}
+	/* section{margin-top:10%} */
       
 	.sideMenu{height:300px;background-color:blue;border-radius:10%;}
 	.subMenu{height:100px;}

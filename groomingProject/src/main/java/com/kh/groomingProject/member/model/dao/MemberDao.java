@@ -1,8 +1,6 @@
 package com.kh.groomingProject.member.model.dao;
 
-
 import java.util.ArrayList;
-
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,8 +87,18 @@ public class MemberDao {
 	}
 
 	public Member selectGroupMemberNo(String gBoardNo) {
-		// TODO Auto-generated method stub
+
 		return sqlSessionTemplate.selectOne("memberMapper.selectGroupMemberNo",gBoardNo);
+	}
+
+	public Member findMember(Member m) {
+
+		return (Member)sqlSessionTemplate.selectOne("memberMapper.findMember",m);
+	}
+
+	public Member findEmail(Member m) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
 	}
 
 }

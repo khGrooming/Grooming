@@ -16,6 +16,8 @@
 		<!-- 홈 -->
 		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeBoard" alias="HomeBoard"/>
 		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeGrooming" alias="HomeGrooming"/>
+		<typeAlias type="com.kh.groomingProject.home.model.vo.HomeHelp" alias="HomeHelp"/>
+
 		<!-- 멤버 -->
 		<typeAlias type="com.kh.groomingProject.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
@@ -28,9 +30,12 @@
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageHeart" alias="MyPageHeart"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageApplicant" alias="MyPageApplicant"/>
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPageGrooming" alias="MyPageGrooming"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MyPagePoint" alias="MyPagePoint"/>
+		<typeAlias type="com.kh.groomingProject.mypage.model.vo.MemberReport" alias="MemberReport"/>
 
 		<!-- 커뮤니티 -->
 		<typeAlias type="com.kh.groomingProject.community.model.vo.Board" alias="Board"/>
+		<typeAlias type="com.kh.groomingProject.community.model.vo.Reply" alias="Reply"/>
 
 		<!-- 그루밍 -->	
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Grooming" alias="Grooming"/>
@@ -44,6 +49,8 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroupBoard" alias="GroupB"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GReply" alias="GReply"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GCheck" alias="GCheck"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingMain" alias="GroomingMain"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSearch" alias="GroomingSearch"/>
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
@@ -54,6 +61,9 @@
 
 		<!-- 관리자 -->
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MemberManageView" alias="MemberManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
 	</typeAliases>
 	
 	<mappers>
@@ -62,7 +72,6 @@
 		<mapper resource="/mappers/tag-mapper.xml"/>
 		<mapper resource="/mappers/point-mapper.xml"/>
 		<mapper resource="/mappers/declaration-mapper.xml"/>
-
 		<mapper resource="/mappers/message-mapper.xml"/>
 		
 		<!-- 홈 멥퍼 -->

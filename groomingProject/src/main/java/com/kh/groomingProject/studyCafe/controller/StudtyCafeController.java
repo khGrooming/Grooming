@@ -38,7 +38,7 @@ public class StudtyCafeController {
 	// 이름으로 검색 첫 화면 이동
 	@RequestMapping("searchName.do")
 	public ModelAndView searchName(ModelAndView mv) throws JsonIOException, IOException {
-		ArrayList<StudyCafe> cafeList = new ArrayList<>();
+		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
 		cafeList = studyCafeService.selectCafeList();
 		
@@ -66,7 +66,7 @@ public class StudtyCafeController {
 	// 지역으로 검색 화면으로 이동
 	@RequestMapping("searchLocal.do")
 	public ModelAndView searchLocal(ModelAndView mv) throws JsonIOException, IOException {
-		ArrayList<StudyCafe> cafeList = new ArrayList<>();
+		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
 		cafeList = studyCafeService.selectCafeList();
 		
@@ -91,7 +91,7 @@ public class StudtyCafeController {
 	
 	// 카페 디테일 페이지로 이동
 	@RequestMapping(value="cafeDetail.do")
-	public ModelAndView cafeDetail(ModelAndView mv, String cafeNo, String cReserNo) {
+	public ModelAndView cafeDetail(ModelAndView mv, CafeInfo cafeNo, String cReserNo) {
 		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
 		
 		mv.addObject("cReserNo", cReserNo);

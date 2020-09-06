@@ -2,12 +2,16 @@ package com.kh.groomingProject.mypage.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -64,6 +68,20 @@ public interface MypageService {
 	int selectGroomingHostCount(String mNo);
 
 	ArrayList<MyPageGrooming> selectMypageGhost(MyPagePageInfo pih, String mNo);
+
+	ArrayList<MyPagePoint> selectPointList(String mNo);
+
+	int insertPoint(MyPagePoint insertPoint);
+
+	int insertMemberReport(MemberReport mr);
+
+	ArrayList<Board> selectMemberBoardList(String mNo, MyPagePageInfo pi);
+
+	int selectMyCommunityCount(String mNo);
+
+	int selectMyReplyCount(String mNo);
+
+	ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi);
 
 
 }

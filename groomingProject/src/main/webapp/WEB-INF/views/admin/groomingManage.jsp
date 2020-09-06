@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,9 +21,9 @@
             .admin{height:80px;text-align:center;padding:30px;}
             .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
     
-            .dropDown{width:120px;height:40px;background:sandybrown;float:right;}
+            .dropDown{width:120px;height:35px;float:right;}
             #groomingName{width:250px;height:35px;float:right;}
-            #search{width:120px;height:40px;float:right;margin-right:10%;}
+            #search{width:120px;height:35px;float:right;margin-right:10%;}
 
             .groomingInfo{width:70%;border-collapse: collapse;margin-left:20%;}
             .groomingInfo th,td{height:50px;text-align:center;}
@@ -44,24 +45,43 @@
                 </div>
          </div>
             <h1 align="center">그루밍 관리</h1>
-            <button type="button" id="search">검색</button>
-            <input type="text" id="groomingName" name="groomingName">
-            <div class="dropDown">카테고리</div>
+            <form action="groomingManage.do">
+	            <button type="submit" id="search">검색</button>
+	            <input type="text" id="groomingName" name="groomingName">
+	            <select class="dropDown" name="category">
+	            	<option value="호스트">호스트</option>
+	            	<option value="멘토">멘토</option>
+	            </select>
+            </form>
             <br><br>
             <table class="groomingInfo" border="1">
                 <thead>
                     <tr>
-                        <th>스터디 이름</th>
+                        <th>그루밍 이름</th>
+                        <th>그루밍 소개</th>
                         <th>그룹 분류</th>
                         <th>그룹 인원</th>
-                        <th>마지막 활동일</th>
                         <th>활성/비활성</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="4">아직 그룹이 없습니다.</td>
-                        <td><button type="button">수정</button></td>
+                        <c:forEach var="glist" items="${glist}">
+                        	<tr>
+                        		<td>${glist.groomingTitle}</td>
+                        		<td style="width:400px;">${glist.groomingIntroduce}</td>
+                        		<td>${glist.groomingType}</td>
+                        		<td>${glist.groomingCurrentPeople} / ${glist.groomingParticipants}</td>
+                        		<c:if test="${glist.gCalendarStartDate lt glist.gBoardModifyDate}">
+                        			<td>${glist.gBoardModifyDate}</td>
+                        		</c:if>
+                        		<c:if test="${glist.gCalendarStartDate gt glist.gBoardModifyDate}">
+                        			<td>${glist.gCalendarStartDate}</td>
+                        		</c:if>
+		                        <td><button type="button">수정</button></td>
+                        	</tr>
+						                        	
+                        </c:forEach>
                     </tr>
                 </tbody>
             </table>

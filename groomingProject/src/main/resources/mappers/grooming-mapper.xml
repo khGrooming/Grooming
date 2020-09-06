@@ -109,24 +109,36 @@
 		<result property="gCheckDate" column="G_CHECK_DATE"/>
 		<result property="memberNickName" column="MEMBER_NICKNAME"/>
 	</resultMap>
-	
-	
- 	<select id="selectList" resultMap="groomingResultSet">
+
+ 	<resultMap type="groomingMain" id="groomingMainResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
+		<result property="groomingViewCount" column="GROOMING_COUNT"/>
+	</resultMap>
+
+<!--  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
  		WHERE GROOMING_STATUS ='Y'
  			OR GROOMING_STATUS = 'B'
  		ORDER BY GROOMING_CREATE_DATE DESC,GROOMING_STATUS DESC
  		
- 	</select>
+ 	</select> -->
  	
- 	<select id="selectMentorList" resultMap="groomingResultSet">
+<!--  	<select id="selectMentorList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING 
  		WHERE GROOMING_TYPE ='멘토'
  		ORDER BY GROOMING_NO DESC
  		
- 	</select>
+ 	</select> -->
  
  	<select id="gSearchTitle" parameterType="string" resultMap="groomingResultSet" >
  		SELECT *
@@ -175,13 +187,13 @@
 		
 	</select>
  
- 	<select id="selectMoneyList" resultMap="groomingResultSet">
+<!--  	<select id="selectMoneyList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING 
  		WHERE DEPOSIT_MONEY > 0
  		ORDER BY GROOMING_NO DESC
  	
- 	</select>
+ 	</select> -->
  
  
  	
@@ -672,7 +684,7 @@
 
  	</select>
  	
- 	<insert id="insertCheck" parameterType="GCheck" >
+	<insert id="insertCheck" parameterType="GCheck" >
 	 	INSERT INTO G_CHECK VALUES(
 	 			'GN' || LPAD(SEQ_G_CHECK_NO.NEXTVAL,5,0)
 	 			, #{groomingNo}
@@ -687,9 +699,105 @@
  		SELECT *
 		FROM G_CHECK
 		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
- 	
  	</select>
+ 							  
+	<select id="selectList" resultMap="groomingMainResultSet">
+		<![CDATA[
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		OR G.GROOMING_STATUS = 'B'
+		]]>
+	</select>
+	
+	<select id="selectMentorList" resultMap="groomingMainResultSet">
+		<![CDATA[
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
+		AND GROOMING_TYPE ='멘토'
+		]]>
+	</select>
  	
+ 	<select id="selectMoneyList" resultMap="groomingMainResultSet">
+		<![CDATA[
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
+		AND DEPOSIT_MONEY > 0
+		]]>
+	</select>
+ 	
+	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
+		    ON(G.MEMBER_NO = M.MEMBER_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
+		<choose>
+		    <when test="search == 'title'">
+				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="search == 'writer'">
+				AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <otherwise>
+				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
+		    </otherwise>
+		  </choose>
+	</select>
  	<update id="updateCheck" parameterType="GCheck">
  		UPDATE G_CHECK
 		SET G_CHECK = #{gCheckStatus}

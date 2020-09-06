@@ -12,6 +12,7 @@ public class CafeInfo implements Serializable {
 	private String cafeContent;
 	private String cafePhone;
 	private String cafeAddress;
+	private String cafeImg;
 	
 	private String cPriceNo;
 	private String cRoomName;
@@ -23,12 +24,13 @@ public class CafeInfo implements Serializable {
 	public CafeInfo() {
 	}
 	
-	public CafeInfo(String cafeNo, String cafeName, String cafeContent, String cafePhone, String cafeAddress) {
+	public CafeInfo(String cafeNo, String cafeName, String cafeContent, String cafePhone, String cafeAddress, String cafeImg) {
 		this.cafeNo = cafeNo;
 		this.cafeName = cafeName;
 		this.cafeContent = cafeContent;
 		this.cafePhone = cafePhone;
 		this.cafeAddress = cafeAddress;
+		this.cafeImg = cafeImg;
 	}
 	
 	public CafeInfo(String cPriceNo, String cRoomName, int cRoomAvailableTime, int cRoomTime, int cRoomPrice,
@@ -40,15 +42,16 @@ public class CafeInfo implements Serializable {
 		this.cRoomPrice = cRoomPrice;
 		this.cRoomHeadCount = cRoomHeadCount;
 	}
-	
+
 	public CafeInfo(String cafeNo, String cafeName, String cafeContent, String cafePhone, String cafeAddress,
-			String cPriceNo, String cRoomName, int cRoomAvailableTime, int cRoomTime, int cRoomPrice,
+			String cafeImg, String cPriceNo, String cRoomName, int cRoomAvailableTime, int cRoomTime, int cRoomPrice,
 			int cRoomHeadCount) {
 		this.cafeNo = cafeNo;
 		this.cafeName = cafeName;
 		this.cafeContent = cafeContent;
 		this.cafePhone = cafePhone;
 		this.cafeAddress = cafeAddress;
+		this.cafeImg = cafeImg;
 		this.cPriceNo = cPriceNo;
 		this.cRoomName = cRoomName;
 		this.cRoomAvailableTime = cRoomAvailableTime;
@@ -56,7 +59,7 @@ public class CafeInfo implements Serializable {
 		this.cRoomPrice = cRoomPrice;
 		this.cRoomHeadCount = cRoomHeadCount;
 	}
-	
+
 	public String getCafeNo() {
 		return cafeNo;
 	}
@@ -86,6 +89,12 @@ public class CafeInfo implements Serializable {
 	}
 	public void setCafeAddress(String cafeAddress) {
 		this.cafeAddress = cafeAddress;
+	}
+	public String getCafeImg() {
+		return cafeImg;
+	}
+	public void setCafeImg(String cafeImg) {
+		this.cafeImg = cafeImg;
 	}
 	public String getcPriceNo() {
 		return cPriceNo;
@@ -123,14 +132,16 @@ public class CafeInfo implements Serializable {
 	public void setcRoomHeadCount(int cRoomHeadCount) {
 		this.cRoomHeadCount = cRoomHeadCount;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "CafeInfo [cafeNo=" + cafeNo + ", cafeName=" + cafeName + ", cafeContent=" + cafeContent + ", cafePhone="
-				+ cafePhone + ", cafeAddress=" + cafeAddress + ", cPriceNo=" + cPriceNo + ", cRoomName=" + cRoomName
-				+ ", cRoomAvailableTime=" + cRoomAvailableTime + ", cRoomTime=" + cRoomTime + ", cRoomPrice="
-				+ cRoomPrice + ", cRoomHeadCount=" + cRoomHeadCount + "]";
+				+ cafePhone + ", cafeAddress=" + cafeAddress + ", cafeImg=" + cafeImg + ", cPriceNo=" + cPriceNo
+				+ ", cRoomName=" + cRoomName + ", cRoomAvailableTime=" + cRoomAvailableTime + ", cRoomTime=" + cRoomTime
+				+ ", cRoomPrice=" + cRoomPrice + ", cRoomHeadCount=" + cRoomHeadCount + "]";
 	}
+	
+	
 	
 
 }

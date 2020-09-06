@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
+import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.grooming.model.vo.GCheck;
 import com.kh.groomingProject.grooming.model.vo.GReply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -128,6 +129,8 @@ public interface GroomingService {
 	int insertCheck(GCheck g);
 
 	ArrayList<GCheck> confirmCheck(Map map);
+
+	ArrayList<Grooming> groomingSearch(GroomingSearch gs);
 
 	int updateCheck(GCheck g);
 

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +28,24 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
+
+import jdk.nashorn.api.scripting.JSObject;
+import net.sf.json.JSONObject;
+
 import static com.kh.groomingProject.mypage.controller.MyPagePagination.getPageInfo;
 
 
@@ -70,56 +79,6 @@ public class MyPageController {
 			profileInfo.setNowPoint(memberPoint2);
 		}
 		
-		
-//		int school=0;
-//		String[] schoolList = new String[3];
-//		String[] schoolconfirm = new String[3];
-//		int certificate=0;
-//		String[] certificateList = new String[3];
-//		String[] certificateconfirm = new String[3];
-//		int career=0;
-//		String[] careerList = new String[3];
-//		String[] careerconfirm = new String[3];
-//
-//		
-//		ArrayList<Spec> specList = mpService.selectSpecList(mNo);
-//
-//		
-//		for(Spec s : specList) {
-//			switch (s.getSpecCName()) {
-//			case "학교":
-//				schoolList[school]=s.getSpecName();
-//				schoolconfirm[school]=s.getSpecConfirm();
-//				
-//				school+=1;
-//				break;
-//			case "자격증":
-//				certificateList[certificate]=s.getSpecName();
-//				certificateconfirm[certificate]=s.getSpecConfirm();
-//				
-//				certificate+=1;
-//				break;
-//			case "경력":
-//				careerList[career]=s.getSpecName();
-//				careerconfirm[career]=s.getSpecConfirm();
-//				
-//				career+=1;
-//				break;
-//			default:
-//				break;
-//			}
-//		}
-//
-//		
-//		session.setAttribute("schoolList",schoolList);
-//		session.setAttribute("schoolconfirm",schoolconfirm);
-//		
-//		session.setAttribute("certificateList",certificateList);
-//		session.setAttribute("certificateconfirm",certificateconfirm);
-//		
-//		
-//		session.setAttribute("careerList",careerList);
-//		session.setAttribute("careerconfirm",careerconfirm);		
 		
 		specSelect(request, mNo);
 		mentorSelect(request, mNo);
@@ -160,6 +119,7 @@ public class MyPageController {
 				certificateList[certificate]=s.getSpecName();
 				certificateconfirm[certificate]=s.getSpecConfirm();
 				
+				System.out.println(s.getSpecName());
 				certificate+=1;
 				break;
 			case "경력":
@@ -201,12 +161,15 @@ public class MyPageController {
 	//==========================================================================
 	
 	@RequestMapping(value="upproimg.do", method=RequestMethod.POST)
-	public void updateProfileIMG(MultipartHttpServletRequest request, ProfileMember m,
+	public String updateProfileIMG(MultipartHttpServletRequest request, ProfileMember m,
 			HttpServletRequest request1,
 			HttpSession session,
-			HttpServletResponse response) throws IOException {
+			HttpServletResponse response){
 	
 		MultipartFile profileFile = request.getFile("profileFile");
+		if(profileFile.getOriginalFilename() == "") {
+			System.out.println("파일이 업습니다.");
+		}
 		System.out.println(profileFile.getOriginalFilename());
 		System.out.println(m.getMemberNo());
 		String folderName = "\\upprofileFiles";
@@ -216,25 +179,31 @@ public class MyPageController {
 		if(!(loginUser2.getMemberPhoto()).equals("MEMBER_SAMPLE_IMG.JPG")) {
 			System.out.println("파일 지우기"+loginUser2.getMemberPhoto());
 			deleteFile(loginUser2.getMemberPhoto(), request1,folderName);
+			
+			
 		}
+		if(profileFile.getOriginalFilename() == "") {
+			renameFileName="MEMBER_SAMPLE_IMG.JPG";
+		}else {
+			
 			renameFileName=saveFile(m.getMemberNo(),profileFile, request1,folderName);
-			m.setMemberPhoto(renameFileName);
+		}
+		m.setMemberPhoto(renameFileName);
+		
+		
 		
 		System.out.println(renameFileName);
-		
 		int result = mpService.updateProfileIMG(m);
 		
-		PrintWriter out = response.getWriter();
+		ProfileMember profileMember = mpService.testLoginUser2(m.getMemberNo());
+		String memberPoint2 = Integer.toString( mpService.selectPoint2(m.getMemberNo()));
+		profileMember.setNowPoint(memberPoint2);
+		session.setAttribute("profileInfo",profileMember);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		loginUser.setMemberPhoto(renameFileName);
+		session.setAttribute("loginUser",loginUser);
 		
-		if(result > 0) {
-			
-			
-			out.print(renameFileName);
-			out.flush();
-			out.close();
-		}else {
-			System.out.println("오륭다");
-		}
+		return "mypage/mypage-memberup";
 	}
 	
 	//==========================================================================
@@ -318,9 +287,9 @@ public class MyPageController {
 
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
-		
 		PrintWriter out = response.getWriter(); 
-		System.out.println(m.getMemberPwd());
+		System.out.println(inputPwd);
+		System.out.println(m);
 		if(bcryptPasswordEncoder.matches(inputPwd,m.getMemberPwd())) {
 			System.out.println("비번 확인 : 성공");
 			out.append("Y");
@@ -419,7 +388,6 @@ public class MyPageController {
 	public void mentorA(MultipartHttpServletRequest request, Spec s,
 			HttpServletRequest request1,
 			HttpServletResponse response) throws IOException {
-		System.out.println("Sdfasdf"+s);
 		String folderName = "//upSpecFiles";
 		
 		if(request1.getAttribute("mentorFome") == "Y") {
@@ -451,7 +419,8 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("mentor.do")
-	public String mentorPage() {
+	public String mentorPage(HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
 		return "mypage/mentor";
 	}
 	
@@ -673,6 +642,172 @@ public class MyPageController {
 		session.setAttribute("tempList",groomingTemp);
 		System.out.println(groomingTemp);
 		return "mypage/ginsertTemp";
+	}
+	
+	@RequestMapping("mypagePoint.do")
+	public ModelAndView myPagePoint(ModelAndView mv,HttpSession session) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		ArrayList<MyPagePoint> pList = mpService.selectPointList(mNo);
+		mv.addObject("pList",pList);
+		
+		mv.setViewName("mypage/mypagePoint");
+		System.out.println(pList);
+		
+		return mv;
+	}
+	
+	@RequestMapping("pointPay.do")
+	public void pointPay(String mNo, String money,HttpServletResponse response) throws IOException {
+		System.out.println("pointPay.do 클래스: "+mNo+","+money);
+		int intMoney = (Integer.valueOf(money))/10;
+		MyPagePoint insertPoint = new MyPagePoint(mNo, intMoney, "포인트 충전");
+		
+		int result= mpService.insertPoint(insertPoint);
+		
+		if(result > 0) {
+			Date time = new Date();
+			String format1 = (new SimpleDateFormat ("yyyy-MM-dd")).format(time);
+			System.out.println( insertPoint.getPointList());
+			JSONObject job = new JSONObject();
+			response.setContentType("application/json;charset=utf-8");
+			job.put("addPoint", insertPoint.getAddPoint());
+			job.put("pointList", insertPoint.getPointList());
+			job.put("pointDate", format1);
+			
+			PrintWriter out = response.getWriter();
+			out.print(job);
+			out.flush();
+			out.close();
+		}else {
+			throw new MypageException("포인트 충전 실패");
+		}
+	}
+	
+
+	@RequestMapping("profilePage.do")
+	public ModelAndView profilePage(ModelAndView mv,HttpSession session,String pfMemberNo ,@RequestParam(value="pageh",required=false) Integer pageh) {
+		ProfileMember profileInfo = mpService.testLoginUser2(pfMemberNo);
+		String mentor = mpService.mentorUserSelect(pfMemberNo);
+		 if(mentor==null) {
+			 mentor="F";
+		 }
+		 
+		 int school=0;
+		String[] schoolList = new String[3];
+		int certificate=0;
+		String[] certificateList = new String[3];
+		int career=0;
+		String[] careerList = new String[3];
+		
+		
+		ArrayList<Spec> specList = mpService.selectSpecList(pfMemberNo);
+		
+		for(Spec s : specList) {
+			switch (s.getSpecCName()) {
+			case "학교":				
+				if(s.getSpecConfirm().equals("Y")) {
+					schoolList[school]=s.getSpecName();
+					school+=1;
+				}
+				break;
+			case "자격증":
+				if(s.getSpecConfirm().equals("Y")) {
+				certificateList[certificate]=s.getSpecName();
+				certificate+=1;
+				}
+				
+				break;
+			case "경력":
+				if(s.getSpecConfirm().equals("Y")) {
+				careerList[career]=s.getSpecName();
+				career+=1;
+				}
+				
+				break;
+			default:
+				break;
+			}
+		}
+		
+		int HlistCount = mpService.selectGroomingHostCount(pfMemberNo);
+		int currentPageh=1;
+		if(pageh != null) {
+			currentPageh = pageh;
+		}
+		int GroomingLimith = 4;
+		double fh=0.8;
+		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimith,fh);
+		
+		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,pfMemberNo);
+
+		
+		
+		mv.addObject("pih", pih);
+		mv.addObject("hpgList", hpgList);
+		mv.addObject("profileInfo", profileInfo);
+		mv.addObject("schoolList", schoolList);
+		mv.addObject("certificateList", certificateList);
+		mv.addObject("careerList", careerList);
+		mv.addObject("mentor", mentor);
+		mv.setViewName("mypage/profilePage");
+		return mv;
+	}
+	@RequestMapping(value="memberReport.do",method=RequestMethod.POST)
+	public void memberReport(MemberReport mr,HttpServletResponse response) throws IOException {
+	
+		int result = mpService.insertMemberReport(mr);
+		PrintWriter out = response.getWriter();
+		if(result > 0) {
+			out.append("Y");
+			
+		}else {
+			System.out.println("에러처리");
+		}
+		out.flush();
+		out.close();
+				
+	}
+	
+	@RequestMapping("mypageCommunity.do")
+	public ModelAndView mypageCommunity(ModelAndView mv,HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int bCount = mpService.selectMyCommunityCount(mNo);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;	
+		}
+		int GroomingLimit= 10;
+		double f=0.9;
+		MyPagePageInfo pi = getPageInfo(currentPage, bCount, GroomingLimit,f);
+		ArrayList<Board> blist = mpService.selectMemberBoardList(mNo,pi);
+		System.out.println(blist);
+		
+		mv.addObject("blist",blist);
+		mv.addObject("pi",pi);
+		mv.setViewName("mypage/mypageCommunity");
+		return mv;
+	}
+	
+	@RequestMapping("mypageReply.do")
+	public ModelAndView mypageReply(ModelAndView mv,HttpSession session,@RequestParam(value="page",required=false) Integer page) {
+		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int rCount = mpService.selectMyReplyCount(mNo);
+		System.out.println(rCount);
+		int currentPage=1;
+		if(page != null) {
+			currentPage = page;	
+		}
+		int GroomingLimit= 10;
+		double f=0.9;
+		MyPagePageInfo pi = getPageInfo(currentPage, rCount, GroomingLimit,f);
+		
+		ArrayList<Reply> rlist = mpService.selectMemberReplyList(mNo,pi);
+		System.out.println(rlist);
+		mv.addObject("pi", pi);
+		mv.addObject("rlist", rlist);
+		mv.setViewName("mypage/mypageReply");
+		
+		return mv;
 	}
 	
 }

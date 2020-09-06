@@ -29,14 +29,14 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
 	}
 
-	public ArrayList<StudyCafe> selectCafeList() {
+	public ArrayList<CafeInfo> selectCafeList() {
 
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList");
 	}
 
-	public ArrayList<CafeInfo> selectCafeInto(String cafeNo) {
+	public ArrayList<CafeInfo> selectCafeInto(CafeInfo cafe) {
 		
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeInfo", cafeNo);
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeInfo", cafe);
 	}
 
 	public ArrayList<Reservation> selectCheckRoom(Map str) {

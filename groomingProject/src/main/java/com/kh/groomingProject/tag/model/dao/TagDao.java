@@ -19,7 +19,9 @@ public class TagDao {
 		return sqlSessionTemplate.update("tagMapper.mergeTags", tagTemp);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ArrayList<Tag> selectGtagList(String groomingNo) {
+
 		return (ArrayList)sqlSessionTemplate.selectList("tagMapper.selectGtagList",groomingNo);
 	}
 

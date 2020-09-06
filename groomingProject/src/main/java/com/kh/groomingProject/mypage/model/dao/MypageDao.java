@@ -7,12 +7,16 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
 
@@ -135,6 +139,38 @@ public class MypageDao {
 		int offset=(pih.getCurrentPage()-1)*pih.getGroomingLimit();
 		RowBounds rowBounds=new RowBounds(offset, pih.getGroomingLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMypageGhost",mNo,rowBounds);
+	}
+
+	public ArrayList<MyPagePoint> selectPointList(String mNo) {
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectPointList",mNo);
+	}
+
+	public int insertPoint(MyPagePoint insertPoint) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertPoint",insertPoint);
+	}
+
+	public int insertMemberReport(MemberReport mr) {
+		return sqlSessionTemplate.insert("MyPageMapper.insertMemberReport",mr);
+	}
+
+	public ArrayList<Board> selectMemberBoardList(String mNo, MyPagePageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMemberBoardList",mNo,rowBounds);
+	}
+
+	public int selectMyCommunityCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectMyCommunityCount", mNo);
+	}
+
+	public int selectMyReplyCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectMyReplyCount", mNo);
+	}
+
+	public ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyReplyList",mNo,rowBounds);
 	}
 
 }

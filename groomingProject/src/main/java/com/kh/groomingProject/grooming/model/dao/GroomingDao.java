@@ -16,6 +16,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
+import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -328,6 +329,11 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.confirmCheck",map);
 	}
 
+	public ArrayList<Grooming> groomingSearch(GroomingSearch gs) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.groomingSearch", gs);
+	}
+	
 	public int updateCheck(GCheck g) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.update("groomingMapper.updateCheck",g);

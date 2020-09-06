@@ -12,21 +12,27 @@ public class MemberManageView implements Serializable {
 	private String memberNickname;
 	private String memberName;
 	private String memberPhone;
+	private String sanctions;
 	private int point;
+	private int dCount;
+	private int totalCount;
 	
 	public MemberManageView() {
 	}
-
+	
 	public MemberManageView(String memberNo, String memberEmail, String memberNickname, String memberName,
-			String memberPhone, int point) {
+			String memberPhone, String sanctions, int point, int dCount, int totalCount) {
 		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
 		this.memberNickname = memberNickname;
 		this.memberName = memberName;
 		this.memberPhone = memberPhone;
+		this.sanctions = sanctions;
 		this.point = point;
+		this.dCount = dCount;
+		this.totalCount = totalCount;
 	}
-
+	
 	public String getMemberNo() {
 		return memberNo;
 	}
@@ -57,18 +63,37 @@ public class MemberManageView implements Serializable {
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
+	public String getSanctions() {
+		return sanctions;
+	}
+	public void setSanctions(String sanctions) {
+		this.sanctions = sanctions;
+	}
 	public int getPoint() {
 		return point;
 	}
 	public void setPoint(int point) {
 		this.point = point;
 	}
-
+	public int getdCount() {
+		return dCount;
+	}
+	public void setdCount(int dCount) {
+		this.dCount = dCount;
+	}
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	
 	@Override
 	public String toString() {
 		return "MemberManageView [memberNo=" + memberNo + ", memberEmail=" + memberEmail + ", memberNickname="
-				+ memberNickname + ", memberName=" + memberName + ", memberPhone=" + memberPhone + ", point=" + point
-				+ "]";
+				+ memberNickname + ", memberName=" + memberName + ", memberPhone=" + memberPhone + ", sanctions="
+				+ sanctions + ", point=" + point + ", dCount=" + dCount + ", totalCount=" + totalCount + "]";
 	}
+	
 	
 }

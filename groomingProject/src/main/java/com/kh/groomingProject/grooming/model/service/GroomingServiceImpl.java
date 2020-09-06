@@ -15,6 +15,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
 import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
 import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
+import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
 import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
@@ -369,6 +370,11 @@ public class GroomingServiceImpl implements GroomingService{
 		return gDao.confirmCheck(map);
 	}
 
+	@Override
+	public ArrayList<Grooming> groomingSearch(GroomingSearch gs) {
+
+		return gDao.groomingSearch(gs);
+	}
 	@Override
 	public int updateCheck(GCheck g) {
 		// TODO Auto-generated method stub

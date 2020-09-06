@@ -11,7 +11,7 @@
 #content {
 	width: 70%;
 	height: 1000px;
-	margin: 5% auto;
+	margin: 0 auto;
 }
 
 #dday_div {
@@ -180,7 +180,9 @@
 	</div>	
 </c:if>
 <c:if test="${empty appList }">
-신청내역이 없습니다.
+
+<p style="cursor: pointer; font-size:25px; margin-top:120px; text-align: center;">신청내역이 없습니다.</p>
+<p onclick="location.href='groomingMain.do'" style="cursor: pointer; text-align: center;">스터디 가입하러 가기</p>
 </c:if>
 	
 </div>
