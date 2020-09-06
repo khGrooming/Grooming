@@ -426,5 +426,11 @@ public class GroomingServiceImpl implements GroomingService{
 		System.out.println("나 service map1 :" + map1);
 		return gDao.addPointMember(map1);
 	}
+
+	@Override
+	public Grooming limitCheck(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.limitCheck(groomingNo);
+	}
 	
 }

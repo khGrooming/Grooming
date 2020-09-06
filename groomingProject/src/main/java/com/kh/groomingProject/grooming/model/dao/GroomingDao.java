@@ -375,6 +375,11 @@ public class GroomingDao {
 		System.out.println("나 gDao map1 : " +map1);
 		return sqlSessionTemplate.insert("groomingMapper.addPointMember",map1);
 	}
+
+	public Grooming limitCheck(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.limitCheck",groomingNo);
+	}
 	
 	
 }

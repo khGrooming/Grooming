@@ -868,6 +868,14 @@
  	
  	</insert>
  	
+ 	<select id="limitCheck" parameterType="string" resultMap="groomingResultSet">
+ 		SELECT *
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo} AND GROOMING_STATUS = 'B'
+ 	
+ 	</select>
+ 	
+ 	
 </mapper>
 
 

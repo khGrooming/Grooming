@@ -441,7 +441,31 @@ img {
 	<script>
 		$(function(){
 			$("#applicantList").on("click",function(){
-				$("#applicant").modal("show");
+				var groomingNo = "${grooming.groomingNo}";
+				$.ajax({
+					url:"LimitCheck.do",
+					data:{groomingNo:groomingNo},
+					success:function(data){
+						if(data=="success"){
+							alert("이미 마감된 게시글입니다.");
+							event.stopImmediatePropagation();
+						}else{
+							
+							$("#applicant").modal("show");
+						}
+					
+						
+					},error:function(request, status, errorData){
+						alert("error code: " + request.status + "\n"
+								+"message: " + request.responseText
+								+"error: " + errorData);
+					}
+					})
+				
+				
+				
+				
+			
 			})
 			
 			$("#close").on("click",function(){

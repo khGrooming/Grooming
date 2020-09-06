@@ -1421,5 +1421,17 @@ public class GroomingController {
 			
 		}	
 		
+		@RequestMapping("LimitCheck.do")
+		@ResponseBody
+		public String LimitCheck(String groomingNo) {
+			Grooming g = gService.limitCheck(groomingNo);
+			
+			if(g != null) {
+				return "success";
+			}else {
+				return "false";
+			}
+			
+		}	
 		
 }

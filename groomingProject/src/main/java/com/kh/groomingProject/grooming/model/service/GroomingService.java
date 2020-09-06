@@ -148,4 +148,6 @@ public interface GroomingService {
 	ArrayList<MyPagePoint> selectGpointList(String applyNo);
 
 	int addPointMember(Map map1);
+
+	Grooming limitCheck(String groomingNo);
 }
