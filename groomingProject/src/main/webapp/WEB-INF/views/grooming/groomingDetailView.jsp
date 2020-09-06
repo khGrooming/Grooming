@@ -436,7 +436,7 @@ img {
 			</div>
 		</div>
 	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
-
+	<input type="hidden" value="${grooming.money }" id ="hiddenmoney">
 	</section>
 	<script>
 		$(function(){
@@ -591,6 +591,7 @@ img {
 				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
 				var groomingP = "${grooming.groomingP}" ;
 				var currentP = "${grooming.currentP}";
+				var money = $("#hiddenmoney").val();
 				
 				$.ajax({
 					url:"checkPeople.do",
@@ -599,15 +600,41 @@ img {
 						if(data.groomingP == data.currentP){
 							event.stopImmediatePropagation();
 							alert("참여인원이 꽉 찼습니다.!");
-						}	else{
+						}else{
 							
 							$.ajax({
-								url:"gaccept.do",
-								data:{applyNo:applyNo,groomingNo:groomingNo},
+								url:"checkPoint.do",
+								data:{applyNo:applyNo},
+								dataType:"json",
 								success:function(data){
-									if(data=="success"){
-									getAppList();
-								}
+									var allmoney = 0;
+									for(var i in data){
+										/* allmoney += data[i]. */
+									}
+									if(data.money < money){
+										event.stopImmediatePropagation();
+										alert("신청자의 포인트가 부족합니다.!");
+									}else{
+										$.ajax({
+											url:"gaccept.do",
+											data:{applyNo:applyNo,groomingNo:groomingNo},
+											success:function(data){
+												if(data=="success"){
+												getAppList();
+											}
+												
+											},error:function(request, status, errorData){
+												alert("error code: " + request.status + "\n"
+														+"message: " + request.responseText
+														+"error: " + errorData);
+											}
+											})
+									}
+									
+									
+									
+									
+								
 									
 								},error:function(request, status, errorData){
 									alert("error code: " + request.status + "\n"
@@ -615,7 +642,11 @@ img {
 											+"error: " + errorData);
 								}
 								})
-						}
+								
+								
+								
+								
+						}	// else 끝 
 						
 					}
 						
