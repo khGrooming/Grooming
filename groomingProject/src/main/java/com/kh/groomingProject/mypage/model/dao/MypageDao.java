@@ -173,4 +173,6 @@ public class MypageDao {
 		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyReplyList",mNo,rowBounds);
 	}
 
+	
+
 }

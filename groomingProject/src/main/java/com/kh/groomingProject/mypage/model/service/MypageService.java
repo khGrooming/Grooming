@@ -83,5 +83,7 @@ public interface MypageService {
 
 	ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi);
 
+	
+
 
 }

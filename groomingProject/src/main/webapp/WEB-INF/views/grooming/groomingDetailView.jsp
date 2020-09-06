@@ -124,7 +124,7 @@ img {
 									<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
 										<c:out value="<h4>모집중</h4>" escapeXml="false" />
 									</c:if>
-									<c:if test="${(grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+									<c:if test="${(grooming.groomingEd lt grooming.groomingNd) ||(grooming.groomingEd eq grooming.groomingNd) || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
 										<c:out value="<h4>마감</h4>" escapeXml="false" />
 									</c:if>
 								</div>
@@ -592,7 +592,6 @@ img {
 				var groomingP = "${grooming.groomingP}" ;
 				var currentP = "${grooming.currentP}";
 				var money = $("#hiddenmoney").val();
-				
 				$.ajax({
 					url:"checkPeople.do",
 					data:{groomingNo:groomingNo},
@@ -603,21 +602,28 @@ img {
 						}else{
 							
 							$.ajax({
-								url:"checkPoint.do",
+								url:"checkGPoint.do",
 								data:{applyNo:applyNo},
 								dataType:"json",
 								success:function(data){
 									var allmoney = 0;
-									for(var i in data){
-										/* allmoney += data[i]. */
-									}
-									if(data.money < money){
+									if(data.length>0){
+										for(var i in data){
+											 allmoney += data[i].addPoint; 
+										}
+									}else{
 										event.stopImmediatePropagation();
 										alert("신청자의 포인트가 부족합니다.!");
+										return false;
+									}
+									if(allmoney < money){
+										event.stopImmediatePropagation();
+										alert("신청자의 포인트가 부족합니다.!");
+										return false;
 									}else{
 										$.ajax({
 											url:"gaccept.do",
-											data:{applyNo:applyNo,groomingNo:groomingNo},
+											data:{applyNo:applyNo,groomingNo:groomingNo,money:money},
 											success:function(data){
 												if(data=="success"){
 												getAppList();

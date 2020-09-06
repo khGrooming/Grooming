@@ -17,6 +17,7 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
 public interface GroomingService {
 
@@ -144,4 +145,7 @@ public interface GroomingService {
 
 	int getCheckN(Map hashmap);
 
+	ArrayList<MyPagePoint> selectGpointList(String applyNo);
+
+	int addPointMember(Map map1);
 }

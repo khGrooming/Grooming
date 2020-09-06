@@ -1,14 +1,14 @@
 package com.kh.groomingProject.grooming.controller;
 
-import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
+import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +45,8 @@ import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.service.MypageService;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.tag.model.service.TagService;
 import com.kh.groomingProject.tag.model.vo.Tag;
 
@@ -63,6 +65,10 @@ public class GroomingController {
 	@Autowired
 	private MemberService mService;
 
+	@Autowired
+	private MypageService mpService;
+	
+	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv, String memberNo,@RequestParam(value="page", required=false) Integer page) {
@@ -319,19 +325,34 @@ public class GroomingController {
 	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
-	public String groomingAccept(String applyNo, String groomingNo) {
+	public String groomingAccept(String applyNo, String groomingNo,String money) {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
 		String memberNo = gService.findAppMemberNo(applyNo);
+		System.out.println("나 memberNo 야  :" + memberNo);
+		
 		Map map = new HashMap();
 		map.put("memberNo", memberNo);
 		map.put("groomingNo", groomingNo);
 
 		int result2 = gService.addGroomingMember(map);
+	
 
-		if (result > 0 && result1 > 0 && result2 > 0) {
+		int tmoney = Integer.parseInt(money);
+
+
+
+		Map map1 = new HashMap();
+		map1.put("memberNo", memberNo);
+		map1.put("money", tmoney);
+
+		System.out.println("나 map1 : " +map1);
+		
+		int result3 = gService.addPointMember(map1);
+
+		if (result > 0 && result1 > 0 && result2 > 0 && result3 > 0) {
 			return "success";
 		} else {
 			return "false";
@@ -1388,6 +1409,17 @@ public class GroomingController {
 
 		}	
 		
+		@RequestMapping("checkGPoint.do")
+		@ResponseBody
+		public void checkGPoint(HttpServletResponse response, String applyNo) throws JsonIOException, IOException {
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			ArrayList<MyPagePoint> mp = gService.selectGpointList(applyNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(mp, response.getWriter());
+			
+		}	
 		
 		
 }
