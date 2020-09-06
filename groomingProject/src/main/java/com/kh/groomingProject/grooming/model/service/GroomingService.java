@@ -125,7 +125,7 @@ public interface GroomingService {
 	String getGMemberNo(Map map);
 
 	ArrayList<GCheck> checkList(Map hashmap);
-
+	
 	int insertCheck(GCheck g);
 
 	ArrayList<GCheck> confirmCheck(Map map);
