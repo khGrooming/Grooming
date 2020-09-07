@@ -32,9 +32,9 @@
 
 <title>Hello, world!</title>
 <style>
-body {
+/* body {
 	height: 1200px;
-}
+} */
 /* div의 크기에 맞춤 */
 img {
 	max-width: 100%;
@@ -78,9 +78,7 @@ h1{
 
 <body>
 	<!-- 헤더시작 -->
-	<header>
-		<jsp:include page="../common/mainNavigationBar.jsp" />
-	</header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
 	<!-- 섹션 시작 -->
 	<section>
@@ -92,7 +90,7 @@ h1{
 
 
 		<!-- 컨테이너로 양옆에 공백 생성 -->
-		<div class=container style="margin-top: 100px;">
+		<div class=container>
 			<c:url var="calendar" value="calendar.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}" />
 				<c:param name="memberNo" value="${loginUser.memberNo}" />
@@ -426,10 +424,7 @@ h1{
 	})
 	})
 </script>
-	<footer>
-
-		<jsp:include page="../common/footer.jsp" />
-	</footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
 	<!-- Optional JavaScript -->

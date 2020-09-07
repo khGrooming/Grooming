@@ -89,9 +89,7 @@ img {
 
 <body>
 
-	<header>
-		<jsp:include page="../common/mainNavigationBar.jsp" />
-	</header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
 
 	<section>
@@ -933,9 +931,7 @@ img {
 	</script>
 	
 
-	<footer style="margin-top:100px;">
 	<jsp:include page="../common/footer.jsp" />
-	</footer>
 
 
 	<!-- Optional JavaScript -->

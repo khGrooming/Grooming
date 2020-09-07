@@ -132,9 +132,7 @@
 
 <body>
     <!-- 헤더시작 -->
-    <header>
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
-    </header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
 	
@@ -321,9 +319,7 @@
     </div>
 
 
-    <footer>
-		<jsp:include page="../common/footer.jsp" />
-    </footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
     <!-- Optional JavaScript -->

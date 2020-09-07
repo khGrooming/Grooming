@@ -233,9 +233,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
-	<header>
-		<jsp:include page="../common/mainNavigationBar.jsp" />
-	</header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
 
 	<section>
@@ -718,8 +716,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	</section>
 
 
-	<footer><jsp:include page="../common/footer.jsp" />
-	</footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
 	<!-- Optional JavaScript -->
