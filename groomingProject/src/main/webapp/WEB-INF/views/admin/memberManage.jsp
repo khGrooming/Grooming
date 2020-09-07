@@ -54,7 +54,7 @@
     </style>
 </head>
 <body>
-    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+   <jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <div class="container-fluid">
 	        <div class="row">
@@ -179,7 +179,7 @@
 	         </div>
          </div>
     </section>
-    <footer><jsp:include page="../common/footer.jsp"/></footer>
+	<jsp:include page="../common/footer.jsp"/>
     <script>
     $(document).on("mouseenter",".point", function(){
 		$(".point").css("cursor","pointer");

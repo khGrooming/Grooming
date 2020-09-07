@@ -1,6 +1,7 @@
 package com.kh.groomingProject.admin.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
@@ -8,8 +9,12 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
+
+import oracle.sql.DATE;
 
 public interface AdminService {
 
@@ -48,6 +53,11 @@ public interface AdminService {
 	int insertCafeInfo(CafeInfo cafe);
 
 	int insertSanctions(String sanctions);
+
+	ArrayList<Board> adminBoardList();
+
+	ArrayList<Grooming> adminGroomingList();
+
 
 	
 

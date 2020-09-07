@@ -4,6 +4,8 @@ import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,10 +32,14 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
-import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
+
+import oracle.sql.DATE;
+
 
 @Controller
 public class AdminController {
@@ -46,8 +52,11 @@ public class AdminController {
 	@RequestMapping("adminMain.do")
 	public ModelAndView goMain(ModelAndView mv) {
 		
+		ArrayList<Board> blist = adminService.adminBoardList();
+		ArrayList<Grooming> glist = adminService.adminGroomingList();
 		
-		
+		mv.addObject("blist", blist);
+		mv.addObject("glist", glist);
 		mv.setViewName("admin/adminMain");
 		
 		return mv;
@@ -289,8 +298,11 @@ public class AdminController {
 		return renameFileName;
 	}
 	
+	// 제재 관련 메소드
 	@RequestMapping
 	public String insertSanctions(String sanctions) {
+		
+		System.out.println();
 		
 		int result = adminService.insertSanctions(sanctions);
 		
