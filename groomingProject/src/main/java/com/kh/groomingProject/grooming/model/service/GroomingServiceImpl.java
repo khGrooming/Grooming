@@ -21,6 +21,7 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
 @Service("gService")
 public class GroomingServiceImpl implements GroomingService{
@@ -374,7 +375,73 @@ public class GroomingServiceImpl implements GroomingService{
 
 		return gDao.groomingSearch(gs);
 	}
+	@Override
+	public int updateCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return gDao.updateCheck(g);
+	}
+
+	@Override
+	public int getCheckY(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckY(hashmap);
+	}
+
+	@Override
+	public int getCheckL(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckL(hashmap);
+	}
+
+	@Override
+	public int getDifDate(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.getDifDate(groomingNo);
+	}
+
+	@Override
+	public String getMemberNickName(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.getMemberNickName(memberNo);
+	}
 
 
+
+	@Override
+	public int getCheckN(Map hashmap) {
+		// TODO Auto-generated method stub
+		return gDao.getCheckN(hashmap);
+	}
+
+	@Override
+	public ArrayList<MyPagePoint> selectGpointList(String applyNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectGpointList(applyNo);
+	}
+
+	@Override
+	public int addPointMember(Map map1) {
+		// TODO Auto-generated method stub
+		System.out.println("나 service map1 :" + map1);
+		return gDao.addPointMember(map1);
+	}
+
+	@Override
+	public Grooming limitCheck(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.limitCheck(groomingNo);
+	}
+
+	@Override
+	public String selectMemberNo(String groomingNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectMemberNo(groomingNo);
+	}
+
+	@Override
+	public int addMentorPoint(Map map2) {
+		// TODO Auto-generated method stub
+		return gDao.addMentorPoint(map2);
+	}
 	
 }

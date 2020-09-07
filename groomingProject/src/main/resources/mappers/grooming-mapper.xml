@@ -123,6 +123,14 @@
 		<result property="groomingViewCount" column="GROOMING_COUNT"/>
 	</resultMap>
 
+	<resultMap type="MyPagePoint" id="MyPagePointSet">
+			<id property="pointNo" column="POINT_NO"/>
+			<result property="memberNo" column="MEMBER_NO" />	
+			<result property="addPoint" column="ADD_POINT" />	
+			<result property="sunPoint" column="SUB_POINT" />	
+			<result property="pointList" column="POINT_LIST" />	
+			<result property="pointDate" column="POINT_DATE" />	
+	</resultMap>
 <!--  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
@@ -701,6 +709,54 @@
 		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
  	</select>
  							  
+
+	
+ 	
+	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
+		SELECT 
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
+		    ON(G.MEMBER_NO = M.MEMBER_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
+		<choose>
+		    <when test="search == 'title'">
+				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="search == 'writer'">
+				AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <otherwise>
+				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
+		    </otherwise>
+		  </choose>
+	</select>
+ 	<update id="updateCheck" parameterType="GCheck">
+ 		UPDATE G_CHECK
+		SET G_CHECK = #{gCheckStatus}
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo} AND G_CHECK_DATE=#{gCheckDate}
+ 	</update>
+ 	
+ 	<select id="getCheckY" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND G_CHECK ='Y'
+
+ 	</select>
+ 							  
 	<select id="selectList" resultMap="groomingMainResultSet">
 		<![CDATA[
 		SELECT 
@@ -745,6 +801,13 @@
 		]]>
 	</select>
  	
+ 	<select id="getCheckL" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND  G_CHECK='L'
+ 	</select>
+ 	
 	<select id="selectMoneyList" resultMap="groomingMainResultSet">
 		<![CDATA[
 		SELECT 
@@ -767,36 +830,79 @@
 		]]>
 	</select>
  	
-	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
-		SELECT 
-		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
-		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
-		FROM GROOMING G
-		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
-		        FROM GROOMING) GD 
-		    ON(G.GROOMING_NO = GD.GROOMING_NO)
-        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
-		    ON(G.MEMBER_NO = M.MEMBER_NO)
-		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
-		        FROM GTAG GT
-		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
-		        GROUP BY GROOMING_NO) GT
-		    ON(G.GROOMING_NO = GT.GROOMING_NO)
-		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
-		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
-		    ON(G.GROOMING_NO = GC.GROOMING_NO)
-		WHERE (G.GROOMING_STATUS = 'Y' OR G.GROOMING_STATUS = 'B')
-		<choose>
-		    <when test="search == 'title'">
-				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
-		    </when>
-		    <when test="search == 'writer'">
-				AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
-		    </when>
-		    <otherwise>
-				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
-		    </otherwise>
-		  </choose>
-	</select>
+ 	<select id="getDifDate" parameterType="map" resultType="_int">
+	 	SELECT TO_DATE(STUDY_END_DATE,'YYYY-MM-DD')-TO_DATE(STUDY_START_DATE,'YYYY-MM-DD')
+		FROM GROOMING
+		WHERE GROOMING_NO=#{groomingNo}
+ 	</select>
+ 	
+ 	<select id="getMemberNickName" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NICKNAME
+ 		FROM MEMBER
+ 		WHERE MEMBER_NO = #{memberNo}
+ 	</select>
+ 	
+ 	<select id="getCheckN" parameterType="map" resultType="_int">
+	 	SELECT COUNT(*)
+		FROM G_CHECK
+		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
+		AND  G_CHECK='N'
+ 	</select>
 
+	<select id="selectGpointList" parameterType="string" resultMap="MyPagePointSet">
+		SELECT *
+		FROM POINT P
+		JOIN GROOMING_APPLICANT G ON G.MEMBER_NO = P.MEMBER_NO
+		WHERE GROOMING_APPLY_NO = #{applyNo}
+	</select>
+ 	
+ 	<insert id="addPointMember" parameterType="map">
+ 		INSERT INTO POINT VALUES(
+ 		'P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0)
+ 		,#{memberNo}
+ 		, #{money}
+ 		,0
+ 		,'예치금'
+ 		,SYSDATE)
+ 	
+ 	
+ 	</insert>
+ 	
+ 	<select id="limitCheck" parameterType="string" resultMap="groomingResultSet">
+ 		SELECT *
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO = #{groomingNo} AND GROOMING_STATUS = 'B'
+ 	
+ 	</select>
+ 	
+ 	<select id="selectMemberNo" parameterType="string" resultType="string">
+ 		SELECT MEMBER_NO
+ 		FROM GROOMING
+ 		WHERE GROOMING_NO=#{groomingNo}
+ 	</select>
+ 	
+ 	
+ 	<insert id="addMentorPoint" parameterType="map">
+ 		INSERT INTO POINT VALUES(
+ 		'P' || LPAD(SEQ_POINT_NO.NEXTVAL,5,0)
+ 		,#{memberNo}
+ 		, #{money}
+ 		,0
+ 		,'예치금'
+ 		,SYSDATE)
+ 	
+ 	
+ 	</insert>
+ 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+

@@ -65,6 +65,7 @@
     <div class=container style="margin-top:150px ; ">
 	    <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
 	  	</c:url>
 		<c:url var="gBlist" value="gBlist.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
@@ -217,4 +218,5 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
+
 </html>

@@ -4,11 +4,6 @@ import java.io.Serializable;
 
 public class GroomingAppList implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 547728354659229361L;
-	
 	private String memberNickName;
 	private String memberPhoto;
 	private String groomingAC;
@@ -18,6 +13,7 @@ public class GroomingAppList implements Serializable{
 		super();
 	}
 	
+	
 	public GroomingAppList(String memberNickName, String memberPhoto, String groomingAC, String groomingAN) {
 		super();
 		this.memberNickName = memberNickName;
@@ -25,38 +21,47 @@ public class GroomingAppList implements Serializable{
 		this.groomingAC = groomingAC;
 		this.groomingAN = groomingAN;
 	}
+
 	
 	public String getMemberNickName() {
 		return memberNickName;
 	}
 
+
 	public void setMemberNickName(String memberNickName) {
 		this.memberNickName = memberNickName;
 	}
+
 
 	public String getMemberPhoto() {
 		return memberPhoto;
 	}
 
+
 	public void setMemberPhoto(String memberPhoto) {
 		this.memberPhoto = memberPhoto;
 	}
+
 
 	public String getGroomingAC() {
 		return groomingAC;
 	}
 
+
 	public void setGroomingAC(String groomingAC) {
 		this.groomingAC = groomingAC;
 	}
+
 
 	public String getGroomingAN() {
 		return groomingAN;
 	}
 
+
 	public void setGroomingAN(String groomingAN) {
 		this.groomingAN = groomingAN;
 	}
+
 
 	@Override
 	public String toString() {
@@ -64,4 +69,8 @@ public class GroomingAppList implements Serializable{
 				+ groomingAC + ", groomingAN=" + groomingAN + "]";
 	}
 
+
+	
+	
+	
 }

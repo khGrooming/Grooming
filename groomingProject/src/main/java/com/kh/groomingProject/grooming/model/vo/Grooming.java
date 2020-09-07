@@ -3,6 +3,8 @@ package com.kh.groomingProject.grooming.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Grooming implements Serializable{
 
 	/**
@@ -29,16 +31,39 @@ public class Grooming implements Serializable{
 	private int count;					// 조회수
 	private Date groomingNd;			// 현재 날짜
 	private int currentP;				// 현재 참가인원
+
 	
 	public Grooming() {
 		super();
 	}
+	
+
+
+
+
+
+
+
+
+
+
 
 	public Grooming(String groomingNo, String memberNo) {
 		super();
 		this.groomingNo = groomingNo;
 		this.memberNo = memberNo;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public Grooming(String groomingNo, String memberNo, String groomingType, String groomingTitle,
 			String groomingContent, String groomingIntroduce, int groomingP, Date studySd, Date studyEd,
@@ -66,161 +91,614 @@ public class Grooming implements Serializable{
 		this.currentP = currentP;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingNo() {
 		return groomingNo;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingNo(String groomingNo) {
 		this.groomingNo = groomingNo;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getMemberNo() {
 		return memberNo;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingType() {
 		return groomingType;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingType(String groomingType) {
 		this.groomingType = groomingType;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingTitle() {
 		return groomingTitle;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingTitle(String groomingTitle) {
 		this.groomingTitle = groomingTitle;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingContent() {
 		return groomingContent;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingContent(String groomingContent) {
 		this.groomingContent = groomingContent;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingIntroduce() {
 		return groomingIntroduce;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingIntroduce(String groomingIntroduce) {
 		this.groomingIntroduce = groomingIntroduce;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public int getGroomingP() {
 		return groomingP;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingP(int groomingP) {
 		this.groomingP = groomingP;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getStudySd() {
 		return studySd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setStudySd(Date studySd) {
 		this.studySd = studySd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getStudyEd() {
 		return studyEd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setStudyEd(Date studyEd) {
 		this.studyEd = studyEd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getGroomingSd() {
 		return groomingSd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingSd(Date groomingSd) {
 		this.groomingSd = groomingSd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getGroomingEd() {
 		return groomingEd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingEd(Date groomingEd) {
 		this.groomingEd = groomingEd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getMoney() {
 		return money;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setMoney(String money) {
 		this.money = money;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public String getGroomingImg() {
 		return groomingImg;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingImg(String groomingImg) {
 		this.groomingImg = groomingImg;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getGroomingCd() {
 		return groomingCd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingCd(Date groomingCd) {
 		this.groomingCd = groomingCd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getGroomingMd() {
 		return groomingMd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingMd(Date groomingMd) {
 		this.groomingMd = groomingMd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
 	public String getStatus() {
 		return status;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public int getCount() {
 		return count;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setCount(int count) {
 		this.count = count;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public Date getGroomingNd() {
 		return groomingNd;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setGroomingNd(Date groomingNd) {
 		this.groomingNd = groomingNd;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public int getCurrentP() {
 		return currentP;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	public void setCurrentP(int currentP) {
 		this.currentP = currentP;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 	@Override
 	public String toString() {
@@ -232,4 +710,29 @@ public class Grooming implements Serializable{
 				+ ", count=" + count + ", groomingNd=" + groomingNd + ", currentP=" + currentP + "]";
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+	
+
+	
 }

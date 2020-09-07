@@ -515,10 +515,13 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			function save() {
+				var groomingNo = "${grooming.groomingNo}";
+				var memberNo = "${loginUser.memberNo}";
+				var page = "${currentPage}";
 				var result = confirm("수정을 취소하시겠습니까?");
 				if (result) {
 					alert("취소되었습니다.");
-					location.href="groomingMain.do"; 
+					 location.href='groomingDetail.do?groomingNo='+groomingNo+ '&memberNo='+memberNo+'&page='+page;  
 				} 
 			}
 		</script>
@@ -678,4 +681,5 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
 </body>
+
 </html>
