@@ -23,13 +23,14 @@ public class Board implements Serializable{
 	private String boardReplyStatus; 	// 댓글 유무 Y 삭제 N
 	private String boardSelecStatus; 	// 댓글 채택 유무 Y 삭제 N
 	private String memberNickName;		// 멤버 닉네임
+	private String boardImg;			// 게시판 이미지 
 	
 	public Board() {
 	}
 
 	public Board(String boardNo, String memberNo, String bCategoryNo, String boardTitle, String boardContent,
 			Date boardCreateDate, Date boardModifyDate, int boardVcount, int boardGcount, String boardStatus,
-			String boardReplyStatus, String boardSelecStatus, String memberNickName) {
+			String boardReplyStatus, String boardSelecStatus, String memberNickName, String boardImg) {
 		this.boardNo = boardNo;
 		this.memberNo = memberNo;
 		this.bCategoryNo = bCategoryNo;
@@ -43,6 +44,7 @@ public class Board implements Serializable{
 		this.boardReplyStatus = boardReplyStatus;
 		this.boardSelecStatus = boardSelecStatus;
 		this.memberNickName = memberNickName;
+		this.boardImg = boardImg;
 	}
 
 	public String getBoardNo() {
@@ -141,10 +143,6 @@ public class Board implements Serializable{
 		this.boardSelecStatus = boardSelecStatus;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	public String getMemberNickName() {
 		return memberNickName;
 	}
@@ -153,14 +151,28 @@ public class Board implements Serializable{
 		this.memberNickName = memberNickName;
 	}
 
+	public String getBoardImg() {
+		return boardImg;
+	}
+
+	public void setBoardImg(String boardImg) {
+		this.boardImg = boardImg;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", memberNo=" + memberNo + ", bCategoryNo=" + bCategoryNo + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boardCreateDate=" + boardCreateDate
 				+ ", boardModifyDate=" + boardModifyDate + ", boardVcount=" + boardVcount + ", boardGcount="
 				+ boardGcount + ", boardStatus=" + boardStatus + ", boardReplyStatus=" + boardReplyStatus
-				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + "]";
+				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + ", boardImg="
+				+ boardImg + "]";
 	}
 
+	
 	
 }
