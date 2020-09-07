@@ -23,6 +23,7 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
 @Repository("gDao")
 
@@ -334,7 +335,61 @@ public class GroomingDao {
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.groomingSearch", gs);
 	}
 	
+	public int updateCheck(GCheck g) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("groomingMapper.updateCheck",g);
+	}
+
+	public int getCheckY(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckY",hashmap);
+	}
+
+	public int getCheckL(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckL",hashmap);
+	}
+
+	public int getDifDate(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getDifDate",groomingNo);
+	}
+
+	public String getMemberNickName(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getMemberNickName",memberNo);
+	}
+
+	public int getCheckN(Map hashmap) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.getCheckN",hashmap);
+	}
 	
+	public ArrayList<MyPagePoint> selectGpointList(String applyNo) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectGpointList",applyNo);
+	}
+
+	public int addPointMember(Map map1) {
+		// TODO Auto-generated method stub
+		System.out.println("나 gDao map1 : " +map1);
+		return sqlSessionTemplate.insert("groomingMapper.addPointMember",map1);
+	}
+
+	public Grooming limitCheck(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.limitCheck",groomingNo);
+	}
+
+	public String selectMemberNo(String groomingNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectMemberNo",groomingNo);
+	}
+
+	public int addMentorPoint(Map map2) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("groomingMapper.addMentorPoint",map2) ;
+	}
 	
 	
 }

@@ -55,9 +55,7 @@
 
 <body>
     <!-- 헤더시작 -->
-    <header>
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
-    </header>
+   	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
 	
@@ -65,6 +63,7 @@
     <div class=container style="margin-top:150px ; ">
 	    <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
 	  	</c:url>
 		<c:url var="gBlist" value="gBlist.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
@@ -201,10 +200,7 @@
 
 
 
-    <footer>
-
-		<jsp:include page="../common/footer.jsp" />
-    </footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
     <!-- Optional JavaScript -->

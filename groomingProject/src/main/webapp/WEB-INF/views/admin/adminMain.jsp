@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,10 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
 
     <style>
-        html, body{margin:0px;padding:0px}
-        header{width:100%;height:100px;background-color:yellowgreen;}
-        footer{height:50px; background-color: grey;}
-
         .statistics{width:150px; height:150px; background-color:brown;border-radius:50%;display:inline-block;margin-top: 50px;}
         .visit, .user, .group, .board{margin-left:50px;}
         .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
@@ -38,7 +36,7 @@
     </style>
 </head>
 <body>
-    <header></header>
+	<jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
         <div class="container col-sm-3">
@@ -54,6 +52,12 @@
          </div>
          <div class="container col-sm-8">
             <h1 align="center">관리자 페이지</h1>
+            
+            <jsp:useBean id="today" class="java.util.Date" />
+            <fmt:formatDate var="toDate" value="${today}" pattern='yyyy-MM-dd'/>
+            
+            ${today-1}
+            
             <div class="statistics visit">
                 <p align="center"><b>방문자 수</b></p>
             </div>
@@ -62,9 +66,20 @@
             </div>
             <div class="statistics group">
                 <p align="center"><b>그룹 수</b></p>
+                <c:forEach var="glist" items="${glist}">
+                	<c:if test="${glist.groomingCd eq toDate}">
+                		<a onclick="getGList"><h1 align="center">${glist.groomingCount}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <div class="statistics board">
+            <br>
                 <p align="center"><b>게시글 수</b></p>
+                <c:forEach var="blist" items="${blist}">
+                	<c:if test="${blist.boardCreateDate eq toDate}">
+                		<a onclick="getBList"><h1 align="center">${blist.boardCount}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <br clear="both">
             <br><br>
@@ -74,32 +89,42 @@
             <br><br>
          </div>
     </section>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
     <script> 
-    // Data
+    
     var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July", "test", "test2", "test3"],
-    datasets: [{
-        label: "My First dataset",
-        fillColor: "rgba(220,220,220,0.2)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(220,220,220,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: [65, 59, 80, 81, 56, 55, 40, 49, 20, 1000]
-    }, {
-        label: "My Second dataset",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-    }]
+    		labels: [
+				
+    		],
+    		datasets:[{
+    			label: "게시글 수",
+    			fillColor: "rgba(220,220,220,0.2)",
+    	        strokeColor: "rgba(220,220,220,1)",
+    	        pointColor: "rgba(220,220,220,1)",
+    	        pointStrokeColor: "#fff",
+    	        pointHighlightFill: "#fff",
+    	        pointHighlightStroke: "rgba(220,220,220,1)",
+    	        data:[
+    	        	<c:forEach var="blist" varStatus="i" items="${blist}">
+    	        		"${blist.boardCount}",
+		            </c:forEach>
+    	        ]
+    		},{
+    			label: "그루밍 수",
+    			fillColor: "rgba(220,220,220,0.2)",
+    	        strokeColor: "rgba(220,220,220,1)",
+    	        pointColor: "rgba(220,220,220,1)",
+    	        pointStrokeColor: "#fff",
+    	        pointHighlightFill: "#fff",
+    	        pointHighlightStroke: "rgba(220,220,220,1)",
+    	        data:[
+    	        	<c:forEach var="glist" varStatus="i" items="${glist}">
+    	        		"${glist.groomingCount}",
+		            </c:forEach>
+    	        ]
+    		}]
     };
-
 
     // Global + Custom Chart Config Options
 

@@ -587,7 +587,3 @@ border-radius: 20px;
 
 </body>
 </html>
-
-
-
-

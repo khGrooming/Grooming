@@ -1,6 +1,7 @@
 package com.kh.groomingProject.admin.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
+
+import oracle.sql.DATE;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -126,6 +131,18 @@ public class AdminServiceImpl implements AdminService {
 	public int insertSanctions(String sanctions) {
 
 		return adminDao.insertSanctions(sanctions);
+	}
+
+	@Override
+	public ArrayList<Board> adminBoardList() {
+
+		return adminDao.adminBoardList();
+	}
+
+	@Override
+	public ArrayList<Grooming> adminGroomingList() {
+
+		return adminDao.adminGroomingList();
 	}
 
 	

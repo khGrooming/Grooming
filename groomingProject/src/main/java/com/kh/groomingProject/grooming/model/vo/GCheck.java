@@ -17,12 +17,34 @@ public class GCheck implements Serializable{
 	private String gCheckStatus;
 	private Date gCheckDate;
 	private String memberNickName;
+	private String checkLate;
+	private int checkY ;
+	private int checkL ;
+	private int checkN  ;
+	private int difDay ;
+	
+	
 	public GCheck() {
 		super();
 	}
 
+	
+
+	public GCheck(String memberNickName,String checkLate, int checkY, int checkL, int checkN, int difDay) {
+		super();
+		this.memberNickName = memberNickName;
+		this.checkLate = checkLate;
+		this.checkY = checkY;
+		this.checkL = checkL;
+		this.checkN = checkN;
+		this.difDay = difDay;
+	}
+
+
+
 	public GCheck(String gCheckNo, String groomingNo, String gMemberNo, String gCheckStatus, Date gCheckDate) {
 		super();
+		
 		this.gCheckNo = gCheckNo;
 		this.groomingNo = groomingNo;
 		this.gMemberNo = gMemberNo;
@@ -91,16 +113,87 @@ public class GCheck implements Serializable{
 
 
 
+	public String getCheckLate() {
+		return checkLate;
+	}
+
+
+
+	public void setCheckLate(String checkLate) {
+		this.checkLate = checkLate;
+	}
+
+
+
+	public int getCheckY() {
+		return checkY;
+	}
+
+
+
+	public void setCheckY(int checkY) {
+		this.checkY = checkY;
+	}
+
+
+
+	public int getCheckL() {
+		return checkL;
+	}
+
+
+
+	public void setCheckL(int checkL) {
+		this.checkL = checkL;
+	}
+
+
+
+	public int getCheckN() {
+		return checkN;
+	}
+
+
+
+	public void setCheckN(int checkN) {
+		this.checkN = checkN;
+	}
+
+
+
+	public int getDifDay() {
+		return difDay;
+	}
+
+
+
+	public void setDifDay(int difDay) {
+		this.difDay = difDay;
+	}
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+
 
 	@Override
 	public String toString() {
 		return "GCheck [gCheckNo=" + gCheckNo + ", groomingNo=" + groomingNo + ", gMemberNo=" + gMemberNo
 				+ ", gCheckStatus=" + gCheckStatus + ", gCheckDate=" + gCheckDate + ", memberNickName=" + memberNickName
-				+ "]";
+				+ ", checkLate=" + checkLate + ", checkY=" + checkY + ", checkL=" + checkL + ", checkN=" + checkN
+				+ ", difDay=" + difDay + "]";
 	}
+
+
+
+	
+
+
+
+	
 
 
 	

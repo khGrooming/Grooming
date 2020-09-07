@@ -55,7 +55,7 @@
     </style>
 </head>
 <body>
-    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+    <jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
             <h1 align="center">카페 관리</h1>
@@ -215,6 +215,45 @@
 				 };
 				 reader.readAsDataURL(event.target.files[0]); 
 		 }
+		
+		 function searchCafeName(){
+				$name = $("#searchName").val();
+
+				$.ajax({
+					url:"cafeName.do",
+					type:"post",
+					dataType:"json",
+					data:{name:$name},
+					success:function(data){
+						$view = $(".searchView").html("");
+						
+						for(var i in data){
+
+							$panel = $("<div class='panel panel-default'>");
+							$panel.attr("onclick","openDetail("+i+",0)");
+							$cafeNo = $('<input type="hidden" class="cafeNo'+i+'" value="'+data[i].cafeNo+'">')
+							$img = $("<img src='${contextPath }/resources/views/images/cafeImage/"+data[i].cafeImg+"' class='thumbnail'>");
+							$body = $("<div class='panel-body'>");
+							$footer = $("<div class='panel-footer'>");
+							
+							$body.append(data[i].cafeName);
+							$footer.append(data[i].cafeAddress);
+							
+							$panel.append($cafeNo);
+							$panel.append($img);
+							$panel.append($body);
+							$panel.append($footer);
+							
+							$view.append($panel);
+						}
+					},
+					error:function(request, status, errorData){
+	                    alert("error code: " + request.status + "\n"
+	                          +"message: " + request.responseText
+	                          +"error: " + errorData);
+	                 }
+				})
+			}
 	</script>
 </body>
 </html>
