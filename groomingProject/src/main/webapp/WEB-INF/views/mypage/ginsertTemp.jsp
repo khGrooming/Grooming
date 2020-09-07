@@ -330,11 +330,5 @@ input {
 
 
     <footer><jsp:include page="../common/footer.jsp" /> </footer>
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
 </body>
-
 </html>

@@ -185,7 +185,5 @@
 <p onclick="location.href='groomingMain.do'" style="cursor: pointer; text-align: center;">스터디 가입하러 가기</p>
 </c:if>
 	
-</div>
 <jsp:include page="../common/footer.jsp" />
-</body>
 </html>
