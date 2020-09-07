@@ -412,4 +412,5 @@
 	    WHERE MEMBER_NO=#{mNo}  AND REPLY_STATUS='Y'
 	</select>
 	
+
 </mapper>
