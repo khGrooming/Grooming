@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
@@ -144,13 +145,15 @@ section {
 	position: relative;
 	float: left;
 	border: 1px solid gray;
+	background:white;
 	z-index: 100;
 }
 .submenubar nav ul li:not(:first-child) {
 	border-left: none;
 }
 .submenubar nav ul li:hover {
-	background-color: rgba(255,255,255,.3);
+	
+	background:white;
 }
 
 .submenubar nav ul li a {

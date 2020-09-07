@@ -572,7 +572,7 @@ border-radius: 20px;
 			</div>
 		</c:if>
 			<c:if test="${empty hpgList }">
-				<h4>개설한 스터디가 없습니다.</h4>
+				<h4 style=" width: 30%; margin: 10% auto">개설한 스터디가 없습니다.</h4>
 			</c:if>
 			</div>
 		</div>

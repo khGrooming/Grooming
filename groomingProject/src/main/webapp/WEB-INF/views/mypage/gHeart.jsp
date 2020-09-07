@@ -126,7 +126,7 @@ text-align: left;
 <br>
 
 <div style="width: 80%; margin: 0 auto;">
-<button onclick="deleteAction();" >삭제</button>
+<button onclick="deleteAction();" style=" width: 80px;  border-radius: 10px;">삭제</button>
 </div>
 <script>
 $(function(){

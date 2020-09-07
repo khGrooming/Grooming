@@ -97,7 +97,6 @@
 	<script>
       			function pwdCheck(){
       				var inputPwd = $("#pwd").val();
-
       			 	$.ajax({
       					url:"pwdCheck.do",
       					type:"post",
@@ -116,7 +115,7 @@
       				})
       				
       			/* 	if(inputPwd == "qwe"){
-      					$("#pwdCheckDiv").css("display","none");
+      					$("#CheckDiv").css("display","none");
       					$("#testtest").css("display","block");
       				}else{
       					
