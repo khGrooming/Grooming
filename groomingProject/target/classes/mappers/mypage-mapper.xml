@@ -79,18 +79,19 @@
 		
 	</resultMap>
 	
+	<!-- 그루밍 신청내역  -->
 	<resultMap type="MyPageApplicant" id="MyPageApplicantSet">
 		<id property="gApplyNo" column="GROOMING_APPLY_NO"/>
 		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
 		<result property="groomingImg" column="GROOMING_IMG"/>
 		<result property="groomingType" column="GROOMING_TYPE"/>
-		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
-		<result property="groomingTitle" column="GROOMING_TITLE"/>
-		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
-		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
 		<result property="money" column="DEPOSIT_MONEY"/>
-		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
-		<result property="groomingEd" column="GROOMING_END_DATE"/>
 		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
 	</resultMap>
 	
@@ -158,6 +159,19 @@
 		<result property="replyStatus" column="REPLY_STATUS" />
 		<result property="declarationCount" column="DECLARATION_COUNT" />
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
+	</resultMap>
+	
+	<resultMap type="HomeGrooming" id="homeGroomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
+		<result property="groomingViewCount" column="GROOMING_COUNT"/>
 	</resultMap>
 
 	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
@@ -239,7 +253,7 @@
 	</select>
 	
 	<insert id="insertMentor" parameterType="string">
-		INSERT INTO MENTOR VALUES('MTR' || LPAD(SEQ_MENTOR_NO.NEXTVAL,5,0) , #{mNo},'N')
+		INSERT INTO MENTOR VALUES('MTR' || LPAD(SEQ_MENTOR_NO.NEXTVAL,5,0) , #{mNo},'S')
 	</insert>
 	
 	<select id="mpSelectListCount" parameterType="string" resultType="_int">
@@ -248,11 +262,17 @@
 		WHERE MEMBER_NO = #{mNo}
 	</select>
 	
-	<select id="selectopenGroomingList" parameterType="string" resultMap="groomingResultSet">
-		SELECT *
-		FROM GROOMING
-		WHERE MEMBER_NO= #{mNo}
-		ORDER BY GROOMING_NO DESC
+	<select id="selectopenGroomingList" parameterType="string" resultMap="homeGroomingResultSet">
+		SELECT ROWNUM,
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GT.TAG_NAME, G.GROOMING_PARTICIPANTS, G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)		
+		WHERE G.GROOMING_STATUS = 'Y' AND G.MEMBER_NO=#{mNo}
 	</select>
 	<select id="selectMyPageHeart" parameterType="string" resultMap="MyPageHeartSet">
 	SELECT GROOMING_HEART_NO, G.GROOMING_NO, G.GROOMING_IMG,G.GROOMING_TYPE, G.GROOMING_TITLE
@@ -280,17 +300,34 @@
 	</select>
 	
 	<select id="selectgApplicantList" parameterType="string" resultMap="MyPageApplicantSet">
-		SELECT GROOMING_APPLY_NO, GA.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
-        ,G.GROOMING_INTRODUCE,G.GROOMING_PARTICIPANTS,G.GROOMING_CURRENT_PEOPLE
-        ,G.DEPOSIT_MONEY,G.GROOMING_NOW_DATE,G.GROOMING_END_DATE,GA.GROOMING_APPLY_STATUS        
+		SELECT GROOMING_APPLY_NO, GA.GROOMING_NO,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
+		,G.GROOMING_IMG,G.GROOMING_TYPE,GD.D_DAY,GT.TAG_NAME,G.GROOMING_PARTICIPANTS
+		, GC.GMEMBER_COUNT,G.POSIT_MONEY,GA.GROOMING_APPLY_STATUS        
 		FROM GROOMING_APPLICANT GA
 		JOIN GROOMING G ON(GA.GROOMING_NO = G.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+				        FROM GROOMING) GD 
+				    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		            FROM GTAG GT
+		            JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		            GROUP BY GROOMING_NO) GT
+		        ON(G.GROOMING_NO = GT.GROOMING_NO)	
+		 LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		                 FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
 		WHERE GA.MEMBER_NO =#{mNo}
 	</select>
 	
 	<delete id="deleteApplicant" parameterType="string">		
 	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
 	</delete>
+	
+	<select id="selectTempGroomingNo" parameterType="string" resultType="string">
+		SELECT GROOMING_NO
+		FROM GROOMING G
+		WHERE G.MEMBER_NO=#{mNo}
+	</select>
 	
 	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
 		SELECT *
@@ -307,7 +344,7 @@
 	</select>
 	
 	<select id="selectMypageGmember" parameterType="string" resultMap="MyPageGroomingSet">
-	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
         ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
 	FROM GROMMING_MEMBER GM
 	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
@@ -343,7 +380,7 @@
 	</insert>
 	
 	<insert id="insertMemberReport" parameterType="MemberReport">
-		INSERT INTO DECLARATION VALUES('DE'||LPAD(SEQ_DECLARATION_NO.NEXTVAL,5,0),#{memberNo},#{declarationCNo},#{declarationNNo},#{declarationContent},DEFAULT)
+		INSERT INTO DECLARATION VALUES('DEC'||LPAD(SEQ_DECLARATION_NO.NEXTVAL,5,0),#{memberNo},#{declarationCNo},#{declarationNNo},#{declarationContent},DEFAULT)
 	</insert>
 	
 	<select id="selectMemberBoardList" parameterType="string" resultMap="boardResultSet">

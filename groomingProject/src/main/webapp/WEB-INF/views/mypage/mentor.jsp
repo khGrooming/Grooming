@@ -10,29 +10,74 @@
 </head>
 <style>
 #content {
-	width: 75%;
+	width: 1050px;
 	height: 1000px;
-	margin: 3% auto;
+	margin: 0 auto;
+}
+.subcontent {
+	width:450px;
+	position: relative;
+	float: left;
+	height : 550px;
+	margin: 0 auto;
+	border: 1px solid lightgray;
+	padding: 5%;
+	border-radius: 20px;
+}
+.subTitle{
+	position: absolute; 
+	top:-10px; 
+	background: white;
+	width: 150px;
+	text-align: center;
+}
+#ment tr{
+	height: 100px;
 }
 </style>
 <body>
 <jsp:include page="./mypageinfo.jsp" /> 
 <div id="content">
-<div style="width: 65%; margin-right: auto; margin-left: auto;">
-	<c:if test="${mentor eq 'F' }">
+	
+<div class="subcontent">
+	<h4 class="subTitle">안내사항</h4>
 	<div class="MsectionDiv" id="Mcontent2">
-		<div
-			style="margin-right: 50px; width: 100%; margin-left: auto; margin-top: 5%; margin-right: auto;">
-			<h4>멘토 신청</h4>
+		
+			
 			<p style="font-size: 13px;">
-				멘토 신청에 관한 설명 약관 어쩌구 신청할 경우 요금? <br>이 있고 신고 당할경우 다시 멘토신청 할 수 없고
-				등등 <br>승인이 완료 될 때 까지 몇일이 걸린다~
-			</p>
-			<br> <br>
-			<p>-스펙</p>
-			<table id="ment"style="width: 80%;" >
+				<ol>
+					<li>멘토 신청 방법<br>
+						<p>멘토를 신청하기 위해서는 학교, 자격증, 경력인증이 반드시 필요합니다.<br>
+						스펙을 등록한 후 신청하기 버튼을 클릭하여 멘토를 신청할 수 있습니다.</p>
+					</li>
+					<li>스펙 등록 방법<br>
+						<p>스펙을 명칭할 수 있는 이름을 반드시 작성하여야 합니다.<br>
+						스펙을 인증할 수 있는 서류가 반드시 필요합니다.</p>
+											
+					</li>
+					<li>스펙 인증<br>
+						<p>스펙을 등록하신 후 인증이 완료되면 다른 이용자에게 자신이 보입니다.</p>
+						<p>
+						<span style="color:red;">인증 하기</span>: 등록되어 있지 않은 스펙입니다.<br>
+						<span style="color:blue;">인증 대기</span>: 자신 외에는 보이지 않습니다.<br>
+						<span style="color:green;">인증 완료</span>: 다른 이용자도 확인 가능합니다.<br>
+						<span style="color:gray;">인증 실패</span>: 자동으로 스펙이 사라집니다.<br>
+						</p>
+					
+					</li>
+				
+				</ol>
+			</div>
+		</div>
+			<div class="subcontent" style="padding: 2%;  width: 550px; margin-left: 2%;">
+			
+			<h4 class="subTitle">멘토 신청</h4>
+			<c:if test="${mentor eq 'F' }">
+			<br>
+			<h5>스펙 등록</h5>
+			<table id="ment" >
 				<tr>
-					<td class="spacIconTd" style="width: 50px;">이미지</td>
+					
 					<th style="width: 50px;">학교</th>
 					<td id="schoolApply" style="width: 80px;">
 					</td>
@@ -43,7 +88,7 @@
 						<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }" style="display: none;">
 						
 						<input type="text" id="specName" name="specName" placeholder="학교 이름을 입력하세요" required>
-						<input type="file" id="SspecFileName" name="specFileName1" onchange="" accept=".gif, .jpg, .png" style="width: 30%"required>
+						<input type="file" id="SspecFileName" name="specFileName1" onchange="" accept=".gif, .jpg, .png" style="width: 40%"required>
 						<button onclick="specFileClick('SspecFileName');">업로드</button>	
 						</form>
 					</td>
@@ -51,7 +96,6 @@
 				</tr>
 				
 				<tr>
-					<td class="spacIconTd">이미지</td>
 					<th>자격증</th>
 					<td id="certificateApply">
 					</td>
@@ -61,7 +105,7 @@
 							<input type="hidden" id="specCName" name="specCName" value="SC00002">
 							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
 							<input type="text" id="specName" name="specName" placeholder="자격증을 입력하세요" required>
-							<input type="file" id="CespecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%">
+							<input type="file" id="CespecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 40%">
 							<button onclick="specFileClick('CespecFileName');">업로드</button>
 						
 					
@@ -70,7 +114,6 @@
 					
 				</tr>
 				<tr>
-					<td class="spacIconTd">이미지</td>
 					<th>경력</th>
 					<td id="careerApply" ></td>
 					
@@ -81,20 +124,42 @@
 							<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo }">
 							
 							<input type="text" id="specName" name="specName" placeholder="경력을 입력하세요"required>
-							<input type="file" id="CAspecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 30%;">						
+							<input type="file" id="CAspecFileName" name="specFileName1"accept=".gif, .jpg, .png" required style="width: 40%;">						
 							<button onclick="specFileClick('CaspecFileName');">업로드</button>
 						
 					</form>
 					</td>
 				</tr>
 			</table>
-			<div style="text-align: center; margin-top:10%;">
+			<div style="width:100%; text-align: center; bottom: 3%; position: absolute; ">
 
 				<input type="checkBox" id="agree"> <label for="agree"
 					style="font-size: 13px;"> 안내사항을 모두 확인했으며, 이에 동의합니다.</label> <br>
-				<button onclick="mentorApply();">신청하기</button>
+				<button onclick="mentorApply();" style=" width:50%;height:40px; border-radius:10px;">신청하기</button>
 			</div>
+			</c:if>
 			
+			
+			
+			<c:if test="${mentor eq 'S' }">
+				<div style="width: 100%; text-align: center; margin-top: 20%">
+				<img src='${contextPath }/resources/views/images/nomentor.jpg' width="200px"><br><br>
+				<h3>심사중입니다.</h3>
+				</div>
+			</c:if>
+			<c:if test="${mentor eq 'Y' }">
+			<div style="width: 100%; text-align: center; margin-top: 20%">
+				<img src='${contextPath }/resources/views/images/mentor.jpg' width="200px"><br><br>
+				<h3>이미 멘토입니다.</h3>
+				</div>
+			</c:if>
+			<c:if test="${mentor eq 'N' }">
+			<div style="width: 100%; text-align: center; margin-top: 20%">
+				<img src='${contextPath }/resources/views/images/outmemtor.jpg' width="200px"><br><br>
+				<h3>멘토 신청에 탈락하셨습니다.</h3>
+				</div>
+			</c:if>
+				</div>
 			
 			<script>
 				function specFileClick(type){
@@ -128,6 +193,7 @@
 						processData : false,
 						contentType : false,
 						success : function(data) {
+							location.reload();
 						},
 						error : function(data) {
 							alert("code:" + request.status + "\n"
@@ -208,20 +274,12 @@
 						alert("체크하세요");
 					}         
 				}
-			</script></div></div>
-			</c:if>
-			<c:if test="${mentor eq 'N' }">
-				<div style="width: 100%; text-align: center; margin-top: 20%">
-				<h3>심사중입니다.</h3>
-				</div>
-			</c:if>
-			<c:if test="${mentor eq 'Y' }">
-			<div style="width: 100%; text-align: center; margin-top: 20%">
-				<h3>이미 멘토입니다.</h3>
-				</div>
-			</c:if>
-	</div>
-	</div>
+			</script>
+			
+		
+			
+		</div>
+	
 <jsp:include page="../common/footer.jsp" />
 </body>
 </html>

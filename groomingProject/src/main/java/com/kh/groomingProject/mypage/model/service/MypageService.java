@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
@@ -41,7 +42,7 @@ public interface MypageService {
 
 	int mpSelectListCount(String mNo);
 
-	ArrayList<Grooming> selectopenGroomingList(MyPagePageInfo pi, String mNo);
+	ArrayList<HomeGrooming> selectopenGroomingList(MyPagePageInfo pi, String mNo);
 
 	int selectPoint(String mNo);
 
@@ -82,6 +83,8 @@ public interface MypageService {
 	int selectMyReplyCount(String mNo);
 
 	ArrayList<Reply> selectMemberReplyList(String mNo, MyPagePageInfo pi);
+
+	String selectTempGroomingNo(String mNo);
 
 
 }

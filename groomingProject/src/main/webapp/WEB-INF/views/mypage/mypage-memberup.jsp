@@ -11,8 +11,10 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 #content {
-	width: 75%;
+	width: 1100px;
 	margin: 0 auto;
+	
+	height: 800px;
 }
 
 
@@ -130,11 +132,12 @@ font-size: 14px;
 </head>
 <body>
 <jsp:include page="./mypageinfo.jsp" />
-	<section style="padding-top: 0.05rem;">
 	<div id="content">
 		<div class="subcontent">
-		
-			<h4 class="subTitle">프로필 수정</h4>
+			<c:url var="profilePage" value="profilePage.do">
+	         <c:param name="pfMemberNo" value="${loginUser.memberNo }" />
+	      </c:url>
+			<h4 class="subTitle" onclick="location.href='${profilePage}'">프로필 수정</h4>
 			<div class="profile_my">
 				<!--toEJ 클릭하면 모달창 띄우고 사진편집할 수 있으면 넣고 못하면 미리보기로 대체 모달창에서 프로필사진 등록/삭제로 해서 고치셈 -->
 				
@@ -875,7 +878,7 @@ font-size: 14px;
 	
 	
 	</div>
-</section>
+
 <jsp:include page="../common/footer.jsp" />	
 
 </body>
