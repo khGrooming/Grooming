@@ -95,50 +95,49 @@
 	</div>
 	</div>
 	<script>
-		function pwdCheck(){
-			var inputPwd = $("#pwd").val();
-		
-		 	$.ajax({
-				url:"pwdCheck.do",
-				type:"post",
-				data:{inputPwd:inputPwd},
-				success : function(data) {
-					if(data == "Y"){
-						$("#pwdCheckDiv").css("display","none");
-		  					$("#testtest").css("display","block");	
-					}else{
-						alert("비밀번호가 틀립니다")
-					}
-		      },
-		      error : function(data) {  
-		         alert("code:"+request.status+"\n"+"error:"+error);
-		      }
-			})
-			
-		/* 	if(inputPwd == "qwe"){
-				$("#pwdCheckDiv").css("display","none");
-				$("#testtest").css("display","block");
-			}else{
-				
-			}  */
-		}
+      			function pwdCheck(){
+      				var inputPwd = $("#pwd").val();
+      			 	$.ajax({
+      					url:"pwdCheck.do",
+      					type:"post",
+      					data:{inputPwd:inputPwd},
+      					success : function(data) {
+      						if(data == "Y"){
+	      						$("#pwdCheckDiv").css("display","none");
+	          					$("#testtest").css("display","block");	
+      						}else{
+      							alert("비밀번호가 틀립니다")
+      						}
+			            },
+			            error : function(data) {  
+			               alert("code:"+request.status+"\n"+"error:"+error);
+			            }
+      				})
+      				
+      			/* 	if(inputPwd == "qwe"){
+      					$("#CheckDiv").css("display","none");
+      					$("#testtest").css("display","block");
+      				}else{
+      					
+      				}  */
+      			}
+      			
+      			function memberdel(){
+      				if($("#agree").is(":checked")){
+      					
+      					var checked = confirm("탈퇴하시겠습니까?");
+      					if(checked){
+      						location.href="memberDel.do";
+      					}else{
+      						alert("취소하셨습니다.");
+      					}
+      				}else{
+      					alert("체크하세요");
+      				}
+      			}
+      		</script>
 			</div>
-		function memberdel(){
-			if($("#agree").is(":checked")){
-				
-				var checked = confirm("탈퇴하시겠습니까?");
-				if(checked){
-					location.href="memberDel.do";
-				}else{
-					alert("취소하셨습니다.");
-				}
-			}else{
-				alert("체크하세요");
-			}
-		}
-	</script>
-	
-	</div>
-	<jsp:include page="../common/footer.jsp" />
+		</div>
+		<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

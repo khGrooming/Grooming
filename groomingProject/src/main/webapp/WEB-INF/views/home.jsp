@@ -714,7 +714,6 @@ body{ background-color: #f2f2f2; }
 			console.log("그루밍 리스트 추가");
 	
 			for(var i in data){
-				// 시간 변수
 				var card_dDay_color = "card_dDay_black";
 				var card_dDay_text = "D-" + data[i].groomingDday;
 
