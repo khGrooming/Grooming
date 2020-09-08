@@ -307,7 +307,7 @@ font-size: 14px;
 								$.ajax({
 									url : "upMemo.do",
 									type : "post",
-									data : {memberMemo : $(this).val()},
+									data : {memberMemo : content},
 									success : function(data) {
 										alert("변경되었습니다");
 									},
@@ -325,30 +325,7 @@ font-size: 14px;
 									$('#memoTextArea').val("${profileInfo.memberMemo}");
 								}
 							}
-							alert(content);
-							var save = confirm("상태메시지를 저장하시겠습니까?");
-							if (save) {
-								$.ajax({
-									url : "upMemo.do",
-									type : "post",
-									data : {memberMemo : $(this).val()},
-									success : function(data) {
-										alert("변경되었습니다");
-									},
-									error : function(data) {
-										alert("code:"+ request.status+ "\n"
-												+ "error:"+ error);
-									}
-
-								})
-							} else {
-								alert("취소하였습니다");
-								if ("${profileInfo.memberMemo}" == "NULL") {
-									$('#memoTextArea').val("");
-								} else {
-									$('#memoTextArea').val("${profileInfo.memberMemo}");
-								}
-							}
+							
 							
 						}
 					</script>
