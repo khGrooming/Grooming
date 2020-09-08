@@ -28,7 +28,7 @@
     padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
 /* 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
-    z-index: 10;
+    z-index: 10000;
 }
 .main_navbar .main_navbar_logo
 {
@@ -337,7 +337,6 @@
 	bottom: 1rem;
 	right: 1rem;
 	float:right;
-	z-index: 9999;
 	font-size: 1.25rem;
 	border: none;
 	outline: none;
