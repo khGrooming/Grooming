@@ -84,15 +84,17 @@ img {
 .fas{
 	color:yellow;
 }
+#gImg{
+width:100%;
+height:100%;
+}
 </style>
 </head>
 
 <body>
 
-	<header>
-		<jsp:include page="../common/mainNavigationBar.jsp" />
-	</header>
 
+		<jsp:include page="../common/mainNavigationBar.jsp" />
 
 	<section>
 
@@ -117,31 +119,40 @@ img {
 					</table>
 				</div>
 				<div style="text-align: right; margin-left: 70px;">
-					<table>
-						<tr>
-							<td align="right">
-								<div class="status">
-									<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
-										<c:out value="<h4>모집중</h4>" escapeXml="false" />
-									</c:if>
-									<c:if test="${(grooming.groomingEd lt grooming.groomingNd) ||(grooming.groomingEd eq grooming.groomingNd) || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
-										<c:out value="<h4>마감</h4>" escapeXml="false" />
-									</c:if>
-								</div>
-							</td>
-						</tr>
-						<tr>
-							<td style="text-align:right;"> 
-							
-								<c:if test="${!empty heart }">
-								<i id="heart" class="fas fa-bookmark"></i>
-								</c:if>
-								<c:if test="${empty heart }">
-								<i id="nheart" class="far fa-bookmark"></i>
-								</c:if>
-								<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
-						
-								<!-- 신청폼 모달 -->
+					<table class="topTable">
+						<tbody class="topTbody">
+							<tr>
+								<td align="right">
+									<div class="status">
+										<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
+											<c:out value="<h4>모집중</h4>" escapeXml="false" />
+										</c:if>
+										<c:if test="${(grooming.groomingEd lt grooming.groomingNd) ||(grooming.groomingEd eq grooming.groomingNd) || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+											<c:out value="<h4>마감</h4>" escapeXml="false" />
+										</c:if>
+									</div>
+								</td>
+							</tr>
+							<tr id="secondTr">
+								<td style="text-align:right;" id="td1"> 
+									<i id="nheart" class="far fa-bookmark"></i>
+									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
+								</td>
+								
+							</tr>
+							<tr>
+								<td><span>작성일 :${grooming.groomingCd }</span></td>
+							</tr>
+							<tr>
+								<td><span>조회수 : </span><span>${grooming.count}</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+			<!-- 신청폼 모달 -->
 								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
 			
 									<div class="modal-dialog">
@@ -173,22 +184,7 @@ img {
 									</div>
 
 								</div>
-								
-								
-							</td>
-
-						</tr>
-						<tr>
-							<td><span>작성일 :${grooming.groomingCd }</span></td>
-						</tr>
-						<tr>
-							<td><span>조회수 : </span><span>${grooming.count}</span></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-
-		</div>
+							<!--신고 모달 창 끝  -->
 		<div class="container" style="margin-top: 20px;">
 			<div class="row">
 				<div class="col-5">
@@ -197,7 +193,7 @@ img {
 							<tr>
 								<td>
 									<div class="groomingImage">
-										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}">
+										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}" id="gImg">
 									</div>
 								</td>
 							</tr>
@@ -435,9 +431,10 @@ img {
 			</c:if>
 			</div>
 		</div>
-	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
 	<input type="hidden" value="${grooming.money }" id ="hiddenmoney">
 	</section>
+	
+
 	<script>
 		$(function(){
 			$("#applicantList").on("click",function(){
@@ -472,8 +469,8 @@ img {
 				$("#applicant").modal("hide");
 			})
 			
-			$(".close").on("click",function(){
-				$(".modal modal-xl fade app").modal("hide");
+			$(document).on("click",".close",function(){
+				$("div[name=modal]").modal("hide");
 			})
 			
 			
@@ -535,13 +532,10 @@ img {
 			alert("신청되었습니다.");
 		})
 	</script>
-	 <script type="text/javascript">
-		 window.history.forward();
-		 function noBack(){window.history.forward();}
-	</script>
 	<script>
 	
 		$(function(){
+			
 			var gheart = "${heart.groomingHNo}";
 			var groomingNo = "${grooming.groomingNo}";
 			var memberNo = "${loginUser.memberNo}";
@@ -549,31 +543,100 @@ img {
 			var dmemberNo = "${declaration.memberNo}";
 			var dgroomingNo = "${declaration.dnNo}";
 			
-			if(gheart==""){
-				$("#nheart").on("click",function(){
-					if(memberNo == gmemberNo){
-						alert("자신의 글은 찜할 수 없습니다.!")
+		$(document).on("click","#nheart",function(){
+			
+			$.ajax({
+				url:"findHeart.do",
+				data:{groomingNo:groomingNo,memberNo:memberNo},
+				success:function(data){
+					if(data=="false"){
+						// 이 게시글이 찜하기가 안되어있다.
+									if(memberNo == gmemberNo){
+										alert("자신의 글은 찜할 수 없습니다.!")
+									}else{
+										$.ajax({
+											url:"addHeart.do",
+											data:{groomingNo:groomingNo,memberNo:memberNo},
+											success:function(data){
+												console.log("찜");
+												var $table;
+												var $tr;
+												var $td;
+												var $i;
+												var $button;
+									/* 			$table.html(""); */
+													if(data == "success"){
+														 /* $table = $("<table class='topTable'>"); */
+														 $tr = $("<tr id='secondTr'>");
+														 $td = $("<td style='text-align:right;' id='td1'>");
+														 $i = $("<i id='nheart' class='fas fa-bookmark'>");
+														 $button = $("<button data-toggle='modal' data-target='#declareForm' id='apply'>").text("신고");
+														
+														$td.append($i);
+														$td.append($button);
+														$tr.append($td);
+												/* 		$table.append($tr); */
+														
+													
+													}
+												
+												
+											},error:function(request, status, errorData){
+												alert("error code: " + request.status + "\n"
+														+"message: " + request.responseText
+														+"error: " + errorData);
+											}
+											})
+											
+									} // else 끝
+								
+								
+							
 					}else{
-						
-					var result = confirm("찜 하시겠습니까?");
-					if(result){
-						location.href='addHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
+						$.ajax({
+							url:"cancelHeart.do",
+							data:{groomingNo:groomingNo,memberNo:memberNo},
+							success:function(data){
+									console.log("취소");
+						/* 			$table.html(""); */
+									if(data == "success"){
+										var $table;
+										var $tr;
+										var $td;
+										var $i;
+										var $button;
+									/* 	 $table = $("<table class='topTable'>"); */
+										 $tr = $("<tr id='secondTr'>");
+										 $td = $("<td style='text-align:right;' id='td1'>");
+										 $i = $("<i id='nheart' class='fas fa-bookmark'>");
+										 $button = $("<button data-toggle='modal' data-target='#declareForm' id='apply'>").text("신고");
+										
+										$td.append($i);
+										$td.append($button);
+										$tr.append($td);
+								/* 		$table.append($tr); */
+									}
+								
+								
+							
+								
+							},error:function(request, status, errorData){
+								alert("error code: " + request.status + "\n"
+										+"message: " + request.responseText
+										+"error: " + errorData);
+							}
+							})
 					}
 				
-					}
-				
+					
+				},error:function(request, status, errorData){
+					alert("error code: " + request.status + "\n"
+							+"message: " + request.responseText
+							+"error: " + errorData);
+				}
 				})
-			}else{
-				$("#heart").on("click",function(){
-					var result = confirm("찜 해제 하시겠습니까?");
-					if(result){
-						location.href='cancelHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
-					}
-				
-				
-				})
-			}
 		
+		})
 		
 			$("#apply").on("click",function(e){
 				var result = confirm("신고하시겠습니까?");
@@ -591,7 +654,9 @@ img {
 				}else{
 					event.stopImmediatePropagation();
 				}
+				
 			})
+			
 			
 		
 		})
@@ -770,12 +835,12 @@ img {
 							 $td2 = $("<td>").text(data[i].memberNickName);
 							 $td3 = $("<td>");
 							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent"+i+"'>").text("신청서열람");
-							 $div2 = $("<div class='modal modal-xl fade app' id='open_modal_appContent"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
+							 $div2 = $("<div class='modal' name='modal' id='open_modal_appContent"+i+"'>");
 							 $div3 = $("<div class='modal-dialog'>");
-							 $div4 = $("<div class='modal-content' style='width: 800px; height: auto;'>");
+							 $div4 = $("<div class='modal-content' style='width: 500px; height: 300px;'>");
 							 $div5 = $("<div class='modal-header'>");
-							 $h5 = $("<h5 class='modal-title' id='exampleModalLabel'>").text("신청 내용");
-							 $button2 = $("<button type='button' class='close' data-target='#applicant' aria-label='Close'>");
+							 $h5 = $("<h5 class='modal-title'>").text("신청 내용");
+							 $button2 = $("<button type='button' class='close'>");
 							 $span1 = $("<span aria-hidden='true'>").text("X");
 							
 							 $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
@@ -932,10 +997,7 @@ img {
 		
 	</script>
 	
-
-	<footer style="margin-top:100px;">
 	<jsp:include page="../common/footer.jsp" />
-	</footer>
 
 
 	<!-- Optional JavaScript -->
