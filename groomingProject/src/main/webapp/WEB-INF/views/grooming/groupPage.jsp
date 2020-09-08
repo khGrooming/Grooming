@@ -82,7 +82,7 @@
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
          
                <!-- 그루밍 제목 -->
-                <h2 style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
+                <h2 style="margin-top:50px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
                 <!-- 그루밍 한줄 소개 -->
                 <p  style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingIntroduce }</p>
                 <div class="row">

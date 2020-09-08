@@ -32,9 +32,6 @@
 
 <title>Hello, world!</title>
 <style>
-/* body {
-	height: 1200px;
-} */
 /* div의 크기에 맞춤 */
 img {
 	max-width: 100%;

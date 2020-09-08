@@ -26,27 +26,20 @@
 	
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
         img {
             max-width: 100%;
             max-height: 100%;
         }
-
-  
-  
         .table{
+        	margin-top: 50px;
             text-align: center;
         }
-        
         @font-face { 
 			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
     	    font-weight: normal; 
     	    font-style: normal; 
    		}
-   
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
@@ -58,18 +51,21 @@
    	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+  
+    <!--게시판에 들어갈 내용 -->
+    <section >
 	
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
-	    <c:url var="calendar" value="calendar.do">
-	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
-	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
+    <div class="container">
+   	    <c:url var="calendar" value="calendar.do">
+    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+    		<c:param name="memberNo" value="${loginUser.memberNo}" />
 	  	</c:url>
 		<c:url var="gBlist" value="gBlist.do">
-				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+			<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 		</c:url>
 		<c:url var="groupP" value="groupPage.do">
-				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+			<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 		</c:url>
     
         <!--디폴트 메뉴-->
@@ -80,9 +76,6 @@
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 	
 
-  
-    <!--게시판에 들어갈 내용 -->
-    <section >
         
         <table class="table table-hover" id="boardId">
             <thead>
@@ -189,19 +182,10 @@
           </div>
    
     
-          
-        
+    	</div>
     </section>
 
-</div>
-
-	
-	
-
-
-
 	<jsp:include page="../common/footer.jsp" />
-
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -213,5 +197,4 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
