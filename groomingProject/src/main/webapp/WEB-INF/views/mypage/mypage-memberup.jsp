@@ -363,6 +363,7 @@ font-size: 14px;
 								<td class="specTd" id="career2"></td>
 							</tr>
 						</table>
+						
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 									aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -574,9 +575,9 @@ font-size: 14px;
 									default:
 										break;
 									}
+								
 									if (career[i] != "") {
-										if(certificateconfirm[i] == "N"){
-											
+										if(careerconfirm[i] == "N"){											
 											$tdId.text(career[i]).css("color","lightgrey");
 										}else{
 											$tdId.text(career[i]).css("color","black");
