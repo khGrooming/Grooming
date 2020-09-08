@@ -18,7 +18,6 @@
 <style type="text/css">
 .main_navbar
 {
-    /* background-color: lightseagreen; */
     background-color: #fff;
     position: fixed;
     font-family: 'Jua', sans-serif;
@@ -27,7 +26,6 @@
     transition: 0.6s;
     padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
-/* 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
     z-index: 10000;
 }
 .main_navbar .main_navbar_logo
