@@ -24,13 +24,15 @@ public class Board implements Serializable{
 	private String boardSelecStatus; 	// 댓글 채택 유무 Y 삭제 N
 	private String memberNickName;		// 멤버 닉네임
 	private String boardImg;			// 게시판 이미지 
+	private String memberPhoto;		// 멤버 프로필 사진
 	
 	public Board() {
 	}
 
 	public Board(String boardNo, String memberNo, String bCategoryNo, String boardTitle, String boardContent,
 			Date boardCreateDate, Date boardModifyDate, int boardVcount, int boardGcount, String boardStatus,
-			String boardReplyStatus, String boardSelecStatus, String memberNickName, String boardImg) {
+			String boardReplyStatus, String boardSelecStatus, String memberNickName, String boardImg,
+			String memberPhoto) {
 		this.boardNo = boardNo;
 		this.memberNo = memberNo;
 		this.bCategoryNo = bCategoryNo;
@@ -45,6 +47,7 @@ public class Board implements Serializable{
 		this.boardSelecStatus = boardSelecStatus;
 		this.memberNickName = memberNickName;
 		this.boardImg = boardImg;
+		this.memberPhoto = memberPhoto;
 	}
 
 	public String getBoardNo() {
@@ -159,6 +162,14 @@ public class Board implements Serializable{
 		this.boardImg = boardImg;
 	}
 
+	public String getMemberPhoto() {
+		return memberPhoto;
+	}
+
+	public void setMemberPhoto(String memberPhoto) {
+		this.memberPhoto = memberPhoto;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -170,9 +181,10 @@ public class Board implements Serializable{
 				+ ", boardModifyDate=" + boardModifyDate + ", boardVcount=" + boardVcount + ", boardGcount="
 				+ boardGcount + ", boardStatus=" + boardStatus + ", boardReplyStatus=" + boardReplyStatus
 				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + ", boardImg="
-				+ boardImg + "]";
+				+ boardImg + ", memberPhoto=" + memberPhoto + "]";
 	}
 
+	
 	
 	
 }

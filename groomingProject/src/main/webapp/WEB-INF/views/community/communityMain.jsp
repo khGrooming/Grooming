@@ -34,7 +34,7 @@
 	<br><br>
 </header>
 <!--내용 시작-->
-<section>
+<section style="padding-top: 0.10rem;">
 	<div class="container-fluid">
     	<div class="row">
     		<div class="col-12">
@@ -108,7 +108,7 @@
 			showStudyPromotion = $("#showStudyPromotion"),
 			showStudyConfirm = $("#showStudyConfirm"),
 			showQnA = $("#showQnA");
-		
+		debugger;
 		[
 			showcommunityMain,
 			showNotice,
@@ -200,6 +200,7 @@
 		};
 	}
 </script>
-
+	<br><br>
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

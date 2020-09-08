@@ -710,6 +710,8 @@ $(function(){
 	
 </script>
 
+		<footer style="margin-top:100px;">
 	<jsp:include page="../common/footer.jsp" />
+	</footer>
 </body>
 </html>
