@@ -270,7 +270,7 @@ font-size: 14px;
 						empPercent = (100 / maxExp) * memberExp;
 						if (empPercent < 5) {
 							/* 5%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
-							$("#expBar").css("width", "5%");
+							$("#expBar").css("width", "1%");
 						} else {
 							$("#expBar").css("width", empPercent + "%");
 						}

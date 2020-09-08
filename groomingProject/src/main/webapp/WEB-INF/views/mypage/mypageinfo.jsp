@@ -145,13 +145,15 @@ section {
 	position: relative;
 	float: left;
 	border: 1px solid gray;
+	background:white;
 	z-index: 100;
 }
 .submenubar nav ul li:not(:first-child) {
 	border-left: none;
 }
 .submenubar nav ul li:hover {
-	background-color: rgba(255,255,255,.3);
+	
+	background:white;
 }
 
 .submenubar nav ul li a {

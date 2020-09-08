@@ -201,14 +201,5 @@
 	}
 </script>
 
-<%
-	
-	System.out.println("리스트 : " + request.getAttribute("list"));
-System.out.println("n리스트 : " + request.getAttribute("nlist"));
-System.out.println("f리스트 : " + request.getAttribute("flist"));
-System.out.println("q리스트 : " + request.getAttribute("qlist"));
-
-%>
-
 </body>
 </html>

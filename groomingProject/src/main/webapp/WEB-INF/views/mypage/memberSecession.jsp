@@ -76,7 +76,7 @@
       				})
       				
       			/* 	if(inputPwd == "qwe"){
-      					$("#pwdCheckDiv").css("display","none");
+      					$("#CheckDiv").css("display","none");
       					$("#testtest").css("display","block");
       				}else{
       					
