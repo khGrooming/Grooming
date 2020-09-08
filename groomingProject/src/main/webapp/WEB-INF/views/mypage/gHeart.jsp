@@ -126,7 +126,7 @@ text-align: left;
 <br>
 
 <div style="width: 80%; margin: 0 auto;">
-<button onclick="deleteAction();" >삭제</button>
+<button onclick="deleteAction();" style=" width: 80px;  border-radius: 10px;">삭제</button>
 </div>
 <script>
 $(function(){
@@ -153,7 +153,7 @@ function deleteAction(){
 	  }
 	  console.log("### checkRow => {}"+checkA);
 	 
-	  if(confirm("정보를 삭제 하시겠습니까?")){
+	  if(confirm("찜하기를 삭제 하시겠습니까?")){
 	      /* ajax로 삭제하기 ?*/
 	    
 	      location.href="heartDele.do?checkList="+checkA;

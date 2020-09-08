@@ -512,7 +512,6 @@
 
 <script>
 $(function(){
-	
 	// 그루밍 디테일 페이지 이동
 	$(document).on("click", ".card_container", function(){
 		var el = $(this);

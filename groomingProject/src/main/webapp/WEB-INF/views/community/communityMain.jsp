@@ -78,13 +78,14 @@
  						<jsp:include page="../community/communityStudyPromotion.jsp" />
        				</div>		
        				
+       				<div class="container"  id="QnA" style="display:none;">
+ 						<jsp:include page="../community/communityQnA.jsp" />
+       				</div>		
+       				
        				<div class="container"  id="StudyConfirm" style="display:none;">
  						<jsp:include page="../community/communityStudyConfirm.jsp" />
        				</div>	
        				
-       				<div class="container"  id="QnA" style="display:none;">
- 						<jsp:include page="../community/communityQnA.jsp" />
-       				</div>		
 				</div>
     		</div>
 		</div>
@@ -131,16 +132,20 @@
 			showStudyPromotion.parents().addClass('active');
 			showBoard(3);
 		
-		}else if(categoryVal == 'BC00005'){
+		}else if(categoryVal == 'BC00004'){
 			showStudyConfirm.parents().addClass('active');
 			showBoard(4);
+			
+		}else if(categoryVal == 'BC00005'){
+			showQnA.parents().addClass('active');
+			showBoard(5);
+			
 		}else{
 			showcommunityMain.parents().addClass('active');
 			showBoard(0);
 		}
 		
 	});
-	
 
 	function showBoard(num){
 		if(num==0){
