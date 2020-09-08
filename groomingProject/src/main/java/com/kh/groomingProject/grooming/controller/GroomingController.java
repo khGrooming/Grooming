@@ -1,6 +1,7 @@
 package com.kh.groomingProject.grooming.controller;
 
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
+import static com.kh.groomingProject.common.GroomingPagination.getPageInfoM;
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 
 import java.io.File;
@@ -77,8 +78,8 @@ public class GroomingController {
 			currentPage = page;
 		}
 		int listCount = gService.getGroomingListCount();
-		
-		GroomingPageInfo pi = getPageInfoG(currentPage, listCount);
+		int boardLimit = 8;
+		GroomingPageInfo pi = getPageInfoM(currentPage, listCount);
 		
 		ArrayList<Grooming> glist = gService.selectList(pi);
 	
@@ -108,6 +109,20 @@ public class GroomingController {
 		return mv;
 	}
 
+// 멘토 필터 적용
+	@RequestMapping("GroomingList.do")
+	public void GroomingList(HttpServletResponse response,@RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException  {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = gService.getGroomingListCount();
+		int boardLimit = 8;
+		GroomingPageInfo pi = getPageInfoG(currentPage, listCount,boardLimit);
+		
+		ArrayList<Grooming> glist = gService.selectList(pi);
+		new Gson().toJson(glist, response.getWriter());
+	}
 // 멘토 필터 적용
 	@RequestMapping("groomingMe.do")
 	public void groomingMentorList(HttpServletResponse response) throws JsonIOException, IOException {

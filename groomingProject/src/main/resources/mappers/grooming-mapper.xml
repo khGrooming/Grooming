@@ -669,9 +669,18 @@
  	</update>
  	
  	<select id="getGroomingListCount" resultType="_int">
-	SELECT COUNT(*)
+<!-- 	SELECT COUNT(*)
 	FROM GROOMING
-	WHERE GROOMING_STATUS ='Y'
+	WHERE GROOMING_STATUS ='Y' -->
+	<![CDATA[
+		SELECT COUNT(*)
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y'
+		AND GD.D_DAY >= 0
+		]]>
 	</select>
  	
  	
