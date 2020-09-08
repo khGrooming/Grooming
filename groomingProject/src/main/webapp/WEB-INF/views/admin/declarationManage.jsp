@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -81,6 +82,12 @@
                 <tbody>
                     <c:forEach var="mList" varStatus="i" items="${mList}">
 	                    <tr>
+	                    	<c:forEach var="dList" items="${dList}">
+	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+	                        		${dList.declarationCNo}
+	                        	</c:if>
+                       		</c:forEach>/
+                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
                         	<td rowspan="4">${mList.memberEmail}</td>
                         	<td rowspan="4">${mList.memberNickname}</td>
                         	<td rowspan="4">${mList.memberName}</td>
@@ -108,11 +115,12 @@
 		                        	<td rowspan="4">${totalCount.totalCount}</td>
 	                        	</c:if>
                         	</c:forEach>
-							<td rowspan="4"><button type="button" onclick="sanctionsPlus();">제재</button></td>
+							<td rowspan="4"><button type="button" onclick="sanctionsPlus(${i.index});">제재</button></td>
                         	<%-- <c:url var="profilePage" value="profilePage.do">
 						       <c:param name="pfMemberNo" value="프로필보고싶은사람의 memberNo" />
 						    </c:url> --%>
 	                    </tr>
+	                    
 	                    <tr>
 	                    	<td>게시판 신고</td>
 	                    	<td id="board"> 
@@ -199,7 +207,7 @@
                 </tbody>
             </table>
             <br><br>
-            <form >
+            <form action="sanctionsInsert.do">
             <div id="myModal" class="modal">
 				      <!-- Modal content -->
 				<div class="modal-content">
@@ -223,9 +231,10 @@
     </section>
     <jsp:include page="../common/footer.jsp"/>
 	<script>
-		function sanctionsPlus(){
+		function sanctionsPlus(i){
 			$("#myModal").css("display","block");
-			
+			$memberNo = $(".memberNo"+i).val();
+			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 		}
 	</script>
 </body>

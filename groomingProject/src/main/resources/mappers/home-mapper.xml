@@ -21,7 +21,6 @@
 		<result property="groomingViewCount" column="GROOMING_COUNT"/>
 	</resultMap>
 	
-	
 	<select id="getBoardTopList" resultMap="homeBoardResultSet">
 		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
 		FROM BOARD B

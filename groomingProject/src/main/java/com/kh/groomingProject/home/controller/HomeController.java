@@ -27,13 +27,13 @@ import static com.kh.groomingProject.common.HomePagination.getPageInfo;
 @SessionAttributes("loginUser")
 @Controller
 public class HomeController {
-
+     
 	@Autowired
 	private HomeService homeService;
 
 	@RequestMapping("home.do")
 	public ModelAndView home(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
-		
+
 		ArrayList<HomeBoard> hBoardList = homeService.getBoardTopList();
 		
 		System.out.println("홈 탑 게시글 : " + hBoardList);
@@ -128,5 +128,7 @@ public class HomeController {
 		}
 
 	}
+	
+	
 
 }

@@ -18,6 +18,7 @@
 		<result property="memberStatus" column="MEMBER_STATUS"/>
 		<result property="memberKakao" column="MEMBER_KAKAO"/>
 		<result property="memberJoinDate" column="MEMBER_JOIN_DATE"/>
+		<result property="memberCount" column="MEMBERCOUNT"/>
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">

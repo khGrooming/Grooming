@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
@@ -129,17 +130,16 @@ public class StudtyCafeController {
 	
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
-	public String insertReservation(Reservation r, String money) {
+	public String insertReservation(Reservation r, String money, Member m) {
 		Map rinfo = new HashMap();
 		
-		String memberNo = "M00002";
-		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(m.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
 			if(r.getcReserNo().equals(rlist.get(i).getcReserNo())) {
 				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
 				
-				rinfo.put("memberNo", memberNo);
+				rinfo.put("memberNo", m.getMemberNo());
 				rinfo.put("pointList", "카페 예약 취소");
 				rinfo.put("addPoint", oldMoney);
 				int resultPoint = studyCafeService.pointCalculation(rinfo);
@@ -148,7 +148,7 @@ public class StudtyCafeController {
 		
 		int result = studyCafeService.insertReservation(r);
 		
-		rinfo.put("memberNo", memberNo);
+		rinfo.put("memberNo", m.getMemberNo());
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 
 		if(totalPoint > Integer.valueOf(money)) {
@@ -162,9 +162,8 @@ public class StudtyCafeController {
 	
 	// 카페 신청  내역 페이지로 이동
 	@RequestMapping(value="reservationCheck.do")
-	public ModelAndView reservationCheck(ModelAndView mv) {
-		String memberNo = "M00002";
-		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
+	public ModelAndView reservationCheck(ModelAndView mv, Member m) {
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(m.getMemberNo());
 
 		mv.addObject("rlist", rlist);
 		mv.setViewName("studyCafe/reservationCheck");
@@ -173,9 +172,8 @@ public class StudtyCafeController {
 	}
 	
 	@RequestMapping(value="reservationHistory.do")
-	public ModelAndView rHistoryCheck(ModelAndView mv) {
-		String memberNo = "M00002";
-		ArrayList<ReservationView> rlist = studyCafeService.rHistoryCheck(memberNo);
+	public ModelAndView rHistoryCheck(ModelAndView mv, Member m) {
+		ArrayList<ReservationView> rlist = studyCafeService.rHistoryCheck(m.getMemberNo());
 		
 		mv.addObject("rlist", rlist);
 		mv.setViewName("studyCafe/reservationHistory");
@@ -183,17 +181,16 @@ public class StudtyCafeController {
 	}
 	
 	@RequestMapping("cancelR.do")
-	public String canccelReservation(String cReserNo) {
+	public String canccelReservation(String cReserNo, Member m) {
 		Map rinfo = new HashMap();
-		
-		String memberNo = "M00002";
-		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(memberNo);
+
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(m.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
 			if(cReserNo.equals(rlist.get(i).getcReserNo())) {
 				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
 				
-				rinfo.put("memberNo", memberNo);
+				rinfo.put("memberNo", m.getMemberNo());
 				rinfo.put("pointList", "카페 예약 취소");
 				rinfo.put("addPoint", oldMoney);
 				int resultPoint = studyCafeService.pointCalculation(rinfo);
@@ -207,11 +204,9 @@ public class StudtyCafeController {
 	
 	@RequestMapping("checkPoint.do")
 	@ResponseBody
-	public String checkPoint(int money, String cReserNo) {
-		String memberNo = "M00002";
-		
+	public String checkPoint(int money, String cReserNo, Member m) {
 		Map rinfo = new HashMap();
-		rinfo.put("memberNo", memberNo);
+		rinfo.put("memberNo", m.getMemberNo());
 		
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 		

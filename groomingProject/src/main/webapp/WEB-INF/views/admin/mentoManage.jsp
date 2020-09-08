@@ -17,8 +17,6 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
     <style>
-        html, body{margin:0px;padding:0px}
-        section{margin-top:10%}
         li{margin:0px; padding:0px;}
 		ul{padding-left:20px;}
 		
