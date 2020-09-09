@@ -69,6 +69,8 @@ public interface AdminService {
 
 	int nowPoint(Point p);
 
+	int mentoManage(String memberNo);
+
 
 	
 
