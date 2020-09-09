@@ -19,7 +19,7 @@
 		/* section{margin-top:10%} */
 		p{margin:0px;}
 		
-		.sideMenu{height:300px;background-color:blue;border-radius:10%;}
+		.sideMenu{height:300px;/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;}
 		.subMenu{height:100px;}
 		.cafe{height:80px;text-align:center;padding:30px;}
 		

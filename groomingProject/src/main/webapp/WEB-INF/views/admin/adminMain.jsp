@@ -19,7 +19,7 @@
         .visit, .user, .group, .board{margin-left:50px;}
         .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
         
-        .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
 
         .graph{width:50%;height:500px;position:relative;}
@@ -93,7 +93,7 @@
          </div>
          <br><br>
     </section>
-    <jsp:include page="../common/footer.jsp"/>
+    <%-- <jsp:include page="../common/footer.jsp"/> --%>
 </body>
     <script> 
     $(function(){

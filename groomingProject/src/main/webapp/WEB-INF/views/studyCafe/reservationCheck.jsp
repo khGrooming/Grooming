@@ -15,7 +15,7 @@
         <style>
 			/* section{margin-top:10%} */
 			
-            .sideMenu{height:300px;background-color:blue;border-radius:10%;}
+            .sideMenu{height:300px;/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;}
             .subMenu{height:100px;}
 
             .search{background:greenyellow;width:280px;height:50px;border:1px solid black}

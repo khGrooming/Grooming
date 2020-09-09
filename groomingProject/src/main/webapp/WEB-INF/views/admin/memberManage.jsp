@@ -15,7 +15,8 @@
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-        .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
+       	section { padding-top: 6.25rem; min-height: calc(100vh - 3.5rem); }
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
 
@@ -176,7 +177,7 @@
 	         </div>
          </div>
     </section>
-	<jsp:include page="../common/footer.jsp"/>
+	<%-- <jsp:include page="../common/footer.jsp"/> --%>
     <script>
     $(document).on("mouseenter",".point", function(){
 		$(".point").css("cursor","pointer");
