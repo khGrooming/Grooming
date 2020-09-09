@@ -144,7 +144,7 @@ font-size: 14px;
 				<img src='${contextPath }/resources/views/icons/profileIcon.png'   style="height:130px; z-index: 3;"class="profile_img" data-toggle="modal" data-target="#mtProfile">
 				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }" class="profile_img" id="profileImg">	
 				<div class="modal fade" id="mtProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					<div class="modal-dialog" role="document">
+					<div class="modal-dialog" role="document" style=" margin-top:200px;">
 						<div class="modal-content">
 							<div class="modal-header">
 

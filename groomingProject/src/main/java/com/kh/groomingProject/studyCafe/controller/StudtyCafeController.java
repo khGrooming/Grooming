@@ -109,7 +109,7 @@ public class StudtyCafeController {
 		str.put("day", day);
 		str.put("cPriceNo", cPriceNo);
 		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(str);
-		System.out.println("Roomlist : "+list);
+		
 		response.setContentType("application/json;charset=UTF-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
@@ -119,12 +119,11 @@ public class StudtyCafeController {
 	@RequestMapping(value="checkTime.do", method=RequestMethod.POST)
 	public void searchTime(String date, String cPriceNo, HttpServletResponse response ) throws JsonIOException, IOException {
 		Map str = new HashMap();
-
 		str.put("date", date);
 		str.put("cPriceNo", cPriceNo);
 		
 		ArrayList<Reservation> list = studyCafeService.selectCheckTime(str);
-		System.out.println("Timelist : "+list);
+
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
 		gson.toJson(list, response.getWriter());
 	}

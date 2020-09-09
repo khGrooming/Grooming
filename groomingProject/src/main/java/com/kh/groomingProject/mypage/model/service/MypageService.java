@@ -86,5 +86,7 @@ public interface MypageService {
 
 	String selectTempGroomingNo(String mNo);
 
+	MemberReport selectReportInfo(MemberReport repM);
+
 
 }

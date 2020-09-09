@@ -197,5 +197,10 @@ public class MypageServiceImpl implements MypageService{
 		return mpDao.selectTempGroomingNo(mNo);
 	}
 
+	@Override
+	public MemberReport selectReportInfo(MemberReport repM) {
+		return mpDao.selectReportInfo(repM);
+	}
+
 
 }

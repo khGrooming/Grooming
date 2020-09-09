@@ -35,8 +35,10 @@
 /* body {
 	height: 1200px;
 } */
-
-img {
+section {
+    margin-bottom: 50px;
+}
+section img {
 	width: 100%;
 	height: 100%;
 }
@@ -49,18 +51,15 @@ img {
 	font-weight: normal;
 	font-style: normal;
 }
-
 * {
 	font-family: "TmoneyRoundWindExtraBold";
 }
-
 .groomingImage {
 width: 450px;
 	height: 550px;
 	background-size: cover;
 	border: 1px solid lightgreen;
 }
-
 .status {
 	border-radius: 10px;
 	border: 1px solid black;
@@ -70,45 +69,36 @@ width: 450px;
 	color: red;
 	margin-bottom: 20px;
 }
-
 .pimg {
 	background-size: cover;
 	width: 100px;
 	height: 90px;
 }
-
 i {
 	font-size: 40px;
 }
-
 .fas {
 	color: yellow;
 }
-
 #gImg {
 	width: 100%;
 	height: 100%;
 	border-radius: 10px;
 }
-
 .specStyle {
 	padding: 4px 9px 6px 8px;
 	margin: 5px;
 	color: white;
 }
-
 .specS {
 	background: #5b84ed;
 }
-
 .specC {
 	background: #07b3a9;
 }
-
 .specCE {
 	background: #fb8c49;
 }
-
 #apply1 {
 	outline: 0;
 	border: 0;
@@ -117,7 +107,6 @@ i {
 	background: #b1caad;
 	margin: 0 auto;
 }
-
 .adBtn {
 	outline: 0;
 	border: 0;
@@ -128,17 +117,14 @@ i {
 }
 </style>
 </head>
-
 <body>
-
-
 	<jsp:include page="../common/mainNavigationBar.jsp" />
  
 	<section>
 
 
 
-		<div class="container" style="margin-top: 50px;">
+		<div class="container" style="margin-bottom: 50px;">
 
 			<div class="row">
 				<div class="col-9">
@@ -484,6 +470,11 @@ i {
 	</section>
 	 
 
+<<<<<<< HEAD
+	 
+
+=======
+>>>>>>> refs/remotes/origin/master
 	<script>
       $(function(){
          $("#applicantList").on("click",function(){

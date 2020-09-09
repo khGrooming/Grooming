@@ -78,7 +78,7 @@ input {
 }
 
 section {
-	margin-bottom: 100px;
+	margin-bottom: 50px;
 }
 
 .study tbody tr td {
@@ -219,7 +219,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 .form_container {
 	width: 100%;
-	margin-top: 150px;
+	margin-top: 50px;
 	border: 3px solid lightgreen;
 	border-radius: 10px;
 }

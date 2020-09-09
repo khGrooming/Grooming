@@ -17,6 +17,7 @@
 		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 		<result property="boardImg" column="BOARD_IMG" />
+		<result property="memberPhoto" column="MEMBER_PHOTO" />
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -166,7 +167,7 @@
 	<select id="communitySearch" parameterType="string" resultMap="boardResultSet">
 		SELECT *
         FROM BOARD
-        WHERE BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
+        WHERE B_CATEGORY_NO='BC00002' AND BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
 	</select>
 	<!-- 태그 -->
 <!-- 	    SELECT *
