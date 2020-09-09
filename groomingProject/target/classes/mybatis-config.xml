@@ -64,8 +64,6 @@
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
-		<typeAlias type="com.kh.groomingProject.admin.model.vo.VisitCount" alias="VisitCount"/>
-		<typeAlias type="com.kh.groomingProject.admin.model.vo.GraphListCount" alias="GraphListCount"/>
 	</typeAliases>
 	
 	<mappers>
