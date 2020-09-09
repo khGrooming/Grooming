@@ -32,7 +32,7 @@
 	</style>
 </head>
 <body>
-	<header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+	<jsp:include page="../common/mainNavigationBar.jsp"/>
 	
 	<section>
 	<div class="container-fluid">
@@ -42,8 +42,14 @@
 			<div class="container col-sm-3"></div>
 			    <div class="sideMenu col-sm-7">
 					<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-					<div class="cafe"><a href="reservationCheck.do">카페 신청 내역</a></div>
-					<div class="cafe"><a href="reservationHistory.do">카페 예약 내역</a></div>
+					<c:if test="${!empty SessionScope.loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					</c:if>
+					<c:if test="${empty SessionScope.loginUser}">
+						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
+						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
+					</c:if>
 	        	</div>
 	        </div>
 			<div class="col-sm-8">
@@ -90,8 +96,7 @@
 		</div>
 	</section>
 	
-	<footer><jsp:include page="../common/footer.jsp" /></footer>
-	
+	<jsp:include page="../common/footer.jsp" />
 	<script>
 		$("#searchName").keyup(function(event){
 			if(event.keyCode == 13){

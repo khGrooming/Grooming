@@ -15,9 +15,6 @@
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
-        html, body{margin:0px;padding:0px}
-        section{margin-top:10%}
-
         .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
@@ -160,7 +157,7 @@
 		                </tbody>
 		            </table>
 		            <form action="pointCalculation.do">
-			            <div id="myModal" class="modal">
+			            <div id="pointModal" class="modal">
 							      <!-- Modal content -->
 							<div class="modal-content">
 								<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">포인트 관리</span></b></span></p>
@@ -184,7 +181,7 @@
     $(document).on("mouseenter",".point", function(){
 		$(".point").css("cursor","pointer");
 	}).on("click", ".point", function(){
-		$(".modal").css("display","block");
+		$("#pointModal").css("display","block");
 		$memberNo = $(this).next().children("input").val();
 		$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 	});
