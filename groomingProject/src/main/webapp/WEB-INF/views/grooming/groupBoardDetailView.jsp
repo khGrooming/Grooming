@@ -35,28 +35,20 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <title>Hello, world!</title>
     <style>
-        body {
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
         img {
             max-width: 300px;
             max-height: 300px;
-           
         }
-      
         .table th {
             text-align: center;
             vertical-align: middle;
         }
-      
-		
 		  @font-face { 
 			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
     	    font-weight: normal; 
     	    font-style: normal; 
    		}
-   
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
@@ -73,22 +65,22 @@
 	    	border-radius:15px;
 	    	background:lightsteelblue;
 	    }
-	    
     </style>
 </head>
 
 <body>
     <!-- 헤더시작 -->
-    <header>
-        <jsp:include page="../common/mainNavigationBar.jsp" />
-    </header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+    <!-- 메인에 들어갈 내용용 -->
+    <section >
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
+    <div class="container">
        <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
 	  	</c:url>
 		<c:url var="gBlist" value="gBlist.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo}"/>
@@ -105,8 +97,6 @@
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
-        <!-- 메인에 들어갈 내용용 -->
-        <section >
 
             <div style="text-align: right; margin-right: 20px;">
             <button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
@@ -222,13 +212,8 @@
                         
                         
                     </div>
-
-
-
-        </section>
-
-
-    </div>
+		</div>
+	</section>
     
     <script>
     $(function(){
@@ -386,10 +371,8 @@
 	
 	
 	</script>
-    <footer style="margin-top:100px;">
 
-		<jsp:include page="../common/footer.jsp" />
-    </footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
     <!-- Optional JavaScript -->

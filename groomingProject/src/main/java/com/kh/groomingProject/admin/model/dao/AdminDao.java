@@ -1,6 +1,7 @@
 package com.kh.groomingProject.admin.model.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,12 @@ import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
+
+import oracle.sql.DATE;
 
 @Repository
 public class AdminDao {
@@ -149,7 +154,16 @@ public class AdminDao {
 		return 0;
 	}
 
-	
+	public ArrayList<Board> adminBoardList() {
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminBoardList");
+	}
+
+	public ArrayList<Grooming> adminGroomingList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminGroomingList");
+	}
+
 
 	
 }

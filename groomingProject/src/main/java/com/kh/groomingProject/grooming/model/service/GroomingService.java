@@ -17,6 +17,7 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
 public interface GroomingService {
 
@@ -132,4 +133,25 @@ public interface GroomingService {
 
 	ArrayList<Grooming> groomingSearch(GroomingSearch gs);
 
+	int updateCheck(GCheck g);
+
+	int getCheckY(Map hashmap);
+
+	int getCheckL(Map hashmap);
+
+	int getDifDate(String groomingNo);
+
+	String getMemberNickName(String memberNo);
+
+	int getCheckN(Map hashmap);
+
+	ArrayList<MyPagePoint> selectGpointList(String applyNo);
+
+	int addPointMember(Map map1);
+
+	Grooming limitCheck(String groomingNo);
+
+	String selectMemberNo(String groomingNo);
+
+	int addMentorPoint(Map map2);
 }

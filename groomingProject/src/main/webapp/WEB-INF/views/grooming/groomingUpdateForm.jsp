@@ -224,9 +224,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
-	<header>
-		<jsp:include page="../common/mainNavigationBar.jsp" />
-	</header>
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
 
 	<section>
@@ -515,10 +513,13 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</script>
 		<script>
 			function save() {
+				var groomingNo = "${grooming.groomingNo}";
+				var memberNo = "${loginUser.memberNo}";
+				var page = "${currentPage}";
 				var result = confirm("수정을 취소하시겠습니까?");
 				if (result) {
 					alert("취소되었습니다.");
-					location.href="groomingMain.do"; 
+					 location.href='groomingDetail.do?groomingNo='+groomingNo+ '&memberNo='+memberNo+'&page='+page;  
 				} 
 			}
 		</script>
@@ -662,8 +663,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	</section>
 
 
-	<footer><jsp:include page="../common/footer.jsp" />
-	</footer>
+	<jsp:include page="../common/footer.jsp" />
 
 
 	<!-- Optional JavaScript -->

@@ -23,8 +23,7 @@
 			<p>정말 탈퇴하시겠습니까?
 			<p>
 				탈퇴하기 위해서 계정의 비밀번호를 입력하십시오. <br> <br> <input
-					type="password" name="pwd" id="pwd" required
-					style="margin-right: 3%;">
+					type="password" name="pwd" id="pwd" required style="margin-right: 3%;">
 				<button onclick="pwdCheck();">입력</button>
 		</div>
 		<div id="testtest"
@@ -57,8 +56,8 @@
 	</div>
 	<script>
       			function pwdCheck(){
+      				
       				var inputPwd = $("#pwd").val();
-
       			 	$.ajax({
       					url:"pwdCheck.do",
       					type:"post",
@@ -77,7 +76,7 @@
       				})
       				
       			/* 	if(inputPwd == "qwe"){
-      					$("#pwdCheckDiv").css("display","none");
+      					$("#CheckDiv").css("display","none");
       					$("#testtest").css("display","block");
       				}else{
       					

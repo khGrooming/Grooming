@@ -875,7 +875,9 @@ section .form_container .hideItem
 					success:function(data){
 						console.log("회원가입 결과 : " + data);
 						if(data == "success"){
-							registerOption();
+							registerOption()
+							// 페이지 접근 경로 변경
+							history.replaceState(null,null, "home.do");
 						} else {
 							$("#registerError").css("display","block");
 						}

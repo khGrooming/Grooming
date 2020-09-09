@@ -47,7 +47,7 @@
     </style>
 </head>
 <body>
-    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+    <jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
         <div class="container col-sm-3">
@@ -221,6 +221,7 @@
 		</form>
         <br clear="both">
     </section>
+    <jsp:include page="../common/footer.jsp"/>
 	<script>
 		function sanctionsPlus(){
 			$("#myModal").css("display","block");

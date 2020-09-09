@@ -26,9 +26,6 @@
 	
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
         img {
             max-width: 100%;
@@ -56,16 +53,19 @@
 
 <body>
     <!-- 헤더시작 -->
-    <header>
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
-    </header>
+   	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
+    <div class=container>
+
+
+        <!-- 메인에 들어갈 내용용 -->
+        <section >
     <c:url var="calendar" value="calendar.do">
     	<c:param name="groomingNo" value="${grooming.groomingNo}"/>
+    	<c:param name="memberNo" value="${loginUser.memberNo}" />
     </c:url>
 	<c:url var="gBlist" value="gBlist.do">
 			<c:param name="groomingNo" value="${grooming.groomingNo}"/>
@@ -80,13 +80,9 @@
         <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>출석부</a></label>
 
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-
-
-        <!-- 메인에 들어갈 내용용 -->
-        <section >
          
                <!-- 그루밍 제목 -->
-                <h2 style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
+                <h2 style="margin-top:50px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
                 <!-- 그루밍 한줄 소개 -->
                 <p  style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingIntroduce }</p>
                 <div class="row">
@@ -159,9 +155,9 @@
 			
 			getGroupList();
 			
-			setInterval(function(){
+			/* setInterval(function(){
 				getGroupList();
-			},10000);   
+			},10000);   */ 
 			
 			$(document).on("click",".kickout",function(){
 			var appTemp = $(this);
@@ -296,33 +292,11 @@
 		})
 		
 	</script>
-	
-	<!-- 캘린더 내용 (일정 관리/출석 체크) -->
-    <section id="content2">
-       
-          
-       
-    </section>
-
-    <!--게시판에 들어갈 내용 -->
-    <section id="content3">
-        
-          
-        
-    </section>
-
 </div>
-
-
-    <footer>
-
-		<jsp:include page="../common/footer.jsp" />
-    </footer>
-
+	<jsp:include page="../common/footer.jsp" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
@@ -330,5 +304,4 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

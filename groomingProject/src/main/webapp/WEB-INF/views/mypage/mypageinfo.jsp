@@ -8,13 +8,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css"
 	integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX"
 	crossorigin="anonymous">
-
+<!-- Bootstrap4 TagsInput -->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.js"></script>
+<link href="${pageContext.servletContext.contextPath }/resources/js/bootstrap4-tagsinput/tagsinput.css" rel="stylesheet">
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
 
 <style type="text/css">
@@ -24,7 +27,9 @@
 	padding: 0;
 	/* box-sizind: border-box; */
 }
-
+body{
+	min-width: 1330px;
+}
 section {
 	position: relative;
 	min-height: 91vh;
@@ -50,19 +55,8 @@ section {
 
 
 
-#memo {
-	width: 75%;
-	margin-left: auto;
-	margin-right: auto;
-	height: 100px;
-}
 
 
-
-.grayBox {
-	border: 1px solid lightgray;
-	border-radius: 12px;
-}
 
 #counter {
 	float: right;
@@ -109,81 +103,101 @@ section {
 
 
 
-#test {
-	margin-top:5px;
-	text-align: center;
-	
-}
-
-#test ul ul {
-	display: none;
-}
-
-#test ul li:hover>ul {
-	display: block;
-}
-
-#test ul {
-       width: 90%;
-	list-style: none;
-	position: relative;
-	display: inline-table;
-}
-
-#test ul:after {
-	content: "";
-	clear: both;
-	display: block;
-}
-
-#test ul li {
-	float: left;
-	margin-left: 3%;
-	margin-right: 3%;
-	
-}
-
-#test ul li :hover {
-}
-
-#test ul li a {
-	width:120px;
-	display: block;
-	padding: 10px;
-	color : #757575;
-	text-decoration: none;
-	margin: 0 10px;
-}
-
-#test ul ul {
-	width:20%;
-	position: absolute;
-	padding:1%;
-	border: 1px solid rgba(229, 229, 229, 1); 
-	border-radius: 10px;
-	background:white;
-	top: 100%;
-	z-index: 50;
-}
-
-#test ul ul li {
-	float: none;
-	position: relative;
-}
-
-#test ul ul li a {
-	color: gray;
-}
-#test ul ul li a:hover {
-	color: black;
-	
-	border-bottom:1px solid gray; 
-}
 
 .myPage_navbar{
 	display: inline-block;
 	margin:3% 15%;
 }
+
+
+
+.submenubar nav {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+}
+
+
+.submenubar nav::before {
+	position: absolute;
+	top: 5%;
+	left: 0;
+	width: 100%;
+	color: black;
+	font: 400 24px/1;
+	text-align: center;
+}
+
+
+/* common */
+.submenubar nav ul {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.submenubar nav ul::after {
+	display: block;
+	clear: both;
+}
+.submenubar nav ul li {
+	position: relative;
+	float: left;
+	border: 1px solid gray;
+	background:white;
+	z-index: 100;
+}
+.submenubar nav ul li:not(:first-child) {
+	border-left: none;
+}
+.submenubar nav ul li:hover {
+	
+	background:white;
+}
+
+.submenubar nav ul li a {
+	display: inline-block;
+	padding: 0.7em 4em;
+	color: black;
+	font: 400 18px/1;
+	text-align: center;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.submenubar nav ul ul {
+	position: absolute;
+	top: 100%;
+	left: -2px;
+}
+
+.submenubar nav ul ul li {
+	float: none;
+	margin: 0;
+}
+.submenubar nav ul ul li:not(:first-child) {
+	border: 1px solid gray;
+	background:white;
+	border-top: none;
+}
+.submenubar nav ul ul ul {
+	position: absolute;
+	top: -2px;
+	left: 100%;
+}
+
+/* DEMO #2 */
+.submenubar .nav02 ul ul {
+	visibility: hidden;
+	opacity: 0;
+	transition: .2s ease-in-out;
+}
+.submenubar .nav02 ul li:hover > ul {
+	visibility: visible;
+	opacity: 1;
+}
+
+
 
 </style>
 </head>
@@ -196,41 +210,43 @@ section {
 	<c:if test="${!empty loginUser }">
 
 		<div class="subContent_my myPage_navbar"
-			style="width: 70%; height: 50px; border: 1px solid rgba(229, 229, 229, 1); border-radius: 10px; margin-top: 7%; ">
+			style="width: 70%; height: 50px; border-radius: 10px; margin-top: 7%; ">
 
-			<div class="menubar">
-				<div  id="test">
-					<ul >
-						<li><a href="mypage-memberup.do">개인정보</a>
-							<ul>
-								<li><a href="mypage-memberup.do">개인정보수정</a></li>
-								<li><a href="mentor.do">멘토등록</a></li>
-								<li><a href="memberSecession.do">탈퇴하기</a></li>
-							</ul>
-						</li>
-						<li><a href="mpgrooming.do">스터디</a>
-							<ul>
-								<li><a href="opengrooming.do">개설한 스터디</a></li>
-								
-								<li><a href="GHeart.do">찜목록</a></li>
-								<li><a href="gApplicant.do">신청내역</a></li>
-								<li><a href="ginsertTemp.do">작성내역</a></li>
-							</ul>
-						</li>
-						<li><a href="mypageCommunity.do">활동내역</a>
-							<ul>
-								<li><a href="mypageCommunity.do">내가 쓴 글</a></li>
-								<li><a href="mypageReply.do">내가 쓴 댓글</a></li>
-							</ul>
-						</li>
-						<li><a href="mypagePoint.do">포인트</a></li>
-					</ul>
-				</div>
-			</div>
+			<div class="submenubar">
+    <nav class="nav02">
+        <ul>
+            <li><a href="mypage-memberup.do">개인정보</a>
+            	<ul>
+                    <li><a href="mypage-memberup.do">개인정보 수정</a></li>
+                    <li><a href="mentor.do">멘토 등록</a></li>
+                    <li><a href="memberSecession.do">회원 탈퇴</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="mpgrooming.do">스터디</a>
+                <ul>
+                	
+                    <li><a href="mpgrooming.do">진행중인스터디</a></li>
+                    <li><a href="opengrooming.do">개설한 스터디</a></li>
+                    <li><a href="GHeart.do">찜목록</a></li>
+                    <li><a href="gApplicant.do">신청내역</a></li>
+                    <li><a href="ginsertTemp.do">작성내역</a></li>
+                </ul>
+            </li>
+             <li>
+                <a href="mypageCommunity.do">활동내역</a>
+                <ul>
+                    <li><a href="mypageCommunity.do">내가 쓴 글</a></li>
+                    <li><a href="mypageReply.do">내가 쓴 댓글</a></li>
+                </ul>
+            </li>
+            <li><a href="mypagePoint.do">포인트</a></li>
+        </ul>
+    </nav>
+</div>
 		</div>
 
 
-		</div>
 		<script>
 			$(".submenu").on("click", function() {
 				var clickId = $(this).attr("id");
