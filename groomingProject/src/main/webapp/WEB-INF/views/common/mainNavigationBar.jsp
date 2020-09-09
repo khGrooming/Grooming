@@ -537,7 +537,8 @@
 	<!-- 로그인 유저 세션 갱신 -->
 	<script type="text/javascript">
 		function refreshLoginUser() {
-			var memberEmail = "${loginUser.memberEmail}";
+			var memberEmail = "";
+			memberEmail = "${loginUser.memberEmail}";
 			$.ajax({
 				url:"refreshLoginUser.do",
 				data:{memberEmail:memberEmail},
