@@ -725,9 +725,6 @@
 		FROM G_CHECK
 		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
  	</select>
- 							  
-
-	
  	
 	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
 		<![CDATA[

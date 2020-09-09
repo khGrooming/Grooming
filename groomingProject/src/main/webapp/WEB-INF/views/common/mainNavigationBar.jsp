@@ -332,7 +332,7 @@
     display: none;
 	width: 1.87rem;
 	height: 1.87rem;
-	bottom: 1rem;
+	bottom: 3rem;
 	right: 1rem;
 	float:right;
 	font-size: 1.25rem;
@@ -342,7 +342,7 @@
 }
 .main_adminIcon
 {
-	bottom: 4rem;
+	bottom: 6rem;
     display: block;
 }
 .main_upIcon .img_svg,
