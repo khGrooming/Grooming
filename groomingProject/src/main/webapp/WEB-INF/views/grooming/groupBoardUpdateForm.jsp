@@ -50,7 +50,6 @@
 	   }
 	   
 	   .filebox input[type="file"] {
-
 	position: absolute;
 	width: 1px;
 	height: 1px;

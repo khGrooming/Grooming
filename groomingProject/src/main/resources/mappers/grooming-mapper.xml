@@ -748,16 +748,16 @@
 		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
 		]]>
 		<choose>
-			<when test="search == 'title'">
-            AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
-			</when>
-			<when test="search == 'writer'">
-			AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
-			</when>
-			<otherwise>
-            AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
-			</otherwise>
-		</choose>
+		    <when test="search == 'title'">
+				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <when test="search == 'writer'">
+				AND MEMBER_NICKNAME LIKE '%' || #{keyword} || '%'
+		    </when>
+		    <otherwise>
+				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
+		    </otherwise>
+		  </choose>
 	</select>
 
  	<update id="updateCheck" parameterType="GCheck">
