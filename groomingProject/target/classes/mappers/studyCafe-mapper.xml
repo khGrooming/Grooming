@@ -113,7 +113,7 @@
 		    ON (C_RESER_NO = '${cReserNo}')
 		WHEN MATCHED THEN 
 		    UPDATE SET  
-		    	MEMBER_NO = 'M00002'
+		    	MEMBER_NO = #{memberNo}
 		        , C_PRICE_NO = '${cPriceNo}'
 		        , C_RESER_HEAD_COUNT = '${cReserHeadCount}'
 		        , C_RESER_DATE = '${cReserDate}'
@@ -122,7 +122,7 @@
 		WHEN NOT MATCHED THEN 
 			INSERT (C_RESER_NO,MEMBER_NO,C_PRICE_NO,C_RESER_HEAD_COUNT,C_RESER_DATE,C_RESER_S_TIME,C_RESER_E_TIME)
 			VALUES (SEQ_C_RESER_NO.NEXTVAL
-					, 'M00002'
+					, #{memberNo}
 					, '${cPriceNo}'
 					, '${cReserHeadCount}'
 					, '${cReserDate}'

@@ -188,6 +188,11 @@ public class AdminDao {
 		return sqlSessionTemplate.selectOne("adminMapper.nowPoint", p);
 	}
 
+	public int mentoManage(String memberNo) {
+
+		return sqlSessionTemplate.update("adminMapper.mentoManage", memberNo);
+	}
+
 
 	
 }
