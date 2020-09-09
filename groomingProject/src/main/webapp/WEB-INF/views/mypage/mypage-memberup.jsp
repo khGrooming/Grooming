@@ -75,8 +75,8 @@ text-align: center;
 }
 
 #memoTextArea {
-	width: 100%;
-	height: 50px;
+	width: 85%;
+	height: 55px;
 	font-size: 12px;
 }
 
@@ -270,7 +270,7 @@ font-size: 14px;
 						empPercent = (100 / maxExp) * memberExp;
 						if (empPercent < 5) {
 							/* 5%보다 작을경우 화면에 표시되는게 너무 작아서 눈에 쉽게 보이지 않음 */
-							$("#expBar").css("width", "5%");
+							$("#expBar").css("width", "1%");
 						} else {
 							$("#expBar").css("width", empPercent + "%");
 						}
@@ -284,7 +284,8 @@ font-size: 14px;
 			<div id="memo" style="position: relative;">
 				<p class="sstitle">상태메시지</p>
 				<textarea id="memoTextArea" style="letter-spacing: 0.3em" maxlength="100"><c:if test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if></textarea>
-				<span id="counter" style="position: absolute; top: 70%; left: 90%;">###</span>
+				<span id="counter" style="position: absolute; top: 70%; left: 75%;">###</span>
+				<button onclick="changememo();" style="position: absolute;  margin-left: 10px; width: 13%; height: 55px; border-radius: 10px;">완료</button>
 				<script>
 						$(function() {
 							var content = $("#memoTextArea").val();
@@ -294,36 +295,39 @@ font-size: 14px;
 								$('#counter').html(content.length + '/100');
 							});
 							$('#content').keyup();
-							$('#memoTextArea').change(
-									function() {
-										alert(content);
-										var save = confirm("상태메시지를 저장하시겠습니까?");
-										if (save) {
-											$.ajax({
-												url : "upMemo.do",
-												type : "post",
-												data : {memberMemo : $(this).val()},
-												success : function(data) {
-													alert("변경되었습니다");
-												},
-												error : function(data) {
-													alert("code:"+ request.status+ "\n"
-															+ "error:"+ error);
-												}
-
-											})
-										} else {
-											alert("취소하였습니다");
-											if ("${profileInfo.memberMemo}" == "NULL") {
-												$('#memoTextArea').val("");
-											} else {
-												$('#memoTextArea').val("${profileInfo.memberMemo}");
-											}
-										}
-
-									})
+						
 
 						});
+						function changememo(){
+
+							var content = $("#memoTextArea").val();
+							alert(content);
+							var save = confirm("상태메시지를 저장하시겠습니까?");
+							if (save) {
+								$.ajax({
+									url : "upMemo.do",
+									type : "post",
+									data : {memberMemo : content},
+									success : function(data) {
+										alert("변경되었습니다");
+									},
+									error : function(data) {
+										alert("code:"+ request.status+ "\n"
+												+ "error:"+ error);
+									}
+
+								})
+							} else {
+								alert("취소하였습니다");
+								if ("${profileInfo.memberMemo}" == "NULL") {
+									$('#memoTextArea').val("");
+								} else {
+									$('#memoTextArea').val("${profileInfo.memberMemo}");
+								}
+							}
+							
+							
+						}
 					</script>
 			</div>
 			<div style="margin-top: 2%;">
@@ -359,6 +363,7 @@ font-size: 14px;
 								<td class="specTd" id="career2"></td>
 							</tr>
 						</table>
+						
 						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 									aria-labelledby="myModalLabel">
 									<div class="modal-dialog" role="document">
@@ -570,9 +575,9 @@ font-size: 14px;
 									default:
 										break;
 									}
+								
 									if (career[i] != "") {
-										if(certificateconfirm[i] == "N"){
-											
+										if(careerconfirm[i] == "N"){											
 											$tdId.text(career[i]).css("color","lightgrey");
 										}else{
 											$tdId.text(career[i]).css("color","black");

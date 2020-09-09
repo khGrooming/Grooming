@@ -240,7 +240,10 @@
 	<div class="cards_bundle row">
 			
 		<c:forEach var="g" items="${openGroomingList }">
-			<div class="card_container col-lg-3">
+		 <c:url var="groupPage" value="groupPage.do">
+				<c:param name="groomingNo" value="${g.groomingNo}"/>
+			</c:url>
+			<div class="card_container col-lg-3" onclick="location.href='${groupPage}'">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->

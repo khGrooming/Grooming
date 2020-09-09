@@ -153,7 +153,7 @@ function deleteAction(){
 	  }
 	  console.log("### checkRow => {}"+checkA);
 	 
-	  if(confirm("정보를 삭제 하시겠습니까?")){
+	  if(confirm("찜하기를 삭제 하시겠습니까?")){
 	      /* ajax로 삭제하기 ?*/
 	    
 	      location.href="heartDele.do?checkList="+checkA;

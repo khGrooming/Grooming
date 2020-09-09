@@ -78,7 +78,7 @@ input {
 }
 
 section {
-	margin-bottom: 100px;
+	margin-bottom: 50px;
 }
 
 .study tbody tr td {
@@ -210,7 +210,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 .form_container {
 	width: 100%;
-	margin-top: 150px;
+	margin-top: 50px;
 	border: 3px solid lightgreen;
 	border-radius: 10px;
 }
@@ -224,7 +224,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
-	<jsp:include page="../common/mainNavigationBar.jsp" />
+		<jsp:include page="../common/mainNavigationBar.jsp" />
 
 
 	<section>
@@ -233,7 +233,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
-		<label id="today" style=""></label>
+		<!-- <label id="today" style=""></label> -->
 		<div class="form_container container">
 			<!-- style=" "> -->
 
@@ -694,4 +694,5 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
 		crossorigin="anonymous"></script>
 </body>
+
 </html>
