@@ -429,9 +429,12 @@ public class GroomingController {
 
 	// 그루밍 글 수정
 	@RequestMapping("gUpdate.do")
-	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
+	public ModelAndView groomingUpdate(HttpServletRequest request,String money1, String tagName, ModelAndView mv, String groomingNo,String memberNo,
 			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
-
+		System.out.println("money1 : " + money1);
+		if(money1.equals("x")) {
+			g.setMoney("0");
+		}
 		String renameFileName = "";
 		// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
 		// 그럼 그걸 가지고 기존의 파일을 삭제하자
@@ -485,8 +488,28 @@ public class GroomingController {
 		}
 
 		System.out.println("나 수정 됬어요~" + result);
+		Grooming grooming = gService.selectGrooming(groomingNo);
+		
+		
+		
+		ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+		ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+		Member member = gService.selectMember(groomingNo);
+		ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+		
+		ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+		Map info = new HashMap();
+		info.put("groomingNo", groomingNo);
+		info.put("memberNo", memberNo);
+		GroomingHeart heart = gService.selectHeartMember(info);
+		Declaration declaration = declarationService.selectGroomingDeclare(info);
+		GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+		
 		if (result > 0 && result1 > 0 && result2 > 0) {
-			mv.addObject("page",page).setViewName("redirect:groomingMain.do");
+			mv.addObject("currentpage",page).addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+			.addObject("member", member).addObject("appList", appList)
+			.addObject("memberNoList", memberNoList).addObject("heart", heart)
+			.setViewName("grooming/groomingDetailView");
 
 		} else {
 			throw new GroomingException("게시글 수정 실패!");

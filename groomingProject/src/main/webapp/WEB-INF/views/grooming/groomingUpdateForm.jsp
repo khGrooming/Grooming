@@ -245,6 +245,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 			<form action="${groomingUpdate }" method="post" enctype="multipart/form-data">
 				
 				<input type="hidden" value="${grooming.groomingNo }">
+				<input type="hidden" value="${loginUser.memberNo }">
 				<div class="row" style="margin-bottom: 10px; margin-top: 10px;">
 
 					<div class="col-7">
@@ -331,7 +332,6 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								<tr>
 									<td>
 										<span>해시 태그</span><br> 
-										
 											<input type="text" name="tagName" placeholder="Tags," data-role="tagsinput" value="${tlist }" class="form-control"
 											 id="tagName" style="display: none;" required>
 										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small></td>
