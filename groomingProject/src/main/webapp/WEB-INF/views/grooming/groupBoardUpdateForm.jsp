@@ -21,28 +21,36 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
-<style>
-/* div의 크기에 맞춤 */
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
-.table{
-    text-align: center;
-    border-radius:15px;
-}
-@font-face { 
-	font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
-	font-weight: normal; 
-	font-style: normal; 
-}
-* {
-	font-family:"TmoneyRoundWindExtraBold";
-}
-.table tr th{
-	vertical-align:center;
-}
-.filebox input[type="file"] {
+
+    <style>
+        /* div의 크기에 맞춤 */
+        section img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+  
+  
+        .table{
+            text-align: center;
+            border-radius:15px;
+        }
+        
+        @font-face { 
+			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+    	    font-weight: normal; 
+    	    font-style: normal; 
+   		}
+   
+	   * {
+	      font-family:"TmoneyRoundWindExtraBold";
+	   }
+	   
+	   .table tr th{
+	   		vertical-align:center;
+	   }
+	   
+	   .filebox input[type="file"] {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -209,12 +217,19 @@ img {
             </div>
         </section>
 
-	<script>
-		$(function(){
-			var textareaContent = $("#textareaContent").val();
-			var content = $("#content");
-			if(textareaContent != null){
-				content.text(textareaContent);
+
+
+
+
+
+    
+        <script>
+			$(function(){
+			
+				var textareaContent = $("#textareaContent").val();
+				var content = $("#content");
+				if(textareaContent != null){
+					content.text(textareaContent);
 			}
 		})
 	</script> 

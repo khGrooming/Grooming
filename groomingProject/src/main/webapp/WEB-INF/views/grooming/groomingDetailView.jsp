@@ -79,36 +79,6 @@ i {
 	height: 100%;
 	border-radius: 10px;
 }
-.specStyle {
-	padding: 4px 9px 6px 8px;
-	margin: 5px;
-	color: white;
-}
-.specS {
-	background: #5b84ed;
-}
-.specC {
-	background: #07b3a9;
-}
-.specCE {
-	background: #fb8c49;
-}
-#apply1 {
-	outline: 0;
-	border: 0;
-	width: 20%;
-	height: 60px;
-	background: #b1caad;
-	margin: 0 auto;
-}
-.adBtn {
-	outline: 0;
-	border: 0;
-	background: #b1caad;
-	width: 10%;
-	height: 40px;
-	margin-right: 10px;
-}
 </style>
 </head>
 <body>
@@ -118,7 +88,9 @@ i {
 
 
 
-		<div class="container" style="margin-bottom: 50px;">
+
+<div class="container" style="margin-bottom: 50px;">
+
 
 			<div class="row">
 				<div class="col-9">
@@ -153,13 +125,13 @@ i {
 						<tr>
 							<td style="text-align:right;"> 
 							
-								<c:if test="${!empty loginuUser }">
 									<c:if test="${!empty heart }">
 										<i id="heart" class="fas fa-bookmark"></i>
 									</c:if>
 									<c:if test="${empty heart }">
 										<i id="nheart" class="far fa-bookmark"></i>
 									</c:if>
+								<c:if test="${!empty loginuUser }">
 									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 								</c:if>
 								<c:if test="${empty loginuUser }">
@@ -445,7 +417,7 @@ i {
 										</td>
 									</div>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="sumbit" id="submit" >제출</button>
+										<button type="submit" id="submit" >제출</button>
 										<button type="button" data-dismiss="modal">취소</button>
 									</div>
 								</div>
@@ -464,11 +436,6 @@ i {
 	</section>
 	 
 
-<<<<<<< HEAD
-	 
-
-=======
->>>>>>> refs/remotes/origin/master
 	<script>
       $(function(){
          $("#applicantList").on("click",function(){
@@ -563,7 +530,7 @@ i {
 
 	<script>
       $("#submit").on("click",function(){
-         alert("신청되었습니다.");
+    	 alert("신청되었습니다.");
       })
    </script>
 	<script>
@@ -578,7 +545,10 @@ i {
          var groomingTitle = "${grooming.groomingTitle}";
          var count = "${grooming.count}";
       $(document).on("click","#nheart",function(){
-   
+   		if(memberNo == ""){
+   			alert("로그인 해야지만 이용가능한 서비스 입니다.");
+   			return false;
+   		}
          $.ajax({
             url:"findHeart.do",
             data:{groomingNo:groomingNo,memberNo:memberNo},

@@ -36,7 +36,7 @@
     <title>Hello, world!</title>
     <style>
         /* div의 크기에 맞춤 */
-        img {
+       section img {
             max-width: 300px;
             max-height: 300px;
         }
