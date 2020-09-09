@@ -2,8 +2,6 @@ package com.kh.groomingProject.home.model.service;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
-
 import com.kh.groomingProject.home.model.vo.HomeBoard;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.home.model.vo.HomeHelp;
