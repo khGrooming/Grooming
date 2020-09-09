@@ -235,7 +235,6 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 		<label id="today" style="" hidden></label>
 		<div class="form_container container">
-			<!-- style=" "> -->
 
 			<c:url var="groomingSaveUpdate" value="gSaveUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>

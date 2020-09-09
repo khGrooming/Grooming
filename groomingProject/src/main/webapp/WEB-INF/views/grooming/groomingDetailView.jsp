@@ -79,37 +79,17 @@ i {
 	height: 100%;
 	border-radius: 10px;
 }
-.specStyle {
-	padding: 4px 9px 6px 8px;
-	margin: 5px;
-	color: white;
-}
-
-.specS {
-	background: #5b84ed;
-}
-
-.specC {
-	background: #07b3a9;
-}
-.specCE {
-	background: #fb8c49;
-}
-
 
 </style>
 </head>
-
 <body>
-
-
 	<jsp:include page="../common/mainNavigationBar.jsp" />
  
 	<section>
 
 
 
-				<div class="container" style="margin-bottom: 50px;">
+<div class="container" style="margin-bottom: 50px;">
 
 
 			<div class="row">

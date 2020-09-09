@@ -89,7 +89,7 @@ public class GroomingDao {
 	}
 
 	public ArrayList<GroomingSpec> selectSpec(String groomingNo) {
-		// TODO Auto-generated method stub
+
 		return (ArrayList)sqlSessionTemplate.selectList("groomingMapper.selectSpec",groomingNo);
 	}
 

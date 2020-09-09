@@ -774,7 +774,6 @@
 		FROM G_CHECK
 		WHERE GROOMING_NO=#{groomingNo} AND G_MEMBER_NO=#{gMemberNo}
 		AND G_CHECK ='Y'
-
  	</select>
  							  
 	<select id="selectList" resultMap="groomingMainResultSet">

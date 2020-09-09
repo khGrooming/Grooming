@@ -35,28 +35,20 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <title>Hello, world!</title>
     <style>
-        body {
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
        section img {
             max-width: 300px;
             max-height: 300px;
-           
         }
-      
         .table th {
             text-align: center;
             vertical-align: middle;
         }
-      
-		
 		  @font-face { 
 			font-family: 'TmoneyRoundWindExtraBold'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
     	    font-weight: normal; 
     	    font-style: normal; 
    		}
-   
 	   * {
 	      font-family:"TmoneyRoundWindExtraBold";
 	   }
@@ -73,13 +65,12 @@
 	    	border-radius:15px;
 	    	background:lightsteelblue;
 	    }
-	    
     </style>
 </head>
 
 <body>
     <!-- 헤더시작 -->
-        <jsp:include page="../common/mainNavigationBar.jsp" />
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
     <!-- 메인에 들어갈 내용용 -->

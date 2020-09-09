@@ -4,36 +4,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!doctype html>
 <html lang="ko">
-
 <head>
 <!-- Required meta tags -->
 <meta charset="utf-8">
-<meta name="viewport"
-   content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<script type="text/javascript"
-   src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
-   
-
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
 <!-- Bootstrap CSS -->
-<link href="https://www.cssscript.com/wp-includes/css/sticky.css"
-   rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-   href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-   integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-   crossorigin="anonymous">
-<link rel="stylesheet"
-   href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
-   integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
-   crossorigin="anonymous">
-
-
-
+<link href="https://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 <title>Hello, world!</title>
 <style>
-
-
 
 @font-face {
    font-family: 'TmoneyRoundWindExtraBold';
@@ -43,36 +26,27 @@
    font-weight: normal;
    font-style: normal;
 }
-
 * {
    font-family: "TmoneyRoundWindExtraBold";
 }
-
 table tr {
    border: 3px double green;
 }
-
 #tb1 tbody tr td {
    border: 3px double green;
 }
-
-
-
-
 h1{
    margin-top:50px;
 }
-
 .ui-datepicker-trigger {
    width: 25px;
    height: 25px;
 }
 </style>
 </head>
-
 <body>
-   <!-- 헤더시작 -->
-   <jsp:include page="../common/mainNavigationBar.jsp" />
+	<!-- 헤더시작 -->
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
    <!-- 섹션 시작 -->
    <section>
@@ -81,19 +55,18 @@ h1{
 
    <%--    <fmt:formatDate value="${grooming.studySd }" var="studySd" pattern="yyyy-MM-dd" /> --%>
 
-
-      <!-- 컨테이너로 양옆에 공백 생성 -->
-      <div class=container>
-         <c:url var="calendar" value="calendar.do">
-            <c:param name="groomingNo" value="${grooming.groomingNo}" />
-            <c:param name="memberNo" value="${loginUser.memberNo}" />
-         </c:url>
-         <c:url var="gBlist" value="gBlist.do">
-            <c:param name="groomingNo" value="${grooming.groomingNo}" />
-         </c:url>
-         <c:url var="groupP" value="groupPage.do">
-            <c:param name="groomingNo" value="${grooming.groomingNo}" />
-         </c:url>
+		<!-- 컨테이너로 양옆에 공백 생성 -->
+		<div class="container">
+			<c:url var="calendar" value="calendar.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}" />
+				<c:param name="memberNo" value="${loginUser.memberNo}" />
+			</c:url>
+			<c:url var="gBlist" value="gBlist.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}" />
+			</c:url>
+			<c:url var="groupP" value="groupPage.do">
+				<c:param name="groomingNo" value="${grooming.groomingNo}" />
+			</c:url>
 
          <label><a href="${groupP }"><i class="fas fa-user-graduate"></i>메인</a></label> 
          <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>출석부</a></label>
@@ -106,8 +79,7 @@ h1{
                      <h1>출석부<small>(${memberNickName }님의 현재 출석률은 ${checkLate }% 입니다. <label style="color:lightgreen;">출석:${checkY }</label>&nbsp;&nbsp;<label style="color:yellow;">지각:${checkL }</label>&nbsp;&nbsp;<label  style="color:red;">결석:${checkN }</label>)</small></h1>
                   </div>
          
-         <div class="table-responsive container"
-            style="text-align: center; height: 300px;">
+         <div class="table-responsive container" style="text-align: center; height: 300px;">
 
             <table class="table table-bordered" id="tb1" style="width: 5000px;">
                <tbody>
