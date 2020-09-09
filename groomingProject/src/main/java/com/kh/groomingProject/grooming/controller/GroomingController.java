@@ -1,6 +1,7 @@
 package com.kh.groomingProject.grooming.controller;
 
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
+import static com.kh.groomingProject.common.GroomingPagination.getPageInfoM;
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 
 import java.io.File;
@@ -77,8 +78,8 @@ public class GroomingController {
 			currentPage = page;
 		}
 		int listCount = gService.getGroomingListCount();
-		
-		GroomingPageInfo pi = getPageInfoG(currentPage, listCount);
+		int boardLimit = 8;
+		GroomingPageInfo pi = getPageInfoM(currentPage, listCount);
 		
 		ArrayList<Grooming> glist = gService.selectList(pi);
 	
@@ -108,6 +109,20 @@ public class GroomingController {
 		return mv;
 	}
 
+// 멘토 필터 적용
+	@RequestMapping("GroomingList.do")
+	public void GroomingList(HttpServletResponse response,@RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException  {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = gService.getGroomingListCount();
+		int boardLimit = 8;
+		GroomingPageInfo pi = getPageInfoG(currentPage, listCount,boardLimit);
+		
+		ArrayList<Grooming> glist = gService.selectList(pi);
+		new Gson().toJson(glist, response.getWriter());
+	}
 // 멘토 필터 적용
 	@RequestMapping("groomingMe.do")
 	public void groomingMentorList(HttpServletResponse response) throws JsonIOException, IOException {
@@ -276,29 +291,43 @@ public class GroomingController {
 		System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
-
-			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
-			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
-			Member member = gService.selectMember(groomingNo);
-			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
-
-			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
-			Map info = new HashMap();
-			info.put("groomingNo", groomingNo);
-			info.put("memberNo", memberNo);
-			Declaration declaration = declarationService.selectGroomingDeclare(info);
-			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
-			GroomingHeart heart = gService.selectHeartMember(info);
+			/*
+			 * SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss"); Date nowDate =
+			 * new Date(); String gEd = sdf.format(grooming.getGroomingEd()); String gNd =
+			 * sdf.format(nowDate);
+			 * 
+			 * int resultDate = Integer.parseInt(gNd)-Integer.parseInt(gEd);
+			 */
+			int gEd = grooming.getGroomingEd().getDate();
+			int gNd = new Date().getDate();
+			int difDate = gNd - gEd;
+			System.out.println("difDate : " + difDate);
+			
+			
+				ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+				ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+				Member member = gService.selectMember(groomingNo);
+				ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+				
+				ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+				Map info = new HashMap();
+				info.put("groomingNo", groomingNo);
+				info.put("memberNo", memberNo);
+				GroomingHeart heart = gService.selectHeartMember(info);
+				Declaration declaration = declarationService.selectGroomingDeclare(info);
+				GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
 //			System.out.println("나 tag야 " +tag);
-
-			if (grooming != null && tag != null && spec != null && member != null) {
-				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
-						.addObject("member", member).addObject("appList", appList)
-						.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
-						.setViewName("grooming/groomingDetailView");
-			} else {
-				throw new GroomingException("조회실패!");
-			}
+				
+				if (grooming != null && tag != null && spec != null && member != null) {
+					mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+					.addObject("member", member).addObject("appList", appList)
+					.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
+					.setViewName("grooming/groomingDetailView");
+				} else {
+					throw new GroomingException("조회실패!");
+				}
+				
+			
 
 		} else {
 			throw new GroomingException("게시글 조회수 증가 실패!");
@@ -592,76 +621,38 @@ public class GroomingController {
 //	찜하기
 
 	@RequestMapping("addHeart.do")
-	public ModelAndView addHeart(ModelAndView mv, String groomingNo, String memberNo) {
+	@ResponseBody
+	public String addHeart(ModelAndView mv, String groomingNo, String memberNo) {
 
 		Map info = new HashMap();
 		info.put("groomingNo", groomingNo);
 		info.put("memberNo", memberNo);
 
 		int result = gService.addHeart(info);
-		if (result > 0) {
-			Grooming grooming = gService.selectGrooming(groomingNo);
-
-			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
-			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
-			Member member = gService.selectMember(groomingNo);
-			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
-
-			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
-
-			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
-			GroomingHeart heart = gService.selectHeartMember(info);
-
-			if (grooming != null && tag != null && spec != null && member != null) {
-				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
-						.addObject("member", member).addObject("appList", appList)
-						.addObject("memberNoList", memberNoList).addObject("heart", heart)
-						.setViewName("grooming/groomingDetailView");
-			} else {
-				throw new GroomingException("조회실패!");
-			}
-		} else {
-			throw new GroomingException("찜하기 실패!");
+		
+		if(result >0) {
+			return "success";
+		}else {
+			return "false";
 		}
-
-		return mv;
 	}
 
 	// 찜취소
 	@RequestMapping("cancelHeart.do")
-	public ModelAndView cancelHeart(ModelAndView mv, String groomingNo, String memberNo) {
+	@ResponseBody
+	public String cancelHeart(String groomingNo, String memberNo) {
 
 		Map info = new HashMap();
 		info.put("groomingNo", groomingNo);
 		info.put("memberNo", memberNo);
 
 		int result = gService.cancelHeart(info);
-		if (result > 0) {
-			Grooming grooming = gService.selectGrooming(groomingNo);
-
-			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
-			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
-			Member member = gService.selectMember(groomingNo);
-			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
-
-			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
-
-			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
-			GroomingHeart heart = gService.selectHeartMember(info);
-
-			if (grooming != null && tag != null && spec != null && member != null) {
-				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
-						.addObject("member", member).addObject("appList", appList)
-						.addObject("memberNoList", memberNoList).addObject("heart", heart)
-						.setViewName("grooming/groomingDetailView");
-			} else {
-				throw new GroomingException("조회실패!");
-			}
-		} else {
-			throw new GroomingException("찜하기 실패!");
+		
+		if(result >0) {
+			return "success";
+		}else {
+			return "false";
 		}
-
-		return mv;
 	}
 
 	// 임시저장 페이지 

@@ -4,8 +4,6 @@ import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,17 +26,17 @@ import com.google.gson.JsonIOException;
 import com.kh.groomingProject.admin.model.exception.AdminException;
 import com.kh.groomingProject.admin.model.service.AdminService;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
+import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
-
-import oracle.sql.DATE;
 
 
 @Controller
@@ -52,9 +50,14 @@ public class AdminController {
 	@RequestMapping("adminMain.do")
 	public ModelAndView goMain(ModelAndView mv) {
 		
-		ArrayList<Board> blist = adminService.adminBoardList();
-		ArrayList<Grooming> glist = adminService.adminGroomingList();
+		ArrayList<GraphListCount> clist = adminService.adminGraphCount();
 		
+		ArrayList<GraphListCount> blist = adminService.adminBoardList(clist);
+		ArrayList<GraphListCount> glist = adminService.adminGroomingList(clist);
+		ArrayList<GraphListCount> mlist = adminService.adminMemberList(clist);
+		
+		mv.addObject("clist", clist);
+		mv.addObject("mlist", mlist);
 		mv.addObject("blist", blist);
 		mv.addObject("glist", glist);
 		mv.setViewName("admin/adminMain");
@@ -97,11 +100,18 @@ public class AdminController {
 	// 포인트 지급 및 차감
 	@RequestMapping("pointCalculation.do")
 	public String pointCalculation(Point p) {
+		int nowPoint = 0;
 		
 		if(Integer.valueOf(p.getAddPoint()) < 0) {
 			p.setPointList("포인트 차감");
+			nowPoint = adminService.nowPoint(p);
+
 		}else {
 			p.setPointList("포인트 지급");
+		}
+		
+		if(nowPoint + Integer.valueOf(p.getAddPoint()) < 0) {
+			p.setAddPoint(-nowPoint);
 		}
 		
 		int result = adminService.pointCalculation(p);
@@ -213,6 +223,19 @@ public class AdminController {
 		return mv;
 	}
 	
+	@RequestMapping("sanctionsInsert.do")
+	public String sanctionsInsert(String sanctions, String memberNo) {
+		Map info = new HashMap();
+		info.put("sanctions", sanctions);
+		info.put("memberNo", memberNo);
+		
+		int result = adminService.sanctionsInsert(info);
+		
+		
+		return "redirect:declarationManage.do";
+	}
+	
+	
 	@RequestMapping("cafeManage.do")
 	public ModelAndView cafeManage(ModelAndView mv) {
 		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList();
@@ -233,13 +256,19 @@ public class AdminController {
 		gson.toJson(info, response.getWriter());
 	}
 	
-	@RequestMapping("cafeInfoChange.do")
-	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe) {
+	@RequestMapping(value="cafeInfoChange.do", method=RequestMethod.POST)
+	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request) {
+		if(!file.getOriginalFilename().equals("")) {
+			String renameFileName = saveFile(file, request);
+
+			cafe.setCafeImg(renameFileName);
+		}
+		
 		int result = adminService.cafeInfoChange(cafe);
 		
 		if(result > 0) {
 			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList();
-			
+
 			mv.addObject("cafeList", cafeList);
 			mv.setViewName("admin/cafeManage");
 			
@@ -298,14 +327,4 @@ public class AdminController {
 		return renameFileName;
 	}
 	
-	// 제재 관련 메소드
-	@RequestMapping
-	public String insertSanctions(String sanctions) {
-		
-		System.out.println();
-		
-		int result = adminService.insertSanctions(sanctions);
-		
-		return "redirect:declarationManage.do";
-	}
 }

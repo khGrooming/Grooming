@@ -21,7 +21,7 @@
 	<style>
 	/* section{margin-top:10%} */
       
-	.sideMenu{height:300px;background-color:blue;border-radius:10%;}
+	.sideMenu{height:300px;/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;}
 	.subMenu{height:100px;}
 	
 	.search{text-align:center;background:greenyellow;width:280px;height:50px;float:left;border:1px solid black}
@@ -44,8 +44,14 @@
 			<div class="container col-sm-3"></div>
 			<div class="sideMenu col-sm-7">
 		         <div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-		         <div class="cafe"><a href="reservationCheck.do">카페 신청 내역</a></div>
-		         <div class="cafe"><a href="reservationHistory.do">카페 예약 내역</a></div>
+		         <c:if test="${!empty SessionScope.loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					</c:if>
+					<c:if test="${empty SessionScope.loginUser}">
+						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
+						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
+					</c:if>
 			 </div>
 		 </div>
             <div class="col-sm-8">
