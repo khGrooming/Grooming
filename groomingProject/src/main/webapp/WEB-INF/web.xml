@@ -53,9 +53,5 @@
 	<error-page>
 		<location>/views/common/errorPage.jsp</location>
 	</error-page>
-	
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
-	
+
 </web-app>
