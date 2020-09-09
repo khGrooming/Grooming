@@ -1439,4 +1439,19 @@ public class GroomingController {
 			
 		}	
 		
+		@RequestMapping("findHeart.do")
+		@ResponseBody
+		public String findHeart(String groomingNo, String memberNo) {
+			Map info = new HashMap();
+			info.put("groomingNo", groomingNo);
+			info.put("memberNo", memberNo);
+			GroomingHeart heart = gService.selectHeartMember(info);
+			
+			if(heart != null) {
+				return "success";
+			}else {
+				return "false";
+			}
+			
+		}	
 }

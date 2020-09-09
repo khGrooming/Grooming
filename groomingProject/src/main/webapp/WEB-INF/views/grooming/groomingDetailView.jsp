@@ -464,8 +464,11 @@ i {
 	</section>
 	 
 
+<<<<<<< HEAD
 	 
 
+=======
+>>>>>>> refs/remotes/origin/master
 	<script>
       $(function(){
          $("#applicantList").on("click",function(){

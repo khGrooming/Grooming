@@ -81,7 +81,8 @@
                 <c:forEach var="blist" items="${blist}">
                 	<c:if test="${blist.lastDay eq day}">
                 		<a onclick="getBList"><h1 align="center">${blist.count}</h1></a>
-	</c:if>
+
+                	</c:if>
                 </c:forEach>
             </div>
             <br clear="both">
@@ -92,24 +93,17 @@
             <br><br>
          </div>
          <br><br>
-    </section         <br><br    <%-- <jsp:include page="../common/footer.jsp"/> --%>
-er.jsp"/> --%>    $(function(){
+
+    </section>
+    <%-- <jsp:include page="../common/footer.jsp"/> --%>
+</body>
+    <script> 
+    $(function(){
 	    var data = {
 	    		labels: [
 	    			<c:forEach var="clist" items="${clist}">
 		        		"${clist.lastDay}",
-55,0,0,0.2)",
-	    	        data:[
-	    	        	<c:forEach var="blist" varStatus="i" items="${blist}">
-	    	        		${blist.count},
-			            </c:forEach>
-	    	        ]
-	    		},{
-	    			label: "그루밍 수",
-	    			fillColor: "rgba(0,255,0,0.2)",
-	    	        strokeColor: "rgba(0,255,0,0.2)",
-	    	        pointColor: "rgba(0,255,0,0.2)",
-	    	        pointStrokeColor: "#fff",
+		            </c:forEach>
 	    		],
 	    		datasets:[{
 	    			label: "board",
@@ -167,19 +161,6 @@ er.jsp"/> --%>    $(function(){
 	        datasetFill : true,
 	        scaleShowLine : true,
 	        animationEasing : "easeOutBounce",
-	        animateRotate : true,
-	        animateScale : true,
-	        responsive: false,
-	    };
-	
-	
-	    // Load Chart
-	
-	    var ctx1 = document.getElementById("myLineChart").getContext("2d");
-	
-	    var myLineChart = new Chart(ctx1).Line(data, options);
-    })
-tBounce",
 	        animateRotate : true,
 	        animateScale : true,
 	        responsive: false,
