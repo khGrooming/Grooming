@@ -15,7 +15,6 @@ import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
-import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -141,6 +140,7 @@ public class AdminDao {
 		int num1 = sqlSessionTemplate.insert("adminMapper.insertCafeInfo",cafe);
 
 		String cafeNo = sqlSessionTemplate.selectOne("adminMapper.selectCafeNo", cafe);
+		cafe.setCafeNo(cafeNo);
 		System.out.println("Dao에서 cafeInfo : "+cafe);
 		
 		int num2 = sqlSessionTemplate.insert("adminMapper.insertCafePriceInfo", cafe);
