@@ -760,7 +760,7 @@
 			<otherwise>
             AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
 			</otherwise>
-		</choose>       
+		</choose>
 	</select>
 
  	<update id="updateCheck" parameterType="GCheck">
