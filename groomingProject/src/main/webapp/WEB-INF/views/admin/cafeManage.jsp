@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <style>
-        .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -52,6 +52,7 @@
         }
 		
 		.modalInfo{width:100%; text-align:center;}
+		img{width:100%;}
     </style>
 </head>
 <body>
@@ -102,7 +103,7 @@
 		</div>
         <br clear="both">
         <!-- 카페 정보 변경 폼 -->
-        <form action="cafeInfoChange.do">
+        <form action="cafeInfoChange.do" method="post" enctype="multipart/form-data">
             <div id="changeCafe" class="modal">
 				      <!-- Modal content -->
 				<div class="modal-content">
@@ -180,6 +181,9 @@
 					$infoCheck.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
 					$infoCheck.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
 					$infoCheck.append("<labe>카페 주소 </label><input class='modalInfo' name='cafeAddress' type='text' value='"+$cafeAddress+"'><br><br>");
+					$infoCheck.append("<label>카페 이미지</label>");
+					$infoCheck.append("<div id='image_container'><img src='${contextPath }/resources/views/images/cafeImage/"+data[j].cafeImg+"' class='thumbnail'></div>");
+					$infoCheck.append("<input type='file' name='uploadFile' id='image' accept='image/*' onchange='setThumbnail(event);'>");
 					$infoCheck.append("<labe>카페 룸 이름 </label><input class='modalInfo' name='cRoomName' type='text' value='"+$cRoomName+"'><br><br>");
 					$infoCheck.append("<labe>카페 이용 시간 </label><input class='modalInfo' name='cRoomAvailableTime' type='text' value='"+$cRoomAvailableTime+"'><br><br>");
 					$infoCheck.append("<labe>카페 최소 예약 시간 </label><input class='modalInfo' name='cRoomTime' type='text' value='"+$cRoomTime+"'><br><br>");
@@ -209,6 +213,7 @@
 		 function setThumbnail(event) { 
 			 var reader = new FileReader(); 
 			 reader.onload = function(event) {
+				$("#image_container").html("");
 				 var img = document.createElement("img");
 				 img.setAttribute("src", event.target.result);
 				 document.querySelector("div#image_container").appendChild(img);

@@ -224,7 +224,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
-	<jsp:include page="../common/mainNavigationBar.jsp" />
+		<jsp:include page="../common/mainNavigationBar.jsp" />
 
 
 	<section>
