@@ -147,7 +147,7 @@ public class MyPageController {
 			case "경력":
 				careerList[career]=s.getSpecName();
 				careerconfirm[career]=s.getSpecConfirm();
-				System.out.println("경력"+s.getSpecName());
+				System.out.println(s.getSpecConfirm());
 				career+=1;
 				break;
 			default:
@@ -452,7 +452,7 @@ public class MyPageController {
 		return "mypage/memberSecession";
 	}
 	
-	@RequestMapping("mentorApply.do")
+	@RequestMapping("mentorApply")
 	public String mentorApply(HttpSession session,HttpServletRequest request) {
 		
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();

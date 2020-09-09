@@ -205,14 +205,22 @@
  
  
  	
- 	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
+ 	<!-- <select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
  		SELECT SPEC_NAME
         FROM SPEC S
         JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
         WHERE GROOMING_NO = #{groomingNo}
  	
- 	</select>
+ 	</select> -->
  	
+ 	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
+       SELECT *
+        FROM SPEC S
+        JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
+        WHERE GROOMING_NO = #{groomingNo} AND SPEC_CONFIRM = 'Y'
+    
+    </select>
+    
  	<insert id="insertGrooming" parameterType="Grooming" >
  		INSERT INTO GROOMING VALUES(
  			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
@@ -717,29 +725,28 @@
 		FROM G_CHECK
 		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
  	</select>
- 							  
-
-	
  	
 	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
+		<![CDATA[
 		SELECT 
-		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
-		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+			G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+			, GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
 		FROM GROOMING G
 		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
-		        FROM GROOMING) GD 
-		    ON(G.GROOMING_NO = GD.GROOMING_NO)
-        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
-		    ON(G.MEMBER_NO = M.MEMBER_NO)
+			FROM GROOMING) GD 
+			ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
+			ON(G.MEMBER_NO = M.MEMBER_NO)
 		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
-		        FROM GTAG GT
-		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
-		        GROUP BY GROOMING_NO) GT
-		    ON(G.GROOMING_NO = GT.GROOMING_NO)
+				FROM GTAG GT
+				JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+				GROUP BY GROOMING_NO) GT
+			ON(G.GROOMING_NO = GT.GROOMING_NO)
 		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
-		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
-		    ON(G.GROOMING_NO = GC.GROOMING_NO)
-		WHERE G.GROOMING_STATUS = 'Y'
+			FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+			ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
+		]]>
 		<choose>
 		    <when test="search == 'title'">
 				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
@@ -752,6 +759,7 @@
 		    </otherwise>
 		  </choose>
 	</select>
+
  	<update id="updateCheck" parameterType="GCheck">
  		UPDATE G_CHECK
 		SET G_CHECK = #{gCheckStatus}
@@ -901,14 +909,3 @@
  	</insert>
  	
 </mapper>
-
-
-
-
-
-
-
-
-
-
-

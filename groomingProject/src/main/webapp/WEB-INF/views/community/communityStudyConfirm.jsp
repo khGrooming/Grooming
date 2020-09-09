@@ -21,10 +21,16 @@
     	margin-left: 30px;
     	font-size: 13px;
 	}
-	/* item page */
-	.item-container {margin-top:10rem;}
+	.modal-title{
+		margin: auto 0.18rem;
+    	height: 2.18rem;
+    	width: 2.18rem;
+    	border-radius: 50%;
+    	border: thin solid lightgrey;
+    }
+	.item-container {display:flex; margin-top:10rem;}
 	.item-card {margin:auto;}
-	#item-card {width:15rem; height:19rem; border-radius:0px; border:none; text-align:center;}
+	#item-card {width:15rem; border-radius:0px; border:none; text-align:center;}
 	#item-card:focus,
 	#item-card:hover {cursor:pointer;}
 	.item-row {padding-left:1rem; padding-right:1rem; }
@@ -47,16 +53,18 @@
 		
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="rf_1_ra" name="filter_ra"><label for="rf_1_ra">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_2_ra" name="filter_ra"><label for="rf_2_ra">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_3_ra" name="filter_ra"><label for="rf_3_ra">&nbsp;좋아요 순</label>
-			<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
-					onclick="location.href='communityInsertView.do?bCategoryNo=BC00004'">
+			<input type="radio" id="Cfilter_1" name="Cfilter" checked><label for="Cfilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Cfilter_2" name="Cfilter"><label for="Cfilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Cfilter_3" name="Cfilter"><label for="Cfilter_3">&nbsp;좋아요 순</label>
+			<c:if test="${!empty loginUser }">
+				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
+						onclick="location.href='communityInsertView.do?bCategoryNo=BC00004'">
+			</c:if>
 		</div>
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->	
-		<div class="container item-container" align="center" style="margin-top: 30px;">
-			<c:forEach var="n" items="${clist }">
+		<div class="container item-container" style="margin-top: 30px;">
+			<c:forEach var="c" items="${clist }">
 				<div class="row item-row">		
 					
 					<input type="hidden" value="">
@@ -64,67 +72,83 @@
 						<div class="card item-card" id="item-card">
 							<input type="hidden" value="">
 							<div class="card-image-zoom">
-								<img src="${contextPath}/resources/buploadFiles/${n.boardImg}" class="card-img-top" alt="..."
-											data-toggle="modal" data-target="#confirmDetailView">
+								<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..."
+											data-toggle="modal" data-target="#confirmDetailView${c.boardNo}" onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
 							</div>
 						</div>
-					</div>
-					
+					</div>				
 				</div>
 				
 				<!-- Modal 스터디 인증 상세보기 -->
-	<div id="confirmDetailView" class="modal fade" role="dialog">
-  		<div class="modal-dialog">
+				<div id="confirmDetailView${c.boardNo}" class="modal fade" role="dialog">
+  					<div class="modal-dialog">
 
-    		<!-- Modal 내용-->
-     		<div class="modal-content">
-      			<div class="modal-header">
-        			<h5 class="modal-title">${n.boardNo }</h5>
-        			<button type="button" class="close" data-dismiss="modal">x</button>
-      			</div>
-      			<div class="modal-body">
-<%--       				<c:forEach var="n" items="${clist }">				
-        				<img src="" alt=".."><br>
-        				<p>${n.boardNo }</p>
-      				</c:forEach> --%>
-        			<p>${n.boardNo }</p>
-      			</div>
-      			<div class="modal-footer">
-      				<p>${n.boardNo }</p> 
-      				<!-- 좋아요 -->
-					<div class="iteminfo-icons" id="iteminfo-icons">
-						<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
-							<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
-								<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
-							</button>
-							<!-- 신고 -->
-							<a href="#declareForm" data-toggle='modal'>
-								<img style="vertical-align: middle;" alt="dep" 
-									src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
-							</a>
-							<input type="hidden" id="goWish-real-btn" data-toggle="modal" href="#goWish">
-						</span>
+    					<!-- Modal 내용-->
+     					<div class="modal-content">
+      						<div class="modal-header">
+      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="..." onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+        						&nbsp;&nbsp;<h5>${c.memberNickName }</h5>
+        						<button type="button" class="close" data-dismiss="modal">x</button>
+      						</div>
+      						<div class="modal-body">
+      							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..." onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
+        						<hr>
+        						<p>${c.boardContent }</p>
+      						</div>
+      					
+      						<div class="modal-footer">
+      							<c:url var="communityUpdateView" value="communityUpdateView.do">
+									<c:param name="boardNo" value="${c.boardNo }" />
+									<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
+								</c:url>
+								<c:url var="communityDelete" value="communityDelete.do">
+									<c:param name="boardNo" value="${c.boardNo }" />
+									<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
+								</c:url>
+								<c:if test="${loginUser.memberNo eq c.memberNo }">	
+									<tr>
+										<td colspan="2" align="center">
+											<a href="${communityUpdateView }">수정하기</a>
+										</td>
+										<td colspan="2" align="center">
+											<a href="${communityDelete }">삭제하기</a>
+										</td>
+									</tr>
+								</c:if> 
+      							<p>${c.boardCreateDate }</p> 
+      						
+      							<!-- 좋아요 -->
+<!-- 								<div class="iteminfo-icons" id="iteminfo-icons">
+									<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
+										<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
+											<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
+										</button> -->
+									 
+										<!-- 신고 -->
+										<a href="#declareForm" data-toggle='modal'>
+											<img style="vertical-align: middle;" alt="dep" 
+												src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
+										</a>
+										<input type="hidden" id="declarebtn" data-toggle="modal" href="#">
+									</span>
 					
-					<script>
-						$(function(){			
-							if(0==0){
-								$(".fa-heart").css("color","gray");
-							}else{
-								$(".fa-heart").css("color","pink");
-							}
-						})
-					</script>
-      			</div>
-    			</div>
-  			</div>
-  		</div>
-  	</div>
-				
-				
+									<script>
+										$(function(){			
+											if(0==0){
+												$(".fa-heart").css("color","gray");
+											}else{
+												$(".fa-heart").css("color","pink");
+											}
+										})
+									</script>
+      							</div>
+    						</div>
+  						</div>
+  					</div>
+  				</div>
 			</c:forEach>
 		</div>
 	</div>
-	
 	
 	<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
 </body>

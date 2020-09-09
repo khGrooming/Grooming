@@ -42,7 +42,7 @@
 					<tr>
 						<th>순위</th>
 						<th>닉네임</th>
-						<th>채택 수</th>
+						<th>조회 수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -116,9 +116,8 @@
 	
 	<!-- ------------------ 정렬 ------------------------- -->
 		<div class="container filterBoard" align="left">
-			<input type="radio" id="filterBoard_1" name="filterBoard"><label for="filterBoard_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="filterBoard_1" name="filterBoard" checked><label for="filterBoard_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
 			<input type="radio" id="filterBoard_2" name="filterBoard"><label for="filterBoard_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="filterBoard_3" name="filterBoard"><label for="filterBoard_3">&nbsp;댓글순</label>
 		</div>
 	<!-- ------------------ 정렬 ------------------------- -->
 	<!-- ------------------ 게시글 리스트 ------------------- -->

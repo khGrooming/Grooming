@@ -26,12 +26,13 @@
 		
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="rf_1_ra" name="filter_ra"><label for="rf_1_ra">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_2_ra" name="filter_ra"><label for="rf_2_ra">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_3_ra" name="filter_ra"><label for="rf_3_ra">&nbsp;댓글순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_4_ra" name="filter_ra"><label for="rf_4_ra">&nbsp;채택순</label>&nbsp;&nbsp;&nbsp;
-			<input type="button" value="질문하기" class="btn btn-info" style="float: right;"
-					onclick="location.href='communityInsertView.do?bCategoryNo=BC00005'">
+			<input type="radio" id="Qfilter_1" name="Qfilter"  checked><label for="Qfilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Qfilter_2" name="Qfilter"><label for="Qfilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Qfilter_4" name="Qfilter"><label for="Qfilter_4">&nbsp;채택순</label>&nbsp;&nbsp;&nbsp;
+			<c:if test="${!empty loginUser }">
+				<input type="button" value="질문하기" class="btn btn-info" style="float: right;"
+						onclick="location.href='communityInsertView.do?bCategoryNo=BC00005'">
+			</c:if>
 		</div>
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->
