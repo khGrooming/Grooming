@@ -206,12 +206,11 @@
  
  	
  	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
- 		SELECT SPEC_NAME
+       SELECT *
         FROM SPEC S
         JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
-        WHERE GROOMING_NO = #{groomingNo}
- 	
- 	</select>
+        WHERE GROOMING_NO = #{groomingNo} AND SPEC_CONFIRM = 'Y'
+    </select>
  	
  	<insert id="insertGrooming" parameterType="Grooming" >
  		INSERT INTO GROOMING VALUES(

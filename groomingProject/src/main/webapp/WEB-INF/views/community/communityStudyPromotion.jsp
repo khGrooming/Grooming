@@ -27,11 +27,13 @@
 		
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="rf_1_ra" name="filter_ra"><label for="rf_1_ra">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_2_ra" name="filter_ra"><label for="rf_2_ra">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_3_ra" name="filter_ra"><label for="rf_3_ra">&nbsp;댓글순</label>
-			<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
-					onclick="location.href='communityInsertView.do?bCategoryNo=BC00003'">
+			<input type="radio" id="Pfilter_1" name="Pfilter" checked><label for="Pfilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Pfilter_2" name="Pfilter"><label for="Pfilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
+			
+			<c:if test="${!empty loginUser }">
+				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
+						onclick="location.href='communityInsertView.do?bCategoryNo=BC00003'">
+			</c:if>
 		</div>
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->

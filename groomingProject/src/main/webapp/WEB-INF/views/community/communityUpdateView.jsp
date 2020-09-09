@@ -66,7 +66,10 @@
 										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small>
 							</td>				
 						</tr>
-						
+						<tr>
+							<td style="text-align:left; vertical-align: baseline;">첨부파일</td>
+							<td><input type="file" name="uploadFile"></td>
+						</tr>
 						<tr>
 							<td colspan="2" align="center">
 								<input type="submit" value="수정 하기">&nbsp;
