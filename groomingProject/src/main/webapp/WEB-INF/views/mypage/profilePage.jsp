@@ -299,9 +299,9 @@ border-radius: 20px;
 <jsp:include page="../common/mainNavigationBar.jsp" />
 	<section>
 	<div id="content">
-		<img src="${contextPath }/resources/views/images/repotBtn.png" style="height: 22px; float: right; margin-right: 1%;" data-toggle="modal" data-target="#reportModal"   >
+		<img src="${contextPath }/resources/views/images/repotBtn.png" style="height: 22px;  float: right; margin-right: 1%;" id="reportImg" data-toggle="modal" data-target="#reportModal"   >
 		<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog" role="document" style=" margin-top:200px;">
 				<div class="modal-content">
 					<div class="modal-header">
 	
@@ -314,6 +314,7 @@ border-radius: 20px;
 					</div>
 						<form id="reportForm" name="reportForm" action="memberReport.do" method="post">
 							<div class="modal-body">
+								<c:if test="${empty repInfo }">
 								<div style="margin-left: 2%;">
 								<p>어떤 문제가 있나요?</p>
 								<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
@@ -364,9 +365,19 @@ border-radius: 20px;
 									
 								
 								</script>
+								</c:if>
+								<c:if test="${!empty repInfo }">
+									<p>이미 신고내역이 있습니다</p>
+									<p>이전 신고가 처리되기 전까지 다시 신고할 수 없습니다</p>
+									<h4>신고내용</h4>
+									<p>${repInfo.declarationContent }</p>
+									
+								</c:if>
 							</div>
 							<div class="modal-footer">
+							<c:if test="${empty repInfo }">
 								<button type="button" class="btn btn-primary"  id="btn-confirm">확인</button>
+							</c:if>
 								<button type="button" id="btn-delete" class="btn btn-default" data-dismiss="modal">취소</button>
 							</div>
 						</form>
@@ -383,8 +394,9 @@ border-radius: 20px;
 							data:reportForm,
 							success : function(data){
 				                if(data == 'Y'){
+				                	alert("신고가 완료되었습니다.")
 				                	$("#btn-delete").click();
-				                	
+				                	$("#reportImg").attr("data-toggle","").attr("data-target","");
 				                }
 				            },
 						error:function(request, status, errorData){

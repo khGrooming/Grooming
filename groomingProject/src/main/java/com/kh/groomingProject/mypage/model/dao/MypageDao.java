@@ -178,4 +178,8 @@ public class MypageDao {
 		return sqlSessionTemplate.selectOne("MyPageMapper.selectTempGroomingNo",mNo);
 	}
 
+	public MemberReport selectReportInfo(MemberReport repM) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.selectReportInfo",repM);
+	}
+
 }
