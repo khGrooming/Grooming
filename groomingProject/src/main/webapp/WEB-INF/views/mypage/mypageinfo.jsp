@@ -220,6 +220,8 @@ section {
                     <li><a href="mypage-memberup.do">개인정보 수정</a></li>
                     <li><a href="mentor.do">멘토 등록</a></li>
                     <li><a href="memberSecession.do">회원 탈퇴</a></li>
+                    <li><a href="test.do">테스트</a></li>
+                  
                 </ul>
             </li>
             <li>
