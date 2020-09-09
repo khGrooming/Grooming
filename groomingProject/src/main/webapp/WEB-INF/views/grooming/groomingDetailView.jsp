@@ -35,7 +35,9 @@
 /* body {
 	height: 1200px;
 } */
-
+section {
+    margin-bottom: 50px;
+}
 section img {
 	width: 100%;
 	height: 100%;
