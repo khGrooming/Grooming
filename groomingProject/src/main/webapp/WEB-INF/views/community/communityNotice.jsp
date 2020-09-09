@@ -38,22 +38,59 @@
 						<tr>
 							<td>${n.boardNo }</td>
 							<td>															
-								<c:if test="${!empty loginUser }">
-									<c:url var="communityDetailView" value="communityDetailView.do">
-										<c:param name="boardNo" value="${n.boardNo }" />
-									</c:url>
-									<a href="${communityDetailView }">${n.boardTitle }</a>
-								</c:if>
-								<c:if test="${empty loginUser }">
-									${n.boardTitle }
-								</c:if>
+								<c:url var="communityDetailView" value="communityDetailView.do">
+									<c:param name="boardNo" value="${n.boardNo }" />
+								</c:url>
+								<a href="${communityDetailView }">${n.boardTitle }</a>
 							</td>
 							<td>${n.memberNickName }</td>
 							<td>${n.boardVcount }</td>
 							<td>${n.boardCreateDate }</td>
 						</tr>
-					</c:forEach>
+					</c:forEach>	
 				</tbody>
+			</table>
+			<!-- 페이징 처리 부분 -->
+			<table>
+					<tr class="paginationCSS" height="20">
+						<td colspan="5">
+					<!-- [이전] -->
+							<c:if test="${npi.currentPage eq 1 }">
+								[이전]&nbsp;
+							</c:if>		
+							<c:if test="${npi.currentPage gt 1 }">
+								<c:url var="communityMainBack" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00001"/>
+									<c:param name="page" value="${npi.currentPage -1 }"></c:param>
+								</c:url>
+								<a href="${communityMainBack }">[이전]</a>
+							</c:if>		
+					<!-- [번호들] -->
+							<c:forEach var="p" begin="${npi.startPage }" end="${npi.endPage }">
+								<c:if test="${p eq npi.currentPage }">
+									<font color="red" size="4"><b>${p}</b></font>
+								</c:if>
+								<c:if test="${p ne npi.currentPage }">
+									<c:url var="communityMainCheck" value="communityMain.do">
+										<c:param name="bCategoryNo" value="BC00001"/>
+										<c:param name="page" value="${p}"></c:param>
+									</c:url>
+									<a href="${communityMainCheck }">${p}</a>
+								</c:if>
+							</c:forEach>			
+					<!-- [이후] -->
+							<c:if test="${npi.currentPage eq npi.maxPage }">
+								&nbsp;[이후]
+							</c:if>		
+							<c:if test="${npi.currentPage lt npi.maxPage }">
+								<c:url var="communityMainAfter" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00001"/>
+									<c:param name="page" value="${npi.currentPage +1 }"></c:param>
+								</c:url>
+								<a href="${communityMainAfter }">[이후]</a>
+							</c:if>	
+						</td>
+					</tr>
 			</table>
 		</div>
 	</div>

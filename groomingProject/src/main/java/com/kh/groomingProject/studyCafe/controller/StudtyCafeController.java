@@ -109,7 +109,7 @@ public class StudtyCafeController {
 		str.put("day", day);
 		str.put("cPriceNo", cPriceNo);
 		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(str);
-		
+		System.out.println("Roomlist : "+list);
 		response.setContentType("application/json;charset=UTF-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
@@ -119,27 +119,28 @@ public class StudtyCafeController {
 	@RequestMapping(value="checkTime.do", method=RequestMethod.POST)
 	public void searchTime(String date, String cPriceNo, HttpServletResponse response ) throws JsonIOException, IOException {
 		Map str = new HashMap();
+
 		str.put("date", date);
 		str.put("cPriceNo", cPriceNo);
 		
 		ArrayList<Reservation> list = studyCafeService.selectCheckTime(str);
-
+		System.out.println("Timelist : "+list);
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
 		gson.toJson(list, response.getWriter());
 	}
 	
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
-	public String insertReservation(Reservation r, String money, Member m) {
+	public String insertReservation(Reservation r, String money) {
 		Map rinfo = new HashMap();
 		
-		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(m.getMemberNo());
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(r.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
 			if(r.getcReserNo().equals(rlist.get(i).getcReserNo())) {
 				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
 				
-				rinfo.put("memberNo", m.getMemberNo());
+				rinfo.put("memberNo", r.getMemberNo());
 				rinfo.put("pointList", "카페 예약 취소");
 				rinfo.put("addPoint", oldMoney);
 				int resultPoint = studyCafeService.pointCalculation(rinfo);
@@ -148,7 +149,7 @@ public class StudtyCafeController {
 		
 		int result = studyCafeService.insertReservation(r);
 		
-		rinfo.put("memberNo", m.getMemberNo());
+		rinfo.put("memberNo", r.getMemberNo());
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 
 		if(totalPoint > Integer.valueOf(money)) {
@@ -157,7 +158,7 @@ public class StudtyCafeController {
 			int resultPoint = studyCafeService.pointCalculation(rinfo);			
 		}
 		
-		return "redirect:reservationCheck.do";
+		return "redirect:reservationCheck.do?memberNo="+r.getMemberNo();
 	}
 	
 	// 카페 신청  내역 페이지로 이동
@@ -199,7 +200,7 @@ public class StudtyCafeController {
 		
 		int result = studyCafeService.deleteReservation(cReserNo);
 		
-		return "redirect:reservationCheck.do";
+		return "redirect:reservationCheck.do?memberNo="+m.getMemberNo();
 	}
 	
 	@RequestMapping("checkPoint.do")

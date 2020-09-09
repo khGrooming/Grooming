@@ -68,11 +68,11 @@
 				<div class="container col-sm-3"></div>
 				    <div class="sideMenu col-sm-7">
 						<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-					<c:if test="${!empty SessionScope.loginUser}">
-						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
-						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					<c:if test="${!empty loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
-					<c:if test="${empty SessionScope.loginUser}">
+					<c:if test="${empty loginUser}">
 						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
 						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
 					</c:if>
@@ -98,7 +98,7 @@
 					</c:forEach>
 				</div>
 				<div class="container col-sm-3">
-				<form method="post" action="insertR.do?${SessionScope.loginUser}">
+				<form method="post" action="insertR.do?memberNo=${loginUser.memberNo}">
 					<div class="row">
 						<ul>
 							<c:forEach var="info" items="${info}">
@@ -200,7 +200,7 @@
 					data:{cPriceNo:cPriceNo, day:day},
 					success:function(data){
 						showCalendar(year, month, day);
-						
+						console.log(data);
 						changeTime(data);
 						
 						click1=0;
@@ -283,7 +283,7 @@
     	
     	// 여기에 시간 바뀌는 메소드를 만들어 적용하자
     	selectDay = $(this).text();
-    	
+    	console.log(selectDay);
     	$.ajax({
     		url:"checkTime.do",
     		type:"post",
@@ -346,9 +346,9 @@
 						$timespan.prop("class","none");
 					}					
 				}
-				
 				for(var j in data){
-					if(data[j].cReserSTime <= i && data[j].cReserETime >= i){
+					console.log(data);
+					if(data[j].cReserSTime <= i && data[j].cReserETime >= i && data[j].memberNo != '${loginUser.memberNo}'){
 						$timespan.css("background","grey");
 						$timespan.prop("class","none");
 					}
@@ -509,7 +509,7 @@
 			$money = $(".money").text().split(' 원');
 			$("#money").val($money[0]);
 			
-			<c:if test="${empty SessionScope.loginUser}">
+			<c:if test="${empty loginUser}">
 				$("#infoCheck").append("<p>로그인해야 예약 가능합니다.<p>");
 				$("#userConfirm").attr("type","button");
 				
@@ -517,11 +517,13 @@
 				return;
 			</c:if>
 			
-			$cReserNo = ${cReserNo eq null? null: cReserNo}
+			$memberNo = "${loginUser.memberNo}";
+			$cReserNo = $("#cReserNo").val();
+			
 			console.log($money[0])
 			$.ajax({
 				url:"checkPoint.do",
-				data:{money:$money[0],cReserNo:$cReserNo},
+				data:{money:$money[0],cReserNo:$cReserNo,memberNo:$memberNo},
 				success:function(data){
 					if(data == "success"){
 						$cPriceNo = $('input[name="cPriceNo"]:checked').val();
@@ -535,7 +537,7 @@
 								$cRoomName = '${info.cRoomName}';
 							}
 						</c:forEach>
-							
+
 				        if(click1 < click2){
 							$("#infoCheck").append("<p>"+$cafeName + "  " + $cRoomName + "<br>"+ $selectDate + "  " + click1 + " 시 ~ " + (click2+1) + " 시<br>" + $head+" 명</p><br>");
 							$("#infoCheck").append("<p>예약 클릭 시 예약 확인 페이지로 이동합니다.</p>");

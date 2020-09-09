@@ -1,12 +1,14 @@
 package com.kh.groomingProject.grooming.controller;
 
-import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
+import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,8 @@ import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.service.MypageService;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.tag.model.service.TagService;
 import com.kh.groomingProject.tag.model.vo.Tag;
 
@@ -56,11 +60,15 @@ public class GroomingController {
 	private TagService tagService;
 
 	@Autowired
-	private DeclarationService declarationService;
+	private DeclarationService declarationService;	
 
 	@Autowired
 	private MemberService mService;
 
+	@Autowired
+	private MypageService mpService;
+	
+	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
 	public ModelAndView groomingList(ModelAndView mv, String memberNo,@RequestParam(value="page", required=false) Integer page) {
@@ -158,11 +166,13 @@ public class GroomingController {
 		new Gson().toJson(glist, response.getWriter());
 	}
 
+	// 그루밍 글쓰기 페이지 이동
 	@RequestMapping("groomingInsert.do")
 	public String groomingInsert() {
 		return "grooming/groomingInsertForm";
 	}
 
+	// 그루밍 글쓰기
 	@RequestMapping("groomingInsertForm.do")
 	public String groomingInsertForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
 			@RequestParam(value = "uploadFile", required = true) MultipartFile file) {
@@ -254,10 +264,15 @@ public class GroomingController {
 
 	// 그루밍 상세보기
 	@RequestMapping("groomingDetail.do")
-	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo,@RequestParam("page") Integer page) {
+	public ModelAndView groomingDetailView(ModelAndView mv, String groomingNo, String memberNo
+			, @RequestParam(value = "page", required = false) Integer page) {
 
 		int result = gService.addReadCount(groomingNo);
-		int	currentPage = page;
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		
 		System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
@@ -292,6 +307,9 @@ public class GroomingController {
 		return mv;
 	}
 
+
+	
+	// 그루밍 신청자 list ajax
 	@RequestMapping("gacceptList.do")
 	@ResponseBody
 	public void groomingAppAccept(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
@@ -304,28 +322,58 @@ public class GroomingController {
 
 	}
 
+	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
-	public String groomingAccept(String applyNo, String groomingNo) {
+	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType) {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
 		String memberNo = gService.findAppMemberNo(applyNo);
+	
+		
 		Map map = new HashMap();
 		map.put("memberNo", memberNo);
 		map.put("groomingNo", groomingNo);
 
 		int result2 = gService.addGroomingMember(map);
+	
 
-		if (result > 0 && result1 > 0 && result2 > 0) {
+		int tmoney = Integer.parseInt(money)*(-1);
+
+
+
+		Map map1 = new HashMap();
+		map1.put("memberNo", memberNo);
+		map1.put("money", tmoney);
+
+		System.out.println("나 map1 : " +map1);
+		
+		int result3 = gService.addPointMember(map1);
+		
+		String mNo = gService.selectMemberNo(groomingNo);
+		
+		tmoney = tmoney * (-1);
+		Map map2 = new HashMap();
+		map2.put("memberNo", mNo);
+		map2.put("money", tmoney);
+		
+		int result4 = 0;
+		System.out.println("groomingType : " + groomingType);
+		System.out.println("tmoney :" + tmoney);
+		if(groomingType.equals("멘토")) {
+			 result4 = gService.addMentorPoint(map2);
+		}
+		System.out.println("result4 : " + result4);
+		if (result > 0 && result1 > 0 && result2 > 0 && result3 > 0 && result4 >= 0) {
 			return "success";
 		} else {
 			return "false";
 		}
 
 	}
-
+	// 그루밍 신청자 거절 ajax
 	@RequestMapping("greject.do")
 	@ResponseBody
 	public String groomingReject(String applyNo) {
@@ -339,6 +387,7 @@ public class GroomingController {
 
 	}
 
+	// 그루밍 글 수정 페이지 이동
 	@RequestMapping("groomingUpdate.do")
 	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
@@ -360,6 +409,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 그루밍 글 수정
 	@RequestMapping("gUpdate.do")
 	public ModelAndView groomingUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,
 			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
@@ -371,8 +421,6 @@ public class GroomingController {
 		if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
 			if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
 				deleteFile(g.getGroomingImg(), request);
-				// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
-				// 폴더명만 수정하자
 			}
 			renameFileName = saveFile(file, request);
 
@@ -428,6 +476,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 기존에 파일 삭제
 	private void deleteFile(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\upGroomingFiles";
@@ -438,6 +487,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 게시글 삭제
 	@RequestMapping("groomingDelete.do")
 	public String groomingDelete(String groomingNo) {
 
@@ -450,18 +500,21 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 게시글 마감 처리
 	@RequestMapping("groomingLimit.do")
+	@ResponseBody
 	public String groomingLimit(String groomingNo) {
 
 		int result = gService.statusUpdate(groomingNo);
 
 		if (result > 0) {
-			return "redirect:groomingMain.do";
+			return "success";
 		} else {
-			throw new GroomingException("게시글 마감 실패!");
+			return "false";
 		}
 	}
 
+	// 그루밍 신청서 작성
 	@RequestMapping("applyContent.do")
 	public String applyContent(GroomingApplicant ga,String money) {
 		System.out.println("나 ga" + ga);
@@ -476,6 +529,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그루밍 신고
 	@RequestMapping("declare.do")
 	public ModelAndView declareG(ModelAndView mv, Declaration d,String groomingNo, String memberNo) {
 
@@ -508,6 +562,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 그루밍 소그룹 게시판 신고
 	@RequestMapping("declareG.do")
 	public ModelAndView declareGroup(Declaration d, String memberNo, String gBoardNo,
 			@RequestParam("currentPage") Integer page, ModelAndView mv, String groomingNo) {
@@ -572,6 +627,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 찜취소
 	@RequestMapping("cancelHeart.do")
 	public ModelAndView cancelHeart(ModelAndView mv, String groomingNo, String memberNo) {
 
@@ -608,6 +664,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 임시저장 페이지 
 	@RequestMapping("save.do")
 	public String groomingSaveForm(HttpServletRequest request, String memberNo, Grooming g, String tagName,
 			@RequestParam(value = "uploadFile", required = false) MultipartFile file) {
@@ -659,7 +716,8 @@ public class GroomingController {
 			throw new GroomingException("게시글 임시저장 실패!");
 		}
 	}
-
+	
+	// 소그룹 페이지 이동
 	@RequestMapping("groupPage.do")
 	public ModelAndView groupPage(ModelAndView mv, String groomingNo) {
 
@@ -675,6 +733,7 @@ public class GroomingController {
 		return mv;
 	}
 
+	// 소그룹 메인
 	@RequestMapping("groupList.do")
 	@ResponseBody
 	public void groupList(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
@@ -692,6 +751,7 @@ public class GroomingController {
 
 	}
 
+	// 스터디원 추방
 	@RequestMapping("kickOut.do")
 	@ResponseBody
 	public String kickOut(String memberNo) {
@@ -705,6 +765,7 @@ public class GroomingController {
 		}
 	}
 
+	// 그룹게시판 불러오기
 	@RequestMapping("gBlist.do")
 	public ModelAndView gBoardList(ModelAndView mv, @RequestParam(value = "page", required = false) Integer page,
 			String groomingNo) {
@@ -736,7 +797,7 @@ public class GroomingController {
 	}
 
 	
-
+	// 그룹 게시판 글작성페이지로 이동
 	@RequestMapping("groupBoardInsertForm.do")
 	public ModelAndView groupBoardInsertForm(@RequestParam("page") Integer page, String groomingNo, String memberNo,
 			ModelAndView mv) {
@@ -752,7 +813,8 @@ public class GroomingController {
 
 		return mv;
 	}
-
+	
+	// 그룹페이지 글쓰기
 	@RequestMapping("groupInsert.do")
 	public ModelAndView groupInsert(@RequestParam(value = "page", required = false) Integer page,
 			HttpServletRequest request, ModelAndView mv, GroupBoard g, String gMemberNo, String groomingNo,
@@ -791,7 +853,8 @@ public class GroomingController {
 		return mv;
 
 	}
-
+	
+	// 그룹게시판 상세보기
 	@RequestMapping("groupDetail.do")
 	public ModelAndView groupBoardDetailView(String memberNo, String gBoardNo, @RequestParam(value = "page", required = false) Integer page,
 			ModelAndView mv, String groomingNo) {
@@ -822,7 +885,7 @@ public class GroomingController {
 		return mv;
 	}
 
-	
+	// 그룹 게시글 삭제하기
 	  @RequestMapping("groupDelete.do") public ModelAndView
 	  groupDelete(ModelAndView mv,String groomingNo, String gBoardNo,@RequestParam(value = "page", required = false) Integer page) {
 	 
@@ -847,6 +910,7 @@ public class GroomingController {
 	} 
 	  return mv; }
 	 
+	  // 그룹 게시글 수정 페이지
 	  @RequestMapping("groupBoardUpdate.do")
 	  public ModelAndView groupBoardUpdate(ModelAndView mv,String groomingNo, String gBoardNo,
 			  @RequestParam(value = "page", required = false) Integer page) {
@@ -859,6 +923,7 @@ public class GroomingController {
 		  return mv;
 	  }
 	 
+	  // 게시글 수정
 	  @RequestMapping("groupUpdate.do")
 	  public ModelAndView groupUpdate(@RequestParam(value = "page", required = false) Integer page,String gBoardNo,String memberNo,
 				HttpServletRequest request, ModelAndView mv, GroupBoard g, String groomingNo,
@@ -917,6 +982,7 @@ public class GroomingController {
 		  return mv;
 	  }
 	  
+	  // 게시글 댓글
 		@RequestMapping("groupReply.do")
 		public void groupReply(HttpServletResponse response,String gBoardNo) throws JsonIOException, IOException {
 			response.setContentType("application/json; charset=utf-8");
@@ -927,6 +993,7 @@ public class GroomingController {
 			gson.toJson(rlist, response.getWriter());
 		}
 
+		// 게시글 댓글 추가
 		@RequestMapping("addGroupReply.do")
 		@ResponseBody
 		public String addReply(GReply g, String memberNo,String groomingNo) {
@@ -948,7 +1015,7 @@ public class GroomingController {
 			
 		}
 	  
-	  
+		// 임시저장 글 가져오기
 		@RequestMapping("groomingSaveInsert.do")
 		public ModelAndView groomingSaveView(ModelAndView mv, String memberNo) {
 			// 임시저장된 그루밍 글번호 가져오자!
@@ -977,6 +1044,7 @@ public class GroomingController {
 			return mv;
 		}
 
+		// 임시저장 페이지 등록
 		@RequestMapping("gSaveUpdate.do")
 		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
 				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
@@ -1045,6 +1113,7 @@ public class GroomingController {
 			return mv;
 		}
 	
+		// 글내역확인
 		@RequestMapping("groomingDecide.do")
 		@ResponseBody
 		public String groomingDecide(String memberNo) {
@@ -1065,29 +1134,84 @@ public class GroomingController {
 			
 		}
 		
+		// 그룹페이지 출석부로 이동
 		@RequestMapping("calendar.do")
-		public ModelAndView calendar(ModelAndView mv, String groomingNo) {
+		public ModelAndView calendar(ModelAndView mv, String groomingNo,String memberNo) throws ParseException {
 
 			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
 			
-		
-		
-		 
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
-			
-
 		
 			  String str = ""; 
 			  for(int i=0; i<member.size(); i++) {
 				  str += member.get(i).getMemberNickName();
 				  if((i+1)<member.size()) { str +=','; }
 			  }
-
+			  System.out.println("memberNo: " + memberNo);
+			  String checkLate = "";
+			  int checkY = 0;
+			  int checkL = 0;
+			  int checkN = 0;
+			  int difDay = 0;
+			  difDay = gService.getDifDate(groomingNo);
+			  System.out.println("difDay : " + difDay);
+			
 			  
-			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+			  String memberNickName = gService.getMemberNickName(memberNo) ;
+		
+			    Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName",memberNickName );
+				
+				String gMemberNo = gService.getGMemberNo(map);
+				
+				Map hashmap  = new HashMap();
+				hashmap.put("groomingNo",groomingNo);
+				hashmap.put("gMemberNo", gMemberNo);
+			  
+				 checkY = gService.getCheckY(hashmap);
+				 checkL = gService.getCheckL(hashmap);
+				 checkN = gService.getCheckN(hashmap);
+				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
+				 System.out.println("checkLate: " + checkLate);
+//			  for(int i=0; i<member.size(); i++) {
+//				 
+//				    Map map  = new HashMap();
+//					map.put("groomingNo",groomingNo);
+//					map.put("memberNickName", member.get(i).getMemberNickName());
+//					
+//					String gMemberNo = gService.getGMemberNo(map);
+//					
+//					Map hashmap  = new HashMap();
+//					hashmap.put("groomingNo",groomingNo);
+//					hashmap.put("gMemberNo", gMemberNo);
+//				  
+//					 checkY = gService.getCheckY(hashmap);
+//					 checkL = gService.getCheckL(hashmap);
+//					System.out.println("checkY :" +checkY);
+//					System.out.println("checkL :" +checkL);
+//					System.out.println("difDay :" +difDay);
+//					checkLate[i] = String.format("%.2f", ((checkY+checkL -(int)(checkL/2.0))/difDay) * 100); 
+//					System.out.println("checkLate["+i+"] : " + checkLate[i] );
+//					memberNick[i] = member.get(i).getMemberNickName();
+//				  
+//			  }
+//			  ArrayList<String[]> list = new ArrayList<String[]>();
+//		
+//			  for(int i=0; i<member.size(); i++) {
+//				  list.add(checkLate);
+//				  list.add(memberNick);
+//			  }
+//			  System.out.println("나 list야 : " +list.forEach(checkLate));
+			  mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("checkLate",checkLate).addObject("memberNickName",memberNickName)
+			  .addObject("grooming",grooming).addObject("checkY",checkY).addObject("checkL",checkL).addObject("checkN",checkN).setViewName("grooming/groupCalendar");
 
 			return mv;
 		}
+		
+		// 그룹페이지 출석 현황
 		@RequestMapping("checkList.do")
 		@ResponseBody
 		public void checkList(HttpServletResponse response,String groomingNo, String memberNickName) throws JsonIOException, IOException {
@@ -1109,5 +1233,219 @@ public class GroomingController {
 			gson.toJson(gCheck, response.getWriter());
 			
 		}
-	  
+		
+		// 출석 저장
+		@RequestMapping("insertCheck.do")
+		@ResponseBody
+		public ModelAndView insertCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus)  {
+
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
+			
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+			
+			String[] nickname = memberNickName.split(",");
+			String[] status = gCheckStatus.split(",");
+			String gMemberNo = null;
+			int result = 0;
+			for(int i=0; i<nickname.length; i++) {
+				
+				Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName", nickname[i]);
+				
+				gMemberNo = gService.getGMemberNo(map);
+				
+				g.setgMemberNo(gMemberNo);
+				g.setgCheckStatus(status[i]);
+				result = gService.insertCheck(g);
+			}
+	
+			
+			System.out.println("나 memberNickName : " + memberNickName);
+			System.out.println("나 groomingNo : " + groomingNo);
+			System.out.println("나 gCheckStatus : " + gCheckStatus);
+			
+			
+			if (result > 0) {
+				
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				
+			} else {
+				throw new GroomingException("출석 체크 실패!");
+			}
+			return mv;
+		}
+		
+		// 출석 가능한 날짜 확인
+		@RequestMapping("confirmCheck.do")
+		@ResponseBody
+		public String confirmCheck(String gCheckDate, String groomingNo) throws ParseException {
+
+			
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date to = sdf.parse(gCheckDate);
+			
+			Map map = new HashMap(); 
+			map.put("gCheckDate", to);
+			map.put("groomingNo", groomingNo);
+		 
+			
+			ArrayList<GCheck> g = gService.confirmCheck(map); 
+			System.out.println("나 check확인하는 g야" + g); 
+		
+			if(!g.isEmpty()) {
+				return "success"; 
+			}else {
+				return "false"; 
+			}
+		 
+		}
+		// 출석 수정
+		@RequestMapping("updateCheck.do")
+		@ResponseBody
+		public ModelAndView updateCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus) {
+			
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			System.out.println("groomingNo:" + groomingNo);
+		
+			
+			ArrayList<Member> member = mService.GroupMList(groomingNo);
+			
+
+		
+			  String str = ""; 
+			  for(int i=0; i<member.size(); i++) {
+				  str += member.get(i).getMemberNickName();
+				  if((i+1)<member.size()) { str +=','; }
+			  }
+			
+			String[] nickname = memberNickName.split(",");
+			String[] status = gCheckStatus.split(",");
+			String gMemberNo = null;
+			int result = 0;
+			for(int i=0; i<nickname.length; i++) {
+				
+				Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName", nickname[i]);
+				
+				gMemberNo = gService.getGMemberNo(map);
+				
+				g.setgMemberNo(gMemberNo);
+				g.setgCheckStatus(status[i]);
+				result = gService.updateCheck(g);
+			}
+	
+			
+//			System.out.println("나 memberNickName : " + memberNickName);
+//			System.out.println("나 groomingNo : " + groomingNo);
+//			System.out.println("나 gCheckStatus : " + gCheckStatus);
+			
+			
+			if (result > 0) {
+				
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				
+			} else {
+				throw new GroomingException("출석 수정 실패!");
+			}
+			return mv;
+		
+			
+		}
+		
+		// 출석률 및 현황 리스트
+		@RequestMapping("checkLate.do")
+		@ResponseBody
+		public void checkLate(HttpServletResponse response, String memberNo, String groomingNo) throws JsonIOException, IOException {
+			response.setContentType("application/json; charset=utf-8");
+
+				 
+			  String checkLate = "";
+			  int checkY = 0;
+			  int checkL = 0;
+			  int checkN = 0;
+			  int difDay = 0;
+			  difDay = gService.getDifDate(groomingNo);
+			  System.out.println("difDay : " + difDay);
+			
+			  
+			  String memberNickName = gService.getMemberNickName(memberNo) ;
+		
+			    Map map  = new HashMap();
+				map.put("groomingNo",groomingNo);
+				map.put("memberNickName",memberNickName );
+				
+				String gMemberNo = gService.getGMemberNo(map);
+				
+				Map hashmap  = new HashMap();
+				hashmap.put("groomingNo",groomingNo);
+				hashmap.put("gMemberNo", gMemberNo);
+			  
+				 checkY = gService.getCheckY(hashmap);
+				 checkL = gService.getCheckL(hashmap);
+				 checkN = gService.getCheckN(hashmap);
+				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
+				 System.out.println("checkLate: " + checkLate);
+				 GCheck g = new GCheck(memberNickName,checkLate,checkL,checkN,checkY,difDay);
+				 g.setCheckLate(checkLate);
+				 g.setCheckL(checkL);
+				 g.setCheckN(checkN);
+				 g.setCheckY(checkY);
+				 g.setDifDay(difDay);
+				 
+				Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+				gson.toJson(g, response.getWriter());
+	}
+  
+		
+		
+		@RequestMapping("checkPeople.do")
+		@ResponseBody
+		public void checkPeople(HttpServletResponse response, String groomingNo) throws JsonIOException, IOException {
+
+			response.setContentType("application/json; charset=utf-8");
+			Grooming grooming = gService.selectGrooming(groomingNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(grooming, response.getWriter());
+
+		}	
+		
+		@RequestMapping("checkGPoint.do")
+		@ResponseBody
+		public void checkGPoint(HttpServletResponse response, String applyNo) throws JsonIOException, IOException {
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			ArrayList<MyPagePoint> mp = gService.selectGpointList(applyNo);
+			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+			gson.toJson(mp, response.getWriter());
+			
+		}	
+		
+		@RequestMapping("LimitCheck.do")
+		@ResponseBody
+		public String LimitCheck(String groomingNo) {
+			Grooming g = gService.limitCheck(groomingNo);
+			
+			if(g != null) {
+				return "success";
+			}else {
+				return "false";
+			}
+			
+		}	
+		
 }

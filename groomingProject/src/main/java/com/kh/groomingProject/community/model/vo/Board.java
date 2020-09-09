@@ -23,14 +23,14 @@ public class Board implements Serializable{
 	private String boardReplyStatus; 	// 댓글 유무 Y 삭제 N
 	private String boardSelecStatus; 	// 댓글 채택 유무 Y 삭제 N
 	private String memberNickName;		// 멤버 닉네임
-	private int boardCount;				// 관리자 페이지에서 쓸 보드 카운트
+	private String boardImg;			// 게시판 이미지 
 	
 	public Board() {
 	}
 
 	public Board(String boardNo, String memberNo, String bCategoryNo, String boardTitle, String boardContent,
 			Date boardCreateDate, Date boardModifyDate, int boardVcount, int boardGcount, String boardStatus,
-			String boardReplyStatus, String boardSelecStatus, String memberNickName, int boardCount) {
+			String boardReplyStatus, String boardSelecStatus, String memberNickName, String boardImg) {
 		this.boardNo = boardNo;
 		this.memberNo = memberNo;
 		this.bCategoryNo = bCategoryNo;
@@ -44,7 +44,7 @@ public class Board implements Serializable{
 		this.boardReplyStatus = boardReplyStatus;
 		this.boardSelecStatus = boardSelecStatus;
 		this.memberNickName = memberNickName;
-		this.boardCount = boardCount;
+		this.boardImg = boardImg;
 	}
 
 	public String getBoardNo() {
@@ -151,12 +151,16 @@ public class Board implements Serializable{
 		this.memberNickName = memberNickName;
 	}
 
-	public int getBoardCount() {
-		return boardCount;
+	public String getBoardImg() {
+		return boardImg;
 	}
 
-	public void setBoardCount(int boardCount) {
-		this.boardCount = boardCount;
+	public void setBoardImg(String boardImg) {
+		this.boardImg = boardImg;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -165,8 +169,10 @@ public class Board implements Serializable{
 				+ boardTitle + ", boardContent=" + boardContent + ", boardCreateDate=" + boardCreateDate
 				+ ", boardModifyDate=" + boardModifyDate + ", boardVcount=" + boardVcount + ", boardGcount="
 				+ boardGcount + ", boardStatus=" + boardStatus + ", boardReplyStatus=" + boardReplyStatus
-				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + ", boardCount="
-				+ boardCount + "]";
+				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + ", boardImg="
+				+ boardImg + "]";
 	}
 
+	
+	
 }

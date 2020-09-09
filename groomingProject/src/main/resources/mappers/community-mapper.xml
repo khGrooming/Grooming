@@ -16,7 +16,7 @@
 		<result property="boardReplyStatus" column="BOARD_REPLY_STATUS" />
 		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
-		<result property="boardCount" column="BOARDCOUNT"/>
+		<result property="boardImg" column="BOARD_IMG" />
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -33,9 +33,10 @@
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 	</resultMap>
 		
+	<!-- 전체 게시판 조회 -->
 	<select id="selectList" parameterType="string" resultMap="boardResultSet">
  		SELECT * FROM BOARD
-		JOIN MEMBER USING (MEMBER_NO) 
+		JOIN MEMBER USING (MEMBER_NO)
 		<where>
 			<if test="value != null and value != '' ">
 				AND B_CATEGORY_NO=#{value}
@@ -44,22 +45,25 @@
         ORDER BY BOARD_NO DESC
 	</select>
 	
+	<!-- 상세 게시물 조회 -->
 	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
 		SELECT * FROM BOARD
 		JOIN MEMBER USING (MEMBER_NO)
 		WHERE BOARD_NO=#{boardNo}
 	</select>
 	
+	<!-- 조회수 올리기 -->
 	<update id="addViewCount" parameterType="string">
 		UPDATE BOARD
 		SET BOARD_VCOUNT = BOARD_VCOUNT + 1
 		WHERE BOARD_NO=#{boardNo} 
 	</update>
 	
+	<!-- 게시물 올리기 -->
 	<insert id="communityInsert" parameterType="map">
 		INSERT INTO BOARD (BOARD_NO, MEMBER_NO, B_CATEGORY_NO, BOARD_TITLE, BOARD_CONTENT,
 							BOARD_CREATE_DATE, BOARD_MODIFY_DATE, BOARD_VCOUNT, BOARD_GCOUNT, BOARD_STATUS,
-							BOARD_REPLY_STATUS, BOARD_SELEC_STATUS)
+							BOARD_REPLY_STATUS, BOARD_SELEC_STATUS, BOARD_IMG)
 		VALUES(
 		    'B' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
 			, #{memberNo}			
@@ -73,9 +77,11 @@
 			, 'Y'
 			, 'N'
 			, 'N'
+			, #{board.boardImg}
 		)
 	</insert>
 	
+	<!-- 게시물 수정 -->
 	<update id="communityUpdate" parameterType="map">
 		UPDATE BOARD
 		SET BOARD_TITLE=#{board.boardTitle}
@@ -83,14 +89,15 @@
 			, BOARD_MODIFY_DATE=SYSDATE
 		WHERE BOARD_NO=#{board.boardNo}
 	</update>
-
+	
+	<!-- 게시물 삭제 -->
 	<delete id="communityDelete" parameterType="string">
 		DELETE FROM BOARD
 		WHERE BOARD_NO=#{boardNo}
 	</delete>
 	
 	<!-- 댓글 관련 쿼리 -->
-	
+	<!-- 댓글 조회 -->
 	<select id="replySelectList" parameterType="string" resultMap="replyResultSet">
 		SELECT *
 		FROM REPLY
@@ -98,6 +105,7 @@
 		WHERE BOARD_NO = #{boardNo}
 	</select>
 	
+	<!-- 댓글 등록 -->
 	<insert id="replyInsert" parameterType="map">	
 		INSERT INTO REPLY (REPLY_NO, BOARD_NO, B_CATEGORY_NO, MEMBER_NO, REPLY_CONTENT,
 							REPLY_CREATE_DATE, REPLY_MODIFY_DATE, PEPLY_SELECTION,
@@ -115,8 +123,57 @@
 			, 0
         )
 	</insert>
-
 	
+	<!-- 댓글 수정 -->
+	<update id="replyUpdate" parameterType="map">
+		UPDATE REPLY
+        SET REPLY_CONTENT=#{reply.replyContent}
+        ,REPLY_MODIFY_DATE=SYSDATE
+        WHERE REPLY_NO=#{reply.replyNo}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="replyDelete" parameterType="map">
+		DELETE
+		FROM REPLY
+		WHERE REPLY_NO=#{reply.replyNo}
+	</delete>
 
+	<!-- 총 게시물 갯수 -->
+	<select id="getListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_STATUS='Y'
+		<if test="value != null and value != '' ">
+			AND B_CATEGORY_NO=#{value}
+		</if>
+	</select>
+	
+	
+	<!-- 랭킹 리스트 -->
+	<select id="communityTopList" resultMap="boardResultSet">
+		<![CDATA[	
+			SELECT *
+			FROM (SELECT * 
+        			FROM BOARD
+        			ORDER BY BOARD_VCOUNT DESC)
+        	JOIN MEMBER USING (MEMBER_NO)
+			WHERE ROWNUM <= 3
+		]]>
+	</select>
+	
+	<!-- 검색 -->
+	<select id="communitySearch" parameterType="string" resultMap="boardResultSet">
+		SELECT *
+        FROM BOARD
+        WHERE BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
+	</select>
+	<!-- 태그 -->
+<!-- 	    SELECT *
+        FROM BOARD B
+        JOIN HASHTAG H ON (B.BOARD_NO = H.BOARD_NO)
+        JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
+        AND TAG_NAME LIKE '%졸려%' -->
+	
 
 </mapper>

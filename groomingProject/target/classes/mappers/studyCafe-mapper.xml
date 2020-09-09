@@ -91,14 +91,14 @@
 		WHERE CAFE_NO = #{cafeNo}
 	</select>
 	
-	<select id="selectCheckRoom" parameterType="string" resultMap="reservationResultSet">
+	<select id="selectCheckRoom" parameterType="Map" resultMap="reservationResultSet">
 		SELECT *
 		FROM CAFERESERVATION
 		WHERE C_PRICE_NO = #{cPriceNo}
 		  AND TO_CHAR(C_RESER_DATE,'DD') = #{day}
 	</select>
 	
-	<select id="selectCheckTime" parameterType="string" resultMap="reservationResultSet">
+	<select id="selectCheckTime" parameterType="Map" resultMap="reservationResultSet">
 		SELECT *
 		FROM CAFERESERVATION
 		WHERE TO_CHAR(C_RESER_DATE,'DD') = #{date}
@@ -113,7 +113,7 @@
 		    ON (C_RESER_NO = '${cReserNo}')
 		WHEN MATCHED THEN 
 		    UPDATE SET  
-		    	MEMBER_NO = 'M00002'
+		    	MEMBER_NO = #{memberNo}
 		        , C_PRICE_NO = '${cPriceNo}'
 		        , C_RESER_HEAD_COUNT = '${cReserHeadCount}'
 		        , C_RESER_DATE = '${cReserDate}'
@@ -122,7 +122,7 @@
 		WHEN NOT MATCHED THEN 
 			INSERT (C_RESER_NO,MEMBER_NO,C_PRICE_NO,C_RESER_HEAD_COUNT,C_RESER_DATE,C_RESER_S_TIME,C_RESER_E_TIME)
 			VALUES (SEQ_C_RESER_NO.NEXTVAL
-					, 'M00002'
+					, #{memberNo}
 					, '${cPriceNo}'
 					, '${cReserHeadCount}'
 					, '${cReserDate}'
@@ -158,10 +158,11 @@
 	</delete>
 	
 	<select id="checkPoint" parameterType="map" resultType="_int">
-		SELECT SUM(ADD_POINT) 
-		FROM POINT
-		WHERE MEMBER_NO = #{memberNo}		
-		GROUP BY MEMBER_NO
+		SELECT NVL(SUM(P.ADD_POINT), 0)
+		FROM POINT P
+		RIGHT JOIN MEMBER M ON (P.MEMBER_NO=M.MEMBER_NO)
+		WHERE M.MEMBER_NO = #{memberNo}
+		GROUP BY M.MEMBER_NO
 	</select>
 	
 	<insert id="pointCalculation" parameterType="map">

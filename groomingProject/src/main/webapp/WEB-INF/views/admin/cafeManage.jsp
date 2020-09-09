@@ -52,7 +52,7 @@
         }
 		
 		.modalInfo{width:100%; text-align:center;}
-		img{width:100%;}
+		.thumbnail{width:100%;}
     </style>
 </head>
 <body>

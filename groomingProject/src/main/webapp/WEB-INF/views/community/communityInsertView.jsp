@@ -58,7 +58,7 @@
 							<td><input type="hidden" name="bCategoryNo" value="${bCategoryNo}"></td>
 						</tr>
 						<tr>
-							<td style="text-align:left; vertical-align: baseline;">해시 태그</td>
+							<td style="text-align:left; vertical-align: baseline;">해시태그</td>
 							<td>	
 								<input type="text" name="tagName" value="" placeholder="Tags,"
 										data-role="tagsinput" class="form-control" id="tagName"
@@ -66,7 +66,10 @@
 										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small>
 							</td>				
 						</tr>
-						
+						<tr>
+							<td style="text-align:left; vertical-align: baseline;">첨부파일</td>
+							<td><input type="file" name="uploadFile"></td>
+						</tr>
 						<tr>
 							<td colspan="2" align="center">
 								<input type="submit" value="등록 하기">&nbsp;

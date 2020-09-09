@@ -104,7 +104,7 @@
 				</c:url>
 				<c:url var="communityDelete" value="communityDelete.do">
 					<c:param name="boardNo" value="${board.boardNo }" />
-					<%-- <c:param name="bCategoryNo" value="${board.bCategoryNo }" /> --%>
+					<c:param name="bCategoryNo" value="${board.bCategoryNo }" />
 				</c:url>
 				<c:if test="${loginUser.memberNo eq board.memberNo }">	
 					<tr>
@@ -143,36 +143,73 @@
         			<th>작성일</th>
         			<th></th>
         		</tr>
+
         		<c:forEach var="r" items="${replyList }">
         			<tr>
         				<td>${r.memberNickName}</td>
-        				<td>${r.replyContent }</td>
-        				<td>${r.replyModifyDate }</td>
-        	
-        				<td>
-							<i class="fas fa-bars" onclick="replyUD();"></i>		
-								<ul class="layer_list">
-									<li class="layer_item">
-										<a href="#" role="button" class="layer_button">수정</a>
-									</li>
-									<li class="layer_item">
-										<a href="#" role="button" class="layer_button">삭제</a>
-									</li>
-								</ul>
-						<script type="text/javascript">
-							function replyUD(){
-       							return confirm("삭제하시겠습니까?");
-							}
-						</script>
-							
-							
+        				<td>${r.replyContent }
+        				
+						<c:url var="replyDelete" value="replyDelete.do">
+							<c:param name="boardNo" value="${board.boardNo }" />
+							<c:param name="bCategoryNo" value="${board.bCategoryNo }" />
+							<c:param name="replyNo" value="${r.replyNo }" />
+						</c:url>
+        					
+        				<c:url var="replyUpdate" value="replypdate.do">
+							<c:param name="boardNo" value="${board.boardNo }" />
+							<c:param name="bCategoryNo" value="${board.bCategoryNo }" />
+							<c:param name="replyNo" value="${r.replyNo }" />
+							<c:param name="replyContent" value="${r.replyContent }" />
+						</c:url> 		
+        					
+        					<form action="${replyUpdate}" style="display: flex;" method = "post">
+        					
+        						<textarea rows="3" cols="70" style="display:none;" class="rUpdate" name="rUpdate">${r.replyContent }</textarea>
+        						<input type="submit" style="display:none;" class="rUpdate_btn" value="수정">
+        						<input type="button" style="display:none;" class="rClose_btn" value="취소">
+        					</form>
         				</td>
-       	 			</tr>
+        				<td>${r.replyModifyDate }</td>
+                      	<c:if test="${loginUser.memberNo eq r.memberNo }">	
+        				<!-- 수정/삭제 버튼-->
+        					<td>
+								<div class="dropdown open">
+                            		<a href="javascript://" data-toggle="dropdown" aria-expanded="true">
+                            			<i class="fa fa-cog" data-toggle="tooltip" data-placement="left" title="" data-original-title="댓글설정" style="color: gray;"></i>
+                            		</a>
+                               		<ul class="dropdown-menu" role="menu">
+                                		<li style="text-align: center;">
+                                			<a class="note-edit-btn replyUpdate">수정</a>
+                                		</li>
+                                    	<li style="text-align: center;">
+                                    		<a href="${replyDelete }" class="note-delete-btn" id="replyDelete">삭제</a>
+                                   	 	</li>
+    								</ul>
+                     			</div>
+                     		</td>
+                     	</c:if> 
+					</tr> 
+					
+					<script>
+						$(function(){
+							$(".replyUpdate").on("click",function(){
+								
+								var arr = $('.replyUpdate');
+								
+								for(var i = 0; i < arr.length; i++){
+									if(arr[i] === this){
+										$('.rUpdate').eq(i).css("display","block");
+										$('.rUpdate_btn').eq(i).css("display","block");
+										$('.rClose_btn').eq(i).css("display","block");
+									}
+								}
+							})			
+						})
+					</script>
+                 		
        	 		</c:forEach>
         	</table>
         	<hr>
-        	
-
 		</div>
 	</div>		
 </section>

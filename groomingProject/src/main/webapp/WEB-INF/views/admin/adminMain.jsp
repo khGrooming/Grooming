@@ -55,7 +55,9 @@
             
             <jsp:useBean id="today" class="java.util.Date" />
             <fmt:formatDate var="day" value="${today}" pattern='yyyy-MM-dd'/>
-			
+            
+            
+            
             <div class="statistics visit">
                 <p align="center"><b>방문자 수</b></p>
             </div>

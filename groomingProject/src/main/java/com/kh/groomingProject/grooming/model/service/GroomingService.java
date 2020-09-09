@@ -1,7 +1,6 @@
 package com.kh.groomingProject.grooming.model.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.groomingProject.grooming.model.vo.GroomingPageInfo;
@@ -18,6 +17,7 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
 public interface GroomingService {
 
@@ -126,7 +126,32 @@ public interface GroomingService {
 	String getGMemberNo(Map map);
 
 	ArrayList<GCheck> checkList(Map hashmap);
+	
+	int insertCheck(GCheck g);
+
+	ArrayList<GCheck> confirmCheck(Map map);
 
 	ArrayList<Grooming> groomingSearch(GroomingSearch gs);
 
+	int updateCheck(GCheck g);
+
+	int getCheckY(Map hashmap);
+
+	int getCheckL(Map hashmap);
+
+	int getDifDate(String groomingNo);
+
+	String getMemberNickName(String memberNo);
+
+	int getCheckN(Map hashmap);
+
+	ArrayList<MyPagePoint> selectGpointList(String applyNo);
+
+	int addPointMember(Map map1);
+
+	Grooming limitCheck(String groomingNo);
+
+	String selectMemberNo(String groomingNo);
+
+	int addMentorPoint(Map map2);
 }

@@ -16,7 +16,8 @@ margin-right: auto;
 margin-left: auto; 
 }
 #ta{
-	width: 80%;
+	width:80%;
+	min-width: 1000px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -27,13 +28,15 @@ margin-left: auto;
 #ta th{
 	font-size: 20px;
 }
-#ta th:nth-child(-n+3){
+#ta th{
 	text-align: center;
 }
-#ta tr td:nth-child(-n+2){
+#ta tr td{
 text-align: center;
 }
-
+#ta tr td:nth-child(3){
+text-align: left;
+}
 </style>
 </head>
 
@@ -41,8 +44,6 @@ text-align: center;
 <jsp:include page="./mypageinfo.jsp" />
 <div class="content-op">
 <h3 style="width: 80%; margin:0 auto;">찜 목록</h3>
-<br>
-<br>
 <br>
 	<div style="height: 700px;">
 	<c:if test="${!empty hlist }">
@@ -89,12 +90,13 @@ text-align: center;
 				</td>
 				<td onclick="location.href='${gdetail}'" style="width: 700px;" >
 					<div style="float: left; margin-right: 20px;">
-					<img src="${contextPath }/resources/views/images/${list.groomingImg}" style="width: 100px;">
+					<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${list.groomingImg }"
+						onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'" width="100px;" height="80px;">
 					</div>
 					<div  style="float: left;">
 					<br>
 				
-					<p>제목:${list.groomingTitle} / ${list.groomingHeartNo }</p>
+					<p>제목:${list.groomingTitle}</p>
 					<p style="width:500px; font-size:10px">${list.groomingIntroduce }</p>
 					</div>
 					</td>
@@ -124,7 +126,7 @@ text-align: center;
 <br>
 
 <div style="width: 80%; margin: 0 auto;">
-<button onclick="deleteAction();" >삭제</button>
+<button onclick="deleteAction();" style=" width: 80px;  border-radius: 10px;">삭제</button>
 </div>
 <script>
 $(function(){

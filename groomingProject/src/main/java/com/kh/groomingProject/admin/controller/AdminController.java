@@ -56,6 +56,11 @@ public class AdminController {
 		ArrayList<GraphListCount> glist = adminService.adminGroomingList(clist);
 		ArrayList<GraphListCount> mlist = adminService.adminMemberList(clist);
 		
+		System.out.println("cList : "+clist);
+		System.out.println("bList : "+blist);
+		System.out.println("gList : "+glist);
+		System.out.println("mList : "+mlist);
+		
 		mv.addObject("clist", clist);
 		mv.addObject("mlist", mlist);
 		mv.addObject("blist", blist);

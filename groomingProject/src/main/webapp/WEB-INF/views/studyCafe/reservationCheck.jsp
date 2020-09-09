@@ -61,11 +61,11 @@
 	               <div class="col-sm-3"></div>
 	                   <div class="sideMenu col-sm-7">
 	                        <div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-                        <c:if test="${!empty SessionScope.loginUser}">
-							<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
-							<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+                        <c:if test="${!empty loginUser}">
+							<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+							<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 						</c:if>
-						<c:if test="${empty SessionScope.loginUser}">
+						<c:if test="${empty loginUser}">
 							<div class="cafe"><a href="loginPage.do?memberNo}">카페 신청 내역</a></div>
 							<div class="cafe"><a href="loginPage.do?memberNo">카페 예약 내역</a></div>
 						</c:if>
@@ -85,15 +85,15 @@
 		                    </thead>
 		                    <tbody id="rInfo" align="center">
 		                    <c:if test="${!empty rlist}">
-		                        <c:forEach var="info" items="${rlist}">
+		                        <c:forEach var="info" varStatus="i" items="${rlist}">
 			                        <tr>
 			                        	<td>${info.cafeName}<br>${info.cRoomName}&nbsp;&nbsp;${info.cReserHeadCount} 명</td>
 			                        	<td>${info.cReserDate.substring(0,10)}<br>${info.cReserSTime}시 ~ ${info.cReserETime}시</td>
 			                        	<td><c:out value="${info.cReserHeadCount*(info.cReserETime-info.cReserSTime)*info.cRoomPrice} 원"/></td>
 			                        	<td width="150px"><button type="button" onclick="location.href='cafeDetail.do?cafeNo=${info.cafeNo}&cReserNo=${info.cReserNo}'">변경</button>
-			                        	<button type="button" onclick="cancelR();">취소</button></td>
+			                        	<button type="button" onclick="cancelR(${i.index});">취소</button></td>
 			                       	</tr>
-			                       	<input type="hidden" id="cReserNo" name="cReserNo" value="${info.cReserNo}">
+			                       	<input type="hidden" class="cReserNo${i.index}" name="cReserNo" value="${info.cReserNo}">
 		                        </c:forEach>
 		                    </c:if>
 		                    <c:if test="${empty rlist}">
@@ -120,10 +120,12 @@
         
         <script>
 	        
-	        function cancelR(){
+	        function cancelR(i){
+        		$No = $(".cReserNo"+i).val();
+	        	console.log($No);
 	        	if(window.confirm("정말 취소하시겠습니까?")){
-	        		$No = $("#cReserNo").val();
-	        		location.href="cancelR.do?cReserNo="+$No;
+	        		
+	        		location.href="cancelR.do?memberNo=${loginUser.memberNo}&cReserNo="+$No;
 	        	}
 	        	
 	        }

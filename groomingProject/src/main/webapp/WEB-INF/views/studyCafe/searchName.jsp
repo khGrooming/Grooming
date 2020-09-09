@@ -42,11 +42,11 @@
 			<div class="container col-sm-3"></div>
 			    <div class="sideMenu col-sm-7">
 					<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-					<c:if test="${!empty SessionScope.loginUser}">
-						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
-						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					<c:if test="${!empty loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
-					<c:if test="${empty SessionScope.loginUser}">
+					<c:if test="${empty loginUser}">
 						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
 						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
 					</c:if>
@@ -82,7 +82,7 @@
 			            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
 			            </c:url>
 		                <div class="panel panel-default" onclick="location.href='cafeDetail.do?cafeNo=${cafe.cafeNo}'">
-		                    <img src="${contextPath}/resources/views/images/study.jpg" class="thumbnail">
+		                    <img src="${contextPath}/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
 		                </div>

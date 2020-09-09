@@ -22,7 +22,6 @@
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-	<div class="container" align="center">
 	<!-- ------------------ 해시태그 검색 -------------------- -->
 		
 	<!-- ------------------ 정렬 ------------------- -->
@@ -66,8 +65,49 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<!-- 페이징 처리 부분 -->
+			<table>
+					<tr class="paginationCSS" height="20">
+						<td colspan="5">
+					<!-- [이전] -->
+							<c:if test="${qpi.currentPage eq 1 }">
+								[이전]&nbsp;
+							</c:if>		
+							<c:if test="${qpi.currentPage gt 1 }">
+								<c:url var="communityMainBack" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00005"/>
+									<c:param name="page" value="${qpi.currentPage -1 }"></c:param>
+								</c:url>
+								<a href="${communityMainBack }">[이전]</a>
+							</c:if>		
+					<!-- [번호들] -->
+							<c:forEach var="p" begin="${qpi.startPage }" end="${qpi.endPage }">
+								<c:if test="${p eq qpi.currentPage }">
+									<font color="red" size="4"><b>${p}</b></font>
+								</c:if>
+								<c:if test="${p ne qpi.currentPage }">
+									<c:url var="communityMainCheck" value="communityMain.do">
+										<c:param name="bCategoryNo" value="BC00005"/>
+										<c:param name="page" value="${p}"></c:param>
+									</c:url>
+									<a href="${communityMainCheck }">${p}</a>
+								</c:if>
+							</c:forEach>			
+					<!-- [이후] -->
+							<c:if test="${qpi.currentPage eq qpi.maxPage }">
+								&nbsp;[이후]
+							</c:if>		
+							<c:if test="${qpi.currentPage lt qpi.maxPage }">
+								<c:url var="communityMainAfter" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00005"/>
+									<c:param name="page" value="${qpi.currentPage +1 }"></c:param>
+								</c:url>
+								<a href="${communityMainAfter }">[이후]</a>
+							</c:if>	
+						</td>
+					</tr>
+			</table>
 		</div>
-	</div>
 	
 </body>
 </html>

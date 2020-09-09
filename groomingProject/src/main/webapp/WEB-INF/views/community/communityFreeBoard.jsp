@@ -21,153 +21,49 @@
 </style>
 <!-- ------ 검색 ------- -->
 <style type="text/css">
-.search-wrapper {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    top:50%;
-    left:50%;
+form {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
 }
-.search-wrapper .input-holder {    
-    height: 50px;
-    width:70px;
-    overflow: hidden;
-    background: rgba(255,255,255,0);
-    border-radius:6px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
+.d1 input {
+  width: 100%;
+  height: 42px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: #F9F0DA;
+  color: #9E9C9C;
 }
-.search-wrapper.active .input-holder {
-    width: 200px;
-    border-radius: 50px;
-    background: rgb(250 245 245 / 50%);
-    transition: all .5s cubic-bezier(0.000, 0.105, 0.035, 1.570);
+.d1 button {
+  position: absolute; 
+  top: 0;
+  right: 0px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #7BA7AB;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
 }
-.search-wrapper .input-holder .search-input {
-    width: 100%;
-    height: 30px;
-    padding: 0px 70px 0 20px;
-    opacity: 0;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background: transparent;
-    box-sizing: border-box;
-    border: none;
-    outline: none;
-    font-family: "Open Sans", Arial, Verdana;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #0c0c0c;
-    transform: translate(0, 60px);
-    transition: all .3s cubic-bezier(0.000, 0.105, 0.035, 1.570);
-    transition-delay: 0.3s;
-}
-.search-wrapper.active .input-holder .search-input {
-    opacity: 1;
-    transform: translate(0, 10px);
-}
-.search-wrapper .input-holder .search-icon {
-    width: 70px;
-    height: 70px;
-    border: none;
-    border-radius: 6px;
-    background: white;
-    padding: 0px;
-    outline: none;
-    position: relative;
-    z-index: 2;
-    float: right;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-.search-wrapper.active .input-holder .search-icon {
-    width: 40px;
-    height: 40px;
-    margin: 5px;
-    border-radius: 20px;
-}
-.search-wrapper .input-holder .search-icon span {
-    width:22px;
-    height:22px;
-    display: inline-block;
-    vertical-align: middle;
-    position:relative;
-    transform: rotate(45deg);
-    transition: all .4s cubic-bezier(0.650, -0.600, 0.240, 1.650);
-}
-.search-wrapper.active .input-holder .search-icon span {
-    transform: rotate(-45deg);
-}
-.search-wrapper .input-holder .search-icon span::before, .search-wrapper .input-holder .search-icon span::after {
-    position: absolute; 
-    content:'';
-}
-.search-wrapper .input-holder .search-icon span::before {
-    width: 4px;
-    height: 11px;
-    left: px;
-    top: 14px;
-    border-radius: 2px;
-    background: #212529;
-}
-.search-wrapper .input-holder .search-icon span::after {
-    width: 14px;
-    height: 14px;
-    left: 6px;
-    top: 0px;
-    border-radius: 14px;
-    border: 2px solid #212529;
-}
-.search-wrapper .close {
-    position: absolute;
-    z-index: 1;
-    top:14px;
-    right:20px;
-    width:25px;
-    height:25px;
-    cursor: pointer;
-    transform: rotate(-180deg);
-    transition: all .3s cubic-bezier(0.285, -0.450, 0.935, 0.110);
-    transition-delay: 0.2s;
-}
-.search-wrapper.active .close {
-	right: -40px;
-    transform: rotate(45deg);
-    transition: all .6s cubic-bezier(0.000, 0.105, 0.035, 1.570);
-    transition-delay: 0.5s;
-}
-.search-wrapper .close::before, .search-wrapper .close::after {
-    position:absolute;
-    content:'';
-    background: #7d7473;
-    border-radius: 2px;
-}
-.search-wrapper .close::before {
-    width: 5px;
-    height: 25px;
-    left: 10px;
-    top: 0px;
-}
-.search-wrapper .close::after {
-    width: 25px;
-    height: 5px;
-    left: 0px;
-    top: 10px;
+.d1 button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
 }
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-<!-- 	<div class="search-wrapper">
-    	<div class="input-holder">
-       		<input type="text" class="search-input" placeholder="검색어 입력" />
-        	<button class="search-icon" onclick="searchToggle(this, event);"><span></span></button>
-    	</div>
-    	<span class="close" onclick="searchToggle(this, event);"></span>
+	<div class="d1">
+  		<form>
+  			<input type="text" placeholder="제목/해시태그로 검색해주세요" name="communitySearch" id="communitySearch">
+  			<button type="submit" name="btnSearch" id="btnSearch"></button>
+  		</form>
 	</div>
-	<div class="container" align="center"> -->
-	<!-- ------------------ 해시태그 검색 -------------------- -->
+	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
 			<input type="radio" id="rf_1_ra" name="filter_ra"><label for="rf_1_ra">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
@@ -208,21 +104,83 @@
 					</c:forEach>
 				</tbody>
 			</table>
+			<!-- 페이징 처리 부분 -->
+			<table>
+					<tr class="paginationCSS" height="20">
+						<td colspan="5">
+					<!-- [이전] -->
+							<c:if test="${fpi.currentPage eq 1 }">
+								[이전]&nbsp;
+							</c:if>		
+							<c:if test="${fpi.currentPage gt 1 }">
+								<c:url var="communityMainBack" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00002"/>
+									<c:param name="page" value="${fpi.currentPage -1 }"></c:param>
+								</c:url>
+								<a href="${communityMainBack }">[이전]</a>
+							</c:if>		
+					<!-- [번호들] -->
+							<c:forEach var="p" begin="${fpi.startPage }" end="${fpi.endPage }">
+								<c:if test="${p eq fpi.currentPage }">
+									<font color="red" size="4"><b>${p}</b></font>
+								</c:if>
+								<c:if test="${p ne fpi.currentPage }">
+									<c:url var="communityMainCheck" value="communityMain.do">
+										<c:param name="bCategoryNo" value="BC00002"/>
+										<c:param name="page" value="${p}"></c:param>
+									</c:url>
+									<a href="${communityMainCheck }">${p}</a>
+								</c:if>
+							</c:forEach>			
+					<!-- [이후] -->
+							<c:if test="${fpi.currentPage eq fpi.maxPage }">
+								&nbsp;[이후]
+							</c:if>		
+							<c:if test="${fpi.currentPage lt fpi.maxPage }">
+								<c:url var="communityMainAfter" value="communityMain.do">
+									<c:param name="bCategoryNo" value="BC00002"/>
+									<c:param name="page" value="${fpi.currentPage +1 }"></c:param>
+								</c:url>
+								<a href="${communityMainAfter }">[이후]</a>
+							</c:if>	
+						</td>
+					</tr>
+			</table>
 		</div>
 	<!-- 검색 -->
+	<c:url var="communityFreeBoardURL" value="/community/communityFreeBoard"></c:url>
 	<script>
-		function searchToggle(obj, evt){
-	    	var container = $(obj).closest('.search-wrapper');
-				if(!container.hasClass('active')){
-	            	container.addClass('active');
-	            	evt.preventDefault();
-	        	} else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
-	            	container.removeClass('active');
-	            	// clear input
-	            	container.find('.search-input').val('');
-	        	}
-		}
+		$(function(){
+			$("#btnSearch").on("click", function(){
+				var communitySearch = $("#communitySearch").val();
+				
+				if(communitySearch == ""){
+					alert("한 글자 이상 검색해주셔야 합니다^^")
+				}else{
+					$.ajax({
+						url:"communitySearch.do",
+						type:"post",
+						data:{communitySearch:communitySearch},
+						dataType:"json",
+						
+						success:function(data) {
+							
+						},
+						error : function(request, status, errorData) {
+							alert("error code: " + request.status + "\n"
+								+ "message: " + request.responseText
+								+ "error: " + errorData);
+						}
+					})
+				}
+			})
+		})
 	</script>
+	
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
 	
 </body>
 </html>
