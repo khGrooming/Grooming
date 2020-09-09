@@ -16,10 +16,6 @@
 	
 	height: 800px;
 }
-
-
-
-
 .spacIconTd {
 	width: 50px;
 }

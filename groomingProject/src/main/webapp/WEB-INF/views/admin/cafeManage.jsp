@@ -112,6 +112,7 @@
 			     	<p><br /></p>
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+						<button type="button" id="roomInsert" onclick="roomInsert();" class="pop_bt" style="font-size: 13pt;">룸 추가</button>
 						<button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">변경</button>
 						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
 					</div>
@@ -259,6 +260,10 @@
 	                 }
 				})
 			}
+		 
+		 function roomInsert(){
+			 $()
+		 }
 	</script>
 </body>
 </html>
