@@ -242,7 +242,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
-		<label id="today" style=""></label>
+		<label id="today" style="" hidden></label>
 		<div class="form_container container">
 			<!-- style=" "> -->
 
@@ -506,6 +506,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 					if ($(this).val() == 'x') {
 						console.log("예치금 없앰");
+						
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {

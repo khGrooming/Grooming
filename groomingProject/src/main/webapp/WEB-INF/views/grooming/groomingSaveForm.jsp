@@ -233,9 +233,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
-		<!-- <label id="today" style=""></label> -->
+		<label id="today" style="" hidden></label>
 		<div class="form_container container">
-			<!-- style=" "> -->
 
 			<c:url var="groomingSaveUpdate" value="gSaveUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
