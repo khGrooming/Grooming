@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +14,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <style>
-        .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
+    	section { padding-top: 6.25rem; min-height: calc(100vh - 3.5rem); }
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -47,7 +49,7 @@
     </style>
 </head>
 <body>
-    <header><jsp:include page="../common/mainNavigationBar.jsp"/></header>
+    <jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
         <div class="container col-sm-3">
@@ -81,6 +83,12 @@
                 <tbody>
                     <c:forEach var="mList" varStatus="i" items="${mList}">
 	                    <tr>
+	                    	<c:forEach var="dList" items="${dList}">
+	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+	                        		${dList.declarationCNo}
+	                        	</c:if>
+                       		</c:forEach>/
+                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
                         	<td rowspan="4">${mList.memberEmail}</td>
                         	<td rowspan="4">${mList.memberNickname}</td>
                         	<td rowspan="4">${mList.memberName}</td>
@@ -108,11 +116,12 @@
 		                        	<td rowspan="4">${totalCount.totalCount}</td>
 	                        	</c:if>
                         	</c:forEach>
-							<td rowspan="4"><button type="button" onclick="sanctionsPlus();">제재</button></td>
+							<td rowspan="4"><button type="button" onclick="sanctionsPlus(${i.index});">제재</button></td>
                         	<%-- <c:url var="profilePage" value="profilePage.do">
 						       <c:param name="pfMemberNo" value="프로필보고싶은사람의 memberNo" />
 						    </c:url> --%>
 	                    </tr>
+	                    
 	                    <tr>
 	                    	<td>게시판 신고</td>
 	                    	<td id="board"> 
@@ -199,7 +208,7 @@
                 </tbody>
             </table>
             <br><br>
-            <form >
+            <form action="sanctionsInsert.do">
             <div id="myModal" class="modal">
 				      <!-- Modal content -->
 				<div class="modal-content">
@@ -221,10 +230,12 @@
 		</form>
         <br clear="both">
     </section>
+    <%-- <jsp:include page="../common/footer.jsp"/> --%>
 	<script>
-		function sanctionsPlus(){
+		function sanctionsPlus(i){
 			$("#myModal").css("display","block");
-			
+			$memberNo = $(".memberNo"+i).val();
+			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 		}
 	</script>
 </body>

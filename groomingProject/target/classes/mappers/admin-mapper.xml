@@ -50,6 +50,18 @@
 		<result property="declarationCheck" column="DECLARATION_CHECK"/>
 	</resultMap>
 
+	<resultMap type="VisitCount" id="VisitCountResultSet">
+		<id property="visitId" column="VISIT_ID"/>
+		
+		<result property="visitTime" column="VISIT_TIME"/>
+	</resultMap>
+	
+	<resultMap type="GraphListCount" id="graphCountResultView">
+		<id property="lastDay" column="LASTDAY"/>
+		
+		<result property="count" column="LIST_COUNT"/>
+	</resultMap>
+
 	<select id="memberListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM MEMBER_MANAGE
@@ -86,6 +98,12 @@
 				SANCTIONS IS NOT NULL
 			</if>
 		</where>
+	</select>
+	
+	<select id="nowPoint" parameterType="Point" resultType="_int">
+		SELECT SUM(ADD_POINT)
+		FROM POINT
+		WHERE MEMBER_NO = #{memberNo}
 	</select>
 	
 	<insert id="pointCalculation" parameterType="Point">
@@ -157,7 +175,7 @@
 		FROM GROOMING
 		WHERE GROOMING_STATUS = 'Y'
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null">
+		<if test="category != null and category != 'null'">
 			AND GROOMING_TYPE = #{category}
 		</if>
 	</select>
@@ -167,7 +185,7 @@
 		FROM GROOMING
 		WHERE GROOMING_STATUS = 'Y'
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null">
+		<if test="category != null and category != 'null'">
 			AND GROOMING_TYPE = #{category}
 		</if>
 	</select>
@@ -244,6 +262,7 @@
 			,CAFE_CONTENT = #{cafeContent}
 			,CAFE_PHONE = #{cafePhone}
 			,CAFE_ADDRESS = #{cafeAddress}
+			,CAFE_IMG = #{cafeImg}
 		WHERE CAFE_NO = #{cafeNo}
 	</update>
 	
@@ -294,4 +313,67 @@
 		INSERT INTO CAFEPRICE
 		VALUES (SEQ_C_PRICE_NO.NEXTVAL, #{cafeNo}, #{cRoomName}, #{cRoomAvailableTime}, #{cRoomTime}, #{cRoomPrice}, #{cRoomHeadCount})
 	</insert>
+	
+	<select id="adminBoardList" parameterType="java.util.List" resultType="GraphListCount">
+		<![CDATA[
+			SELECT LASTDAY lastDay, COUNT(BOARD_CREATE_DATE) count
+			FROM (SELECT TO_CHAR(TO_DATE(SYSDATE-9, 'YY-MM-DD') + ROWNUM - 1, 'YYYY-MM-DD') AS LASTDAY
+					FROM ALL_OBJECTS
+					WHERE ROWNUM <= 10)
+			LEFT JOIN BOARD ON (BOARD_CREATE_DATE=LASTDAY)
+			GROUP BY LASTDAY
+			ORDER BY 1 ASC
+		]]>
+	</select>
+	
+	<select id="adminGroomingList" parameterType="java.util.List" resultType="GraphListCount">
+		<![CDATA[
+			SELECT LASTDAY lastDay, COUNT(GROOMING_CREATE_DATE) count
+			FROM (SELECT TO_CHAR(TO_DATE(SYSDATE-9, 'YY-MM-DD') + ROWNUM - 1, 'YYYY-MM-DD') AS LASTDAY
+					FROM ALL_OBJECTS
+					WHERE ROWNUM <= 10)
+			LEFT JOIN GROOMING ON (GROOMING_CREATE_DATE=LASTDAY)
+			GROUP BY LASTDAY
+			ORDER BY 1 ASC
+		]]>
+	</select>
+	
+	<select id="adminMemberList" parameterType="java.util.List" resultType="GraphListCount">
+		<![CDATA[
+			SELECT LASTDAY lastDay, COUNT(MEMBER_JOIN_DATE) count
+			FROM (SELECT TO_CHAR(TO_DATE(SYSDATE-9, 'YY-MM-DD') + ROWNUM - 1, 'YYYY-MM-DD') AS LASTDAY
+					FROM ALL_OBJECTS
+					WHERE ROWNUM <= 10)
+			LEFT JOIN MEMBER ON (MEMBER_JOIN_DATE=LASTDAY)
+			GROUP BY LASTDAY
+			ORDER BY 1 ASC
+		]]>
+	</select>
+	
+	<insert id="insertVisit" parameterType="VisitCount">
+		INSERT INTO VISIT_COUNT
+        (
+            VISIT_ID,
+            VISIT_TIME,
+        )
+        VALUES
+        (
+            VISIT_SEQ.NEXTVAL,
+            SYSDATE,
+        )
+	</insert>
+	
+	<select id="adminGraphCount" resultType="GraphListCount">
+	 <![CDATA[
+		SELECT TO_CHAR(TO_DATE(SYSDATE-9, 'YY-MM-DD') + ROWNUM - 1, 'YYYY-MM-DD') AS LASTDAY
+		FROM ALL_OBJECTS
+		WHERE ROWNUM <= 10
+	]]>
+	</select>
+	
+	<insert id="sanctionsInsert" parameterType="Map">
+		INSERT INTO SANCTIONS
+		VALUES (SEQ_SANCTIONS_NO.NEXTVAL, #{memberNo}, )
+	</insert>
+	
 </mapper>

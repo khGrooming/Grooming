@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.common.CommunityPageInfo;
 import com.kh.groomingProject.community.model.dao.CommunityDao;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
@@ -17,9 +18,9 @@ public class CommunityServiceImpl implements CommunityService {
 	CommunityDao cDao;
 
 	@Override
-	public ArrayList<Board> selectList(String bCategoryNo) {
+	public ArrayList<Board> selectList(String bCategoryNo, CommunityPageInfo pi) {
 		
-		return cDao.selectList(bCategoryNo);
+		return cDao.selectList(bCategoryNo, pi);
 	}
 
 	@Override
@@ -63,6 +64,38 @@ public class CommunityServiceImpl implements CommunityService {
 		
 		return cDao.replyInsert(reply, member);
 	}
+
+	@Override
+	public ArrayList<Board> communityTopList() {
+		// TODO Auto-generated method stub
+		return cDao.communityTopList();
+	}
+
+	@Override
+	public ArrayList<Board> communitySearch(String communitySearch) {
+		// TODO Auto-generated method stub
+		return cDao.communitySearch(communitySearch);
+	}
+
+	@Override
+	public int getListCount(String bCategoryNo) {
+		// TODO Auto-generated method stub
+		return cDao.getListCount(bCategoryNo);
+	}
+
+	@Override
+	public int replyUpdate(Reply reply, Member member) {
+		// TODO Auto-generated method stub
+		return cDao.replyUpdate(reply, member);
+	}
+
+	@Override
+	public int replyDelete(Reply reply, Member member) {
+		// TODO Auto-generated method stub
+		return cDao.replyDelete(reply, member);
+	}
+
+	
 
 	
 

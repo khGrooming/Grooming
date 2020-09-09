@@ -26,11 +26,8 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
-        img {
+        section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -126,15 +123,15 @@
 	width: 100%;
 	height: auto;
 }
-	   
-    </style>
+</style>
 </head>
 
 <body>
     <!-- 헤더시작 -->
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+	<section>
 	
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
@@ -155,17 +152,11 @@
         <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>출석부</a></label>
 
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-	
 
         <!-- 메인에 들어갈 내용용 -->
-        <section style="margin-top:100px;">
-
-
-
             <div class="container">
 
                 <table class="table table-bordered">
-
 
                 <form action="groupUpdate.do" method="post" enctype="multipart/form-data" id="form">
                     <input type="hidden" name="page" value="${page}">
@@ -231,12 +222,14 @@
 
             </div>	
             <input type="hidden" value="${g.gBoardContent }" id="textareaContent">
-
-
-
-
-
+            </div>
         </section>
+
+
+
+
+
+    
         <script>
 			$(function(){
 			

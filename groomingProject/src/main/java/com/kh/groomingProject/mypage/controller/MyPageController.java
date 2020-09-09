@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
+import com.kh.groomingProject.declaration.model.service.DeclarationService;
+import com.kh.groomingProject.declaration.model.vo.Declaration;
+import com.kh.groomingProject.grooming.model.exception.GroomingException;
+import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
@@ -42,7 +54,10 @@ import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.mypage.model.vo.ProfileMember;
 import com.kh.groomingProject.mypage.model.vo.Spec;
+import com.kh.groomingProject.tag.model.service.TagService;
+import com.kh.groomingProject.tag.model.vo.Tag;
 
+import javafx.scene.control.Tab;
 import jdk.nashorn.api.scripting.JSObject;
 import net.sf.json.JSONObject;
 
@@ -58,8 +73,15 @@ public class MyPageController {
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private TagService tagService;
 	
-
+	@Autowired
+	private GroomingService gService;
+	
+	@Autowired
+	private DeclarationService declarationService;	
+	
 	@RequestMapping("mypage-memberup.do")
 	public String myPageView(HttpServletRequest request) {
 		
@@ -125,14 +147,14 @@ public class MyPageController {
 			case "경력":
 				careerList[career]=s.getSpecName();
 				careerconfirm[career]=s.getSpecConfirm();
-				
+				System.out.println(s.getSpecConfirm());
 				career+=1;
 				break;
 			default:
 				break;
 			}
 		}
-
+		
 		
 		session.setAttribute("schoolList",schoolList);
 		session.setAttribute("schoolconfirm",schoolconfirm);
@@ -431,14 +453,15 @@ public class MyPageController {
 	}
 	
 	@RequestMapping("mentorApply")
-	public String mentorApply(HttpSession session) {
+	public String mentorApply(HttpSession session,HttpServletRequest request) {
 		
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		int result = mpService.insertMentor(mNo);
 		
 		if(result>0) {
-			return "home";
+			mentorSelect(request,mNo);
+			return "mypage/mentor";
 		}else {
 			throw new MypageException("멘토 등록 실패");
 		}
@@ -462,8 +485,8 @@ public class MyPageController {
 		double f=0.8;
 		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
 		
-		ArrayList<Grooming> openGroomingList = mpService.selectopenGroomingList(pi,mNo);
-		
+		ArrayList<HomeGrooming> openGroomingList = mpService.selectopenGroomingList(pi,mNo);
+		System.out.println("개설한 스터디 리스트"+openGroomingList);
 		
 		if(openGroomingList != null) {
 			mv.addObject("pi", pi);
@@ -484,7 +507,6 @@ public class MyPageController {
 	public ModelAndView GHeartPage(ModelAndView mv,HttpSession session
 								   ,@RequestParam(value="page", required=false) Integer page) {
 		String mNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
-		System.out.println(mNo);
 		System.out.println("GHeart.do에서 mNo :"+mNo);
 		
 		int currentPage =1;
@@ -499,7 +521,7 @@ public class MyPageController {
 		
 		
 		ArrayList<MyPageHeart> hlist = mpService.selectMyPageHeart(pi,mNo);
-		
+		System.out.println("GHeart.do에서 mNo :"+hlist);
 		if(hlist != null) {
 			mv.addObject("pi", pi);
 			mv.addObject("hlist", hlist);
@@ -563,13 +585,12 @@ public class MyPageController {
 
 	//신청한 스터디 그룹 삭제하기
 	@RequestMapping("deleteAppl.do")
-	public void deleteApplicant(HttpSession session,String gaNo,HttpServletResponse response,String mNo,@RequestParam(value="page",required=false) Integer page) throws IOException {
+	public void deleteApplicant(ModelAndView mv,HttpSession session,String gApplyNo,HttpServletResponse response,String memberNo,@RequestParam(value="page",required=false) Integer page) throws IOException {
 		
-		int result=mpService.deleteApplicant(gaNo);
-		
+		int result=mpService.deleteApplicant(gApplyNo);
 		PrintWriter out = response.getWriter();
 		if(result > 0) {
-			int listCount = mpService.gApplicantListCount(mNo);
+			int listCount = mpService.gApplicantListCount(memberNo);
 			int currentPage=1;
 			if(page != null) {
 				currentPage = page;
@@ -578,20 +599,21 @@ public class MyPageController {
 			double f=0.8;
 			MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
 			
-			ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
+			ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,memberNo);
 			
 			if(gApplicantList != null) {
 				session.setAttribute("pi", pi);
 				session.setAttribute("appList",gApplicantList);
 				out.append("Y");
-			
+				out.flush();
+				out.close();
 			}
 		}else {
 			throw new MypageException("신청내역 삭제 실패");
 		}
 		
-		out.flush();
-		out.close();
+		
+		
 		
 	}
 	
@@ -633,14 +655,30 @@ public class MyPageController {
 		return "mypage/mpgrooming";
 	}
 	
-	
+	//임시저장 페이지 이동 및 데이터 불러오기
 	@RequestMapping("ginsertTemp.do")
 	public String groomingInsertHistory(HttpSession session) {
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String TempGno = mpService.selectTempGroomingNo(mNo);
 		
 		Grooming groomingTemp = mpService.selectGroomingTemp(mNo);
-		session.setAttribute("tempList",groomingTemp);
-		System.out.println(groomingTemp);
+		String str = "";
+		
+		if(groomingTemp != null){
+			ArrayList<Tag> tlist = tagService.selectGtagList(TempGno);
+		
+			if(tlist != null) {
+				for (int i = 0; i < tlist.size(); i++) {
+					str += tlist.get(i).getTagName();
+					if ((i + 1) < tlist.size()) {
+						str += ',';
+					}
+				}
+			}
+		
+		}
+		session.setAttribute("grooming",groomingTemp);
+		session.setAttribute("tlist", str);
 		return "mypage/ginsertTemp";
 	}
 	
@@ -738,12 +776,13 @@ public class MyPageController {
 		double fh=0.8;
 		MyPagePageInfo pih = getPageInfo(currentPageh, HlistCount, GroomingLimith,fh);
 		
-		ArrayList<MyPageGrooming> hpgList = mpService.selectMypageGhost(pih,pfMemberNo);
+		ArrayList<HomeGrooming> openGroomingList = mpService.selectopenGroomingList(pih,profileInfo.getMemberNo());
+		System.out.println("개설한 스터디 리스트"+openGroomingList);
 
 		
 		
 		mv.addObject("pih", pih);
-		mv.addObject("hpgList", hpgList);
+		mv.addObject("hpgList", openGroomingList);
 		mv.addObject("profileInfo", profileInfo);
 		mv.addObject("schoolList", schoolList);
 		mv.addObject("certificateList", certificateList);
@@ -809,5 +848,49 @@ public class MyPageController {
 		
 		return mv;
 	}
-	
+	@RequestMapping("test.do")
+	public ModelAndView test(ModelAndView mv,HttpSession session, String groomingNo, String memberNo
+			, @RequestParam(value = "page", required = false) Integer page) {
+		groomingNo = "G00017";
+		memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int result = gService.addReadCount(groomingNo);
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println("test에서 result"+result);
+		if (result > 0) {
+			Grooming grooming = gService.selectGrooming(groomingNo);
+
+			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+			Member member = gService.selectMember(groomingNo);
+			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+
+			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+			Map info = new HashMap();
+			info.put("groomingNo", groomingNo);
+			info.put("memberNo", memberNo);
+			Declaration declaration = declarationService.selectGroomingDeclare(info);
+			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+			GroomingHeart heart = gService.selectHeartMember(info);
+			System.out.println("나 heart야 " +heart);
+
+			if (grooming != null && tag != null && spec != null && member != null) {
+				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+						.addObject("member", member).addObject("appList", appList)
+						.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
+						.setViewName("mypage/test");
+			} else {
+				throw new GroomingException("조회실패!");
+			}
+
+		} else {
+			throw new GroomingException("게시글 조회수 증가 실패!");
+		}
+
+		return mv;
+	}
+
 }

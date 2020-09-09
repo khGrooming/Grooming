@@ -26,11 +26,8 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
-        img {
+       section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -132,12 +129,13 @@
 
 <body>
     <!-- 헤더시작 -->
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+	<section>
 	
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
+    <div class="container">
 	    <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
@@ -158,7 +156,6 @@
 	
 
         <!-- 메인에 들어갈 내용용 -->
-        <section style="margin-top:100px;">
 
 
 
@@ -216,11 +213,13 @@
 
             </div>
 
+		</div>
+	</section>
 
 
 
 
-        </section>
+
     <!--     <script >
             $(document).ready(function() {
                   $('#summernote').summernote({
@@ -298,12 +297,14 @@
 		
 
 
-    </div>
+   
 
 
 		<jsp:include page="../common/footer.jsp" />
 
 
+
+	
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
    

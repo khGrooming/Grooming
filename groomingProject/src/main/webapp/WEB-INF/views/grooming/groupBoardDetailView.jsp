@@ -39,7 +39,7 @@
             height: 1200px;
         }
         /* div의 크기에 맞춤 */
-        img {
+       section img {
             max-width: 300px;
             max-height: 300px;
            
@@ -82,9 +82,11 @@
         <jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+    <!-- 메인에 들어갈 내용용 -->
+    <section >
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
+    <div class="container">
        <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
@@ -104,8 +106,6 @@
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
 
 
-        <!-- 메인에 들어갈 내용용 -->
-        <section >
 
             <div style="text-align: right; margin-right: 20px;">
             <button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
@@ -221,13 +221,8 @@
                         
                         
                     </div>
-
-
-
-        </section>
-
-
-    </div>
+		</div>
+	</section>
     
     <script>
     $(function(){
@@ -372,22 +367,8 @@
 	
 	
 	</script>
-	<script>
-			
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	</script>
 
-		<jsp:include page="../common/footer.jsp" />
-
+	<jsp:include page="../common/footer.jsp" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

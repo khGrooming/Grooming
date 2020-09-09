@@ -25,14 +25,15 @@ public class Member implements Serializable {
 	private String memberStatus;	// 멤버 탈퇴 상태
 	private String memberKakao;		// 멤버 카카오 로그인
 	private Date memberJoinDate;	// 멤버 가입 날짜
+	private int memberCount;		// 관리자 페이지에서 쓸 회원가입 수
 
 	public Member() {
 		super();
 	}
+
 	public Member(String memberNo, String memberEmail, String memberPwd, String memberNickName, String memberName,
 			String memberGender, String memberPhone, String lvlNo, int memberExp, String memberMemo, String memberPhoto,
-			String memberAdmin, String memberStatus, String memberKakao, Date memberJoinDate) {
-		super();
+			String memberAdmin, String memberStatus, String memberKakao, Date memberJoinDate, int memberCount) {
 		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
 		this.memberPwd = memberPwd;
@@ -48,107 +49,146 @@ public class Member implements Serializable {
 		this.memberStatus = memberStatus;
 		this.memberKakao = memberKakao;
 		this.memberJoinDate = memberJoinDate;
+		this.memberCount = memberCount;
 	}
+
 	public String getMemberNo() {
 		return memberNo;
 	}
+
 	public void setMemberNo(String memberNo) {
 		this.memberNo = memberNo;
 	}
+
 	public String getMemberEmail() {
 		return memberEmail;
 	}
+
 	public void setMemberEmail(String memberEmail) {
 		this.memberEmail = memberEmail;
 	}
+
 	public String getMemberPwd() {
 		return memberPwd;
 	}
+
 	public void setMemberPwd(String memberPwd) {
 		this.memberPwd = memberPwd;
 	}
+
 	public String getMemberNickName() {
 		return memberNickName;
 	}
+
 	public void setMemberNickName(String memberNickName) {
 		this.memberNickName = memberNickName;
 	}
+
 	public String getMemberName() {
 		return memberName;
 	}
+
 	public void setMemberName(String memberName) {
 		this.memberName = memberName;
 	}
+
 	public String getMemberGender() {
 		return memberGender;
 	}
+
 	public void setMemberGender(String memberGender) {
 		this.memberGender = memberGender;
 	}
+
 	public String getMemberPhone() {
 		return memberPhone;
 	}
+
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
+
 	public String getLvlNo() {
 		return lvlNo;
 	}
+
 	public void setLvlNo(String lvlNo) {
 		this.lvlNo = lvlNo;
 	}
+
 	public int getMemberExp() {
 		return memberExp;
 	}
+
 	public void setMemberExp(int memberExp) {
 		this.memberExp = memberExp;
 	}
+
 	public String getMemberMemo() {
 		return memberMemo;
 	}
+
 	public void setMemberMemo(String memberMemo) {
 		this.memberMemo = memberMemo;
 	}
+
 	public String getMemberPhoto() {
 		return memberPhoto;
 	}
+
 	public void setMemberPhoto(String memberPhoto) {
 		this.memberPhoto = memberPhoto;
 	}
+
 	public String getMemberAdmin() {
 		return memberAdmin;
 	}
+
 	public void setMemberAdmin(String memberAdmin) {
 		this.memberAdmin = memberAdmin;
 	}
+
 	public String getMemberStatus() {
 		return memberStatus;
 	}
+
 	public void setMemberStatus(String memberStatus) {
 		this.memberStatus = memberStatus;
 	}
+
 	public String getMemberKakao() {
 		return memberKakao;
 	}
+
 	public void setMemberKakao(String memberKakao) {
 		this.memberKakao = memberKakao;
 	}
+
 	public Date getMemberJoinDate() {
 		return memberJoinDate;
 	}
+
 	public void setMemberJoinDate(Date memberJoinDate) {
 		this.memberJoinDate = memberJoinDate;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+
+	public int getMemberCount() {
+		return memberCount;
 	}
+
+	public void setMemberCount(int memberCount) {
+		this.memberCount = memberCount;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [memberNo=" + memberNo + ", memberEmail=" + memberEmail + ", memberPwd=" + memberPwd
 				+ ", memberNickName=" + memberNickName + ", memberName=" + memberName + ", memberGender=" + memberGender
 				+ ", memberPhone=" + memberPhone + ", lvlNo=" + lvlNo + ", memberExp=" + memberExp + ", memberMemo="
 				+ memberMemo + ", memberPhoto=" + memberPhoto + ", memberAdmin=" + memberAdmin + ", memberStatus="
-				+ memberStatus + ", memberKakao=" + memberKakao + ", memberJoinDate=" + memberJoinDate + "]";
+				+ memberStatus + ", memberKakao=" + memberKakao + ", memberJoinDate=" + memberJoinDate
+				+ ", memberCount=" + memberCount + "]";
 	}
+	
 
 }

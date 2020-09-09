@@ -1,6 +1,7 @@
 package com.kh.groomingProject.admin.model.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,12 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
+import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
+import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
+import com.kh.groomingProject.community.model.vo.Board;
+import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
+
+import oracle.sql.DATE;
 
 @Repository
 public class AdminDao {
@@ -144,12 +152,42 @@ public class AdminDao {
 		}
 	}
 
-	public int insertSanctions(String sanctions) {
+	public ArrayList<GraphListCount> adminBoardList(ArrayList<GraphListCount> clist) {
 		
-		return 0;
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminBoardList", clist);
 	}
 
-	
+	public ArrayList<GraphListCount> adminGroomingList(ArrayList<GraphListCount> clist) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminGroomingList", clist);
+	}
+
+	public ArrayList<GraphListCount> adminMemberList(ArrayList<GraphListCount> clist) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminMemberList", clist);
+	}
+
+	public int insertVisit() {
+
+		return sqlSessionTemplate.insert("adminMapper.insertVisit");
+	}
+
+	public ArrayList<GraphListCount> adminGraphCount() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminGraphCount");
+	}
+
+
+	public int sanctionsInsert(Map info) {
+
+		return sqlSessionTemplate.insert("adminMapper.sanctionsInsert", info);
+	}
+
+	public int nowPoint(Point p) {
+
+		return sqlSessionTemplate.selectOne("adminMapper.nowPoint", p);
+	}
+
 
 	
 }

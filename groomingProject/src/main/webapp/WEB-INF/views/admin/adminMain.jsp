@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,15 +15,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
 
     <style>
-        html, body{margin:0px;padding:0px}
-        header{width:100%;height:100px;background-color:yellowgreen;}
-        footer{height:50px; background-color: grey;}
-
         .statistics{width:150px; height:150px; background-color:brown;border-radius:50%;display:inline-block;margin-top: 50px;}
         .visit, .user, .group, .board{margin-left:50px;}
         .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
         
-        .sideMenu{background-color:blue;border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
 
         .graph{width:50%;height:500px;position:relative;}
@@ -38,7 +36,7 @@
     </style>
 </head>
 <body>
-    <header></header>
+	<jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
         <div class="container col-sm-3">
@@ -54,17 +52,37 @@
          </div>
          <div class="container col-sm-8">
             <h1 align="center">관리자 페이지</h1>
+            
+            <jsp:useBean id="today" class="java.util.Date" />
+            <fmt:formatDate var="day" value="${today}" pattern='yyyy-MM-dd'/>
+			
             <div class="statistics visit">
                 <p align="center"><b>방문자 수</b></p>
             </div>
             <div class="statistics user">
                 <p align="center"><b>회원가입 수</b></p>
+                <c:forEach var="mlist" items="${mlist}">
+                	<c:if test="${mlist.lastDay eq day}">
+                		<a onclick="getMList"><h1 align="center">${mlist.count}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <div class="statistics group">
                 <p align="center"><b>그룹 수</b></p>
+                <c:forEach var="glist" items="${glist}">
+                	<c:if test="${glist.lastDay eq day}">
+                		<a onclick="getGList"><h1 align="center">${glist.count}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <div class="statistics board">
+            <br>
                 <p align="center"><b>게시글 수</b></p>
+                <c:forEach var="blist" items="${blist}">
+                	<c:if test="${blist.lastDay eq day}">
+                		<a onclick="getBList"><h1 align="center">${blist.count}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <br clear="both">
             <br><br>
@@ -73,59 +91,86 @@
             </div>
             <br><br>
          </div>
+         <br><br>
     </section>
+    <%-- <jsp:include page="../common/footer.jsp"/> --%>
 </body>
     <script> 
-    // Data
-    var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July", "test", "test2", "test3"],
-    datasets: [{
-        label: "My First dataset",
-        fillColor: "rgba(220,220,220,0.2)",
-        strokeColor: "rgba(220,220,220,1)",
-        pointColor: "rgba(220,220,220,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: [65, 59, 80, 81, 56, 55, 40, 49, 20, 1000]
-    }, {
-        label: "My Second dataset",
-        fillColor: "rgba(151,187,205,0.2)",
-        strokeColor: "rgba(151,187,205,1)",
-        pointColor: "rgba(151,187,205,1)",
-        pointStrokeColor: "#fff",
-        pointHighlightFill: "#fff",
-        pointHighlightStroke: "rgba(151,187,205,1)",
-        data: [28, 48, 40, 19, 86, 27, 90]
-    }]
-    };
-
-
-    // Global + Custom Chart Config Options
-
-    var options = {
-        bezierCurve: true,
-        animation: true,
-        animationEasing: "easeOutQuart",
-        showScale: true,
-        tooltipEvents: ["mousemove", "touchstart", "touchmove"],
-        tooltipCornerRadius: 3,
-        pointDot : true,
-        pointDotRadius : 3,
-        datasetFill : true,
-        scaleShowLine : true,
-        animationEasing : "easeOutBounce",
-        animateRotate : true,
-        animateScale : true,
-        responsive: false,
-    };
-
-
-    // Load Chart
-
-    var ctx1 = document.getElementById("myLineChart").getContext("2d");
-
-    var myLineChart = new Chart(ctx1).Line(data, options);
+    $(function(){
+	    var data = {
+	    		labels: [
+	    			<c:forEach var="clist" items="${clist}">
+		        		"${clist.lastDay}",
+		            </c:forEach>
+	    		],
+	    		datasets:[{
+	    			label: "board",
+	    			fillColor: "rgba(255,0,0,0.2)",
+	    	        strokeColor: "rgba(255,0,0,0.2)",
+	    	        pointColor: "rgba(255,0,0,0.2)",
+	    	        pointStrokeColor: "#fff",
+	    	        pointHighlightFill: "#fff",
+	    	        pointHighlightStroke: "rgba(255,0,0,0.2)",
+	    	        data:[
+	    	        	<c:forEach var="blist" varStatus="i" items="${blist}">
+	    	        		${blist.count},
+			            </c:forEach>
+	    	        ]
+	    		},{
+	    			label: "그루밍 수",
+	    			fillColor: "rgba(0,255,0,0.2)",
+	    	        strokeColor: "rgba(0,255,0,0.2)",
+	    	        pointColor: "rgba(0,255,0,0.2)",
+	    	        pointStrokeColor: "#fff",
+	    	        pointHighlightFill: "#fff",
+	    	        pointHighlightStroke: "rgba(0,255,0,0.2)",
+	    	        data:[
+	    	        	<c:forEach var="glist" varStatus="i" items="${glist}">
+	    	        		${glist.count},
+			            </c:forEach>
+	    	        ]
+	    		},{
+	    			label: "회원가입 수",
+	    			fillColor: "rgba(0,0,255,0.2)",
+	    	        strokeColor: "rgba(0,0,255,0.2)",
+	    	        pointColor: "rgba(0,0,255,0.2)",
+	    	        pointStrokeColor: "#fff",
+	    	        pointHighlightFill: "#fff",
+	    	        pointHighlightStroke: "rgba(0,0,255,0.2)",
+	    	        data:[
+	    	        	<c:forEach var="mlist" varStatus="i" items="${mlist}">
+	    	        		${mlist.count},
+			            </c:forEach>
+	    	        ]
+	    		}]
+	    };
+	
+	    // Global + Custom Chart Config Options
+	
+	    var options = {
+	        bezierCurve: true,
+	        animation: true,
+	        animationEasing: "easeOutQuart",
+	        showScale: true,
+	        tooltipEvents: ["mousemove", "touchstart", "touchmove"],
+	        tooltipCornerRadius: 3,
+	        pointDot : true,
+	        pointDotRadius : 3,
+	        datasetFill : true,
+	        scaleShowLine : true,
+	        animationEasing : "easeOutBounce",
+	        animateRotate : true,
+	        animateScale : true,
+	        responsive: false,
+	    };
+	
+	
+	    // Load Chart
+	
+	    var ctx1 = document.getElementById("myLineChart").getContext("2d");
+	
+	    var myLineChart = new Chart(ctx1).Line(data, options);
+    })
     </script>
 
 </html>

@@ -32,10 +32,7 @@
 
 <title>Hello, world!</title>
 <style>
-/* body {
-   height: 1200px;
-} */
-/* div의 크기에 맞춤 */
+
 
 
 @font-face {
@@ -83,7 +80,6 @@ h1{
       <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
    <%--    <fmt:formatDate value="${grooming.studySd }" var="studySd" pattern="yyyy-MM-dd" /> --%>
-   
 
 
       <!-- 컨테이너로 양옆에 공백 생성 -->
@@ -419,8 +415,8 @@ h1{
    })
    })
 </script>
-   <jsp:include page="../common/footer.jsp" />
 
+	<jsp:include page="../common/footer.jsp" />
 
    <!-- Optional JavaScript -->
    <!-- jQuery first, then Popper.js, then Bootstrap JS -->

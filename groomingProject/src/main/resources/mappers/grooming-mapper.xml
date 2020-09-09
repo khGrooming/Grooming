@@ -749,6 +749,7 @@
 		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
 		    ON(G.GROOMING_NO = GC.GROOMING_NO)
 		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
+		]]>
 		<choose>
 		    <when test="search == 'title'">
 				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
@@ -760,7 +761,7 @@
 				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
 		    </otherwise>
 		  </choose>
-		  	]]>
+		  	
 	</select>
  	<update id="updateCheck" parameterType="GCheck">
  		UPDATE G_CHECK

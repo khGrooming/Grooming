@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
@@ -86,7 +87,7 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public ArrayList<Grooming> selectopenGroomingList(MyPagePageInfo pi, String mNo) {
+	public ArrayList<HomeGrooming> selectopenGroomingList(MyPagePageInfo pi, String mNo) {
 		return mpDao.selectopenGroomingList(pi,mNo);
 	}
 
@@ -191,7 +192,10 @@ public class MypageServiceImpl implements MypageService{
 		return mpDao.selectMemberReplyList(mNo, pi);
 	}
 
-
+	@Override
+	public String selectTempGroomingNo(String mNo) {
+		return mpDao.selectTempGroomingNo(mNo);
+	}
 
 
 }
