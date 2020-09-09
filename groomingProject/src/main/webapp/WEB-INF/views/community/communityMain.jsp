@@ -34,7 +34,8 @@
 	<br><br>
 </header>
 <!--내용 시작-->
-<section style="padding-top: 0.10rem;">
+<!-- <section style="padding-top: 0.10rem;"> -->
+<section>
 	<div class="container-fluid">
     	<div class="row">
     		<div class="col-12">
@@ -200,7 +201,7 @@
 		};
 	}
 </script>
-	<br><br>
-	<jsp:include page="../common/footer.jsp" />
+<%-- 	<br><br>
+	<jsp:include page="../common/footer.jsp" /> --%>
 </body>
 </html>

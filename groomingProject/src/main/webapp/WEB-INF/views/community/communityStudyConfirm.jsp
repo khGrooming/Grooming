@@ -21,7 +21,13 @@
     	margin-left: 30px;
     	font-size: 13px;
 	}
-	/* item page */
+	.modal-title{
+		margin: auto 0.18rem;
+    	height: 2.18rem;
+    	width: 2.18rem;
+    	border-radius: 50%;
+    	border: thin solid lightgrey;
+    }
 	.item-container {display:flex; margin-top:10rem;}
 	.item-card {margin:auto;}
 	#item-card {width:15rem; border-radius:0px; border:none; text-align:center;}
@@ -80,8 +86,7 @@
     					<!-- Modal 내용-->
      					<div class="modal-content">
       						<div class="modal-header">
-      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="..."
-      									style="width: 25px;">
+      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="...">
         						&nbsp;&nbsp;<h5>${c.memberNickName }</h5>
         						<button type="button" class="close" data-dismiss="modal">x</button>
       						</div>
@@ -113,12 +118,12 @@
       							<p>${c.boardCreateDate }</p> 
       						
       							<!-- 좋아요 -->
-								<div class="iteminfo-icons" id="iteminfo-icons">
+<!-- 								<div class="iteminfo-icons" id="iteminfo-icons">
 									<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
 										<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
 											<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
-										</button>
-									
+										</button> -->
+									 
 										<!-- 신고 -->
 										<a href="#declareForm" data-toggle='modal'>
 											<img style="vertical-align: middle;" alt="dep" 
