@@ -36,10 +36,7 @@
    height: 1200px;
 } */
 /* div의 크기에 맞춤 */
-img {
-   max-width: 100%;
-   max-height: 100%;
-}
+
 
 @font-face {
    font-family: 'TmoneyRoundWindExtraBold';
@@ -248,12 +245,10 @@ h1{
                               $tableBody.append($br);
 
                            } else {
-
-                              $td2 = $("<td style='text-align:left;'>")
-                                    .text("출석체크를 오늘부터 해주세요!");
-                              $tr2 = $("<tr>");
-                              $tr2.append($td2);
-                              $tableBody.append($tr2);
+							  $tableBody.html("");
+                              $td2 = $("<div style='text-align:left;'>")
+                                    .text("출석체크를 시작일을 처음으로 진행 해주세요!");
+                              $tableBody.append($td2);
                            }
                         },
                         error : function(request, status, errorData) {

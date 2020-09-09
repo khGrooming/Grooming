@@ -205,14 +205,22 @@
  
  
  	
- 	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
+ 	<!-- <select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
  		SELECT SPEC_NAME
         FROM SPEC S
         JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
         WHERE GROOMING_NO = #{groomingNo}
  	
- 	</select>
+ 	</select> -->
  	
+ 	<select id="selectSpec" parameterType="string" resultMap="gSpecResultSet">
+       SELECT *
+        FROM SPEC S
+        JOIN GROOMING G ON G.MEMBER_NO = S.MEMBER_NO
+        WHERE GROOMING_NO = #{groomingNo} AND SPEC_CONFIRM = 'Y'
+    
+    </select>
+    
  	<insert id="insertGrooming" parameterType="Grooming" >
  		INSERT INTO GROOMING VALUES(
  			'G' || LPAD(SEQ_GROOMING_NO.NEXTVAL,5,0)
@@ -722,6 +730,7 @@
 	
  	
 	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
+		<![CDATA[
 		SELECT 
 		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
 		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
@@ -739,7 +748,7 @@
 		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
 		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
 		    ON(G.GROOMING_NO = GC.GROOMING_NO)
-		WHERE G.GROOMING_STATUS = 'Y'
+		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
 		<choose>
 		    <when test="search == 'title'">
 				AND GROOMING_TITLE LIKE '%' || #{keyword} || '%'
@@ -751,6 +760,7 @@
 				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
 		    </otherwise>
 		  </choose>
+		  	]]>
 	</select>
  	<update id="updateCheck" parameterType="GCheck">
  		UPDATE G_CHECK
