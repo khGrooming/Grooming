@@ -62,9 +62,7 @@
 	 
 	    <context-param>
 	        <param-name>contextConfigLocation</param-name>
-	        <param-value>
-	            classpath*:groomingProject/spring/*-context.xml
-	        </param-value>
+	        <param-value>classpath*:groomingProject/spring/*-context.xml</param-value>
 	    </context-param>
 	</PRE>
 
