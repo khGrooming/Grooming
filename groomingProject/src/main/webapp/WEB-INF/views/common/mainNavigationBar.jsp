@@ -26,7 +26,7 @@
     transition: 0.6s;
     padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
-    z-index: 10000;
+    z-index: 1040;
 }
 .main_navbar .main_navbar_logo
 {
