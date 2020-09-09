@@ -397,6 +397,7 @@ border-radius: 20px;
 				                	alert("신고가 완료되었습니다.")
 				                	$("#btn-delete").click();
 				                	$("#reportImg").attr("data-toggle","").attr("data-target","");
+				                	$("#reportImg").attr("onclick","alert('이미신고하였습니다.')");
 				                }
 				            },
 						error:function(request, status, errorData){
