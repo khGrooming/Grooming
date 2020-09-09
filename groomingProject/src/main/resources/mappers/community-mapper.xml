@@ -88,6 +88,7 @@
 		SET BOARD_TITLE=#{board.boardTitle}
 			, BOARD_CONTENT=#{board.boardContent}
 			, BOARD_MODIFY_DATE=SYSDATE
+			, BOARD_IMG=#{board.boardImg}
 		WHERE BOARD_NO=#{board.boardNo}
 	</update>
 	
