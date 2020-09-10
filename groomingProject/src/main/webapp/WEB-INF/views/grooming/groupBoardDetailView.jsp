@@ -63,7 +63,10 @@
 	   }
 	    #tb2 tbody{
 	    	border-radius:15px;
-	    	background:lightsteelblue;
+	    	background:;
+	    }
+	    .Gbtn{
+	    	border-radius:10px;
 	    }
     </style>
 </head>
@@ -99,7 +102,7 @@
 
 
             <div style="text-align: right; margin-right: 20px;">
-            <button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
+            <button data-toggle='modal' data-target='#declareForm' id='apply' class="Gbtn">신고</button>
 						
 			<!-- 신청폼 모달 -->
 			<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
@@ -164,7 +167,7 @@
 								</tr>
 
                         </table>
-                        <div style="text-align:center;"><button type="button" onclick="location.href='${gBlist}'">목록으로</button></div>
+                        <div style="text-align:center;"><button type="button" class="Gbtn" onclick="location.href='${gBlist}'">목록으로</button></div>
                         <c:if test="${loginUser.memberNo eq member.memberNo }">
                         <c:url var="groupBoardUpdate" value="groupBoardUpdate.do">
                         	<c:param name="groomingNo" value="${grooming.groomingNo}"/>
@@ -173,8 +176,8 @@
                         </c:url>
 	                       <!-- 수정 삭제 버튼 -->
 	                        <div align="right">
-	                            <button type="button" onclick="location.href='${groupBoardUpdate}'">수정</button>
-	                            <button type="button" id="delete">삭제</button>
+	                            <button type="button" class="Gbtn" onclick="location.href='${groupBoardUpdate}'">수정</button>
+	                            <button type="button" class="Gbtn" id="delete">삭제</button>
 	                        </div>
                         </c:if>
                         <br><br><br>
@@ -193,13 +196,13 @@
 	                                        </td>
 	                                        <br><br>
 	                                        <td class="col-4" style="width:30%; vertical-align: middle; text-align: center;">
-	                                            <button id="sumbitReply">댓글 등록</button>
+	                                            <button id="sumbitReply" class="Gbtn">댓글 등록</button>
 	                                        </td>
 	
 	                                    </tr>
 	                            </table>
 	                            <!-- 댓글 목록 보기 -->
-	                            <table align="center" width="1050" border="1" id="tb2">
+	                            <table align="center" width="1050" border="1" id="tb2" class="">
 	                                   <tbody>
 	                                    <tr>
 	                                        

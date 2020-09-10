@@ -27,7 +27,7 @@
     <title>Hello, world!</title>
     <style>
         /* div의 크기에 맞춤 */
-        img {
+         section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -56,13 +56,13 @@
       <jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+        <section >
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container>
+    <div class="container" >
 
 
         <!-- 메인에 들어갈 내용용 -->
-        <section >
     <c:url var="calendar" value="calendar.do">
        <c:param name="groomingNo" value="${grooming.groomingNo}"/>
        <c:param name="memberNo" value="${loginUser.memberNo}" />
@@ -85,6 +85,7 @@
                 <h2 style="margin-top:50px; margin-left:20px;" align="left">${grooming.groomingTitle }</h2>
                 <!-- 그루밍 한줄 소개 -->
                 <p  style="margin-top:20px; margin-left:20px;" align="left">${grooming.groomingIntroduce }</p>
+                <hr style="background-color:green; height:2px;">
                 <div class="row">
                     <div class="col-4" style="width: 20%;">
                         <table>

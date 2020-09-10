@@ -1428,6 +1428,8 @@ public class GroomingController {
 				 checkN = gService.getCheckN(hashmap);
 				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
 				 System.out.println("checkLate: " + checkLate);
+				 checkN = checkN + checkL/2;
+				 checkL = checkL/2;
 				 GCheck g = new GCheck(memberNickName,checkLate,checkL,checkN,checkY,difDay);
 				 g.setCheckLate(checkLate);
 				 g.setCheckL(checkL);

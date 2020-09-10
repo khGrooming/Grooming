@@ -367,8 +367,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td>
-										<input id="insert" class="btn-3d green" value="등록하기">
-										<button class="btn-3d green" onclick="save();">취소하기</button>
+										<input id="insert" class="btn-3d green" value="등록하기" type="submit">
+										<input class="btn-3d green" onclick="save();" value="취소하기" type="button">
 									</td>
 								</tr>
 							</tbody>

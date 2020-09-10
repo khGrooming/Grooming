@@ -343,7 +343,7 @@ public class MyPageController {
 		}
 
 		System.out.println("퇄퇴");
-		return "home";
+		return "home.do";
 	}
 	
 

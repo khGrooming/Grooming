@@ -78,7 +78,7 @@ input {
 }
 
 section {
-	margin-bottom: 50px;
+	margin-bottom: 100px;
 }
 
 .study tbody tr td {
@@ -233,7 +233,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
+	<header>
 		<jsp:include page="../common/mainNavigationBar.jsp" />
+	</header>
 
 
 	<section>
@@ -506,7 +508,6 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 					if ($(this).val() == 'x') {
 						console.log("예치금 없앰");
-						
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {
@@ -717,7 +718,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	</section>
 
 
-	<jsp:include page="../common/footer.jsp" />
+	<footer><jsp:include page="../common/footer.jsp" />
+	</footer>
 
 
 	<!-- Optional JavaScript -->
