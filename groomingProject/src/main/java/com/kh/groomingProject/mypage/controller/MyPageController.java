@@ -147,7 +147,6 @@ public class MyPageController {
 			case "경력":
 				careerList[career]=s.getSpecName();
 				careerconfirm[career]=s.getSpecConfirm();
-				System.out.println(s.getSpecConfirm());
 				career+=1;
 				break;
 			default:
