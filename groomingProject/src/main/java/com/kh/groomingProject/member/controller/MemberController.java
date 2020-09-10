@@ -332,7 +332,7 @@ public class MemberController {
 				if(resultMemberTag == tag.length) {
 					System.out.println("MemberTag 업데이트 : 성공");
 
-					return "home";
+					return "home.do";
 
 				} else {
 					System.out.println("MemberTag 업데이트 : 실패");
@@ -346,7 +346,7 @@ public class MemberController {
 
 		}
 
-		return "home";
+		return "home.do";
 
 	}
 
