@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.Reply;
+import com.kh.groomingProject.declaration.model.service.DeclarationService;
+import com.kh.groomingProject.declaration.model.vo.Declaration;
+import com.kh.groomingProject.grooming.model.exception.GroomingException;
+import com.kh.groomingProject.grooming.model.service.GroomingService;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.exception.MypageException;
@@ -64,7 +75,13 @@ public class MyPageController {
 	
 	@Autowired
 	private TagService tagService;
-
+	
+	@Autowired
+	private GroomingService gService;
+	
+	@Autowired
+	private DeclarationService declarationService;	
+	
 	@RequestMapping("mypage-memberup.do")
 	public String myPageView(HttpServletRequest request) {
 		
@@ -130,14 +147,14 @@ public class MyPageController {
 			case "경력":
 				careerList[career]=s.getSpecName();
 				careerconfirm[career]=s.getSpecConfirm();
-				
+				System.out.println(s.getSpecConfirm());
 				career+=1;
 				break;
 			default:
 				break;
 			}
 		}
-
+		
 		
 		session.setAttribute("schoolList",schoolList);
 		session.setAttribute("schoolconfirm",schoolconfirm);
@@ -832,31 +849,48 @@ public class MyPageController {
 		return mv;
 	}
 	@RequestMapping("test.do")
-	public String test(HttpServletRequest request) {
-		
-		
-		HttpSession session = request.getSession();
-		Member m = (Member)session.getAttribute("loginUser");
-		String mNo =m.getMemberNo();
-		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
-		int memberPoint = mpService.selectPoint(mNo);
-		System.out.println("memberPoint:"+memberPoint);
-		System.out.println("myPage.do"+profileInfo);
-		if(memberPoint==0) {
-			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
-			profileInfo.setNowPoint("0");
-		}else {
-			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
-			profileInfo.setNowPoint(memberPoint2);
+	public ModelAndView test(ModelAndView mv,HttpSession session, String groomingNo, String memberNo
+			, @RequestParam(value = "page", required = false) Integer page) {
+		groomingNo = "G00017";
+		memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int result = gService.addReadCount(groomingNo);
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = page;
 		}
 		
-		
-		specSelect(request, mNo);
-		mentorSelect(request, mNo);
-		
-		session.setAttribute("profileInfo",profileInfo);
-		
-		
-		return "mypage/test";
+		System.out.println("test에서 result"+result);
+		if (result > 0) {
+			Grooming grooming = gService.selectGrooming(groomingNo);
+
+			ArrayList<GroomingTag> tag = gService.selectTag(groomingNo);
+			ArrayList<GroomingSpec> spec = gService.selectSpec(groomingNo);
+			Member member = gService.selectMember(groomingNo);
+			ArrayList<Member> galist = gService.selectAppMember(groomingNo);
+
+			ArrayList<GroomingAppList> appList = gService.selectAppContent(groomingNo);
+			Map info = new HashMap();
+			info.put("groomingNo", groomingNo);
+			info.put("memberNo", memberNo);
+			Declaration declaration = declarationService.selectGroomingDeclare(info);
+			GroomingApplicant memberNoList = gService.selectAppMemberNo(info);
+			GroomingHeart heart = gService.selectHeartMember(info);
+			System.out.println("나 heart야 " +heart);
+
+			if (grooming != null && tag != null && spec != null && member != null) {
+				mv.addObject("grooming", grooming).addObject("tag", tag).addObject("spec", spec)
+						.addObject("member", member).addObject("appList", appList)
+						.addObject("memberNoList", memberNoList).addObject("heart", heart).addObject("currentPage" , currentPage)
+						.setViewName("mypage/test");
+			} else {
+				throw new GroomingException("조회실패!");
+			}
+
+		} else {
+			throw new GroomingException("게시글 조회수 증가 실패!");
+		}
+
+		return mv;
 	}
+
 }

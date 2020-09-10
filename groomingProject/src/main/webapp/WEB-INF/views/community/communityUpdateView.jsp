@@ -66,7 +66,7 @@
 										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small>
 							</td>				
 						</tr>
-						<tr>
+						<tr id="fileTr">
 							<td style="text-align:left; vertical-align: baseline;">첨부파일</td>
 							<td><input type="file" name="uploadFile"></td>
 						</tr>
@@ -81,7 +81,7 @@
 			
 			<!--summerNote-->
 			<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-			<script>
+			<script>	
     			$(document).ready(function() {
         			$('#summernote').summernote({
             			height: 300,                 // set editor height
@@ -90,6 +90,16 @@
             			focus: true  
         			})
     			});
+    			
+    			var bCategoryNo = "${board.bCategoryNo}";
+				
+				$(document).ready(function(){
+					$('#fileTr').hide();
+					
+					if(bCategoryNo == "BC00004"){
+						$('#fileTr').show();
+					}
+				})
 			</script>
 </body>
 </html>

@@ -68,11 +68,11 @@
 						</tr>
 						<tr id="fileTr">
 							<td style="text-align:left; vertical-align: baseline;">첨부파일</td>
-							<td><input type="file" name="uploadFile"></td>
+							<td><input type="file" name="uploadFile" id="bfile"></td>
 						</tr>
-						<tr>
+						<tr id="fileTr2">
 							<td colspan="2" align="center">
-								<input type="submit" value="등록 하기">&nbsp;
+								<input id="submit" type="submit" value="등록 하기">&nbsp;
 								<input type="reset" value="등록 취소">
 							</td>
 						</tr>
@@ -95,10 +95,18 @@
 				
 				$(document).ready(function(){
 					$('#fileTr').hide();
-					
+
 					if(bCategoryNo == "BC00004"){
 						$('#fileTr').show();
 					}
+				})
+				
+				$("#submit").on("click",function(){
+					var fileCheck = document.getElementById("bfile").value;
+    				if(bCategoryNo == "BC00004" && !fileCheck){
+       					alert("인증 사진은 필수입니다~");
+        				return false;
+    				}
 				})
 			</script>
 </body>

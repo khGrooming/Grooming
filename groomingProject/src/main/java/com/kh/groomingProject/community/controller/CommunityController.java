@@ -31,6 +31,8 @@ import com.kh.groomingProject.community.model.service.CommunityService;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.community.model.vo.Reply;
+import com.kh.groomingProject.declaration.model.service.DeclarationService;
+import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.member.model.vo.Member;
@@ -39,7 +41,7 @@ import com.kh.groomingProject.member.model.vo.Member;
 public class CommunityController {
 	
 	@Autowired
-	CommunityService cService;
+	private CommunityService cService;
 
 	// 전체 게시판 조회
 	@RequestMapping("communityMain.do")
@@ -313,9 +315,26 @@ public class CommunityController {
 		response.setContentType("application/json; charset=utf-8");
 
 		ArrayList<Board> blist = cService.communitySearch(communitySearch);
-		System.out.println("blist " + blist);
+		System.out.println("자유게시판을 검색해온 blist " + blist);
 		new Gson().toJson(blist, response.getWriter());
 	}
+	
+	// 좋아요
+	@RequestMapping("boardGcount.do")
+	public String boardGcountInsert(HttpServletRequest request, String boardNo, Model model) {
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		
+		int result = cService.boardGcount(boardNo);
+		System.out.println("좋아요 눌렀으면 " + result);
+		
+		if(result > 0) {
+			return "redirect:communityStudyConfirm?boardNo="+boardNo;
+		}else {
+			throw new CommunityException("좋아요 실패!");
+		}
+	}
+	
+	
 	
 	
 		

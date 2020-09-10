@@ -66,15 +66,12 @@ form {
 	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="Ffilter_1" name="Ffilter" checked><label for="Ffilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Ffilter_2" name="Ffilter"><label for="Ffilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-		
 			<c:if test="${!empty loginUser }">
 				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
 						onclick="location.href='communityInsertView.do?bCategoryNo=BC00002'">
 			</c:if>
 		</div>
-		<br>
+		<br><br>
 	<!-- ------------------ 게시판 -------------------------- -->
 		<div class="container" align="center">
 			<table class="table table-hover table_ra">
@@ -92,7 +89,6 @@ form {
 						<tr>
 							<td>${n.boardNo }</td>
 							<td>
-								<a href="#" class="tagKind">#스터디</a>
 								<br>
 								<c:url var="communityDetailView" value="communityDetailView.do">
 									<c:param name="boardNo" value="${n.boardNo }" />
@@ -166,6 +162,7 @@ form {
 						dataType:"json",
 						
 						success:function(data) {
+							
 							
 						},
 						error : function(request, status, errorData) {

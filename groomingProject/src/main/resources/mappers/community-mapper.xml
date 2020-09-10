@@ -105,6 +105,7 @@
 		FROM REPLY
 		JOIN MEMBER USING (MEMBER_NO)
 		WHERE BOARD_NO = #{boardNo}
+		ORDER BY REPLY_MODIFY_DATE
 	</select>
 	
 	<!-- 댓글 등록 -->
@@ -164,6 +165,19 @@
 		]]>
 	</select>
 	
+	<!-- 좋아요 -->
+	<update id="boardGcount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_GCOUNT = BOARD_GCOUNT + 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
+	<update id="deleteBoardGcount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_GCOUNT = BOARD_GCOUNT - 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
 	<!-- 검색 -->
 	<select id="communitySearch" parameterType="string" resultMap="boardResultSet">
 		SELECT *
@@ -176,6 +190,7 @@
         JOIN HASHTAG H ON (B.BOARD_NO = H.BOARD_NO)
         JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
         AND TAG_NAME LIKE '%졸려%' -->
+    
 	
 
 </mapper>

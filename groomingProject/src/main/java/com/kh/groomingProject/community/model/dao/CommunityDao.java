@@ -100,6 +100,13 @@ public class CommunityDao {
 		return sqlSessionTemplate.delete("communityMapper.replyDelete", map);
 	}
 
+	public int boardGcount(String boardNo) {
+
+		return sqlSessionTemplate.update("communityMapper.boardGcount", boardNo);
+	}
+
+
+
 
 
 

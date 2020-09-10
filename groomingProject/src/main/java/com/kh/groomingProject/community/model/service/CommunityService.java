@@ -35,6 +35,9 @@ public interface CommunityService {
 
 	int replyDelete(Reply reply, Member member);
 
+	int boardGcount(String boardNo);
+
+
 	
 
 	

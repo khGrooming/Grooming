@@ -9,12 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.kh.groomingProject.admin.model.dao.AdminDao;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
+import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
+import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 
@@ -128,21 +131,45 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int insertSanctions(String sanctions) {
+	public ArrayList<GraphListCount> adminBoardList(ArrayList<GraphListCount> clist) {
 
-		return adminDao.insertSanctions(sanctions);
+		return adminDao.adminBoardList(clist);
 	}
 
 	@Override
-	public ArrayList<Board> adminBoardList() {
+	public ArrayList<GraphListCount> adminGroomingList(ArrayList<GraphListCount> clist) {
 
-		return adminDao.adminBoardList();
+		return adminDao.adminGroomingList(clist);
 	}
 
 	@Override
-	public ArrayList<Grooming> adminGroomingList() {
+	public ArrayList<GraphListCount> adminMemberList(ArrayList<GraphListCount> clist) {
 
-		return adminDao.adminGroomingList();
+		return adminDao.adminMemberList(clist);
+	}
+
+	@Override
+	public int insertVisit() {
+		
+		return adminDao.insertVisit();
+	}
+
+	@Override
+	public ArrayList<GraphListCount> adminGraphCount() {
+
+		return adminDao.adminGraphCount();
+	}
+
+	@Override
+	public int sanctionsInsert(Map info) {
+
+		return adminDao.sanctionsInsert(info);
+	}
+
+	@Override
+	public int nowPoint(Point p) {
+
+		return adminDao.nowPoint(p);
 	}
 
 	

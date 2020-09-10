@@ -21,24 +21,26 @@
 	href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
 	integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
 	crossorigin="anonymous">
-	
+
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
 
 <!-- modal CSS  -->
 <link
-	href="${pageContext.servletContext.contextPath }/resources/views/css/modal.css" rel="stylesheet">
+	href="${pageContext.servletContext.contextPath }/resources/views/css/modal.css"
+	rel="stylesheet">
 <title>Hello, world!</title>
 <style>
-body {
+/* body {
 	height: 1200px;
+} */
+section {
+    margin-bottom: 50px;
 }
-
-img {
-	max-width: 100%;
-	max-height: 100%;
-	
+section img {
+	width: 100%;
+	height: 100%;
 }
 /*폰트 설정 */
 @font-face {
@@ -49,18 +51,15 @@ img {
 	font-weight: normal;
 	font-style: normal;
 }
-
 * {
 	font-family: "TmoneyRoundWindExtraBold";
 }
-
 .groomingImage {
-	width: 450px;
+width: 450px;
 	height: 550px;
 	background-size: cover;
 	border: 1px solid lightgreen;
 }
-
 .status {
 	border-radius: 10px;
 	border: 1px solid black;
@@ -70,33 +69,62 @@ img {
 	color: red;
 	margin-bottom: 20px;
 }
-
 .pimg {
 	background-size: cover;
 	width: 100px;
 	height: 90px;
 }
-.far .fas{
-	font-size:20px;
-	
+i {
+	font-size: 40px;
 }
-
-.fas{
-	color:yellow;
+.fas {
+	color: yellow;
+}
+#gImg {
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+}
+.specStyle {
+	padding: 4px 9px 6px 8px;
+	margin: 5px;
+	color: white;
+}
+.specS {
+	background: #5b84ed;
+}
+.specC {
+	background: #07b3a9;
+}
+.specCE {
+	background: #fb8c49;
+}
+#apply1 {
+	outline: 0;
+	border: 0;
+	width: 20%;
+	height: 60px;
+	background: #b1caad;
+	margin: 0 auto;
+}
+.adBtn {
+	outline: 0;
+	border: 0;
+	background: #b1caad;
+	width: 10%;
+	height: 40px;
+	margin-right: 10px;
 }
 </style>
 </head>
-
 <body>
-
 	<jsp:include page="../common/mainNavigationBar.jsp" />
-
-
+ 
 	<section>
 
 
 
-		<div class="container" style="margin-top: 150px;">
+		<div class="container" style="margin-bottom: 50px;">
 
 			<div class="row">
 				<div class="col-9">
@@ -122,7 +150,7 @@ img {
 									<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
 										<c:out value="<h4>모집중</h4>" escapeXml="false" />
 									</c:if>
-									<c:if test="${(grooming.groomingEd lt grooming.groomingNd) ||(grooming.groomingEd eq grooming.groomingNd) || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+									<c:if test="${(grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
 										<c:out value="<h4>마감</h4>" escapeXml="false" />
 									</c:if>
 								</div>
@@ -131,14 +159,19 @@ img {
 						<tr>
 							<td style="text-align:right;"> 
 							
-								<c:if test="${!empty heart }">
-								<i id="heart" class="fas fa-bookmark"></i>
+									<c:if test="${!empty heart }">
+										<i id="heart" class="fas fa-bookmark"></i>
+									</c:if>
+									<c:if test="${empty heart }">
+										<i id="nheart" class="far fa-bookmark"></i>
+									</c:if>
+								<c:if test="${!empty loginuUser }">
+									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 								</c:if>
-								<c:if test="${empty heart }">
-								<i id="nheart" class="far fa-bookmark"></i>
+								<c:if test="${empty loginuUser }">
+									<button data-toggle='modal' data-target='#declareForm' id='apply' disabled>신고</button>
 								</c:if>
-								<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
-						
+								
 								<!-- 신청폼 모달 -->
 								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
 			
@@ -380,11 +413,11 @@ img {
 				<div class="col-3">
 		
 					<!-- 신청하기 버튼 -->
-					<c:if test="${(!empty memberNoList) || (grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+					<c:if test="${empty loginUser ||(!empty memberNoList) || (grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
 						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply' disabled>신청하기</button>" escapeXml="false" />
 					</c:if>
 					
-					<c:if test="${(empty memberNoList) && (grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
+					<c:if test="${!empty loginUser && (empty memberNoList) && (grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
 						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply'>신청하기</button>" escapeXml="false" />
 					</c:if>
 				
@@ -418,7 +451,7 @@ img {
 										</td>
 									</div>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="sumbit" id="submit" >제출</button>
+										<button type="submit" id="submit" >제출</button>
 										<button type="button" data-dismiss="modal">취소</button>
 									</div>
 								</div>
@@ -433,512 +466,577 @@ img {
 			</c:if>
 			</div>
 		</div>
-	 <body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" /> 
 	<input type="hidden" value="${grooming.money }" id ="hiddenmoney">
 	</section>
-	<script>
-		$(function(){
-			$("#applicantList").on("click",function(){
-				var groomingNo = "${grooming.groomingNo}";
-				$.ajax({
-					url:"LimitCheck.do",
-					data:{groomingNo:groomingNo},
-					success:function(data){
-						if(data=="success"){
-							alert("이미 마감된 게시글입니다.");
-							event.stopImmediatePropagation();
-						}else{
-							
-							$("#applicant").modal("show");
-						}
-					
-						
-					},error:function(request, status, errorData){
-						alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData);
-					}
-					})
-				
-				
-				
-				
-			
-			})
-			
-			$("#close").on("click",function(){
-				$("#applicant").modal("hide");
-			})
-			
-			$(".close").on("click",function(){
-				$(".modal modal-xl fade app").modal("hide");
-			})
-			
-			
-		})
-	
-	
-	</script>
-	<script>
-		$(function(){
-			var groomingNo = "${grooming.groomingNo}";
-			$("#deleteGrooming").on("click",function(){
-				var result = confirm("삭제하시겠습니까?");
-				
-				if(result){
-					location.href="groomingDelete.do?groomingNo="+groomingNo;
-				}
-			
-			})
-			
-			
-			$("#limit").on("click",function(){
-				var result = confirm("글을 마감하시겠습니까?");
-				
-				if(result){
-				
-					$.ajax({
-						url:"groomingLimit.do",
-						data:{groomingNo:groomingNo},
-						success:function(data){
-							if(data=="success"){
-								alert("마감 되었습니다.");
-								location.reload();
-							}
-						
-							
-						},error:function(request, status, errorData){
-							alert("error code: " + request.status + "\n"
-									+"message: " + request.responseText
-									+"error: " + errorData);
-						}
-						})
-					
-					
-				
-				
-				}
-				
-			})
-		})
-		
-	
-	
-	
-	
-	</script>
-	
-	<script>
-		$("#submit").on("click",function(){
-			alert("신청되었습니다.");
-		})
-	</script>
-	 <script type="text/javascript">
-		 window.history.forward();
-		 function noBack(){window.history.forward();}
-	</script>
-	<script>
-	
-		$(function(){
-			var gheart = "${heart.groomingHNo}";
-			var groomingNo = "${grooming.groomingNo}";
-			var memberNo = "${loginUser.memberNo}";
-			var gmemberNo="${grooming.memberNo}";
-			var dmemberNo = "${declaration.memberNo}";
-			var dgroomingNo = "${declaration.dnNo}";
-			
-			if(gheart==""){
-				$("#nheart").on("click",function(){
-					if(memberNo == gmemberNo){
-						alert("자신의 글은 찜할 수 없습니다.!")
-					}else{
-						
-					var result = confirm("찜 하시겠습니까?");
-					if(result){
-						location.href='addHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
-					}
-				
-					}
-				
-				})
-			}else{
-				$("#heart").on("click",function(){
-					var result = confirm("찜 해제 하시겠습니까?");
-					if(result){
-						location.href='cancelHeart.do?groomingNo='+groomingNo+ '&memberNo='+memberNo;	
-					}
-				
-				
-				})
-			}
-		
-		
-			$("#apply").on("click",function(e){
-				var result = confirm("신고하시겠습니까?");
-				
-				if(result){
-					if(memberNo == gmemberNo){
-						alert("자신의 글은 신고할 수 없습니다.");
-						$(this).attr("disabled",true)
-					}
-					
-					if((memberNo == dmemberNo) && (groomingNo == dgroomingNo)){
-						alert("이미 신고하신 게시글 입니다.!");
-						$(this).attr("disabled",true)
-					}
-				}else{
-					event.stopImmediatePropagation();
-				}
-			})
-			
-		
-		})
-		
-	
-	</script>
-	
-	<script>
-		
-		$(function(){
-			
-			
-			getAppList();
-		 	 setInterval(function(){
-				currentPeole()
-			},1000);   
-			
-			$(document).on("click",".accept",function(){
-				var groomingNo = "${grooming.groomingNo}";
-				var appTemp = $(this);
-				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
-				var groomingP = "${grooming.groomingP}" ;
-				var currentP = "${grooming.currentP}";
-				var money = $("#hiddenmoney").val();
-				var groomingType = "${grooming.groomingType }";
-				$.ajax({
-					url:"checkPeople.do",
-					data:{groomingNo:groomingNo},
-					success:function(data){
-						if(data.groomingP == data.currentP){
-							event.stopImmediatePropagation();
-							alert("참여인원이 꽉 찼습니다.!");
-						}else{
-							
-							$.ajax({
-								url:"checkGPoint.do",
-								data:{applyNo:applyNo},
-								dataType:"json",
-								success:function(data){
-									var allmoney = 0;
-									if(data.length>0){
-										for(var i in data){
-											 allmoney += data[i].addPoint; 
-											 
-										}
-									}else{
-										event.stopImmediatePropagation();
-										alert("신청자의 포인트가 부족합니다.!");
-										return false;
-									}
-									if(allmoney < money){
-										console.log(allmoney);
-										console.log(money);
-										event.stopImmediatePropagation();
-										alert("신청자의 포인트가 부족합니다.!");
-										return false;
-									}else{
-										$.ajax({
-											url:"gaccept.do",
-											data:{applyNo:applyNo,groomingNo:groomingNo,money:money,groomingType:groomingType},
-											success:function(data){
-												if(data=="success"){
-												getAppList();
-											}
-												
-											},error:function(request, status, errorData){
-												alert("error code: " + request.status + "\n"
-														+"message: " + request.responseText
-														+"error: " + errorData);
-											}
-											})
-									}
-									
-									
-									
-									
-								
-									
-								},error:function(request, status, errorData){
-									alert("error code: " + request.status + "\n"
-											+"message: " + request.responseText
-											+"error: " + errorData);
-								}
-								})
-								
-								
-								
-								
-						}	// else 끝 
-						
-					}
-						
-					,error:function(request, status, errorData){
-						alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData);
-					}
-					})
-				
-				
-				
-			
-				});
-			
-			
-			
-			$(document).on("click",".reject",function(){
-				var groomingNo = "${grooming.groomingNo}";
-				var appTemp = $(this);
-				var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
-				
-				$.ajax({
-					url:"greject.do",
-					data:{applyNo:applyNo},
-					success:function(data){
-						if(data=="success"){
-						getAppList();
-					}
-						
-					},error:function(request, status, errorData){
-						alert("error code: " + request.status + "\n"
-								+"message: " + request.responseText
-								+"error: " + errorData);
-					}
-					})
-			})
-			
-		})
-		
-						
-			
-				/* -- ajax-- */
-			
-			
-		function getAppList(){
-			
-			var groomingNo = "${grooming.groomingNo}";
-			$.ajax({
-				url:"gacceptList.do",
-				data:{groomingNo:groomingNo},
-				dataType:"json",
-				success:function(data){
-					$tableBody = $(".tbody");
-					$tableBody.html("");
-					
-					var $tr;
-					var $input;
-					var $td1;
-					var $div1;
-					var $img1;
-					var $td2;
-					var $td3;
-					var $td4;
-					var $button1;
-					var $div2;
-					var $div3;
-					var $div4;
-					var $div5;
-					var $h5;
-					var $button2;
-					var $span1;
-					
-					var $div6;
-					var $td5;
-					var $button3;
-			
-						console.log(data.length);
-					if(data.length> 0){	// 신청자가 한 명 이상 존재하면
-						for(var i in data){
-							 $tr = $("<tr class='appTr'>");
-							 $input = $("<input type='hidden' class='applyNo' >");
-							 $inputVal = $input.val(data[i].groomingAN);
-							 $td1 = $("<td>");
-							 $div1 = $("<div class='pimg' style='width:50px; height:50px;'>");
-							 $img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
-							 $td2 = $("<td>").text(data[i].memberNickName);
-							 $td3 = $("<td>");
-							 $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent"+i+"'>").text("신청서열람");
-							 $div2 = $("<div class='modal modal-xl fade app' id='open_modal_appContent"+i+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>");
-							 $div3 = $("<div class='modal-dialog'>");
-							 $div4 = $("<div class='modal-content' style='width: 800px; height: auto;'>");
-							 $div5 = $("<div class='modal-header'>");
-							 $h5 = $("<h5 class='modal-title' id='exampleModalLabel'>").text("신청 내용");
-							 $button2 = $("<button type='button' class='close' data-target='#applicant' aria-label='Close'>");
-							 $span1 = $("<span aria-hidden='true'>").text("X");
-							
-							 $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
-							 
-							 $td4 = $("<td>");
-							 $button3 = $("<button class='accept'>").text("수락");
-							 $button4 = $("<button class='reject'>").text("거절");
-							 
-							 $td1.append($div1);
-							 $div1.append($img1);
-							 $td3.append($button1);
-							 $td3.append($div2);
-							 
-							 $div2.append($div3);
-							 $div3.append($div4);
-							 $div4.append($div5);
-							 $div5.append($h5);
-							 $div5.append($button2);
-							 $button2.append($span1);
-							 
-							 $div4.append($div6);
-							 $td4.append($button3);
-							 $td4.append($button4);
-							 
-							 $tr.append($td1);
-							 $tr.append($td2);
-							 $tr.append($td3);
-							 $tr.append($td4);
-							 $tr.append($inputVal);
-							 $tableBody.append($tr);
-							 
-						}
-					}else{					// 신청자가 없으면
-						$tr = $("<tr>");
-						$rContent = $("<td colspan='3'>").text("신청자가 없습니다.");
-						
-						$tr.append($rContent);
-						$tableBody.append($tr);
-					}
-					
-					
-				},
-				error:function(request, status, errorData){
-					alert("error code: " + request.status + "\n"
-							+"message: " + request.responseText
-							+"error: " + errorData);
-				}
-			}) 
-		}
-		
-		
-		function currentPeole(){
-			var groomingNo = "${grooming.groomingNo}";
-			
-			$.ajax({
-				url:"checkPeople.do",
-				data:{groomingNo:groomingNo},
-				dataType:"json",
-				success:function(data){
-					$tableBody = $("#people");
-					$tableBody.html("");
-					
-					var $tr1;
-					var $tr2;
-					var $tr3;
-					var $tr4;
-					var $tr5;
-					var $tr6;
-				
-					var $td1;
-					var $td2;
-					var $td3;
-					var $td4;
-					var $td5;
-					var $td6;
-				
-					var $span1;
-					var $span2;
-					var $span3;
-					var $span4;
-					var $span5;
-					var $span6;
-					var $span7;
-					
-					var $br;
-					var $h4;
-					var $p;
-				
-						$tr1 = $("<tr>");
-						$tr2 = $("<tr>");
-						$tr3 = $("<tr>");
-						$tr4 = $("<tr>");
-						$tr5 = $("<tr>");
-						$tr6 = $("<tr>");
-						
-						$td1 = $("<td>"); 
-						$td2 = $("<td>"); 
-						$td3 = $("<td>"); 
-						$td4 = $("<td>"); 
-						$td5 = $("<td>"); 
-						$td6 = $("<td>"); 
-						
-						$span1 = $("<span>").text("그룹 타입 : ");
-						$span2 = $("<span>").text(data.groomingType);
-						$span3 = $("<span>").text("스터디 기간 : ");
-						$span4 = $("<span>").text(data.studySd+" ~ "+data.studyEd);
-						$span5 = $("<span>").text("예치금 : ");
-						$span6 = $("<span>").text(data.money);
-						$span7 = $("<span>").text("모집 인원 : "+data.currentP+"/"+data.groomingP+"명");
-						
-						$br = $("<br>");
-						$h4 = $("<h4>").text(data.groomingIntroduce);
-						$p = $("<p>").text(data.groomingContent);
-						
-						$td1.append($span1);
-						$td1.append($span2);
-						$td2.append($span3);
-						$td2.append($span4);
-						$td3.append($span5);
-						$td3.append($span6);
-						$td4.append($span7);
-						$td5.append($br);
-						$td5.append($h4);
-						$td6.append($p);
-						
-						$tr1.append($td1);
-						$tr2.append($td2);
-						$tr3.append($td3);
-						$tr4.append($td4);
-						$tr5.append($td5);
-						$tr6.append($td6);
-						
-						$tableBody.append($tr1);
-						$tableBody.append($tr2);
-						$tableBody.append($tr3);
-						$tableBody.append($tr4);
-						$tableBody.append($tr5);
-						$tableBody.append($tr6);
-						
-					
-					
-				},
-				error:function(request, status, errorData){
-					alert("error code: " + request.status + "\n"
-							+"message: " + request.responseText
-							+"error: " + errorData);
-				}
-			}) 
+	 
 
-			
-			
-		}
-		
-		
-	</script>
-	
+	<script>
+      $(function(){
+         $("#applicantList").on("click",function(){
+            var groomingNo = "${grooming.groomingNo}";
+            $.ajax({
+               url:"LimitCheck.do",
+               data:{groomingNo:groomingNo},
+               success:function(data){
+                  if(data=="success"){
+                     alert("이미 마감된 게시글입니다.");
+                     event.stopImmediatePropagation();
+                  }else{
+                     
+                     $("#applicant").modal("show");
+                  }
+               
+                  
+               },error:function(request, status, errorData){
+                  alert("error code: " + request.status + "\n"
+                        +"message: " + request.responseText
+                        +"error: " + errorData);
+               }
+               })
+            
+            
+            
+            
+         
+         })
+         
+         $("#close").on("click",function(){
+            $("#applicant").modal("hide");
+         })
+         
+         $(document).on("click",".close",function(){
+            $("div[name=modal]").modal("hide");
+         })
+         
+         
+      })
+   
+   
+   </script>
+	<script>
+      $(function(){
+         var groomingNo = "${grooming.groomingNo}";
+         $("#deleteGrooming").on("click",function(){
+            var result = confirm("삭제하시겠습니까?");
+            
+            if(result){
+               location.href="groomingDelete.do?groomingNo="+groomingNo;
+            }
+         
+         })
+         
+         
+         $("#limit").on("click",function(){
+            var result = confirm("글을 마감하시겠습니까?");
+            
+            if(result){
+            
+               $.ajax({
+                  url:"groomingLimit.do",
+                  data:{groomingNo:groomingNo},
+                  success:function(data){
+                     if(data=="success"){
+                        alert("마감 되었습니다.");
+                        location.reload();
+                     }
+                  
+                     
+                  },error:function(request, status, errorData){
+                     alert("error code: " + request.status + "\n"
+                           +"message: " + request.responseText
+                           +"error: " + errorData);
+                  }
+                  })
+               
+               
+            
+            
+            }
+            
+         })
+      })
+      
+   
+   
+   
+   
+   </script>
+
+	<script>
+      $("#submit").on("click",function(){
+    	 alert("신청되었습니다.");
+      })
+   </script>
+	<script>
+   
+      $(function(){
+         var gheart = "${heart.groomingHNo}";
+         var groomingNo = "${grooming.groomingNo}";
+         var memberNo = "${loginUser.memberNo}";
+         var gmemberNo="${grooming.memberNo}";
+         var dmemberNo = "${declaration.memberNo}";
+         var dgroomingNo = "${declaration.dnNo}";
+         var groomingTitle = "${grooming.groomingTitle}";
+         var count = "${grooming.count}";
+      $(document).on("click","#nheart",function(){
+   		if(memberNo == ""){
+   			alert("로그인 해야지만 이용가능한 서비스 입니다.");
+   			return false;
+   		}
+         $.ajax({
+            url:"findHeart.do",
+            data:{groomingNo:groomingNo,memberNo:memberNo},
+            success:function(data){
+               if(data=="false"){
+                  // 이 게시글이 찜하기가 안되어있다.
+                           if(memberNo == gmemberNo){
+                              alert("자신의 글은 찜할 수 없습니다.!")
+                           }else{
+                              $.ajax({
+                                 url:"addHeart.do",
+                                 data:{groomingNo:groomingNo,memberNo:memberNo},
+                                 success:function(data){
+                                    console.log("찜");
+                                    var $div1;
+                                    var $div2;
+                                    var $div3;
+                                    var $h1;
+                                    var $i;
+                                    var $span;
+                                     $div2 = $("#top div");
+                                     $div2.html("");
+                                       if(data == "success"){
+                                         /*   $h1=$("<h1>").text(groomingTitle+" ");
+                                           $i=$("<i id='nheart' class='fas fa-bookmark'>");
+                                           $h1.append($i);
+                                           $div2.append($h1);
+                                     */
+                                    	   $("#nheart").attr("class","fas fa-bookmark");
+                                       }
+                                    
+                                    
+                                 },error:function(request, status, errorData){
+                                    alert("error code: " + request.status + "\n"
+                                          +"message: " + request.responseText
+                                          +"error: " + errorData);
+                                 }
+                                 })
+                                 
+                           } // else 끝
+                        
+                        
+                     
+               }else{
+                  $.ajax({
+                     url:"cancelHeart.do",
+                     data:{groomingNo:groomingNo,memberNo:memberNo},
+                     success:function(data){
+                           console.log("취소");
+                           var $div1;
+                           var $div2;
+                           var $div3;
+                           var $h1;
+                           var $i;
+                           var $span;
+                            $div2 = $("#top div");
+                            $div2.html("");
+                              if(data == "success"){
+                                /*   $h1=$("<h1>").text(groomingTitle+" ");
+                                  $i=$("<i id='nheart' class='far fa-bookmark'>");
+                                 
+                                  $h1.append($i);
+                                  $div2.append($h1); */
+                                  $("#nheart").attr("class","far fa-bookmark");
+                           }
+                        
+                        
+                     
+                        
+                     },error:function(request, status, errorData){
+                        alert("error code: " + request.status + "\n"
+                              +"message: " + request.responseText
+                              +"error: " + errorData);
+                     }
+                     })
+               }
+            
+               
+            },error:function(request, status, errorData){
+               alert("error code: " + request.status + "\n"
+                     +"message: " + request.responseText
+                     +"error: " + errorData);
+            }
+            })
+      
+      })
+      
+         $("#apply").on("click",function(e){
+            var result = confirm("신고하시겠습니까?");
+            
+            if(result){
+               if(memberNo == gmemberNo){
+                  alert("자신의 글은 신고할 수 없습니다.");
+                  $(this).attr("disabled",true)
+               }
+               
+               if((memberNo == dmemberNo) && (groomingNo == dgroomingNo)){
+                  alert("이미 신고하신 게시글 입니다.!");
+                  $(this).attr("disabled",true)
+               }
+            }else{
+               event.stopImmediatePropagation();
+            }
+            
+         })
+         
+         
+      
+      })
+  
+   
+   </script>
+
+	<script>
+      
+      $(function(){
+         
+         
+         getAppList();
+           setInterval(function(){
+            currentPeole();
+         },1000);   
+         
+         $(document).on("click",".accept",function(){
+            var groomingNo = "${grooming.groomingNo}";
+            var appTemp = $(this);
+            var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
+            var groomingP = "${grooming.groomingP}" ;
+            var currentP = "${grooming.currentP}";
+            var money = $("#hiddenmoney").val();
+            var groomingType = "${grooming.groomingType }";
+            $.ajax({
+               url:"checkPeople.do",
+               data:{groomingNo:groomingNo},
+               success:function(data){
+                  if(data.groomingP == data.currentP){
+                     event.stopImmediatePropagation();
+                     alert("참여인원이 꽉 찼습니다.!");
+                  }else{
+                     
+                     $.ajax({
+                        url:"checkGPoint.do",
+                        data:{applyNo:applyNo},
+                        dataType:"json",
+                        success:function(data){
+                           var allmoney = 0;
+                           if(data.length>0){
+                              for(var i in data){
+                                  allmoney += data[i].addPoint; 
+                                  
+                              }
+                           }else{
+                              event.stopImmediatePropagation();
+                              alert("신청자의 포인트가 부족합니다.!");
+                              return false;
+                           }
+                           if(allmoney < money){
+                              console.log(allmoney);
+                              console.log(돈);
+                              event.stopImmediatePropagation();
+                              alert("신청자의 포인트가 부족합니다.!");
+                              return false;
+                           }else{
+                              $.ajax({
+                                 url:"gaccept.do",
+                                 data:{applyNo:applyNo,groomingNo:groomingNo,money:money,groomingType:groomingType},
+                                 success:function(data){
+                                    if(data=="success"){
+                                    getAppList();
+                                 }
+                                    
+                                 },error:function(request, status, errorData){
+                                    alert("error code: " + request.status + "\n"
+                                          +"message: " + request.responseText
+                                          +"error: " + errorData);
+                                 }
+                                 })
+                           }
+                           
+                           
+                           
+                           
+                        
+                           
+                        },error:function(request, status, errorData){
+                           alert("error code: " + request.status + "\n"
+                                 +"message: " + request.responseText
+                                 +"error: " + errorData);
+                        }
+                        })
+                        
+                        
+                        
+                        
+                  }   // else 끝 
+                  
+               }
+                  
+               ,error:function(request, status, errorData){
+                  alert("error code: " + request.status + "\n"
+                        +"message: " + request.responseText
+                        +"error: " + errorData);
+               }
+               })
+            
+            
+            
+         
+            });
+         
+         
+         
+         $(document).on("click",".reject",function(){
+            var groomingNo = "${grooming.groomingNo}";
+            var appTemp = $(this);
+            var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
+            
+            $.ajax({
+               url:"greject.do",
+               data:{applyNo:applyNo},
+               success:function(data){
+                  if(data=="success"){
+                  getAppList();
+               }
+                  
+               },error:function(request, status, errorData){
+                  alert("error code: " + request.status + "\n"
+                        +"message: " + request.responseText
+                        +"error: " + errorData);
+               }
+               })
+         })
+         
+      })
+      
+                  
+         
+            /* -- ajax-- */
+         
+         
+      function getAppList(){
+         
+         var groomingNo = "${grooming.groomingNo}";
+         $.ajax({
+            url:"gacceptList.do",
+            data:{groomingNo:groomingNo},
+            dataType:"json",
+            success:function(data){
+               $tableBody = $(".tbody");
+               $tableBody.html("");
+               
+               var $tr;
+               var $input;
+               var $td1;
+               var $div1;
+               var $img1;
+               var $td2;
+               var $td3;
+               var $td4;
+               var $button1;
+               var $div2;
+               var $div3;
+               var $div4;
+               var $div5;
+               var $h5;
+               var $button2;
+               var $span1;
+               
+               var $div6;
+               var $td5;
+               var $button3;
+         
+                  console.log(data.length);
+               if(data.length> 0){   // 신청자가 한 명 이상 존재하면
+                  for(var i in data){
+                      $tr = $("<tr class='appTr'>");
+                      $input = $("<input type='hidden' class='applyNo' >");
+                      $inputVal = $input.val(data[i].groomingAN);
+                      $td1 = $("<td>");
+                      $div1 = $("<div class='pimg' style='width:50px; height:50px;'>");
+                      $img1 = $("<img src='${contextPath }/resources/upprofileFiles/"+data[i].memberPhoto+"'>");
+                      $td2 = $("<td>").text(data[i].memberNickName);
+                      $td3 = $("<td>");
+                      $button1 = $("<button data-toggle='modal' data-target='#open_modal_appContent"+i+"'>").text("신청서열람");
+                      $div2 = $("<div class='modal' name='modal' id='open_modal_appContent"+i+"'>");
+                      $div3 = $("<div class='modal-dialog'>");
+                      $div4 = $("<div class='modal-content' style='width: 500px; height: 300px;'>");
+                      $div5 = $("<div class='modal-header'>");
+                      $h5 = $("<h5 class='modal-title'>").text("신청 내용");
+                      $button2 = $("<button type='button' class='close'>");
+                      $span1 = $("<span aria-hidden='true'>").text("X");
+                     
+                      $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
+                      
+                      $td4 = $("<td>");
+                      $button3 = $("<button class='accept'>").text("수락");
+                      $button4 = $("<button class='reject'>").text("거절");
+                      
+                      $td1.append($div1);
+                      $div1.append($img1);
+                      $td3.append($button1);
+                      $td3.append($div2);
+                      
+                      $div2.append($div3);
+                      $div3.append($div4);
+                      $div4.append($div5);
+                      $div5.append($h5);
+                      $div5.append($button2);
+                      $button2.append($span1);
+                      
+                      $div4.append($div6);
+                      $td4.append($button3);
+                      $td4.append($button4);
+                      
+                      $tr.append($td1);
+                      $tr.append($td2);
+                      $tr.append($td3);
+                      $tr.append($td4);
+                      $tr.append($inputVal);
+                      $tableBody.append($tr);
+                      
+                  }
+               }else{               // 신청자가 없으면
+                  $tr = $("<tr>");
+                  $rContent = $("<td colspan='3'>").text("신청자가 없습니다.");
+                  
+                  $tr.append($rContent);
+                  $tableBody.append($tr);
+               }
+               
+               
+            },
+            error:function(request, status, errorData){
+               alert("error code: " + request.status + "\n"
+                     +"message: " + request.responseText
+                     +"error: " + errorData);
+            }
+         }) 
+      }
+      
+      
+      function currentPeole(){
+         var groomingNo = "${grooming.groomingNo}";
+         
+         $.ajax({
+            url:"checkPeople.do",
+            data:{groomingNo:groomingNo},
+            dataType:"json",
+            success:function(data){
+               $tableBody = $("#people");
+               $tableBody.html("");
+               
+               var $tr1;
+               var $tr2;
+               var $tr3;
+               var $tr4;
+               var $tr5;
+               var $tr6;
+            
+               var $td1;
+               var $td2;
+               var $td3;
+               var $td4;
+               var $td5;
+               var $td6;
+            
+               var $span1;
+               var $span2;
+               var $span3;
+               var $span4;
+               var $span5;
+               var $span6;
+               var $span7;
+               
+               var $br;
+               var $h4;
+               var $p;
+            
+                  $tr1 = $("<tr>");
+                  $tr2 = $("<tr>");
+                  $tr3 = $("<tr>");
+                  $tr4 = $("<tr>");
+                  $tr5 = $("<tr>");
+                  $tr6 = $("<tr>");
+                  
+                  $td1 = $("<td>"); 
+                  $td2 = $("<td>"); 
+                  $td3 = $("<td>"); 
+                  $td4 = $("<td>"); 
+                  $td5 = $("<td>"); 
+                  $td6 = $("<td>"); 
+                  
+                  $span1 = $("<span>").text("그룹 타입 : ");
+                  $span2 = $("<span>").text(data.groomingType);
+                  $span3 = $("<span>").text("스터디 기간 : ");
+                  $span4 = $("<span>").text(data.studySd+" ~ "+data.studyEd);
+                  $span5 = $("<span>").text("예치금 : ");
+                  $span6 = $("<span>").text(data.money);
+                  $span7 = $("<span>").text("모집 인원 : "+data.currentP+"/"+data.groomingP+"명");
+                  
+                  $br = $("<br>");
+                  $h4 = $("<h4>").text(data.groomingIntroduce);
+                  $p = $("<p>").text(data.groomingContent);
+                  
+                  $td1.append($span1);
+                  $td1.append($span2);
+                  $td2.append($span3);
+                  $td2.append($span4);
+                  $td3.append($span5);
+                  $td3.append($span6);
+                  $td4.append($span7);
+                   $td5.append($br);
+                  $td5.append($h4);
+                  $td6.append($p); 
+                  
+                  $tr1.append($td1);
+                  $tr2.append($td2);
+                  $tr3.append($td3);
+                  $tr4.append($td4);
+                   $tr5.append($td5);
+                  $tr6.append($td6); 
+                  
+                  $tableBody.append($tr1);
+                  $tableBody.append($tr2);
+                  $tableBody.append($tr3);
+                  $tableBody.append($tr4);
+                   $tableBody.append($tr5);
+                  $tableBody.append($tr6); 
+                  
+               
+               
+            },
+            error:function(request, status, errorData){
+               alert("error code: " + request.status + "\n"
+                     +"message: " + request.responseText
+                     +"error: " + errorData);
+            }
+         }) 
+
+         
+         
+      }
+      
+      
+   </script>
 
 	<jsp:include page="../common/footer.jsp" />
 
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<!-- 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-		crossorigin="anonymous"></script> -->
+	<!--    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script> -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

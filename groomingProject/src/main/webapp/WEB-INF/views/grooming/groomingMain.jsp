@@ -421,7 +421,7 @@
 
 			</div>
 
-			<table class="paging" align="center">
+		<%-- 	<table class="paging" align="center">
 				<!-- 페이징 처리 부분 -->
 				<tr align="center" height="20">
 					<td colspan="6">
@@ -462,7 +462,7 @@
 						</c:if>
 					</td>
 				</tr>
-			</table>
+			</table> --%>
 		</div>
 
 		<input type="hidden" value="${selectG }" id="selectG">
@@ -471,7 +471,131 @@
 
 	</section>
 	<!-- 필터 -->
+<script type="text/javascript">
+	var page = 1;
+	var pageloading = true;
 
+
+	// 스크롤 로딩
+	window.onscroll = function(e) {
+	    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	    	// ajax + 카드 추가
+	    	if(pageloading){
+	    		pageloading = false;
+		    	loadGroomingData();
+	    	}
+	    }
+	};
+
+	// 그루밍 데이터 가져오기
+	function loadGroomingData() {
+		page++;
+		$.ajax({
+			url:"addAllGroomingList.do",
+			data:{page:page},
+			success:function(data){
+				console.log("그루밍 가져오기 결과 : " + data.length);
+				// 그루밍 내용 추가
+				loadGrooming(data);
+			},
+			error:function(request, status, errorData){
+				page--;
+				alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
+			}
+		});
+	}
+
+	// 그루밍 출력
+	function loadGrooming(data) {
+		// 그루밍 내용 추가
+		if(data.length > 0) {
+			console.log("그루밍 리스트 추가");
+	
+			for(var i in data){
+				// 시간 변수
+				var card_dDay_color = "card_dDay_black";
+				var card_dDay_text = "D-" + data[i].groomingDday;
+
+				// d-day에 따른 css 클래스명 선택
+				if(data[i].groomingDday == 0){
+					card_dDay_color = "card_dDay_deadline";
+					card_dDay_text = "마감임박";
+				} else if(data[i].groomingDday <= 7){
+					card_dDay_color = "card_dDay_red";
+				} else if(data[i].groomingDday <= 15){
+					card_dDay_color = "card_dDay_orange";
+				} else if(data[i].groomingDday <= 25){
+					card_dDay_color = "card_dDay_green";
+				} else {
+					card_dDay_color = "card_dDay_black";
+				}
+
+				// bundle
+				var $allGroooming_bundle = $("#allGroooming_bundle");
+				
+				// container
+				var $card_container = $('<div>').addClass("card_container col-lg-3");
+				var $iGroomingNo = $('<input>').attr("type","hidden").val(data[i].groomingNo);
+				$card_container.append($iGroomingNo);
+				
+				// card_box
+				var $card_box = $('<div>').addClass("card_box");
+				$card_container.append($card_box);
+				
+				// header
+				var $card_header = $('<div>').addClass("card_header");
+				var $imgGroomingImg = $('<img>').attr({"alt":"그루밍 사진","src":"${contextPath }/resources/upGroomingFiles/"+data[i].groomingImg,"onerror":"this.src='${contextPath }/resources/views/images/grooming_logo.png'"});
+				var $card_dDay = $('<div>').addClass("card_dDay " + card_dDay_color);
+				var $card_dDay_text = $('<span>').text(card_dDay_text);
+				$card_box.append($card_header);
+				$card_header.append($imgGroomingImg);
+				$card_header.append($card_dDay);
+				$card_dDay.append($card_dDay_text);
+
+				// card_body
+				var $card_body = $('<div>').addClass("card_body");
+				// title
+				var $card_title = $('<div>').addClass("card_title").text(data[i].groomingTitle);
+				$card_box.append($card_body);
+				$card_body.append($card_title);
+				
+				// tags
+				var $card_tags = $('<div>').addClass("card_tags");
+				var $tag_wrap = $('<div>');
+				
+				var $bTagsinput = $('<div>').addClass("bootstrap-tagsinput");
+
+				var tagName = (data[i].groomingTagName).split(",");
+				for(var j in tagName){
+					var $sBadge = $('<span>').addClass("badge badge-info").text(tagName[j]);
+					$bTagsinput.append($sBadge);
+				}
+				
+				$card_body.append($card_tags);
+				$card_tags.append($tag_wrap);
+				$tag_wrap.append($bTagsinput);
+
+				// intro
+				var $card_intro = $('<div>').addClass("card_intro").text(data[i].groomingIntroduce);
+				$card_body.append($card_intro);
+				
+				// between
+				var $card_between = $('<div>').addClass("card_between mt-0");
+				var $card_np = $('<p>').addClass("card_np").text("인원" + data[i].groomingMemberCount + "/" + data[i].groomingParti);
+				var $card_gt = $('<p>').addClass("card_gt").text(data[i].groomingType);
+				$card_body.append($card_between);
+				$card_between.append($card_np);
+				$card_between.append($card_gt);
+				
+				$allGroooming_bundle.append($card_container);
+
+			}
+		} else {
+			console.log("내용 없음");
+		}
+		pageloading = true;
+	}
+</script>
 <script>
    	$(function(){
     	var gmemberNo = $("#selectG").val();
@@ -512,6 +636,7 @@
 
 <script>
 $(function(){
+	
 	// 그루밍 디테일 페이지 이동
 	$(document).on("click", ".card_container", function(){
 		var el = $(this);
@@ -709,8 +834,6 @@ $(function(){
 	
 </script>
 
-		<footer style="margin-top:100px;">
 	<jsp:include page="../common/footer.jsp" />
-	</footer>
 </body>
 </html>

@@ -95,6 +95,14 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.replyDelete(reply, member);
 	}
 
+	@Override
+	public int boardGcount(String boardNo) {
+		// TODO Auto-generated method stub
+		return cDao.boardGcount(boardNo);
+	}
+
+	
+
 	
 
 	
