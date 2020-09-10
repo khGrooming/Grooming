@@ -81,6 +81,7 @@
                 <c:forEach var="blist" items="${blist}">
                 	<c:if test="${blist.lastDay eq day}">
                 		<a onclick="getBList"><h1 align="center">${blist.count}</h1></a>
+
                 	</c:if>
                 </c:forEach>
             </div>
@@ -92,6 +93,7 @@
             <br><br>
          </div>
          <br><br>
+
     </section>
     <%-- <jsp:include page="../common/footer.jsp"/> --%>
 </body>

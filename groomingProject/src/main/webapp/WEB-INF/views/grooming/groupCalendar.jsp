@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 <title>Hello, world!</title>
+
 <style>
 
 @font-face {
@@ -213,6 +214,7 @@ h1{
                               $tableBody.append($br);
 
                            } else {
+
 							  $tableBody.html("");
                               $td2 = $("<div style='text-align:left;'>")
                                     .text("출석체크를 시작일을 처음으로 진행 해주세요!");
@@ -227,7 +229,10 @@ h1{
                         }
                      });
 
+
+
             })(j);
+
 
          }
       }
