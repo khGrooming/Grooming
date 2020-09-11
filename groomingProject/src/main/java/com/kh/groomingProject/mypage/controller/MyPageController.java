@@ -461,7 +461,7 @@ public class MyPageController {
 		
 		if(result>0) {
 			mentorSelect(request,mNo);
-			return "mypage/mentor";
+			return  "mypage/mypage-memberup";
 		}else {
 			throw new MypageException("멘토 등록 실패");
 		}
