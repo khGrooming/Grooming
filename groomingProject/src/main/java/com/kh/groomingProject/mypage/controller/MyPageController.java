@@ -147,6 +147,7 @@ public class MyPageController {
 			case "경력":
 				careerList[career]=s.getSpecName();
 				careerconfirm[career]=s.getSpecConfirm();
+				System.out.println(s.getSpecConfirm());
 				career+=1;
 				break;
 			default:
@@ -460,7 +461,7 @@ public class MyPageController {
 		
 		if(result>0) {
 			mentorSelect(request,mNo);
-			return "mypage/mypage-memberup";
+			return  "mypage/mypage-memberup";
 		}else {
 			throw new MypageException("멘토 등록 실패");
 		}
