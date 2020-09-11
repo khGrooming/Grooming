@@ -317,7 +317,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									<td><span>해시 태그</span><br> <input type="text"
 										name="tagName" value="" placeholder="Tags,"
 										data-role="tagsinput" class="form-control" id="tagName"
-										style="display: none;" required> <small><span
+										required> <small><span
 											style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span> </small></td>
 									</td>
 								</tr>
@@ -366,16 +366,25 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	
 		 <script>
 			$(function(){
-					var inputText = $('input[type="text"]').val();
-					var inputRadio = $('input[type="radio"]').val();
-					var inputNumber = $('input[type="number"]').val();
-					var inputFile = $('input[type="file"]').val();
-					var textarea = $("textarea").val();
+					var tagName = $("#tagName").text();
+					$(document).on("click","#insert",function(){
+						
+						
+							var result= confirm("등록하시겠습니까?");
+							if(result){
+								if(tagName == ""){
+									console.log("모든값을 작성해주세요!");
+								}else{
+									$("form").submit();
+									
+								}
+							}else{
+								event.preventDefault();
+							}
+						
 					
-				/* $("#insert").on("click",function(e){
-					alert();
-					e.preventDefault();
-				}) */
+					
+				})
 			})
 		
 		</script> 

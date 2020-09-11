@@ -1132,12 +1132,12 @@ public class GroomingController {
 				}
 			}
 			
-			System.out.println("나 수정 됬어요~" + result +result1+ result2);
+			System.out.println("나 등록 됬어요~" + result +result1+ result2);
 			if (result > 0 && result1 > 0) {
 				mv.setViewName("redirect:groomingMain.do");
 
 			} else {
-				throw new GroomingException("게시글 수정 실패!");
+				throw new GroomingException("게시글 등록 실패!");
 			}
 			return mv;
 		}
