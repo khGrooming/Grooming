@@ -32,12 +32,6 @@
 	rel="stylesheet">
 <title>Hello, world!</title>
 <style>
-/* body {
-	height: 1200px;
-} */
-section {
-    margin-bottom: 50px;
-}
 section img {
 	width: 100%;
 	height: 100%;
@@ -85,36 +79,6 @@ i {
 	height: 100%;
 	border-radius: 10px;
 }
-.specStyle {
-	padding: 4px 9px 6px 8px;
-	margin: 5px;
-	color: white;
-}
-.specS {
-	background: #5b84ed;
-}
-.specC {
-	background: #07b3a9;
-}
-.specCE {
-	background: #fb8c49;
-}
-#apply1 {
-	outline: 0;
-	border: 0;
-	width: 20%;
-	height: 60px;
-	background: #b1caad;
-	margin: 0 auto;
-}
-.adBtn {
-	outline: 0;
-	border: 0;
-	background: #b1caad;
-	width: 10%;
-	height: 40px;
-	margin-right: 10px;
-}
 </style>
 </head>
 <body>
@@ -124,7 +88,9 @@ i {
 
 
 
-		<div class="container" style="margin-bottom: 50px;">
+
+<div class="container" style="margin-bottom: 50px;">
+
 
 			<div class="row">
 				<div class="col-9">

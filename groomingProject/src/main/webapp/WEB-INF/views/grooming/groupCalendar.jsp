@@ -16,12 +16,9 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
 <title>Hello, world!</title>
+
 <style>
-/* div의 크기에 맞춤 */
-img {
-   max-width: 100%;
-   max-height: 100%;
-}
+
 @font-face {
    font-family: 'TmoneyRoundWindExtraBold';
    src:
@@ -218,11 +215,10 @@ h1{
 
                            } else {
 
-                              $td2 = $("<td style='text-align:left;'>")
-                                    .text("출석체크를 오늘부터 해주세요!");
-                              $tr2 = $("<tr>");
-                              $tr2.append($td2);
-                              $tableBody.append($tr2);
+							  $tableBody.html("");
+                              $td2 = $("<div style='text-align:left;'>")
+                                    .text("출석체크를 시작일을 처음으로 진행 해주세요!");
+                              $tableBody.append($td2);
                            }
                         },
                         error : function(request, status, errorData) {
@@ -233,7 +229,10 @@ h1{
                         }
                      });
 
+
+
             })(j);
+
 
          }
       }

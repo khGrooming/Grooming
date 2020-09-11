@@ -103,8 +103,9 @@
 	                         	<th>경력</th>
 	                         </tr>
 	                     <c:if test="${!empty mentoList}">
-	                     	<c:forEach var="mento" varStatus="i" items="${mNo}" begin="0" end="${mNo.size()}">
+	                     	<c:forEach var="mento" varStatus="i" items="${mNo}">
 	                     		<tr>
+	                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
 		                         	<td><c:out value="${i.current.memberEmail}"/></td>
 		                         	<td><c:out value="${i.current.memberNickname}"/></td>
 		                         	<td><c:out value="${i.current.memberName}"/></td>
@@ -154,7 +155,7 @@
 			                         	</c:if>
 		                         	</c:forEach>
 		                         	</ul></td>
-		                         	<td><button id="metoManageBtn" onclick="mentoManage();">관리</button></td>
+		                         	<td><button id="metoManageBtn" onclick="mentoManage(${i.index});">관리</button></td>
 								</tr>
 		                         
 	                         </c:forEach>
@@ -208,19 +209,21 @@
 	                 </table>
 	                 
 	                 <!-- 멘토 관리 모달창 -->
-	                 <div id="mentoModal" class="modal">
-						      <!-- Modal content -->
-						<div class="modal-content">
-							<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">멘토 관리</span></b></span></p>
-							<p id="infoCheck" style="text-align: center; line-height: 1.5;"><br /></p>
-					     	<p><br /></p>
-					     	
-							<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
-								<button type="button" class="pop_bt" style="font-size: 13pt;">확인</button>
-								<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+	                 <form action="mentoFail.do">
+		                 <div id="mentoModal" class="modal">
+							      <!-- Modal content -->
+							<div class="modal-content">
+								<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">멘토 관리</span></b></span></p>
+								<p id="infoCheck" style="text-align: center; line-height: 1.5;"><br />멘토 자격을 박탈하시겠습니까?</p>
+						     	<p><br /></p>
+						     	
+								<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+									<button type="submit" class="pop_bt" style="font-size: 13pt;">확인</button>
+									<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+								</div>
 							</div>
 						</div>
-					</div>
+	                 </form>
 					
 					<!-- 경력 보기 모달창 -->
 					<div id="careerModal" class="modal">
@@ -405,8 +408,11 @@
 			location.href="${listCheck}";
 		}
 		
-		function mentoManage(){
+		function mentoManage(i){
 			$("#mentoModal").css("display","block");
+			$memberNo = $(".member"+i).val();
+			
+			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 		}
 
 		function showImg(i){
@@ -421,7 +427,7 @@
 			
 			// 파일 이름을 $file로 설정하기 
 			if($file != null){
-				$("#cImg").append("<img src='${contextPath}/resources/views/images/"+$file+"' style='width:100%'>");
+				$("#cImg").append("<img src='${contextPath}/resources/upprofileFiles/"+$file+"' style='width:100%'>");
 			}else{
 				$("#cImg").append("사진 파일 없음");
 			}

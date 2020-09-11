@@ -327,4 +327,12 @@ public class AdminController {
 		return renameFileName;
 	}
 	
+	@RequestMapping("mentoFail.do")
+	public String mentoFail(String memberNo) {
+		System.out.println(memberNo);
+		int result = adminService.mentoManage(memberNo);
+		
+		return "redirect:mentoManage.do";
+	}
+	
 }

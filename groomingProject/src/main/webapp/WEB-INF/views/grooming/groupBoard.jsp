@@ -123,17 +123,17 @@
 
             <!-- 페이징 처리 부분 -->
       <tr align="center" height="20">   
-         <td colspan="6">
+         <td colspan="6" >
       <!-- [이전] -->
             <c:if test="${pi.currentPage eq 1 }">
-               [이전]&nbsp;
+              <&nbsp;
             </c:if>         
             <c:if test="${pi.currentPage gt 1 }">
             <c:url var="blistBack" value="gBlist.do">
                <c:param name="page" value="${pi.currentPage - 1 }"/>
                <c:param name="groomingNo" value="${grooming.groomingNo}"/>
             </c:url>
-               <a href="${blistBack }">[이전]</a>
+               <a href="${blistBack }"><</a>
             </c:if>   
       <!-- [번호들] -->
             <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
@@ -153,14 +153,14 @@
             </c:forEach>
       <!-- [이후] -->
             <c:if test="${pi.currentPage eq pi.maxPage }">
-               &nbsp;[이후]
+               &nbsp;>
             </c:if>         
             <c:if test="${pi.currentPage lt pi.maxPage }">
                <c:url var="blistAfter" value="gBlist.do">
                   <c:param name="page" value="${pi.currentPage + 1 }"/>
                   <c:param name="groomingNo" value="${grooming.groomingNo}"/>
                </c:url>
-                  <a href="${blistAfter }">[이후]</a>
+                  <a href="${blistAfter }">></a>
             </c:if>   
          </td>
       </tr>

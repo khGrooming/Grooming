@@ -28,5 +28,10 @@ public class DeclarationDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("declarationMapper.selectGroomingDeclare",info);
 	}
+
+	public int declareB(Declaration d) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.insert("declarationMapper.declareB",d);
+	}
 	
 }

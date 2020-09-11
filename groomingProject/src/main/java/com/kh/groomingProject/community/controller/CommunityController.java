@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -33,8 +35,14 @@ import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
+import com.kh.groomingProject.grooming.model.exception.GroomingException;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingAppList;
+import com.kh.groomingProject.grooming.model.vo.GroomingApplicant;
+import com.kh.groomingProject.grooming.model.vo.GroomingHeart;
 import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
+import com.kh.groomingProject.grooming.model.vo.GroomingSpec;
+import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Controller
@@ -42,6 +50,9 @@ public class CommunityController {
 	
 	@Autowired
 	private CommunityService cService;
+	
+	@Autowired
+	private DeclarationService declarationService;	
 
 	// 전체 게시판 조회
 	@RequestMapping("communityMain.do")
@@ -334,9 +345,19 @@ public class CommunityController {
 		}
 	}
 	
-	
-	
-	
+	// 신고하기
+	@RequestMapping(value="declareB.do", method=RequestMethod.POST)
+	public String declareB(Model model, Declaration d,String boardNo, String bCategoryNo, String memberNo) {
+		
+		int result = declarationService.declareB(d);
+
+		if(result > 0) {
+			return "redirect:communityDetailView.do?boardNo="+d.getDnNo();
+		}else {
+			throw new CommunityException("신고 실패!");
+		}
+	}
+
 		
 
 

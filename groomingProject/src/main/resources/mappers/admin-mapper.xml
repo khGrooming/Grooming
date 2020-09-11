@@ -49,12 +49,6 @@
 		<result property="declarationContent" column="DECLARATION_CONTENT"/>
 		<result property="declarationCheck" column="DECLARATION_CHECK"/>
 	</resultMap>
-
-	<resultMap type="VisitCount" id="VisitCountResultSet">
-		<id property="visitId" column="VISIT_ID"/>
-		
-		<result property="visitTime" column="VISIT_TIME"/>
-	</resultMap>
 	
 	<resultMap type="GraphListCount" id="graphCountResultView">
 		<id property="lastDay" column="LASTDAY"/>
@@ -350,18 +344,6 @@
 		]]>
 	</select>
 	
-	<insert id="insertVisit" parameterType="VisitCount">
-		INSERT INTO VISIT_COUNT
-        (
-            VISIT_ID,
-            VISIT_TIME,
-        )
-        VALUES
-        (
-            VISIT_SEQ.NEXTVAL,
-            SYSDATE,
-        )
-	</insert>
 	
 	<select id="adminGraphCount" resultType="GraphListCount">
 	 <![CDATA[
@@ -375,5 +357,11 @@
 		INSERT INTO SANCTIONS
 		VALUES (SEQ_SANCTIONS_NO.NEXTVAL, #{memberNo}, )
 	</insert>
+	
+	<update id="mentoManage" parameterType="string">
+		UPDATE MENTOR
+		SET MENTOR_PASS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
 	
 </mapper>

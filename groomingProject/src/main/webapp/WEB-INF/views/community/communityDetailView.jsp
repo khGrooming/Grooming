@@ -52,10 +52,11 @@
 	<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
 			style="margin-top: 100px;">
 		<div class="modal-dialog">
-			<form action="declare.do" method="post">
+			<form action="declareB.do" method="post">
 				<div class="modal-content" style="width: auto; height: auto;">
-					<input type="hidden" value="${grooming.groomingNo }" name="dnNo">
+					<input type="hidden" value="${board.boardNo }" name="dnNo">
 					<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+					<input type="hidden" value="${board.bCategoryNo }" name="bCategoryNo">
 					<!-- 모달 제목 -->
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">신고 사유</h5>
@@ -69,13 +70,21 @@
 								id="summernote" name="dContent" class="form-control" required></textarea>								
 					</div>
 					<div style="text-align:center; margin-bottom:10px;">
-						<button type="sumbit">제출</button>
+						<button type="sumbit" id="sumbit">제출</button>
 						<button type="button" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
+		<script>
+			$("#sumbit").on("click", function(){
+				alert("게시물이 신고 되었습니다.");
+			})
+			// 중복 신고 막기
+			// 자신의 게시물은 신고할수 없기
+		</script>
 	
 		<div class="table table-responsive">
         	<table class="table">

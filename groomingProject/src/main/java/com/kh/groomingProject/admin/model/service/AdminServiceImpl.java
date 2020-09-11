@@ -172,6 +172,12 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.nowPoint(p);
 	}
 
+	@Override
+	public int mentoManage(String memberNo) {
+
+		return adminDao.mentoManage(memberNo);
+	}
+
 	
 
 	

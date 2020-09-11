@@ -332,7 +332,7 @@ public class MemberController {
 				if(resultMemberTag == tag.length) {
 					System.out.println("MemberTag 업데이트 : 성공");
 
-					return "home";
+					return "redirect:home.do";
 
 				} else {
 					System.out.println("MemberTag 업데이트 : 실패");
@@ -346,7 +346,7 @@ public class MemberController {
 
 		}
 
-		return "home";
+		return "redirect:home.do";
 
 	}
 
@@ -660,7 +660,7 @@ public class MemberController {
 			if(resultAlertJoin > 0) {
 				System.out.println("비밀번호 재설정 (알림 추가) : 성공");
 
-				return "home";
+				return "redirect:home.do";
 			} else {
 				System.out.println("비밀번호 재설정 (알림 추가) : 실패");
 				throw new MemberException("비밀번호 재설정 (알림 추가) : 실패");
