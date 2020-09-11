@@ -267,10 +267,17 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 								</tr>
 								<tr>
-									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<label><input type="radio" name="groomingType" id="m"
-											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
-											type="radio" name="groomingType" value="호스트" id="h">호스트 그룹</label></td>
+									<td>
+										<label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<c:if test="${m ne null }">
+											<label><input type="radio" name="groomingType" id="m"value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label><input type="radio" name="groomingType" value="호스트" id="h">호스트 그룹</label>
+										</c:if>
+										<c:if test="${m eq null }">
+											<label><input type="radio" name="groomingType" id="m"value="멘토" disabled>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트 그룹</label>
+										</c:if>
+									</td>
 								</tr>
 
 								<tr>

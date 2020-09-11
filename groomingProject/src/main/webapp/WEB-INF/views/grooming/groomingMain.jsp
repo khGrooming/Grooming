@@ -623,11 +623,11 @@
 		    			if(result){
 		    				location.href='groomingSaveInsert.do?memberNo='+memberNo;
 		    			}else{
-		    				location.href='groomingInsert.do';
+		    				location.href='groomingInsert.do?memberNo='+memberNo;
 		    			}
 		    			
 		    		}else {
-		    			location.href='groomingInsert.do';
+		    			location.href='groomingInsert.do?memberNo='+memberNo;
 		    		}
 					
 				},error:function(request, status, errorData){

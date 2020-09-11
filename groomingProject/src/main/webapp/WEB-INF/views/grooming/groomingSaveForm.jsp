@@ -259,18 +259,21 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<c:if test="${grooming.groomingType eq '멘토' }">
-										<label for="m"><input type="radio" name="groomingType" id="m"
-											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
-											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h">호스트
-											그룹</label></td>
+									<c:if test="${m ne null }">
+										<c:if test="${grooming.groomingType eq '멘토' }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h">호스트그룹</label>
+										</c:if>
+										<c:if test="${grooming.groomingType eq '호스트' }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" >멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트그룹</label>
+										</c:if>		
 									</c:if>
-									<c:if test="${grooming.groomingType eq '호스트' }">
-										<label for="m"><input type="radio" name="groomingType" id="m"
-											value="멘토" >멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
-											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트
-											그룹</label></td>
-									</c:if>		
+									<c:if test="${m eq null }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" disabled>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트그룹</label>
+									</c:if>
+									</td>
 								</tr>
 
 								<tr>

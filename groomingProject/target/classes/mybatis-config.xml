@@ -51,6 +51,7 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GCheck" alias="GCheck"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingMain" alias="GroomingMain"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSearch" alias="GroomingSearch"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Mentor" alias="Mentor"/>
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>

@@ -376,7 +376,8 @@ body{
 
 				<c:url var="gupdate" value="groomingUpdate.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
-					<c:param name="page" value="${currentPage }"/>						
+					<c:param name="page" value="${currentPage }"/>		
+					<c:param name="memberNo" value="${loginUser.memberNo }"/>				
 				</c:url>
 			
 				<!-- 글의 상태 버튼 -->

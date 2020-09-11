@@ -20,6 +20,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
+import com.kh.groomingProject.grooming.model.vo.Mentor;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
@@ -442,6 +443,12 @@ public class GroomingServiceImpl implements GroomingService{
 	public int addMentorPoint(Map map2) {
 		// TODO Auto-generated method stub
 		return gDao.addMentorPoint(map2);
+	}
+
+	@Override
+	public Mentor selectMentor(String memberNo) {
+		// TODO Auto-generated method stub
+		return gDao.selectMentor(memberNo);
 	}
 	
 }
