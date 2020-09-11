@@ -438,13 +438,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 													}
 
 													else {
-														// Old IE 파일명 추출
+														// 기존의 파일명 추출
 														var filename = $(this).val().split('/').pop().split('\\').pop();
 													};
-
-													$(this).siblings(
-															'.upload-name')
-															.val(filename);
+						
+													$(this).siblings('.upload-name').val(filename);
 												});
 
 								//preview image 
@@ -473,6 +471,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 								var img = $(this).siblings('.upload-display').find('img');
 								img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+ imgSrc+ "\")";
+								// IE7
 							}
 												});
 									});
