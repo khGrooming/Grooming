@@ -685,9 +685,6 @@ section .form_container .hideItem
 								},
 								error:function(request, status, errorData){
 									alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-									
-									
-									//		+"error: " + errorData);
 								}
 							});
 						},
@@ -705,6 +702,7 @@ section .form_container .hideItem
 
 	<!-- 회원가입 -->
 	<script>
+		// 키이벤트 회원가입
 		$("#regiNickName").keyup(function(e){
 			if(e.keyCode == 13){
 				register();
