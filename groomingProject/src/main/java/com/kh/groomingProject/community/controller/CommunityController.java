@@ -143,14 +143,21 @@ public class CommunityController {
 	
 	// 게시판 상세 조회
 	@RequestMapping("communityDetailView.do")
-	public String communityDetailView(Model model, String boardNo) {
+	public String communityDetailView(HttpServletRequest request, Model model, String boardNo) {
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		System.out.println("boardNo : " + boardNo);
 		
-		Board b = cService.selectOne(boardNo); 
+		String memberNo = null;
+		if(member != null) {
+			memberNo = member.getMemberNo();
+		}
+		
+		Board b = cService.selectOne(boardNo, memberNo); 
 		
 		ArrayList<Reply> replyList = cService.replySelectList(boardNo); // 댓글목록
 	
 		int result = cService.addViewCount(boardNo); // 조회수 증가
-		
+		System.out.println("값 확인 : " + b);
 		if(b != null) { 
 			model.addAttribute("board", b); 
 			model.addAttribute("replyList", replyList);
@@ -213,8 +220,10 @@ public class CommunityController {
 	
 	// 게시물 수정하기
 	@RequestMapping("communityUpdateView.do") 
-	public String communityUpdateView(String boardNo, Model model, String bCategoryNo) { 
-		model.addAttribute("board", cService.selectOne(boardNo));
+	public String communityUpdateView(HttpServletRequest request, String boardNo, Model model, String bCategoryNo) { 
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		
+		model.addAttribute("board", cService.selectOne(boardNo, member.getMemberNo()));
 		return "community/communityUpdateView"; 
 	}
 		
@@ -254,7 +263,9 @@ public class CommunityController {
 	// 게시물 삭제하기
 	@RequestMapping("communityDelete.do")
 	public String communityDelete(String boardNo, HttpServletRequest request) { 
-		Board b = cService.selectOne(boardNo);
+		Member member = (Member)request.getSession().getAttribute("loginUser");
+		
+		Board b = cService.selectOne(boardNo, member.getMemberNo());
 	
 		int result = cService.communityDelete(boardNo);
 			 
@@ -326,8 +337,9 @@ public class CommunityController {
 		response.setContentType("application/json; charset=utf-8");
 
 		ArrayList<Board> blist = cService.communitySearch(communitySearch);
-		System.out.println("자유게시판을 검색해온 blist " + blist);
-		new Gson().toJson(blist, response.getWriter());
+		System.out.println("검색해온 blist " + blist);
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(blist, response.getWriter());
 	}
 	
 	// 좋아요

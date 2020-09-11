@@ -27,9 +27,13 @@ public class CommunityDao {
 		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectList", bCategoryNo, rowBounds);
 	}
 
-	public Board selectOne(String boardNo) {
+	public Board selectOne(String boardNo, String memberNo) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("boardNo", boardNo);
+		map.put("memberNo", memberNo);
 		
-		return sqlSessionTemplate.selectOne("communityMapper.selectOne", boardNo);
+		
+		return sqlSessionTemplate.selectOne("communityMapper.selectOne", map);
 	}
 	
 	public int addViewCount(String boardNo) {

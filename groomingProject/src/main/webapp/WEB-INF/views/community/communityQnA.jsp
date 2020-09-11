@@ -19,11 +19,46 @@
     	font-size: 13px;
 	}
 </style>
+<!-- ------ 검색 ------- -->
+<style type="text/css">
+.d1 {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+.d1 input {
+  width: 100%;
+  height: 42px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: #F9F0DA;
+  color: #9E9C9C;
+}
+.d1 button {
+  position: absolute; 
+  top: 0;
+  right: 0px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #7BA7AB;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.d1 button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
+</style>
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-	<!-- ------------------ 해시태그 검색 -------------------- -->
-		
+	
+	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
 			<c:if test="${!empty loginUser }">

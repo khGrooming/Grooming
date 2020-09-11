@@ -1,6 +1,7 @@
 package com.kh.groomingProject.community.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,9 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 
 	@Override
-	public Board selectOne(String boardNo) {
+	public Board selectOne(String boardNo, String memberNo) {
 		
-		return cDao.selectOne(boardNo);
+		return cDao.selectOne(boardNo, memberNo);
 	}
 	
 	@Override

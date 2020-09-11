@@ -43,11 +43,14 @@
 	
 	<div class="container" align="center">
 	
-	<p class="text-right">
-		<a href="#declareForm" data-toggle='modal'>
-		<img style="vertical-align: bottom;" alt="dep" 
-				src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG"> 신고</a>
-	</p>					
+	<c:if test="${empty board.declarationNo}">
+		<p class="text-right">
+			<a href="#declareForm" data-toggle='modal'>
+			<img style="vertical-align: bottom;" alt="dep" 
+					src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG"> 신고</a>
+		</p>
+	</c:if>
+						
 	<!-- 신고모달 -->
 	<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
 			style="margin-top: 100px;">

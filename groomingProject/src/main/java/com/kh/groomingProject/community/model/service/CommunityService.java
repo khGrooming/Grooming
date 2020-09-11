@@ -11,7 +11,7 @@ public interface CommunityService {
 
 	ArrayList<Board> selectList(String bCategoryNo, CommunityPageInfo pi);
 
-	Board selectOne(String boardNo);
+	Board selectOne(String boardNo, String memberNo);
 	
 	int addViewCount(String boardNo);
 	

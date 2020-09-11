@@ -18,6 +18,7 @@
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 		<result property="boardImg" column="BOARD_IMG" />
 		<result property="memberPhoto" column="MEMBER_PHOTO" />
+		<result property="declarationNo" column="DECLARATION_NO" />
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -47,10 +48,19 @@
 	</select>
 	
 	<!-- 상세 게시물 조회 -->
-	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
-		SELECT * FROM BOARD
-		JOIN MEMBER USING (MEMBER_NO)
-		WHERE BOARD_NO=#{boardNo}
+	<select id="selectOne" parameterType="hashmap" resultMap="boardResultSet">
+		SELECT A.*
+			<if test="memberNo != null">
+		     , C.DECLARATION_NO
+		    </if> 
+		  FROM BOARD A
+		  JOIN MEMBER B ON (A.MEMBER_NO = B.MEMBER_NO)
+		  <if test="memberNo != null">
+		  LEFT OUTER JOIN DECLARATION C ON (C.DECLARATION_N_NO = A.BOARD_NO 
+                                        AND C.DECLARATION_C_NO = '2' 
+                                        AND C.MEMBER_NO = #{memberNo})
+         </if>                               
+		 WHERE A.BOARD_NO=#{boardNo}
 	</select>
 	
 	<!-- 조회수 올리기 -->
