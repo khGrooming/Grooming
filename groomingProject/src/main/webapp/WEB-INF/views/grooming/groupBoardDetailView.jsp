@@ -161,9 +161,17 @@
 								<tr>
 									<th>첨부파일</th>
 									<td style="text-align:center;">
-									<a href="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" download="${gboard.gBoardImg}">
-									<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}"><br>
-									</a></td>
+										<c:if test="${gboard.gBoardImg ne null}">
+											<a href="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" download="${gboard.gBoardImg}">
+											<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" ><br></a>
+										</c:if>
+										<c:if test="${gboard.gBoardImg eq null}">
+											<a href="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" download="${gboard.gBoardImg}">
+											<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" hidden><br></a>
+										</c:if>
+										
+										
+									</td>
 								</tr>
 
                         </table>
