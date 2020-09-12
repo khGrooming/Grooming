@@ -56,7 +56,7 @@
       <jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
-        <section >
+        <section style="margin-bottom:20px;">
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class="container" >

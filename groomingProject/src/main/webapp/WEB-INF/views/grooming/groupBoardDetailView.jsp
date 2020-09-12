@@ -77,7 +77,7 @@
 
     <!-- 섹션 시작 -->
     <!-- 메인에 들어갈 내용용 -->
-    <section >
+    <section style="margin-bottom:20px;">
 
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class="container">
