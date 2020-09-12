@@ -104,7 +104,7 @@
 	                         </tr>
 	                     <c:if test="${!empty mentoList}">
 	                     	<c:forEach var="mento" varStatus="i" items="${mNo}">
-	                     		<c:if test="${!empty mNo.sanctions}">
+	                     		<c:if test="${mento.sanctions ne 0}">
 		                     		<tr style="background:grey; opacity:0.7">
 		                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>
@@ -159,7 +159,7 @@
 			                         	<td><button id="metoManageBtn" onclick="mentoManage(${i.index});">관리</button></td>
 									</tr>
 	                     		</c:if>
-	                     		<c:if test="${empty mNo.sanctions}">
+	                     		<c:if test="${mento.sanctions eq 0}">
 		                     		<tr>
 		                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>

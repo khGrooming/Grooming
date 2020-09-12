@@ -113,7 +113,7 @@
 	</insert>
 	
 	<select id="selectNo" parameterType="map" resultMap="memberViewResultSet">
-		SELECT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, SANCTIONS
+		SELECT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, NVL(SANCTIONS,0) sanctions
 		FROM MEMBER_MANAGE M
 		RIGHT JOIN MENTOR T ON (M.MEMBER_NO = T.MEMBER_NO)
 		<where>
@@ -123,7 +123,6 @@
 			<if test="kind == 2">
 				T.MENTOR_PASS = 'C'
 			</if>
-			AND SANCTIONS IS NOT NULL
 		</where>
 	</select>
 	

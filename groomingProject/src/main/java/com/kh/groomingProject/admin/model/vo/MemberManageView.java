@@ -12,7 +12,7 @@ public class MemberManageView implements Serializable {
 	private String memberNickname;
 	private String memberName;
 	private String memberPhone;
-	private String sanctions;
+	private int sanctions;
 	private int point;
 	private int dCount;
 	private int totalCount;
@@ -21,7 +21,7 @@ public class MemberManageView implements Serializable {
 	}
 	
 	public MemberManageView(String memberNo, String memberEmail, String memberNickname, String memberName,
-			String memberPhone, String sanctions, int point, int dCount, int totalCount) {
+			String memberPhone, int sanctions, int point, int dCount, int totalCount) {
 		this.memberNo = memberNo;
 		this.memberEmail = memberEmail;
 		this.memberNickname = memberNickname;
@@ -63,10 +63,10 @@ public class MemberManageView implements Serializable {
 	public void setMemberPhone(String memberPhone) {
 		this.memberPhone = memberPhone;
 	}
-	public String getSanctions() {
+	public int getSanctions() {
 		return sanctions;
 	}
-	public void setSanctions(String sanctions) {
+	public void setSanctions(int sanctions) {
 		this.sanctions = sanctions;
 	}
 	public int getPoint() {
