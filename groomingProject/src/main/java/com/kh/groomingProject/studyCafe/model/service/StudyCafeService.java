@@ -3,6 +3,7 @@ package com.kh.groomingProject.studyCafe.model.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
@@ -15,7 +16,7 @@ public interface StudyCafeService {
 
 	ArrayList<StudyCafe> selectCafeLocalList(String name);
 
-	ArrayList<CafeInfo> selectCafeList();
+	ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi);
 
 	ArrayList<CafeInfo> selectCafeInfo(CafeInfo cafe);
 
@@ -34,5 +35,7 @@ public interface StudyCafeService {
 	int checkPoint(Map rinfo);
 
 	int pointCalculation(Map rinfo);
+
+	int selectcafeCount();
 
 }

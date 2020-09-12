@@ -3,10 +3,12 @@ package com.kh.groomingProject.studyCafe.model.dao;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
 import com.kh.groomingProject.studyCafe.model.vo.Reservation;
@@ -29,9 +31,11 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
 	}
 
-	public ArrayList<CafeInfo> selectCafeList() {
-
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList");
+	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList", null, rowBounds);
 	}
 
 	public ArrayList<CafeInfo> selectCafeInto(CafeInfo cafe) {
@@ -77,5 +81,11 @@ public class StudyCafeDao {
 		
 		return sqlSessionTemplate.insert("cafeMapper.pointCalculation", rinfo);
 	}
+
+	public int studyCafeCount() {
+
+		return sqlSessionTemplate.selectOne("cafeMapper.studyCafeCount");
+	}
+
 
 }

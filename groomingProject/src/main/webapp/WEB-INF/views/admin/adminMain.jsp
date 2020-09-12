@@ -39,9 +39,14 @@
 	<jsp:include page="../common/mainNavigationBar.jsp"/>
     <section>
         <br><br>
-        <div class="container col-sm-3">
+        <h1 align="center">관리자 페이지</h1>
+        <br><br>
+        <div class="container-fluid">
+			<div class="row">
+        <div class="col-sm-3">
             <br><br>
             <div class="col-sm-3"></div>
+            	<div class="container col-sm-3"></div>
                 <div class="sideMenu col-sm-7">
                     <div class="admin"><a href="adminMain.do">통계</a></div>
                      <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -50,14 +55,19 @@
                      <div class="admin"><a href="cafeManage.do">카페 관리</a></div>
                 </div>
          </div>
-         <div class="container col-sm-8">
-            <h1 align="center">관리자 페이지</h1>
+         <div class="col-sm-8">
+            
             
             <jsp:useBean id="today" class="java.util.Date" />
             <fmt:formatDate var="day" value="${today}" pattern='yyyy-MM-dd'/>
 			
             <div class="statistics visit">
-                <p align="center"><b>방문자 수</b></p>
+                <p align="center"><b>포인트 충전</b></p>
+                <c:forEach var="point" items="${point}">
+                	<c:if test="${point.lastDay eq day}">
+                		<a onclick="getpoint"><h1 align="center">${point.count}</h1></a>
+                	</c:if>
+                </c:forEach>
             </div>
             <div class="statistics user">
                 <p align="center"><b>회원가입 수</b></p>
@@ -92,6 +102,7 @@
             </div>
             <br><br>
          </div>
+         </div></div>
          <br><br>
 
     </section>
@@ -142,6 +153,19 @@
 	    	        data:[
 	    	        	<c:forEach var="mlist" varStatus="i" items="${mlist}">
 	    	        		${mlist.count},
+			            </c:forEach>
+	    	        ]
+	    		},{
+	    			label: "포인트 충전",
+	    			fillColor: "rgba(0,255,255,0.2)",
+	    	        strokeColor: "rgba(0,255,255,0.2)",
+	    	        pointColor: "rgba(0,255,255,0.2)",
+	    	        pointStrokeColor: "#fff",
+	    	        pointHighlightFill: "#fff",
+	    	        pointHighlightStroke: "rgba(0,255,255,0.2)",
+	    	        data:[
+	    	        	<c:forEach var="point" varStatus="i" items="${point}">
+	    	        		${point.count},
 			            </c:forEach>
 	    	        ]
 	    		}]
