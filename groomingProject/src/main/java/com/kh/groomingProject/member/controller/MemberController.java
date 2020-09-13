@@ -461,7 +461,7 @@ public class MemberController {
 
 	}
 
-	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
+	// 회원정보 찾기 : 이메일
 	@RequestMapping("findEmail.do")
 	@ResponseBody
 	public String findEmail(Member m) {
@@ -519,7 +519,7 @@ public class MemberController {
 
 	}
 
-	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
+	// 회원정보 찾기 : 인증번호 저장 & 전송
 	@RequestMapping("sendCertiEmail.do")
 	@ResponseBody
 	public String sendCertiMail(Member m) {
