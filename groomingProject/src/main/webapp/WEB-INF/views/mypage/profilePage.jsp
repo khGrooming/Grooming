@@ -429,7 +429,7 @@ border-radius: 20px;
 				<span>&nbsp;&nbsp;</span> <span style="font-size: 15px; color: darkgray">Lv.${profileInfo.lvl }</span>
 			</div>
 			<div style="width: 100%; height:100px;white-space: normal; font-size:14px; font-weight: 200; text-align: center;">
-			<c:if test="${profileInfo.memberMemo ne 'NULL' }">${profileInfo.memberMemo}</c:if>
+			<c:if test="${profileInfo.memberMemo ne 'NULL' }"><pre>${profileInfo.memberMemo}</pre></c:if>
 			</div>
 			<br>
 			<br>

@@ -236,7 +236,7 @@
 <jsp:include page="./mypageinfo.jsp" />
 <div class="content-op">
 <h3>개설한 그룹${g.groomingImg }</h3><br>
-<p>작성한 게시글로 이동합니다</p>
+<p>작성한 그룹 만들기 게시글로 이동합니다</p>
 
 <c:if test="${listCount ne 0 }">
 	<div class="cards_bundle row">
