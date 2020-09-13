@@ -121,8 +121,7 @@ body{
 							<td><h3>${grooming.groomingTitle }</h3></td>
 						</tr>
 						<tr>
-							<td><span>모집 기간 : </span><span>${grooming.groomingSd }
-									~ ${grooming.groomingEd }</span></td>
+							<td><span>모집 기간 : </span><span>${grooming.groomingSd } ~ ${grooming.groomingEd }</span></td>
 						</tr>
 
 					</table>
