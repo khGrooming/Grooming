@@ -37,6 +37,11 @@ public interface CommunityService {
 
 	int boardGcount(String boardNo);
 
+	int getCommunityFBSearchCount(String communitySearch);
+
+	ArrayList<Board> getCommunityFBSearch(CommunityPageInfo fpi, String communitySearch);
+
+
 
 	
 

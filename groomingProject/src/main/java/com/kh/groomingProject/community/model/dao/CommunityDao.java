@@ -109,6 +109,18 @@ public class CommunityDao {
 		return sqlSessionTemplate.update("communityMapper.boardGcount", boardNo);
 	}
 
+	public int getCommunityFBSearchCount(String communitySearch) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("communityMapper.getCommunityFBSearchCount", communitySearch);
+	}
+
+	public ArrayList<Board> getCommunityFBSearch(CommunityPageInfo fpi, String communitySearch) {
+		int offset = (fpi.getCurrentPage() -1)*fpi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, fpi.getBoardLimit());
+
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.getCommunityFBSearch", communitySearch, rowBounds);
+	}
+
 
 
 

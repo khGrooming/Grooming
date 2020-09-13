@@ -370,7 +370,41 @@ public class CommunityController {
 		}
 	}
 
+	// 검색
+	@RequestMapping("communityFBSearch.do")
+	public ModelAndView communityFBSearch(ModelAndView mav, String communitySearch
+			, @RequestParam(value="page", required=false) Integer page)
+			throws JsonIOException, IOException {
+		System.out.println(" 검색 " + communitySearch);
 		
+		int listCount4F = cService.getCommunityFBSearchCount(communitySearch); 	// 검색 게시글 갯수
+		
+		System.out.println(" 검색 페이지 " + listCount4F);
+		
+		// 페이지 네이션 구간
+		int fcp = 1;	// qna 게시판 글 현재 페이지
+		
+		if(page == null) {
+			page = 1;
+		}else {
+			fcp = page;
+		}
+		
+		CommunityPageInfo fpi = getPageInfo(fcp, listCount4F);	
+		
+		// 게시글 가져오기 
+		ArrayList<Board> flist = cService.getCommunityFBSearch(fpi, communitySearch);
+		
+		System.out.println("검색해온 blist " + flist);
+		
+		mav.addObject("flist", flist);
+		mav.addObject("fpi", fpi);
+		mav.addObject("communitySearch", communitySearch);
 
+		mav.setViewName("community/communityFBsearch");
+		
+		return mav;
+
+	}
 
 }
