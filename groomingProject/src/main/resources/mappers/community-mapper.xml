@@ -44,7 +44,7 @@
 				AND B_CATEGORY_NO=#{value}
 			</if>
 		</where>
-        ORDER BY BOARD_NO DESC
+        ORDER BY BOARD_CREATE_DATE DESC
 	</select>
 	
 	<!-- 상세 게시물 조회 -->
@@ -175,13 +175,6 @@
 		]]>
 	</select>
 	
-	<!-- 좋아요 -->
-	<update id="boardGcount" parameterType="string">
-		UPDATE BOARD
-		SET BOARD_GCOUNT = BOARD_GCOUNT + 1
-		WHERE BOARD_NO=#{boardNo} 
-	</update>
-	
 	<update id="deleteBoardGcount" parameterType="string">
 		UPDATE BOARD
 		SET BOARD_GCOUNT = BOARD_GCOUNT - 1
@@ -194,12 +187,6 @@
         FROM BOARD
         WHERE B_CATEGORY_NO='BC00002' AND BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
 	</select>
-	<!-- 태그 -->
-<!-- 	    SELECT *
-        FROM BOARD B
-        JOIN HASHTAG H ON (B.BOARD_NO = H.BOARD_NO)
-        JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
-        AND TAG_NAME LIKE '%졸려%' -->
     
 	
 

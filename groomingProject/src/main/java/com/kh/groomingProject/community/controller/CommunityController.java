@@ -343,20 +343,19 @@ public class CommunityController {
 		gson.toJson(blist, response.getWriter());
 	}
 	
-	// 좋아요
-	@RequestMapping("boardGcount.do")
-	public String boardGcountInsert(HttpServletRequest request, String boardNo, Model model) {
-		Member member = (Member)request.getSession().getAttribute("loginUser");
-		
-		int result = cService.boardGcount(boardNo);
-		System.out.println("좋아요 눌렀으면 " + result);
-		
-		if(result > 0) {
-			return "redirect:communityStudyConfirm?boardNo="+boardNo;
-		}else {
-			throw new CommunityException("좋아요 실패!");
-		}
-	}
+	/*
+	 * // 좋아요
+	 * 
+	 * @RequestMapping("boardGcount.do") public String
+	 * boardGcountInsert(HttpServletRequest request, String boardNo, Model model) {
+	 * Member member = (Member)request.getSession().getAttribute("loginUser");
+	 * 
+	 * int result = cService.boardGcount(boardNo); System.out.println("좋아요 눌렀으면 " +
+	 * result);
+	 * 
+	 * if(result > 0) { return "redirect:communityStudyConfirm?boardNo="+boardNo;
+	 * }else { throw new CommunityException("좋아요 실패!"); } }
+	 */
 	
 	// 신고하기
 	@RequestMapping(value="declareB.do", method=RequestMethod.POST)

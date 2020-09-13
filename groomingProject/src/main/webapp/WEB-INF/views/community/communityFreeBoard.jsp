@@ -153,7 +153,6 @@
 						dataType:"json",
 						
 						success:function(data) {
-							debugger;
 							$('#searchTbody').html("");
 							for(var i = 0; i < data.length; i++){
 							$('#searchTbody').append('<tr>' + 
