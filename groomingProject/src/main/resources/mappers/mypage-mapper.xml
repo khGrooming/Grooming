@@ -421,5 +421,11 @@
 	    WHERE MEMBER_NO=#{mNo}  AND REPLY_STATUS='Y'
 	</select>
 	
+	<select id="selectReportInfo" parameterType="MemberReport" resultMap="MemberReportSet">
+		SELECT *
+		FROM DECLARATION
+		WHERE MEMBER_NO=#{memberNo} AND DECLARATION_C_NO='1' AND DECLARATION_N_NO = #{declarationNNo} AND DECLARATION_CHECK='N'
+	
+	</select>
 
 </mapper>
