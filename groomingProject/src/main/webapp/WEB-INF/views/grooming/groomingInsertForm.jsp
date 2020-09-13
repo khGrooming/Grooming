@@ -78,7 +78,7 @@ input {
 }
 
 section {
-	margin-bottom: 50px;
+	margin-bottom: 100px;
 }
 
 .study tbody tr td {
@@ -233,7 +233,9 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 <body>
 
+	<header>
 		<jsp:include page="../common/mainNavigationBar.jsp" />
+	</header>
 
 
 	<section>
@@ -265,10 +267,17 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 								</tr>
 								<tr>
-									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<label><input type="radio" name="groomingType" id="m"
-											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; <label><input
-											type="radio" name="groomingType" value="호스트" id="h">호스트 그룹</label></td>
+									<td>
+										<label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<c:if test="${m ne null }">
+											<label><input type="radio" name="groomingType" id="m"value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label><input type="radio" name="groomingType" value="호스트" id="h">호스트 그룹</label>
+										</c:if>
+										<c:if test="${m eq null }">
+											<label><input type="radio" name="groomingType" id="m"value="멘토" disabled>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트 그룹</label>
+										</c:if>
+									</td>
 								</tr>
 
 								<tr>
@@ -315,7 +324,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									<td><span>해시 태그</span><br> <input type="text"
 										name="tagName" value="" placeholder="Tags,"
 										data-role="tagsinput" class="form-control" id="tagName"
-										style="display: none;" required> <small><span
+										required> <small><span
 											style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span> </small></td>
 									</td>
 								</tr>
@@ -364,16 +373,25 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	
 		 <script>
 			$(function(){
-					var inputText = $('input[type="text"]').val();
-					var inputRadio = $('input[type="radio"]').val();
-					var inputNumber = $('input[type="number"]').val();
-					var inputFile = $('input[type="file"]').val();
-					var textarea = $("textarea").val();
+					var tagName = $("#tagName").text();
+					$(document).on("click","#insert",function(){
+						
+						
+							var result= confirm("등록하시겠습니까?");
+							if(result){
+								if(tagName == ""){
+									console.log("모든값을 작성해주세요!");
+								}else{
+									$("form").submit();
+									
+								}
+							}else{
+								event.preventDefault();
+							}
+						
 					
-				/* $("#insert").on("click",function(e){
-					alert();
-					e.preventDefault();
-				}) */
+					
+				})
 			})
 		
 		</script> 
@@ -506,7 +524,6 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 					if ($(this).val() == 'x') {
 						console.log("예치금 없앰");
-						
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {
@@ -717,7 +734,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 	</section>
 
 
-	<jsp:include page="../common/footer.jsp" />
+	<footer><jsp:include page="../common/footer.jsp" />
+	</footer>
 
 
 	<!-- Optional JavaScript -->

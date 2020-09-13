@@ -131,6 +131,13 @@
 			<result property="pointList" column="POINT_LIST" />	
 			<result property="pointDate" column="POINT_DATE" />	
 	</resultMap>
+	
+	<resultMap type="Mentor" id="MentorResultSet">
+			<id property="mentorNo" column="MENTOR_NO"/>
+			<result property="memberNo" column="MEMBER_NO" />	
+			<result property="pass" column="MENTOR_PASS" />	
+	</resultMap>
+	
 <!--  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING
@@ -545,13 +552,13 @@
  	</select>
  	
  	<select id="selectGroupBoardList" parameterType="map" resultMap="GroupBoardResultSet">
- 	   SELECT GB.*, M.MEMBER_NICKNAME
+ 	  SELECT GB.*, M.MEMBER_NICKNAME
        FROM GBOARD GB
        JOIN GROMMING_MEMBER GM ON GB.GROOMING_MEMBER_NO = GM.G_MEMBER_NO
        JOIN GROOMING G ON G.GROOMING_NO = GM.GROOMING_NO
        JOIN MEMBER M ON M.MEMBER_NO = GM.MEMBER_NO
        WHERE GM.GROOMING_NO=#{groomingNo}
-       ORDER BY G_BOARD_CATEGORY,G_BOARD_NO DESC
+       ORDER BY G_BOARD_CATEGORY,G_BOARD_CREATE_DATE DESC
  	
  	
  	
@@ -725,26 +732,29 @@
 		FROM G_CHECK
 		WHERE GROOMING_NO=#{groomingNo} AND G_CHECK_DATE = #{gCheckDate}
  	</select>
+ 							  
+
+	
  	
 	<select id="groomingSearch" parameterType="GroomingSearch" resultMap="groomingMainResultSet">
 		<![CDATA[
 		SELECT 
-			G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
-			, GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GD.D_DAY, GT.TAG_NAME, G.GROOMING_PARTICIPANTS, GC.GMEMBER_COUNT , G.GROOMING_COUNT
 		FROM GROOMING G
 		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
-			FROM GROOMING) GD 
-			ON(G.GROOMING_NO = GD.GROOMING_NO)
-		JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
-			ON(G.MEMBER_NO = M.MEMBER_NO)
+		        FROM GROOMING) GD 
+		    ON(G.GROOMING_NO = GD.GROOMING_NO)
+        JOIN (SELECT MEMBER_NICKNAME, MEMBER_NO FROM MEMBER) M
+		    ON(G.MEMBER_NO = M.MEMBER_NO)
 		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
-				FROM GTAG GT
-				JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
-				GROUP BY GROOMING_NO) GT
-			ON(G.GROOMING_NO = GT.GROOMING_NO)
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)
 		LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
-			FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
-			ON(G.GROOMING_NO = GC.GROOMING_NO)
+		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
 		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
 		]]>
 		<choose>
@@ -758,8 +768,8 @@
 				AND GROOMING_CONTENT LIKE '%' || #{keyword} || '%'
 		    </otherwise>
 		  </choose>
+		  	
 	</select>
-
  	<update id="updateCheck" parameterType="GCheck">
  		UPDATE G_CHECK
 		SET G_CHECK = #{gCheckStatus}
@@ -791,7 +801,7 @@
 		        FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
 		    ON(G.GROOMING_NO = GC.GROOMING_NO)
 		WHERE G.GROOMING_STATUS = 'Y' AND GD.D_DAY >0
-		
+		ORDER BY G.GROOMING_CREATE_DATE DESC
 		]]>
 	</select>
 	
@@ -907,5 +917,13 @@
  		,'예치금'
  		,SYSDATE) 	 	
  	</insert>
+ 	
+ 	<select id="selectMentor" parameterType="string" resultMap="MentorResultSet">
+	 	SELECT *
+		FROM MENTOR
+		WHERE MEMBER_NO = #{memberNo} AND MENTOR_PASS='Y'
+ 	
+ 	</select>
+ 	
  	
 </mapper>

@@ -21,7 +21,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
-
     <style>
         /* div의 크기에 맞춤 */
         section img {
@@ -51,6 +50,7 @@
 	   }
 	   
 	   .filebox input[type="file"] {
+
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -216,7 +216,6 @@
             <input type="hidden" value="${g.gBoardContent }" id="textareaContent">
             </div>
         </section>
-
 
 
 
