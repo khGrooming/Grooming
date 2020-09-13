@@ -447,15 +447,4 @@ WHERE MEMBER_NO =#{mNo}
 	
 	</select>
 
-	<select id="selectMyPageApplicantV2" parameterType="string" resultMap="MyPageApplicantV2Set">
-	SELECT GA.GROOMING_APPLY_NO, GA.GROOMING_NO, G.GROOMING_TYPE,G.GROOMING_IMG, G.GROOMING_TITLE,G.GROOMING_INTRODUCE, G.DEPOSIT_MONEY,GROOMING_APPLY_CONTENT, GROOMING_APPLY_STATUS
-	FROM GROOMING_APPLICANT GA
-	JOIN GROOMING G ON (GA.GROOMING_NO = G.GROOMING_NO)
-	WHERE GA.MEMBER_NO =#{mNo}
-		
-	</select>
-	
-	<delete id="gApplicantDelete" parameterType="string">
-		DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gApplicantNo}
-	</delete>
 </mapper>
