@@ -194,6 +194,53 @@
 						contentType : false,
 						success : function(data) {
 							location.reload();
+							if ("${schoolList[0]}" == "") {
+								$("#schoolApply").	text("인증하기").css("color", "red");
+								
+
+							} else {
+								if ("${schoolconfirm[0]}" == "N") {
+									$("#schoolApply").text("인증대기").css("color", "blue");
+									$(".schoolinput").css("display", "none");
+									
+
+								} else {
+
+									$("#schoolApply").text("인증완료").css("color", "green");
+									$(".schoolinput").css("display", "none");
+								}
+							}
+							if ("${certificateList[0]}" == "") {
+								$("#certificateApply").text("인증하기").css("color", "red");
+
+							} else {
+								if ("${certificateconfirm[0]}" == "N") {
+									$("#certificateApply").text("인증대기").css("color","blue");
+									$(".certificateinput").css("display", "none");
+
+								} else {
+
+									$("#certificateApply").text("인증완료").css("color","green");
+									$(".certificateinput").css("display", "none");
+								}
+							}
+							if ("${careerList[0]}" == "") {
+								$("#careerApply").text("인증하기").css("color", "red");
+							
+								
+							} else {
+								if ("${careerconfirm[0]}" == "N") {
+									$("#careerApply").text("인증대기").css("color", "blue");
+									$(".careerinput").css("display", "none");
+
+
+								} else {
+
+									$("#careerApply").text("인증완료").css("color", "green");
+									$(".careerinput").css("display", "none");
+								}
+
+							}
 						},
 						error : function(data) {
 							alert("code:" + request.status + "\n"
