@@ -25,6 +25,8 @@ public class Board implements Serializable{
 	private String memberNickName;		// 멤버 닉네임
 	private String boardImg;			// 게시판 이미지 
 	private String memberPhoto;		// 멤버 프로필 사진
+	private String declarationNo; // 신고번호
+	
 	
 	public Board() {
 	}
@@ -48,6 +50,15 @@ public class Board implements Serializable{
 		this.memberNickName = memberNickName;
 		this.boardImg = boardImg;
 		this.memberPhoto = memberPhoto;
+	}
+
+	
+	public String getDeclarationNo() {
+		return declarationNo;
+	}
+
+	public void setDeclarationNo(String declarationNo) {
+		this.declarationNo = declarationNo;
 	}
 
 	public String getBoardNo() {
@@ -181,8 +192,10 @@ public class Board implements Serializable{
 				+ ", boardModifyDate=" + boardModifyDate + ", boardVcount=" + boardVcount + ", boardGcount="
 				+ boardGcount + ", boardStatus=" + boardStatus + ", boardReplyStatus=" + boardReplyStatus
 				+ ", boardSelecStatus=" + boardSelecStatus + ", memberNickName=" + memberNickName + ", boardImg="
-				+ boardImg + ", memberPhoto=" + memberPhoto + "]";
+				+ boardImg + ", memberPhoto=" + memberPhoto + ", declarationNo=" + declarationNo + "]";
 	}
+
+	
 
 	
 	

@@ -32,9 +32,10 @@
 	rel="stylesheet">
 <title>Hello, world!</title>
 <style>
-section img {
-	width: 100%;
-	height: 100%;
+section img{
+width:100%;
+height:100%;
+
 }
 /*폰트 설정 */
 @font-face {
@@ -49,7 +50,7 @@ section img {
 	font-family: "TmoneyRoundWindExtraBold";
 }
 .groomingImage {
-width: 450px;
+	width: 450px;
 	height: 450px;
 	background-size: cover;
 	border: 1px solid lightgray;
@@ -97,6 +98,23 @@ body{
 
 .Gbtn {
 	border-radius:10px;
+
+}
+#contentPre, #ac{
+
+font-family: 'TmoneyRoundWindExtraBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+
+}
+
+#g,#m{
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <body>
@@ -119,13 +137,12 @@ body{
 							<td><h3>${grooming.groomingTitle }</h3></td>
 						</tr>
 						<tr>
-							<td><span>모집 기간 : </span><span>${grooming.groomingSd }
-									~ ${grooming.groomingEd }</span></td>
+							<td><span>모집 기간 : </span><span>${grooming.groomingSd } ~ ${grooming.groomingEd }</span></td>
 						</tr>
 
 					</table>
 				</div>
-				<div style="text-align: right; margin-left: 70px; margin-top: 30px;">
+				<div style="text-align: right; margin-left: 70px; margin-top: 30px;"">
 					<table>
 						<tr>
 							<td align="right">
@@ -140,7 +157,7 @@ body{
 							</td>
 						</tr>
 						<tr>
-							<td style="text-align:right;"> 
+							<td > 
 							
 									<c:if test="${!empty heart }">
 										<i id="heart" class="fas fa-bookmark"></i>
@@ -148,14 +165,18 @@ body{
 									<c:if test="${empty heart }">
 										<i id="nheart" class="far fa-bookmark"></i>
 									</c:if>
+								
 								<c:if test="${!empty loginUser }">
 									<div style="height: 22px; float: right;"> 
 										<img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply'data-toggle="modal" data-target="#declareForm"   >
 									</div>
 								</c:if>
 								<c:if test="${empty loginUser }">
-									<button data-toggle='modal' data-target='#declareForm' id='apply' disabled>신고</button>
-								</c:if>
+		                           <div  style="height: 22px; width: 70px; float: right; margin-left: 10px;"> 
+		                              <img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply' data-toggle="modal" data-target="#declareForm"  disabled >
+		                           </div>
+		                        </c:if>
+								
 								
 								<!-- 신청폼 모달 -->
 								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
@@ -213,7 +234,7 @@ body{
 							<tr>
 								<td>
 									<div class="groomingImage">
-										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}">
+										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}" id="g">
 									</div>
 								</td>
 							</tr>
@@ -231,7 +252,7 @@ body{
 								<td style="padding-right: 20px;">
 									<div class="pimg">
 										<img
-											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}">
+											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}" id="m">
 									</div>
 								</td>
 								<td>호스트 : <span>${member.memberNickName }</span><br> 태그:<c:forEach
@@ -272,7 +293,7 @@ body{
 
 						<tr>
 							<td>
-								<p>${grooming.groomingContent }</p>
+								<pre id="contentPre">${grooming.groomingContent }</pre>
 							</td>
 						</tr>
 					</tbody>
@@ -289,7 +310,7 @@ body{
 					<button data-toggle="modal" id="applicantList" class="btn-3d green">신청자 리스트</button><!-- data-target="#applicant" -->
 					<!-- 리스트 모달 -->
 					<div class="modal fade" id="applicant" tabindex="-1" role="dialog"
-						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static">
+						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static" style="margin-right:auto; margin-left:auto;">
 
 						<div class="modal-dialog">
 
@@ -673,6 +694,7 @@ body{
                if(memberNo == gmemberNo){
                   alert("자신의 글은 신고할 수 없습니다.");
                   $(this).attr("disabled",true)
+                  event.stopImmediatePropagation();
                }
                
                if((memberNo == dmemberNo) && (groomingNo == dgroomingNo)){
@@ -846,7 +868,7 @@ body{
                var $h5;
                var $button2;
                var $span1;
-               
+               var $pre;
                var $div6;
                var $td5;
                var $button3;
@@ -871,8 +893,8 @@ body{
                       $button2 = $("<button type='button' class='close'>");
                       $span1 = $("<span aria-hidden='true'>").text("X");
                      
-                      $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
-                      
+                      $div6 = $("<div class='modal-body'>");
+                      $pre = $("<pre id='ac'>").text(data[i].groomingAC);
                       $td4 = $("<td>");
                       $button3 = $("<button class='accept'>").text("수락");
                       $button4 = $("<button class='reject'>").text("거절");
@@ -881,7 +903,7 @@ body{
                       $div1.append($img1);
                       $td3.append($button1);
                       $td3.append($div2);
-                      
+                      $div6.append($pre);
                       $div2.append($div3);
                       $div3.append($div4);
                       $div4.append($div5);
@@ -981,7 +1003,7 @@ body{
                   
                   $br = $("<br>");
                   $h4 = $("<h4>").text(data.groomingIntroduce);
-                  $p = $("<p>").text(data.groomingContent);
+                  $p = $("<pre id='contentPre'>").text(data.groomingContent);
                   
                   $td1.append($span1);
                   $td1.append($span2);

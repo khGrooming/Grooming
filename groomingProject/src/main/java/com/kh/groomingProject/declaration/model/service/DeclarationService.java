@@ -12,4 +12,6 @@ public interface DeclarationService {
 
 	Declaration selectGroomingDeclare(Map info);
 
+	int declareB(Declaration d);
+
 }

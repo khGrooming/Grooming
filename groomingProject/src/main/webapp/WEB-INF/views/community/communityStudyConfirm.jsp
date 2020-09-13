@@ -28,6 +28,12 @@
     	border-radius: 50%;
     	border: thin solid lightgrey;
     }
+    .modal {
+    height: 250px;
+    overflow-y: auto;
+    height: 650px;
+    margin-top: 70px;
+}
 	.item-container {display:flex; margin-top:10rem;}
 	.item-card {margin:auto;}
 	#item-card {width:15rem; border-radius:0px; border:none; text-align:center;}
@@ -43,6 +49,7 @@
 	.card-image-zoom:hover img {transform: scale(1.1);}
 	#all-item-order li::hover {font-color:black; !important}
 	#keyword-badge {background-color:#5b89a6;}
+	.item-col {margin-bottom: 1rem;}
 	/* item page end */
 </style>
 <!-- -------------- style 부분------------- -->
@@ -53,100 +60,95 @@
 		
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="Cfilter_1" name="Cfilter" checked><label for="Cfilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Cfilter_2" name="Cfilter"><label for="Cfilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Cfilter_3" name="Cfilter"><label for="Cfilter_3">&nbsp;좋아요 순</label>
 			<c:if test="${!empty loginUser }">
 				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
 						onclick="location.href='communityInsertView.do?bCategoryNo=BC00004'">
 			</c:if>
 		</div>
-		<br>
+		<br><br>
 	<!-- ------------------ 게시판 -------------------------- -->	
 		<div class="container item-container" style="margin-top: 30px;">
+			<div class="row item-row">
 			<c:forEach var="c" items="${clist }">
-				<div class="row item-row">		
 					
-					<input type="hidden" value="">
-					<div class="col-3 col-sm item-col" id="item-col">
-						<div class="card item-card" id="item-card">
-							<input type="hidden" value="">
-							<div class="card-image-zoom">
-								<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..."
-											data-toggle="modal" data-target="#confirmDetailView${c.boardNo}" onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
-							</div>
+				<input type="hidden" value="">
+				<div class="col-3 item-col" id="item-col">
+					<div class="card item-card" id="item-card">
+						<input type="hidden" value="">
+						<div class="card-image-zoom">
+							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..."
+								data-toggle="modal" data-target="#confirmDetailView${c.boardNo}"
+								onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
 						</div>
-					</div>				
-				</div>
+					</div>
 				
-				<!-- Modal 스터디 인증 상세보기 -->
-				<div id="confirmDetailView${c.boardNo}" class="modal fade" role="dialog">
-  					<div class="modal-dialog">
-
-    					<!-- Modal 내용-->
-     					<div class="modal-content">
-      						<div class="modal-header">
-      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="..." onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
-        						&nbsp;&nbsp;<h5>${c.memberNickName }</h5>
-        						<button type="button" class="close" data-dismiss="modal">x</button>
-      						</div>
-      						<div class="modal-body">
-      							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..." onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
-        						<hr>
-        						<p>${c.boardContent }</p>
-      						</div>
-      					
-      						<div class="modal-footer">
-      							<c:url var="communityUpdateView" value="communityUpdateView.do">
-									<c:param name="boardNo" value="${c.boardNo }" />
-									<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
-								</c:url>
-								<c:url var="communityDelete" value="communityDelete.do">
-									<c:param name="boardNo" value="${c.boardNo }" />
-									<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
-								</c:url>
-								<c:if test="${loginUser.memberNo eq c.memberNo }">	
-									<tr>
-										<td colspan="2" align="center">
-											<a href="${communityUpdateView }">수정하기</a>
-										</td>
-										<td colspan="2" align="center">
-											<a href="${communityDelete }">삭제하기</a>
-										</td>
-									</tr>
-								</c:if> 
-      							<p>${c.boardCreateDate }</p> 
-      						
-      							<!-- 좋아요 -->
-<!-- 								<div class="iteminfo-icons" id="iteminfo-icons">
-									<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
-										<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
-											<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
-										</button> -->
-									 
-										<!-- 신고 -->
-										<a href="#declareForm" data-toggle='modal'>
-											<img style="vertical-align: middle;" alt="dep" 
-												src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
-										</a>
-										<input type="hidden" id="declarebtn" data-toggle="modal" href="#">
-									</span>
-					
-									<script>
-										$(function(){			
-											if(0==0){
-												$(".fa-heart").css("color","gray");
-											}else{
-												$(".fa-heart").css("color","pink");
-											}
-										})
-									</script>
-      							</div>
-    						</div>
-  						</div>
-  					</div>
+					<!-- Modal 스터디 인증 상세보기 -->
+					<div id="confirmDetailView${c.boardNo}" class="modal fade" role="dialog">
+	  					<div class="modal-dialog">
+	
+	    					<!-- Modal 내용-->
+	     					<div class="modal-content">
+	      						<div class="modal-header">
+	      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="..."
+	      								onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
+	        						&nbsp;&nbsp;<h5>${c.memberNickName }</h5>
+	        						<button type="button" class="close" data-dismiss="modal">x</button>
+	      						</div>
+	      						<div class="modal-body">
+	      							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..."
+	      								onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
+	        						<hr>
+	        						<p>${c.boardContent }</p>
+	      						</div>
+	      					
+	      						<div class="modal-footer">
+	      							<c:url var="communityUpdateView" value="communityUpdateView.do">
+										<c:param name="boardNo" value="${c.boardNo }" />
+										<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
+									</c:url>
+									<c:url var="communityDelete" value="communityDelete.do">
+										<c:param name="boardNo" value="${c.boardNo }" />
+										<c:param name="bCategoryNo" value="${c.bCategoryNo }" />
+									</c:url>
+									<c:if test="${loginUser.memberNo eq c.memberNo }">	
+										<tr>
+											<td colspan="2" align="center">
+												<a href="${communityUpdateView }">수정하기</a>
+											</td>
+											<td colspan="2" align="center">
+												<a href="${communityDelete }">삭제하기</a>
+											</td>
+										</tr>
+									</c:if> 
+	      							<p>${c.boardCreateDate }</p> 
+	      						
+	      							<!-- 좋아요 -->
+	 								<div class="iteminfo-icons" id="iteminfo-icons">
+										<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
+											<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
+												<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
+											</button> 
+										 
+											<!-- 신고 -->
+											<a href="#declareForm" data-toggle='modal'>
+												<img style="vertical-align: middle;" alt="dep" 
+													src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
+											</a>
+											<input type="hidden" id="declarebtn" data-toggle="modal" href="#">
+										</span>
+						
+										<script>
+											
+	
+										</script>
+	      							</div>
+	    						</div>
+	  						</div>
+	  					</div>
+	  				</div>
   				</div>
-			</c:forEach>
+			</c:forEach>			
+			</div>
 		</div>
 	</div>
 	

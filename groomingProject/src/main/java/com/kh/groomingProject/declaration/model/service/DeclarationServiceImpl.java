@@ -31,4 +31,10 @@ public class DeclarationServiceImpl implements DeclarationService{
 		// TODO Auto-generated method stub
 		return dDao.selectGroomingDeclare(info);
 	}
+
+	@Override
+	public int declareB(Declaration d) {
+		// TODO Auto-generated method stub
+		return dDao.declareB(d);
+	}
 }

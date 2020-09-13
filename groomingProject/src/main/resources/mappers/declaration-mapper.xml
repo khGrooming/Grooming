@@ -26,6 +26,18 @@
 	 			)
   	</insert>
   	
+  	<insert id="declareB" parameterType="Declaration">
+ 		INSERT INTO DECLARATION 
+  		VALUES(
+	 			'DEC' || LPAD(SEQ_BOARD_NO.NEXTVAL,5,0)
+	 			, #{memberNo}
+	 			, '2'
+	 			, #{dnNo}
+	 			, #{dContent}
+	 			, DEFAULT	
+	 	)
+  	</insert>
+  	
   	<select id="selectGroupDeclare" parameterType="map" resultMap="dResultSet">
 	  SELECT * 
       FROM DECLARATION
@@ -43,5 +55,7 @@
   	
   	
   	</select>
+  	
+  	
   
 </mapper>

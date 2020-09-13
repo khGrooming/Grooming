@@ -102,10 +102,12 @@
 
 
             <div style="text-align: right; margin-right: 20px;">
-            <button data-toggle='modal' data-target='#declareForm' id='apply' class="Gbtn">신고</button>
-						
+            <!-- <button data-toggle='modal' data-target='#declareForm' id='apply' class="Gbtn">신고</button> -->
+		
+		             <img src="${contextPath }/resources/views/images/repotBtn.png"  id='apply' data-toggle="modal" data-target="#declareForm" style="width:70px; height:20px;">
+		      
 			<!-- 신청폼 모달 -->
-			<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
+			<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true" style ="margin-top:150px;">
 			
 				<div class="modal-dialog">
 					<c:url var="declareG" value="declareG.do">
@@ -167,7 +169,7 @@
 										</c:if>
 										<c:if test="${gboard.gBoardImg eq null}">
 											<a href="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" download="${gboard.gBoardImg}">
-											<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" hidden><br></a>
+											<img src="${pageContext.servletContext.contextPath }/resources/upGroomingFiles/${gboard.gBoardImg}" onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'"><br></a>
 										</c:if>
 										
 										
@@ -336,11 +338,13 @@
 				if(memberNo == gmemberNo){
 					alert("자신의 글은 신고할 수 없습니다.");
 					$(this).attr("disabled",true)
+					 event.stopImmediatePropagation();
 				}
 				
 				if((memberNo == dmemberNo) && (groupBNo == gBoardNo)){
 					alert("이미 신고하신 게시글 입니다.!");
 					$(this).attr("disabled",true)
+					 event.stopImmediatePropagation();
 				}
 				
 				

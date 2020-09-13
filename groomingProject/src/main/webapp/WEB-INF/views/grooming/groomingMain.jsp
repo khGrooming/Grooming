@@ -358,7 +358,7 @@
 					<!-- 그루밍 카드 -->
 					<div id="allGroooming_bundle" class="cards_bundle row">
 
-						<c:forEach var="g" items="${glist }">
+						<c:forEach var="g" items="${gAlist }">
 
 							<div class="card_container col-lg-3">
 								<input type="hidden" value="${g.groomingNo}"></input>
@@ -480,7 +480,11 @@
 	var page = 1;
 	var pageloading = true;
 
-
+	$(function() {
+		console.log("그루밍 페이지");
+		loadGroomingData();
+	});
+	
 	// 스크롤 로딩
 	window.onscroll = function(e) {
 	    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -494,7 +498,6 @@
 
 	// 그루밍 데이터 가져오기
 	function loadGroomingData() {
-		page++;
 		
 		$.ajax({
 			url:"addAllGroomingList.do",
@@ -509,6 +512,7 @@
 				alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
 			}
 		});
+		page++;
 	}
 
 	// 그루밍 출력

@@ -10,18 +10,10 @@
     	vertical-align: middle;
     	text-align:center;
 	}
-	/* 해시태그 */
-	.tagKind {
-	    color: blue;
-    	padding: 5px;
-    	margin-right: 50px;
-    	margin-left: 30px;
-    	font-size: 13px;
-	}
 </style>
 <!-- ------ 검색 ------- -->
 <style type="text/css">
-form {
+.d1 {
   position: relative;
   width: 300px;
   margin: 0 auto;
@@ -58,23 +50,18 @@ form {
 </head>
 <body>
 	<div class="d1">
-  		<form>
-  			<input type="text" placeholder="제목으로 검색해주세요" name="communitySearch" id="communitySearch">
-  			<button type="submit" name="btnSearch" id="btnSearch"></button>
-  		</form>
+  		<input type="text" placeholder="제목으로 검색해주세요" name="communitySearch" id="communitySearch">
+  		<button name="btnSearch" id="btnSearch"></button>
 	</div>
 	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="Ffilter_1" name="Ffilter" checked><label for="Ffilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Ffilter_2" name="Ffilter"><label for="Ffilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-		
 			<c:if test="${!empty loginUser }">
 				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
 						onclick="location.href='communityInsertView.do?bCategoryNo=BC00002'">
 			</c:if>
 		</div>
-		<br>
+		<br><br>
 	<!-- ------------------ 게시판 -------------------------- -->
 		<div class="container" align="center">
 			<table class="table table-hover table_ra">
@@ -166,7 +153,22 @@ form {
 						dataType:"json",
 						
 						success:function(data) {
-							
+							debugger;
+							$('#searchTbody').html("");
+							for(var i = 0; i < data.length; i++){
+							$('#searchTbody').append('<tr>' + 
+						    						'<td>' + data[i].boardNo  + '</td>' + 
+						   						    '<td>' + '<br>' +
+													' <c:url var="communityDetailView" value="communityDetailView.do">' + 
+													' <c:param name="boardNo" value=" ' + data[i].boardNo + '" /> ' +
+													' </c:url>' +
+													' <a href="communityDetailView.do?boardNo=' + data[i].boardNo + '">' + data[i].boardTitle + '</a>' +
+													' </td>' +
+													'<td>' + data[i].memberNo + '</td>' +
+													'<td>' + data[i].boardVcount  + '</td>' +
+													'<td>' + data[i].boardCreateDate  + '</td>' +
+													'</tr>');
+							}
 						},
 						error : function(request, status, errorData) {
 							alert("error code: " + request.status + "\n"

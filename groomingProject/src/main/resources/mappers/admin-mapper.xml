@@ -425,4 +425,5 @@
 		DELETE FROM CAFEPRICE
 		WHERE C_PRICE_NO = #{cPriceNo}
 	</delete>
+
 </mapper>

@@ -3,6 +3,7 @@ package com.kh.groomingProject.grooming.controller;
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoG;
 import static com.kh.groomingProject.common.GroomingPagination.getPageInfoM;
 import static com.kh.groomingProject.common.GroupPagination.getPageInfo;
+import static com.kh.groomingProject.common.HomePagination.getPageInfo;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +46,9 @@ import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
 import com.kh.groomingProject.grooming.model.vo.Mentor;
+import com.kh.groomingProject.home.model.service.HomeService;
+import com.kh.groomingProject.home.model.vo.HomeGrooming;
+import com.kh.groomingProject.home.model.vo.HomePageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.service.MypageService;
@@ -78,39 +82,34 @@ public class GroomingController {
 		if(page != null) {
 			currentPage = page;
 		}
-		int listCount = gService.getGroomingListCount();
-		int boardLimit = 8;
-		GroomingPageInfo pi = getPageInfoM(currentPage, listCount);
-		
-		ArrayList<Grooming> glist = gService.selectList(pi);
 	
-		System.out.println("나 glist야 " +glist);
-//		int result = 0;
-//		for (int i = 0; i < glist.size(); i++) {
-//
-//			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//			String endDate = sdf.format(glist.get(i).getGroomingEd());
-//			String nowDate = sdf.format(glist.get(i).getGroomingNd());
-//
-//			System.out.println("나 endDate야 " + endDate);
-//			System.out.println("나 nowDate야 " + nowDate);
-//
-//			if (endDate.compareTo(nowDate) < 0) {
-//				String groomingNo = glist.get(i).getGroomingNo();
-//				result = gService.statusUpdate(groomingNo);
-//			}
-//
-//		}
-//		System.out.println("나 result" + result);
-		if (glist != null) {
-			mv.addObject("glist", glist).addObject("pi", pi).setViewName("grooming/groomingMain");
-		} else {
-			throw new GroomingException("리스트 불러오기 실패!");
-		}
+		
+		ArrayList<HomeGrooming> gAList = getAllGroomingList(currentPage);
+		System.out.println("나 gAList야 :" +gAList);
+		mv.addObject("gAList",gAList).setViewName("grooming/groomingMain");
 		return mv;
 	}
 
-// 멘토 필터 적용
+private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
+	
+	
+	
+	int listCount = homeService.getGListCount();
+
+	System.out.println("전체 그루밍 : " + listCount);
+	
+	int boardLimit = 8;
+
+	HomePageInfo pi = getPageInfo(currentPage, listCount, boardLimit);
+
+	ArrayList<HomeGrooming> gAList = homeService.getGroomingList(pi);
+
+	return gAList;
+	
+	
+	}
+
+	// 멘토 필터 적용
 	@RequestMapping("GroomingList.do")
 	public void GroomingList(HttpServletResponse response,@RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException  {
 		int currentPage = 1;

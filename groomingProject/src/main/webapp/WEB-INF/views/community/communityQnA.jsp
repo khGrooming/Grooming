@@ -10,31 +10,55 @@
     	vertical-align: middle;
     	text-align:center;
 	}
-	/* 해시태그 */
-	.tagKind {
-	    color: blue;
-    	padding: 5px;
-    	margin-right: 50px;
-    	margin-left: 30px;
-    	font-size: 13px;
-	}
+</style>
+<!-- ------ 검색 ------- -->
+<style type="text/css">
+.d1 {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+.d1 input {
+  width: 100%;
+  height: 42px;
+  padding-left: 10px;
+  border: 2px solid #7BA7AB;
+  border-radius: 5px;
+  outline: none;
+  background: #F9F0DA;
+  color: #9E9C9C;
+}
+.d1 button {
+  position: absolute; 
+  top: 0;
+  right: 0px;
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: #7BA7AB;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+.d1 button:before {
+  content: "\f002";
+  font-family: FontAwesome;
+  font-size: 16px;
+  color: #F9F0DA;
+}
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
-	<!-- ------------------ 해시태그 검색 -------------------- -->
-		
+	
+	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="Qfilter_1" name="Qfilter"  checked><label for="Qfilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Qfilter_2" name="Qfilter"><label for="Qfilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="Qfilter_4" name="Qfilter"><label for="Qfilter_4">&nbsp;채택순</label>&nbsp;&nbsp;&nbsp;
 			<c:if test="${!empty loginUser }">
 				<input type="button" value="질문하기" class="btn btn-info" style="float: right;"
 						onclick="location.href='communityInsertView.do?bCategoryNo=BC00005'">
 			</c:if>
 		</div>
-		<br>
+		<br><br>
 	<!-- ------------------ 게시판 -------------------------- -->
 		<div class="container" align="center">
 			<table class="table table-hover table_ra">
@@ -52,8 +76,6 @@
 						<tr>
 							<td>${n.boardNo }</td>
 							<td>
-								<a href="#" class="tagKind">#스터디</a>
-								<br>
 								<c:url var="communityDetailView" value="communityDetailView.do">
 									<c:param name="boardNo" value="${n.boardNo }" />
 								</c:url>

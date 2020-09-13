@@ -23,6 +23,7 @@
 
             .groomingInfo{width:70%;border-collapse: collapse;margin-left:20%;}
             .groomingInfo th,td{height:50px;text-align:center;}
+			.groomingInfo tbody tr:hover{background: lightgray;}
             
              /* The Modal (background) */
 	        .modal {
