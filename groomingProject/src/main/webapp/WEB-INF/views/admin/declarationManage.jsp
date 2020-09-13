@@ -90,6 +90,7 @@
 		                        	</c:if>
 	                       		</c:forEach>/
 	                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
+	                       		<input type="hidden" class="memberEmail${i.index}" value="${mList.memberEmail}">
 	                        	<td rowspan="4">${mList.memberEmail}</td>
 	                        	<td rowspan="4">${mList.memberNickname}</td>
 	                        	<td rowspan="4">${mList.memberName}</td>
@@ -241,8 +242,13 @@
 	<script>
 		function sanctionsPlus(i){
 			$("#myModal").css("display","block");
+			
 			$memberNo = $(".memberNo"+i).val();
+			$memberEmail = $(".memberEmail"+i).val();
+			console.log("$memberEmail : "+$memberEmail);
+			
 			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
+			$("#infoCheck").append("<input type='hidden' name='memberEmail' value='"+$memberEmail+"'>");
 		}
 	</script>
 </body>

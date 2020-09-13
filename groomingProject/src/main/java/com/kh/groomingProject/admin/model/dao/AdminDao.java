@@ -218,4 +218,6 @@ public class AdminDao {
 		return sqlSessionTemplate.update("adminMapper.mentoSuccess", memberNo);
 	}
 
+
+
 }
