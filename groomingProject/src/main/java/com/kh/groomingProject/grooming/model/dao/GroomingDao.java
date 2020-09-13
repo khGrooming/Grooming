@@ -391,6 +391,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.addMentorPoint",map2) ;
 	}
+
+	public Mentor selectMentor(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectMentor",memberNo);
+	}
 	
 	
 }

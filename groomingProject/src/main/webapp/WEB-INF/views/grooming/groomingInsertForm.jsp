@@ -389,12 +389,13 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								event.preventDefault();
 							}
 						
+<<<<<<< HEAD
+					
+=======
+>>>>>>> refs/remotes/origin/master
 					
 					
-				/* $("#insert").on("click",function(e){
-					alert();
-					e.preventDefault();
-				}) */
+				})
 			})
 		
 		</script> 

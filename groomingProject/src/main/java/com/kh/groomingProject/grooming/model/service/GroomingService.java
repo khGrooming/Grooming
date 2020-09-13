@@ -155,4 +155,6 @@ public interface GroomingService {
 	String selectMemberNo(String groomingNo);
 
 	int addMentorPoint(Map map2);
+
+	Mentor selectMentor(String memberNo);
 }

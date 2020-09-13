@@ -178,7 +178,7 @@
           
           <!-- 글작성 버튼 -->
            <div class="col-12" align="right">
-             <button type="button"  style="margin-right:10px;" id="ib" onclick="location.href='${gbif}'" >글 작성</button>
+             <button type="button"  style="margin-right:10px; border-radius:10px;" id="ib" onclick="location.href='${gbif}'" >글 작성</button>
           </div>
    
     

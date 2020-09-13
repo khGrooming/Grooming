@@ -385,8 +385,63 @@
 									</tr>
 	                     			</c:if>
 		                         
-	                         </c:forEach>
-						</c:if>
+
+							<c:if test="${empty sNo.sanctions}">
+								<tr>
+			                         	<td><c:out value="${i.current.memberEmail}"/></td>
+			                         	<td><c:out value="${i.current.memberNickname}"/></td>
+			                         	<td><c:out value="${i.current.memberName}"/></td>
+			                         	
+			                         	<td><ul>
+			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
+				                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
+				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
+				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
+					                         	<c:if test="${j.current.specComfirm eq 'Y'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
+				                         		</c:if>
+				                         		<c:if test="${j.current.specComfirm eq 'N'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
+				                         		</c:if>
+				                         	</c:if>
+			                         	</c:forEach>
+			                         	</ul></td>
+			                         	<td><ul>
+			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
+				                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
+				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
+				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
+					                         	<c:if test="${j.current.specComfirm eq 'Y'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
+				                         		</c:if>
+				                         		<c:if test="${j.current.specComfirm eq 'N'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
+				                         		</c:if>
+				                         	</c:if>
+			                         	</c:forEach>
+			                         	</ul></td>
+			                         	<td><ul>
+			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
+				                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
+				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
+				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
+					                         	<c:if test="${j.current.specComfirm eq 'Y'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:green;">${career.specName}</li>
+				                         		</c:if>
+				                         		<c:if test="${j.current.specComfirm eq 'N'}">
+						                         	<li class="hover" onclick="showImg(${j.index});" style="color:red;">${career.specName}</li>
+				                         		</c:if>
+				                         	</c:if>
+			                         	</c:forEach>
+			                         	</ul></td>
+			                         	<td><button id="metoManageBtn">관리</button></td>
+									</tr>
+									</c:if>
+								</c:forEach>
+							</c:if>
 						<c:if test="${empty spareMentoList}">
 							<tr>
 								<td colspan="7">멘토 신청자가 없습니다.</td>

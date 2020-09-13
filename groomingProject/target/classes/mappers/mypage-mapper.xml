@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MyPageMapper">
+
+	<resultMap type="Member" id="MemberSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberEmail" column="MEMBER_EMAIL" />
+		<result property="memberPwd" column="MEMBER_PASSWORD" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+		<result property="memberName" column="MEMBER_NAME" />
+		<result property="memberGender" column="MEMBER_GENDER"/>
+		<result property="memberPhone" column="MEMBER_PHONE" />
+		<result property="lvlNo" column="LVL_NO" />
+		<result property="memberExp" column="MEMBER_EMP" />
+		<result property="memberMemo" column="MEMBER_MEMO" />
+		<result property="memberPhoto" column="MEMBER_PHOTO" />
+		<result property="memberAdmin" column="MEMBER_ADMIN" />
+		<result property="memberStatus" column="MEMBER_STATUS" />
+		<result property="memberJoinDate" column="MEMBER_JOIN_DATE" />
+	</resultMap>
+
+	<resultMap type="ProfileMember" id="ProfileMemberSet">
+		<id property="memberNo" column="MEMBER_NO"/>
+		<result property="memberPhoto" column="MEMBER_PHOTO"/>
+		<result property="memberNickName" column="MEMBER_NICKNAME"/>
+		<result property="lvl" column="LVL_RANK"/>
+		<result property="memberExp" column="MEMBER_EXP"/>
+		<result property="lvlMaxExp" column="LVL_MAX_EXP"/>
+		<result property="memberEmail" column="MEMBER_EMAIL"/>
+		<result property="memberMemo" column="MEMBER_MEMO"/>
+		<result property="nowPoint" column="NOWPOINT"/>
+	</resultMap>
+
+	<resultMap type="Spec" id="SpecSet">
+		<id property="specNo" column="SPEC_NO"/>
+		<result property="specCName" column="SPEC_C_NAME"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="specFileName" column="SPEC_FILENAME"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="specConfirm" column="SPEC_CONFIRM" />
+	</resultMap>
+
+	<resultMap type="Grooming" id="groomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingContent" column="GROOMING_CONTENT"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="studySd" column="STUDY_START_DATE"/>
+		<result property="studyEd" column="STUDY_END_DATE"/>
+		<result property="groomingSd" column="GROOMING_START_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingCd" column="GROOMING_CREATE_DATE"/>
+		<result property="groomingMd" column="GROOMING_MODIFY_DATE"/>
+		<result property="status" column="GROOMING_STATUS"/>
+		<result property="count" column="GROOMING_COUNT"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="tagName" column="TAG_NAME"/>
+		<result property="specName" column="SPEC_NAME"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		
+	</resultMap>
+	<resultMap type="MyPageHeart" id="MyPageHeartSet">
+		<id property="groomingHeartNo" column="GROOMING_HEART_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		
+	</resultMap>
+	
+	<!-- 그루밍 신청내역  -->
+	<resultMap type="MyPageApplicant" id="MyPageApplicantSet">
+		<id property="gApplyNo" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
+	</resultMap>
+	
+		<resultMap type="MyPageApplicant" id="MyPageGmember">
+		<id property="gApplyNo" column="GROOMING_APPLY_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingP" column="GROOMING_PARTICIPANTS"/>
+		<result property="currentP" column="GROOMING_CURRENT_PEOPLE"/>
+		<result property="money" column="DEPOSIT_MONEY"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="GROOMING_END_DATE"/>
+		<result property="applyStatus" column="GROOMING_APPLY_STATUS"/>
+	</resultMap>
+	
+	<resultMap type="MyPageGrooming" id="MyPageGroomingSet">
+		<id property="gMemberNo" column="G_MEMBER_NO"/>
+		<result property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>		
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingNd" column="GROOMING_NOW_DATE"/>
+		<result property="groomingEd" column="STUDY_END_DATE"/>
+	
+	
+	</resultMap>
+	
+	<resultMap type="MyPagePoint" id="MyPagePointSet">
+		<id property="pointNo" column="POINT_NO"/>
+		<result property="memberNo" column="MEMBER_NO" />	
+		<result property="addPoint" column="ADD_POINT" />	
+		<result property="sunPoint" column="SUB_POINT" />	
+		<result property="pointList" column="POINT_LIST" />	
+		<result property="pointDate" column="POINT_DATE" />	
+	</resultMap>
+	
+	<resultMap type="Board" id="boardResultSet">
+		<id property="boardNo" column="BOARD_NO" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NAME" />
+		<result property="boardTitle" column="BOARD_TITLE" />
+		<result property="boardContent" column="BOARD_CONTENT" />
+		<result property="boardCreateDate" column="BOARD_CREATE_DATE" />
+		<result property="boardModifyDate" column="BOARD_MODIFY_DATE" />
+		<result property="boardVcount" column="BOARD_VCOUNT" />
+		<result property="boardGcount" column="BOARD_GCOUNT" />
+		<result property="boardStatus" column="BOARD_STATUS" />
+		<result property="boardReplyStatus" column="BOARD_REPLY_STATUS" />
+		<result property="boardSelecStatus" column="BOARD_SELEC_STATUS" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+	</resultMap>
+	<resultMap type="Reply" id="replyResultSet">
+		<id property="replyNo" column="REPLY_NO" />
+		<result property="boardNo" column="BOARD_NO" />
+		<result property="bCategoryNo" column="B_CATEGORY_NAME" />
+		<result property="memberNo" column="MEMBER_NO" />
+		<result property="replyContent" column="REPLY_CONTENT" />
+		<result property="replyCreateDate" column="REPLY_CREATE_DATE" />
+		<result property="replyModifyDate" column="REPLY_MODIFY_DATE" />
+		<result property="replySelection" column="PEPLY_SELECTION" />
+		<result property="replyStatus" column="REPLY_STATUS" />
+		<result property="declarationCount" column="DECLARATION_COUNT" />
+		<result property="memberNickName" column="MEMBER_NICKNAME" />
+	</resultMap>
+	
+	<resultMap type="HomeGrooming" id="homeGroomingResultSet">
+		<id property="groomingNo" column="GROOMING_NO"/>
+		<result property="groomingTitle" column="GROOMING_TITLE"/>
+		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
+		<result property="groomingImg" column="GROOMING_IMG"/>
+		<result property="groomingType" column="GROOMING_TYPE"/>
+		<result property="groomingDday" column="D_DAY"/>
+		<result property="groomingTagName" column="TAG_NAME"/>
+		<result property="groomingParti" column="GROOMING_PARTICIPANTS"/>
+		<result property="groomingMemberCount" column="GMEMBER_COUNT"/>
+		<result property="groomingViewCount" column="GROOMING_COUNT"/>
+	</resultMap>
+
+	<resultMap type="MemberReport" id="MemberReportSet">
+		<id property="declarationNo" column="DECLARATION_NO" />
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="declarationCNo" column="DECLARATION_C_NO"/>
+		<result property="declarationNNo" column="DECLARATION_N_NO"/>
+		<result property="declarationContent" column="DECLARATION_CONTENT"/>
+		<result property="declarationCheck" column="DECLARATION_CHECK"/>	
+	</resultMap>
+
+	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
+		SELECT * 
+		FROM MEMBER
+		WHERE MEMBER_NO = #{mNo}
+		AND MEMBER_STATUS='N'
+	</select>
+
+	<select id="testLoginUser2" parameterType="string" resultMap="ProfileMemberSet">
+		SELECT MEMBER_NO, MEMBER_PHOTO, MEMBER_NICKNAME,ML.LVL_RANK,MEMBER_EXP,ML.LVL_MAX_EXP,MEMBER_EMAIL,MEMBER_MEMO
+		FROM MEMBER M
+		JOIN MEMBER_LEVEL ML ON(M.LVL_NO=ML.LVL_NO)
+		WHERE MEMBER_NO =#{mNo}
+	
+	</select>
+	<select id="selectPoint" parameterType="string" resultType="_int">
+		SELECT NVL(SUM(ROWNUM),0)
+		FROM POINT
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+	<select id="selectPoint2" parameterType="string" resultType="_int">
+		SELECT SUM(ADD_POINT)AS NOWPOINT
+		FROM POINT 
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+
+	<select id="selectSpecList" parameterType="string" resultMap="SpecSet"> 
+		SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO, S.SPEC_CONFIRM
+		FROM SPEC S
+		JOIN SPEC_CATEGORY SC ON(S.SPEC_C_NO = SC.SPEC_C_NO)
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+
+	<update id="updateProfileIMG" parameterType="ProfileMember">
+		UPDATE MEMBER
+		SET MEMBER_PHOTO=#{memberPhoto}
+		WHERE MEMBER_NO =#{memberNo}
+	</update>
+
+	<update id="updateMemo" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_MEMO=#{memberMemo}
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+
+	<update id="memberDelete" parameterType="Member">
+		UPDATE MEMBER 
+		SET MEMBER_STATUS='Y'
+		WHERE MEMBER_NO=#{memberNo}
+	</update>
+	
+	<update id="memberInfoUpdate" parameterType="Member">
+		UPDATE MEMBER
+		SET MEMBER_PASSWORD=#{memberPwd}
+			,MEMBER_NICKNAME=#{memberNickName}
+			,MEMBER_NAME=#{memberName}
+			,MEMBER_GENDER=#{memberGender}
+			,MEMBER_PHONE=#{memberPhone}
+		WHERE MEMBER_NO = #{memberNo}
+		
+	</update>
+	
+	<select id="memberSelect" parameterType="string" resultMap="MemberSet">
+		SELECT *
+		FROM MEMBER
+		WHERE MEMBER_NO=#{memberNo}
+		AND MEMBER_STATUS='N'	
+	</select>
+	
+	<insert id="insertSpec" parameterType="Spec" >
+		INSERT INTO SPEC VALUES('SPEC' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0) , #{specCName},#{specName},#{specFileName},#{memberNo},DEFAULT)
+	</insert>
+	
+	<select id="mentorUserSelect" parameterType="string" resultType="string">
+		SELECT MENTOR_PASS
+		FROM MENTOR
+		WHERE MEMBER_NO=#{mNo}
+	</select>
+	
+	<insert id="insertMentor" parameterType="string">
+		INSERT INTO MENTOR VALUES('MTR' || LPAD(SEQ_MENTOR_NO.NEXTVAL,5,0) , #{mNo},'S')
+	</insert>
+	
+	<select id="mpSelectListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM GROOMING
+		WHERE MEMBER_NO = #{mNo}
+	</select>
+	
+	<select id="selectopenGroomingList" parameterType="string" resultMap="homeGroomingResultSet">
+		SELECT ROWNUM,
+		    G.GROOMING_NO, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_IMG, G.GROOMING_TYPE
+		    , GT.TAG_NAME, G.GROOMING_PARTICIPANTS, G.GROOMING_COUNT
+		FROM GROOMING G
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		        FROM GTAG GT
+		        JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		        GROUP BY GROOMING_NO) GT
+		    ON(G.GROOMING_NO = GT.GROOMING_NO)		
+		WHERE G.GROOMING_STATUS = 'Y' AND G.MEMBER_NO=#{mNo}
+	</select>
+	<select id="selectMyPageHeart" parameterType="string" resultMap="MyPageHeartSet">
+	SELECT GROOMING_HEART_NO, G.GROOMING_NO, G.GROOMING_IMG,G.GROOMING_TYPE, G.GROOMING_TITLE
+	, G.GROOMING_INTRODUCE, G.GROOMING_PARTICIPANTS,G.GROOMING_CURRENT_PEOPLE,G.DEPOSIT_MONEY,G.GROOMING_NOW_DATE,G.GROOMING_END_DATE
+	FROM GROOMING_HEART GH
+	JOIN GROOMING G ON(G.GROOMING_NO=GH.GROOMING_NO)
+	WHERE GH.MEMBER_NO=#{mNo}
+	</select>
+	
+	<select id="heartListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM GROOMING_HEART
+		WHERE MEMBER_NO=#{mNo}		
+	</select>
+	
+	<delete id="heartListDelete" parameterType="string">
+	
+		DELETE FROM GROOMING_HEART WHERE GROOMING_HEART_NO =#{ghNo}
+	</delete>
+	
+	<select id="gApplicantListCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM GROOMING_APPLICANT
+		WHERE MEMBER_NO =#{mNo}
+	</select>
+	
+	<select id="selectgApplicantList" parameterType="string" resultMap="MyPageApplicantSet">
+		SELECT GROOMING_APPLY_NO, GA.GROOMING_NO,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
+		,G.GROOMING_IMG,G.GROOMING_TYPE,GD.D_DAY,GT.TAG_NAME,G.GROOMING_PARTICIPANTS
+		, GC.GMEMBER_COUNT,G.DEPOSIT_MONEY,GA.GROOMING_APPLY_STATUS        
+		FROM GROOMING_APPLICANT GA
+		JOIN GROOMING G ON(GA.GROOMING_NO = G.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, TRUNC(GROOMING_END_DATE - SYSDATE) AS D_DAY
+				        FROM GROOMING) GD 
+				    ON(G.GROOMING_NO = GD.GROOMING_NO)
+		JOIN (SELECT GROOMING_NO, (LISTAGG(TAG_NAME,',') WITHIN GROUP(ORDER BY GROOMING_NO)) AS TAG_NAME 
+		            FROM GTAG GT
+		            JOIN TAG TA ON(GT.TAG_NO = TA.TAG_NO) 
+		            GROUP BY GROOMING_NO) GT
+		        ON(G.GROOMING_NO = GT.GROOMING_NO)	
+		 LEFT OUTER JOIN (SELECT GROOMING_NO, COUNT(MEMBER_NO) AS GMEMBER_COUNT
+		                 FROM GROMMING_MEMBER GROUP BY GROOMING_NO) GC
+		    ON(G.GROOMING_NO = GC.GROOMING_NO)
+		WHERE GA.MEMBER_NO =#{mNo}
+	</select>
+	
+	<delete id="deleteApplicant" parameterType="string">		
+	DELETE FROM GROOMING_APPLICANT WHERE GROOMING_APPLY_NO=#{gaNo}		
+	</delete>
+	
+	<select id="selectTempGroomingNo" parameterType="string" resultType="string">
+		SELECT GROOMING_NO
+		FROM GROOMING G
+		WHERE G.MEMBER_NO=#{mNo}
+	</select>
+	
+	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
+		SELECT *
+		FROM GROOMING
+		WHERE MEMBER_NO =#{mNo} AND GROOMING_STATUS='N'
+	</select>
+	
+	<select id="selectGroomingMemberCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectMypageGmember" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO NOT IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectGroomingHostCount" parameterType="string" resultType="_int">
+	SELECT COUNT(*)
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+	AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
+
+	<select id="selectMypageGhost" parameterType="string" resultMap="MyPageGroomingSet">
+	SELECT GM.G_MEMBER_NO,G.GROOMING_NO,G.GROOMING_IMG,G.GROOMING_TYPE,G.GROOMING_TITLE,G.GROOMING_INTRODUCE
+        ,G.GROOMING_NOW_DATE,G.STUDY_END_DATE
+	FROM GROMMING_MEMBER GM
+	JOIN GROOMING G ON(G.GROOMING_NO = GM.GROOMING_NO)
+	WHERE GM. MEMBER_NO = #{mNo} 
+            AND GM.MEMBER_NO IN G.MEMBER_NO
+	</select>
+	
+	<select id="selectPointList" parameterType="string" resultMap="MyPagePointSet">
+	SELECT *
+	FROM POINT
+	WHERE MEMBER_NO = #{mNo}
+	</select>
+	
+	<insert id="insertPoint" parameterType="MyPagePoint" >
+		INSERT INTO POINT VALUES('P' || LPAD(SEQ_SPEC_NO.NEXTVAL,5,0),#{memberNo},#{addPoint},0,#{pointList},SYSDATE)
+	</insert>
+	
+	<insert id="insertMemberReport" parameterType="MemberReport">
+		INSERT INTO DECLARATION VALUES('DEC'||LPAD(SEQ_DECLARATION_NO.NEXTVAL,5,0),#{memberNo},#{declarationCNo},#{declarationNNo},#{declarationContent},DEFAULT)
+	</insert>
+	
+	<select id="selectMemberBoardList" parameterType="string" resultMap="boardResultSet">
+		SELECT BOARD_NO,MEMBER_NO,BC.B_CATEGORY_NAME,BOARD_TITLE, BOARD_CONTENT, BOARD_CREATE_DATE,
+                B.BOARD_MODIFY_DATE,B.BOARD_VCOUNT,B.BOARD_GCOUNT,BOARD_STATUS,BOARD_REPLY_STATUS,BOARD_SELEC_STATUS                
+		FROM BOARD B
+		JOIN BCATEGORY BC ON(B.B_CATEGORY_NO = BC.B_CATEGORY_NO)
+		WHERE MEMBER_NO=#{mNo} AND BOARD_STATUS='Y'
+	</select>
+	
+	<select id="selectMyCommunityCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD 
+		WHERE MEMBER_NO=#{mNo} AND BOARD_STATUS='Y'
+	</select>
+	
+	<select id="selectMyReplyCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM REPLY
+		WHERE MEMBER_NO=#{mNo} AND REPLY_STATUS='Y'
+		
+	</select>
+	
+	<select id="selectMyReplyList" parameterType="string" resultMap="replyResultSet">
+		SELECT     P.REPLY_NO,P.BOARD_NO,BC.B_CATEGORY_NAME,  P.MEMBER_NO,P.REPLY_CONTENT,P.REPLY_CREATE_DATE,P.REPLY_MODIFY_DATE,
+                    P.PEPLY_SELECTION, P.REPLY_STATUS,P.DECLARATION_COUNT
+	    FROM REPLY P
+	    JOIN BCATEGORY BC ON(P.B_CATEGORY_NO = BC.B_CATEGORY_NO)
+	    WHERE MEMBER_NO=#{mNo}  AND REPLY_STATUS='Y'
+	</select>
+	
+	<select id="selectReportInfo" parameterType="MemberReport" resultMap="MemberReportSet">
+		SELECT *
+		FROM DECLARATION
+		WHERE MEMBER_NO=#{memberNo} AND DECLARATION_C_NO='1' AND DECLARATION_N_NO = #{declarationNNo} AND DECLARATION_CHECK='N'
+	
+	</select>
+
+</mapper>

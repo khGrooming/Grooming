@@ -346,7 +346,7 @@ public class MemberController {
 
 		}
 
-		return "home";
+		return "redirect:home.do";
 
 	}
 
@@ -461,7 +461,7 @@ public class MemberController {
 
 	}
 
-	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
+	// 회원정보 찾기 : 이메일
 	@RequestMapping("findEmail.do")
 	@ResponseBody
 	public String findEmail(Member m) {
@@ -519,7 +519,7 @@ public class MemberController {
 
 	}
 
-	// 회원정보 찾기 : 회원 확인 / 인증번호 저장
+	// 회원정보 찾기 : 인증번호 저장 & 전송
 	@RequestMapping("sendCertiEmail.do")
 	@ResponseBody
 	public String sendCertiMail(Member m) {
@@ -660,7 +660,7 @@ public class MemberController {
 			if(resultAlertJoin > 0) {
 				System.out.println("비밀번호 재설정 (알림 추가) : 성공");
 
-				return "home";
+				return "redirect:home.do";
 			} else {
 				System.out.println("비밀번호 재설정 (알림 추가) : 실패");
 				throw new MemberException("비밀번호 재설정 (알림 추가) : 실패");

@@ -56,6 +56,7 @@ public class AdminController {
 		ArrayList<GraphListCount> blist = adminService.adminBoardList(clist);
 		ArrayList<GraphListCount> glist = adminService.adminGroomingList(clist);
 		ArrayList<GraphListCount> mlist = adminService.adminMemberList(clist);
+		System.out.println("point : "+point);
 		
 		mv.addObject("point", point);
 		mv.addObject("clist", clist);
@@ -180,11 +181,13 @@ public class AdminController {
 		str.put("day", day);
 		str.put("groomingName", groomingName);
 		
+		System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
+		int gListCount = adminService.selectGroomingCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
 		
@@ -370,6 +373,7 @@ public class AdminController {
 			cafe.setCafeImg(renameFileName);
 		}
 		
+		System.out.println("cafe : "+cafe);
 		int result = adminService.insertCafeInfo(cafe);
 		
 		if(result > 0) {

@@ -83,7 +83,7 @@
 				            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
 			            </c:url>
 		                <div class="panel panel-default" onclick="location.href='${cafeDetail}'">
-		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
+		                    <img src="${contextPath }/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
 		                </div>		            
