@@ -49,7 +49,7 @@
 	
 	<!-- 상세 게시물 조회 -->
 	<select id="selectOne" parameterType="hashmap" resultMap="boardResultSet">
-		SELECT A.*
+		SELECT A.* , B.MEMBER_NICKNAME
 			<if test="memberNo != null">
 		     , C.DECLARATION_NO
 		    </if> 

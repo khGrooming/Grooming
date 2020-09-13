@@ -83,8 +83,6 @@
 					</div>				
 				</div>
 				
-				<script>
-				</script>
 				
 				<!-- Modal 스터디 인증 상세보기 -->
 				<div id="confirmDetailView${c.boardNo}" class="modal fade" role="dialog">

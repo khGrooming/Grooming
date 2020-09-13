@@ -85,8 +85,6 @@
 			$("#sumbit").on("click", function(){
 				alert("게시물이 신고 되었습니다.");
 			})
-			// 중복 신고 막기
-			// 자신의 게시물은 신고할수 없기
 		</script>
 	
 		<div class="table table-responsive">
@@ -194,7 +192,7 @@
         					
         						<textarea rows="3" cols="70" style="display:none;" class="rUpdate" name="rUpdate" id="1update${r.replyNo }">${r.replyContent }</textarea>
         						<input type="submit" style="display:none;" class="rUpdate_btn" id="2update${r.replyNo }" value="수정">
-        						<input type="button" style="display:none;" class="rClose_btn" id="3update${r.replyNo }" value="취소">
+        						<input type="button" style="display:none;" class="rClose_btn" id="3update${r.replyNo }" onclick="close();" value="취소">
         					</form>
         				</td>
         				<td>${r.replyModifyDate }</td>
@@ -231,6 +229,16 @@
 							})			
 						})
 					</script>
+ 					<script>
+ 					// 취소
+						$(function(){
+							$("#3update${r.replyNo }").on("click",function(){
+								$('#1update${r.replyNo }').css('display','none'); // 댓글 text
+								$('#2update${r.replyNo }').css('display','none'); // 수정
+								$('#3update${r.replyNo }').css('display','none'); // 삭제
+							})
+						})
+					</script> 
                  		
        	 		</c:forEach>
         	</table>

@@ -10,14 +10,6 @@
     	vertical-align: middle;
     	text-align:center;
 	}
-	/* 해시태그 */
-	.tagKind {
-	    color: blue;
-    	padding: 5px;
-    	margin-right: 50px;
-    	margin-left: 30px;
-    	font-size: 13px;
-	}
 </style>
 <!-- ------ 검색 ------- -->
 <style type="text/css">
@@ -88,7 +80,6 @@
 						<tr>
 							<td>${n.boardNo }</td>
 							<td>
-								<br>
 								<c:url var="communityDetailView" value="communityDetailView.do">
 									<c:param name="boardNo" value="${n.boardNo }" />
 								</c:url>
