@@ -100,7 +100,7 @@ body{
 	border-radius:10px;
 
 }
-#contentPre{
+#contentPre, #ac{
 
 font-family: 'TmoneyRoundWindExtraBold';
 	src:
@@ -310,7 +310,7 @@ font-family: 'TmoneyRoundWindExtraBold';
 					<button data-toggle="modal" id="applicantList" class="btn-3d green">신청자 리스트</button><!-- data-target="#applicant" -->
 					<!-- 리스트 모달 -->
 					<div class="modal fade" id="applicant" tabindex="-1" role="dialog"
-						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static">
+						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static" style="margin-right:auto; margin-left:auto;">
 
 						<div class="modal-dialog">
 
@@ -868,7 +868,7 @@ font-family: 'TmoneyRoundWindExtraBold';
                var $h5;
                var $button2;
                var $span1;
-               
+               var $pre;
                var $div6;
                var $td5;
                var $button3;
@@ -893,8 +893,8 @@ font-family: 'TmoneyRoundWindExtraBold';
                       $button2 = $("<button type='button' class='close'>");
                       $span1 = $("<span aria-hidden='true'>").text("X");
                      
-                      $div6 = $("<div class='modal-body'>").text(data[i].groomingAC);
-                      
+                      $div6 = $("<div class='modal-body'>");
+                      $pre = $("<pre id='ac'>").text(data[i].groomingAC);
                       $td4 = $("<td>");
                       $button3 = $("<button class='accept'>").text("수락");
                       $button4 = $("<button class='reject'>").text("거절");
@@ -903,7 +903,7 @@ font-family: 'TmoneyRoundWindExtraBold';
                       $div1.append($img1);
                       $td3.append($button1);
                       $td3.append($div2);
-                      
+                      $div6.append($pre);
                       $div2.append($div3);
                       $div3.append($div4);
                       $div4.append($div5);
