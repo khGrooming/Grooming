@@ -50,6 +50,7 @@ import com.kh.groomingProject.mypage.model.exception.MypageException;
 import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicantV2;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
@@ -558,32 +559,49 @@ public class MyPageController {
 	
 //	신청한 스터디 그룹 
 	@RequestMapping("gApplicant.do")
-	public String GApplicantPage(HttpSession session,HttpServletRequest request
-								,@RequestParam(value="page",required=false) Integer page) {
-		String mNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-		
-		int listCount = mpService.gApplicantListCount(mNo);
-		int currentPage=1;
-		if(page != null) {
+	public ModelAndView GApplicantPage(ModelAndView mv, HttpSession session,
+			@RequestParam(value = "page", required = false) Integer page) {
+		String mNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+
+		int currentPage = 1;
+		if (page != null) {
 			currentPage = page;
 		}
-		int GroomingLimit = 4;
-		double f=0.8;
-		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit,f);
-		
-		ArrayList<MyPageApplicant> gApplicantList = mpService.selectgApplicant(pi,mNo);
-		
-		if(gApplicantList != null) {
-			session.setAttribute("pi", pi);
-			session.setAttribute("appList",gApplicantList);
-			return "mypage/gApplicant";
-		}else {
-			throw new MypageException("신청내역 조회 실패");
+		int listCount = mpService.appv2listCount(mNo);
+		System.out.println("GHeart.do에서 listCount:" + listCount);
+		int GroomingLimit = 5;
+		double f = 0.8;
+		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit, f);
+
+		ArrayList<MyPageApplicantV2> aplist = mpService.selectMyPageApplicantV2(pi, mNo);
+		System.out.println("test.do에서 aplist :" + aplist);
+		if (aplist != null) {
+			mv.addObject("pi", pi);
+			mv.addObject("aplist", aplist);
+		} else {
+			throw new MypageException("신청 내역 목록 조회 실패");
 		}
-		
-		
-		
+		System.out.println(aplist);
+		mv.addObject("listCount", listCount);
+		mv.setViewName("mypage/gApplicant");
+		return mv;
 	}
+
+	@RequestMapping("gAppDelete.do")
+	public ModelAndView gAppDelete(ModelAndView mv,String gApplicantNo,HttpSession session,@RequestParam(value = "page", required = false) Integer page) {
+		
+		int result= mpService.gApplicantDelete(gApplicantNo);
+		
+		if(result > 0) {
+			mv=GApplicantPage(mv,session,page);
+			mv.setViewName("mypage/gApplicant");
+		}else {
+			throw new MypageException("신척내역 삭제 실패");
+		}
+		return mv;
+	}
+		
+		
 
 	//신청한 스터디 그룹 삭제하기
 	@RequestMapping("deleteAppl.do")
@@ -868,30 +886,31 @@ public class MyPageController {
 	public ModelAndView test(ModelAndView mv, HttpSession session,
 			@RequestParam(value = "page", required = false) Integer page) {
 		String mNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
-		System.out.println("GHeart.do에서 mNo :" + mNo);
 
 		int currentPage = 1;
 		if (page != null) {
 			currentPage = page;
 		}
-		int listCount = mpService.heartListCount(mNo);
+		int listCount = mpService.appv2listCount(mNo);
 		System.out.println("GHeart.do에서 listCount:" + listCount);
 		int GroomingLimit = 5;
 		double f = 0.8;
 		MyPagePageInfo pi = getPageInfo(currentPage, listCount, GroomingLimit, f);
 
-		ArrayList<MyPageHeart> hlist = mpService.selectMyPageHeart(pi, mNo);
-		System.out.println("GHeart.do에서 mNo :" + hlist);
-		if (hlist != null) {
+		ArrayList<MyPageApplicantV2> aplist = mpService.selectMyPageApplicantV2(pi, mNo);
+		System.out.println("test.do에서 aplist :" + aplist);
+		if (aplist != null) {
 			mv.addObject("pi", pi);
-			mv.addObject("hlist", hlist);
+			mv.addObject("aplist", aplist);
 		} else {
-			throw new MypageException("찜목록 조회 실패");
+			throw new MypageException("신청 내역 목록 조회 실패");
 		}
-		System.out.println(hlist);
+		System.out.println(aplist);
 		mv.addObject("listCount", listCount);
 		mv.setViewName("mypage/test");
 		return mv;
 	}
+	
+	
 
 }

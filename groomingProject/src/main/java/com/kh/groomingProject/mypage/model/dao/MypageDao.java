@@ -14,6 +14,7 @@ import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicantV2;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
@@ -180,6 +181,20 @@ public class MypageDao {
 
 	public MemberReport selectReportInfo(MemberReport repM) {
 		return sqlSessionTemplate.selectOne("MyPageMapper.selectReportInfo",repM);
+	}
+
+	public int appv2listCount(String mNo) {
+		return sqlSessionTemplate.selectOne("MyPageMapper.appv2listCount",mNo);
+	}
+
+	public ArrayList<MyPageApplicantV2> selectMyPageApplicantV2(MyPagePageInfo pi, String mNo) {
+		int offset=(pi.getCurrentPage()-1)*pi.getGroomingLimit();
+		RowBounds rowBounds=new RowBounds(offset, pi.getGroomingLimit());
+		return (ArrayList)sqlSessionTemplate.selectList("MyPageMapper.selectMyPageApplicantV2",mNo,rowBounds);
+	}
+
+	public int gApplicantDelete(String gApplicantNo) {
+		return sqlSessionTemplate.delete("MyPageMapper.gApplicantDelete",gApplicantNo);
 	}
 
 	

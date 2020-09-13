@@ -37,63 +37,50 @@ text-align: center;
 #ta tr td:nth-child(3){
 text-align: left;
 }
+pre{
+
+ font-family: 'Jua', sans-serif;
+}
 </style>
 </head>
 
 <body>
 <jsp:include page="./mypageinfo.jsp" />
 <div class="content-op">
-<h3 style="width: 80%; margin:0 auto;">찜 목록</h3>
+<h3 style="width: 80%; margin:0 auto;">신청내역</h3>
 <br>
 	<div style="height: 700px;">
-	<c:if test="${!empty hlist }">
+	<c:if test="${!empty aplist }">
 		<table id="ta">
 			<tr style="border-bottom: 2px solid;border-top:2px solid; height: 55px ">
-				<th style="width: 10%;"><input type="checkbox" id="allcheck"onclick="checkAll();"></th>
-				<th>D-DAY</th>
-				<th>그룹 이름/작성한 신청서</th>
+				
+				<th>타입</th>
+				<th>그룹 정보</th>
 				<th>예치금</th>
+				<th>신청서</th>
 				<th>심사결과</th>
 				
 			
 			</tr>
-			<c:forEach var="list" items="${hlist }">
+			<c:forEach var="list" items="${aplist }">
 				<c:url var="gdetail" value="groomingDetail.do">
 					<c:param name="groomingNo" value="${list.groomingNo }"/>
 					<%-- <c:param name="page" value="${pi.currentPage }"/> --%>
 					<!-- 현재 보던 페이지 정보도 넘기자 -->
 				</c:url>
 	                        
-	            <fmt:formatDate value="${list.groomingNd }" var="nowDate1" pattern="yyyyMMdd"/>	   	
-	 	 		<fmt:formatDate value="${list.groomingEd }" var="endDate1" pattern="yyyyMMdd"/>	 	 		
-	 	 		<fmt:parseDate value="${nowDate1 }" var="nowDate2" pattern="yyyyMMdd" />
-	 	 		<fmt:parseDate value="${endDate1 }" var="endDate2" pattern="yyyyMMdd" />	 	 		
-		    	<fmt:parseNumber value="${(endDate2.time - nowDate2.time)/ ( 24*60*60*1000)}" integerOnly="true" var="difDate"/> 
-		    	<c:if test="${list.groomingEd gt list.groomingNd }">
-				<tr id="trr" >
-				</c:if>
-				<c:if test="${list.groomingEd lt list.groomingNd }">
-                  <tr id="trr" style="color:rgba(229, 229, 229, 1);">
-                 </c:if>
-				<td><input type="checkbox" id="checkA" name="checkA" class="checkA" value="${list.groomingHeartNo }" >
+	           <tr>
 				
-				</td>
 				<td>
-				  <c:if test="${list.groomingEd gt list.groomingNd }">
-                      <span id="d-day">D-</span><span id="day" >${difDate }</span>
-                  </c:if>
-                  <c:if test="${list.groomingEd lt list.groomingNd }">
-                     <span id="day">마감</span>
-                  </c:if>
-				
+				  ${list.groomingType }
 				
 				</td>
-				<td onclick="location.href='${gdetail}'" style="width: 700px;" >
+				<td onclick="location.href='${gdetail}'" style="width: 700px; padding-left: 10px;" >
 					<div style="float: left; margin-right: 20px;">
 					<img alt="그루밍 사진" src="${contextPath }/resources/upGroomingFiles/${list.groomingImg }"
 						onerror="this.src='${contextPath }/resources/views/images/grooming_logo.png'" width="100px;" height="80px;">
 					</div>
-					<div  style="float: left;">
+					<div  style="float: left; text-align: left;">
 					
 				
 					<p>제목:${list.groomingTitle}</p>
@@ -110,16 +97,50 @@ text-align: left;
 						${list.money }
 					</c:if>
 				</td>
-				<td>${list.currentP }/${list.groomingP}</td>
+				<td><p style="cursor: pointer;" data-toggle="modal" data-target="#gaContent">신청서보기</p></td>
 				
-			</tr>
+				<td>
+					<c:if test="${list.applyStatus eq 'Y' }">
+						<p style="color:#c8ce60;">심사중</p>
+					</c:if>
+					<c:if test="${list.applyStatus eq 'C' }">
+						<p style="color:blue;">합격</p>
+					</c:if>
+					<c:if test="${list.applyStatus eq 'D' }">
+						<p style="color:gray">탈락</p>
+					</c:if>
+				
 			
+				</td>
+				
+				</tr>
+			<div class="modal fade" id="gaContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document" style=" margin-top:200px;">
+						<div class="modal-content">
+							<div class="modal-header">
+
+								<h4 class="modal-title" id="myModalLabel">작성한 신청서</h4>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+						
+							<div class="modal-body">
+								<div style="overflow: auto; height: 300px;">
+									<pre>${list.gaContent }</pre>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>	
 			</c:forEach>
 		
 		</table>
 	</c:if>
-	<c:if test="${empty hlist }">
-		<p style="font-size: 25px; text-align: center;">찜 목록이 없습니다.</p>
+	<c:if test="${empty aplist }">
+		<p style="font-size: 25px; text-align: center;">신청내역이 없습니다.</p>
 		<p style="text-align: center; cursor: pointer;" onclick="location.href='groomingMain.do'">그루밍 메인으로 가기</p>
 
 	</c:if>
@@ -127,45 +148,12 @@ text-align: left;
 	
 <br>
 
-<div style="width: 80%; margin: 0 auto;">
-<button onclick="deleteAction();" style=" width: 80px;  border-radius: 10px;">삭제</button>
-</div>
+
 <script>
 $(function(){
 	var day=$("span[id=day]").text();
 })
-function checkAll(){
-    if( $("#allcheck").is(':checked') ){
-      $("input[name=checkA]").prop("checked", true);
-    }else{
-      $("input[name=checkA]").prop("checked", false);
-    }
-}
 
-function deleteAction(){
-	  var checkA = "";
-	  $( "input[name='checkA']:checked" ).each (function (){
-		  checkA = checkA + $(this).val()+"," ;
-	  });
-	  checkA = checkA.substring(0,checkA.lastIndexOf( ",")); //맨끝 콤마 지우기
-	 
-	  if(checkA == ''){
-	    alert("삭제할 대상을 선택하세요.");
-	    return false;
-	  }
-	  console.log("### checkRow => {}"+checkA);
-	 
-	  if(confirm("찜하기를 삭제 하시겠습니까?")){
-	    
-	      location.href="heartDele.do?checkList="+checkA;
-	          
-	   
-	  }else{
-		  $("input[name=checkA]").prop("checked", false);
-	  }
-	}
-	
-	
 </script>
 
 <br>
@@ -175,7 +163,7 @@ function deleteAction(){
 			[이전]&nbsp;
 		</c:if>
 		<c:if test="${pi.currentPage gt 1 }">
-			<c:url var="GHeartBack" value="GHeart.do">
+			<c:url var="GHeartBack" value="test.do">
 				<c:param name="page" value="${pi.currentPage -1 }"/>
 			</c:url>
 			<a href="${GHeartBack }">[이전]</a>
@@ -185,7 +173,7 @@ function deleteAction(){
 				<font color="red" size="4"><b>[${p }]</b></font>
 			</c:if>
 			<c:if test="${p ne pi.currentPage }">
-				<c:url var="GHeartCheck" value="GHeart.do">
+				<c:url var="GHeartCheck" value="test.do">
 				<c:param name="page" value="${p }"/>
 				</c:url>
 				<a href="${GHeartCheck }">${p }</a>
@@ -195,7 +183,7 @@ function deleteAction(){
 			&nbsp;[이후]
 		</c:if>
 		<c:if test="${pi.currentPage lt pi.maxPage }">
-			<c:url var="GHeartAfter" value="GHeart.do">
+			<c:url var="GHeartAfter" value="test.do">
 				<c:param name="page" value="${pi.currentPage +1 }"/>
 			</c:url>
 			<a href="${GHeartAfter }">[이후]</a>

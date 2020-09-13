@@ -136,7 +136,6 @@ font-size: 14px;
 			<h4 class="subTitle" onclick="location.href='${profilePage}'">프로필 수정</h4>
 			<div class="profile_my">
 				<!--toEJ 클릭하면 모달창 띄우고 사진편집할 수 있으면 넣고 못하면 미리보기로 대체 모달창에서 프로필사진 등록/삭제로 해서 고치셈 -->
-				
 				<img src='${contextPath }/resources/views/icons/profileIcon.png'   style="height:130px; z-index: 3;"class="profile_img" data-toggle="modal" data-target="#mtProfile">
 				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }" class="profile_img" id="profileImg">	
 				<div class="modal fade" id="mtProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -365,7 +364,7 @@ font-size: 14px;
 										<div class="modal-content">
 											<div class="modal-header">
 
-												<h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
+												<h4 class="modal-title" id="myModalLabel">스펙 추가하기</h4>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">×</span>

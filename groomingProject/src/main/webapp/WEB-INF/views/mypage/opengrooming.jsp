@@ -236,14 +236,17 @@
 <jsp:include page="./mypageinfo.jsp" />
 <div class="content-op">
 <h3>개설한 그룹${g.groomingImg }</h3><br>
+<p>작성한 게시글로 이동합니다</p>
+
 <c:if test="${listCount ne 0 }">
 	<div class="cards_bundle row">
 			
 		<c:forEach var="g" items="${openGroomingList }">
-		 <c:url var="groupPage" value="groupPage.do">
+		  <c:url var="groomingDetail" value="groomingDetail.do">
 				<c:param name="groomingNo" value="${g.groomingNo}"/>
+				<c:param name="memberNo" value="${loginUser.memberNo }"></c:param>
 			</c:url>
-			<div class="card_container col-lg-3" onclick="location.href='${groupPage}'">
+			<div class="card_container col-lg-3" onclick="location.href='${groomingDetail}'">
 				<input type="hidden" value="${g.groomingNo}"></input>
 				<div class="card_box">
 					<!-- 그룹 이미지 -->
