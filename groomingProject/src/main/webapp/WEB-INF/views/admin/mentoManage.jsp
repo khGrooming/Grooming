@@ -103,18 +103,18 @@
 	                         	<th>자격증</th>
 	                         	<th>경력</th>
 	                         </tr>
-	                     <c:if test="${!empty mentoList}">
 	                     	<c:forEach var="mento" varStatus="i" items="${mNo}">
 	                     		<c:if test="${mento.sanctions ne 0}">
 		                     		<tr style="opacity:0.7">
-		                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
-			                         	<td><c:out value="${i.current.memberEmail}"/></td>
-			                         	<td><c:out value="${i.current.memberNickname}"/></td>
-			                         	<td><c:out value="${i.current.memberName}"/></td>
+		                     			<input type="hidden" class="mento${i.index}" value="${mento.memberNo}">
+			                         	<td><c:out value="${mento.memberEmail}"/></td>
+			                         	<td><c:out value="${mento.memberNickname}"/></td>
+			                         	<td><c:out value="${mento.memberName}"/></td>
 			                         	
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -130,6 +130,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -145,6 +146,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -162,7 +164,7 @@
 	                     		</c:if>
 	                     		<c:if test="${mento.sanctions eq 0}">
 		                     		<tr>
-		                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
+		                     			<input type="hidden" class="mento${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>
 			                         	<td><c:out value="${i.current.memberNickname}"/></td>
 			                         	<td><c:out value="${i.current.memberName}"/></td>
@@ -170,6 +172,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -185,6 +188,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -200,6 +204,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${mentoList}">
 				                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -216,8 +221,7 @@
 									</tr>
 	                     		</c:if>
 	                         </c:forEach>
-						</c:if>
-						<c:if test="${empty mentoList}">
+						<c:if test="${empty mNo}">
 							<tr>
 								<td colspan="7">멘토가 없습니다.</td>
 							<tr>
@@ -281,6 +285,23 @@
 							</div>
 						</div>
 	                 </form>
+	                 
+	                 <!-- 멘토 신청 승인 -->
+	                 <form action="mentoSuccess.do">
+		                 <div id="mentoSModal" class="modal">
+							      <!-- Modal content -->
+							<div class="modal-content">
+								<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">멘토 관리</span></b></span></p>
+								<p id="mentoSuccess" style="text-align: center; line-height: 1.5;"><br />멘토 자격을 승인하시겠습니까?</p>
+						     	<p><br /></p>
+						     	
+								<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+									<button type="submit" class="pop_bt" style="font-size: 13pt;">확인</button>
+									<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+								</div>
+							</div>
+						</div>
+	                 </form>
 					
 					<!-- 경력 보기 모달창 -->
 					<div id="careerModal" class="modal">
@@ -302,10 +323,16 @@
 									<tr>
 										<td colspan="2" id="cImg"></td>
 									</tr>
+									<tr>
+										<td><input type="radio" name="careerCheck" value="Y">&nbsp; Y &nbsp;&nbsp;
+										<input type="radio" name="careerCheck" value="N">&nbsp; N</td>
+										<td colspan="2"><button type="button" class="pop_bt" style="font-size: 13pt;" onClick="careerConfirm();">경력 인증</button></td>
+									</tr>
 								</tbody>
 							</table>
 					     	<p><br /></p>
 							<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
+
 								<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">확인</button>
 							</div>
 						</div>
@@ -328,10 +355,10 @@
 	                         	<th>자격증</th>
 	                         	<th>경력</th>
 	                         </tr>
-	                     <c:if test="${!empty spareMentoList}">
 	                     	<c:forEach var="mento" varStatus="i" items="${sNo}" begin="0" end="${sNo.size()}">
-	                     		<c:if test="${!empty sNo.sanctions}">
+	                     		<c:if test="${mento.sanctions ne 0}">
 		                     		<tr style="background:grey; opacity:0.7">
+		                     			<input type="hidden" class="mentoS${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>
 			                         	<td><c:out value="${i.current.memberNickname}"/></td>
 			                         	<td><c:out value="${i.current.memberName}"/></td>
@@ -339,6 +366,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -354,6 +382,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -369,6 +398,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -381,13 +411,12 @@
 				                         	</c:if>
 			                         	</c:forEach>
 			                         	</ul></td>
-			                         	<td><button id="metoManageBtn">관리</button></td>
+			                         	<td><button id="metoSManageBtn" onclick="mentoSManage(${i.index});">관리</button></td>
 									</tr>
 	                     			</c:if>
-		                         
-
-							<c:if test="${empty sNo.sanctions}">
-								<tr>
+									<c:if test="${mento.sanctions eq 0}">
+										<tr>
+										<input type="hidden" class="mentoS${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>
 			                         	<td><c:out value="${i.current.memberNickname}"/></td>
 			                         	<td><c:out value="${i.current.memberName}"/></td>
@@ -395,6 +424,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '학교' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -410,6 +440,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '자격증' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -425,6 +456,7 @@
 			                         	<td><ul>
 			                         	<c:forEach var="career" varStatus="j" items="${spareMentoList}">
 				                         	<c:if test="${career.specCName eq '경력' && i.current.memberNo eq career.memberNo}">
+				                         	<input type="hidden" class="spec${j.index}" value="${career.specNo}">
 				                         	<input type="hidden" class="name${j.index}" value="${career.specName}">
 				                         	<input type="hidden" class="pass${j.index}" value="${career.specComfirm}">
 				                         	<input type="hidden" class="file${j.index}" value="${career.specFileName}">
@@ -437,12 +469,12 @@
 				                         	</c:if>
 			                         	</c:forEach>
 			                         	</ul></td>
-			                         	<td><button id="metoManageBtn">관리</button></td>
+			                         	<td><button id="metoSManageBtn" onclick="mentoSManage(${i.index});">관리</button></td>
 									</tr>
 									</c:if>
 								</c:forEach>
-							</c:if>
-						<c:if test="${empty spareMentoList}">
+
+						<c:if test="${empty sNo}">
 							<tr>
 								<td colspan="7">멘토 신청자가 없습니다.</td>
 							<tr>
@@ -522,22 +554,33 @@
 			location.href="${listCheck}";
 		}
 		
+		// 멘토 박탈
 		function mentoManage(i){
 			$("#mentoModal").css("display","block");
-			$memberNo = $(".member"+i).val();
+			$memberNo = $(".mento"+i).val();
 			
 			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
+		}
+		
+		// 멘토 승인
+		function mentoSManage(i){
+			$("#mentoSModal").css("display","block");
+			$memberNo = $(".mentoS"+i).val();
+			console.log($memberNo);
+			$("#mentoSuccess").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 		}
 
 		function showImg(i){
 			$name = $(".name"+i).val();
 			$pass = $(".pass"+i).val();
 			$file = $(".file"+i).val();
+			$spec = $(".spec"+i).val();
 			
 			$("#careerModal").css("display","block");
 			
 			$("#specName").append($name);
 			$("#speckCheck").append($pass);
+			$("#specName").append("<input type='hidden' class='test' value='"+$spec+"'>")
 			
 			// 파일 이름을 $file로 설정하기 
 			if($file != null){
@@ -545,6 +588,14 @@
 			}else{
 				$("#cImg").append("사진 파일 없음");
 			}
+
+		}
+		
+		function careerConfirm(i){
+			$spec = $(".test").val();
+			$check = $("input[name=careerCheck]:checked").val();
+			
+			location.href="careerConfirm.do?specNo="+$spec+"&specComfirm="+$check;
 		}
 	</script>
 

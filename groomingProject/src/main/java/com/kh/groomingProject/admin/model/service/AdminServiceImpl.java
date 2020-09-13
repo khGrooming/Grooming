@@ -201,5 +201,17 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.adminPoint(clist);
 	}
 
+	@Override
+	public int careerConfirm(MentoManageView mv) {
+
+		return adminDao.careerConfirm(mv);
+	}
+
+	@Override
+	public int mentoSManage(String memberNo) {
+
+		return adminDao.mentoSuccess(memberNo);
+	}
+
 	
 }

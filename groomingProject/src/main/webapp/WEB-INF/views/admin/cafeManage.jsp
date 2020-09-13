@@ -301,10 +301,11 @@
 		    var page = 1;   //불러올 페이지
 		    /*nextpageload function*/
 		    function next_load(){
+		    	$name = $("#searchName").val();
 		    	page++;
 	            $.ajax({
                     url:"cafeManageAjax.do",
-                    data : {page:page},
+                    data : {page:page, name:$name},
                     dataType:"json",
 					success:function(data){
 						addCafeInfo(data);
@@ -316,7 +317,10 @@
 		    }
 
 		    $(window).scroll(function(){
-		    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+		    	var maxHeight = $(document).height();
+		    	var currentScroll = $(window).scrollTop() + $(window).height();
+		    	
+		    	if(maxHeight <= currentScroll + 10) {
 		            if(!loading)    //실행 가능 상태라면?
 		            {
 		                loading = true; //실행 불가능 상태로 변경

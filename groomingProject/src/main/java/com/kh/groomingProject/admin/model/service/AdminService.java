@@ -78,6 +78,10 @@ public interface AdminService {
 
 	ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist);
 
+	int careerConfirm(MentoManageView mv);
+
+	int mentoSManage(String memberNo);
+
 
 
 	

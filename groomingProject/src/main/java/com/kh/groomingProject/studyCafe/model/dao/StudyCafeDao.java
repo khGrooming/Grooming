@@ -31,11 +31,11 @@ public class StudyCafeDao {
 		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
 	}
 
-	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi) {
+	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi, Map str) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList", null, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeList", str, rowBounds);
 	}
 
 	public ArrayList<CafeInfo> selectCafeInto(CafeInfo cafe) {
@@ -82,9 +82,9 @@ public class StudyCafeDao {
 		return sqlSessionTemplate.insert("cafeMapper.pointCalculation", rinfo);
 	}
 
-	public int studyCafeCount() {
+	public int studyCafeCount(Map str) {
 
-		return sqlSessionTemplate.selectOne("cafeMapper.studyCafeCount");
+		return sqlSessionTemplate.selectOne("cafeMapper.studyCafeCount", str);
 	}
 
 

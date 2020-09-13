@@ -99,10 +99,10 @@
 		                </thead>
 		                <tbody>
 		                    <c:forEach var="list" items="${list}">
-		                    	<c:if test="${!empty list.sanctions}">
-		                    		<tr style="opacity:0.9">
+		                    	<c:if test="${list.sanctions ne 0}">
+		                    		<tr style="background:grey;opacity:0.9;">
 		                    	</c:if>
-		                    	<c:if test="${empty list.sanctions}">
+		                    	<c:if test="${list.sanctions eq 0}">
 			                    	<tr>
 		                    	</c:if>
 		                    		<td>${list.memberEmail}</td>

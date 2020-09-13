@@ -86,7 +86,7 @@ public class AdminController {
 		AdminPageInfo pi = getPageInfo(currentPage, listCount);
 		
 		ArrayList<MemberManageView> list = adminService.selectList(pi, info);
-
+		System.out.println("mList : "+list);
 		if(list != null) {
 			mv.addObject("category", category);
 			mv.addObject("name", name);
@@ -279,17 +279,21 @@ public class AdminController {
 	
 	
 	@RequestMapping("cafeManage.do")
-	public ModelAndView cafeManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView cafeManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("cafeList", cafeList);
@@ -299,17 +303,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping("cafeManageAjax.do")
-	public void cafeManageAjax(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+	public void cafeManageAjax(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		System.out.println("str : "+str);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -328,7 +337,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="cafeInfoChange.do", method=RequestMethod.POST)
-	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -340,7 +353,7 @@ public class AdminController {
 			int cPriceDel = adminService.DeleteCafeInfo(cafe);
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
 		
@@ -353,7 +366,7 @@ public class AdminController {
 		int result = adminService.cafeInfoChange(cafe);
 		
 		if(result > 0) {
-			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi,str);
 			
 			mv.addObject("pi", pi);
 			mv.addObject("cafeList", cafeList);
@@ -417,10 +430,26 @@ public class AdminController {
 	
 	@RequestMapping("mentoFail.do")
 	public String mentoFail(String memberNo) {
-		System.out.println(memberNo);
+
 		int result = adminService.mentoManage(memberNo);
 		
 		return "redirect:mentoManage.do";
 	}
 	
+	@RequestMapping("mentoSuccess.do")
+	public String mentoSuccess(String memberNo) {
+		System.out.println(memberNo);
+		int result = adminService.mentoSManage(memberNo);
+		
+		return "redirect:mentoManage.do";
+	}
+	
+	@RequestMapping("careerConfirm.do")
+	public String careerConfirm(MentoManageView mv) {
+		
+		int result = adminService.careerConfirm(mv);
+		
+		return "redirect:mentoManage.do";
+	}
+
 }

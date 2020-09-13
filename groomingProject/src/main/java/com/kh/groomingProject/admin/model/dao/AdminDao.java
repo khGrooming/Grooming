@@ -208,4 +208,14 @@ public class AdminDao {
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminPoint", clist);
 	}
 
+	public int careerConfirm(MentoManageView mv) {
+
+		return sqlSessionTemplate.update("adminMapper.careerConfirm", mv);
+	}
+
+	public int mentoSuccess(String memberNo) {
+
+		return sqlSessionTemplate.update("adminMapper.mentoSuccess", memberNo);
+	}
+
 }
