@@ -479,7 +479,10 @@
 <script type="text/javascript">
 	var page = 1;
 	var pageloading = true;
-
+	$(function() {
+	      console.log("그루밍 페이지");
+	      loadGroomingData();
+	   });
 
 	// 스크롤 로딩
 	window.onscroll = function(e) {
@@ -705,6 +708,8 @@ $(function(){
 	$("#find").on("click", function() {
 		search();
 	});
+	
+	
 	// 검색
 	function search() {
 		var search = $('#search option:selected').val();

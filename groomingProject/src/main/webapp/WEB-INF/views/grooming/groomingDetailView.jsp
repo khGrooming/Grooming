@@ -115,6 +115,10 @@ font-family: 'TmoneyRoundWindExtraBold';
 	width: 100%;
 	height: 100%;
 }
+
+section pre{
+  white-space: pre-wrap;
+}
 </style>
 </head>
 <body>
