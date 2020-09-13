@@ -23,6 +23,7 @@
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberAlert" alias="MemberAlert"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberCertiCode" alias="MemberCertiCode"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberSanctions" alias="MemberSanctions"/>
 
 		<!-- 마이페이지 -->
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>

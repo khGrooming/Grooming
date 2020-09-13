@@ -528,31 +528,8 @@
 					getUserAlert();
 					getUserMessages();
 				}, 10000);
-				/* setInterval(function(){
-					refreshLoginUser();
-				}, 60000); */
 			}
 		});
-	</script>
-
-	<!-- 로그인 유저 세션 갱신 -->
-	<script type="text/javascript">
-		function refreshLoginUser() {
-			var memberEmail = "";
-			memberEmail = "${loginUser.memberEmail}";
-			$.ajax({
-				url:"refreshLoginUser.do",
-				data:{memberEmail:memberEmail},
-				success:function(data){
-					if(data == "success"){
-						console.log("로그인 유저 세션 새로고침");
-					}
-				},
-				error:function(request, status, errorData){
-					alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-				}
-			});
-		}
 	</script>
 
 	<!-- 메시지 스크립트 -->

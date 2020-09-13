@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
+import com.kh.groomingProject.member.model.vo.MemberSanctions;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 
 public interface MemberService {
@@ -44,5 +45,7 @@ public interface MemberService {
 	Member findEmail(Member m);
 
 	int addExp(Map map1);
+
+	MemberSanctions chkMemberSanction(String memberEmail);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
+import com.kh.groomingProject.member.model.vo.MemberSanctions;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Repository("mDao")
@@ -103,8 +104,13 @@ public class MemberDao {
 	}
 
 	public int addExp(Map map1) {
-		// TODO Auto-generated method stub
+
 		return sqlSessionTemplate.update("memberMapper.addExp",map1);
+	}
+
+	public MemberSanctions chkMemberSanction(String memberEmail) {
+
+		return sqlSessionTemplate.selectOne("memberMapper.chkMemberSanction", memberEmail);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.groomingProject.member.model.dao.MemberDao;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
+import com.kh.groomingProject.member.model.vo.MemberSanctions;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 
 @Service("mService")
@@ -103,7 +104,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectGroupMemberNo(String gBoardNo) {
-		// TODO Auto-generated method stub
+
 		return mDao.selectGroupMemberNo(gBoardNo);
 	}
 
@@ -121,8 +122,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int addExp(Map map1) {
-		// TODO Auto-generated method stub
+		
 		return mDao.addExp(map1);
+	}
+
+	@Override
+	public MemberSanctions chkMemberSanction(String memberEmail) {
+
+		return mDao.chkMemberSanction(memberEmail);
 	}
 
 }
