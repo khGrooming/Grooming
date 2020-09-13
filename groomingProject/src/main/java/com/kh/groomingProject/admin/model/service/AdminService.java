@@ -9,7 +9,6 @@ import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
-import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -35,9 +34,9 @@ public interface AdminService {
 
 	ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i);
 
-	int selectGroomingCount(String category);
+	int selectGroomingCount(Map str);
 
-	ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category);
+	ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, Map str);
 
 	int selectDeclarationCount();
 
@@ -71,8 +70,14 @@ public interface AdminService {
 
 	int mentoManage(String memberNo);
 
+	int gActivation(Map str);
 
-	
+	int declarationDelete(Map info);
+
+	int DeleteCafeInfo(CafeInfo cafe);
+
+	ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist);
+
 
 
 	

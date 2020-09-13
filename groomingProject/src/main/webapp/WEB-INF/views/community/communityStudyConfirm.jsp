@@ -73,7 +73,7 @@
 							<input type="hidden" value="">
 							<div class="card-image-zoom">
 								<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..."
-											data-toggle="modal" data-target="#confirmDetailView${c.boardNo}">
+											data-toggle="modal" data-target="#confirmDetailView${c.boardNo}" onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
 							</div>
 						</div>
 					</div>				
@@ -86,12 +86,12 @@
     					<!-- Modal 내용-->
      					<div class="modal-content">
       						<div class="modal-header">
-      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="...">
+      							<img src="${contextPath}/resources/upprofileFiles/${c.memberPhoto }" class="modal-title" alt="..." onerror="this.src='${contextPath }/resources/upprofileFiles/MEMBER_SAMPLE_IMG.JPG'">
         						&nbsp;&nbsp;<h5>${c.memberNickName }</h5>
         						<button type="button" class="close" data-dismiss="modal">x</button>
       						</div>
       						<div class="modal-body">
-      							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="...">
+      							<img src="${contextPath}/resources/buploadFiles/${c.boardImg}" class="card-img-top" alt="..." onerror="this.src='${contextPath }/resources/buploadFiles/ww.jpg'">
         						<hr>
         						<p>${c.boardContent }</p>
       						</div>

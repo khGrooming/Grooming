@@ -17,6 +17,13 @@ public class MemberReport implements Serializable{
 	public MemberReport() {
 		super();
 	}
+	
+	public MemberReport(String memberNo, String declarationNNo) {
+		super();
+		this.memberNo = memberNo;
+		this.declarationNNo = declarationNNo;
+	}
+
 	public MemberReport(String declarationNo, String memberNo, String declarationCNo, String declarationNNo,
 			String declarationContent, String declarationCheck) {
 		super();

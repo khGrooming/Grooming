@@ -26,11 +26,8 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
-        img {
+       section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -132,12 +129,13 @@
 
 <body>
     <!-- 헤더시작 -->
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+	<section>
 	
     <!-- 컨테이너로 양옆에 공백 생성 -->
-    <div class=container style="margin-top:150px ; ">
+    <div class="container">
 	    <c:url var="calendar" value="calendar.do">
 	    		<c:param name="groomingNo" value="${grooming.groomingNo}"/>
 	    		<c:param name="memberNo" value="${loginUser.memberNo}" />
@@ -158,7 +156,6 @@
 	
 
         <!-- 메인에 들어갈 내용용 -->
-        <section style="margin-top:100px;">
 
 
 
@@ -213,92 +210,64 @@
                     </form>
 
                 </table>
-
             </div>
 
+		</div>
+	</section>
 
+	<script>
+		$(document).ready(function() {
 
+			var fileTarget = $('.filebox .upload-hidden');
 
+			fileTarget.on('change', function() {
+				if (window.FileReader) {
+					// 파일명 추출
+					var filename = $(this)[0].files[0].name;
+				} else {
+					// Old IE 파일명 추출
+					var filename = $(this).val().split('/').pop().split('\\').pop();
+				}
+				;
 
-        </section>
-    <!--     <script >
-            $(document).ready(function() {
-                  $('#summernote').summernote({
-                	 	height:500,
-                        placeholder: 'content',
-                        minHeight: null,
-                        maxHeight: null,
-                        focus: true, 
-                        lang : 'ko-KR'
-                  });
-                });
-            </script>
- -->
+				$(this).siblings('.upload-name').val(filename);
+			});
 
-<script>
-			$(document).ready(function() {
+			//preview image 
+			var imgTarget = $('.preview-image .upload-hidden');
 
-								var fileTarget = $('.filebox .upload-hidden');
+			imgTarget.on('change',function() {
+				var parent = $(this).parent();
+				parent.children('.upload-display').remove();
 
-								fileTarget.on('change',
-												function() {
-													if (window.FileReader) {
-														// 파일명 추출
-														var filename = $(this)[0].files[0].name;
-													}
+				if (window.FileReader) {
+					//image 파일만
+					if (!$(this)[0].files[0].type.match(/image\//))
+						return;
 
-													else {
-														// Old IE 파일명 추출
-														var filename = $(this)
-																.val().split('/')
-																.pop().split('\\')
-																.pop();
-													}
-													;
+					var reader = new FileReader();
+					
+					reader.onload = function(e) {
+						var src = e.target.result;
+						parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
 
-													$(this).siblings('.upload-name').val(filename);
-												});
+					}
+					reader.readAsDataURL($(this)[0].files[0]);
+					} else {
+						$(this)[0].select();
+						$(this)[0].blur();
+						var imgSrc = document.selection.createRange().text;
+						parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
 
-								//preview image 
-								var imgTarget = $('.preview-image .upload-hidden');
-
-								imgTarget.on('change',function() {
-													var parent = $(this).parent();
-													parent.children('.upload-display').remove();
-
-													if (window.FileReader) {
-														//image 파일만
-														if (!$(this)[0].files[0].type.match(/image\//))
-															return;
-
-														var reader = new FileReader();
-														
-														reader.onload = function(e) {
-															var src = e.target.result;
-															parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-
-														}
-														reader.readAsDataURL($(this)[0].files[0]);
-													}
-
-													else {
-														$(this)[0].select();
-														$(this)[0].blur();
-														var imgSrc = document.selection.createRange().text;
-														parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-														var img = $(this).siblings('.upload-display').find('img');
-														img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""
-																+ imgSrc
-																+ "\")";
-													}
-												});
-							});
+						var img = $(this).siblings('.upload-display').find('img');
+						img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\"" + imgSrc + "\")";
+					}
+				});
+			});
 		</script>
-		
 
 
-    </div>
+   
 
 
 		<jsp:include page="../common/footer.jsp" />

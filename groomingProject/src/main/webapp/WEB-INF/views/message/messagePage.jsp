@@ -562,7 +562,7 @@ section
                             <div class="received_msg">
                                 <div class="received_withd_msg">
                                 	<div class="msgBox_add"></div>
-                                    <p>아마도 애니메이션 작업 할꺼에요... //TODO </p>
+                                    <p>채팅 리스트를 클릭해 채팅창을 열거나 </p>
                                     <span class="time_date">PM 02시 22분</span>
                                 </div>
                             </div>
@@ -599,7 +599,7 @@ section
 			loadChatListData();
 			
 			// 테스트 중
-			/* setInterval(function(){
+			setInterval(function(){
 				loadChatListData();
 				
 				if($(".mesgs_header").find("input[type=hidden].header_memberNo").val() != ""){
@@ -610,7 +610,7 @@ section
 					
 					loadChatData(fromMemberNo,toMemberNo);
 				}
-			}, 5000); */
+			}, 5000);
 		});
 	</script>
 

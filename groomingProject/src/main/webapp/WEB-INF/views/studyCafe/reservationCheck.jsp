@@ -22,7 +22,7 @@
             .searchView{width:100%;height:550px;background:lawngreen;display:inline-block;padding:10px;}
 
             .panel{width:150px;height:200px;display:inline-block; border-radius: 10%;overflow:hidden;}
-            img{width: 150px;}
+            section img{width: 150px;}
 
             .cafe{height:80px;text-align:center;padding:30px;}
             
@@ -62,13 +62,13 @@
 	                   <div class="sideMenu col-sm-7">
 	                        <div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
                         <c:if test="${!empty loginUser}">
-						<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
-						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
-					</c:if>
-					<c:if test="${empty loginUser}">
-						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
-						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
-					</c:if>
+							<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+							<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
+						</c:if>
+						<c:if test="${empty loginUser}">
+							<div class="cafe"><a href="loginPage.do?memberNo}">카페 신청 내역</a></div>
+							<div class="cafe"><a href="loginPage.do?memberNo">카페 예약 내역</a></div>
+						</c:if>
 	                   </div>
 	            </div>
             

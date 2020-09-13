@@ -174,6 +174,15 @@
 		<result property="groomingViewCount" column="GROOMING_COUNT"/>
 	</resultMap>
 
+	<resultMap type="MemberReport" id="MemberReportSet">
+		<id property="declarationNo" column="DECLARATION_NO" />
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="declarationCNo" column="DECLARATION_C_NO"/>
+		<result property="declarationNNo" column="DECLARATION_N_NO"/>
+		<result property="declarationContent" column="DECLARATION_CONTENT"/>
+		<result property="declarationCheck" column="DECLARATION_CHECK"/>	
+	</resultMap>
+
 	<select id="testLoginUser" parameterType="string" resultMap="MemberSet">
 		SELECT * 
 		FROM MEMBER

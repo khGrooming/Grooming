@@ -299,9 +299,9 @@ border-radius: 20px;
 <jsp:include page="../common/mainNavigationBar.jsp" />
 	<section>
 	<div id="content">
-		<img src="${contextPath }/resources/views/images/repotBtn.png" style="height: 22px; float: right; margin-right: 1%;" data-toggle="modal" data-target="#reportModal"   >
+		<img src="${contextPath }/resources/views/images/repotBtn.png" style="height: 22px;  float: right; margin-right: 1%;" id="reportImg" data-toggle="modal" data-target="#reportModal"   >
 		<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog" role="document" style=" margin-top:200px;">
 				<div class="modal-content">
 					<div class="modal-header">
 	
@@ -314,6 +314,7 @@ border-radius: 20px;
 					</div>
 						<form id="reportForm" name="reportForm" action="memberReport.do" method="post">
 							<div class="modal-body">
+								<c:if test="${empty repInfo }">
 								<div style="margin-left: 2%;">
 								<p>어떤 문제가 있나요?</p>
 								<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
@@ -364,9 +365,19 @@ border-radius: 20px;
 									
 								
 								</script>
+								</c:if>
+								<c:if test="${!empty repInfo }">
+									<p>이미 신고내역이 있습니다</p>
+									<p>이전 신고가 처리되기 전까지 다시 신고할 수 없습니다</p>
+									<h4>신고내용</h4>
+									<p style="color:red;">${repInfo.declarationContent }</p>
+									
+								</c:if>
 							</div>
 							<div class="modal-footer">
+							<c:if test="${empty repInfo }">
 								<button type="button" class="btn btn-primary"  id="btn-confirm">확인</button>
+							</c:if>
 								<button type="button" id="btn-delete" class="btn btn-default" data-dismiss="modal">취소</button>
 							</div>
 						</form>
@@ -383,8 +394,10 @@ border-radius: 20px;
 							data:reportForm,
 							success : function(data){
 				                if(data == 'Y'){
+				                	alert("신고가 완료되었습니다.")
 				                	$("#btn-delete").click();
-				                	
+				                	$("#reportImg").attr("data-toggle","").attr("data-target","");
+				                	$("#reportImg").attr("onclick","alert('이미신고하였습니다.')");
 				                }
 				            },
 						error:function(request, status, errorData){
@@ -540,9 +553,8 @@ border-radius: 20px;
 				[이전]&nbsp;
 			</c:if>
 			<c:if test="${pih.currentPage gt 1 }">
-				<c:url var="gApplicantBack" value="gApplicant.do">
+				<c:url var="gApplicantBack" value="profilePage.do.do">
 					<c:param name="pageh" value="${pih.currentPage -1 }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 				</c:url>
 				<a href="${gApplicantBack }">[이전]</a>
 			</c:if>
@@ -551,9 +563,8 @@ border-radius: 20px;
 					<font color="red" size="4"><b>[${p }]</b></font>
 				</c:if>
 				<c:if test="${p ne pih.currentPage }">
-					<c:url var="gApplicantCheck" value="gApplicant.do">
+					<c:url var="gApplicantCheck" value="profilePage.do.do">
 					<c:param name="pageh" value="${p }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 					</c:url>
 					<a href="${gApplicantCheck }">${p }</a>
 				</c:if>
@@ -562,9 +573,8 @@ border-radius: 20px;
 				&nbsp;[이후]
 			</c:if>
 			<c:if test="${pih.currentPage lt pih.maxPage }">
-				<c:url var="gApplicantAfter" value="gApplicant.do">
+				<c:url var="gApplicantAfter" value="profilePage.do.do">
 					<c:param name="pageh" value="${pih.currentPage +1 }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 				</c:url>
 				<a href="${gApplicantAfter }">[이후]</a>
 			</c:if>

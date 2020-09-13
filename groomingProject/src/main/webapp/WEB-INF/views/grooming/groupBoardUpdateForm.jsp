@@ -11,12 +11,8 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
 
     <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-	crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
-     integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
    
  
 <%-- 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-lite.js"></script>
@@ -26,11 +22,8 @@
 	<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/summernote-ko-KR.js"></script> --%>
     <title>Hello, world!</title>
     <style>
-        body{
-            height: 1200px;
-        }
         /* div의 크기에 맞춤 */
-        img {
+        section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -57,6 +50,7 @@
 	   }
 	   
 	   .filebox input[type="file"] {
+
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -66,7 +60,6 @@
 	clip: rect(0, 0, 0, 0);
 	border: 0;
 }
-
 .filebox label {
 	display: inline-block;
 	padding: .5em .75em;
@@ -96,7 +89,6 @@
 	-webkit-appearance: none; /* 네이티브 외형 감추기 */
 	ppearance: none;
 }
-
 .filebox .upload-display { /* 이미지가 표시될 지역 */
 	margin-bottom: 5px;
 	width: 300px;
@@ -109,7 +101,6 @@
 		margin-bottom: 0;
 	}
 }
-
 .filebox .upload-thumb-wrap { /* 추가될 이미지를 감싸는 요소 */
 	display: inline-block;
 	width: 100%;
@@ -119,22 +110,20 @@
 	border-radius: 5px;
 	background-color: #fff;
 }
-
 .filebox .upload-display img { /* 추가될 이미지 */
 	display: block;
 	max-width: 100%;
 	width: 100%;
 	height: auto;
 }
-	   
-    </style>
+</style>
 </head>
-
 <body>
     <!-- 헤더시작 -->
-      	<jsp:include page="../common/mainNavigationBar.jsp" />
+	<jsp:include page="../common/mainNavigationBar.jsp" />
 
     <!-- 섹션 시작 -->
+	<section>
 	
     <!-- 컨테이너로 양옆에 공백 생성 -->
     <div class=container style="margin-top:150px ; ">
@@ -155,17 +144,11 @@
         <label><a href="${calendar }"><i class="fas fa-calendar-alt"></i>출석부</a></label>
 
         <label><a href="${gBlist }"><i class="fas fa-icons"></i>게시판</a></label>
-	
 
         <!-- 메인에 들어갈 내용용 -->
-        <section style="margin-top:100px;">
-
-
-
             <div class="container">
 
                 <table class="table table-bordered">
-
 
                 <form action="groupUpdate.do" method="post" enctype="multipart/form-data" id="form">
                     <input type="hidden" name="page" value="${page}">
@@ -231,12 +214,14 @@
 
             </div>	
             <input type="hidden" value="${g.gBoardContent }" id="textareaContent">
-
-
-
-
-
+            </div>
         </section>
+
+
+
+
+
+    
         <script>
 			$(function(){
 			
@@ -244,83 +229,56 @@
 				var content = $("#content");
 				if(textareaContent != null){
 					content.text(textareaContent);
+			}
+		})
+	</script> 
+
+	<script>
+		// 파일 업로드 관련 script
+		$(document).ready(function() {
+			var fileTarget = $('.filebox .upload-hidden');
+			fileTarget.on('change',function() {
+				if (window.FileReader) {
+					// 파일명 추출
+					var filename = $(this)[0].files[0].name;
+				} else {
+					// Old IE 파일명 추출
+					var filename = $(this).val().split('/').pop().split('\\').pop();
+				};
+				$(this).siblings('.upload-name').val(filename);
+			});
+
+			//preview image 
+			var imgTarget = $('.preview-image .upload-hidden');	// api에서 기존에 있었던 이미지
+			var imgTarget1 = $('.preview-image #UImg');	// 원래 업로드 하여 사용중이었던 이미지
+			imgTarget.on('change',function() {
+					var parent = $('.preview-image .upload-hidden').parent();
+					parent.children('.upload-display').remove();
+					imgTarget1.remove();
+				if (window.FileReader) {
+					//image 파일만
+					if (!$(this)[0].files[0].type.match(/image\//))
+						return;
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						var src = e.target.result;
+						parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+					}
+					reader.readAsDataURL($(this)[0].files[0]);
+				} else {
+					$(this)[0].select();
+					$(this)[0].blur();
+					var imgSrc = document.selection.createRange().text;
+					parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+				
+					var img = $(this).siblings('.upload-display').find('img');
+					img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+ imgSrc+ "\")";
 				}
-			})
-			
-		</script> 
-    <!--     <script >
-            $(document).ready(function() {
-                  $('#summernote').summernote({
-                	 	height:500,
-                        placeholder: 'content',
-                        minHeight: null,
-                        maxHeight: null,
-                        focus: true, 
-                        lang : 'ko-KR'
-                  });
-                });
-            </script>
- -->
+			});
+		});
+	</script>
 
-		<script>
-			// 파일 업로드 관련 script
-			$(document).ready(function() {
-
-								var fileTarget = $('.filebox .upload-hidden');
-
-								fileTarget.on('change',function() {
-													if (window.FileReader) {
-														// 파일명 추출
-														var filename = $(this)[0].files[0].name;
-													}
-
-													else {
-														// Old IE 파일명 추출
-														var filename = $(this).val().split('/').pop().split('\\').pop();
-													};
-
-													$(this).siblings(
-															'.upload-name')
-															.val(filename);
-												});
-
-								//preview image 
-								var imgTarget = $('.preview-image .upload-hidden');	// api에서 기존에 있었던 이미지
-								var imgTarget1 = $('.preview-image #UImg');	// 원래 업로드 하여 사용중이었던 이미지
-								imgTarget.on('change',function() {
-												var parent = $('.preview-image .upload-hidden').parent();
-												parent.children('.upload-display').remove();
-												imgTarget1.remove();
-							if (window.FileReader) {
-							//image 파일만
-									if (!$(this)[0].files[0].type.match(/image\//))
-										return;
-									var reader = new FileReader();
-									reader.onload = function(e) {
-										var src = e.target.result;
-										parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
-									}
-									reader.readAsDataURL($(this)[0].files[0]);
-								}
-							else {
-								$(this)[0].select();
-								$(this)[0].blur();
-								var imgSrc = document.selection.createRange().text;
-								parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
-
-								var img = $(this).siblings('.upload-display').find('img');
-								img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+ imgSrc+ "\")";
-							}
-												});
-									});
-		</script>
-
-
-    </div>
-
-
-		<jsp:include page="../common/footer.jsp" />
-
+	<jsp:include page="../common/footer.jsp" />
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -332,5 +290,4 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 </body>
-
 </html>

@@ -23,6 +23,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
+
 <!-- 아이콘 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
 
@@ -33,7 +34,6 @@
 <!-- 폰트 -->
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
-
 <!-- 메인 컨테이너 -->
 <style type="text/css">
 .main_container
@@ -244,6 +244,11 @@
 	margin: 0.4rem;
 	padding: 0;
 }
+
+.Gbtn {
+	border-radius:10px;
+
+}
 </style>
 
 <!--     <style>
@@ -336,10 +341,10 @@
 						<option value="content" id="content">내용</option>
 					</select>
 					<input type="text" size="30px" id="keyword" required>
-					<button id="find">검색</button>
+					<button id="find" class="Gbtn">검색</button>
 					<c:if test="${!empty loginUser }">
 
-						<button type="button" id="writeG">글쓰기</button>
+						<button type="button" id="writeG"  class="Gbtn">글쓰기</button>
 
 					</c:if>
 				</div>
@@ -490,6 +495,7 @@
 	// 그루밍 데이터 가져오기
 	function loadGroomingData() {
 		page++;
+		
 		$.ajax({
 			url:"addAllGroomingList.do",
 			data:{page:page},
@@ -617,11 +623,11 @@
 		    			if(result){
 		    				location.href='groomingSaveInsert.do?memberNo='+memberNo;
 		    			}else{
-		    				event.preventDefault();
+		    				location.href='groomingInsert.do?memberNo='+memberNo;
 		    			}
 		    			
 		    		}else {
-		    			location.href='groomingInsert.do';
+		    			location.href='groomingInsert.do?memberNo='+memberNo;
 		    		}
 					
 				},error:function(request, status, errorData){

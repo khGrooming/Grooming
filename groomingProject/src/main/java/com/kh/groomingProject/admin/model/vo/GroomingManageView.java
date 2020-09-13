@@ -14,22 +14,25 @@ public class GroomingManageView implements Serializable {
 	private String groomingIntroduce;
 	private int groomingParticipants;
 	private int groomingCurrentPeople;
-	private Date gCalendarStartDate;
-	private Date gBoardModifyDate;
+	private Date gCalendarEndDate;
+	private Date gBoardCreateDate;
+	private String groomingStatus;
 	
 	public GroomingManageView() {
 	}
 	
 	public GroomingManageView(String groomingNo, String groomingType, String groomingTitle, String groomingIntroduce,
-			int groomingParticipants, int groomingCurrentPeople, Date gCalendarStartDate, Date gBoardModifyDate) {
+			int groomingParticipants, int groomingCurrentPeople, Date gCalendarEndDate, Date gBoardCreateDate,
+			String groomingStatus) {
 		this.groomingNo = groomingNo;
 		this.groomingType = groomingType;
 		this.groomingTitle = groomingTitle;
 		this.groomingIntroduce = groomingIntroduce;
 		this.groomingParticipants = groomingParticipants;
 		this.groomingCurrentPeople = groomingCurrentPeople;
-		this.gCalendarStartDate = gCalendarStartDate;
-		this.gBoardModifyDate = gBoardModifyDate;
+		this.gCalendarEndDate = gCalendarEndDate;
+		this.gBoardCreateDate = gBoardCreateDate;
+		this.groomingStatus = groomingStatus;
 	}
 	
 	public String getGroomingNo() {
@@ -68,26 +71,33 @@ public class GroomingManageView implements Serializable {
 	public void setGroomingCurrentPeople(int groomingCurrentPeople) {
 		this.groomingCurrentPeople = groomingCurrentPeople;
 	}
-	public Date getgCalendarStartDate() {
-		return gCalendarStartDate;
+	public Date getgCalendarEndDate() {
+		return gCalendarEndDate;
 	}
-	public void setgCalendarStartDate(Date gCalendarStartDate) {
-		this.gCalendarStartDate = gCalendarStartDate;
+	public void setgCalendarEndDate(Date gCalendarEndDate) {
+		this.gCalendarEndDate = gCalendarEndDate;
 	}
-	public Date getgBoardModifyDate() {
-		return gBoardModifyDate;
+	public Date getgBoardCreateDate() {
+		return gBoardCreateDate;
 	}
-	public void setgBoardModifyDate(Date gBoardModifyDate) {
-		this.gBoardModifyDate = gBoardModifyDate;
+	public void setgBoardCreateDate(Date gBoardCreateDate) {
+		this.gBoardCreateDate = gBoardCreateDate;
+	}
+	public String getGroomingStatus() {
+		return groomingStatus;
+	}
+	public void setGroomingStatus(String groomingStatus) {
+		this.groomingStatus = groomingStatus;
 	}
 	
 	@Override
 	public String toString() {
 		return "GroomingManageView [groomingNo=" + groomingNo + ", groomingType=" + groomingType + ", groomingTitle="
 				+ groomingTitle + ", groomingIntroduce=" + groomingIntroduce + ", groomingParticipants="
-				+ groomingParticipants + ", groomingCurrentPeople=" + groomingCurrentPeople + ", gCalendarStartDate="
-				+ gCalendarStartDate + ", gBoardModifyDate=" + gBoardModifyDate + "]";
+				+ groomingParticipants + ", groomingCurrentPeople=" + groomingCurrentPeople + ", gCalendarEndDate="
+				+ gCalendarEndDate + ", gBoardCreateDate=" + gBoardCreateDate + ", groomingStatus=" + groomingStatus
+				+ "]";
 	}
 	
-	
+
 }

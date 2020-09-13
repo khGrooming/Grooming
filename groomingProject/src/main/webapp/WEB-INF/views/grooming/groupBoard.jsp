@@ -27,7 +27,7 @@
     <title>Hello, world!</title>
     <style>
         /* div의 크기에 맞춤 */
-        img {
+        section img {
             max-width: 100%;
             max-height: 100%;
         }
@@ -43,8 +43,6 @@
       * {
          font-family:"TmoneyRoundWindExtraBold";
       }
-       
-  
     </style>
 </head>
 

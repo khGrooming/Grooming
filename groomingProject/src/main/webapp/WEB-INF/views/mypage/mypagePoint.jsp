@@ -278,7 +278,7 @@
 	    			                 */
 	    			                name: '그루밍 포인트 충전',
 	    			                //결제창에서 보여질 이름
-	    			                amount: 100, 
+	    			                amount: money, 
 	    			                //가격 
 	    			                buyer_email: "${loginUser.memberEmail}",
 	    			                buyer_name: "${loginUser.memberEmail}",

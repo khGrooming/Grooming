@@ -131,6 +131,13 @@
 			<result property="pointList" column="POINT_LIST" />	
 			<result property="pointDate" column="POINT_DATE" />	
 	</resultMap>
+	
+	<resultMap type="Mentor" id="MentorResultSet">
+			<id property="mentorNo" column="MENTOR_NO"/>
+			<result property="memberNo" column="MEMBER_NO" />	
+			<result property="pass" column="MENTOR_PASS" />	
+	</resultMap>
+	
 <!--  	<select id="selectList" resultMap="groomingResultSet">
  		SELECT * 
  		FROM GROOMING

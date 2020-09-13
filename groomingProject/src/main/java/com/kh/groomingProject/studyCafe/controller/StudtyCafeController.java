@@ -1,5 +1,7 @@
 package com.kh.groomingProject.studyCafe.controller;
 
+import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
@@ -38,10 +42,19 @@ public class StudtyCafeController {
 	
 	// 이름으로 검색 첫 화면 이동
 	@RequestMapping("searchName.do")
-	public ModelAndView searchName(ModelAndView mv) throws JsonIOException, IOException {
+	public ModelAndView searchName(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList();
+		cafeList = studyCafeService.selectCafeList(pi);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchName");
@@ -66,10 +79,19 @@ public class StudtyCafeController {
 	
 	// 지역으로 검색 화면으로 이동
 	@RequestMapping("searchLocal.do")
-	public ModelAndView searchLocal(ModelAndView mv) throws JsonIOException, IOException {
+	public ModelAndView searchLocal(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList();
+		cafeList = studyCafeService.selectCafeList(pi);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchLocal");
@@ -90,6 +112,8 @@ public class StudtyCafeController {
 		gson.toJson(list, response.getWriter());
 	}
 	
+	
+	
 	// 카페 디테일 페이지로 이동
 	@RequestMapping(value="cafeDetail.do")
 	public ModelAndView cafeDetail(ModelAndView mv, CafeInfo cafeNo, String cReserNo) {
@@ -109,7 +133,7 @@ public class StudtyCafeController {
 		str.put("day", day);
 		str.put("cPriceNo", cPriceNo);
 		ArrayList<Reservation> list = studyCafeService.selectCheckRoom(str);
-		System.out.println("Roomlist : "+list);
+		
 		response.setContentType("application/json;charset=UTF-8");
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
@@ -119,12 +143,11 @@ public class StudtyCafeController {
 	@RequestMapping(value="checkTime.do", method=RequestMethod.POST)
 	public void searchTime(String date, String cPriceNo, HttpServletResponse response ) throws JsonIOException, IOException {
 		Map str = new HashMap();
-
 		str.put("date", date);
 		str.put("cPriceNo", cPriceNo);
 		
 		ArrayList<Reservation> list = studyCafeService.selectCheckTime(str);
-		System.out.println("Timelist : "+list);
+
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
 		gson.toJson(list, response.getWriter());
 	}
@@ -133,7 +156,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
 	public String insertReservation(Reservation r, String money) {
 		Map rinfo = new HashMap();
-		
+
 		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(r.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
@@ -208,9 +231,9 @@ public class StudtyCafeController {
 	public String checkPoint(int money, String cReserNo, Member m) {
 		Map rinfo = new HashMap();
 		rinfo.put("memberNo", m.getMemberNo());
-		
+
 		int totalPoint = studyCafeService.checkPoint(rinfo);
-		
+
 		if(totalPoint >= money) {
 			return "success";
 		}else {
