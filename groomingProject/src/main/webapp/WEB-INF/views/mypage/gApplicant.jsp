@@ -107,7 +107,7 @@ pre{
 					</c:if>
 					<c:if test="${list.applyStatus eq 'D' }">
 						
-						<p style="cursor:pointer; width: 10px; position: absolute; top: 0; right: 0;" onclick="apdelete('${list.gApplicantNo}')">X</p>
+						<p style="cursor:pointer; width: 10px; position: absolute; top: 0; right: 0; margin: 5px 5px;" onclick="apdelete('${list.gApplicantNo}')">X</p>
 						<p style="color:gray">탈락</p>
 						
 					</c:if>
