@@ -97,8 +97,6 @@ body{
 
 .Gbtn {
 	border-radius:10px;
-
-}
 </style>
 </head>
 <body>
