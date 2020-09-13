@@ -381,6 +381,13 @@
  		WHERE GROOMING_APPLY_NO = #{applyNo}
  	
  	</select>
+ 	<select id="findAppMemberEmail" parameterType="string" resultType="string">
+ 		SELECT MEMBER_EMAIL
+ 		FROM MEMBER M
+        JOIN GROOMING_APPLICANT GA ON M.MEMBER_NO = GA.MEMBER_NO
+ 		WHERE GROOMING_APPLY_NO = #{applyNo}
+ 	
+ 	</select>
  	<insert id="addGroomingMember" parameterType="map">
  		INSERT INTO GROMMING_MEMBER VALUES(
  		'GM' || LPAD(SEQ_G_MEMBER_NO.NEXTVAL,5,0)

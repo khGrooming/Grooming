@@ -732,6 +732,7 @@ font-family: 'TmoneyRoundWindExtraBold';
             var currentP = "${grooming.currentP}";
             var money = $("#hiddenmoney").val();
             var groomingType = "${grooming.groomingType }";
+            var groomingTitle = "${grooming.groomingTitle}";
             $.ajax({
                url:"checkPeople.do",
                data:{groomingNo:groomingNo},
@@ -766,7 +767,7 @@ font-family: 'TmoneyRoundWindExtraBold';
                            }else{
                               $.ajax({
                                  url:"gaccept.do",
-                                 data:{applyNo:applyNo,groomingNo:groomingNo,money:money,groomingType:groomingType},
+                                 data:{applyNo:applyNo,groomingNo:groomingNo,money:money,groomingType:groomingType,groomingTitle:groomingTitle},
                                  success:function(data){
                                     if(data=="success"){
                                     getAppList();
@@ -817,10 +818,10 @@ font-family: 'TmoneyRoundWindExtraBold';
             var groomingNo = "${grooming.groomingNo}";
             var appTemp = $(this);
             var applyNo = appTemp.parents(".appTr").children(".applyNo").val();
-            
+            var groomingTitle = "${grooming.groomingTitle}";
             $.ajax({
                url:"greject.do",
-               data:{applyNo:applyNo},
+               data:{applyNo:applyNo,groomingTitle:groomingTitle},
                success:function(data){
                   if(data=="success"){
                   getAppList();
