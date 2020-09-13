@@ -369,7 +369,6 @@
 	
 	
 	</script>
-
 	<jsp:include page="../common/footer.jsp" />
 
     <!-- Optional JavaScript -->

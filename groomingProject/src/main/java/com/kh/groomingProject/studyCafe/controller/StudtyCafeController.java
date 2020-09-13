@@ -156,7 +156,6 @@ public class StudtyCafeController {
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
 	public String insertReservation(Reservation r, String money) {
 		Map rinfo = new HashMap();
-
 		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(r.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
@@ -231,7 +230,6 @@ public class StudtyCafeController {
 	public String checkPoint(int money, String cReserNo, Member m) {
 		Map rinfo = new HashMap();
 		rinfo.put("memberNo", m.getMemberNo());
-
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 
 		if(totalPoint >= money) {

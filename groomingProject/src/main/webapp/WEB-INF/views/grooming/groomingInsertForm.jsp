@@ -78,7 +78,7 @@ input {
 }
 
 section {
-	margin-bottom: 100px;
+	margin-bottom: 50px;
 }
 
 .study tbody tr td {
@@ -524,6 +524,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 					if ($(this).val() == 'x') {
 						console.log("예치금 없앰");
+						
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {

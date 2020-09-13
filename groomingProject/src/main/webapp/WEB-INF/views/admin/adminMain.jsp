@@ -21,7 +21,6 @@
         
         .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
-
         .graph{width:50%;height:500px;position:relative;}
         .chart{
         vertical-align: middle;

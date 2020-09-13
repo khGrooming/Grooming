@@ -495,7 +495,6 @@
 	// 그루밍 데이터 가져오기
 	function loadGroomingData() {
 		page++;
-		
 		$.ajax({
 			url:"addAllGroomingList.do",
 			data:{page:page},

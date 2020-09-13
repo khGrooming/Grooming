@@ -42,7 +42,7 @@
         		<div class="container">
 					<div class="btn-group btn-group-toggle btn-lg btn-block" data-toggle="buttons" style="margin:100px 0; margin-bottom: 50px;" id="buttonGroup">
   						<label class="btn btn-outline-info active">
-    						<input type="radio" id="showcommunityMain" onclick="showBoard(0);" autocomplete="off" checked> 커뮤니티
+    						<input type="radio" id="showcommunityMain" onclick="showBoard(0);" autocomplete="off"> 커뮤니티
   						</label>
   						<label class="btn btn-outline-info">
     						<input type="radio" id="showNotice" onclick="showBoard(1);" autocomplete="off"> 공지사항 
@@ -109,7 +109,7 @@
 			showStudyPromotion = $("#showStudyPromotion"),
 			showStudyConfirm = $("#showStudyConfirm"),
 			showQnA = $("#showQnA");
-		[
+/* 		[
 			showcommunityMain,
 			showNotice,
 			showFreeBoard,
@@ -118,30 +118,39 @@
 			showQnA
 		].forEach(function(btn){
 			btn.parents().removeClass('active');
-		})
+		}) */
+		$(".btn-outline-info").removeClass("active");
+		
+		console.log(categoryVal);
 		
 		if(categoryVal == 'BC00001'){
-			showNotice.parents().addClass('active');
+			showNotice.parents(".container").addClass('active');
+			showNotice.attr("checked", true);
 			showBoard(1);
 			
 		}else if(categoryVal == 'BC00002'){
-			showFreeBoard.parents().addClass('active');
+			showFreeBoard.parents(".container").addClass('active');
+			showFreeBoard.attr("checked", true);
 			showBoard(2);
 			
 		}else if(categoryVal == 'BC00003'){
-			showStudyPromotion.parents().addClass('active');
+			showStudyPromotion.parents(".container").addClass('active');
+			showStudyPromotion.attr("checked", true);
 			showBoard(3);
 		
 		}else if(categoryVal == 'BC00004'){
-			showStudyConfirm.parents().addClass('active');
+			showStudyConfirm.parents(".container").addClass('active');
+			showStudyConfirm.attr("checked", true);
 			showBoard(4);
 			
 		}else if(categoryVal == 'BC00005'){
-			showQnA.parents().addClass('active');
+			showQnA.parents(".container").addClass('active');
+			showQnA.attr("checked", true);
 			showBoard(5);
 			
 		}else{
-			showcommunityMain.parents().addClass('active');
+			showcommunityMain.parents(".container").addClass('active');
+			showcommunityMain.attr("checked", true);
 			showBoard(0);
 		}
 		
