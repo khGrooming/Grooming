@@ -9,7 +9,6 @@ import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
-import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -78,6 +77,10 @@ public interface AdminService {
 	int DeleteCafeInfo(CafeInfo cafe);
 
 	ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist);
+
+	int careerConfirm(MentoManageView mv);
+
+	int mentoSManage(String memberNo);
 
 
 

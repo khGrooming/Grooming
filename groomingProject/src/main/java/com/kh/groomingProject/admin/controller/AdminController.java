@@ -30,10 +30,10 @@ import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
+import com.kh.groomingProject.alert.model.service.AlertService;
 import com.kh.groomingProject.common.AdminPageInfo;
-import com.kh.groomingProject.community.model.vo.Board;
-import com.kh.groomingProject.grooming.model.vo.Grooming;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
@@ -42,10 +42,13 @@ import com.kh.groomingProject.studyCafe.model.vo.Point;
 @Controller
 public class AdminController {
 	@Autowired
-	AdminService adminService;
+	private AdminService adminService;
 	
 	@Autowired
-	StudyCafeService studyCafeService;
+	private StudyCafeService studyCafeService;
+	
+	@Autowired
+	private AlertService alertService;
 	
 	@RequestMapping("adminMain.do")
 	public ModelAndView goMain(ModelAndView mv) {
@@ -86,7 +89,7 @@ public class AdminController {
 		AdminPageInfo pi = getPageInfo(currentPage, listCount);
 		
 		ArrayList<MemberManageView> list = adminService.selectList(pi, info);
-
+		System.out.println("mList : "+list);
 		if(list != null) {
 			mv.addObject("category", category);
 			mv.addObject("name", name);
@@ -188,7 +191,6 @@ public class AdminController {
 			currentPage = page;
 		}
 		int gListCount = adminService.selectGroomingCount(str);
-		System.out.println("gListCount : "+gListCount);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
 		
@@ -255,18 +257,28 @@ public class AdminController {
 	}
 	
 	@RequestMapping("sanctionsInsert.do")
-	public String sanctionsInsert(String sanctions, String memberNo, String issue) {
+	public String sanctionsInsert(String sanctions, Member m, String issue) {
 		Map info = new HashMap();
 		info.put("sanctions", sanctions);
-		info.put("memberNo", memberNo);
+		info.put("memberNo", m.getMemberNo());
 		info.put("issue", issue);
 		
-		int result = adminService.sanctionsInsert(info);
-		System.out.println("제재 기간 result : "+result);
-		if(result>0) {
+		
+		int result = 0;
+		int resultAlertJoin = 0;
+		String message = issue+" 로 경고를 받으셨습니다.";
+		
+		if(Integer.valueOf(sanctions) == 0) {
+			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
+	         System.out.println("경고 알림 : " + memberAlert);
+	         resultAlertJoin = alertService.insertAlert(memberAlert);
+		}else {
+			result = adminService.sanctionsInsert(info);			
+		}
+
+		if(result>0 || resultAlertJoin>0) {
 			int delResult = adminService.declarationDelete(info);
 			if(delResult>0) {
-				System.out.println("신고 목록 delResult : "+delResult);
 				return "redirect:declarationManage.do";				
 			}else {
 				throw new AdminException("신고 목록 업데이트 실패!");
@@ -280,17 +292,21 @@ public class AdminController {
 	
 	
 	@RequestMapping("cafeManage.do")
-	public ModelAndView cafeManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView cafeManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("cafeList", cafeList);
@@ -300,17 +316,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping("cafeManageAjax.do")
-	public void cafeManageAjax(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+	public void cafeManageAjax(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		System.out.println("str : "+str);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -329,7 +350,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="cafeInfoChange.do", method=RequestMethod.POST)
-	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
+	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -341,7 +366,7 @@ public class AdminController {
 			int cPriceDel = adminService.DeleteCafeInfo(cafe);
 		}
 		
-		int cListCount = studyCafeService.selectcafeCount();
+		int cListCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
 		
@@ -354,7 +379,7 @@ public class AdminController {
 		int result = adminService.cafeInfoChange(cafe);
 		
 		if(result > 0) {
-			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi,str);
 			
 			mv.addObject("pi", pi);
 			mv.addObject("cafeList", cafeList);
@@ -418,10 +443,39 @@ public class AdminController {
 	
 	@RequestMapping("mentoFail.do")
 	public String mentoFail(String memberNo) {
-		System.out.println(memberNo);
 		int result = adminService.mentoManage(memberNo);
 		
-		return "redirect:mentoManage.do";
+		if(result>0) {
+			return "redirect:mentoManage.do";			
+		}else {
+			throw new AdminException("멘토 자격 박탈 실패!");
+		}
+		
 	}
 	
+	@RequestMapping("mentoSuccess.do")
+	public String mentoSuccess(String memberNo) {
+		int result = adminService.mentoSManage(memberNo);
+		
+		if(result>0) {
+			return "redirect:mentoManage.do";		
+		}else {
+			throw new AdminException("멘토 자격 승인 실패!");
+		}
+		
+		
+	}
+	
+	@RequestMapping("careerConfirm.do")
+	public String careerConfirm(MentoManageView mv) {
+		int result = adminService.careerConfirm(mv);
+		
+		if(result>0) {
+			return "redirect:mentoManage.do";
+		}else {
+			throw new AdminException("멘토 자격 승인 실패!");
+		}
+
+	}
+
 }

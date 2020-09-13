@@ -148,10 +148,11 @@
     var page = 1;   //불러올 페이지
     /*nextpageload function*/
     function next_load(){
+    	$local = $("#searchLocal").val();
     	page++;
         $.ajax({
             url:"cafeManageAjax.do",
-            data : {page:page},
+            data : {page:page,local:$local},
             dataType:"json",
 			success:function(data){
 				addCafeInfo(data);

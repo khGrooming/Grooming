@@ -33,9 +33,9 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi) {
+	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi, Map str) {
 		
-		return studyCafeDao.selectCafeList(pi);
+		return studyCafeDao.selectCafeList(pi, str);
 	}
 
 	@Override
@@ -93,9 +93,9 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public int selectcafeCount() {
+	public int selectcafeCount(Map str) {
 
-		return studyCafeDao.studyCafeCount();
+		return studyCafeDao.studyCafeCount(str);
 	}
 
 }

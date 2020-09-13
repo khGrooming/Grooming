@@ -7,11 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 관리</title>
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <style>
        	section { padding-top: 6.25rem; min-height: calc(100vh - 3.5rem); }
@@ -58,7 +59,7 @@
 	        <div class="row">
 	        	<div class="col-sm-3">
 	            <br><br>
-	            <!-- <div class="container col-sm-3"></div> -->
+	            <div class="container col-sm-3"></div>
 	                <div class="sideMenu col-sm-7">
 	                    <div class="admin"><a href="adminMain.do">통계</a></div>
 	                     <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -98,10 +99,10 @@
 		                </thead>
 		                <tbody>
 		                    <c:forEach var="list" items="${list}">
-		                    	<c:if test="${!empty list.sanctions}">
-		                    		<tr style="opacity:0.9">
+		                    	<c:if test="${list.sanctions ne 0}">
+		                    		<tr style="background:grey;opacity:0.9;">
 		                    	</c:if>
-		                    	<c:if test="${empty list.sanctions}">
+		                    	<c:if test="${list.sanctions eq 0}">
 			                    	<tr>
 		                    	</c:if>
 		                    		<td>${list.memberEmail}</td>

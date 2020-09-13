@@ -83,6 +83,14 @@
 	<select id="selectCafeList" resultMap="CafeInfoResultSet">
 		SELECT *
 		FROM STUDYCAFE
+		<where>
+			<if test="name != null and name != ''">
+				CAFE_NAME = '%'||#{name}||'%'
+			</if>
+			<if test="local != null and local != ''">
+				CAFE_ADDRESS = '%'||#{local}||'%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectCafeInfo" parameterType="CafeInfo" resultMap="CafeInfoResultSet">
@@ -177,6 +185,14 @@
 	<select id="studyCafeCount" resultType="_int">
 		SELECT COUNT(DISTINCT CAFE_NAME)
 		FROM CAFEINFO
+		<where>
+			<if test="name != null and name != ''">
+				CAFE_NAME = '%'||#{name}||'%'
+			</if>
+			<if test="local != null and local != ''">
+				CAFE_ADDRESS = '%'||#{local}||'%'
+			</if>
+		</where>
 	</select>
 	
 	

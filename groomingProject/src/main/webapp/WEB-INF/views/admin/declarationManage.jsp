@@ -54,7 +54,7 @@
         <br><br>
         <div class="container col-sm-3">
             <br><br>
-            <!-- <div class="col-sm-3"></div> -->
+            <div class="col-sm-3"></div>
             <div class="sideMenu col-sm-7">
                 <div class="admin"><a href="adminMain.do">통계</a></div>
                     <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -90,6 +90,7 @@
 		                        	</c:if>
 	                       		</c:forEach>/
 	                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
+	                       		<input type="hidden" class="memberEmail${i.index}" value="${mList.memberEmail}">
 	                        	<td rowspan="4">${mList.memberEmail}</td>
 	                        	<td rowspan="4">${mList.memberNickname}</td>
 	                        	<td rowspan="4">${mList.memberName}</td>
@@ -241,8 +242,13 @@
 	<script>
 		function sanctionsPlus(i){
 			$("#myModal").css("display","block");
+			
 			$memberNo = $(".memberNo"+i).val();
+			$memberEmail = $(".memberEmail"+i).val();
+			console.log("$memberEmail : "+$memberEmail);
+			
 			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
+			$("#infoCheck").append("<input type='hidden' name='memberEmail' value='"+$memberEmail+"'>");
 		}
 	</script>
 </body>

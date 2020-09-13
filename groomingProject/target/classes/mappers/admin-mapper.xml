@@ -22,6 +22,7 @@
 		<result property="memberName" column="MEMBER_NAME"/>
 		<result property="mentorNo" column="MENTOR_NO"/>
 		<result property="mentorPass" column="MENTOR_PASS"/>
+		<result property="specNo" column="SPEC_NO"/>
 		<result property="specName" column="SPEC_NAME"/>
 		<result property="specFileName" column="SPEC_FILENAME"/>
 		<result property="specCName" column="SPEC_C_NAME"/>
@@ -121,7 +122,7 @@
 				T.MENTOR_PASS = 'Y'
 			</if>
 			<if test="kind == 2">
-				T.MENTOR_PASS = 'C'
+				T.MENTOR_PASS = 'S'
 			</if>
 		</where>
 	</select>
@@ -134,7 +135,7 @@
 				MENTOR_PASS = 'Y'
 			</if>
 			<if test="kind == 2">
-				MENTOR_PASS = 'C'
+				MENTOR_PASS = 'S'
 			</if>
 		</where>
 	</select>
@@ -155,7 +156,7 @@
 	<select id="selectSpareMentoList" parameterType="java.util.List" resultMap="mentoViewResultSet">
 		SELECT * 
 		FROM METO_MANAGE
-		WHERE MENTOR_PASS = 'C'
+		WHERE MENTOR_PASS = 'S'
 		<foreach item="sNo" index="index" collection="list"
 				open="AND (" separator="OR" close=")">
 				<if test="sNo.memberNo != null">
@@ -413,6 +414,12 @@
 	<update id="mentoManage" parameterType="string">
 		UPDATE MENTOR
 		SET MENTOR_PASS = 'N'
+		WHERE MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="mentoSuccess" parameterType="string">
+		UPDATE MENTOR
+		SET MENTOR_PASS = 'Y'
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
