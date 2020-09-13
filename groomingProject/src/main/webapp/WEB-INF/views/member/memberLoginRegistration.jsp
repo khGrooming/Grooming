@@ -674,7 +674,7 @@ section .form_container .hideItem
 							goBackPage();
 						} else if(data.loginSatatus == "sanctions"){
 							console.log(data);
-							$(".sanctions").html("[ 회원님은 재제 중 입니다. ]\n 해제일 : " + data.sanctionsFDate + "\n" +
+							$(".sanctions").html("[ 회원님은 제재 중 입니다. ]\n 해제일 : " + data.sanctionsFDate + "\n" +
 									"사유 : " + data.sanctionsContent + "\n 자세한 사항은 문의하기로 문의해 주세요.");
 							$('#myModal').show();
 						} else {

@@ -368,7 +368,7 @@ public class MemberController {
 		
 		MemberSanctions ms = mService.chkMemberSanction(memberEmail);
 		
-		System.out.println("로그인 유저 재제 확인 : " + ms);
+		System.out.println("로그인 유저 제재 확인 : " + ms);
 		
 		if(ms == null) {
 			Member loginUser = mService.loginMember(m);
@@ -384,7 +384,7 @@ public class MemberController {
 			System.out.println("로그인 확인 : 실패");
 			ms.setLoginSatatus("fail");
 		} else {
-			System.out.println("로그인 확인 : 재제 중");
+			System.out.println("로그인 확인 : 제재 중");
 			ms.setLoginSatatus("sanctions");
 		}
 		gson.toJson(ms, response.getWriter());

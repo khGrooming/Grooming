@@ -9,11 +9,11 @@ public class MemberSanctions implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6159240405831701247L;
-	private String sanctionsNo;	// 재제 번호
-	private String memberNo;	// 재제 대상
-	private Timestamp sanctionsSDate;	// 재제 일
-	private Timestamp sanctionsFDate;	// 재제 종료일
-	private String sanctionsContent;	// 재제 내용
+	private String sanctionsNo;	// 제재 번호
+	private String memberNo;	// 제재 대상
+	private Timestamp sanctionsSDate;	// 제재 일
+	private Timestamp sanctionsFDate;	// 제재 종료일
+	private String sanctionsContent;	// 제재 내용
 	private String loginSatatus;	// 로그인 상태
 
 	public MemberSanctions() {
