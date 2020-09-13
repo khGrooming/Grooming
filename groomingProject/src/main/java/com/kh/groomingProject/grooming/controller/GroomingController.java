@@ -1296,6 +1296,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			String[] status = gCheckStatus.split(",");
 			String gMemberNo = null;
 			int result = 0;
+			int result1 = 0;
 			for(int i=0; i<nickname.length; i++) {
 				
 				Map map  = new HashMap();
@@ -1307,6 +1308,13 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				g.setgMemberNo(gMemberNo);
 				g.setgCheckStatus(status[i]);
 				result = gService.insertCheck(g);
+				
+				Map map1  = new HashMap();
+				map1.put("status",status[i]);
+				map1.put("memberNickName", nickname[i]);
+				
+				
+				result1 = mService.addExp(map1);
 			}
 	
 			
@@ -1317,7 +1325,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			
 			if (result > 0) {
 				
-				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).setViewName("grooming/groupCalendar");
 				
 			} else {
 				throw new GroomingException("출석 체크 실패!");

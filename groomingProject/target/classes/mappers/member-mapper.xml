@@ -161,4 +161,15 @@
 		AND MEMBER_STATUS='N'
 	</select>
 
+	<update id="addExp" parameterType="map">
+		UPDATE MEMBER
+		SET MEMBER_EXP = MEMBER_EXP +30
+		WHERE MEMBER_NICKNAME = #{memberNickName} AND #{status} = 'Y'
+	</update>
 </mapper>
+
+
+
+
+
+

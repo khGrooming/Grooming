@@ -1,6 +1,7 @@
 package com.kh.groomingProject.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -116,6 +117,12 @@ public class MemberServiceImpl implements MemberService {
 	public Member findEmail(Member m) {
 
 		return mDao.findEmail(m);
+	}
+
+	@Override
+	public int addExp(Map map1) {
+		// TODO Auto-generated method stub
+		return mDao.addExp(map1);
 	}
 
 }
