@@ -99,6 +99,16 @@ body{
 	border-radius:10px;
 
 }
+#contentPre{
+
+font-family: 'TmoneyRoundWindExtraBold';
+	src:
+		url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff')
+		format('woff');
+	font-weight: normal;
+	font-style: normal;
+
+}
 </style>
 </head>
 <body>
@@ -271,7 +281,7 @@ body{
 
 						<tr>
 							<td>
-								<p>${grooming.groomingContent }</p>
+								<pre id="contentPre">${grooming.groomingContent }</pre>
 							</td>
 						</tr>
 					</tbody>
@@ -980,7 +990,7 @@ body{
                   
                   $br = $("<br>");
                   $h4 = $("<h4>").text(data.groomingIntroduce);
-                  $p = $("<p>").text(data.groomingContent);
+                  $p = $("<pre id='contentPre'>").text(data.groomingContent);
                   
                   $td1.append($span1);
                   $td1.append($span2);
