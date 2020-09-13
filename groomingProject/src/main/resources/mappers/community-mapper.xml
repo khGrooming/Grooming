@@ -201,6 +201,7 @@
         JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
         AND TAG_NAME LIKE '%졸려%' -->
     
+ 
 	<select id="getCommunityFBSearchCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
         FROM BOARD
