@@ -73,21 +73,16 @@ public class AdminDao {
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectNo", num, rowBounds);
 	}
 
-	public int selectGroomingCount(String category) {
-		Map num = new HashMap();
-		num.put("category", category);
-		
-		return sqlSessionTemplate.selectOne("adminMapper.selectGroomingCount", num);
+	public int selectGroomingCount(Map str) {
+
+		return sqlSessionTemplate.selectOne("adminMapper.selectGroomingCount", str);
 	}
 
-	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
-		Map num = new HashMap();
-		num.put("category", category);
-		
+	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, Map str) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", num, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", str, rowBounds);
 	}
 
 	public int selectDeclarationCount() {
@@ -193,6 +188,24 @@ public class AdminDao {
 		return sqlSessionTemplate.update("adminMapper.mentoManage", memberNo);
 	}
 
+	public int gActivation(Map str) {
 
-	
+		return sqlSessionTemplate.update("adminMapper.gActivation", str);
+	}
+
+	public int declarationDelete(Map info) {
+
+		return sqlSessionTemplate.update("adminMapper.declarationDelete", info);
+	}
+
+	public int DeleteCafeInfo(CafeInfo cafe) {
+
+		return sqlSessionTemplate.delete("adminMapper.DeleteCafeInfo", cafe);
+	}
+
+	public ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminPoint", clist);
+	}
+
 }

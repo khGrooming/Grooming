@@ -15,7 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <style>
     	section { padding-top: 6.25rem; min-height: calc(100vh - 3.5rem); }
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -54,7 +54,7 @@
         <br><br>
         <div class="container col-sm-3">
             <br><br>
-            <div class="col-sm-3"></div>
+            <!-- <div class="col-sm-3"></div> -->
             <div class="sideMenu col-sm-7">
                 <div class="admin"><a href="adminMain.do">통계</a></div>
                     <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -81,90 +81,95 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="mList" varStatus="i" items="${mList}">
-	                    <tr>
-	                    	<c:forEach var="dList" items="${dList}">
-	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-	                        		${dList.declarationCNo}
-	                        	</c:if>
-                       		</c:forEach>/
-                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
-                        	<td rowspan="4">${mList.memberEmail}</td>
-                        	<td rowspan="4">${mList.memberNickname}</td>
-                        	<td rowspan="4">${mList.memberName}</td>
-                        	<td>회원 신고</td>
-                        	<td id="member">
-                        		<c:forEach var="dList" varStatus="j" items="${dList}">
-	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-	                        		<ul>
-	                        		<c:if test="${dList.declarationCNo eq 1}">
-	                        			<li>${dList.declarationContent}</li>
-	                        		</c:if>
-	                        		</ul> 
-	                        	</c:if>
-                        		</c:forEach>
-                        	</td>
-
-                        	<c:forEach var="dCount" varStatus="j" items="${dCount}">
-	                        	<c:if test="${dCount.memberNo eq mList.memberNo}">
-		                        	<td rowspan="4">${dCount.dCount}</td>
-	                        	</c:if>
-                        	</c:forEach>
-                        	
-                        	<c:forEach var="totalCount" varStatus="j" items="${totalCount}">
-	                        	<c:if test="${totalCount.memberNo eq mList.memberNo}">
-		                        	<td rowspan="4">${totalCount.totalCount}</td>
-	                        	</c:if>
-                        	</c:forEach>
-							<td rowspan="4"><button type="button" onclick="sanctionsPlus(${i.index});">제재</button></td>
-                        	<%-- <c:url var="profilePage" value="profilePage.do">
-						       <c:param name="pfMemberNo" value="프로필보고싶은사람의 memberNo" />
-						    </c:url> --%>
-	                    </tr>
-	                    
-	                    <tr>
-	                    	<td>게시판 신고</td>
-	                    	<td id="board"> 
-                        		<c:forEach var="dList" varStatus="j" items="${dList}">
-	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-	                        		<ul>
-	                        		<c:if test="${dList.declarationCNo eq 2}">
-	                        			<li>${dList.declarationContent}</li>
-	                        		</c:if>
-	                        		</ul> 
-	                        	</c:if>
-                        		</c:forEach>
-                        	</td>
-	                    </tr>
-	                    <tr>
-	                    	<td>댓글 신고</td>
-	                    	<td id="reply"> 
-                        		<c:forEach var="dList" varStatus="j" items="${dList}">
-	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-	                        		<ul>
-	                        		<c:if test="${dList.declarationCNo eq 3}">
-	                        			<li>${dList.declarationContent}</li>
-	                        		</c:if>
-	                        		</ul> 
-	                        	</c:if>
-                        		</c:forEach>
-                        	</td>
-	                    </tr>
-	                    <tr>
-	                    	<td>그루밍 신고</td>
-	                    	<td id="grooming"> 
-                        		<c:forEach var="dList" varStatus="j" items="${dList}">
-	                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-	                        		<ul>
-	                        		<c:if test="${dList.declarationCNo eq 4}">
-	                        			<li>${dList.declarationContent}</li>
-	                        		</c:if>
-	                        		</ul> 
-	                        	</c:if>
-                        		</c:forEach>
-                        	</td>
-	                    </tr>
-                    </c:forEach>
+                	<c:if test="${!empty mList }">
+	                    <c:forEach var="mList" varStatus="i" items="${mList}">
+		                    <tr>
+		                    	<c:forEach var="dList" items="${dList}">
+		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+		                        		${dList.declarationCNo}
+		                        	</c:if>
+	                       		</c:forEach>/
+	                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
+	                        	<td rowspan="4">${mList.memberEmail}</td>
+	                        	<td rowspan="4">${mList.memberNickname}</td>
+	                        	<td rowspan="4">${mList.memberName}</td>
+	                        	<td>회원 신고</td>
+	                        	<td id="member">
+	                        		<c:forEach var="dList" varStatus="j" items="${dList}">
+		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+		                        		<ul>
+		                        		<c:if test="${dList.declarationCNo eq 1}">
+		                        			<li>${dList.declarationContent}</li>
+		                        		</c:if>
+		                        		</ul> 
+		                        	</c:if>
+	                        		</c:forEach>
+	                        	</td>
+	
+	                        	<c:forEach var="dCount" varStatus="j" items="${dCount}">
+		                        	<c:if test="${dCount.memberNo eq mList.memberNo}">
+			                        	<td rowspan="4">${dCount.dCount}</td>
+		                        	</c:if>
+	                        	</c:forEach>
+	                        	
+	                        	<c:forEach var="totalCount" varStatus="j" items="${totalCount}">
+		                        	<c:if test="${totalCount.memberNo eq mList.memberNo}">
+			                        	<td rowspan="4">${totalCount.totalCount}</td>
+		                        	</c:if>
+	                        	</c:forEach>
+								<td rowspan="4"><button type="button" onclick="sanctionsPlus(${i.index});">제재</button></td>
+	                        	<%-- <c:url var="profilePage" value="profilePage.do">
+							       <c:param name="pfMemberNo" value="프로필보고싶은사람의 memberNo" />
+							    </c:url> --%>
+		                    </tr>
+		                    
+		                    <tr>
+		                    	<td>게시판 신고</td>
+		                    	<td id="board"> 
+	                        		<c:forEach var="dList" varStatus="j" items="${dList}">
+		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+		                        		<ul>
+		                        		<c:if test="${dList.declarationCNo eq 2}">
+		                        			<li>${dList.declarationContent}</li>
+		                        		</c:if>
+		                        		</ul> 
+		                        	</c:if>
+	                        		</c:forEach>
+	                        	</td>
+		                    </tr>
+		                    <tr>
+		                    	<td>댓글 신고</td>
+		                    	<td id="reply"> 
+	                        		<c:forEach var="dList" varStatus="j" items="${dList}">
+		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+		                        		<ul>
+		                        		<c:if test="${dList.declarationCNo eq 3}">
+		                        			<li>${dList.declarationContent}</li>
+		                        		</c:if>
+		                        		</ul> 
+		                        	</c:if>
+	                        		</c:forEach>
+	                        	</td>
+		                    </tr>
+		                    <tr>
+		                    	<td>그루밍 신고</td>
+		                    	<td id="grooming"> 
+	                        		<c:forEach var="dList" varStatus="j" items="${dList}">
+		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
+		                        		<ul>
+		                        		<c:if test="${dList.declarationCNo eq 4}">
+		                        			<li>${dList.declarationContent}</li>
+		                        		</c:if>
+		                        		</ul> 
+		                        	</c:if>
+	                        		</c:forEach>
+	                        	</td>
+		                    </tr>
+	                    </c:forEach>
+                	</c:if>
+                	<c:if test="${empty mList}">
+                		<tr><td colspan="8">신고 내역이 없습니다.</td></tr>
+                	</c:if>
                      <!-- 페이징 처리 부분 -->
 							<tr align="center" height="20">
 								<td colspan="8">
@@ -217,7 +222,9 @@
 					<input type="radio" name="sanctions" value="0">경고 &nbsp;
 					<input type="radio" name="sanctions" value="7">7일 정지 &nbsp;
 					<input type="radio" name="sanctions" value="30">한달 정지 &nbsp;
-					<input type="radio" name="sanctions" value="99">영구 정지 &nbsp;
+					<input type="radio" name="sanctions" value="99">영구 정지 <br>
+					제재 사유<br>
+					<textarea rows="5" cols="50" name="issue"></textarea>
 					</p>
 			     	<p><br /></p>
 			     	

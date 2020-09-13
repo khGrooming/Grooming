@@ -44,6 +44,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
+import com.kh.groomingProject.grooming.model.vo.Mentor;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.service.MypageService;
@@ -183,8 +184,13 @@ public class GroomingController {
 
 	// 그루밍 글쓰기 페이지 이동
 	@RequestMapping("groomingInsert.do")
-	public String groomingInsert() {
-		return "grooming/groomingInsertForm";
+	public ModelAndView groomingInsert(ModelAndView mv, String memberNo) {
+		
+		Mentor m = gService.selectMentor(memberNo);
+		
+		mv.addObject("m",m).setViewName("grooming/groomingInsertForm");
+		
+		return mv;
 	}
 
 	// 그루밍 글쓰기
@@ -407,7 +413,7 @@ public class GroomingController {
 
 	// 그루밍 글 수정 페이지 이동
 	@RequestMapping("groomingUpdate.do")
-	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page) {
+	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page, String memberNo) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
 //		System.out.println("나 tlist야" +tlist);
 		Grooming grooming = gService.selectGrooming(groomingNo);
@@ -418,8 +424,9 @@ public class GroomingController {
 				str += ',';
 			}
 		}
+		Mentor m = gService.selectMentor(memberNo);
 		if (grooming != null && tlist != null) {
-			mv.addObject("grooming", grooming).addObject("tlist", str).addObject("currentPage",page).setViewName("grooming/groomingUpdateForm");
+			mv.addObject("grooming", grooming).addObject("tlist", str).addObject("currentPage",page).addObject("m",m).setViewName("grooming/groomingUpdateForm");
 		} else {
 			throw new GroomingException("수정 게시글 불러오기 실패!");
 		}
@@ -1053,7 +1060,7 @@ public class GroomingController {
 			ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
 //			System.out.println("나 tlist야" +tlist);
 			Grooming grooming = gService.selectGrooming(groomingNo);
-			
+			Mentor m = gService.selectMentor(memberNo);
 			// 해쉬태그값을 안적었을 수도 있다.
 			String str = "";
 			if(tlist != null) {
@@ -1065,7 +1072,7 @@ public class GroomingController {
 				}
 			}
 			if (grooming != null ) {
-				mv.addObject("grooming", grooming).addObject("tlist", str).setViewName("grooming/groomingSaveForm");
+				mv.addObject("grooming", grooming).addObject("tlist", str).addObject("m", m).setViewName("grooming/groomingSaveForm");
 			} else {
 				throw new GroomingException("수정 게시글 불러오기 실패!");
 			}
@@ -1132,12 +1139,12 @@ public class GroomingController {
 				}
 			}
 			
-			System.out.println("나 수정 됬어요~" + result +result1+ result2);
+			System.out.println("나 등록 됬어요~" + result +result1+ result2);
 			if (result > 0 && result1 > 0) {
 				mv.setViewName("redirect:groomingMain.do");
 
 			} else {
-				throw new GroomingException("게시글 수정 실패!");
+				throw new GroomingException("게시글 등록 실패!");
 			}
 			return mv;
 		}
@@ -1205,6 +1212,8 @@ public class GroomingController {
 				 checkN = gService.getCheckN(hashmap);
 				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
 				 System.out.println("checkLate: " + checkLate);
+				 checkN = checkN + checkL/2;
+				 checkL = checkL%2;
 //			  for(int i=0; i<member.size(); i++) {
 //				 
 //				    Map map  = new HashMap();
@@ -1428,6 +1437,8 @@ public class GroomingController {
 				 checkN = gService.getCheckN(hashmap);
 				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
 				 System.out.println("checkLate: " + checkLate);
+				 checkN = checkN + checkL/2;
+				 checkL = checkL%2;
 				 GCheck g = new GCheck(memberNickName,checkLate,checkL,checkN,checkY,difDay);
 				 g.setCheckLate(checkLate);
 				 g.setCheckL(checkL);

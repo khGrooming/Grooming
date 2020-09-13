@@ -71,15 +71,15 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int selectGroomingCount(String category) {
+	public int selectGroomingCount(Map str) {
 
-		return adminDao.selectGroomingCount(category);
+		return adminDao.selectGroomingCount(str);
 	}
 
 	@Override
-	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
+	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, Map str) {
 		
-		return adminDao.selectGroomingList(pi, category);
+		return adminDao.selectGroomingList(pi, str);
 	}
 
 	@Override
@@ -178,7 +178,29 @@ public class AdminServiceImpl implements AdminService {
 		return adminDao.mentoManage(memberNo);
 	}
 
-	
+	@Override
+	public int gActivation(Map str) {
+
+		return adminDao.gActivation(str);
+	}
+
+	@Override
+	public int declarationDelete(Map info) {
+
+		return adminDao.declarationDelete(info);
+	}
+
+	@Override
+	public int DeleteCafeInfo(CafeInfo cafe) {
+
+		return adminDao.DeleteCafeInfo(cafe);
+	}
+
+	@Override
+	public ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist) {
+
+		return adminDao.adminPoint(clist);
+	}
 
 	
 }

@@ -18,7 +18,6 @@
 <title>Hello, world!</title>
 
 <style>
-
 @font-face {
    font-family: 'TmoneyRoundWindExtraBold';
    src:
@@ -214,7 +213,6 @@ h1{
                               $tableBody.append($br);
 
                            } else {
-
 							  $tableBody.html("");
                               $td2 = $("<div style='text-align:left;'>")
                                     .text("출석체크를 시작일을 처음으로 진행 해주세요!");
@@ -229,10 +227,7 @@ h1{
                         }
                      });
 
-
-
             })(j);
-
 
          }
       }

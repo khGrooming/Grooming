@@ -36,8 +36,9 @@
 		<result property="groomingIntroduce" column="GROOMING_INTRODUCE"/>
 		<result property="groomingParticipants" column="GROOMING_PARTICIPANTS"/>
 		<result property="groomingCurrentPeople" column="GROOMING_CURRENT_PEOPLE"/>
-		<result property="gCalendarStartDate" column="G_CALENDAR_START_DATE"/>
-		<result property="gBoardModifyDate" column="G_BOARD_MODIFY_DATE"/>
+		<result property="gCalendarEndDate" column="G_CALENDAR_END_DATE"/>
+		<result property="gBoardCreateDate" column="G_BOARD_CREATE_DATE"/>
+		<result property="groomingStatus" column="GROOMING_STATUS"/>
 	</resultMap>
 	
 	<resultMap type="DeclarationManageView" id="declarationViewResultSet">
@@ -112,8 +113,8 @@
 	</insert>
 	
 	<select id="selectNo" parameterType="map" resultMap="memberViewResultSet">
-		SELECT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME
-		FROM MEMBER M
+		SELECT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, NVL(SANCTIONS,0) sanctions
+		FROM MEMBER_MANAGE M
 		RIGHT JOIN MENTOR T ON (M.MEMBER_NO = T.MEMBER_NO)
 		<where>
 			<if test="kind == 1">
@@ -164,25 +165,58 @@
 		ORDER BY SPEC_C_NAME DESC
 	</select>
 	
-	<select id="selectGroomingCount" parameterType="map" resultType="_int">
-		SELECT COUNT(*)
-		FROM GROOMING
-		WHERE GROOMING_STATUS = 'Y'
+	<select id="selectGroomingCount" parameterType="Map" resultType="_int">
+		SELECT COUNT(DISTINCT G.GROOMING_NO)
+		FROM GROOMING G
+		LEFT JOIN GROMMING_MEMBER GM ON (G.GROOMING_NO=GM.GROOMING_NO)
+		LEFT JOIN GROOMING_CALENDAR GC ON (G.GROOMING_NO=GC.GROOMING_NO)
+		LEFT JOIN GBOARD GB ON (GM.G_MEMBER_NO=GB.GROOMING_MEMBER_NO)
+		WHERE (GROOMING_STATUS = 'Y' OR GROOMING_STATUS = 'B')
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null and category != 'null'">
-			AND GROOMING_TYPE = #{category}
+		<if test="day != null and day != ''">
+	<![CDATA[
+			AND GB.G_BOARD_CREATE_DATE < SYSDATE -#{day}
+			AND GC.G_CALENDAR_END_DATE < SYSDATE -#{day}			
+	]]>
 		</if>
+		<if test="category != null and category != 'null' and category != ''">
+			AND G.GROOMING_TYPE = #{category}
+		</if>
+		<if test="groomingName != null and groomingName != ''">
+	        AND GROOMING_TITLE LIKE '%'||#{groomingName}||'%'
+		</if>
+		ORDER BY G_BOARD_CREATE_DATE ASC, G_CALENDAR_END_DATE ASC
 	</select>
 	
-	<select id="selectGroomingList" parameterType="map" resultMap="groomingViewResultSet">
-		SELECT *
-		FROM GROOMING
-		WHERE GROOMING_STATUS = 'Y'
+	<select id="selectGroomingList" parameterType="Map" resultMap="groomingViewResultSet">
+		SELECT G.GROOMING_NO,G.GROOMING_TYPE,G.GROOMING_TITLE,G.GROOMING_INTRODUCE,G.GROOMING_PARTICIPANTS,G.GROOMING_CURRENT_PEOPLE,NVL(MAX(GB.G_BOARD_CREATE_DATE),G.GROOMING_CREATE_DATE) G_BOARD_CREATE_DATE,NVL(MAX(GC.G_CALENDAR_END_DATE),G.GROOMING_CREATE_DATE) G_CALENDAR_END_DATE, G.GROOMING_STATUS
+		FROM GROOMING G
+		LEFT JOIN GROMMING_MEMBER GM ON (G.GROOMING_NO=GM.GROOMING_NO)
+		LEFT JOIN GROOMING_CALENDAR GC ON (G.GROOMING_NO=GC.GROOMING_NO)
+		LEFT JOIN GBOARD GB ON (GM.G_MEMBER_NO=GB.GROOMING_MEMBER_NO)
+		WHERE (GROOMING_STATUS = 'Y' OR GROOMING_STATUS = 'B')
 		AND STUDY_END_DATE > SYSDATE
-		<if test="category != null and category != 'null'">
-			AND GROOMING_TYPE = #{category}
+		<if test="day != null and day != ''">
+	<![CDATA[
+			AND GB.G_BOARD_CREATE_DATE < SYSDATE -#{day}
+			AND GC.G_CALENDAR_END_DATE < SYSDATE -#{day}			
+	]]>
 		</if>
+		<if test="category != null and category != 'null' and category != ''">
+			AND G.GROOMING_TYPE = #{category}
+		</if>
+		<if test="groomingName != null and groomingName != ''">
+	        AND GROOMING_TITLE LIKE '%'||#{groomingName}||'%'
+		</if>
+		GROUP BY G.GROOMING_NO, G.GROOMING_TYPE, G.GROOMING_TITLE, G.GROOMING_INTRODUCE, G.GROOMING_PARTICIPANTS, G.GROOMING_CURRENT_PEOPLE, G.GROOMING_CREATE_DATE, G.GROOMING_STATUS	
+		ORDER BY G_BOARD_CREATE_DATE ASC, G_CALENDAR_END_DATE ASC
 	</select>
+	
+	<update id="gActivation" parameterType="string">
+		UPDATE GROOMING
+		SET GROOMING_STATUS = #{gActivation}
+		WHERE GROOMING_NO = #{groomingNo}
+	</update>
 	
 	<select id="selectDeclarationMember" parameterType="java.util.List" resultMap="memberViewResultSet">
 		SELECT DISTINCT M.MEMBER_NO, M.MEMBER_EMAIL, M.MEMBER_NICKNAME, M.MEMBER_NAME, M.POINT, COUNT(D.DECLARATION_N_NO)
@@ -222,6 +256,12 @@
 				</if>
 		</foreach>
 	</select>
+	
+	<update id="declarationDelete" parameterType="Map">
+		UPDATE DECLARATION
+		SET DECLARATION_CHECK = 'Y'
+		WHERE DECLARATION_N_NO = #{memberNo}
+	</update>
 	
 	<select id="selectTotalCount" parameterType="java.util.List" resultMap="memberViewResultSet">
 		SELECT DECLARATION_N_NO MEMBER_NO, COUNT(DECLARATION_N_NO) AS TOTALCOUNT
@@ -344,6 +384,18 @@
 		]]>
 	</select>
 	
+	<select id="adminPoint" parameterType="java.util.List" resultType="GraphListCount">
+		<![CDATA[
+			SELECT LASTDAY lastDay, NVL(SUM(ADD_POINT),0) count
+			FROM (SELECT * FROM POINT WHERE POINT_LIST = '포인트 충전')
+			RIGHT JOIN (SELECT TO_CHAR(TO_DATE(SYSDATE-9, 'YY-MM-DD') + ROWNUM - 1, 'YYYY-MM-DD') AS LASTDAY
+			    FROM ALL_OBJECTS
+			    WHERE ROWNUM <= 10) ON (POINT_DATE=LASTDAY)
+			GROUP BY LASTDAY
+			ORDER BY 1 ASC
+		]]>
+	</select>
+	
 	
 	<select id="adminGraphCount" resultType="GraphListCount">
 	 <![CDATA[
@@ -355,7 +407,7 @@
 	
 	<insert id="sanctionsInsert" parameterType="Map">
 		INSERT INTO SANCTIONS
-		VALUES (SEQ_SANCTIONS_NO.NEXTVAL, #{memberNo}, )
+		VALUES (SEQ_SANCTIONS_NO.NEXTVAL, #{memberNo}, SYSDATE, SYSDATE+#{sanctions}, #{issue})
 	</insert>
 	
 	<update id="mentoManage" parameterType="string">
@@ -364,4 +416,14 @@
 		WHERE MEMBER_NO = #{memberNo}
 	</update>
 	
+	<select id="selectcafeCount">
+		SELECT COUNT(*)
+		FROM CAFEINFO
+	</select>
+	
+	<delete id="DeleteCafeInfo" parameterType="CafeInfo">
+		DELETE FROM CAFEPRICE
+		WHERE C_PRICE_NO = #{cPriceNo}
+	</delete>
+
 </mapper>

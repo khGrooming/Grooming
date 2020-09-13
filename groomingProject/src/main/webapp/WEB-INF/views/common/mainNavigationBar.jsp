@@ -635,7 +635,8 @@
 					var $mbody_container = $('<div>').addClass("mbody_container");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
-					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
+					var $messages_Img = $('<img>').addClass("main_messages_img")
+						.attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
 					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);

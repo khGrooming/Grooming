@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.studyCafe.model.dao.StudyCafeDao;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
 import com.kh.groomingProject.studyCafe.model.vo.Point;
@@ -32,9 +33,9 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	}
 
 	@Override
-	public ArrayList<CafeInfo> selectCafeList() {
+	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi) {
 		
-		return studyCafeDao.selectCafeList();
+		return studyCafeDao.selectCafeList(pi);
 	}
 
 	@Override
@@ -89,6 +90,12 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	public int pointCalculation(Map rinfo) {
 		
 		return studyCafeDao.pointCalculation(rinfo);
+	}
+
+	@Override
+	public int selectcafeCount() {
+
+		return studyCafeDao.studyCafeCount();
 	}
 
 }

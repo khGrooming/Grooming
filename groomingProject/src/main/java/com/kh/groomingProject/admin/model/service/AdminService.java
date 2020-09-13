@@ -35,9 +35,9 @@ public interface AdminService {
 
 	ArrayList<MemberManageView> selectNo(AdminPageInfo pi, int i);
 
-	int selectGroomingCount(String category);
+	int selectGroomingCount(Map str);
 
-	ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category);
+	ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, Map str);
 
 	int selectDeclarationCount();
 
@@ -71,8 +71,14 @@ public interface AdminService {
 
 	int mentoManage(String memberNo);
 
+	int gActivation(Map str);
 
-	
+	int declarationDelete(Map info);
+
+	int DeleteCafeInfo(CafeInfo cafe);
+
+	ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist);
+
 
 
 	
