@@ -432,5 +432,11 @@
 		DELETE FROM CAFEPRICE
 		WHERE C_PRICE_NO = #{cPriceNo}
 	</delete>
-
+	
+	<update id="careerConfirm" parameterType="MentoManageView">
+		UPDATE SPEC
+		SET SPEC_CONFIRM = #{specComfirm}
+		WHERE SPEC_NO = #{specNo}
+	</update>
+	
 </mapper>
