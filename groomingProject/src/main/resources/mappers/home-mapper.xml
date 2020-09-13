@@ -23,12 +23,15 @@
 	
 	
 	<select id="getBoardTopList" resultMap="homeBoardResultSet">
-		SELECT BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
+		<![CDATA[
+		SELECT ROWNUM, BOARD_NO,BC.B_CATEGORY_NAME,BOARD_TITLE
 		FROM BOARD B
 		JOIN BCATEGORY BC ON (B.B_CATEGORY_NO = BC.B_CATEGORY_NO)
 		WHERE BOARD_STATUS = 'Y'
 		AND B.B_CATEGORY_NO != 'BC00001'
+		AND ROWNUM < 11
 		ORDER BY BOARD_VCOUNT DESC
+		]]>
 	</select>
 
 	<select id="getGMentoTopList" resultMap="homeGroomingResultSet">
