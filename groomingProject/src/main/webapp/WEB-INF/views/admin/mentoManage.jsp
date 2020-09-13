@@ -21,7 +21,7 @@
         li{margin:0px; padding:0px;}
 		ul{padding-left:20px;}
 		
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
 
@@ -31,6 +31,7 @@
         #searchMentoBtn{width:50px;height:35px;}
         .mentoInfo{border-collapse: collapse;width:100%;}
         .mentoInfo th,td{height:50px;text-align:center;}
+        .memberInfo tbody tr:hover{background: lightgray;}
         
         /* The Modal (background) */
         .modal {
@@ -105,7 +106,7 @@
 	                     <c:if test="${!empty mentoList}">
 	                     	<c:forEach var="mento" varStatus="i" items="${mNo}">
 	                     		<c:if test="${mento.sanctions ne 0}">
-		                     		<tr style="background:grey; opacity:0.7">
+		                     		<tr style="opacity:0.7">
 		                     			<input type="hidden" class="member${i.index}" value="${mento.memberNo}">
 			                         	<td><c:out value="${i.current.memberEmail}"/></td>
 			                         	<td><c:out value="${i.current.memberNickname}"/></td>

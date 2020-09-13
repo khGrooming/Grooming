@@ -19,12 +19,13 @@
 		.sideMenu{height:300px;/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;}
 		.subMenu{height:100px;}
 		
-		.search{text-align:center;background:greenyellow;width:280px;height:50px;float:left;border:1px solid black}
-		.searchView{width:100%;background:lawngreen;display:inline-block;padding:10px;}
+		.search{text-align:center;/* background:greenyellow; */width:280px;height:50px;float:left;border:1px solid black}
+		.searchView{width:100%;/* background:lawngreen; */display:inline-block;padding:10px;}
 		
 		.searchName{width:200px;height:35px;}
 		
-		.panel{width:250px;height:200px;display:inline-block; border-radius: 10%;overflow:hidden;}
+		.panel{width:250px;height:200px;display:inline-block; border-radius: 0.1rem; overflow:hidden; margin: 0.5rem;}
+		.panel:hover {border: thin solid lawngreen;}
 		
 		.cafe{height:80px;text-align:center;padding:30px;}
 		

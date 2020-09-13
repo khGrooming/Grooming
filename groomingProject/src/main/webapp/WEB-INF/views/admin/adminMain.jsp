@@ -15,11 +15,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
 
     <style>
-        .statistics{width:150px; height:150px; background-color:brown;border-radius:50%;display:inline-block;margin-top: 50px;}
+        .statistics{width:150px; height:150px; background-color:antiquewhite; border-radius:50%;display:inline-block;margin-top: 50px; padding:35px;}
         .visit, .user, .group, .board{margin-left:50px;}
         .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
         
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
 
         .graph{width:50%;height:500px;position:relative;}
@@ -45,8 +45,8 @@
 			<div class="row">
         <div class="col-sm-3">
             <br><br>
-            <div class="col-sm-3"></div>
-            	<div class="container col-sm-3"></div>
+            <!-- <div class="col-sm-3"></div> -->
+            	<!-- <div class="container col-sm-3"></div> -->
                 <div class="sideMenu col-sm-7">
                     <div class="admin"><a href="adminMain.do">통계</a></div>
                      <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -86,7 +86,6 @@
                 </c:forEach>
             </div>
             <div class="statistics board">
-            <br>
                 <p align="center"><b>게시글 수</b></p>
                 <c:forEach var="blist" items="${blist}">
                 	<c:if test="${blist.lastDay eq day}">

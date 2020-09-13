@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <style>
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -22,11 +22,12 @@
         .declarationInfo{width: 70%;border-collapse: collapse;margin-left:20%;}
         .declarationInfo th,td{height:50px;text-align:center;}
         
-        .panel{width:150px;height:250px;display:inline-block; border-radius: 10%;overflow:hidden;}
-		
+        .panel{width:150px;height:250px;display:inline-block; border-radius: 0.1rem;overflow:hidden; margin:0.2rem;}
+		.panel:hover {border: thin solid lawngreen;}
+
 		.cafe{height:100px;text-align:center;padding:30px;}
 		
-		.thumbnail{width:300px;height:130px;}
+		.thumbnail{width:300px;height:130px;border-radius: 0.1rem;}
 		
 		/* The Modal (background) */
         .modal {
@@ -65,7 +66,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 				<br><br>
-					<div class="container col-sm-3"></div>
+					<!-- <div class="container col-sm-3"></div> -->
 				    <div class="sideMenu col-sm-7">
 						<div class="admin"><a href="adminMain.do">통계</a></div>
 	                    <div class="admin"><a href="memberManage.do">회원 관리</a></div>
