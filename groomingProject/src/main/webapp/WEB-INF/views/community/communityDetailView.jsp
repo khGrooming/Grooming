@@ -154,7 +154,7 @@
         				<tr>
         					<td style="vertical-align: middle;">${loginUser.memberNickName }</td>
 							<td align="center">
-								<a href="http://localhost:8888/groomingProject/loginPage.do?url=%2fgroomingProject%2fhome.do" class="link">로그인</a>을 하시면 댓글 을 등록할 수 있습니다.
+								<a href="loginPage.do?url=${contextPath }/communityDetailView.do?boardNo=${board.boardNo }" class="link">로그인</a>을 하시면 댓글 을 등록할 수 있습니다.
 							</td>
 						</tr>
         			</table>
