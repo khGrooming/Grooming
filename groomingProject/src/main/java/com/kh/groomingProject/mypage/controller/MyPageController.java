@@ -452,7 +452,7 @@ public class MyPageController {
 		return "mypage/memberSecession";
 	}
 	
-	@RequestMapping("mentorApply")
+	@RequestMapping("mentorApply.do")
 	public String mentorApply(HttpSession session,HttpServletRequest request) {
 		
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
