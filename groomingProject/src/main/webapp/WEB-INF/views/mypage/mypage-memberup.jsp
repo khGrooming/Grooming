@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>회원정보</title>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 #content {
 	width: 1100px;
@@ -159,7 +158,7 @@ font-size: 14px;
 								</div>
 										<input type="hidden" name="memberPhoto" id="memberPhoto" value="${profileInfo.memberPhoto }">
 										<input type="hidden" name="memberNo" id="memberNo" value="${profileInfo.memberNo}"> 
-										<input type="file" accept=".gif, .jpg, .png" name="profileFile" id="profileFile0" style="display: none;" onchange="test2();">
+										<input type="file" accept=".gif, .jpg, .png" name="profileFile" id="profileFile0" style="display: none;">
 								<br>
 							
 								<button type="button" onclick="srcReset();" style="width: 200px; height: 50px;  border-radius: 10px; margin-left:30%;">프로필 삭제하기</button>
@@ -384,7 +383,7 @@ font-size: 14px;
 														</tr>
 														<tr>
 															<td><label id="specFileNameLable">파일첨부</label></td>
-															<td><input type="file" accept=".gif, .jpg, .png" id="specFileName" name="specFileName1" style="width: 100%;" required onchange="setThumbnail(event);" /></td>
+															<td><input type="file" accept=".gif, .jpg, .png" id="specFileName" name="specFileName1" style="width: 100%;" required  /></td>
 														<tr>
 													</table>
 													<br>
