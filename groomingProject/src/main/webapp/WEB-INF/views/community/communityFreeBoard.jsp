@@ -146,13 +146,16 @@
 				if(communitySearch == ""){
 					alert("한 글자 이상 검색해주셔야 합니다^^")
 				}else{
-					$.ajax({
+					// communityFBSearch.do 쪽으로 communitySearch를 get방식으로 보냄
+					location.href="communityFBSearch.do?communitySearch="+communitySearch;
+					/* $.ajax({
 						url:"communitySearch.do",
 						type:"post",
 						data:{communitySearch:communitySearch},
 						dataType:"json",
 						
 						success:function(data) {
+							debugger;
 							$('#searchTbody').html("");
 							for(var i = 0; i < data.length; i++){
 							$('#searchTbody').append('<tr>' + 
@@ -174,7 +177,7 @@
 								+ "message: " + request.responseText
 								+ "error: " + errorData);
 						}
-					})
+					}) */
 				}
 			})
 		})

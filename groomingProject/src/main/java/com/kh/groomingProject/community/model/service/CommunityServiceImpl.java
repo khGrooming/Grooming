@@ -102,6 +102,20 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.boardGcount(boardNo);
 	}
 
+	@Override
+	public int getCommunityFBSearchCount(String communitySearch) {
+		// TODO Auto-generated method stub
+		return cDao.getCommunityFBSearchCount(communitySearch);
+	}
+
+	@Override
+	public ArrayList<Board> getCommunityFBSearch(CommunityPageInfo fpi, String communitySearch) {
+		// TODO Auto-generated method stub
+		return cDao.getCommunityFBSearch(fpi, communitySearch);
+	}
+
+
+
 	
 
 	
