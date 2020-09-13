@@ -29,6 +29,9 @@
     	background-color: transparent;
     	padding: .5em 1em;
 	}	
+	.aTag{
+		line-height:64px;
+	}
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
@@ -41,7 +44,7 @@
 				<thead>
 					<tr>
 						<th>순위</th>
-						<th>닉네임</th>
+						<th>게시물</th>
 						<th>조회 수</th>
 					</tr>
 				</thead>
@@ -64,13 +67,12 @@
 		<div class="col-sm-3"></div>
 		
 		<script>
-
 			function communityTopList(){
 				// ajax 관련 코드
 				$.ajax({
-					url:"topList.do", 
+					url:"topList.do",
 					dataType:"json",
-				
+					
 					success:function(data){
 						$tableBody = $("#communityTopList tbody");
 						$tableBody.html(
@@ -84,15 +86,18 @@
 								
 								'<tr id="ranking3">' +
 								'<td><img class="Img_ra" alt="3st" src="${contextPath }/resources/views/images/3st.PNG"></td>'+
-								'</tr>');	// tbody 부분 리셋
+								'</tr>');	
 						
-						for(var i = 0; i < data.length; i++){							
-							var $memberNickName = $("<td>").text(data[i].memberNickName);
+						for(var i = 0; i < data.length; i++){
+							var boardNo = "${boardNo}";
+							console.log(data[i].boardNo);
+							var $boardTitle = $("<td>");
+							var $aTag = $("<a>").attr("href","communityDetailView.do?boardNo="+data[i].boardNo).text(data[i].boardTitle).addClass("aTag");
 							var $boardVcount = $("<td>").text(data[i].boardVcount);
-							
-							if(i ==0) $("#ranking1").append($memberNickName).append($boardVcount);
-							if(i ==1) $("#ranking2").append($memberNickName).append($boardVcount);
-							if(i ==2) $("#ranking3").append($memberNickName).append($boardVcount);
+							$boardTitle.append($aTag);
+							if(i ==0) $("#ranking1").append($boardTitle).append($boardVcount);
+							if(i ==1) $("#ranking2").append($boardTitle).append($boardVcount);
+							if(i ==2) $("#ranking3").append($boardTitle).append($boardVcount);
 						}
 					},
 					error:function(request, status, errorData){
