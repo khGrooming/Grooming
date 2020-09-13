@@ -149,7 +149,9 @@ body{
 										<i id="nheart" class="far fa-bookmark"></i>
 									</c:if>
 								<c:if test="${!empty loginUser }">
-									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
+									<div style="height: 22px; float: right;"> 
+										<img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply'data-toggle="modal" data-target="#declareForm"   >
+									</div>
 								</c:if>
 								<c:if test="${empty loginUser }">
 									<button data-toggle='modal' data-target='#declareForm' id='apply' disabled>신고</button>

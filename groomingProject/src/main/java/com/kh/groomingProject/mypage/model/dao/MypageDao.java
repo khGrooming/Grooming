@@ -182,4 +182,6 @@ public class MypageDao {
 		return sqlSessionTemplate.selectOne("MyPageMapper.selectReportInfo",repM);
 	}
 
+	
+
 }

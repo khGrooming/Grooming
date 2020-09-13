@@ -268,7 +268,7 @@
 	<select id="mpSelectListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*)
 		FROM GROOMING
-		WHERE MEMBER_NO = #{mNo}
+		WHERE MEMBER_NO = #{mNo} AND GROOMING_STATUS='Y'; 
 	</select>
 	
 	<select id="selectopenGroomingList" parameterType="string" resultMap="homeGroomingResultSet">
@@ -335,7 +335,7 @@
 	<select id="selectTempGroomingNo" parameterType="string" resultType="string">
 		SELECT GROOMING_NO
 		FROM GROOMING G
-		WHERE G.MEMBER_NO=#{mNo}
+		WHERE G.MEMBER_NO=#{mNo} AND GROOMING_STATUS='N'
 	</select>
 	
 	<select id="selectGroomingTemp" parameterType="string" resultMap="groomingResultSet">
@@ -427,5 +427,6 @@
 		WHERE MEMBER_NO=#{memberNo} AND DECLARATION_C_NO='1' AND DECLARATION_N_NO = #{declarationNNo} AND DECLARATION_CHECK='N'
 	
 	</select>
+
 
 </mapper>

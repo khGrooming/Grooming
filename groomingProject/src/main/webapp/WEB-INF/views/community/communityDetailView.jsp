@@ -45,8 +45,8 @@
 	
 	<p class="text-right">
 		<a href="#declareForm" data-toggle='modal'>
-		<img style="vertical-align: bottom;" alt="dep" 
-				src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG"> 신고</a>
+		<img style="vertical-align: bottom; height: 22px;" alt="dep" 
+				src="${contextPath }/resources/views/images/repotBtn.png" ></a>
 	</p>					
 	<!-- 신고모달 -->
 	<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

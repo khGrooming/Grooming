@@ -89,4 +89,5 @@ public interface MypageService {
 	MemberReport selectReportInfo(MemberReport repM);
 
 
+
 }

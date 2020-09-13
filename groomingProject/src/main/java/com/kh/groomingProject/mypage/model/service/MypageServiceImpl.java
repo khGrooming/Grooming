@@ -202,4 +202,5 @@ public class MypageServiceImpl implements MypageService{
 		return mpDao.selectReportInfo(repM);
 	}
 
+
 }
