@@ -1,6 +1,7 @@
 package com.kh.groomingProject.member.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
@@ -41,5 +42,7 @@ public interface MemberService {
 	Member findMember(Member m);
 
 	Member findEmail(Member m);
+
+	int addExp(Map map1);
 
 }

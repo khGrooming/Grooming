@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.alert.model.service.AlertService;
 import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
@@ -51,6 +52,7 @@ import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.tag.model.service.TagService;
@@ -76,6 +78,9 @@ public class GroomingController {
 	
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired
+	private AlertService alertService;
 	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
@@ -350,13 +355,13 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
-	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType) {
+	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType,String groomingTitle) {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
 		String memberNo = gService.findAppMemberNo(applyNo);
-	
+		String memberEmail = gService.findAppMemberEmail(applyNo);
 		
 		Map map = new HashMap();
 		map.put("memberNo", memberNo);
@@ -387,6 +392,14 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		int result4 = 0;
 		System.out.println("groomingType : " + groomingType);
 		System.out.println("tmoney :" + tmoney);
+		
+		// 알림
+		String message = groomingTitle+"에서 신청 수락 되었습니다.축하해 뿡뿡";
+        MemberAlert memberAlert = new MemberAlert(message, memberEmail);
+        System.out.println("수락되었습니다 ㅊㅋㅊㅋ : " + memberAlert);
+        int resultAlertJoin = alertService.insertAlert(memberAlert);
+        
+        
 		if(groomingType.equals("멘토")) {
 			 result4 = gService.addMentorPoint(map2);
 		}
@@ -401,9 +414,18 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	// 그루밍 신청자 거절 ajax
 	@RequestMapping("greject.do")
 	@ResponseBody
-	public String groomingReject(String applyNo) {
+	public String groomingReject(String applyNo,String groomingTitle) {
 		System.out.println(applyNo);
+		
+		String memberEmail = gService.findAppMemberEmail(applyNo);
 		int result = gService.selectRejectApp(applyNo);
+		
+		// 알림
+		String message = groomingTitle+"에서 신청 거절 되었습니다. ㅠㅠㅠ";
+		MemberAlert memberAlert = new MemberAlert(message, memberEmail);
+		System.out.println("거절됐다 이유 찾아라 : " + memberAlert);
+		int resultAlertJoin = alertService.insertAlert(memberAlert);
+		
 		if (result > 0) {
 			return "success";
 		} else {
@@ -1296,6 +1318,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			String[] status = gCheckStatus.split(",");
 			String gMemberNo = null;
 			int result = 0;
+			int result1 = 0;
 			for(int i=0; i<nickname.length; i++) {
 				
 				Map map  = new HashMap();
@@ -1307,6 +1330,13 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				g.setgMemberNo(gMemberNo);
 				g.setgCheckStatus(status[i]);
 				result = gService.insertCheck(g);
+				
+				Map map1  = new HashMap();
+				map1.put("status",status[i]);
+				map1.put("memberNickName", nickname[i]);
+				
+				
+				result1 = mService.addExp(map1);
 			}
 	
 			
@@ -1317,7 +1347,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			
 			if (result > 0) {
 				
-				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).setViewName("grooming/groupCalendar");
 				
 			} else {
 				throw new GroomingException("출석 체크 실패!");

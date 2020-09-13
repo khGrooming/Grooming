@@ -221,7 +221,8 @@ public class MyPageController {
 		int result = mpService.updateProfileIMG(m);
 		
 		ProfileMember profileMember = mpService.testLoginUser2(m.getMemberNo());
-		String memberPoint2 = Integer.toString( mpService.selectPoint2(m.getMemberNo()));
+		System.out.println("나 memberNo야 " + m.getMemberNo());
+		String memberPoint2 = Integer.toString( mpService.selectPoint(m.getMemberNo()));
 		profileMember.setNowPoint(memberPoint2);
 		session.setAttribute("profileInfo",profileMember);
 		Member loginUser = (Member)session.getAttribute("loginUser");

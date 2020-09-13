@@ -21,6 +21,7 @@ public class MemberAlert implements Serializable {
 		this.alertContent = alertContent;
 		this.memberEmail = memberEmail;
 	}
+	
 	public MemberAlert(String memberNo, String alertContent, String memberEmail) {
 		super();
 		this.memberNo = memberNo;

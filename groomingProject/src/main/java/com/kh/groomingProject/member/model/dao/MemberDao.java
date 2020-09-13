@@ -1,6 +1,7 @@
 package com.kh.groomingProject.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,11 @@ public class MemberDao {
 	public Member findEmail(Member m) {
 
 		return sqlSessionTemplate.selectOne("memberMapper.findEmail", m);
+	}
+
+	public int addExp(Map map1) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.update("memberMapper.addExp",map1);
 	}
 
 }

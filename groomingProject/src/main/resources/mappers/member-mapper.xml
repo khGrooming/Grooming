@@ -167,3 +167,9 @@
 		WHERE MEMBER_NICKNAME = #{memberNickName} AND #{status} = 'Y'
 	</update>
 </mapper>
+
+
+
+
+
+
