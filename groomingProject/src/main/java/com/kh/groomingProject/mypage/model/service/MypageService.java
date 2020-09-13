@@ -9,6 +9,7 @@ import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicantV2;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
@@ -87,6 +88,13 @@ public interface MypageService {
 	String selectTempGroomingNo(String mNo);
 
 	MemberReport selectReportInfo(MemberReport repM);
+
+	int appv2listCount(String mNo);
+
+	ArrayList<MyPageApplicantV2> selectMyPageApplicantV2(MyPagePageInfo pi, String mNo);
+
+	int gApplicantDelete(String gApplicantNo);
+
 
 
 }

@@ -13,6 +13,7 @@ import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.dao.MypageDao;
 import com.kh.groomingProject.mypage.model.vo.MemberReport;
 import com.kh.groomingProject.mypage.model.vo.MyPageApplicant;
+import com.kh.groomingProject.mypage.model.vo.MyPageApplicantV2;
 import com.kh.groomingProject.mypage.model.vo.MyPageGrooming;
 import com.kh.groomingProject.mypage.model.vo.MyPageHeart;
 import com.kh.groomingProject.mypage.model.vo.MyPagePageInfo;
@@ -201,5 +202,21 @@ public class MypageServiceImpl implements MypageService{
 	public MemberReport selectReportInfo(MemberReport repM) {
 		return mpDao.selectReportInfo(repM);
 	}
+
+	@Override
+	public int appv2listCount(String mNo) {
+		return mpDao.appv2listCount(mNo);
+	}
+
+	@Override
+	public ArrayList<MyPageApplicantV2> selectMyPageApplicantV2(MyPagePageInfo pi, String mNo) {
+		return mpDao.selectMyPageApplicantV2(pi,mNo);
+	}
+
+	@Override
+	public int gApplicantDelete(String gApplicantNo) {
+		return mpDao.gApplicantDelete(gApplicantNo);
+	}
+
 
 }

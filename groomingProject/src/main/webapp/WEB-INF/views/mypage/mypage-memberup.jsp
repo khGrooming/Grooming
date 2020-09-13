@@ -8,7 +8,6 @@
 <meta charset="UTF-8">
 <title>회원정보</title>
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
 #content {
 	width: 1100px;
@@ -136,7 +135,6 @@ font-size: 14px;
 			<h4 class="subTitle" onclick="location.href='${profilePage}'">프로필 수정</h4>
 			<div class="profile_my">
 				<!--toEJ 클릭하면 모달창 띄우고 사진편집할 수 있으면 넣고 못하면 미리보기로 대체 모달창에서 프로필사진 등록/삭제로 해서 고치셈 -->
-				
 				<img src='${contextPath }/resources/views/icons/profileIcon.png'   style="height:130px; z-index: 3;"class="profile_img" data-toggle="modal" data-target="#mtProfile">
 				<img src="${contextPath}/resources/upprofileFiles/${profileInfo.memberPhoto }" class="profile_img" id="profileImg">	
 				<div class="modal fade" id="mtProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -160,7 +158,7 @@ font-size: 14px;
 								</div>
 										<input type="hidden" name="memberPhoto" id="memberPhoto" value="${profileInfo.memberPhoto }">
 										<input type="hidden" name="memberNo" id="memberNo" value="${profileInfo.memberNo}"> 
-										<input type="file" accept=".gif, .jpg, .png" name="profileFile" id="profileFile0" style="display: none;" onchange="test2();">
+										<input type="file" accept=".gif, .jpg, .png" name="profileFile" id="profileFile0" style="display: none;">
 								<br>
 							
 								<button type="button" onclick="srcReset();" style="width: 200px; height: 50px;  border-radius: 10px; margin-left:30%;">프로필 삭제하기</button>
@@ -365,7 +363,7 @@ font-size: 14px;
 										<div class="modal-content">
 											<div class="modal-header">
 
-												<h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
+												<h4 class="modal-title" id="myModalLabel">스펙 추가하기</h4>
 												<button type="button" class="close" data-dismiss="modal"
 													aria-label="Close">
 													<span aria-hidden="true">×</span>
@@ -385,7 +383,7 @@ font-size: 14px;
 														</tr>
 														<tr>
 															<td><label id="specFileNameLable">파일첨부</label></td>
-															<td><input type="file" accept=".gif, .jpg, .png" id="specFileName" name="specFileName1" style="width: 100%;" required onchange="setThumbnail(event);" /></td>
+															<td><input type="file" accept=".gif, .jpg, .png" id="specFileName" name="specFileName1" style="width: 100%;" required  /></td>
 														<tr>
 													</table>
 													<br>
