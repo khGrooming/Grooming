@@ -2,6 +2,7 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import javax.mail.internet.MimeMessage;
@@ -371,23 +372,29 @@ public class MemberController {
 		System.out.println("로그인 유저 제재 확인 : " + ms);
 		
 		if(ms == null) {
+			MemberSanctions loginMs = new MemberSanctions("","",new Timestamp(0),new Timestamp(0),"","");
+
 			Member loginUser = mService.loginMember(m);
 			System.out.println("회원 확인 : " + loginUser);
 			
 			if(loginUser != null) {
 				if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 					System.out.println("로그인 확인 : 성공");
-					ms.setLoginSatatus("success");
+					
 					model.addAttribute("loginUser", loginUser);
+					loginMs.setLoginSatatus("success");
+					gson.toJson(loginMs, response.getWriter());
+					return;
 				}
 			}
 			System.out.println("로그인 확인 : 실패");
-			ms.setLoginSatatus("fail");
+			loginMs.setLoginSatatus("fail");
+			gson.toJson(loginMs, response.getWriter());
 		} else {
 			System.out.println("로그인 확인 : 제재 중");
 			ms.setLoginSatatus("sanctions");
+			gson.toJson(ms, response.getWriter());
 		}
-		gson.toJson(ms, response.getWriter());
 		
 	}
 
