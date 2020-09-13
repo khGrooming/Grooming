@@ -439,7 +439,7 @@
                            
                            for(var j in data){
 
-                              if((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10)){
+                              if((data[j].cReserSTime <= i+10 && data[j].cReserETime >= i+10 && data[j].memberNo != ${loginUser.memberNo})){
                                  alert("예약할 수 없는 시간이 포함되어 있습니다.");
                                  changeTime(data);
                                  return;
