@@ -201,6 +201,16 @@
         JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
         AND TAG_NAME LIKE '%졸려%' -->
     
-	
-
+ 
+	<select id="getCommunityFBSearchCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+        FROM BOARD
+        WHERE B_CATEGORY_NO='BC00002' AND BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
+	</select>
+	    
+	<select id="getCommunityFBSearch" parameterType="string" resultMap="boardResultSet">
+		SELECT *
+        FROM BOARD
+        WHERE B_CATEGORY_NO='BC00002' AND BOARD_TITLE LIKE '%' || #{board.boardTitle} || '%'
+	</select>
 </mapper>

@@ -1,9 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false" language="java"
+	contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
+<!-- jQuery -->
+<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        
+<!--datatable-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" /> -->
 <!-- -------------- style 부분------------- -->
 <style type="text/css">
 	.table_ra>tbody>tr>td, .table_ra>tbody>tr>th, .table_ra>tfoot>tr>td, .table_ra>tfoot>tr>th, .table_ra>thead>tr>td, .table_ra>thead>tr>th {
@@ -13,6 +30,7 @@
 </style>
 <!-- ------ 검색 ------- -->
 <style type="text/css">
+    	section { padding-top: 6.25rem; min-height: calc(100vh - 3.5rem); }
 .d1 {
   position: relative;
   width: 300px;
@@ -45,10 +63,28 @@
   font-size: 16px;
   color: #F9F0DA;
 }
+div.dataTables_wrapper {
+    width: 70rem;
+    margin: 0 auto;
+}
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
 <body>
+<header>
+<jsp:include page="../common/mainNavigationBar.jsp" />
+	<br><br>
+</header>
+<!--내용 시작-->
+<!-- <section style="padding-top: 0.10rem;"> -->
+<section>
+	<div class="container-fluid">
+    	<div class="row">
+    		<div class="col-12">
+	<br>
+	<h1 align="center">조회된 게시글</h1>
+	<br><br>
+    		
 	<div class="d1">
   		<input type="text" placeholder="제목으로 검색해주세요" name="communitySearch" id="communitySearch">
   		<button name="btnSearch" id="btnSearch"></button>
@@ -102,8 +138,8 @@
 								[이전]&nbsp;
 							</c:if>		
 							<c:if test="${fpi.currentPage gt 1 }">
-								<c:url var="communityMainBack" value="communityMain.do">
-									<c:param name="bCategoryNo" value="BC00002"/>
+								<c:url var="communityMainBack" value="communityFBSearch.do">
+									<c:param name="communitySearch" value="${communitySearch }"/>
 									<c:param name="page" value="${fpi.currentPage -1 }"></c:param>
 								</c:url>
 								<a href="${communityMainBack }">[이전]</a>
@@ -114,8 +150,8 @@
 									<font color="red" size="4"><b>${p}</b></font>
 								</c:if>
 								<c:if test="${p ne fpi.currentPage }">
-									<c:url var="communityMainCheck" value="communityMain.do">
-										<c:param name="bCategoryNo" value="BC00002"/>
+									<c:url var="communityMainCheck" value="communityFBSearch.do">
+										<c:param name="communitySearch" value="${communitySearch }"/>
 										<c:param name="page" value="${p}"></c:param>
 									</c:url>
 									<a href="${communityMainCheck }">${p}</a>
@@ -126,8 +162,8 @@
 								&nbsp;[이후]
 							</c:if>		
 							<c:if test="${fpi.currentPage lt fpi.maxPage }">
-								<c:url var="communityMainAfter" value="communityMain.do">
-									<c:param name="bCategoryNo" value="BC00002"/>
+								<c:url var="communityMainAfter" value="communityFBSearch.do">
+									<c:param name="communitySearch" value="${communitySearch }"/>
 									<c:param name="page" value="${fpi.currentPage +1 }"></c:param>
 								</c:url>
 								<a href="${communityMainAfter }">[이후]</a>
@@ -136,8 +172,14 @@
 					</tr>
 			</table>
 		</div>
+	    		</div>
+   		</div>
+	</div>
+</section>
+	
 	<!-- 검색 -->
 	<c:url var="communityFreeBoardURL" value="/community/communityFreeBoard"></c:url>
+	
 	<script>
 		$(function(){
 			$("#btnSearch").on("click", function(){
@@ -146,47 +188,20 @@
 				if(communitySearch == ""){
 					alert("한 글자 이상 검색해주셔야 합니다^^")
 				}else{
-					// communityFBSearch.do 쪽으로 communitySearch를 get방식으로 보냄
 					location.href="communityFBSearch.do?communitySearch="+communitySearch;
-					/* $.ajax({
-						url:"communitySearch.do",
-						type:"post",
-						data:{communitySearch:communitySearch},
-						dataType:"json",
-						
-						success:function(data) {
-							debugger;
-							$('#searchTbody').html("");
-							for(var i = 0; i < data.length; i++){
-							$('#searchTbody').append('<tr>' + 
-						    						'<td>' + data[i].boardNo  + '</td>' + 
-						   						    '<td>' + '<br>' +
-													' <c:url var="communityDetailView" value="communityDetailView.do">' + 
-													' <c:param name="boardNo" value=" ' + data[i].boardNo + '" /> ' +
-													' </c:url>' +
-													' <a href="communityDetailView.do?boardNo=' + data[i].boardNo + '">' + data[i].boardTitle + '</a>' +
-													' </td>' +
-													'<td>' + data[i].memberNo + '</td>' +
-													'<td>' + data[i].boardVcount  + '</td>' +
-													'<td>' + data[i].boardCreateDate  + '</td>' +
-													'</tr>');
-							}
-						},
-						error : function(request, status, errorData) {
-							alert("error code: " + request.status + "\n"
-								+ "message: " + request.responseText
-								+ "error: " + errorData);
-						}
-					}) */
+
 				}
 			})
 		})
 	</script>
+
 	
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+		
+<script src="https://kit.fontawesome.com/4b6b63d8f6.js" crossorigin="anonymous"></script>
 	
 </body>
 </html>

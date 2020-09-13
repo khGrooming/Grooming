@@ -319,7 +319,9 @@
 		    }
 
 		    $(window).scroll(function(){
+		    	console.log(" 스크롤 작동 중? ");
 		    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+			    	console.log(" 스크롤 작동 중! ");
 		            if(!loading)    //실행 가능 상태라면?
 		            {
 		                loading = true; //실행 불가능 상태로 변경

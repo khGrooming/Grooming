@@ -74,6 +74,8 @@ public class GroomingController {
 	@Autowired
 	private MypageService mpService;
 	
+	@Autowired
+	private HomeService homeService;
 	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
