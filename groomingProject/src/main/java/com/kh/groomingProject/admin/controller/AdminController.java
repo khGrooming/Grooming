@@ -360,16 +360,7 @@ public class AdminController {
 		if(page != null) {
 			currentPage = page;
 		}
-		
-		System.out.println("cafeDelete : "+cafe);
-		if(cafe.getcPriceNo() != null) {
-			int cPriceDel = adminService.DeleteCafeInfo(cafe);
-		}
-		
-		int cListCount = studyCafeService.selectcafeCount(str);
-		
-		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-		
+
 		if(!file.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(file, request);
 
@@ -379,6 +370,24 @@ public class AdminController {
 		int result = adminService.cafeInfoChange(cafe);
 		
 		if(result > 0) {
+			int cListCount = studyCafeService.selectcafeCount(str);
+			
+			AdminPageInfo pi = getPageInfo(currentPage, cListCount);
+			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi,str);
+			
+			mv.addObject("pi", pi);
+			mv.addObject("cafeList", cafeList);
+			mv.setViewName("admin/cafeManage");
+			
+			return mv;
+		}else if(result == 0) {
+			System.out.println("cafeDelete : "+cafe);
+			if(cafe.getcPriceNo() != null && cafe.getcPriceNo() != "") {
+				int cPriceDel = adminService.DeleteCafeInfo(cafe);
+			}
+			int cListCount = studyCafeService.selectcafeCount(str);
+			
+			AdminPageInfo pi = getPageInfo(currentPage, cListCount);
 			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi,str);
 			
 			mv.addObject("pi", pi);
@@ -469,7 +478,7 @@ public class AdminController {
 	@RequestMapping("careerConfirm.do")
 	public String careerConfirm(MentoManageView mv) {
 		int result = adminService.careerConfirm(mv);
-		
+		System.out.println("mv : "+mv);
 		if(result>0) {
 			return "redirect:mentoManage.do";
 		}else {

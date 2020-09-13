@@ -108,13 +108,13 @@
 	
 	// 카페 검색 결과 ajax
 		function searchCafeLocal(){
-			name = $("#searchLocal").val();
+			$local = $("#searchLocal").val();
 
 			$.ajax({
 				url:"cafeLocal.do",
 				type:"post",
 				dataType:"json",
-				data:{name:name},
+				data:{local:$local},
 				success:function(data){
 					$view = $(".searchView").html("");
 					
@@ -164,7 +164,10 @@
     }
 
     $(window).scroll(function(){
-    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    	var maxHeight = $(document).height();
+    	var currentScroll = $(window).scrollTop() + $(window).height();
+    	
+    	if(maxHeight <= currentScroll+1) {
             if(!loading)    //실행 가능 상태라면?
             {
                 loading = true; //실행 불가능 상태로 변경
