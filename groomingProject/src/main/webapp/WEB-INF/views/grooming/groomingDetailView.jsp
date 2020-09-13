@@ -32,9 +32,10 @@
 	rel="stylesheet">
 <title>Hello, world!</title>
 <style>
-section img {
-	width: 100%;
-	height: 100%;
+section img{
+width:100%;
+height:100%;
+
 }
 /*폰트 설정 */
 @font-face {
@@ -49,7 +50,7 @@ section img {
 	font-family: "TmoneyRoundWindExtraBold";
 }
 .groomingImage {
-width: 450px;
+	width: 450px;
 	height: 450px;
 	background-size: cover;
 	border: 1px solid lightgray;
@@ -109,6 +110,11 @@ font-family: 'TmoneyRoundWindExtraBold';
 	font-style: normal;
 
 }
+
+#g,#m{
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <body>
@@ -136,7 +142,7 @@ font-family: 'TmoneyRoundWindExtraBold';
 
 					</table>
 				</div>
-				<div style="text-align: right; margin-left: 70px; margin-top: 30px;">
+				<div style="text-align: right; margin-left: 70px; margin-top: 30px;"">
 					<table>
 						<tr>
 							<td align="right">
@@ -151,7 +157,7 @@ font-family: 'TmoneyRoundWindExtraBold';
 							</td>
 						</tr>
 						<tr>
-							<td style="text-align:right;"> 
+							<td > 
 							
 									<c:if test="${!empty heart }">
 										<i id="heart" class="fas fa-bookmark"></i>
@@ -159,12 +165,18 @@ font-family: 'TmoneyRoundWindExtraBold';
 									<c:if test="${empty heart }">
 										<i id="nheart" class="far fa-bookmark"></i>
 									</c:if>
+								
 								<c:if test="${!empty loginUser }">
-									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
-								</c:if>
+		                           <div style="height: 22px; width: 70px; float: right; margin-left: 10px;"> 
+		                              <img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply' data-toggle="modal" data-target="#declareForm"   >
+		                           </div>
+		                        </c:if>
 								<c:if test="${empty loginUser }">
-									<button data-toggle='modal' data-target='#declareForm' id='apply' disabled>신고</button>
-								</c:if>
+		                           <div  style="height: 22px; width: 70px; float: right; margin-left: 10px;"> 
+		                              <img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply' data-toggle="modal" data-target="#declareForm"  disabled >
+		                           </div>
+		                        </c:if>
+								
 								
 								<!-- 신청폼 모달 -->
 								<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="declareModalLabel" aria-hidden="true">
@@ -222,7 +234,7 @@ font-family: 'TmoneyRoundWindExtraBold';
 							<tr>
 								<td>
 									<div class="groomingImage">
-										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}">
+										<img src="${contextPath }/resources/upGroomingFiles/${grooming.groomingImg}" id="g">
 									</div>
 								</td>
 							</tr>
@@ -240,7 +252,7 @@ font-family: 'TmoneyRoundWindExtraBold';
 								<td style="padding-right: 20px;">
 									<div class="pimg">
 										<img
-											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}">
+											src="${contextPath }/resources/upprofileFiles/${member.memberPhoto}" id="m">
 									</div>
 								</td>
 								<td>호스트 : <span>${member.memberNickName }</span><br> 태그:<c:forEach
@@ -682,6 +694,7 @@ font-family: 'TmoneyRoundWindExtraBold';
                if(memberNo == gmemberNo){
                   alert("자신의 글은 신고할 수 없습니다.");
                   $(this).attr("disabled",true)
+                  event.stopImmediatePropagation();
                }
                
                if((memberNo == dmemberNo) && (groomingNo == dgroomingNo)){
