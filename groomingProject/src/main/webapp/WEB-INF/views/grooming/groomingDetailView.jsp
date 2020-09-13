@@ -719,10 +719,10 @@ font-family: 'TmoneyRoundWindExtraBold';
       $(function(){
          
          
-         getAppList();
+         /* getAppList();
            setInterval(function(){
             currentPeole();
-         },1000);   
+         },1000); */   
          
          $(document).on("click",".accept",function(){
             var groomingNo = "${grooming.groomingNo}";
