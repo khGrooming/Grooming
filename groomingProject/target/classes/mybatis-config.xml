@@ -51,6 +51,7 @@
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GCheck" alias="GCheck"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingMain" alias="GroomingMain"/>
 		<typeAlias type="com.kh.groomingProject.grooming.model.vo.GroomingSearch" alias="GroomingSearch"/>
+		<typeAlias type="com.kh.groomingProject.grooming.model.vo.Mentor" alias="Mentor"/>
 
 		<!-- 스터디 카페 -->	
 		<typeAlias type="com.kh.groomingProject.studyCafe.model.vo.StudyCafe" alias="studyCafe"/>
@@ -64,7 +65,6 @@
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.MentoManageView" alias="MentoManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
-		<typeAlias type="com.kh.groomingProject.admin.model.vo.VisitCount" alias="VisitCount"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GraphListCount" alias="GraphListCount"/>
 	</typeAliases>
 	

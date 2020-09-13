@@ -22,6 +22,7 @@ import com.kh.groomingProject.grooming.model.vo.GroomingTag;
 import com.kh.groomingProject.grooming.model.vo.GroupBoard;
 import com.kh.groomingProject.grooming.model.vo.GroupMember;
 import com.kh.groomingProject.grooming.model.vo.GroupPageInfo;
+import com.kh.groomingProject.grooming.model.vo.Mentor;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 
@@ -389,6 +390,11 @@ public class GroomingDao {
 	public int addMentorPoint(Map map2) {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.insert("groomingMapper.addMentorPoint",map2) ;
+	}
+
+	public Mentor selectMentor(String memberNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.selectMentor",memberNo);
 	}
 	
 	

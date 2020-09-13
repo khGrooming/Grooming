@@ -59,18 +59,20 @@ form {
 <body>
 	<div class="d1">
   		<form>
-  			<input type="text" placeholder="제목/해시태그로 검색해주세요" name="communitySearch" id="communitySearch">
+  			<input type="text" placeholder="제목으로 검색해주세요" name="communitySearch" id="communitySearch">
   			<button type="submit" name="btnSearch" id="btnSearch"></button>
   		</form>
 	</div>
 	<!-- ------------------ 검색 -------------------- -->
 	<!-- ------------------ 정렬 ------------------- -->
 		<div class="container" align="left">
-			<input type="radio" id="rf_1_ra" name="filter_ra"><label for="rf_1_ra">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_2_ra" name="filter_ra"><label for="rf_2_ra">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-			<input type="radio" id="rf_3_ra" name="filter_ra"><label for="rf_3_ra">&nbsp;댓글순</label>
-			<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
-					onclick="location.href='communityInsertView.do?bCategoryNo=BC00002'">
+			<input type="radio" id="Ffilter_1" name="Ffilter" checked><label for="Ffilter_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
+			<input type="radio" id="Ffilter_2" name="Ffilter"><label for="Ffilter_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
+		
+			<c:if test="${!empty loginUser }">
+				<input type="button" value="글쓰기" class="btn btn-info" style="float: right;"
+						onclick="location.href='communityInsertView.do?bCategoryNo=BC00002'">
+			</c:if>
 		</div>
 		<br>
 	<!-- ------------------ 게시판 -------------------------- -->

@@ -26,7 +26,7 @@
     transition: 0.6s;
     padding: 1rem 6.25rem;
 	border-bottom: thin solid lightgrey;
-    z-index: 10000;
+    z-index: 1040;
 }
 .main_navbar .main_navbar_logo
 {
@@ -332,7 +332,7 @@
     display: none;
 	width: 1.87rem;
 	height: 1.87rem;
-	bottom: 1rem;
+	bottom: 3rem;
 	right: 1rem;
 	float:right;
 	font-size: 1.25rem;
@@ -342,7 +342,7 @@
 }
 .main_adminIcon
 {
-	bottom: 4rem;
+	bottom: 6rem;
     display: block;
 }
 .main_upIcon .img_svg,
@@ -517,7 +517,8 @@
 
 	<script type="text/javascript">
 		$(function() {
-			var loginUser = "${sessionScope.loginUser}";
+			var loginUser = "";
+			loginUser = "${sessionScope.loginUser}";
 			if(loginUser != ""){
 				console.log("네비바 인터벌");
 				getUserAlert();
@@ -537,7 +538,8 @@
 	<!-- 로그인 유저 세션 갱신 -->
 	<script type="text/javascript">
 		function refreshLoginUser() {
-			var memberEmail = "${loginUser.memberEmail}";
+			var memberEmail = "";
+			memberEmail = "${loginUser.memberEmail}";
 			$.ajax({
 				url:"refreshLoginUser.do",
 				data:{memberEmail:memberEmail},
@@ -563,7 +565,8 @@
 
 		// 메시지 카운트
 		function getUserMessages() {
-			var memberNo = "${loginUser.memberNo}";
+			var memberNo = "";
+			memberNo = "${loginUser.memberNo}";
 			$.ajax({
 				url:"getUserMessagesCount.do",
 				data:{memberNo:memberNo},
@@ -632,7 +635,8 @@
 					var $mbody_container = $('<div>').addClass("mbody_container");
 					var $messages_body = $('<div>').addClass("main_messages_body");
 					var $messages_bodyInput = $('<input>').attr("type","hidden").val(data[i].messageNo);
-					var $messages_Img = $('<img>').addClass("main_messages_img").attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
+					var $messages_Img = $('<img>').addClass("main_messages_img")
+						.attr("src","${contextPath }/resources/upprofileFiles/"+(data[i].fromMemberPhoto));
 					var $messages_bodyFrom = $('<div>').addClass("main_mBody_from").text(data[i].fromMemberNickname);
 					var $messages_bodyContent = $('<div>').text(data[i].messageContent);
 					var $messages_bodyTime = $('<div>').addClass("main_mBody_time").text(data[i].messageDate);
@@ -697,7 +701,8 @@
 	<script type="text/javascript">
 		// 알림 카운트
 		function getUserAlert() {
-			var memberNo = "${loginUser.memberNo}";
+			var memberNo = "";
+			memberNo = "${loginUser.memberNo}";
 
 			$.ajax({
 				url:"getUserAlertCount.do",

@@ -16,10 +16,6 @@
 	
 	height: 800px;
 }
-
-
-
-
 .spacIconTd {
 	width: 50px;
 }
@@ -228,7 +224,7 @@ font-size: 14px;
 							processData : false,
 							contentType : false,
 							success : function(data) {
-								alert(data);
+								
 								$("#profileImg").attr(
 										"src",
 										"${contextPath}/resources/upprofileFiles/"
@@ -301,7 +297,6 @@ font-size: 14px;
 						function changememo(){
 
 							var content = $("#memoTextArea").val();
-							alert(content);
 							var save = confirm("상태메시지를 저장하시겠습니까?");
 							if (save) {
 								$.ajax({
@@ -712,7 +707,6 @@ font-size: 14px;
              			changeinfo="Y";
              		}
              		
-         			alert(changeinfo);
              		if(changeinfo =="Y"){
              			var updateCheck = confirm("수정된 내용을 변경하겠습니까?");
              			if(updateCheck){             				

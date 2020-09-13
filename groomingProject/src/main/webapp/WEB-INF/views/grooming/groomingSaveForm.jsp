@@ -233,9 +233,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		<jsp:useBean id="now" class="java.util.Date" />
 		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 
-		<!-- <label id="today" style=""></label> -->
+		<label id="today" style="" hidden></label>
 		<div class="form_container container">
-			<!-- style=" "> -->
 
 			<c:url var="groomingSaveUpdate" value="gSaveUpdate.do">
 				<c:param name="groomingNo" value="${grooming.groomingNo }"/>
@@ -260,18 +259,21 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td><label>타입</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<c:if test="${grooming.groomingType eq '멘토' }">
-										<label for="m"><input type="radio" name="groomingType" id="m"
-											value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
-											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h">호스트
-											그룹</label></td>
+									<c:if test="${m ne null }">
+										<c:if test="${grooming.groomingType eq '멘토' }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" checked>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h">호스트그룹</label>
+										</c:if>
+										<c:if test="${grooming.groomingType eq '호스트' }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" >멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트그룹</label>
+										</c:if>		
 									</c:if>
-									<c:if test="${grooming.groomingType eq '호스트' }">
-										<label for="m"><input type="radio" name="groomingType" id="m"
-											value="멘토" >멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
-											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트
-											그룹</label></td>
-									</c:if>		
+									<c:if test="${m eq null }">
+											<label for="m"><input type="radio" name="groomingType" id="m" value="멘토" disabled>멘토 그룹</label>&nbsp;&nbsp;&nbsp;&nbsp; 
+											<label for="h"><input type="radio" name="groomingType" value="호스트" id="h" checked>호스트그룹</label>
+									</c:if>
+									</td>
 								</tr>
 
 								<tr>
@@ -332,8 +334,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 									<td>
 										<span>해시 태그</span><br> 
 										
-											<input type="text" name="tagName" placeholder="Tags," data-role="tagsinput" value="${tlist }" class="form-control"
-											 id="tagName" style="display: none;" required>
+											<input type="text" name="tagName" placeholder="Tags," data-role="tagsinput" value="${tlist }" class="form-control" id="tagName" required>
 										<small><span style="color: lightblue">해쉬태그는 5개 이하로 등록해주세요!</span></small></td>
 									</td>
 								</tr>
@@ -368,8 +369,8 @@ section .form_container .study .bootstrap-tagsinput .badge {
 								</tr>
 								<tr>
 									<td>
-										<input id="insert" class="btn-3d green" value="등록하기">
-										<button class="btn-3d green" onclick="save();">취소하기</button>
+										<input id="insert" class="btn-3d green" value="등록하기" type="submit">
+										<input class="btn-3d green" onclick="save();" value="취소하기" type="button">
 									</td>
 								</tr>
 							</tbody>
@@ -380,17 +381,25 @@ section .form_container .study .bootstrap-tagsinput .badge {
 		</div>
 		<script>
 			$(function(){
+				var tagName = $("#tagName").text();
 				$(document).on("click","#insert",function(){
-					var result= confirm("등록하시겠습니까?");
-					if(result){
-						$("form").submit();
-					}else{
-						event.preventDefault();
-					}
+					
+					
+						var result= confirm("등록하시겠습니까?");
+						if(result){
+							if(tagName == ""){
+								console.log("모든값을 작성해주세요!");
+							}else{
+								$("form").submit();
+								
+							}
+						}else{
+							event.preventDefault();
+						}
+					
 				
-				})
 				
-				
+			})
 			})
 		
 		
@@ -432,13 +441,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 													}
 
 													else {
-														// Old IE 파일명 추출
+														// 기존의 파일명 추출
 														var filename = $(this).val().split('/').pop().split('\\').pop();
 													};
-
-													$(this).siblings(
-															'.upload-name')
-															.val(filename);
+						
+													$(this).siblings('.upload-name').val(filename);
 												});
 
 								//preview image 
@@ -467,6 +474,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 
 								var img = $(this).siblings('.upload-display').find('img');
 								img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+ imgSrc+ "\")";
+								// IE7
 							}
 												});
 									});

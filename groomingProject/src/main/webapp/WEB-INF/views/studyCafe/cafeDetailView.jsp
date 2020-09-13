@@ -68,11 +68,11 @@
 				<div class="container col-sm-3"></div>
 				    <div class="sideMenu col-sm-7">
 						<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-					<c:if test="${!empty SessionScope.loginUser}">
-						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
-						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					<c:if test="${!empty loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
-					<c:if test="${empty SessionScope.loginUser}">
+					<c:if test="${empty loginUser}">
 						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
 						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
 					</c:if>
@@ -98,7 +98,7 @@
 					</c:forEach>
 				</div>
 				<div class="container col-sm-3">
-				<form method="post" action="insertR.do?${SessionScope.loginUser}">
+				<form method="post" action="insertR.do?memberNo=${loginUser.memberNo}">
 					<div class="row">
 						<ul>
 							<c:forEach var="info" items="${info}">
@@ -348,7 +348,8 @@
 				}
 				
 				for(var j in data){
-					if(data[j].cReserSTime <= i && data[j].cReserETime >= i){
+					console.log(data);
+					if(data[j].cReserSTime <= i && data[j].cReserETime > i && data[j].memberNo != '${loginUser.memberNo}'){
 						$timespan.css("background","grey");
 						$timespan.prop("class","none");
 					}
@@ -509,7 +510,7 @@
 			$money = $(".money").text().split(' 원');
 			$("#money").val($money[0]);
 			
-			<c:if test="${empty SessionScope.loginUser}">
+			<c:if test="${empty loginUser}">
 				$("#infoCheck").append("<p>로그인해야 예약 가능합니다.<p>");
 				$("#userConfirm").attr("type","button");
 				
@@ -517,11 +518,12 @@
 				return;
 			</c:if>
 			
+			$memberNo = '${loginUser.memberNo}';
 			$cReserNo = ${cReserNo eq null? null: cReserNo}
 			console.log($money[0])
 			$.ajax({
 				url:"checkPoint.do",
-				data:{money:$money[0],cReserNo:$cReserNo},
+				data:{money:$money[0],cReserNo:$cReserNo,memberNo:$memberNo},
 				success:function(data){
 					if(data == "success"){
 						$cPriceNo = $('input[name="cPriceNo"]:checked').val();
@@ -554,11 +556,12 @@
 						$("#userConfirm").attr("type","button");
 						
 						// 포인트 충전 사이트로 바꿔놓을 것!!
-						$("#userConfirm").attr("onclick","location.href='searchName.do'");
+						$("#userConfirm").attr("onclick","location.href='mypagePoint.do'");
 					}
 					
 				},
 				error:function(data){
+					console.log("실패!");
 				}
 			})
 			

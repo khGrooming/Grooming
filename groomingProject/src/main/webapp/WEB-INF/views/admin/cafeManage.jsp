@@ -13,7 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <style>
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;font-size:large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -22,11 +22,12 @@
         .declarationInfo{width: 70%;border-collapse: collapse;margin-left:20%;}
         .declarationInfo th,td{height:50px;text-align:center;}
         
-        .panel{width:150px;height:250px;display:inline-block; border-radius: 10%;overflow:hidden;}
-		
+        .panel{width:150px;height:250px;display:inline-block; border-radius: 0.1rem;overflow:hidden; margin:0.2rem;}
+		.panel:hover {border: thin solid lawngreen;}
+
 		.cafe{height:100px;text-align:center;padding:30px;}
 		
-		.thumbnail{width:150px}
+		.thumbnail{width:300px;height:130px;border-radius: 0.1rem;}
 		
 		/* The Modal (background) */
         .modal {
@@ -52,7 +53,7 @@
         }
 		
 		.modalInfo{width:100%; text-align:center;}
-		img{width:100%;}
+		.panel{width:300px;}
     </style>
 </head>
 <body>
@@ -65,7 +66,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 				<br><br>
-					<div class="container col-sm-3"></div>
+					<!-- <div class="container col-sm-3"></div> -->
 				    <div class="sideMenu col-sm-7">
 						<div class="admin"><a href="adminMain.do">통계</a></div>
 	                    <div class="admin"><a href="memberManage.do">회원 관리</a></div>
@@ -90,7 +91,8 @@
 		                <c:forEach var="cafe" varStatus="i" items="${cafeList}">
 		                <div class="panel panel-default" onclick="openDetail(${i.index}, 0);">
 		                	<input type="hidden" class="cafeNo${i.index}" value="${cafe.cafeNo}">
-		                    <img src="${contextPath}/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail">
+		                	<div class="panel-header"><img src="${contextPath}/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail"></div>
+		                    
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
 		                </div>
@@ -113,7 +115,7 @@
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
 						<button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">변경</button>
-						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="closeModal();">취소</button>
 					</div>
 				</div>
 			</div>
@@ -123,8 +125,8 @@
 				      <!-- Modal content -->
 				<div class="modal-content">
 					<p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">카페 추가</span></b></span></p>
-					<p id="insertInfo" style="text-align: center; line-height: 1.5;"><br />
 					<form action="insertCafeInfo.do" method="post" enctype="multipart/form-data">
+					<p id="insertInfo" style="text-align: center; line-height: 1.5;">
 						<label>카페 이름</label><input type="text" name="cafeName" class="modalInfo">
 						<label>카페 소개</label><textarea name="cafeContent" class="modalInfo"></textarea>
 						<label>카페 연락처</label><input type="text" name="cafePhone" class="modalInfo">
@@ -141,14 +143,11 @@
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
 						<input type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;" value="추가">
-						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="location.reload(true);">취소</button>
+						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="closeModal();">취소</button>
 					</div>
 					</form>
 				</div>
 			</div>
-		 <script> 
-			
-		 </script>
 
     </section>
 	<script>
@@ -176,7 +175,7 @@
 					$cRoomHeadCount = data[j].cRoomHeadCount;
 					
 					$infoCheck.append("<input class='modalInfo' name='cafeNo' type='hidden' value='"+$cafeNo+"'>");
-					$infoCheck.append("<input class='modalInfo' name='cPriceNo' type='hidden' value='"+$cPriceNo+"'>");
+					$infoCheck.append("<input class='modalInfo' clss='cPriceNo"+j+"' name='cPriceNo' type='hidden' value='"+$cPriceNo+"'>");
 					$infoCheck.append("<labe>카페 이름 </label><input class='modalInfo' name='cafeName' type='text' value='"+$cafeName+"'><br><br>");
 					$infoCheck.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
 					$infoCheck.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
@@ -189,7 +188,6 @@
 					$infoCheck.append("<labe>카페 최소 예약 시간 </label><input class='modalInfo' name='cRoomTime' type='text' value='"+$cRoomTime+"'><br><br>");
 					$infoCheck.append("<labe>카페 룸 가격 </label><input class='modalInfo' name='cRoomPrice' type='text' value='"+$cRoomPrice+"'><br><br>");
 					$infoCheck.append("<labe>카페 룸 이용가능 수 </label><input class='modalInfo' name='cRoomHeadCount' type='text' value='"+$cRoomHeadCount+"'><br><br>");
-					
 					for(l in data){
 						if(l == j){
 							$infoCheck.append("<a style='color:green;' onclick='openDetail("+i+","+l+");'> ["+l+"] </a>");
@@ -197,6 +195,8 @@
 							$infoCheck.append("<a style='color:blue;' onclick='openDetail("+i+","+l+");'> ["+l+"] </a>");
 						}
 					}
+					$infoCheck.append("<br><button type='button' onclick='roomInsert("+i+");' class='pop_bt' style='font-size: 13pt;'>룸 추가</button>");
+					$infoCheck.append("&nbsp;<button type='submit' onclick='roomDelete("+j+");' class='pop_bt' style='font-size: 13pt;'>룸 삭제</button>");
 				},
 				error:function(data){
 					console.log("실패!");
@@ -206,7 +206,9 @@
 
 		function insertCafe(){
 			$("#insertCafe").css("display","block");
-			
+		}
+		function closeModal(){
+			$(".modal").css("display","none");
 		}
 		
 		// 이미지 미리보기
@@ -259,6 +261,94 @@
 	                 }
 				})
 			}
+		 
+		 function roomInsert(i){
+			 $("#changeCafe").css("display","none");
+			 $("#insertCafe").css("display","block");
+			 console.log("insert i : "+i);
+			 $cafeNo = $(".cafeNo"+i).val();
+			 console.log("insert $cafeNo : "+$cafeNo);
+			 $insertInfo = $("#insertInfo");
+			 $insertInfo.html("");
+			 
+			 $.ajax({
+					url:"cafeinfo.do",
+					data:{cafeNo:$cafeNo},
+					type:"post",
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						$cafeName = data[0].cafeName;
+						$cafeContent = data[0].cafeContent;
+						$cafePhone = data[0].cafePhone;
+						$cafeAddress = data[0].cafeAddress;
+						
+						$insertInfo.append("<input class='modalInfo' name='cafeNo' type='hidden' value='"+$cafeNo+"'>");
+						$insertInfo.append("<labe>카페 이름 </label><input class='modalInfo' name='cafeName' type='text' value='"+$cafeName+"'><br><br>");
+						$insertInfo.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
+						$insertInfo.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
+						$insertInfo.append("<labe>카페 주소 </label><input class='modalInfo' name='cafeAddress' type='text' value='"+$cafeAddress+"'><br><br>");
+						$insertInfo.append("<label>카페 이미지</label>");
+						$insertInfo.append("<div id='image_container'><img src='${contextPath }/resources/views/images/cafeImage/"+data[0].cafeImg+"' class='thumbnail'></div>");
+					},
+					error:function(data){
+						console.log("실패!");
+					}
+				})
+			}
+		
+		 var loading = false;    //중복실행여부 확인 변수
+		    var page = 1;   //불러올 페이지
+		    /*nextpageload function*/
+		    function next_load(){
+		    	page++;
+	            $.ajax({
+                    url:"cafeManageAjax.do",
+                    data : {page:page},
+                    dataType:"json",
+					success:function(data){
+						addCafeInfo(data);
+
+					},error:function(data){
+                        console.log("실패!");
+                    }
+                });
+		    }
+
+		    $(window).scroll(function(){
+		    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+		            if(!loading)    //실행 가능 상태라면?
+		            {
+		                loading = true; //실행 불가능 상태로 변경
+		                next_load(); 
+		            }
+		            else            //실행 불가능 상태라면?
+		            {
+		            	page--;
+		            }
+		        }
+		    });  
+		    
+		    function addCafeInfo(data){
+		    	$searchView = $(".searchView");
+				console.log("data : "+data);
+				for(var i in data){
+					var j = 1;
+					$panel = $("<div class='panel panel-default'  onclick='openDetail("+(j+i)+", 0);'>");
+					$cafeNo = $('<input type="hidden" class="cafeNo'+(j+i)+'" value="'+data[i].cafeNo+'">');
+					console.log(data.cafeNo);
+					$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/"+data[i].cafeImg+"' class='thumbnail'></div>");
+					$panelB = $('<div class="panel-body">'+data[i].cafeName+'</div>');
+					$panelF = $('<div class="panel-footer">'+data[i].cafeAddress+'</div>');
+					
+					$panel.append($cafeNo);
+					$panel.append($panelH);
+					$panel.append($panelB);
+					$panel.append($panelF);
+					$searchView.append($panel);
+				}
+					j++;
+		    }
 	</script>
 </body>
 </html>

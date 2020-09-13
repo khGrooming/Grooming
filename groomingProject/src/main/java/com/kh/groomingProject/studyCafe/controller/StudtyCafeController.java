@@ -1,5 +1,7 @@
 package com.kh.groomingProject.studyCafe.controller;
 
+import static com.kh.groomingProject.common.AdminPagination.getPageInfo;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.studyCafe.model.service.StudyCafeService;
 import com.kh.groomingProject.studyCafe.model.vo.CafeInfo;
@@ -38,10 +42,19 @@ public class StudtyCafeController {
 	
 	// 이름으로 검색 첫 화면 이동
 	@RequestMapping("searchName.do")
-	public ModelAndView searchName(ModelAndView mv) throws JsonIOException, IOException {
+	public ModelAndView searchName(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList();
+		cafeList = studyCafeService.selectCafeList(pi);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchName");
@@ -66,10 +79,19 @@ public class StudtyCafeController {
 	
 	// 지역으로 검색 화면으로 이동
 	@RequestMapping("searchLocal.do")
-	public ModelAndView searchLocal(ModelAndView mv) throws JsonIOException, IOException {
+	public ModelAndView searchLocal(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList();
+		cafeList = studyCafeService.selectCafeList(pi);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchLocal");
@@ -89,6 +111,8 @@ public class StudtyCafeController {
 		Gson gson = new Gson();
 		gson.toJson(list, response.getWriter());
 	}
+	
+	
 	
 	// 카페 디테일 페이지로 이동
 	@RequestMapping(value="cafeDetail.do")
@@ -130,16 +154,16 @@ public class StudtyCafeController {
 	
 	// 최종 예약
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
-	public String insertReservation(Reservation r, String money, Member m) {
+	public String insertReservation(Reservation r, String money) {
 		Map rinfo = new HashMap();
-		
-		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(m.getMemberNo());
+
+		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(r.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
 			if(r.getcReserNo().equals(rlist.get(i).getcReserNo())) {
 				int oldMoney = Integer.valueOf(rlist.get(i).getcRoomPrice()) * rlist.get(i).getcReserHeadCount() *  (Integer.valueOf(rlist.get(i).getcReserETime())- Integer.valueOf(rlist.get(i).getcReserSTime()));
 				
-				rinfo.put("memberNo", m.getMemberNo());
+				rinfo.put("memberNo", r.getMemberNo());
 				rinfo.put("pointList", "카페 예약 취소");
 				rinfo.put("addPoint", oldMoney);
 				int resultPoint = studyCafeService.pointCalculation(rinfo);
@@ -148,7 +172,7 @@ public class StudtyCafeController {
 		
 		int result = studyCafeService.insertReservation(r);
 		
-		rinfo.put("memberNo", m.getMemberNo());
+		rinfo.put("memberNo", r.getMemberNo());
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 
 		if(totalPoint > Integer.valueOf(money)) {
@@ -157,7 +181,7 @@ public class StudtyCafeController {
 			int resultPoint = studyCafeService.pointCalculation(rinfo);			
 		}
 		
-		return "redirect:reservationCheck.do";
+		return "redirect:reservationCheck.do?memberNo="+r.getMemberNo();
 	}
 	
 	// 카페 신청  내역 페이지로 이동
@@ -199,7 +223,7 @@ public class StudtyCafeController {
 		
 		int result = studyCafeService.deleteReservation(cReserNo);
 		
-		return "redirect:reservationCheck.do";
+		return "redirect:reservationCheck.do?memberNo="+m.getMemberNo();
 	}
 	
 	@RequestMapping("checkPoint.do")
@@ -207,9 +231,9 @@ public class StudtyCafeController {
 	public String checkPoint(int money, String cReserNo, Member m) {
 		Map rinfo = new HashMap();
 		rinfo.put("memberNo", m.getMemberNo());
-		
+
 		int totalPoint = studyCafeService.checkPoint(rinfo);
-		
+
 		if(totalPoint >= money) {
 			return "success";
 		}else {

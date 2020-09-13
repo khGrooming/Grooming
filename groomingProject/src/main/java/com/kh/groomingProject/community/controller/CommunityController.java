@@ -32,6 +32,7 @@ import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.community.model.vo.PageInfo;
 import com.kh.groomingProject.community.model.vo.Reply;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
+import com.kh.groomingProject.grooming.model.vo.GroomingSearch;
 import com.kh.groomingProject.member.model.vo.Member;
 
 @Controller
@@ -173,9 +174,6 @@ public class CommunityController {
 		}
 		
 		int result = cService.communityInsert(b, member);
-
-		/* .println(b); 
-		 * .println("imgFile : " + imgFile); */
 		
 		if(result > 0) { 
 			return "redirect:communityMain.do?bCategoryNo="+b.getbCategoryNo(); 
@@ -208,9 +206,10 @@ public class CommunityController {
 	}
 		
 	@RequestMapping(value="communityUpdate.do", method=RequestMethod.POST)
-	public String communityUpdate(HttpServletRequest request, Board b) {
+	public String communityUpdate(HttpServletRequest request, Board b,
+			@RequestParam(value="uploadFile", required=false) MultipartFile file) {
 		Member member = (Member)request.getSession().getAttribute("loginUser");
-	
+		
 		int result = cService.communityUpdate(b, member);
 	
 		if(result > 0) { 
@@ -314,9 +313,12 @@ public class CommunityController {
 		response.setContentType("application/json; charset=utf-8");
 
 		ArrayList<Board> blist = cService.communitySearch(communitySearch);
-		
-		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		gson.toJson(communitySearch, response.getWriter());
+		System.out.println("blist " + blist);
+		new Gson().toJson(blist, response.getWriter());
 	}
+	
+	
+		
+
 
 }

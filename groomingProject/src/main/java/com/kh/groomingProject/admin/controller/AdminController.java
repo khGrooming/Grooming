@@ -52,10 +52,13 @@ public class AdminController {
 		
 		ArrayList<GraphListCount> clist = adminService.adminGraphCount();
 		
+		ArrayList<GraphListCount> point = adminService.adminPoint(clist);
 		ArrayList<GraphListCount> blist = adminService.adminBoardList(clist);
 		ArrayList<GraphListCount> glist = adminService.adminGroomingList(clist);
 		ArrayList<GraphListCount> mlist = adminService.adminMemberList(clist);
+		System.out.println("point : "+point);
 		
+		mv.addObject("point", point);
 		mv.addObject("clist", clist);
 		mv.addObject("mlist", mlist);
 		mv.addObject("blist", blist);
@@ -172,24 +175,52 @@ public class AdminController {
 	
 
 	@RequestMapping("groomingManage.do")
-	public ModelAndView groomingManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) String category) {
+	public ModelAndView groomingManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="category", required=false) String category,@RequestParam(value="day", required=false) String day,@RequestParam(value="groomingName", required=false) String groomingName) {
+		Map str = new HashMap();
+		str.put("category", category);
+		str.put("day", day);
+		str.put("groomingName", groomingName);
 		
+		System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
-		
-		int gListCount = adminService.selectGroomingCount(category);
+		int gListCount = adminService.selectGroomingCount(str);
+		System.out.println("gListCount : "+gListCount);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
 		
-		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, category);
+		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, str);
 		
+		System.out.println("glist : "+glist);
+		
+		mv.addObject("category", category);
+		mv.addObject("day", day);
+		mv.addObject("groomingName", groomingName);
+		mv.addObject("pi", pi);
 		mv.addObject("glist", glist);
 		mv.setViewName("admin/groomingManage");
 		
 		return mv;
+	}
+	
+	@RequestMapping("gActivation.do")
+	public String gActivation(String gActivation, String groomingNo) {
+		Map str = new HashMap();
+		str.put("gActivation", gActivation);
+		str.put("groomingNo", groomingNo);
+		System.out.println("그루밍 관리 정보 : "+str);
+		
+		int result = adminService.gActivation(str);
+		System.out.println("그루밍 관리 결과 : "+result);
+		if(result > 0) {
+			return "redirect:groomingManage.do";
+		}else {
+			throw new AdminException("그루밍 관리 실패!");
+		}
+		
 	}
 	
 	@RequestMapping("declarationManage.do")
@@ -224,26 +255,67 @@ public class AdminController {
 	}
 	
 	@RequestMapping("sanctionsInsert.do")
-	public String sanctionsInsert(String sanctions, String memberNo) {
+	public String sanctionsInsert(String sanctions, String memberNo, String issue) {
 		Map info = new HashMap();
 		info.put("sanctions", sanctions);
 		info.put("memberNo", memberNo);
+		info.put("issue", issue);
 		
 		int result = adminService.sanctionsInsert(info);
+		System.out.println("제재 기간 result : "+result);
+		if(result>0) {
+			int delResult = adminService.declarationDelete(info);
+			if(delResult>0) {
+				System.out.println("신고 목록 delResult : "+delResult);
+				return "redirect:declarationManage.do";				
+			}else {
+				throw new AdminException("신고 목록 업데이트 실패!");
+			}
+		}else {
+			throw new AdminException("제재기간 업데이트 실패!");
+		}
 		
 		
-		return "redirect:declarationManage.do";
 	}
 	
 	
 	@RequestMapping("cafeManage.do")
-	public ModelAndView cafeManage(ModelAndView mv) {
-		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList();
+	public ModelAndView cafeManage(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = 1;
 		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cListCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		
+		mv.addObject("pi", pi);
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("admin/cafeManage");
 		
 		return mv;
+	}
+	
+	@RequestMapping("cafeManageAjax.do")
+	public void cafeManageAjax(HttpServletResponse response, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cListCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
+		ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+		
+		response.setContentType("application/json;charset=UTF-8");
+		
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();;
+		gson.toJson(cafeList, response.getWriter());
 	}
 	
 	@RequestMapping("cafeinfo.do")
@@ -257,7 +329,22 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="cafeInfoChange.do", method=RequestMethod.POST)
-	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request) {
+	public ModelAndView cafeInfoChange(ModelAndView mv, CafeInfo cafe, @RequestParam(value="uploadFile", required=false) MultipartFile file, HttpServletRequest request, @RequestParam(value="page", required=false) Integer page) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		System.out.println("cafeDelete : "+cafe);
+		if(cafe.getcPriceNo() != null) {
+			int cPriceDel = adminService.DeleteCafeInfo(cafe);
+		}
+		
+		int cListCount = studyCafeService.selectcafeCount();
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cListCount);
+		
 		if(!file.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(file, request);
 
@@ -267,8 +354,9 @@ public class AdminController {
 		int result = adminService.cafeInfoChange(cafe);
 		
 		if(result > 0) {
-			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList();
-
+			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi);
+			
+			mv.addObject("pi", pi);
 			mv.addObject("cafeList", cafeList);
 			mv.setViewName("admin/cafeManage");
 			
@@ -286,6 +374,7 @@ public class AdminController {
 			cafe.setCafeImg(renameFileName);
 		}
 		
+		System.out.println("cafe : "+cafe);
 		int result = adminService.insertCafeInfo(cafe);
 		
 		if(result > 0) {
@@ -325,6 +414,14 @@ public class AdminController {
 			e.printStackTrace();
 		} 
 		return renameFileName;
+	}
+	
+	@RequestMapping("mentoFail.do")
+	public String mentoFail(String memberNo) {
+		System.out.println(memberNo);
+		int result = adminService.mentoManage(memberNo);
+		
+		return "redirect:mentoManage.do";
 	}
 	
 }

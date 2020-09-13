@@ -154,18 +154,10 @@ function deleteAction(){
 	  console.log("### checkRow => {}"+checkA);
 	 
 	  if(confirm("찜하기를 삭제 하시겠습니까?")){
-	      /* ajax로 삭제하기 ?*/
 	    
 	      location.href="heartDele.do?checkList="+checkA;
 	          
-	      
-	      /* var url = document.location.href;
-	      var page = $("#page").val();
-	      var saleType = $("#saleType").val();
-	      var schtype = $("#schtype").val();
-	      var schval = $("#schval").val();
-	      location.href="${rc.contextPath}/test_proc.do?idx="+checkRow+"&goUrl="+url+"&page="+page+"&saleType="+saleType+"schtype="+schtype+"schval="+schval;  
- */
+	   
 	  }else{
 		  $("input[name=checkA]").prop("checked", false);
 	  }

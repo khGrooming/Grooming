@@ -117,6 +117,7 @@
 					</tr>
 				</c:if> 
         	</table>
+        	<c:if test="${!empty loginUser }">
         	<!-- 댓글 입력 -->
         	<form id="fm-reply" action="replyInsert.do" method="post" enctype="Multipart/form-data">
         		<input type="hidden" name="boardNo" value="${board.boardNo }">
@@ -134,6 +135,19 @@
 					</tr>
         		</table>
         	</form>
+        	</c:if>
+        	<c:if test="${empty loginUser }">
+  	        	<form id="fm-reply" action="replyInsert.do" method="post" enctype="Multipart/form-data">
+        			<table>
+        				<tr>
+        					<td style="vertical-align: middle;">${loginUser.memberNickName }</td>
+							<td align="center">
+								<a href="http://localhost:8888/groomingProject/loginPage.do?url=%2fgroomingProject%2fhome.do" class="link">로그인</a>을 하시면 댓글 을 등록할 수 있습니다.
+							</td>
+						</tr>
+        			</table>
+        		</form>
+        	</c:if>
         	
         	<!-- 댓글 목록 -->
         	<table class="table table-responsive-xl" align="center" style="width: 80%">
@@ -155,7 +169,7 @@
 							<c:param name="replyNo" value="${r.replyNo }" />
 						</c:url>
         					
-        				<c:url var="replyUpdate" value="replypdate.do">
+        				<c:url var="replyUpdate" value="replyUpdate.do">
 							<c:param name="boardNo" value="${board.boardNo }" />
 							<c:param name="bCategoryNo" value="${board.bCategoryNo }" />
 							<c:param name="replyNo" value="${r.replyNo }" />

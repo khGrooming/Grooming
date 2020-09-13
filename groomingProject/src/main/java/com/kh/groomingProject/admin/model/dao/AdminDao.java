@@ -15,7 +15,6 @@ import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
-import com.kh.groomingProject.admin.model.vo.VisitCount;
 import com.kh.groomingProject.common.AdminPageInfo;
 import com.kh.groomingProject.community.model.vo.Board;
 import com.kh.groomingProject.grooming.model.vo.Grooming;
@@ -74,21 +73,16 @@ public class AdminDao {
 		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectNo", num, rowBounds);
 	}
 
-	public int selectGroomingCount(String category) {
-		Map num = new HashMap();
-		num.put("category", category);
-		
-		return sqlSessionTemplate.selectOne("adminMapper.selectGroomingCount", num);
+	public int selectGroomingCount(Map str) {
+
+		return sqlSessionTemplate.selectOne("adminMapper.selectGroomingCount", str);
 	}
 
-	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, String category) {
-		Map num = new HashMap();
-		num.put("category", category);
-		
+	public ArrayList<GroomingManageView> selectGroomingList(AdminPageInfo pi, Map str) {
 		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", num, rowBounds);
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectGroomingList", str, rowBounds);
 	}
 
 	public int selectDeclarationCount() {
@@ -141,6 +135,7 @@ public class AdminDao {
 		int num1 = sqlSessionTemplate.insert("adminMapper.insertCafeInfo",cafe);
 
 		String cafeNo = sqlSessionTemplate.selectOne("adminMapper.selectCafeNo", cafe);
+		cafe.setCafeNo(cafeNo);
 		System.out.println("Dao에서 cafeInfo : "+cafe);
 		
 		int num2 = sqlSessionTemplate.insert("adminMapper.insertCafePriceInfo", cafe);
@@ -188,6 +183,29 @@ public class AdminDao {
 		return sqlSessionTemplate.selectOne("adminMapper.nowPoint", p);
 	}
 
+	public int mentoManage(String memberNo) {
 
-	
+		return sqlSessionTemplate.update("adminMapper.mentoManage", memberNo);
+	}
+
+	public int gActivation(Map str) {
+
+		return sqlSessionTemplate.update("adminMapper.gActivation", str);
+	}
+
+	public int declarationDelete(Map info) {
+
+		return sqlSessionTemplate.update("adminMapper.declarationDelete", info);
+	}
+
+	public int DeleteCafeInfo(CafeInfo cafe) {
+
+		return sqlSessionTemplate.delete("adminMapper.DeleteCafeInfo", cafe);
+	}
+
+	public ArrayList<GraphListCount> adminPoint(ArrayList<GraphListCount> clist) {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.adminPoint", clist);
+	}
+
 }

@@ -370,7 +370,7 @@ border-radius: 20px;
 									<p>이미 신고내역이 있습니다</p>
 									<p>이전 신고가 처리되기 전까지 다시 신고할 수 없습니다</p>
 									<h4>신고내용</h4>
-									<p>${repInfo.declarationContent }</p>
+									<p style="color:red;">${repInfo.declarationContent }</p>
 									
 								</c:if>
 							</div>
@@ -553,9 +553,8 @@ border-radius: 20px;
 				[이전]&nbsp;
 			</c:if>
 			<c:if test="${pih.currentPage gt 1 }">
-				<c:url var="gApplicantBack" value="gApplicant.do">
+				<c:url var="gApplicantBack" value="profilePage.do.do">
 					<c:param name="pageh" value="${pih.currentPage -1 }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 				</c:url>
 				<a href="${gApplicantBack }">[이전]</a>
 			</c:if>
@@ -564,9 +563,8 @@ border-radius: 20px;
 					<font color="red" size="4"><b>[${p }]</b></font>
 				</c:if>
 				<c:if test="${p ne pih.currentPage }">
-					<c:url var="gApplicantCheck" value="gApplicant.do">
+					<c:url var="gApplicantCheck" value="profilePage.do.do">
 					<c:param name="pageh" value="${p }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 					</c:url>
 					<a href="${gApplicantCheck }">${p }</a>
 				</c:if>
@@ -575,9 +573,8 @@ border-radius: 20px;
 				&nbsp;[이후]
 			</c:if>
 			<c:if test="${pih.currentPage lt pih.maxPage }">
-				<c:url var="gApplicantAfter" value="gApplicant.do">
+				<c:url var="gApplicantAfter" value="profilePage.do.do">
 					<c:param name="pageh" value="${pih.currentPage +1 }"/>
-					<c:param name="page" value="${pi.currentPage}"/>
 				</c:url>
 				<a href="${gApplicantAfter }">[이후]</a>
 			</c:if>

@@ -50,9 +50,9 @@ section img {
 }
 .groomingImage {
 width: 450px;
-	height: 550px;
+	height: 450px;
 	background-size: cover;
-	border: 1px solid lightgreen;
+	border: 1px solid lightgray;
 }
 .status {
 	border-radius: 10px;
@@ -69,7 +69,7 @@ width: 450px;
 	height: 90px;
 }
 i {
-	font-size: 40px;
+	font-size: 30px;
 }
 .fas {
 	color: yellow;
@@ -79,46 +79,35 @@ i {
 	height: 100%;
 	border-radius: 10px;
 }
-.specStyle {
-	padding: 4px 9px 6px 8px;
-	margin: 5px;
-	color: white;
+
+.btn-3d{
+	border-radius:10px;
+	background-color:#F5FFFA;
+	width:150px; 
+	height:40px;
 }
-.specS {
-	background: #5b84ed;
+
+body{
+	background-image:url("${pageContext.servletContext.contextPath }/resources/upGroomingFiles/노트.jpg");
+
 }
-.specC {
-	background: #07b3a9;
+.container{
+	 background-color:white;
 }
-.specCE {
-	background: #fb8c49;
-}
-#apply1 {
-	outline: 0;
-	border: 0;
-	width: 20%;
-	height: 60px;
-	background: #b1caad;
-	margin: 0 auto;
-}
-.adBtn {
-	outline: 0;
-	border: 0;
-	background: #b1caad;
-	width: 10%;
-	height: 40px;
-	margin-right: 10px;
-}
+
+.Gbtn {
+	border-radius:10px;
 </style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
  
-	<section>
+<section style=" margin-bottom: 100px; ">
 
 
 
-		<div class="container" style="margin-bottom: 50px;">
+<div class="container" style="margin-top: 70px; border-radius:15px 15px 0 0;" >
+
 
 			<div class="row">
 				<div class="col-9">
@@ -136,7 +125,7 @@ i {
 
 					</table>
 				</div>
-				<div style="text-align: right; margin-left: 70px;">
+				<div style="text-align: right; margin-left: 70px; margin-top: 30px;">
 					<table>
 						<tr>
 							<td align="right">
@@ -153,16 +142,16 @@ i {
 						<tr>
 							<td style="text-align:right;"> 
 							
-								<c:if test="${!empty loginuUser }">
 									<c:if test="${!empty heart }">
 										<i id="heart" class="fas fa-bookmark"></i>
 									</c:if>
 									<c:if test="${empty heart }">
 										<i id="nheart" class="far fa-bookmark"></i>
 									</c:if>
+								<c:if test="${!empty loginUser }">
 									<button data-toggle='modal' data-target='#declareForm' id='apply'>신고</button>
 								</c:if>
-								<c:if test="${empty loginuUser }">
+								<c:if test="${empty loginUser }">
 									<button data-toggle='modal' data-target='#declareForm' id='apply' disabled>신고</button>
 								</c:if>
 								
@@ -214,7 +203,7 @@ i {
 			</div>
 
 		</div>
-		<div class="container" style="margin-top: 20px;">
+		<div class="container" >
 			<div class="row">
 				<div class="col-5">
 					<table>
@@ -290,12 +279,12 @@ i {
 				</div>
 			</div>
 		</div>
-		<div class="container">
-			<div class="row">
+		<div class="container" style="border-radius:0 0  15px 15px;">
+			<div class="row" style="margin-left:100px; height:100px;">
 			<c:if test="${loginUser.memberNo eq grooming.memberNo }">
 				<div class="col-3">
 					<!-- 신청자 리스트  확인 버튼 -->
-					<button data-toggle="modal" id="applicantList">신청자 리스트</button><!-- data-target="#applicant" -->
+					<button data-toggle="modal" id="applicantList" class="btn-3d green">신청자 리스트</button><!-- data-target="#applicant" -->
 					<!-- 리스트 모달 -->
 					<div class="modal fade" id="applicant" tabindex="-1" role="dialog"
 						aria-labelledby="applicantModalLabel" aria-hidden="true" data-backdrop="static">
@@ -337,7 +326,7 @@ i {
 												<td >${aL.memberNickName }</td>
 												
 												<td>
-												<button data-toggle="modal" id="contentOpen">신청서 열람</button>
+												<button data-toggle="modal" id="contentOpen" >신청서 열람</button>
 													<%-- <div class="modal modal-xl fade" id="open_modal_appContent" tabindex="-1" role="dialog" 
 													aria-labelledby="applyContentLabel" aria-hidden="true" >
 
@@ -385,14 +374,25 @@ i {
 
 				<c:url var="gupdate" value="groomingUpdate.do" >
 					<c:param name="groomingNo" value="${grooming.groomingNo}"/> 
-					<c:param name="page" value="${currentPage }"/>						
+					<c:param name="page" value="${currentPage }"/>		
+					<c:param name="memberNo" value="${loginUser.memberNo }"/>				
 				</c:url>
 			
 				<!-- 글의 상태 버튼 -->
 				<div class="col-6" style="text-align: center">
-					<button onclick="location.href='${gupdate}'">수정</button>
-					<button id="deleteGrooming" type="button">삭제</button>
-					<button id="limit" type="button">마감</button>
+					<c:if test="${(grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+						<button onclick="location.href='${gupdate}'" class="Gbtn" disabled>수정</button>
+					</c:if>
+					<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
+						<button onclick="location.href='${gupdate}'" class="Gbtn">수정</button>
+					</c:if>
+					<button id="deleteGrooming" type="button" class="Gbtn">삭제</button>
+					<c:if test="${(grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
+						<button id="limit" type="button" class="Gbtn" disabled>마감</button>
+					</c:if>
+					<c:if test="${(grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
+						<button id="limit" type="button" class="Gbtn">마감</button>
+					</c:if>
 				</div>
 				</c:if>
 				<c:url var="goMain" value="groomingMain.do" >
@@ -400,7 +400,7 @@ i {
 					<c:param name="page" value="${currentPage }"/>
 				</c:url> 
 				<div>
-					<button onclick="location.href='${goMain}'">목록으로</button>
+					<button onclick="location.href='${goMain}'" id="goMain" class="btn-3d green">목록으로</button>
 				</div>
 				<c:if test="${grooming.status eq 'Y' }">
 					<c:if test="${loginUser.memberNo ne grooming.memberNo  }">
@@ -408,11 +408,11 @@ i {
 		
 					<!-- 신청하기 버튼 -->
 					<c:if test="${empty loginUser ||(!empty memberNoList) || (grooming.groomingEd lt grooming.groomingNd)  || (grooming.groomingP eq grooming.currentP) || (grooming.status eq 'B') }">
-						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply' disabled>신청하기</button>" escapeXml="false" />
+						<c:out value="<button class='btn-3d green' data-toggle='modal' data-target='#applyForm' id='apply' disabled >신청하기</button>" escapeXml="false" />
 					</c:if>
 					
 					<c:if test="${!empty loginUser && (empty memberNoList) && (grooming.groomingEd gt grooming.groomingNd) && (grooming.groomingP gt grooming.currentP) && (grooming.status eq 'Y') }">
-						<c:out value="<button data-toggle='modal' data-target='#applyForm' id='apply'>신청하기</button>" escapeXml="false" />
+						<c:out value="<button class='btn-3d green' data-toggle='modal' data-target='#applyForm' id='apply' >신청하기</button>" escapeXml="false" />
 					</c:if>
 				
 				
@@ -445,7 +445,7 @@ i {
 										</td>
 									</div>
 									<div style="text-align:center; margin-bottom:10px;">
-										<button type="sumbit" id="submit" >제출</button>
+										<button type="submit" id="submit" >제출</button>
 										<button type="button" data-dismiss="modal">취소</button>
 									</div>
 								</div>
@@ -464,11 +464,6 @@ i {
 	</section>
 	 
 
-<<<<<<< HEAD
-	 
-
-=======
->>>>>>> refs/remotes/origin/master
 	<script>
       $(function(){
          $("#applicantList").on("click",function(){
@@ -563,7 +558,7 @@ i {
 
 	<script>
       $("#submit").on("click",function(){
-         alert("신청되었습니다.");
+    	 alert("신청되었습니다.");
       })
    </script>
 	<script>
@@ -578,7 +573,10 @@ i {
          var groomingTitle = "${grooming.groomingTitle}";
          var count = "${grooming.count}";
       $(document).on("click","#nheart",function(){
-   
+   		if(memberNo == ""){
+   			alert("로그인 해야지만 이용가능한 서비스 입니다.");
+   			return false;
+   		}
          $.ajax({
             url:"findHeart.do",
             data:{groomingNo:groomingNo,memberNo:memberNo},

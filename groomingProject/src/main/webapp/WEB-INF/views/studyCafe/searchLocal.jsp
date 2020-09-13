@@ -19,16 +19,17 @@
 		.sideMenu{height:300px;/* background-color:blue; */ border: thin solid lightgray; border-radius:10%;}
 		.subMenu{height:100px;}
 		
-		.search{text-align:center;background:greenyellow;width:280px;height:50px;float:left;border:1px solid black}
-		.searchView{width:100%;background:lawngreen;display:inline-block;padding:10px;}
+		.search{text-align:center;/* background:greenyellow; */width:280px;height:50px;float:left;border:1px solid black}
+		.searchView{width:100%;/* background:lawngreen; */display:inline-block;padding:10px;}
 		
 		.searchName{width:200px;height:35px;}
 		
-		.panel{width:150px;height:200px;display:inline-block; border-radius: 10%;overflow:hidden;}
+		.panel{width:250px;height:200px;display:inline-block; border-radius: 0.1rem; overflow:hidden; margin: 0.5rem;}
+		.panel:hover {border: thin solid lawngreen;}
 		
 		.cafe{height:80px;text-align:center;padding:30px;}
 		
-		.thumbnail{width:150px}
+		.thumbnail{width:250px;height:130px;}
 	</style>
 </head>
 <body>
@@ -42,11 +43,11 @@
 			<div class="container col-sm-3"></div>
 			    <div class="sideMenu col-sm-7">
 					<div class="cafe"><a href="searchMap.do">스터디 카페 검색</a></div>
-					<c:if test="${!empty SessionScope.loginUser}">
-						<div class="cafe"><a href="reservationCheck.do?memberNo=${SessionScope.loginUser}">카페 신청 내역</a></div>
-						<div class="cafe"><a href="reservationHistory.do?memberNo=${SessionScope.loginUser}">카페 예약 내역</a></div>
+					<c:if test="${!empty loginUser}">
+						<div class="cafe"><a href="reservationCheck.do?memberNo=${loginUser.memberNo}">카페 신청 내역</a></div>
+						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
-					<c:if test="${empty SessionScope.loginUser}">
+					<c:if test="${empty loginUser}">
 						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
 						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
 					</c:if>
@@ -82,7 +83,7 @@
 				            	<c:param name="cafeNo" value="${cafe.cafeNo}"/>
 			            </c:url>
 		                <div class="panel panel-default" onclick="location.href='${cafeDetail}'">
-		                    <img src="${contextPath }/resources/views/images/study.jpg" class="thumbnail">
+		                    <img src="${contextPath }/resources/views/images/cafeImage/${cafe.cafeImg}" class="thumbnail">
 		                    <div class="panel-body"><c:out value="${cafe.cafeName}"/></div>
 		                    <div class="panel-footer"><c:out value="${cafe.cafeAddress}"/></div>
 		                </div>		            
@@ -121,7 +122,7 @@
 
 						$panel = $("<div class='panel panel-default'>");
 						$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
-						$img = $("<img src='${contextPath }/resources/views/images/study.jpg' class='thumbnail'>");
+						$img = $("<img src='${contextPath }/resources/views/images/cafeImage/"+data[i].cafeImg+"' class='thumbnail'>");
 						$body = $("<div class='panel-body'>");
 						$footer = $("<div class='panel-footer'>");
 						
@@ -143,10 +144,59 @@
 			})
 		}
 		
-		// 카페 상세보기
-		function cafeDetailView(){
+	var loading = false;    //중복실행여부 확인 변수
+    var page = 1;   //불러올 페이지
+    /*nextpageload function*/
+    function next_load(){
+    	page++;
+        $.ajax({
+            url:"cafeManageAjax.do",
+            data : {page:page},
+            dataType:"json",
+			success:function(data){
+				addCafeInfo(data);
+
+			},error:function(data){
+                console.log("실패!");
+            }
+        });
+    }
+
+    $(window).scroll(function(){
+    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            if(!loading)    //실행 가능 상태라면?
+            {
+                loading = true; //실행 불가능 상태로 변경
+                next_load(); 
+            }
+            else            //실행 불가능 상태라면?
+            {
+            	page--;
+            }
+        }
+    });  
+    
+    function addCafeInfo(data){
+    	$searchView = $(".searchView");
+		console.log("data : "+data);
+		for(var i in data){
+			var j = 1;
+			$panel = $("<div class='panel panel-default'>");
+			$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
+			$cafeNo = $('<input type="hidden" class="cafeNo'+(j+i)+'" value="'+data[i].cafeNo+'">');
+			console.log(data.cafeNo);
+			$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/data[i].cafeImg' class='thumbnail'></div>");
+			$panelB = $('<div class="panel-body">'+data[i].cafeName+'</div>');
+			$panelF = $('<div class="panel-footer">'+data[i].cafeAddress+'</div>');
 			
+			$panel.append($cafeNo);
+			$panel.append($panelH);
+			$panel.append($panelB);
+			$panel.append($panelF);
+			$searchView.append($panel);
 		}
+			j++;
+    }
 	</script>
 </body>
 </html>

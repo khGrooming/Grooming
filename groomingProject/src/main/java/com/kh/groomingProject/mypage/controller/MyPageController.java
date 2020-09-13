@@ -343,7 +343,7 @@ public class MyPageController {
 		}
 
 		System.out.println("퇄퇴");
-		return "home";
+		return "redirect:home.do";
 	}
 	
 
@@ -452,7 +452,7 @@ public class MyPageController {
 		return "mypage/memberSecession";
 	}
 	
-	@RequestMapping("mentorApply")
+	@RequestMapping("mentorApply.do")
 	public String mentorApply(HttpSession session,HttpServletRequest request) {
 		
 		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
@@ -461,7 +461,7 @@ public class MyPageController {
 		
 		if(result>0) {
 			mentorSelect(request,mNo);
-			return "mypage/mentor";
+			return  "mypage/mypage-memberup";
 		}else {
 			throw new MypageException("멘토 등록 실패");
 		}

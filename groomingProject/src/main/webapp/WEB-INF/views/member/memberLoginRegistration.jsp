@@ -543,7 +543,7 @@ section .form_container .hideItem
 
 		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
 		function goBackPage() {
-			let url = "${url}";
+/* 			let url = "${url}";
 			if(url.indexOf("login") != -1){
 				location.href="home.do";
 			} else if(url.indexOf("register") != -1) {
@@ -558,7 +558,8 @@ section .form_container .hideItem
 				location.href="home.do";
 			} else {
 				location.href="${url}";
-			}
+			} */
+			location.href="home.do";
 		}
 	</script>
 
@@ -684,9 +685,6 @@ section .form_container .hideItem
 								},
 								error:function(request, status, errorData){
 									alert("서버가 혼잡합니다. 잠시 후 시도해 주세요.");
-									
-									
-									//		+"error: " + errorData);
 								}
 							});
 						},
@@ -704,6 +702,7 @@ section .form_container .hideItem
 
 	<!-- 회원가입 -->
 	<script>
+		// 키이벤트 회원가입
 		$("#regiNickName").keyup(function(e){
 			if(e.keyCode == 13){
 				register();
