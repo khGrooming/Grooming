@@ -324,6 +324,7 @@ public class CommunityController {
 		response.setContentType("appalication/json;charset=utf-8");
 		
 		ArrayList<Board> communityTopList = cService.communityTopList();
+
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(communityTopList, response.getWriter());
