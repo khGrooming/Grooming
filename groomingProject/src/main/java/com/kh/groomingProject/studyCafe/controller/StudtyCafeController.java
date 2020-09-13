@@ -42,19 +42,23 @@ public class StudtyCafeController {
 	
 	// 이름으로 검색 첫 화면 이동
 	@RequestMapping("searchName.do")
-	public ModelAndView searchName(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+	public ModelAndView searchName(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cafeCount = studyCafeService.selectcafeCount();
+		int cafeCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList(pi);
+		cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchName");
@@ -79,19 +83,23 @@ public class StudtyCafeController {
 	
 	// 지역으로 검색 화면으로 이동
 	@RequestMapping("searchLocal.do")
-	public ModelAndView searchLocal(ModelAndView mv, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+	public ModelAndView searchLocal(ModelAndView mv, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="name", required=false) String name, @RequestParam(value="local", required=false) String local) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("name", name);
+		str.put("local", local);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
 		
-		int cafeCount = studyCafeService.selectcafeCount();
+		int cafeCount = studyCafeService.selectcafeCount(str);
 		
 		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
-		cafeList = studyCafeService.selectCafeList(pi);
+		cafeList = studyCafeService.selectCafeList(pi, str);
 		
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchLocal");
@@ -156,6 +164,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="insertR.do", method=RequestMethod.POST)
 	public String insertReservation(Reservation r, String money) {
 		Map rinfo = new HashMap();
+
 		ArrayList<ReservationView> rlist = studyCafeService.selectReservation(r.getMemberNo());
 		
 		for(int i=0; i<rlist.size(); i++) {
@@ -230,6 +239,7 @@ public class StudtyCafeController {
 	public String checkPoint(int money, String cReserNo, Member m) {
 		Map rinfo = new HashMap();
 		rinfo.put("memberNo", m.getMemberNo());
+
 		int totalPoint = studyCafeService.checkPoint(rinfo);
 
 		if(totalPoint >= money) {

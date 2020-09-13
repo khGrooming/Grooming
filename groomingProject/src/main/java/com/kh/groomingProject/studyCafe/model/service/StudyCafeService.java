@@ -16,7 +16,7 @@ public interface StudyCafeService {
 
 	ArrayList<StudyCafe> selectCafeLocalList(String name);
 
-	ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi);
+	ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi, Map str);
 
 	ArrayList<CafeInfo> selectCafeInfo(CafeInfo cafe);
 
@@ -36,6 +36,5 @@ public interface StudyCafeService {
 
 	int pointCalculation(Map rinfo);
 
-	int selectcafeCount();
-
+	int selectcafeCount(Map str);
 }

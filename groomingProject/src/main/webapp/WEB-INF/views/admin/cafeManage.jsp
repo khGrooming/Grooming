@@ -7,13 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>신고 관리</title>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
     <style>
-        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius: 0.1rem; font-size: large;}
+        .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}
         .admin{height:80px;text-align:center;padding:30px;}
         .sub{height:50px;text-align:center;font-size:small;}
         
@@ -54,7 +54,6 @@
 		
 		.modalInfo{width:100%; text-align:center;}
 		.panel{width:300px;}
-		section{margin-bottom: 100px;}
     </style>
 </head>
 <body>
@@ -63,7 +62,7 @@
         <br><br>
             <h1 align="center">카페 관리</h1>
             <br><br>
-		<div class="container-fluid cafe_container">
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-3">
 				<br><br>
@@ -115,7 +114,7 @@
 			     	<p><br /></p>
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
-						<button type="submit" id="userConfirm1" class="pop_bt" style="font-size: 13pt;">변경</button>
+						<button type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;">변경</button>
 						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="closeModal();">취소</button>
 					</div>
 				</div>
@@ -143,7 +142,7 @@
 			     	<p><br /></p>
 			     	
 					<div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;">
-						<input type="submit" id="userConfirm2" class="pop_bt" style="font-size: 13pt;" value="추가">
+						<input type="submit" id="userConfirm" class="pop_bt" style="font-size: 13pt;" value="추가">
 						<button type="button" class="pop_bt" style="font-size: 13pt;" onClick="closeModal();">취소</button>
 					</div>
 					</form>
@@ -151,8 +150,6 @@
 			</div>
 
     </section>
-    <footer>
-    </footer>
 	<script>
 		function openDetail(i, j){
 			$("#changeCafe").css("display","block");
@@ -304,10 +301,11 @@
 		    var page = 1;   //불러올 페이지
 		    /*nextpageload function*/
 		    function next_load(){
+		    	$name = $("#searchName").val();
 		    	page++;
 	            $.ajax({
                     url:"cafeManageAjax.do",
-                    data : {page:page},
+                    data : {page:page, name:$name},
                     dataType:"json",
 					success:function(data){
 						addCafeInfo(data);
@@ -319,9 +317,10 @@
 		    }
 
 		    $(window).scroll(function(){
-		    	console.log(" 스크롤 작동 중? ");
-		    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-			    	console.log(" 스크롤 작동 중! ");
+		    	var maxHeight = $(document).height();
+		    	var currentScroll = $(window).scrollTop() + $(window).height();
+		    	
+		    	if(maxHeight <= currentScroll + 10) {
 		            if(!loading)    //실행 가능 상태라면?
 		            {
 		                loading = true; //실행 불가능 상태로 변경
