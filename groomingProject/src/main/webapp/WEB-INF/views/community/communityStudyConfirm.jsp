@@ -124,26 +124,7 @@
 								</c:if> 
       							<p>${c.boardCreateDate }</p> 
       						
-      							<!-- 좋아요 -->
- 								<div class="iteminfo-icons" id="iteminfo-icons">
-									<span class="col iteminfo-wish-span" id="iteminfo-wish-span" style="justify-content: center;">
-										<button class="btn btn-default iteminfo-icons" id="iteminfo-wish-btn">
-											<i class="fa fa-heart" style="font-size: 1.5rem; color: gray;" aria-hidden="true"></i>
-										</button> 
-									 
-										<!-- 신고 -->
-										<a href="#declareForm" data-toggle='modal'>
-											<img style="vertical-align: middle;" alt="dep" 
-												src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG">
-										</a>
-										<input type="hidden" id="declarebtn" data-toggle="modal" href="#">
-									</span>
-					
-									<script>
-										
 
-									</script>
-      							</div>
     						</div>
   						</div>
   					</div>
