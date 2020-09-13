@@ -43,18 +43,23 @@
 	
 	<div class="container" align="center">
 	
-	<p class="text-right">
-		<a href="#declareForm" data-toggle='modal'>
-		<img style="vertical-align: bottom;" alt="dep" 
-				src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG"> 신고</a>
-	</p>					
+	<c:if test="${empty board.declarationNo}">
+		<p class="text-right">
+			<a href="#declareForm" data-toggle='modal'>
+			<img style="vertical-align: bottom;" alt="dep" 
+					src="${pageContext.servletContext.contextPath }/resources/views/images/dd.PNG"> 신고</a>
+		</p>
+	</c:if>
+						
 	<!-- 신고모달 -->
-	<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="declareForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+			style="margin-top: 100px;">
 		<div class="modal-dialog">
-			<form action="declare.do" method="post">
+			<form action="declareB.do" method="post">
 				<div class="modal-content" style="width: auto; height: auto;">
-					<input type="hidden" value="${grooming.groomingNo }" name="dnNo">
+					<input type="hidden" value="${board.boardNo }" name="dnNo">
 					<input type="hidden" value="${loginUser.memberNo }" name="memberNo">
+					<input type="hidden" value="${board.bCategoryNo }" name="bCategoryNo">
 					<!-- 모달 제목 -->
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">신고 사유</h5>
@@ -68,13 +73,19 @@
 								id="summernote" name="dContent" class="form-control" required></textarea>								
 					</div>
 					<div style="text-align:center; margin-bottom:10px;">
-						<button type="sumbit">제출</button>
+						<button type="sumbit" id="sumbit">제출</button>
 						<button type="button" data-dismiss="modal">취소</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
+		<script>
+			$("#sumbit").on("click", function(){
+				alert("게시물이 신고 되었습니다.");
+			})
+		</script>
 	
 		<div class="table table-responsive">
         	<table class="table">
@@ -118,6 +129,7 @@
 				</c:if> 
         	</table>
         	<c:if test="${!empty loginUser }">
+        	
         	<!-- 댓글 입력 -->
         	<form id="fm-reply" action="replyInsert.do" method="post" enctype="Multipart/form-data">
         		<input type="hidden" name="boardNo" value="${board.boardNo }">
@@ -176,11 +188,11 @@
 							<c:param name="replyContent" value="${r.replyContent }" />
 						</c:url> 		
         					
-        					<form action="${replyUpdate}" style="display: flex;" method = "post">
+        					<form action="${replyUpdate}" style="display: flex;" method = "post" id="rUpdate${r.replyNo }">
         					
-        						<textarea rows="3" cols="70" style="display:none;" class="rUpdate" name="rUpdate">${r.replyContent }</textarea>
-        						<input type="submit" style="display:none;" class="rUpdate_btn" value="수정">
-        						<input type="button" style="display:none;" class="rClose_btn" value="취소">
+        						<textarea rows="3" cols="70" style="display:none;" class="rUpdate" name="rUpdate" id="1update${r.replyNo }">${r.replyContent }</textarea>
+        						<input type="submit" style="display:none;" class="rUpdate_btn" id="2update${r.replyNo }" value="수정">
+        						<input type="button" style="display:none;" class="rClose_btn" id="3update${r.replyNo }" onclick="close();" value="취소">
         					</form>
         				</td>
         				<td>${r.replyModifyDate }</td>
@@ -193,7 +205,7 @@
                             		</a>
                                		<ul class="dropdown-menu" role="menu">
                                 		<li style="text-align: center;">
-                                			<a class="note-edit-btn replyUpdate">수정</a>
+                                			<a class="note-edit-btn replyUpdate" id="update${r.replyNo }">수정</a>
                                 		</li>
                                     	<li style="text-align: center;">
                                     		<a href="${replyDelete }" class="note-delete-btn" id="replyDelete">삭제</a>
@@ -206,20 +218,27 @@
 					
 					<script>
 						$(function(){
-							$(".replyUpdate").on("click",function(){
-								
-								var arr = $('.replyUpdate');
-								
-								for(var i = 0; i < arr.length; i++){
-									if(arr[i] === this){
-										$('.rUpdate').eq(i).css("display","block");
-										$('.rUpdate_btn').eq(i).css("display","block");
-										$('.rClose_btn').eq(i).css("display","block");
-									}
-								}
+							debugger;
+							$("#update${r.replyNo }").on("click",function(){
+								// 톱니바퀴 버튼 안의 "수정" 누르면 실행되는 구문
+								// 내가 누른 댓글 수정하기
+								// #1update (수정하려고 만든 input,textarea의 id들) ${r.replyNo} (로그인한 유저의 댓글의 댓글 번호) 
+								$('#1update${r.replyNo }').css('display','block'); // 댓글 text
+								$('#2update${r.replyNo }').css('display','block'); // 수정
+								$('#3update${r.replyNo }').css('display','block'); // 삭제
 							})			
 						})
 					</script>
+ 					<script>
+ 					// 취소
+						$(function(){
+							$("#3update${r.replyNo }").on("click",function(){
+								$('#1update${r.replyNo }').css('display','none'); // 댓글 text
+								$('#2update${r.replyNo }').css('display','none'); // 수정
+								$('#3update${r.replyNo }').css('display','none'); // 삭제
+							})
+						})
+					</script> 
                  		
        	 		</c:forEach>
         	</table>

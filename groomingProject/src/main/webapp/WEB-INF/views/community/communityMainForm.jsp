@@ -115,11 +115,10 @@
 	<!-- ------------------ 랭킹 시스템 -------------------- -->
 	
 	<!-- ------------------ 정렬 ------------------------- -->
-		<div class="container filterBoard" align="left">
+	<!--	<div class="container filterBoard" align="left">
 			<input type="radio" id="filterBoard_1" name="filterBoard" checked><label for="filterBoard_1">&nbsp;최신순</label>&nbsp;&nbsp;&nbsp;
 			<input type="radio" id="filterBoard_2" name="filterBoard"><label for="filterBoard_2">&nbsp;조회순</label>&nbsp;&nbsp;&nbsp;
-		</div>
-	<!-- ------------------ 정렬 ------------------------- -->
+		</div> -->
 	<!-- ------------------ 게시글 리스트 ------------------- -->
 		<div class="container" align="center">
 			<table class="table table-hover table_ra">

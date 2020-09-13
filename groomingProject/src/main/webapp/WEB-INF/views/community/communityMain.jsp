@@ -109,7 +109,6 @@
 			showStudyPromotion = $("#showStudyPromotion"),
 			showStudyConfirm = $("#showStudyConfirm"),
 			showQnA = $("#showQnA");
-		debugger;
 		[
 			showcommunityMain,
 			showNotice,

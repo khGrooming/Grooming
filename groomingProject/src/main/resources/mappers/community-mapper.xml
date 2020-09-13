@@ -18,6 +18,7 @@
 		<result property="memberNickName" column="MEMBER_NICKNAME" />
 		<result property="boardImg" column="BOARD_IMG" />
 		<result property="memberPhoto" column="MEMBER_PHOTO" />
+		<result property="declarationNo" column="DECLARATION_NO" />
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -47,10 +48,19 @@
 	</select>
 	
 	<!-- 상세 게시물 조회 -->
-	<select id="selectOne" parameterType="string" resultMap="boardResultSet">
-		SELECT * FROM BOARD
-		JOIN MEMBER USING (MEMBER_NO)
-		WHERE BOARD_NO=#{boardNo}
+	<select id="selectOne" parameterType="hashmap" resultMap="boardResultSet">
+		SELECT A.* , B.MEMBER_NICKNAME
+			<if test="memberNo != null">
+		     , C.DECLARATION_NO
+		    </if> 
+		  FROM BOARD A
+		  JOIN MEMBER B ON (A.MEMBER_NO = B.MEMBER_NO)
+		  <if test="memberNo != null">
+		  LEFT OUTER JOIN DECLARATION C ON (C.DECLARATION_N_NO = A.BOARD_NO 
+                                        AND C.DECLARATION_C_NO = '2' 
+                                        AND C.MEMBER_NO = #{memberNo})
+         </if>                               
+		 WHERE A.BOARD_NO=#{boardNo}
 	</select>
 	
 	<!-- 조회수 올리기 -->
@@ -105,6 +115,7 @@
 		FROM REPLY
 		JOIN MEMBER USING (MEMBER_NO)
 		WHERE BOARD_NO = #{boardNo}
+		ORDER BY REPLY_MODIFY_DATE
 	</select>
 	
 	<!-- 댓글 등록 -->
@@ -164,6 +175,19 @@
 		]]>
 	</select>
 	
+	<!-- 좋아요 -->
+	<update id="boardGcount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_GCOUNT = BOARD_GCOUNT + 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
+	<update id="deleteBoardGcount" parameterType="string">
+		UPDATE BOARD
+		SET BOARD_GCOUNT = BOARD_GCOUNT - 1
+		WHERE BOARD_NO=#{boardNo} 
+	</update>
+	
 	<!-- 검색 -->
 	<select id="communitySearch" parameterType="string" resultMap="boardResultSet">
 		SELECT *
@@ -176,6 +200,7 @@
         JOIN HASHTAG H ON (B.BOARD_NO = H.BOARD_NO)
         JOIN TAG T ON (H.TAG_NO = T.TAG_NO)
         AND TAG_NAME LIKE '%졸려%' -->
+    
 	
 
 </mapper>
