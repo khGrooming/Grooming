@@ -480,7 +480,11 @@
 	var page = 1;
 	var pageloading = true;
 
-
+	$(function() {
+		console.log("그루밍 페이지");
+		loadGroomingData();
+	});
+	
 	// 스크롤 로딩
 	window.onscroll = function(e) {
 	    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
@@ -494,7 +498,6 @@
 
 	// 그루밍 데이터 가져오기
 	function loadGroomingData() {
-		
 		
 		$.ajax({
 			url:"addAllGroomingList.do",
