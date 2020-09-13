@@ -100,7 +100,7 @@ public class MyPageController {
 			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
 			profileInfo.setNowPoint("0");
 		}else {
-			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
+			String memberPoint2 = Integer.toString( mpService.selectPoint(mNo));
 			profileInfo.setNowPoint(memberPoint2);
 		}
 		

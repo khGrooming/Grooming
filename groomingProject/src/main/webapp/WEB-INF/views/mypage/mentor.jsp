@@ -181,7 +181,6 @@
 					default:
 						break;
 					}	
-					alert("sdfwdf");
 
 					$.ajax({
 						type : 'POST',
