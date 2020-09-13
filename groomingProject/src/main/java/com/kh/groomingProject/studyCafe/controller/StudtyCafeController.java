@@ -126,7 +126,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="cafeDetail.do")
 	public ModelAndView cafeDetail(ModelAndView mv, CafeInfo cafeNo, String cReserNo) {
 		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
-		
+		System.out.println(info);
 		mv.addObject("cReserNo", cReserNo);
 		mv.addObject("info", info);
 		mv.setViewName("studyCafe/cafeDetailView");

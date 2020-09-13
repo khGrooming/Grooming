@@ -73,8 +73,11 @@
 						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
 					<c:if test="${empty loginUser}">
-						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
-						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
+						<c:url var="loginPage_Cafe" value="loginPage.do">
+							<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+						</c:url>
+						<div class="cafe"><a href="${loginPage_Cafe }">카페 신청 내역</a></div>
+						<div class="cafe"><a href="${loginPage_Cafe }">카페 예약 내역</a></div>
 					</c:if>
 		        	</div>
 		        </div>
@@ -514,7 +517,7 @@
 				$("#infoCheck").append("<p>로그인해야 예약 가능합니다.<p>");
 				$("#userConfirm").attr("type","button");
 				
-				$("#userConfirm").attr("onclick","location.href='loginPage.do'");
+				$("#userConfirm").attr("onclick","location.href='loginPage.do?url=${contextPath }/cafeDetail.do?cafeNo=${info[0].cafeNo}'");
 				return;
 			</c:if>
 			
