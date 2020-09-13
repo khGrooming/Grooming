@@ -18,13 +18,19 @@
         
 <!--datatable-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
-      
+
+<!-- 폰트 -->
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
 <title>Insert title here</title>
 <style>
     /*datatable css*/
     div.dataTables_wrapper {
         width: 70rem;
         margin: 0 auto;
+    }
+    section .btn-group-toggle{
+		font-family: 'Jua', sans-serif;
     }
 </style>
 </head>

@@ -167,7 +167,6 @@ font-family: 'TmoneyRoundWindExtraBold';
 									</c:if>
 								
 								<c:if test="${!empty loginUser }">
-
 		                           <div style="height: 22px; width: 70px; float: right; margin-left: 10px;"> 
 		                              <img src="${contextPath }/resources/views/images/repotBtn.png"   id='apply' data-toggle="modal" data-target="#declareForm"   >
 		                           </div>
@@ -720,10 +719,10 @@ font-family: 'TmoneyRoundWindExtraBold';
       $(function(){
          
          
-         getAppList();
+         /* getAppList();
            setInterval(function(){
             currentPeole();
-         },1000);   
+         },1000); */   
          
          $(document).on("click",".accept",function(){
             var groomingNo = "${grooming.groomingNo}";

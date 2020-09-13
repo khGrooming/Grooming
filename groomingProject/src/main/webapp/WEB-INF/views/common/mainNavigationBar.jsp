@@ -528,9 +528,9 @@
 					getUserAlert();
 					getUserMessages();
 				}, 10000);
-				setInterval(function(){
+				/* setInterval(function(){
 					refreshLoginUser();
-				}, 60000);
+				}, 60000); */
 			}
 		});
 	</script>
