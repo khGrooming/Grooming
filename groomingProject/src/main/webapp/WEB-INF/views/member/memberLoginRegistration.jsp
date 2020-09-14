@@ -378,7 +378,13 @@ section .form_container .hideItem
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */                          
+    width: 65%; /* Could be more or less, depending on screen size */                          
+}
+@media (min-width: 576px){
+	.modal-dialog {
+	    max-width: 800px;
+	    margin: 1.75rem auto;
+	}
 }
 .modal-content pre{
   white-space: pre-wrap;

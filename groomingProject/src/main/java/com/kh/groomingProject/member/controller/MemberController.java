@@ -267,11 +267,11 @@ public class MemberController {
 			,@RequestParam(value="memberTagName", required=false) String memberTagName
 			,@RequestParam(value="profileFile", required=false) MultipartFile file) {
 		//System.out.println("회원가입 추가 ( 멤버 이메일  : " + m.getMemberEmail()
-						+ " 멤버 이름 : " + m.getMemberName()
-						+ " 멤버 전화 : " + m.getMemberPhone()
-						+ " 멤버 성별 : " + m.getMemberGender()
-						+ " 멤버 사진 : " + m.getMemberPhoto()
-						+ " 멤버 메모 : " + m.getMemberMemo() + " )");
+//						+ " 멤버 이름 : " + m.getMemberName()
+//						+ " 멤버 전화 : " + m.getMemberPhone()
+//						+ " 멤버 성별 : " + m.getMemberGender()
+//						+ " 멤버 사진 : " + m.getMemberPhoto()
+//						+ " 멤버 메모 : " + m.getMemberMemo() + " )");
 		//System.out.println("멤버 Tags : " + memberTagName);
 		
 		//System.out.println("값 유무 확인 (이멜) : " + ((m.getMemberEmail()).length() != 0));

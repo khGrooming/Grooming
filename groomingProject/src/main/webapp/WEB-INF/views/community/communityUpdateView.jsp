@@ -90,12 +90,12 @@
             			focus: true  
         			})
     			});
-    			debugger;
+    			//debugger;
     			var bCategoryNo = "${board.bCategoryNo}";
-    			debugger;
+    			//debugger;
 				$(document).ready(function(){
 					$('#fileTr').hide();
-					debugger;
+					//debugger;
 					if(bCategoryNo == "BC00004"){
 						$('#fileTr').show();
 					}
