@@ -11,6 +11,8 @@ import com.kh.groomingProject.admin.model.dao.AdminDao;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
+import com.kh.groomingProject.admin.model.vo.HelpCategory;
+import com.kh.groomingProject.admin.model.vo.HelpManage;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -211,6 +213,24 @@ public class AdminServiceImpl implements AdminService {
 	public int mentoSManage(String memberNo) {
 
 		return adminDao.mentoSuccess(memberNo);
+	}
+
+	@Override
+	public int helpListCount(Map info) {
+
+		return adminDao.helpListCount(info);
+	}
+
+	@Override
+	public ArrayList<HelpCategory> selectHelpCList() {
+
+		return adminDao.selectHelpCList();
+	}
+
+	@Override
+	public ArrayList<HelpManage> selectHelpList(AdminPageInfo pi, Map info) {
+
+		return adminDao.selectHelpList(pi, info);
 	}
 
 

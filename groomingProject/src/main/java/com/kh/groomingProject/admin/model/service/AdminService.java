@@ -7,6 +7,8 @@ import java.util.Map;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
+import com.kh.groomingProject.admin.model.vo.HelpCategory;
+import com.kh.groomingProject.admin.model.vo.HelpManage;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -81,6 +83,12 @@ public interface AdminService {
 	int careerConfirm(MentoManageView mv);
 
 	int mentoSManage(String memberNo);
+
+	int helpListCount(Map info);
+
+	ArrayList<HelpCategory> selectHelpCList();
+
+	ArrayList<HelpManage> selectHelpList(AdminPageInfo pi, Map info);
 
 
 

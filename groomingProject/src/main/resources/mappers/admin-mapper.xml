@@ -51,11 +51,27 @@
 		<result property="declarationContent" column="DECLARATION_CONTENT"/>
 		<result property="declarationCheck" column="DECLARATION_CHECK"/>
 	</resultMap>
-	
+
 	<resultMap type="GraphListCount" id="graphCountResultView">
 		<id property="lastDay" column="LASTDAY"/>
 		
 		<result property="count" column="LIST_COUNT"/>
+	</resultMap>
+	
+	<resultMap type="HelpCategory" id="helpCategoryResultSet">
+		<id property="helpCNo" column="HELP_NO"/>
+		
+		<result property="helpCName" column="HCATEGORY_NAME"/>
+	</resultMap>
+	
+	<resultMap type="HelpManage" id="helpResultSet">
+		<id property="helpNo" column="HELP_NO"/>
+
+		<result property="helpCName" column="HCATEGORY_NAME"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="helpEmail" column="HELP_EMAIL"/>
+		<result property="helpContent" column="HELP_CONTENT"/>
+		<result property="helpCDate" column="HELP_CDATE"/>
 	</resultMap>
 
 	<select id="memberListCount" parameterType="string" resultType="_int">
@@ -439,5 +455,45 @@
 		WHERE SPEC_NO = #{specNo}
 	</update>
 	
+	<select id="helpListCount" parameterType="Map" resultType="_int">
+		SELECT COUNT(*)
+		FROM HELP
+		<where>
+		<choose>
+		    <when test="category == 'helpContent'">
+				HELP_CONTENT LIKE '%'||#{helpValue}||'%'
+		    </when>
+		    <otherwise>
+				HCATEGORY_NO LIKE '%'||#{helpValue}||'%'
+		    </otherwise>
+		  </choose>
+		</where>
+	</select>
+	
+	<select id="selectHelpCList" parameterType="Map" resultMap="helpCategoryResultSet">
+		SELECT HCATEGORY_NO, HCATEGORY_NAME
+		FROM HELP_CATEGORY
+	</select>
+	
+	<select id="selectHelpList" parameterType="Map" resultMap="helpResultSet">
+		SELECT H.HELP_NO
+			, HC.HCATEGORY_NAME
+			, H.MEMBER_NO
+			, H.HELP_EMAIL
+			, H.HELP_CONTENT
+			, H.HELP_CDATE 
+		FROM HELP H
+		JOIN HELP_CATEGORY HC ON (H.HCATEGORY_NO = HC.HCATEGORY_NO)
+		<where>
+		<choose>
+		    <when test="category == 'helpContent'">
+				H.HELP_CONTENT LIKE '%'||#{helpValue}||'%'
+		    </when>
+		    <otherwise>
+				H.HCATEGORY_NO LIKE '%'||#{helpValue}||'%'
+		    </otherwise>
+		  </choose>
+		</where>
+	</select>
 
 </mapper>

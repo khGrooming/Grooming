@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.groomingProject.admin.model.vo.DeclarationManageView;
 import com.kh.groomingProject.admin.model.vo.GraphListCount;
 import com.kh.groomingProject.admin.model.vo.GroomingManageView;
+import com.kh.groomingProject.admin.model.vo.HelpCategory;
+import com.kh.groomingProject.admin.model.vo.HelpManage;
 import com.kh.groomingProject.admin.model.vo.MemberManageView;
 import com.kh.groomingProject.admin.model.vo.MentoManageView;
 import com.kh.groomingProject.common.AdminPageInfo;
@@ -216,6 +218,23 @@ public class AdminDao {
 	public int mentoSuccess(String memberNo) {
 
 		return sqlSessionTemplate.update("adminMapper.mentoSuccess", memberNo);
+	}
+
+	public int helpListCount(Map info) {
+		
+		return sqlSessionTemplate.selectOne("adminMapper.helpListCount", info);
+	}
+
+	public ArrayList<HelpCategory> selectHelpCList() {
+
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectHelpCList");
+	}
+
+	public ArrayList<HelpManage> selectHelpList(AdminPageInfo pi, Map info) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("adminMapper.selectHelpList", info, rowBounds);
 	}
 
 
