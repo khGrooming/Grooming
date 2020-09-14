@@ -355,9 +355,9 @@ h1{
                data:{gCheckDate:gCheckDate,groomingNo:groomingNo},
                success : function (data){
                   if(data == "success"){
-                     console.log("일단 액션 바꾸기전");
+                     //console.log("일단 액션 바꾸기전");
                      $("#form").attr("action","updateCheck.do");
-                     console.log("액션바꾸고 나서");
+                     //console.log("액션바꾸고 나서");
                      $("#form").submit();
                      alert("수정되었습니다.");
                /*       $("#update").submit(); */

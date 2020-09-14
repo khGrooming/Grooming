@@ -36,19 +36,19 @@ public class HomeController {
 		
 		ArrayList<HomeBoard> hBoardList = homeService.getBoardTopList();
 		
-		System.out.println("홈 탑 게시글 : " + hBoardList);
+		//System.out.println("홈 탑 게시글 : " + hBoardList);
 		
 		ArrayList<HomeGrooming> gMList = homeService.getGMentoTopList();
 		
-		System.out.println("홈 탑 멘토 그루밍 : " + gMList);
+		//System.out.println("홈 탑 멘토 그루밍 : " + gMList);
 		
 		ArrayList<HomeGrooming> gPList = homeService.getGPopulTopList();
 		
-		System.out.println("홈 탑 인기 그루밍 : " + gPList);
+		//System.out.println("홈 탑 인기 그루밍 : " + gPList);
 		
 		ArrayList<HomeGrooming> gDList = homeService.getGDeadlineTopList();
 		
-		System.out.println("홈 탑 마감임박 그루밍 : " + gDList);
+		//System.out.println("홈 탑 마감임박 그루밍 : " + gDList);
 
 		// 페이징 관련 처리
 		int currentPage = 1;
@@ -76,7 +76,7 @@ public class HomeController {
 
 		int listCount = homeService.getGListCount();
 
-		System.out.println("전체 그루밍 : " + listCount);
+		//System.out.println("전체 그루밍 : " + listCount);
 		
 		int boardLimit = 8;
 
@@ -93,7 +93,7 @@ public class HomeController {
 	public void getAllGroomingList(HttpServletResponse response
 			, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
 
-		System.out.println("메시지 리스트 확인 :" + page);
+		//System.out.println("메시지 리스트 확인 :" + page);
 
 		// 페이징 관련 처리
 		int currentPage = 1;
@@ -103,7 +103,7 @@ public class HomeController {
 
 		ArrayList<HomeGrooming> gAList = getAllGroomingList(currentPage);
 
-		System.out.println("메시지 리스트 확인 :" + gAList);
+		//System.out.println("메시지 리스트 확인 :" + gAList);
 		
 		response.setContentType("application/json;charset=utf-8");
 
@@ -115,11 +115,11 @@ public class HomeController {
 	@RequestMapping("siteQuestion.do")
 	@ResponseBody
 	public String siteQuestion(HomeHelp homehelp) {
-		System.out.println("문의 : " + homehelp.getHelpEmail() + " 분류 : " + homehelp.gethCategoryNo() + " 내용 : " + homehelp.getHelpContent());
+		//System.out.println("문의 : " + homehelp.getHelpEmail() + " 분류 : " + homehelp.gethCategoryNo() + " 내용 : " + homehelp.getHelpContent());
 
 		int result = homeService.siteQuestion(homehelp);
 		
-		System.out.println("문의 db 결과 : " + result);
+		//System.out.println("문의 db 결과 : " + result);
 
 		if(result > 0) {
 			return "success";

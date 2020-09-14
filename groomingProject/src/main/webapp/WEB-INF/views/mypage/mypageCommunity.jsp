@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
@@ -52,8 +54,8 @@
 					<th>분류</th>
 					<th style="width: 40%">제목</th>
 					<th>조회수</th>
-					<th>좋아요</th>
-					<th>채택</th>
+					<!-- <th>좋아요</th>
+					<th>채택</th> -->
 					<th>작성일</th>
 				</tr>		
 		<c:if test="${!empty blist }">
@@ -66,8 +68,8 @@
 					<td>${b.bCategoryNo }</td>
 					<td onclick="location.href='${communityDetailView}'">${b.boardTitle }</td>
 					<td>${b.boardVcount }</td>
-					<td>${b.boardGcount }</td>
-					<td>${b.boardSelecStatus }</td>
+					<%-- <td>${b.boardGcount }</td>
+					<td>${b.boardSelecStatus }</td> --%>
 					<td>${b.boardCreateDate }</td>
 				</tr>			
 			</c:forEach>

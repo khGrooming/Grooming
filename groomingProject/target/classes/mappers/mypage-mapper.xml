@@ -396,6 +396,7 @@
 	SELECT *
 	FROM POINT
 	WHERE MEMBER_NO = #{mNo}
+	AND ADD_POINT != 0
 	</select>
 	
 	<insert id="insertPoint" parameterType="MyPagePoint" >

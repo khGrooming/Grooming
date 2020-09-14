@@ -5,6 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 <!-- Required meta tags -->
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
@@ -28,6 +32,9 @@
     div.dataTables_wrapper {
         width: 70rem;
         margin: 0 auto;
+    }
+    section {
+    	margin-top: -70px;
     }
     section .btn-group-toggle{
 		font-family: 'Jua', sans-serif;
@@ -128,7 +135,7 @@
 		}) */
 		$(".btn-outline-info").removeClass("active");
 		
-		console.log(categoryVal);
+		//console.log(categoryVal);
 		
 		if(categoryVal == 'BC00001'){
 			showNotice.parents(".container").addClass('active');
@@ -216,7 +223,7 @@
 		};
 	}
 </script>
-<%-- 	<br><br>
-	<jsp:include page="../common/footer.jsp" /> --%>
+ 	<br><br>
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

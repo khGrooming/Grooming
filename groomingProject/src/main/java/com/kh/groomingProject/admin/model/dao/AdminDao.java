@@ -138,7 +138,7 @@ public class AdminDao {
 
 		String cafeNo = sqlSessionTemplate.selectOne("adminMapper.selectCafeNo", cafe);
 		cafe.setCafeNo(cafeNo);
-		System.out.println("Dao에서 cafeInfo : "+cafe);
+		//System.out.println("Dao에서 cafeInfo : "+cafe);
 		
 		int num2 = sqlSessionTemplate.insert("adminMapper.insertCafePriceInfo", cafe);
 		

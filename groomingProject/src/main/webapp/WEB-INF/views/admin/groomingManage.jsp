@@ -188,7 +188,7 @@
     	function openModal(i){
     		$("#activation").css("display","block");
     		$groomingNo = $(".grooming"+i).val()
-    		console.log($groomingNo);
+    		//console.log($groomingNo);
     		$("#infoCheck").append("<input type='hidden' name='groomingNo' value='"+$groomingNo+"'>");
     	}
     </script>

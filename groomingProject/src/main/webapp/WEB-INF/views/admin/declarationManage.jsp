@@ -240,7 +240,7 @@
 			
 			$memberNo = $(".memberNo"+i).val();
 			$memberEmail = $(".memberEmail"+i).val();
-			console.log("$memberEmail : "+$memberEmail);
+			//console.log("$memberEmail : "+$memberEmail);
 			
 			$("#infoCheck").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 			$("#infoCheck").append("<input type='hidden' name='memberEmail' value='"+$memberEmail+"'>");

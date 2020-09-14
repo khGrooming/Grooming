@@ -117,7 +117,7 @@ public class GroomingDao {
 	public int selectApplyOne(String applyNo) {
 		Map<String, String> map = new HashMap<>();
 		map.put("applyNo", applyNo);
-		System.out.println(map);
+		//System.out.println(map);
 		return sqlSessionTemplate.update("groomingMapper.selectApplyOne",map);
 	}
 
@@ -373,7 +373,7 @@ public class GroomingDao {
 
 	public int addPointMember(Map map1) {
 		// TODO Auto-generated method stub
-		System.out.println("나 gDao map1 : " +map1);
+		//System.out.println("나 gDao map1 : " +map1);
 		return sqlSessionTemplate.insert("groomingMapper.addPointMember",map1);
 	}
 

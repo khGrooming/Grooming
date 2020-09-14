@@ -7,6 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>회원정보</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 
 <style>
 #content {
@@ -849,7 +851,7 @@ font-size: 14px;
         					url:"phoneDuplicateChk.do",
         					data:{memberPhone:memberPhone},
         					success:function(data){
-        						console.log("회원가입 전화번호 결과 : " + data);
+        						//console.log("회원가입 전화번호 결과 : " + data);
         						if(data == "success"){
         							$("#memberPhone").css("color","green");
         							if($("#memberPhone").val() != "${loginUser.memberPhone}"){

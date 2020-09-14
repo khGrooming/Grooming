@@ -11,6 +11,9 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+	
 <!--      <script src="http:/code.jquery.com/jquery-latest.min.js"></script> -->
 <script type="text/javascript"
 	src="${pageContext.servletContext.contextPath }/resources/js/jquery-3.5.1.min.js"></script>
@@ -398,7 +401,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 						var result= confirm("등록하시겠습니까?");
 						if(result){
 							if(tagName == ""){
-								console.log("모든값을 작성해주세요!");
+								//console.log("모든값을 작성해주세요!");
 							}else{
 								$("form").submit();
 								
@@ -536,11 +539,11 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				$("input:radio[name='money1']").on("click", function() {
 
 					if ($(this).val() == 'x') {
-						console.log("예치금 없앰");
+						//console.log("예치금 없앰");
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {
-						console.log("예치금 있음");
+						//console.log("예치금 있음");
 						$(".money").attr('style', "display:inline;");
 					}
 

@@ -272,7 +272,7 @@ section .form_container .findAccount .form-group .find_container form input[type
 		// 닉네임 검사
 		$(".btn_find").on("click", function() {
 			if($.trim($("#certiNickName").val()) == ""){
-				console.log("올바른 닉네임을 입력해 주세요.");
+				//console.log("올바른 닉네임을 입력해 주세요.");
 				$("#certiNickNameChk").css("display","block");
 				$("#certiNickName").focus();
 				return;
@@ -280,14 +280,14 @@ section .form_container .findAccount .form-group .find_container form input[type
 
 			memberNickName = $("#certiNickName").val();
 
-			console.log("닉네임 으로 이메일 찾기 시작");
+			//console.log("닉네임 으로 이메일 찾기 시작");
 
 			//닉네임 찾기
 			$.ajax({ 
 				url:"findEmail.do",
 				data:{memberNickName:memberNickName},
 				success:function(data){
-					console.log("닉네임 확인 결과 : " + data);
+					//console.log("닉네임 확인 결과 : " + data);
 					if(data != ""){
 						console.log("이메일 착기 : 성공");
 	
@@ -347,7 +347,7 @@ section .form_container .findAccount .form-group .find_container form input[type
 		// 이메일 전송
 		$(".btn_send").on("click", function() {
 			if(!$("#certiEmail")[0].checkValidity()){
-				console.log("이메일을 입력해 주세요.");
+				//console.log("이메일을 입력해 주세요.");
 				certiEmailPass = false;
 				$("#certiEmailChk").css("display","block");
 				$("#certiEmail").focus();
@@ -363,7 +363,7 @@ section .form_container .findAccount .form-group .find_container form input[type
 				return;
 			}
 
-			console.log("인증 메일 전송");
+			//console.log("인증 메일 전송");
 			certiEmailpass = true;
 
 			//email 전송
@@ -373,7 +373,7 @@ section .form_container .findAccount .form-group .find_container form input[type
 				success:function(data){
 					console.log("이메일 전송 결과 : " + data);
 					if(data == "success"){
-						console.log("이메일 전송 결과 : 완료");
+						//console.log("이메일 전송 결과 : 완료");
 
 						// 타이머 설정
 						clearTime(expireTime);
@@ -385,11 +385,11 @@ section .form_container .findAccount .form-group .find_container form input[type
 						$("#certiNumberSpan").css("color","black");
 						
 					} else if(data == "retry"){
-						console.log("이메일 전송 결과 : 실패");
+						//console.log("이메일 전송 결과 : 실패");
 						certiEmailpass = false;
 						alert("정상적으로 처리되지 않았습니다. 잠시 후 다시 해주세요.");
 					} else {
-						console.log("이메일 전송 결과 : 일치하는 정보 없음");
+						//console.log("이메일 전송 결과 : 일치하는 정보 없음");
 						certiEmailpass = false;
 						alert("입력하신 이메일과 일치하는 정보가 없습니다.");
 					}
@@ -410,7 +410,7 @@ section .form_container .findAccount .form-group .find_container form input[type
 
 		// 인증 번호 확인
 		function findAccountFn() {
-			console.log("인증번호 검증 시작 : 입력 확인");
+			//console.log("인증번호 검증 시작 : 입력 확인");
 			if(!$("#certiEmail")[0].checkValidity()){
 				certiEmailPass = false;
 				$("#certiEmailChk").css("display","block");
@@ -422,19 +422,19 @@ section .form_container .findAccount .form-group .find_container form input[type
 				$("#certiNumberInput").focus();
 				return;
 			}
-			console.log("인증번호 검증 시작 : 입력 제약조건 확인");
-			console.log("인증번호 검증 시작 (이멜): " + certiEmailPass);
-			console.log("인증번호 검증 시작 (코드): " + certiCodePass);
+			//console.log("인증번호 검증 시작 : 입력 제약조건 확인");
+			//console.log("인증번호 검증 시작 (이멜): " + certiEmailPass);
+			//console.log("인증번호 검증 시작 (코드): " + certiCodePass);
 
 			if(certiEmailPass){
-				console.log("인증번호 검증 시작 : 입력 제약조건 이메일 확인");
+				//console.log("인증번호 검증 시작 : 입력 제약조건 이메일 확인");
 			} else if(certiCodePass){
-				console.log("인증번호 검증 시작 : 입력 제약조건 인증코드 확인");
+				//console.log("인증번호 검증 시작 : 입력 제약조건 인증코드 확인");
 			} else {
 				return;
 			}
 
-			console.log("인증 번호 확인 시작")
+			//console.log("인증 번호 확인 시작")
 			memberEmail = $("#certiEmail").val();
 			certiNumber = $("#certiNumberInput").val();
 
@@ -444,12 +444,12 @@ section .form_container .findAccount .form-group .find_container form input[type
 					 ,certiNumber:certiNumber
 					 ,expireTime:expireTime},
 				success:function(data){
-					console.log("인증번호 확인 결과 : " + data);
+					//console.log("인증번호 확인 결과 : " + data);
 					if(data == "success"){
-						console.log("인증번호 결과 : 완료");
+						//console.log("인증번호 결과 : 완료");
 						$("#changePwdForm").submit();
 					} else {
-						console.log("이메일 전송 결과 : 일치하지 않음");
+						//console.log("이메일 전송 결과 : 일치하지 않음");
 						alert("잘못된 인증번호입니다. 인증번호를 확인한 다음 다시 입력해 주세요.");
 					}
 				},

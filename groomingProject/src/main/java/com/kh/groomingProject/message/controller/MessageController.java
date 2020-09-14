@@ -34,11 +34,11 @@ public class MessageController {
 	// 메시지 페이지 이동
 	@RequestMapping("messagePage.do")
 	public ModelAndView loginPage(ModelAndView mv, Member m) {
-		System.out.println("메시지 페이지 접근 유저 : " + m.getMemberNo());
+		//System.out.println("메시지 페이지 접근 유저 : " + m.getMemberNo());
 		
 		ArrayList<Message> mList = msgService.getUserMessageList(m);
 		
-		System.out.println("메시지 페이지 대화 리스트 : " + mList);
+		//System.out.println("메시지 페이지 대화 리스트 : " + mList);
 		
 		mv.addObject("mList", mList)
 		.setViewName("message/messagePage");
@@ -50,11 +50,11 @@ public class MessageController {
 	@ResponseBody
 	public String getUserMessagesCount(HttpServletResponse response, Member m) {
 	
-		System.out.println("메시지 확인 : " + m.getMemberNo());
+		//System.out.println("메시지 확인 : " + m.getMemberNo());
 		
 		int mCount = msgService.getUserMessagesCount(m);
 		
-		System.out.println("메시지카운트 : " + mCount);
+		//System.out.println("메시지카운트 : " + mCount);
 		
 		String result = Integer.toString(mCount);
 		
@@ -68,11 +68,11 @@ public class MessageController {
 	@RequestMapping("getUserMessage.do")
 	public void getUserMessage(HttpServletResponse response, Member m) throws JsonIOException, IOException {
 		
-		System.out.println("메시지 리스트 확인 :" + m.getMemberNo());
+		//System.out.println("메시지 리스트 확인 :" + m.getMemberNo());
 
 		ArrayList<Message> mList = msgService.getUserMessage(m);
 
-		System.out.println("메시지 리스트 : " + mList);
+		//System.out.println("메시지 리스트 : " + mList);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -84,15 +84,15 @@ public class MessageController {
 	@RequestMapping("readUserMessage.do")
 	public void readUserMessage(HttpServletResponse response, Member m, String messageNo) throws JsonIOException, IOException {
 		
-		System.out.println("메시지 읽음 : " + messageNo);
+		//System.out.println("메시지 읽음 : " + messageNo);
 		
 		int result = msgService.readUserMessage(messageNo);
 		
-		System.out.println("메시지 읽음 확인 : " + result);
+		//System.out.println("메시지 읽음 확인 : " + result);
 
 		ArrayList<Message> mList = msgService.getUserMessage(m);
 
-		System.out.println("메시지 확인 리스트 : " + mList);
+		//System.out.println("메시지 확인 리스트 : " + mList);
 
 		response.setContentType("application/json;charset=utf-8");
 
@@ -104,7 +104,7 @@ public class MessageController {
 	@RequestMapping("loadChatList.do")
 	public void loadChatList(HttpServletResponse response, Member m) throws JsonIOException, IOException {
 
-		System.out.println("채팅 리스트 확인 유저번호 : " + m.getMemberNo());
+		//System.out.println("채팅 리스트 확인 유저번호 : " + m.getMemberNo());
 
 		ArrayList<Message> mListI = msgService.loadChatList(m);
 		ArrayList<Message> mListJ = new ArrayList<Message>();
@@ -129,7 +129,7 @@ public class MessageController {
 				// 같은 채팅 인원의 시간 비교 후 리스트에 최근 메시지 시간 표시 용 데이터 정리
 				if(jFmNo.equals(iTmNo) && jTmNo.equals(iFmNo)) {
 					if(iTime.getTime() < jTime.getTime()) {
-						//System.out.println("시간 비교 < : " + (iTime.getTime() < jTime.getTime()) + " / " + i.getMessageNo());
+						////System.out.println("시간 비교 < : " + (iTime.getTime() < jTime.getTime()) + " / " + i.getMessageNo());
 						im.remove();
 						break;
 					}
@@ -139,7 +139,7 @@ public class MessageController {
 		
 		mList.addAll(mListI);
 		
-		System.out.println("채팅 리스트 확인 : " + mList);
+		//System.out.println("채팅 리스트 확인 : " + mList);
 				
 		response.setContentType("application/json;charset=utf-8");
 		
@@ -152,15 +152,15 @@ public class MessageController {
 	@RequestMapping("loadChat.do")
 	public void loadChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
 		
-		System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
+		//System.out.println("채팅 확인 유저번호 : " + me.getFromMemberNo() + "/" + me.getToMemberNo());
 		
 		int result = msgService.readChat(me);
 		
-		System.out.println("채팅 읽음 표시 결과 : " + result);
+		//System.out.println("채팅 읽음 표시 결과 : " + result);
 
 		ArrayList<Message> mList = msgService.loadChat(me);
 		
-		System.out.println("채팅  확인 : " + mList);
+		//System.out.println("채팅  확인 : " + mList);
 				
 		response.setContentType("application/json;charset=utf-8");
 		
@@ -173,15 +173,15 @@ public class MessageController {
 	@ResponseBody
 	public String sendChat(HttpServletResponse response, Message me) throws JsonIOException, IOException {
 
-		System.out.println("채팅 전송 : " + me);
+		//System.out.println("채팅 전송 : " + me);
 
 		int result = msgService.sendChat(me);
 
 		if(result > 0) {
-			System.out.println("채팅 전송 : 성공");
+			//System.out.println("채팅 전송 : 성공");
 			return "success";
 		}
-		System.out.println("채팅 전송 : 실패");
+		//System.out.println("채팅 전송 : 실패");
 		return "fail";
 
 	}
@@ -189,7 +189,7 @@ public class MessageController {
 	@RequestMapping("createChatRoom.do")
 	public void createChatRoom(HttpServletResponse response, Member m) throws JsonIOException, IOException {
 		
-		System.out.println("채팅 시작 유저번호 : " + m.getMemberNo());
+		//System.out.println("채팅 시작 유저번호 : " + m.getMemberNo());
 		
 		Member member = mService.findMember(m);
 		

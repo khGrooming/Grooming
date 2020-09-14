@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>이름으로 카페 검색</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
@@ -152,7 +154,7 @@
 	    function next_load(){
 	    	$name = $("#searchName").val();
 	    	page++;
-	    	console.log("page : "+page);
+	    	//console.log("page : "+page);
             $.ajax({
                 url:"cafeManageAjax.do",
                 data : {page:page,name:$name},
@@ -161,7 +163,7 @@
 					addCafeInfo(data);
 
 				},error:function(data){
-                    console.log("실패!");
+                    //console.log("실패!");
                 }
             });
 	    }
@@ -185,14 +187,14 @@
 	    
 	    function addCafeInfo(data){
 	    	$searchView = $(".searchView");
-			console.log("data : "+data);
+			//console.log("data : "+data);
 			for(var i in data){
 				var j = 1;
 				$panel = $("<div class='panel panel-default'>");
 				$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
 				$cafeNo = $('<input type="hidden" class="cafeNo'+(j+i)+'" value="'+data[i].cafeNo+'">');
-				console.log(data[i].cafeNo);
-				$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/data[i].cafeImg' class='thumbnail'></div>");
+				//console.log(data[i].cafeNo);
+				$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/"+data[i].cafeImg+"' class='thumbnail'></div>");
 				$panelB = $('<div class="panel-body">'+data[i].cafeName+'</div>');
 				$panelF = $('<div class="panel-footer">'+data[i].cafeAddress+'</div>');
 				

@@ -70,7 +70,7 @@ public class AdminController {
 		ArrayList<GraphListCount> blist = adminService.adminBoardList(clist);
 		ArrayList<GraphListCount> glist = adminService.adminGroomingList(clist);
 		ArrayList<GraphListCount> mlist = adminService.adminMemberList(clist);
-		System.out.println("point : "+point);
+		//System.out.println("point : "+point);
 		
 		mv.addObject("point", point);
 		mv.addObject("clist", clist);
@@ -100,7 +100,7 @@ public class AdminController {
 		AdminPageInfo pi = getPageInfo(currentPage, listCount);
 		
 		ArrayList<MemberManageView> list = adminService.selectList(pi, info);
-		System.out.println("mList : "+list);
+//		System.out.println("mList : "+list);
 		if(list != null) {
 			mv.addObject("category", category);
 			mv.addObject("name", name);
@@ -169,9 +169,9 @@ public class AdminController {
 		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(mNo);
 		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(sNo);
 
-		System.out.println("listCount : "+listCount);
-		System.out.println("mNo : "+mNo);
-		System.out.println("mentoList : "+mentoList);
+//		System.out.println("listCount : "+listCount);
+//		System.out.println("mNo : "+mNo);
+//		System.out.println("mentoList : "+mentoList);
 		
 		mv.addObject("pi", pi);
 		mv.addObject("spi", spi);
@@ -195,7 +195,7 @@ public class AdminController {
 		str.put("day", day);
 		str.put("groomingName", groomingName);
 		
-		System.out.println("str : "+str);
+//		System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -207,7 +207,7 @@ public class AdminController {
 		
 		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, str);
 		
-		System.out.println("glist : "+glist);
+//		System.out.println("glist : "+glist);
 		
 		mv.addObject("category", category);
 		mv.addObject("day", day);
@@ -224,10 +224,10 @@ public class AdminController {
 		Map str = new HashMap();
 		str.put("gActivation", gActivation);
 		str.put("groomingNo", groomingNo);
-		System.out.println("그루밍 관리 정보 : "+str);
+//		System.out.println("그루밍 관리 정보 : "+str);
 		
 		int result = adminService.gActivation(str);
-		System.out.println("그루밍 관리 결과 : "+result);
+//		System.out.println("그루밍 관리 결과 : "+result);
 		if(result > 0) {
 			return "redirect:groomingManage.do";
 		}else {
@@ -281,7 +281,7 @@ public class AdminController {
 		
 		if(Integer.valueOf(sanctions) == 0) {
 			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
-	         System.out.println("경고 알림 : " + memberAlert);
+//	         System.out.println("경고 알림 : " + memberAlert);
 	         resultAlertJoin = alertService.insertAlert(memberAlert);
 		}else {
 			result = adminService.sanctionsInsert(info);			
@@ -331,7 +331,7 @@ public class AdminController {
 		Map str = new HashMap();
 		str.put("name", name);
 		str.put("local", local);
-		System.out.println("str : "+str);
+//		System.out.println("str : "+str);
 		
 		int currentPage = 1;
 		
@@ -406,7 +406,7 @@ public class AdminController {
 			cafe.setCafeImg(renameFileName);
 		}
 		
-		System.out.println("cafe : "+cafe);
+//		System.out.println("cafe : "+cafe);
 		int result = adminService.insertCafeInfo(cafe);
 		
 		if(result > 0) {
@@ -476,7 +476,7 @@ public class AdminController {
 	@RequestMapping("careerConfirm.do")
 	public String careerConfirm(MentoManageView mv) {
 		int result = adminService.careerConfirm(mv);
-		System.out.println("mv : "+mv);
+		//System.out.println("mv : "+mv);
 		if(result>0) {
 			return "redirect:mentoManage.do";
 		}else {
@@ -507,7 +507,7 @@ public class AdminController {
 		ArrayList<HelpCategory> hCList = adminService.selectHelpCList();
 		
 		ArrayList<HelpManage> hList = adminService.selectHelpList(pi, info);
-		System.out.println("hList : "+hList);
+		//System.out.println("hList : "+hList);
 
 		if(hList != null) {
 			mv.addObject("category", category);
@@ -527,7 +527,7 @@ public class AdminController {
 	@RequestMapping("helpAnswer.do")
 	@ResponseBody
 	public String sendCertiMail(String helpEmailModal, String helpAnswerModal) {
-		System.out.println("메일 전송 : " + helpEmailModal + " / " + helpAnswerModal);
+		//System.out.println("메일 전송 : " + helpEmailModal + " / " + helpAnswerModal);
 
 		String mailFrom = "onebunonecho@gmail.com";
 		String mailTo = helpEmailModal;

@@ -617,7 +617,7 @@ section pre{
                                  url:"addHeart.do",
                                  data:{groomingNo:groomingNo,memberNo:memberNo},
                                  success:function(data){
-                                    console.log("찜");
+                                    //console.log("찜");
                                     var $div1;
                                     var $div2;
                                     var $div3;
@@ -652,7 +652,7 @@ section pre{
                      url:"cancelHeart.do",
                      data:{groomingNo:groomingNo,memberNo:memberNo},
                      success:function(data){
-                           console.log("취소");
+                           //console.log("취소");
                            var $div1;
                            var $div2;
                            var $div3;
@@ -763,8 +763,8 @@ section pre{
                               return false;
                            }
                            if(allmoney < money){
-                              console.log(allmoney);
-                              console.log(돈);
+                              //console.log(allmoney);
+                              //console.log(돈);
                               event.stopImmediatePropagation();
                               alert("신청자의 포인트가 부족합니다.!");
                               return false;
@@ -878,7 +878,7 @@ section pre{
                var $td5;
                var $button3;
          
-                  console.log(data.length);
+                  //console.log(data.length);
                if(data.length> 0){   // 신청자가 한 명 이상 존재하면
                   for(var i in data){
                       $tr = $("<tr class='appTr'>");

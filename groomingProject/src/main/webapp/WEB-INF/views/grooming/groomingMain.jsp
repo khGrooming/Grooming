@@ -480,7 +480,7 @@
 	var page = 1;
 	var pageloading = true;
 	$(function() {
-	      console.log("그루밍 페이지");
+	      //console.log("그루밍 페이지");
 	      loadGroomingData();
 	   });
 
@@ -503,7 +503,7 @@
 			url:"addAllGroomingList.do",
 			data:{page:page},
 			success:function(data){
-				console.log("그루밍 가져오기 결과 : " + data.length);
+				//console.log("그루밍 가져오기 결과 : " + data.length);
 				// 그루밍 내용 추가
 				loadGrooming(data);
 			},
@@ -519,7 +519,7 @@
 	function loadGrooming(data) {
 		// 그루밍 내용 추가
 		if(data.length > 0) {
-			console.log("그루밍 리스트 추가");
+			//console.log("그루밍 리스트 추가");
 	
 			for(var i in data){
 				// 시간 변수
@@ -601,7 +601,7 @@
 
 			}
 		} else {
-			console.log("내용 없음");
+			//console.log("내용 없음");
 		}
 		pageloading = true;
 	}
@@ -666,7 +666,7 @@ $(function(){
 			type : 'post',
 			dataType:"json",
 			success : function (data){
-				console.log("그루밍 가져오기 결과 : " + data.length);
+				//console.log("그루밍 가져오기 결과 : " + data.length);
 				// 그루밍 내용 추가
 				loadGrooming(data);
 				$(".paging").css("display","none");
@@ -686,7 +686,7 @@ $(function(){
 			type : 'post',
 			dataType:"json",
 			success : function (data){
-				console.log("그루밍 가져오기 결과 : " + data.length);
+				//console.log("그루밍 가져오기 결과 : " + data.length);
 				// 그루밍 내용 추가
 				loadGrooming(data);
 				$(".paging").css("display","none");
@@ -715,7 +715,7 @@ $(function(){
 		var search = $('#search option:selected').val();
 		var keyword = $('#keyword').val();
 
-		console.log("구르밍 검색 : " + search + " / " + keyword);
+		//console.log("구르밍 검색 : " + search + " / " + keyword);
 		
 		if(keyword == "") {
 			alert("한 글자 이상 검색해주세요!");
@@ -726,7 +726,7 @@ $(function(){
 				data:{search : search, keyword : keyword},
 				dataType:"json",
 				success:function(data) {
-					console.log("그루밍 가져오기 결과 : " + data.length);
+					//console.log("그루밍 가져오기 결과 : " + data.length);
 					if(data.length > 0){
 						// 그루밍 내용 추가
 						loadGrooming(data);
@@ -751,7 +751,7 @@ $(function(){
 	function loadGrooming(data) {
 		// 그루밍 내용 추가
 		if(data.length > 0) {
-			console.log("그루밍 리스트 추가");
+			//console.log("그루밍 리스트 추가");
 			
 			$(".cards_bundle").html("");
 	
@@ -838,7 +838,7 @@ $(function(){
 
 			}
 		} else {
-			console.log("내용 없음");
+			//console.log("내용 없음");
 		}
 	}
 

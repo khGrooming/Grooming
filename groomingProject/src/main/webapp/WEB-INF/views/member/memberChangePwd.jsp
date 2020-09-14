@@ -223,14 +223,14 @@ section .form_container .findAccount .form-group form input[type="button"]
 				$("#new_conf_pwChk").css("display","block");
 				$("#new_conf_pwComp").css("display","none");
 				newPwdPass = false;
-				console.log("비밀번호 불일치");
+				//console.log("비밀번호 불일치");
 			} else {
 				$("#new_conf_pwChk").css("display","none");
 				$("#new_conf_pwComp").css("display","block");
 				if (regexPwd.test($("#new_pwChk").val())) {
 					newPwdPass = true;
-					console.log("changePwdPass : "+ changePwdPass);
-					console.log("비밀번호 일치");
+					//console.log("changePwdPass : "+ changePwdPass);
+					//console.log("비밀번호 일치");
 				}
 			}
 		}
@@ -245,14 +245,14 @@ section .form_container .findAccount .form-group form input[type="button"]
 				newPwdPass = false;
 				$("#new_conf_pwChk").css("display","block");
 				$("#new_conf_pwComp").css("display","none");
-				console.log("비밀번호 불일치");
+				//console.log("비밀번호 불일치");
 			} else {
 				$("#new_conf_pwChk").css("display","none");
 				$("#new_conf_pwComp").css("display","block");
 				if (regexPwd.test($("#new_pw").val())) {
 					newPwdPass = true;
-					console.log("newPwdPass : "+ newPwdPass);
-					console.log("비밀번호 일치");
+					//console.log("newPwdPass : "+ newPwdPass);
+					//console.log("비밀번호 일치");
 				}
 			}
 		}
@@ -274,7 +274,7 @@ section .form_container .findAccount .form-group form input[type="button"]
 				$("#new_pw").focus();
 				return;
 			} else {
-				console.log("비밀번호 업데이트 submit")
+				//console.log("비밀번호 업데이트 submit")
 				$("#newPwdForm").submit();
 			}
 		}

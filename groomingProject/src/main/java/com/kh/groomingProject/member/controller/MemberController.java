@@ -103,7 +103,7 @@ public class MemberController {
 	@ResponseBody
 	public String memberInsert(Model model, Member m) {
 		String message = "";
-		System.out.println("회원가입 (프론트정보): " + m);
+		//System.out.println("회원가입 (프론트정보): " + m);
 
 		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 
@@ -114,55 +114,55 @@ public class MemberController {
 
 		// 회원가입 확인
 		if(resultInsertMember > 0) {
-			System.out.println("회원가입 (insert): 성공");
+			//System.out.println("회원가입 (insert): 성공");
 
 			// 회원가입 (신규 가입 알림 추가 insert)
 			message = "신규가입을 환영합니다.";
 			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
-			System.out.println("회원가입 (신규 가입 알림 추가) : " + memberAlert);
+			//System.out.println("회원가입 (신규 가입 알림 추가) : " + memberAlert);
 			int resultAlertJoin = alertService.insertAlert(memberAlert);
 
 			if(resultAlertJoin > 0) {
-				System.out.println("회원가입 (신규 가입 알림 추가): 성공");
+				//System.out.println("회원가입 (신규 가입 알림 추가): 성공");
 
 				// 회원가입 (신규포인트 지급 insert)
 				int resultWelcomePoint = mService.welcomePoint(m.getMemberEmail());
 
 				if(resultWelcomePoint > 0) {
-					System.out.println("회원가입 (신규포인트 지급): 성공");
+					//System.out.println("회원가입 (신규포인트 지급): 성공");
 
 					// 회원가입 (신규 가입 감사 포인트 알림 추가 insert)
 					memberAlert.setAlertContent("신규가입 감사 포인트가 지급 되었습니다.");
-					System.out.println("회원가입 (신규포인트 지급) : " + memberAlert);
+					//System.out.println("회원가입 (신규포인트 지급) : " + memberAlert);
 					int resultAlertPoint = alertService.insertAlert(memberAlert);
 
 					if(resultAlertPoint > 0) {
-						System.out.println("회원가입 확인 : 성공");
+						//System.out.println("회원가입 확인 : 성공");
 						
 						Member loginUser = mService.loginMember(m);
-						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+						//System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
 
 						model.addAttribute("loginUser", loginUser);
 
 						return "success";
 
 					} else {
-						System.out.println("회원가입 (신규 가입 감사 포인트 알림 추가): 실패");
+						//System.out.println("회원가입 (신규 가입 감사 포인트 알림 추가): 실패");
 						return "fail";
 					}
 
 				} else {
-					System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
+					//System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
 					return "fail";
 				}
 
 			} else {
-				System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
+				//System.out.println("회원가입 (신규 가입 감사 포인트 지금): 실패");
 				return "fail";
 			}
 
 		} else {
-			System.out.println("회원가입 (insert): 실패");
+			//System.out.println("회원가입 (insert): 실패");
 			return "fail";
 		}
 
@@ -173,62 +173,62 @@ public class MemberController {
 	@ResponseBody
 	public String memberKakaoInsert(Member m, Model model) {
 		String message = "";
-		System.out.println("회원가입Kakao (프론트정보): " + m);
+		//System.out.println("회원가입Kakao (프론트정보): " + m);
 
 		// 회원가입 (insert)
 		int resultInsertMember = mService.insertMemberKakao(m);
 
 		// 회원가입 확인
 		if(resultInsertMember > 0) {
-			System.out.println("회원가입Kakao (insert): 성공");
+			//System.out.println("회원가입Kakao (insert): 성공");
 
 			// 회원가입 (신규 가입 알림 추가 insert)
 			message = "신규가입을 환영합니다.(카카오)";
 			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
-			System.out.println("회원가입Kakao (신규 가입 알림 추가) : " + memberAlert);
+			//System.out.println("회원가입Kakao (신규 가입 알림 추가) : " + memberAlert);
 			int resultAlertJoin = alertService.insertAlert(memberAlert);
 
 			if(resultAlertJoin > 0) {
-				System.out.println("회원가입Kakao (신규 가입 알림 추가): 성공");
+				//System.out.println("회원가입Kakao (신규 가입 알림 추가): 성공");
 
 				// 회원가입 (신규포인트 지급 insert)
 				int resultWelcomePoint = mService.welcomePoint(m.getMemberEmail());
 
 				if(resultWelcomePoint > 0) {
-					System.out.println("회원가입Kakao (신규포인트 지급): 성공");
+					//System.out.println("회원가입Kakao (신규포인트 지급): 성공");
 
 					// 회원가입 (신규 가입 감사 포인트 알림 추가 insert)
 					memberAlert.setAlertContent("신규가입 감사 포인트가 지급 되었습니다.");
-					System.out.println("회원가입Kakao (신규포인트 지급) : " + memberAlert);
+					//System.out.println("회원가입Kakao (신규포인트 지급) : " + memberAlert);
 					int resultAlertPoint = alertService.insertAlert(memberAlert);
 
 					if(resultAlertPoint > 0) {
-						System.out.println("회원가입Kakao 확인 : 성공");
+						//System.out.println("회원가입Kakao 확인 : 성공");
 
 						Member loginUser = mService.loginMember(m);
-						System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+						//System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
 
 						model.addAttribute("loginUser", loginUser);
 
 						return "success";
 
 					} else {
-						System.out.println("회원가입Kakao (신규 가입 감사 포인트 알림 추가): 실패");
+						//System.out.println("회원가입Kakao (신규 가입 감사 포인트 알림 추가): 실패");
 						return "fail";
 					}
 
 				} else {
-					System.out.println("회원가입Kakao (신규 가입 감사 포인트 지금): 실패");
+					//System.out.println("회원가입Kakao (신규 가입 감사 포인트 지금): 실패");
 					return "fail";
 				}
 
 			} else {
-				System.out.println("회원가입Kakao (신규 가입 감사 포인트 지금): 실패");
+				//System.out.println("회원가입Kakao (신규 가입 감사 포인트 지금): 실패");
 				return "fail";
 			}
 
 		} else {
-			System.out.println("회원가입Kakao (insert): 실패");
+			//System.out.println("회원가입Kakao (insert): 실패");
 			return "fail";
 		}
 
@@ -255,7 +255,7 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("변경된 파일 명 : " + renameFileName);
+		//System.out.println("변경된 파일 명 : " + renameFileName);
 
 		return renameFileName;
 
@@ -266,20 +266,20 @@ public class MemberController {
 	public String memberOptionUpdate(HttpServletRequest request, Member m
 			,@RequestParam(value="memberTagName", required=false) String memberTagName
 			,@RequestParam(value="profileFile", required=false) MultipartFile file) {
-		System.out.println("회원가입 추가 ( 멤버 이메일  : " + m.getMemberEmail()
+		//System.out.println("회원가입 추가 ( 멤버 이메일  : " + m.getMemberEmail()
 						+ " 멤버 이름 : " + m.getMemberName()
 						+ " 멤버 전화 : " + m.getMemberPhone()
 						+ " 멤버 성별 : " + m.getMemberGender()
 						+ " 멤버 사진 : " + m.getMemberPhoto()
 						+ " 멤버 메모 : " + m.getMemberMemo() + " )");
-		System.out.println("멤버 Tags : " + memberTagName);
+		//System.out.println("멤버 Tags : " + memberTagName);
 		
-		System.out.println("값 유무 확인 (이멜) : " + ((m.getMemberEmail()).length() != 0));
-		System.out.println("값 유무 확인 (이름) : " +((m.getMemberName()).length() != 0));
-		System.out.println("값 유무 확인 (전화) : " + ((m.getMemberPhone()).length() != 0));
-		System.out.println("값 유무 확인 (성별) : " + (m.getMemberGender() != null));
-		System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
-		System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
+		//System.out.println("값 유무 확인 (이멜) : " + ((m.getMemberEmail()).length() != 0));
+		//System.out.println("값 유무 확인 (이름) : " +((m.getMemberName()).length() != 0));
+		//System.out.println("값 유무 확인 (전화) : " + ((m.getMemberPhone()).length() != 0));
+		//System.out.println("값 유무 확인 (성별) : " + (m.getMemberGender() != null));
+		//System.out.println("값 유무 확인 (사진) : " + (!file.getOriginalFilename().equals("")));
+		//System.out.println("값 유무 확인 (메모) : " + ((m.getMemberMemo()).length() != 0));
 
 		Member member = mService.loginMember(m);
 		m.setMemberNo(member.getMemberNo());
@@ -295,21 +295,21 @@ public class MemberController {
 				m.setMemberPhoto("MEMBER_SAMPLE_IMG.JPG");
 			}
 
-			System.out.println("member update data : " + m);
+			//System.out.println("member update data : " + m);
 
 			// 회원가입(추가 update)
 			int resultUpdateMemberOption = mService.updateMemberOption(m);
 
 			if(resultUpdateMemberOption > 0) {
-				System.out.println("회원가입 추가정보 업데이트 : 성공");
+				//System.out.println("회원가입 추가정보 업데이트 : 성공");
 
 			} else {
-				System.out.println("회원가입 추가정보 업데이트 : 실패");
+				//System.out.println("회원가입 추가정보 업데이트 : 실패");
 				throw new MemberException("회원가입 추가정보 업데이트 : 실패");
 			}
 
 		} else {
-			System.out.println("회원 추가입력(사진,이름,성별,한줄) : skip");
+			//System.out.println("회원 추가입력(사진,이름,성별,한줄) : skip");
 		}
 
 		// 태그 테이블 업데이트
@@ -323,32 +323,32 @@ public class MemberController {
 			}
 
 			if(resultMergeTags > 0) {
-				System.out.println("TAG 업데이트 : 성공");
+				//System.out.println("TAG 업데이트 : 성공");
 
 				// 멤버태그 테이블 추가
 				int resultMemberTag = 0;
 
 				for(String i : tag) {
 					MemberTag memberTag = new MemberTag(m.getMemberNo(), m.getMemberEmail(), i);
-					System.out.println(memberTag);
+					//System.out.println(memberTag);
 					int result = mService.mergeMemberTags(memberTag);
 					resultMemberTag += result;
 				}
 
-				System.out.println("MemberTag 횟수 : " + tag.length + " / 결과 "+ resultMemberTag );
+				//System.out.println("MemberTag 횟수 : " + tag.length + " / 결과 "+ resultMemberTag );
 
 				if(resultMemberTag == tag.length) {
-					System.out.println("MemberTag 업데이트 : 성공");
+					//System.out.println("MemberTag 업데이트 : 성공");
 
 					return "redirect:home.do";
 
 				} else {
-					System.out.println("MemberTag 업데이트 : 실패");
+					//System.out.println("MemberTag 업데이트 : 실패");
 					throw new MemberException("MemberTag 업데이트 : 실패");
 				}
 
 			} else {
-				System.out.println("TAG 업데이트 : 실패");
+				//System.out.println("TAG 업데이트 : 실패");
 				throw new MemberException("TAG 업데이트 : 실패");
 			}
 
@@ -365,18 +365,18 @@ public class MemberController {
 		response.setContentType("application/json;charset=utf-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH시mm분ss초").create();
 		
-		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
+		//System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
 
 		String memberEmail = m.getMemberEmail();
 		
 		MemberSanctions ms = mService.chkMemberSanction(memberEmail);
 		
-		System.out.println("로그인 유저 제재 확인 : " + ms);
+		//System.out.println("로그인 유저 제재 확인 : " + ms);
 		if(ms != null) {
 			if(ms.getSanctionsDDay() > 0 ) {
 				login(response, model, m, gson);
 			} else {
-				System.out.println("로그인 확인 : 제재 중");
+				//System.out.println("로그인 확인 : 제재 중");
 				ms.setLoginSatatus("sanctions");
 				gson.toJson(ms, response.getWriter());
 			}
@@ -391,11 +391,11 @@ public class MemberController {
 		MemberSanctions loginMs = new MemberSanctions("","",new Timestamp(0),new Timestamp(0),"",0.0,"");
 
 		Member loginUser = mService.loginMember(m);
-		System.out.println("회원 확인 : " + loginUser);
+		//System.out.println("회원 확인 : " + loginUser);
 		
 		if(loginUser != null) {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-				System.out.println("로그인 확인 : 성공");
+				//System.out.println("로그인 확인 : 성공");
 				
 				model.addAttribute("loginUser", loginUser);
 				loginMs.setLoginSatatus("success");
@@ -403,7 +403,7 @@ public class MemberController {
 				return;
 			}
 		}
-		System.out.println("로그인 확인 : 실패");
+		//System.out.println("로그인 확인 : 실패");
 		loginMs.setLoginSatatus("fail");
 		gson.toJson(loginMs, response.getWriter());
 		
@@ -414,16 +414,16 @@ public class MemberController {
 	@ResponseBody
 	public String kakaoLogin(Member m, Model model) {
 
-		System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
+		//System.out.println("kakao로그인 (아이디/닉네임) : " + m.getMemberEmail() + " / " + m.getMemberNickName());
 
 		Member loginUser = mService.loginMember(m);
 
 		if(loginUser != null) {
-			System.out.println("kakao로그인 확인 : 성공");
+			//System.out.println("kakao로그인 확인 : 성공");
 			model.addAttribute("loginUser", loginUser);
 			return "success";
 		} else {
-			System.out.println("kakao로그인 확인 : 신규가입");
+			//System.out.println("kakao로그인 확인 : 신규가입");
 			model.addAttribute("loginUser", m);
 			return "fail";
 		}
@@ -444,15 +444,15 @@ public class MemberController {
 	@ResponseBody
 	public String emailDuplicateChk(Member m) {
 
-		System.out.println("이메일 중복 확인 : " + m.getMemberEmail());
+		//System.out.println("이메일 중복 확인 : " + m.getMemberEmail());
 
 		int result = mService.emailDuplicateChk(m);
 
 		if(result == 0) {
-			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용가능 )");
+			//System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용가능 )");
 			return "success";
 		} else {
-			System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용 중 )");
+			//System.out.println("이메일 중복 확인 : " + m.getMemberEmail() + "( 사용 중 )");
 			return "fail";
 		}
 
@@ -463,15 +463,15 @@ public class MemberController {
 	@ResponseBody
 	public String nickNameDuplicateChk(Member m) {
 
-		System.out.println("닉네임 중복 확인 : " + m.getMemberNickName());
+		//System.out.println("닉네임 중복 확인 : " + m.getMemberNickName());
 
 		int result = mService.nickNameDuplicateChk(m);
 
 		if(result == 0) {
-			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용가능 )");
+			//System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용가능 )");
 			return "success";
 		} else {
-			System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용 중 )");
+			//System.out.println("닉네임 중복 확인 : " + m.getMemberNickName() + "( 사용 중 )");
 			return "fail";
 		}
 
@@ -482,15 +482,15 @@ public class MemberController {
 	@ResponseBody
 	public String phoneDuplicateChk(Member m) {
 
-		System.out.println("전화번호 중복 확인 : " + m.getMemberPhone());
+		//System.out.println("전화번호 중복 확인 : " + m.getMemberPhone());
 
 		int result = mService.phoneDuplicateChk(m);
 
 		if(result == 0) {
-			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용가능 )");
+			//System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용가능 )");
 			return "success";
 		} else {
-			System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용 중 )");
+			//System.out.println("전화번호 중복 확인 : " + m.getMemberPhone() + "( 사용 중 )");
 			return "fail";
 		}
 
@@ -501,7 +501,7 @@ public class MemberController {
 	@ResponseBody
 	public String findEmail(Member m) {
 		String memberEmail = "";
-		System.out.println("닉네임 확인 : " + m.getMemberNickName());
+		//System.out.println("닉네임 확인 : " + m.getMemberNickName());
 
 		Member member = mService.findEmail(m);
 
@@ -558,20 +558,20 @@ public class MemberController {
 	@RequestMapping("sendCertiEmail.do")
 	@ResponseBody
 	public String sendCertiMail(Member m) {
-		System.out.println("메일 전송 : " + m.getMemberEmail());
+		//System.out.println("메일 전송 : " + m.getMemberEmail());
 
 		// 회원인지 확인
 		int result = mService.findMemberEmail(m);
 
 		if(result == 0) {
-			System.out.println("회원 정보 찾기 : 정보 없음");
+			//System.out.println("회원 정보 찾기 : 정보 없음");
 			return "fail";
 		}
 
 		// 인증 숫자 생성 (앞은 0으로 6자리 채우기)
 		int randomTemp = (int)(Math.random()*1000000);
 		String randomCode = String.format("%06d", randomTemp);
-		System.out.println("인증코드 : " + randomCode);
+		//System.out.println("인증코드 : " + randomCode);
 
 		MemberCertiCode mcc = new MemberCertiCode();
 
@@ -580,7 +580,7 @@ public class MemberController {
 
 		result = mService.insertRandomCode(mcc);
 		if(result == 0) {
-			System.out.println("회원 정보 찾기 : 인증코드 저장 실패");
+			//System.out.println("회원 정보 찾기 : 인증코드 저장 실패");
 			return "retry";
 		}
 
@@ -657,14 +657,14 @@ public class MemberController {
 	@RequestMapping("certiChk.do")
 	@ResponseBody
 	public String certiChk(MemberCertiCode mcc) {
-		System.out.println("메일 : " + mcc.getMemberEmail() + " / 인증코드 : " + mcc.getCertiNumber());
+		//System.out.println("메일 : " + mcc.getMemberEmail() + " / 인증코드 : " + mcc.getCertiNumber());
 
 		int result = mService.certiChk(mcc);
 		if(result > 0) {
-			System.out.println("회원 정보 찾기 : 인증번호 일치");
+			//System.out.println("회원 정보 찾기 : 인증번호 일치");
 			return "success";
 		}
-		System.out.println("회원 정보 찾기 : 인증번호 불일치");
+		//System.out.println("회원 정보 찾기 : 인증번호 불일치");
 		return "fail";
 
 	}
@@ -673,7 +673,7 @@ public class MemberController {
 	@RequestMapping("newPwd.do")
 	public String newPwd(Member m) {
 		String message = "";
-		System.out.println("비밀번호 재설정 : " + m.getMemberEmail() + " / 재설정 비밀번호 : " + m.getMemberPwd());
+		//System.out.println("비밀번호 재설정 : " + m.getMemberEmail() + " / 재설정 비밀번호 : " + m.getMemberPwd());
 
 		String emcPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 
@@ -684,25 +684,25 @@ public class MemberController {
 
 		// 비밀번호 재설정
 		if(resultUpdateMemberPwd > 0) {
-			System.out.println("비밀번호 재설정: 성공");
+			//System.out.println("비밀번호 재설정: 성공");
 
 			// 비밀번호 재설정 (알림 추가 insert)
 			message = "비밀번호가 변경 되었습니다..";
 			MemberAlert memberAlert = new MemberAlert(message, m.getMemberEmail());
-			System.out.println("비밀번호 재설정 (알림 추가) : " + memberAlert);
+			//System.out.println("비밀번호 재설정 (알림 추가) : " + memberAlert);
 			int resultAlertJoin = alertService.insertAlert(memberAlert);
 
 			if(resultAlertJoin > 0) {
-				System.out.println("비밀번호 재설정 (알림 추가) : 성공");
+				//System.out.println("비밀번호 재설정 (알림 추가) : 성공");
 
 				return "redirect:home.do";
 			} else {
-				System.out.println("비밀번호 재설정 (알림 추가) : 실패");
+				//System.out.println("비밀번호 재설정 (알림 추가) : 실패");
 				throw new MemberException("비밀번호 재설정 (알림 추가) : 실패");
 			}
 
 		} else {
-			System.out.println("비밀번호 재설정 : 실패");
+			//System.out.println("비밀번호 재설정 : 실패");
 			throw new MemberException("비밀번호 재설정 : 실패");
 		}
 
@@ -713,10 +713,10 @@ public class MemberController {
 	@ResponseBody
 	public String memberLogin(Member m, Model model) {
 		
-		System.out.println("로그인 한 회원 (이메일) : " + m.getMemberEmail());
+		//System.out.println("로그인 한 회원 (이메일) : " + m.getMemberEmail());
 		
 		Member loginUser = mService.loginMember(m);
-		System.out.println("로그인 회원 새로고침 확인 : " + loginUser);
+		//System.out.println("로그인 회원 새로고침 확인 : " + loginUser);
 		
 		if(loginUser != null) {
 			model.addAttribute("loginUser", loginUser);

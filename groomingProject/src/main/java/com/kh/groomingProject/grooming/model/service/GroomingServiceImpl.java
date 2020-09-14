@@ -423,7 +423,7 @@ public class GroomingServiceImpl implements GroomingService{
 	@Override
 	public int addPointMember(Map map1) {
 		// TODO Auto-generated method stub
-		System.out.println("나 service map1 :" + map1);
+		//System.out.println("나 service map1 :" + map1);
 		return gDao.addPointMember(map1);
 	}
 
