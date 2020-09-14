@@ -594,6 +594,10 @@ section .form_container .hideItem
 				location.href="home.do";
 			} else if(url.indexOf("OptionUpdate") != -1) {
 				location.href="home.do";
+			} else if(url.indexOf("groomingDetail") != -1) {
+				location.href="groomingMain.do";
+			} else if(url.indexOf("communityDetailView") != -1) {
+				location.href="communityMain.do";
 			} else if(url == "") {
 				location.href="home.do";
 			} else {
