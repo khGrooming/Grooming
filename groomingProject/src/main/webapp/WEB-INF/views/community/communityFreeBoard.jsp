@@ -139,53 +139,24 @@
 	<!-- 검색 -->
 	<c:url var="communityFreeBoardURL" value="/community/communityFreeBoard"></c:url>
 	<script>
-		$(function(){
-			$("#btnSearch").on("click", function(){
-				var communitySearch = $("#communitySearch").val();
-				
-				if(communitySearch == ""){
-					alert("한 글자 이상 검색해주셔야 합니다^^")
-				}else{
-					// communityFBSearch.do 쪽으로 communitySearch를 get방식으로 보냄
-					location.href="communityFBSearch.do?communitySearch="+communitySearch;
-					/* $.ajax({
-						url:"communitySearch.do",
-						type:"post",
-						data:{communitySearch:communitySearch},
-						dataType:"json",
-						
-						success:function(data) {
-							debugger;
-							$('#searchTbody').html("");
-							for(var i = 0; i < data.length; i++){
-							$('#searchTbody').append('<tr>' + 
-						    						'<td>' + data[i].boardNo  + '</td>' + 
-						   						    '<td>' + '<br>' +
-													' <c:url var="communityDetailView" value="communityDetailView.do">' + 
-													' <c:param name="boardNo" value=" ' + data[i].boardNo + '" /> ' +
-													' </c:url>' +
-													' <a href="communityDetailView.do?boardNo=' + data[i].boardNo + '">' + data[i].boardTitle + '</a>' +
-													' </td>' +
-													'<td>' + data[i].memberNo + '</td>' +
-													'<td>' + data[i].boardVcount  + '</td>' +
-													'<td>' + data[i].boardCreateDate  + '</td>' +
-													'</tr>');
-							}
-						},
-						error : function(request, status, errorData) {
-							alert("error code: " + request.status + "\n"
-								+ "message: " + request.responseText
-								+ "error: " + errorData);
-						}
-					}) */
-				}
-			})
+		$("#btnSearch").on("click", function(){
+			search();
 		})
 		$("#communitySearch").keyup(function(e){
 			if(e.keyCode == 13){
 				search();
 			}
 		});
+		function search(){
+			var communitySearch = $("#communitySearch").val();
+			
+			if(communitySearch == ""){
+				alert("한 글자 이상 검색해주셔야 합니다^^")
+			}else{
+				// communityFBSearch.do 쪽으로 communitySearch를 get방식으로 보냄
+				location.href="communityFBSearch.do?communitySearch="+communitySearch;
+			}
+		}
 	</script>
 	
 <!-- Optional JavaScript -->

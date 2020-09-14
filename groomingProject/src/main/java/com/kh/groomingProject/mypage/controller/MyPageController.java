@@ -69,54 +69,53 @@ import static com.kh.groomingProject.mypage.controller.MyPagePagination.getPageI
 
 @Controller
 public class MyPageController {
-
-	
-	@Autowired
-	private MypageService mpService; 
-	
-	@Autowired 
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
-	
-	@Autowired
-	private TagService tagService;
-	
-	@Autowired
-	private GroomingService gService;
-	
-	@Autowired
-	private DeclarationService declarationService;	
-	
-	@RequestMapping("mypage-memberup.do")
-	public String myPageView(HttpServletRequest request) {
-		
-		
-		HttpSession session = request.getSession();
-		Member m = (Member)session.getAttribute("loginUser");
-		String mNo =m.getMemberNo();
-		ProfileMember profileInfo = mpService.testLoginUser2(mNo);
-		int memberPoint = mpService.selectPoint(mNo);
-		System.out.println("memberPoint:"+memberPoint);
-		System.out.println("myPage.do"+profileInfo);
-		if(memberPoint==0) {
-			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
-			profileInfo.setNowPoint("0");
-		}else {
-			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
-			profileInfo.setNowPoint(memberPoint2);
-		}
-		
-		
-		specSelect(request, mNo);
-		mentorSelect(request, mNo);
-		
-		session.setAttribute("profileInfo",profileInfo);
-		
-		
-	
-		return "mypage/mypage-memberup";
-	}
-	
-	
+   
+   @Autowired
+   private MypageService mpService; 
+   
+   @Autowired 
+   private BCryptPasswordEncoder bcryptPasswordEncoder;
+   
+   @Autowired
+   private TagService tagService;
+   
+   @Autowired
+   private GroomingService gService;
+   
+   @Autowired
+   private DeclarationService declarationService;   
+   
+   @RequestMapping("mypage-memberup.do")
+   public String myPageView(HttpServletRequest request) {
+      
+      
+      HttpSession session = request.getSession();
+      Member m = (Member)session.getAttribute("loginUser");
+      String mNo =m.getMemberNo();
+      ProfileMember profileInfo = mpService.testLoginUser2(mNo);
+      int memberPoint = mpService.selectPoint(mNo);
+      System.out.println("memberPoint:"+memberPoint);
+      System.out.println("myPage.do"+profileInfo);
+      if(memberPoint==0) {
+         System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
+         profileInfo.setNowPoint("0");
+      }else {
+         String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
+         profileInfo.setNowPoint(memberPoint2);
+      }
+      
+      
+      specSelect(request, mNo);
+      mentorSelect(request, mNo);
+      
+      session.setAttribute("profileInfo",profileInfo);
+      
+      
+   
+      return "mypage/mypage-memberup";
+   }
+   
+   
 // ===========스펙 검색 메소드 (검색 후 session에 저장)
    public void specSelect(HttpServletRequest request,String mNo) {
       HttpSession session = request.getSession();

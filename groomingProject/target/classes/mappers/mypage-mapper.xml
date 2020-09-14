@@ -214,7 +214,6 @@
 		FROM POINT
 		WHERE MEMBER_NO=#{mNo}
 	</select>
-
 <select id="selectPoint2" parameterType="string" resultType="_int">
       SELECT NVL(SUM(ADD_POINT),0)AS NOWPOINT
       FROM POINT 
@@ -444,6 +443,7 @@
 		SELECT COUNT(*)
 		FROM GROOMING_APPLICANT
 		WHERE MEMBER_NO =#{mNo}
+	
 	</select>
 
 	<select id="selectMyPageApplicantV2" parameterType="string" resultMap="MyPageApplicantV2Set">
