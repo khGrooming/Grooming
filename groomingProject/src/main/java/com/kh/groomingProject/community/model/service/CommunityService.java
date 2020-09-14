@@ -41,6 +41,8 @@ public interface CommunityService {
 
 	ArrayList<Board> getCommunityFBSearch(CommunityPageInfo fpi, String communitySearch);
 
+	ArrayList<Board> selectListC(String bCategoryNo, int cpi);
+
 
 
 	

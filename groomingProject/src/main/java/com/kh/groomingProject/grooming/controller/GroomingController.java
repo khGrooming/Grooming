@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.groomingProject.alert.model.service.AlertService;
 import com.kh.groomingProject.declaration.model.service.DeclarationService;
 import com.kh.groomingProject.declaration.model.vo.Declaration;
 import com.kh.groomingProject.grooming.model.exception.GroomingException;
@@ -51,6 +52,7 @@ import com.kh.groomingProject.home.model.vo.HomeGrooming;
 import com.kh.groomingProject.home.model.vo.HomePageInfo;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
+import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.mypage.model.service.MypageService;
 import com.kh.groomingProject.mypage.model.vo.MyPagePoint;
 import com.kh.groomingProject.tag.model.service.TagService;
@@ -76,6 +78,9 @@ public class GroomingController {
 	
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired
+	private AlertService alertService;
 	
 //	메인으로 가기
 	@RequestMapping("groomingMain.do")
@@ -350,13 +355,13 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	// 그루밍 신청자 수락 ajax
 	@RequestMapping("gaccept.do")
 	@ResponseBody
-	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType) {
+	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType,String groomingTitle) {
 		System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
 		String memberNo = gService.findAppMemberNo(applyNo);
-	
+		String memberEmail = gService.findAppMemberEmail(applyNo);
 		
 		Map map = new HashMap();
 		map.put("memberNo", memberNo);
@@ -387,6 +392,14 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		int result4 = 0;
 		System.out.println("groomingType : " + groomingType);
 		System.out.println("tmoney :" + tmoney);
+		
+		// 알림
+		String message = groomingTitle+"에서 신청 수락 되었습니다.축하해 뿡뿡";
+        MemberAlert memberAlert = new MemberAlert(message, memberEmail);
+        System.out.println("수락되었습니다 ㅊㅋㅊㅋ : " + memberAlert);
+        int resultAlertJoin = alertService.insertAlert(memberAlert);
+        
+        
 		if(groomingType.equals("멘토")) {
 			 result4 = gService.addMentorPoint(map2);
 		}
@@ -401,9 +414,18 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	// 그루밍 신청자 거절 ajax
 	@RequestMapping("greject.do")
 	@ResponseBody
-	public String groomingReject(String applyNo) {
+	public String groomingReject(String applyNo,String groomingTitle) {
 		System.out.println(applyNo);
+		
+		String memberEmail = gService.findAppMemberEmail(applyNo);
 		int result = gService.selectRejectApp(applyNo);
+		
+		// 알림
+		String message = groomingTitle+"에서 신청 거절 되었습니다. ㅠㅠㅠ";
+		MemberAlert memberAlert = new MemberAlert(message, memberEmail);
+		System.out.println("거절됐다 이유 찾아라 : " + memberAlert);
+		int resultAlertJoin = alertService.insertAlert(memberAlert);
+		
 		if (result > 0) {
 			return "success";
 		} else {
@@ -1082,73 +1104,75 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		}
 
 		// 임시저장 페이지 등록
-		@RequestMapping("gSaveUpdate.do")
-		public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
-				Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
+		   // 임시저장 페이지 등록
+	      @RequestMapping("gSaveUpdate.do")
+	      public ModelAndView groomingSaveUpdate(HttpServletRequest request, String tagName, ModelAndView mv, String groomingNo,String memberNo,
+	            Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file) {
 
-			String renameFileName = "";
-			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
-			// 그럼 그걸 가지고 기존의 파일을 삭제하자
-			System.out.println(g.getGroomingImg());
-			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
-				if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
-					deleteFile(g.getGroomingImg(), request);
-					// deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
-					// 폴더명만 수정하자
-				}
-				renameFileName = saveFile(file, request);
+	         String renameFileName = "";
+	         // 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
+	         // 그럼 그걸 가지고 기존의 파일을 삭제하자
+	         System.out.println(g.getGroomingImg());
+	         if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
+	            if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
+	               deleteFile(g.getGroomingImg(), request);
+	               // deleteFile메소드는 NoticeController에 만들었으니 아래에 복붙해서
+	               // 폴더명만 수정하자
+	            }
+	            renameFileName = saveFile(file, request);
 
-				// Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
-				if (!renameFileName.equals("")) {
+	            // Grooming 객체에 새로 올린 파일명을 담고(원본 및 변경한 것 둘다) DB를 다녀오자(update)
+	            if (!renameFileName.equals("")) {
 
-					g.setGroomingImg(renameFileName);
-				}
+	               g.setGroomingImg(renameFileName);
+	            }
 
-			} else {
-				g.setGroomingImg(gService.selectGimg(groomingNo));
-			}
+	         } else {
+	            g.setGroomingImg(gService.selectGimg(groomingNo));
+	         }
 
-			g.setGroomingNo(groomingNo);
-			System.out.println("수정controller" + g);
+	         g.setGroomingNo(groomingNo);
+	         System.out.println("수정controller" + g);
 
-			int result = gService.updateSaveGrooming(g);
+	         int result = gService.updateSaveGrooming(g);
 
-			int result1 = 0;
+	         int result1 = 0;
 
-			// 기존에 GTAG에 존재해있던 값을 지우자
-			int result2 = gService.deleteGtag(groomingNo);
+	         // 기존에 GTAG에 존재해있던 값을 지우자
+	         int result2 = gService.deleteGtag(groomingNo);
 
-			if (tagName.length() != 0) {
-				String[] tag = tagName.split(",");
-				String[] tagNo = new String[tag.length];
+	         if (tagName.length() != 0) {
+	            String[] tag = tagName.split(",");
+	            String[] tagNo = new String[tag.length];
 
-				for (int i = 0; i < tag.length; i++) {
-					// TAG 테이블에 값넣기
-					String tagTemp = tag[i];
-					result = tagService.mergeTags(tagTemp);
-					// GTAG 테이블에 값넣기
-					tagNo[i] = gService.findTagNo(tagTemp);
-					String GtagNo = tagNo[i];
+	            for (int i = 0; i < tag.length; i++) {
+	               // TAG 테이블에 값넣기
+	               String tagTemp = tag[i];
+	               result = tagService.mergeTags(tagTemp);
+	               // GTAG 테이블에 값넣기
+	               tagNo[i] = gService.findTagNo(tagTemp);
+	               String GtagNo = tagNo[i];
 
-					Map map = new HashMap();
-					map.put("GtagNo", GtagNo);
-					map.put("groomingNo", groomingNo);
+	               Map map = new HashMap();
+	               map.put("GtagNo", GtagNo);
+	               map.put("groomingNo", groomingNo);
 
-					// db 갔다 오기
-					result1 = gService.insertGtag(map);
+	               // db 갔다 오기
+	               result1 = gService.insertGtag(map);
 
-				}
-			}
-			
-			System.out.println("나 등록 됬어요~" + result +result1+ result2);
-			if (result > 0 && result1 > 0) {
-				mv.setViewName("redirect:groomingMain.do");
+	            }
+	         }
+	         
+	         System.out.println("나 등록 됬어요~" + result +result1+ result2);
+	         if (result > 0 && result1 > 0) {
+	            mv.setViewName("redirect:groomingMain.do");
 
-			} else {
-				throw new GroomingException("게시글 등록 실패!");
-			}
-			return mv;
-		}
+	         } else {
+	            throw new GroomingException("게시글 등록 실패!");
+	         }
+	         return mv;
+	      }
+	   
 	
 		// 글내역확인
 		@RequestMapping("groomingDecide.do")
@@ -1296,6 +1320,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			String[] status = gCheckStatus.split(",");
 			String gMemberNo = null;
 			int result = 0;
+			int result1 = 0;
 			for(int i=0; i<nickname.length; i++) {
 				
 				Map map  = new HashMap();
@@ -1307,6 +1332,13 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				g.setgMemberNo(gMemberNo);
 				g.setgCheckStatus(status[i]);
 				result = gService.insertCheck(g);
+				
+				Map map1  = new HashMap();
+				map1.put("status",status[i]);
+				map1.put("memberNickName", nickname[i]);
+				
+				
+				result1 = mService.addExp(map1);
 			}
 	
 			
@@ -1317,7 +1349,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			
 			if (result > 0) {
 				
-				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).addObject("grooming",grooming).setViewName("grooming/groupCalendar");
+				mv.addObject("grooming", grooming).addObject("str",str).addObject("member",member).setViewName("grooming/groupCalendar");
 				
 			} else {
 				throw new GroomingException("출석 체크 실패!");

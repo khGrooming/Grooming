@@ -61,6 +61,7 @@
                     <div class="admin"><a href="declarationManage.do">신고 관리</a></div>
                     <div class="sub"><a href="declarationManage.do">회원 신고 관리</a></div>
                     <div class="admin"><a href="cafeManage.do">카페 관리</a></div>
+                    <div class="admin"><a href="helpManage.do">문의 사항</a></div>
             </div>
         </div>
 
@@ -83,11 +84,6 @@
                 	<c:if test="${!empty mList }">
 	                    <c:forEach var="mList" varStatus="i" items="${mList}">
 		                    <tr>
-		                    	<c:forEach var="dList" items="${dList}">
-		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-		                        		${dList.declarationCNo}
-		                        	</c:if>
-	                       		</c:forEach>/
 	                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
 	                       		<input type="hidden" class="memberEmail${i.index}" value="${mList.memberEmail}">
 	                        	<td rowspan="4">${mList.memberEmail}</td>

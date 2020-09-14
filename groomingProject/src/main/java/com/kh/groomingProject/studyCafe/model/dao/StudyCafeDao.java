@@ -21,14 +21,18 @@ public class StudyCafeDao {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	public ArrayList<StudyCafe> selectCafeNameList(String name) {
-
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeNameList", name);
+	public ArrayList<StudyCafe> selectCafeNameList(AdminPageInfo pi, Map str) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeNameList", str, rowBounds);
 	}
 
-	public ArrayList<StudyCafe> selectCafeLocalList(String name) {
-
-		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", name);
+	public ArrayList<StudyCafe> selectCafeLocalList(AdminPageInfo pi, Map str) {
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		return (ArrayList)sqlSessionTemplate.selectList("cafeMapper.selectCafeLocalList", str, rowBounds);
 	}
 
 	public ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi, Map str) {

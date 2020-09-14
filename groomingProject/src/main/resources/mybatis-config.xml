@@ -23,6 +23,7 @@
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberTag" alias="MemberTag"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberAlert" alias="MemberAlert"/>
 		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberCertiCode" alias="MemberCertiCode"/>
+		<typeAlias type="com.kh.groomingProject.member.model.vo.MemberSanctions" alias="MemberSanctions"/>
 
 		<!-- 마이페이지 -->
 		<typeAlias type="com.kh.groomingProject.mypage.model.vo.ProfileMember" alias="ProfileMember"/>
@@ -67,6 +68,8 @@
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GroomingManageView" alias="GroomingManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.DeclarationManageView" alias="DeclarationManageView"/>
 		<typeAlias type="com.kh.groomingProject.admin.model.vo.GraphListCount" alias="GraphListCount"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.HelpCategory" alias="HelpCategory"/>
+		<typeAlias type="com.kh.groomingProject.admin.model.vo.HelpManage" alias="HelpManage"/>
 	</typeAliases>
 	
 	<mappers>

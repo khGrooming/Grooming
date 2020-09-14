@@ -450,5 +450,11 @@ public class GroomingServiceImpl implements GroomingService{
 		// TODO Auto-generated method stub
 		return gDao.selectMentor(memberNo);
 	}
+
+	@Override
+	public String findAppMemberEmail(String applyNo) {
+		// TODO Auto-generated method stub
+		return gDao.findAppMemberEmail(applyNo);
+	}
 	
 }

@@ -100,7 +100,7 @@ public class MyPageController {
 			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
 			profileInfo.setNowPoint("0");
 		}else {
-			String memberPoint2 = Integer.toString( mpService.selectPoint(mNo));
+			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
 			profileInfo.setNowPoint(memberPoint2);
 		}
 		
@@ -221,7 +221,8 @@ public class MyPageController {
 		int result = mpService.updateProfileIMG(m);
 		
 		ProfileMember profileMember = mpService.testLoginUser2(m.getMemberNo());
-		String memberPoint2 = Integer.toString( mpService.selectPoint2(m.getMemberNo()));
+		System.out.println("나 memberNo야 " + m.getMemberNo());
+		String memberPoint2 = Integer.toString( mpService.selectPoint(m.getMemberNo()));
 		profileMember.setNowPoint(memberPoint2);
 		session.setAttribute("profileInfo",profileMember);
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -675,45 +676,7 @@ public class MyPageController {
 		return "mypage/mpgrooming";
 	}
 	
-	//임시저장 페이지 이동 및 데이터 불러오기
-	@RequestMapping("ginsertTemp.do")
-	public ModelAndView groomingInsertHistory(ModelAndView mv,HttpSession session) {
-		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		String TempGno = mpService.selectTempGroomingNo(mNo);
-		System.out.println("TempGno"+TempGno);
-		
 	
-		
-		if(TempGno != null){
-			ArrayList<Tag> tlist = tagService.selectGtagList(TempGno);
-//			System.out.println("나 tlist야" +tlist);
-			Grooming grooming = gService.selectGrooming(TempGno);
-			Mentor m = gService.selectMentor(mNo);
-			// 해쉬태그값을 안적었을 수도 있다.
-			String str = "";
-			if(tlist != null) {
-				for (int i = 0; i < tlist.size(); i++) {
-					str += tlist.get(i).getTagName();
-					if ((i + 1) < tlist.size()) {
-						str += ',';
-					}
-				}
-			}
-			if (grooming != null ) {
-				mv.addObject("grooming", grooming).addObject("tlist", str).addObject("m", m).setViewName("mypage/ginsertTemp");
-			} else {
-				throw new GroomingException("수정 게시글 불러오기 실패!");
-			}
-
-			return mv;
-		
-		}else {
-			mv.setViewName("mypage/ginsertTemp");
-			return mv;
-			
-		}
-		
-	}
 	
 	@RequestMapping("mypagePoint.do")
 	public ModelAndView myPagePoint(ModelAndView mv,HttpSession session) {

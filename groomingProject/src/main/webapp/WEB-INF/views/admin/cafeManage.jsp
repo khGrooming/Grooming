@@ -73,6 +73,7 @@
 	                    <div class="admin"><a href="groomingManage.do">그루밍 관리</a></div>
 	                    <div class="admin"><a href="declarationManage.do">신고 관리</a></div>
 	                    <div class="admin"><a href="cafeManage.do">카페 관리</a></div>
+                     	<div class="admin"><a href="helpManage.do">문의 사항</a></div>
 	            	</div>
 	        	</div>
 			<div class="col-sm-8">
@@ -175,7 +176,6 @@
 					$cRoomHeadCount = data[j].cRoomHeadCount;
 					
 					$infoCheck.append("<input class='modalInfo' name='cafeNo' type='hidden' value='"+$cafeNo+"'>");
-					$infoCheck.append("<input class='modalInfo' clss='cPriceNo"+j+"' name='cPriceNo' type='hidden' value='"+$cPriceNo+"'>");
 					$infoCheck.append("<labe>카페 이름 </label><input class='modalInfo' name='cafeName' type='text' value='"+$cafeName+"'><br><br>");
 					$infoCheck.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
 					$infoCheck.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
@@ -302,7 +302,7 @@
 		    /*nextpageload function*/
 		    function next_load(){
 		    	$name = $("#searchName").val();
-		    	page++;
+
 	            $.ajax({
                     url:"cafeManageAjax.do",
                     data : {page:page, name:$name},
@@ -320,11 +320,12 @@
 		    	var maxHeight = $(document).height();
 		    	var currentScroll = $(window).scrollTop() + $(window).height();
 		    	
-		    	if(maxHeight <= currentScroll + 10) {
+		    	if(maxHeight <= currentScroll+1) {
 		            if(!loading)    //실행 가능 상태라면?
 		            {
 		                loading = true; //실행 불가능 상태로 변경
 		                next_load(); 
+		                page++;
 		            }
 		            else            //실행 불가능 상태라면?
 		            {

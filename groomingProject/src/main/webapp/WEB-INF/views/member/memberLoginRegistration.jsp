@@ -357,6 +357,33 @@ section .form_container .hideItem
 	transition: 0s;}
 }
 </style>
+<style>
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1050; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%; /* Could be more or less, depending on screen size */                          
+}
+.modal-content pre{
+  white-space: pre-wrap;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../common/mainNavigationBar.jsp" />
@@ -490,6 +517,19 @@ section .form_container .hideItem
 				<div class="imgBx"><img alt="회원가입이미지" src="${contextPath }/resources/views/images/register3.png"></div>	
 			</div>
 		</div>
+		<!-- The Modal -->
+	    <div id="myModal" class="modal">
+	      <!-- Modal content -->
+	      <div class="modal-content">
+	                <p style="text-align: center;"><span style="font-size: 14pt;"><b><span style="font-size: 24pt;">공지</span></b></span></p>
+	                <pre class="sanctions" style="text-align: center; line-height: 1.5;"></pre>
+	            <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="close_pop();">
+	                <span class="pop_bt" style="font-size: 13pt;" >닫기</span>
+	            </div>
+	      </div>
+	 
+	    </div>
+		<!--End Modal-->
 	</section>
 	
 	<!-- 공용 스크립트 -->
@@ -543,7 +583,7 @@ section .form_container .hideItem
 
 		// 돌아갈 페이지가 로그인, 회원가입, 로그아웃 이라면 홈으로
 		function goBackPage() {
-/* 			let url = "${url}";
+ 			let url = "${url}";
 			if(url.indexOf("login") != -1){
 				location.href="home.do";
 			} else if(url.indexOf("register") != -1) {
@@ -558,13 +598,14 @@ section .form_container .hideItem
 				location.href="home.do";
 			} else {
 				location.href="${url}";
-			} */
-			location.href="home.do";
+			}
+			/* location.href="home.do"; */
 		}
 	</script>
 
 	<!-- 로그인 -->
 	<script>
+		// 비밀번호에서 enter키로 로그인
 		$("#loginPwd").keyup(function(e){
 			if(e.keyCode == 13){
 				login();
@@ -582,6 +623,7 @@ section .form_container .hideItem
 			}
 		}
 
+		// 키업과 체인지로 이메일 유효성 검사
 		$("#loginEmail").on("keyup change", function () {
 			loginEmail();
 		});
@@ -619,8 +661,8 @@ section .form_container .hideItem
 					url:"memberLogin.do",
 					data:{memberEmail:memberEmail, memberPwd:memberPwd, idSaveCheck:idSaveCheck},
 					success:function(data){
-						console.log("로그인 결과 : " + data);
-						if(data == "success"){
+						console.log("로그인 결과 : " + data.loginSatatus);
+						if(data.loginSatatus == "success"){
 							// 아이디 저장이 체크상태이면 쿠키에 아이디 저장
 							if($("#idSaveCheck").is(":checked")){
 								$.cookie("userCheck", memberEmail);
@@ -630,6 +672,11 @@ section .form_container .hideItem
 							}
 
 							goBackPage();
+						} else if(data.loginSatatus == "sanctions"){
+							console.log(data);
+							$(".sanctions").html("[ 회원님은 제재 중 입니다. ]\n 해제일 : " + data.sanctionsFDate + "\n" +
+									"사유 : " + data.sanctionsContent + "\n 자세한 사항은 문의하기로 문의해 주세요.");
+							$('#myModal').show();
 						} else {
 							$("#loginError").css("display","block");
 						}
@@ -640,6 +687,9 @@ section .form_container .hideItem
 				});
 			}
 		}
+		function close_pop(flag) {
+			$('#myModal').hide();
+		};
 	</script>
 
 	<!-- 카카오 로그인 -->	

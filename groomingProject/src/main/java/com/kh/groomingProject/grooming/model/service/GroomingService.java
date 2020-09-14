@@ -157,4 +157,6 @@ public interface GroomingService {
 	int addMentorPoint(Map map2);
 
 	Mentor selectMentor(String memberNo);
+
+	String findAppMemberEmail(String applyNo);
 }

@@ -92,7 +92,9 @@
 							var boardNo = "${boardNo}";
 							console.log(data[i].boardNo);
 							var $boardTitle = $("<td>");
-							var $aTag = $("<a>").attr("href","communityDetailView.do?boardNo="+data[i].boardNo).text(data[i].boardTitle).addClass("aTag");
+							var $aTag = $("<a>").attr("href","communityDetailView.do?boardNo="+data[i].boardNo)
+												.text(data[i].boardTitle)
+												.addClass("aTag");
 							var $boardVcount = $("<td>").text(data[i].boardVcount);
 							$boardTitle.append($aTag);
 							if(i ==0) $("#ranking1").append($boardTitle).append($boardVcount);

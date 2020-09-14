@@ -21,6 +21,15 @@
 		<result property="memberCount" column="MEMBERCOUNT"/>
 	</resultMap>
 
+	<resultMap type="MemberSanctions" id="memberSanctionsResultSet">
+		<id property="sanctionsNo" column="SANCTIONS_NO"/>
+		<result property="memberNo" column="MEMBER_NO"/>
+		<result property="sanctionsSDate" column="SANCTIONS_S_DATE"/>
+		<result property="sanctionsFDate" column="SANCTIONS_F_DATE"/>
+		<result property="sanctionsContent" column="SANCTIONS_CONTENT"/>
+		<result property="sanctionsDDay" column="SANCTIONS_DDAY"/>
+	</resultMap>
+
 	<insert id="insertMember" parameterType="Member">
 		INSERT INTO MEMBER (MEMBER_NO, MEMBER_EMAIL, MEMBER_PASSWORD, MEMBER_NICKNAME
 			, LVL_NO, MEMBER_PHOTO, MEMBER_ADMIN, MEMBER_STATUS, MEMBER_KAKAO, MEMBER_JOIN_DATE)
@@ -159,6 +168,29 @@
 		FROM MEMBER
 		WHERE MEMBER_NICKNAME = #{memberNickName}
 		AND MEMBER_STATUS='N'
+	</select>
+
+	<update id="addExp" parameterType="map">
+		UPDATE MEMBER
+		SET MEMBER_EXP = MEMBER_EXP +30
+		WHERE MEMBER_NICKNAME = #{memberNickName} AND #{status} = 'Y'
+	</update>
+	
+	<select id="chkMemberSanction" parameterType="string" resultMap="memberSanctionsResultSet">
+		SELECT ROWNUM
+			,SANCTIONS_NO
+			,M.MEMBER_NO
+			,SANCTIONS_S_DATE
+			,SANCTIONS_F_DATE
+			,SANCTIONS_CONTENT
+			, (SYSDATE - SANCTIONS_F_DATE) SANCTIONS_DDAY
+		FROM MEMBER M
+		JOIN (SELECT SANCTIONS_NO,MEMBER_NO,SANCTIONS_S_DATE
+		    ,SANCTIONS_F_DATE,SANCTIONS_CONTENT
+		    FROM SANCTIONS ORDER BY SANCTIONS_F_DATE DESC) S
+		    ON (M.MEMBER_NO = S.MEMBER_NO)
+		WHERE MEMBER_EMAIL =  #{memberEmail}
+		AND ROWNUM = 1
 	</select>
 
 </mapper>

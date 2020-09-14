@@ -1,10 +1,14 @@
  package com.kh.groomingProject.member.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -21,12 +25,16 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.groomingProject.alert.model.service.AlertService;
 import com.kh.groomingProject.member.model.exception.MemberException;
 import com.kh.groomingProject.member.model.service.MemberService;
 import com.kh.groomingProject.member.model.vo.Member;
 import com.kh.groomingProject.member.model.vo.MemberAlert;
 import com.kh.groomingProject.member.model.vo.MemberCertiCode;
+import com.kh.groomingProject.member.model.vo.MemberSanctions;
 import com.kh.groomingProject.member.model.vo.MemberTag;
 import com.kh.groomingProject.tag.model.service.TagService;
 
@@ -351,26 +359,54 @@ public class MemberController {
 	}
 
 	// 회원 로그인
+	//@SuppressWarnings("null")
 	@RequestMapping("memberLogin.do")
-	@ResponseBody
-	public String memberLogin(Member m, Model model, String idSaveCheck) {
-
+	public void memberLogin(HttpServletResponse response, Model model, Member m, String idSaveCheck) throws JsonIOException, IOException {
+		response.setContentType("application/json;charset=utf-8");
+		Gson gson = new GsonBuilder().setDateFormat("yyyy년 MM월 dd일 HH시mm분ss초").create();
+		
 		System.out.println("로그인 (아이디/비번/저장) : " + m.getMemberEmail() + " / " + m.getMemberPwd() + " / " + idSaveCheck);
+
+		String memberEmail = m.getMemberEmail();
+		
+		MemberSanctions ms = mService.chkMemberSanction(memberEmail);
+		
+		System.out.println("로그인 유저 제재 확인 : " + ms);
+		if(ms != null) {
+			if(ms.getSanctionsDDay() > 0 ) {
+				login(response, model, m, gson);
+			} else {
+				System.out.println("로그인 확인 : 제재 중");
+				ms.setLoginSatatus("sanctions");
+				gson.toJson(ms, response.getWriter());
+			}
+		} else {
+			login(response, model, m, gson);
+		}
+		
+	}
+	
+	// 일반 로그인
+	private void login(HttpServletResponse response, Model model, Member m, Gson gson) throws JsonIOException, IOException {
+		MemberSanctions loginMs = new MemberSanctions("","",new Timestamp(0),new Timestamp(0),"",0.0,"");
 
 		Member loginUser = mService.loginMember(m);
 		System.out.println("회원 확인 : " + loginUser);
-
+		
 		if(loginUser != null) {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 				System.out.println("로그인 확인 : 성공");
+				
 				model.addAttribute("loginUser", loginUser);
-				return "success";
-			} else {
-				System.out.println("로그인 확인 : 실패");
-				return "fail";
+				loginMs.setLoginSatatus("success");
+				gson.toJson(loginMs, response.getWriter());
+				return;
 			}
 		}
-		return "fail";
+		System.out.println("로그인 확인 : 실패");
+		loginMs.setLoginSatatus("fail");
+		gson.toJson(loginMs, response.getWriter());
+		
 	}
 
 	// 카카오 회원 로그인
@@ -397,7 +433,6 @@ public class MemberController {
 	// 회원 로그아웃
 	@RequestMapping("logout.do")
 	public String logout(SessionStatus status){
-		//TODO session 처리 방식 수정 필요할까?
 		status.setComplete();
 
 		return "redirect:home.do";

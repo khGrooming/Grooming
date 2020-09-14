@@ -21,15 +21,15 @@ public class StudyCafeServiceImpl implements StudyCafeService{
 	StudyCafeDao studyCafeDao;
 
 	@Override
-	public ArrayList<StudyCafe> selectCafeNameList(String name) {
+	public ArrayList<StudyCafe> selectCafeNameList(AdminPageInfo pi, Map str) {
 		
-		return studyCafeDao.selectCafeNameList(name);
+		return studyCafeDao.selectCafeNameList(pi, str);
 	}
 
 	@Override
-	public ArrayList<StudyCafe> selectCafeLocalList(String name) {
+	public ArrayList<StudyCafe> selectCafeLocalList(AdminPageInfo pi, Map str) {
 
-		return studyCafeDao.selectCafeLocalList(name);
+		return studyCafeDao.selectCafeLocalList(pi, str);
 	}
 
 	@Override

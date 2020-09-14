@@ -48,8 +48,11 @@
 						<div class="cafe"><a href="reservationHistory.do?memberNo=${loginUser.memberNo}">카페 예약 내역</a></div>
 					</c:if>
 					<c:if test="${empty loginUser}">
-						<div class="cafe"><a href="loginPage.do">카페 신청 내역</a></div>
-						<div class="cafe"><a href="loginPage.do">카페 예약 내역</a></div>
+						<c:url var="loginPage_Cafe" value="loginPage.do">
+							<c:param name="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
+						</c:url>
+						<div class="cafe"><a href="${loginPage_Cafe }">카페 신청 내역</a></div>
+						<div class="cafe"><a href="${loginPage_Cafe }">카페 예약 내역</a></div>
 					</c:if>
 	        	</div>
 	        </div>
@@ -149,6 +152,7 @@
 	    function next_load(){
 	    	$name = $("#searchName").val();
 	    	page++;
+	    	console.log("page : "+page);
             $.ajax({
                 url:"cafeManageAjax.do",
                 data : {page:page,name:$name},
@@ -163,7 +167,10 @@
 	    }
 
 	    $(window).scroll(function(){
-	    	if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	    	var maxHeight = $(document).height();
+	    	var currentScroll = $(window).scrollTop() + $(window).height();
+	    	
+	    	if(maxHeight <= currentScroll+1) {
 	            if(!loading)    //실행 가능 상태라면?
 	            {
 	                loading = true; //실행 불가능 상태로 변경
@@ -184,7 +191,7 @@
 				$panel = $("<div class='panel panel-default'>");
 				$panel.attr("onclick","location.href='cafeDetail.do?cafeNo="+data[i].cafeNo+"'");
 				$cafeNo = $('<input type="hidden" class="cafeNo'+(j+i)+'" value="'+data[i].cafeNo+'">');
-				console.log(data.cafeNo);
+				console.log(data[i].cafeNo);
 				$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/data[i].cafeImg' class='thumbnail'></div>");
 				$panelB = $('<div class="panel-body">'+data[i].cafeName+'</div>');
 				$panelF = $('<div class="panel-footer">'+data[i].cafeAddress+'</div>');

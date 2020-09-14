@@ -396,6 +396,11 @@ public class GroomingDao {
 		// TODO Auto-generated method stub
 		return sqlSessionTemplate.selectOne("groomingMapper.selectMentor",memberNo);
 	}
+
+	public String findAppMemberEmail(String applyNo) {
+		// TODO Auto-generated method stub
+		return sqlSessionTemplate.selectOne("groomingMapper.findAppMemberEmail",applyNo);
+	}
 	
 	
 }
