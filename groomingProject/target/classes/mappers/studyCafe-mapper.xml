@@ -77,7 +77,7 @@
 	<select id="selectCafeLocalList" parameterType="string" resultMap="CafeInfoResultSet">
 		SELECT *
 		FROM STUDYCAFE
-		WHERE CAFE_ADDRESS LIKE '%'||#{name}||'%'
+		WHERE CAFE_ADDRESS LIKE '%'||#{local}||'%'
 	</select>
 	
 	<select id="selectCafeList" resultMap="CafeInfoResultSet">

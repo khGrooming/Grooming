@@ -12,9 +12,9 @@ import com.kh.groomingProject.studyCafe.model.vo.StudyCafe;
 
 public interface StudyCafeService {
 
-	ArrayList<StudyCafe> selectCafeNameList(String name);
+	ArrayList<StudyCafe> selectCafeNameList(AdminPageInfo pi, Map str);
 
-	ArrayList<StudyCafe> selectCafeLocalList(String name);
+	ArrayList<StudyCafe> selectCafeLocalList(AdminPageInfo pi, Map str);
 
 	ArrayList<CafeInfo> selectCafeList(AdminPageInfo pi, Map str);
 

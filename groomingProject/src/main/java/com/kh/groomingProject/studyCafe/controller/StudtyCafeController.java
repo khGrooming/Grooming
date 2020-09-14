@@ -46,7 +46,7 @@ public class StudtyCafeController {
 		Map str = new HashMap();
 		str.put("name", name);
 		str.put("local", local);
-		
+		System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -59,7 +59,7 @@ public class StudtyCafeController {
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
 		cafeList = studyCafeService.selectCafeList(pi, str);
-		
+		System.out.println("cafeList : "+cafeList);
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchName");
 		
@@ -68,10 +68,22 @@ public class StudtyCafeController {
 	
 	// 입력 된 이름으로 검색 기능
 	@RequestMapping(value="cafeName.do", method=RequestMethod.POST)
-	public void getCafeNameList(String name, HttpServletResponse response) throws IOException {
+	public void getCafeNameList(String name, HttpServletResponse response, @RequestParam(value="page", required=false) Integer page) throws IOException {
+		Map str = new HashMap();
+		str.put("name", name);
+		
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount(str);
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
 		ArrayList<StudyCafe> list = new ArrayList<>();
 
-		list = studyCafeService.selectCafeNameList(name);
+		list = studyCafeService.selectCafeNameList(pi, str);
 		
 
 		
@@ -109,10 +121,22 @@ public class StudtyCafeController {
 	
 	// 입력 된 지역으로 카페 검색 기능
 	@RequestMapping(value="cafeLocal.do", method=RequestMethod.POST)
-	public void getCafeLocalList(String name, HttpServletResponse response) throws JsonIOException, IOException {
-		ArrayList<StudyCafe> list = new ArrayList<>();
+	public void getCafeLocalList(String local, HttpServletResponse response, @RequestParam(value="page", required=false) Integer page) throws JsonIOException, IOException {
+		Map str = new HashMap();
+		str.put("local", local);
 		
-		list = studyCafeService.selectCafeLocalList(name);
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		int cafeCount = studyCafeService.selectcafeCount(str);
+		
+		AdminPageInfo pi = getPageInfo(currentPage, cafeCount);
+		ArrayList<StudyCafe> list = new ArrayList<>();
+
+		list = studyCafeService.selectCafeLocalList(pi, str);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -126,7 +150,7 @@ public class StudtyCafeController {
 	@RequestMapping(value="cafeDetail.do")
 	public ModelAndView cafeDetail(ModelAndView mv, CafeInfo cafeNo, String cReserNo) {
 		ArrayList<CafeInfo> info = studyCafeService.selectCafeInfo(cafeNo);
-		System.out.println(info);
+		
 		mv.addObject("cReserNo", cReserNo);
 		mv.addObject("info", info);
 		mv.setViewName("studyCafe/cafeDetailView");

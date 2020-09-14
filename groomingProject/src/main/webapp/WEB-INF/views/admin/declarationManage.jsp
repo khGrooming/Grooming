@@ -83,11 +83,6 @@
                 	<c:if test="${!empty mList }">
 	                    <c:forEach var="mList" varStatus="i" items="${mList}">
 		                    <tr>
-		                    	<c:forEach var="dList" items="${dList}">
-		                        	<c:if test="${mList.memberNo eq dList.declarationNNo}">
-		                        		${dList.declarationCNo}
-		                        	</c:if>
-	                       		</c:forEach>/
 	                       		<input type="hidden" class="memberNo${i.index}" value="${mList.memberNo}">
 	                       		<input type="hidden" class="memberEmail${i.index}" value="${mList.memberEmail}">
 	                        	<td rowspan="4">${mList.memberEmail}</td>
