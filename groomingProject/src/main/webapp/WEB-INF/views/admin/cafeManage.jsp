@@ -302,7 +302,7 @@
 		    /*nextpageload function*/
 		    function next_load(){
 		    	$name = $("#searchName").val();
-
+				page++;
 	            $.ajax({
                     url:"cafeManageAjax.do",
                     data : {page:page, name:$name},

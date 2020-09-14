@@ -85,7 +85,7 @@
 					<c:forEach var="info" items="${info}" begin="0" end="0">
 						<h1>${info.cafeName}</h1>
 						<hr>
-						<img src="${contextPath}/resources/views/images/study.jpg" style="width:100%;">
+						<img src="${contextPath}/resources/views/images/cafeImage/${info.cafeImg}" style="width:100%;">
 						<hr>
 						<h2>상세 설명</h2>
 						<c:set var="content" value="${fn:split(info.cafeContent,'.')}" />
