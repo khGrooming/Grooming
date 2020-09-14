@@ -180,20 +180,26 @@ div.dataTables_wrapper {
 	<!-- 검색 -->
 	<c:url var="communityFreeBoardURL" value="/community/communityFreeBoard"></c:url>
 	
-	<script>
-		$(function(){
-			$("#btnSearch").on("click", function(){
-				var communitySearch = $("#communitySearch").val();
-				
-				if(communitySearch == ""){
-					alert("한 글자 이상 검색해주셔야 합니다^^")
-				}else{
-					location.href="communityFBSearch.do?communitySearch="+communitySearch;
-
-				}
-			})
-		})
-	</script>
+<script>
+	$("#btnSearch").on("click", function(){
+		search();
+	})
+	$("#communitySearch").keyup(function(e){
+		if(e.keyCode == 13){
+			search();
+		}
+	});
+	function search(){
+		var communitySearch = $("#communitySearch").val();
+		
+		if(communitySearch == ""){
+			alert("한 글자 이상 검색해주셔야 합니다^^")
+		}else{
+			// communityFBSearch.do 쪽으로 communitySearch를 get방식으로 보냄
+			location.href="communityFBSearch.do?communitySearch="+communitySearch;
+		}
+	}
+</script>
 
 	
 <!-- Optional JavaScript -->
