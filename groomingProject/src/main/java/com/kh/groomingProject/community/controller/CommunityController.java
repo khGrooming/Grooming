@@ -59,14 +59,11 @@ public class CommunityController {
 	public ModelAndView communityMain(HttpServletRequest request, ModelAndView mav, 
 							@RequestParam(value="bCategoryNo", required=false) String bCategoryNo,
 							@RequestParam(value="page", required=false) Integer page) {
-				
-
 		
 		int cp = 1;		// 커뮤니티 글 현재 페이지
 		int ncp = 1;	// 공지사항 글 현재 페이지
 		int fcp = 1;	// 자유게시판 글 현재 페이지
 		int pcp = 1;	// 홍보게시판 글 현재 페이지
-		int ccp = 1;	// 인증게시판 글 현재 페이지
 		int qcp = 1;	// qna 게시판 글 현재 페이지
 		
 		if(page == null) {
@@ -77,7 +74,6 @@ public class CommunityController {
 			case "BC00001": ncp = page; break; // 공지사항
 			case "BC00002": fcp = page; break; // 자유
 			case "BC00003": pcp = page; break; // 홍보
-			case "BC00004": ccp = page; break; // 인증
 			case "BC00005": qcp = page; break; // qna
 			default: cp = page; break;
 			}
@@ -96,35 +92,29 @@ public class CommunityController {
 		CommunityPageInfo npi = getPageInfo(ncp, listCount4N);	
 		CommunityPageInfo fpi = getPageInfo(fcp, listCount4F);	
 		CommunityPageInfo ppi = getPageInfo(pcp, listCount4P);	
-		CommunityPageInfo cpi = getPageInfo(ccp, listCount4C);	
+		int cpi = listCount4C;	
 		CommunityPageInfo qpi = getPageInfo(qcp, listCount4Q);	
 		
 		String bCate = request.getParameter("bCategoryNo");
 		
-//		.println("파라미터 되니? : " + bCate);
 		ArrayList<Board> list = cService.selectList(null, pi);
 		mav.addObject("list", list);
-//		.println("list" + pi);
-		
+
 		ArrayList<Board> nlist = cService.selectList("BC00001", npi);
 		mav.addObject("nlist", nlist);
-//		.println("nlist" + pi);
 		
 		ArrayList<Board> flist = cService.selectList("BC00002", fpi);
 		mav.addObject("flist", flist);
-//		.println("flist" + pi);
 		
 		ArrayList<Board> plist = cService.selectList("BC00003", ppi);
 		mav.addObject("plist", plist);
-//		.println("plist" + pi);
 		
-		ArrayList<Board> clist = cService.selectList("BC00004", cpi);
+		ArrayList<Board> clist = cService.selectListC("BC00004", cpi);
 		mav.addObject("clist", clist);
 		
 		
 		ArrayList<Board> qlist = cService.selectList("BC00005", qpi);
 		mav.addObject("qlist", qlist);
-//		.println("qlist" + pi);
 		
 		mav.setViewName("community/communityMain");
 		mav.addObject("bCategoryNo", bCate);
@@ -135,8 +125,6 @@ public class CommunityController {
 		mav.addObject("cpi", cpi);
 		mav.addObject("qpi", qpi);
 		
-		System.out.println("그림잇는 게시판 : " + clist);
-		
 		return mav;
 	}
 	
@@ -145,7 +133,6 @@ public class CommunityController {
 	@RequestMapping("communityDetailView.do")
 	public String communityDetailView(HttpServletRequest request, Model model, String boardNo) {
 		Member member = (Member)request.getSession().getAttribute("loginUser");
-		System.out.println("boardNo : " + boardNo);
 		
 		String memberNo = null;
 		if(member != null) {
@@ -157,7 +144,7 @@ public class CommunityController {
 		ArrayList<Reply> replyList = cService.replySelectList(boardNo); // 댓글목록
 	
 		int result = cService.addViewCount(boardNo); // 조회수 증가
-		System.out.println("값 확인 : " + b);
+
 		if(b != null) { 
 			model.addAttribute("board", b); 
 			model.addAttribute("replyList", replyList);
@@ -341,21 +328,7 @@ public class CommunityController {
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		gson.toJson(blist, response.getWriter());
 	}
-	
-	// 좋아요
-	@RequestMapping("boardGcount.do")
-	public String boardGcountInsert(HttpServletRequest request, String boardNo, Model model) {
-		Member member = (Member)request.getSession().getAttribute("loginUser");
-		
-		int result = cService.boardGcount(boardNo);
-		System.out.println("좋아요 눌렀으면 " + result);
-		
-		if(result > 0) {
-			return "redirect:communityStudyConfirm?boardNo="+boardNo;
-		}else {
-			throw new CommunityException("좋아요 실패!");
-		}
-	}
+
 	
 	// 신고하기
 	@RequestMapping(value="declareB.do", method=RequestMethod.POST)
