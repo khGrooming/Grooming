@@ -121,6 +121,14 @@ public class CommunityDao {
 		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.getCommunityFBSearch", communitySearch, rowBounds);
 	}
 
+	public ArrayList<Board> selectListC(String bCategoryNo, int cpi) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("bCategoryNo", bCategoryNo);
+		map.put("cpi", cpi);
+
+		return (ArrayList)sqlSessionTemplate.selectList("communityMapper.selectListC", map);
+	}
+
 
 
 

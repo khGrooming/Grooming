@@ -114,6 +114,12 @@ public class CommunityServiceImpl implements CommunityService {
 		return cDao.getCommunityFBSearch(fpi, communitySearch);
 	}
 
+	@Override
+	public ArrayList<Board> selectListC(String bCategoryNo, int cpi) {
+		// TODO Auto-generated method stub
+		return cDao.selectListC(bCategoryNo, cpi);
+	}
+
 
 
 	

@@ -47,6 +47,13 @@
         ORDER BY BOARD_CREATE_DATE DESC
 	</select>
 	
+	<select id="selectListC" parameterType="map" resultMap="boardResultSet">
+	 	SELECT * FROM BOARD
+		JOIN MEMBER USING (MEMBER_NO)
+		WHERE B_CATEGORY_NO='BC00004'
+        ORDER BY BOARD_CREATE_DATE DESC
+	</select>
+	
 	<!-- 상세 게시물 조회 -->
 	<select id="selectOne" parameterType="hashmap" resultMap="boardResultSet">
 		SELECT A.* , B.MEMBER_NICKNAME
