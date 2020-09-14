@@ -80,10 +80,10 @@
                     <tr>
                         <th>그루밍 이름</th>
                         <th>그루밍 소개</th>
-                        <th>그룹 분류</th>
-                        <th>그룹 인원</th>
-                        <th>스케줄 활동일</th>
-                        <th>커뮤니티 활동일</th>
+                        <th style="width:100px;">그룹 분류</th>
+                        <th style="width:80px;">그룹 인원</th>
+                        <th style="width:100px;">스케줄 활동일</th>
+                        <th style="width:100px;">커뮤니티 활동일</th>
                         <th>활성/비활성</th>
                     </tr>
                 </thead>

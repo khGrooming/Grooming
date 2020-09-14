@@ -430,7 +430,7 @@
 	
 	<delete id="DeleteCafeInfo" parameterType="CafeInfo">
 		DELETE FROM CAFEPRICE
-		WHERE C_PRICE_NO = #{cPriceNo}
+		WHERE C_PRICE_NO = #{cPriceNo} AND C_ROOM_NAME = #{cRoomName}
 	</delete>
 	
 	<update id="careerConfirm" parameterType="MentoManageView">

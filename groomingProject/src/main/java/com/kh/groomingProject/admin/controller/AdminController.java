@@ -158,10 +158,6 @@ public class AdminController {
 		ArrayList<MentoManageView> mentoList = adminService.selectmentoList(mNo);
 		ArrayList<MentoManageView> spareList = adminService.selectSpareMentoList(sNo);
 
-		System.out.println("listCount : "+listCount);
-		System.out.println("mNo : "+mNo);
-		System.out.println("mentoList : "+mentoList);
-		
 		mv.addObject("pi", pi);
 		mv.addObject("spi", spi);
 		
@@ -184,7 +180,6 @@ public class AdminController {
 		str.put("day", day);
 		str.put("groomingName", groomingName);
 		
-		System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -195,9 +190,7 @@ public class AdminController {
 		AdminPageInfo pi = getPageInfo(currentPage, gListCount);
 		
 		ArrayList<GroomingManageView> glist = adminService.selectGroomingList(pi, str);
-		
-		System.out.println("glist : "+glist);
-		
+
 		mv.addObject("category", category);
 		mv.addObject("day", day);
 		mv.addObject("groomingName", groomingName);
@@ -354,16 +347,19 @@ public class AdminController {
 		Map str = new HashMap();
 		str.put("name", name);
 		str.put("local", local);
-		
+		System.out.println("cafe : "+cafe);
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
-
+		
+		if(cafe.getcPriceNo() != null && cafe.getcPriceNo() != "") {
+			int cPriceDel = adminService.DeleteCafeInfo(cafe);
+		}
+		
 		if(!file.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(file, request);
-
 			cafe.setCafeImg(renameFileName);
 		}
 		
@@ -380,22 +376,8 @@ public class AdminController {
 			mv.setViewName("admin/cafeManage");
 			
 			return mv;
-		}else if(result == 0) {
-			System.out.println("cafeDelete : "+cafe);
-			if(cafe.getcPriceNo() != null && cafe.getcPriceNo() != "") {
-				int cPriceDel = adminService.DeleteCafeInfo(cafe);
-			}
-			int cListCount = studyCafeService.selectcafeCount(str);
-			
-			AdminPageInfo pi = getPageInfo(currentPage, cListCount);
-			ArrayList<CafeInfo> cafeList = studyCafeService.selectCafeList(pi,str);
-			
-			mv.addObject("pi", pi);
-			mv.addObject("cafeList", cafeList);
-			mv.setViewName("admin/cafeManage");
-			
-			return mv;
-		}else {
+		
+		}else{
 			throw new AdminException("카페 정보 변경 실패!");
 		}
 	}

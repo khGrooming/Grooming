@@ -175,13 +175,14 @@
 					$cRoomHeadCount = data[j].cRoomHeadCount;
 					
 					$infoCheck.append("<input class='modalInfo' name='cafeNo' type='hidden' value='"+$cafeNo+"'>");
+					$infoCheck.append("<input class='modalInfo' clss='cPriceNo"+j+"' name='cPriceNo' type='hidden' value='"+$cPriceNo+"'>");
 					$infoCheck.append("<labe>카페 이름 </label><input class='modalInfo' name='cafeName' type='text' value='"+$cafeName+"'><br><br>");
 					$infoCheck.append("<labe>카페 소개 </label><textarea name='cafeContent' class='modalInfo'>"+$cafeContent+"</textarea><br><br>");
 					$infoCheck.append("<labe>카페 연락처 </label><input class='modalInfo' name='cafePhone' type='text' value='"+$cafePhone+"'><br><br>");
 					$infoCheck.append("<labe>카페 주소 </label><input class='modalInfo' name='cafeAddress' type='text' value='"+$cafeAddress+"'><br><br>");
 					$infoCheck.append("<label>카페 이미지</label>");
 					$infoCheck.append("<div id='image_container'><img src='${contextPath }/resources/views/images/cafeImage/"+data[j].cafeImg+"' class='thumbnail'></div>");
-					$infoCheck.append("<input type='file' name='uploadFile' id='image' accept='image/*' onchange='setThumbnail(event);'>");
+					$infoCheck.append("<input type='file' name='uploadFile' id='image' accept='image/*' onchange='setThumbnail(event);' value='"+data[j].cafeImg+"'>");
 					$infoCheck.append("<labe>카페 룸 이름 </label><input class='modalInfo' name='cRoomName' type='text' value='"+$cRoomName+"'><br><br>");
 					$infoCheck.append("<labe>카페 이용 시간 </label><input class='modalInfo' name='cRoomAvailableTime' type='text' value='"+$cRoomAvailableTime+"'><br><br>");
 					$infoCheck.append("<labe>카페 최소 예약 시간 </label><input class='modalInfo' name='cRoomTime' type='text' value='"+$cRoomTime+"'><br><br>");
@@ -196,6 +197,7 @@
 					}
 					$infoCheck.append("<br><button type='button' onclick='roomInsert("+i+");' class='pop_bt' style='font-size: 13pt;'>룸 추가</button>");
 					$infoCheck.append("&nbsp;<button type='submit' onclick='roomDelete("+j+");' class='pop_bt' style='font-size: 13pt;'>룸 삭제</button>");
+					
 				},
 				error:function(data){
 					console.log("실패!");
@@ -224,7 +226,7 @@
 		
 		 function searchCafeName(){
 				$name = $("#searchName").val();
-
+				
 				$.ajax({
 					url:"cafeName.do",
 					type:"post",
@@ -261,6 +263,10 @@
 				})
 			}
 		 
+		 function roomDelete(j){
+			 $(".cPriceNo"+j).html("");
+		 }
+		 
 		 function roomInsert(i){
 			 $("#changeCafe").css("display","none");
 			 $("#insertCafe").css("display","block");
@@ -289,6 +295,7 @@
 						$insertInfo.append("<labe>카페 주소 </label><input class='modalInfo' name='cafeAddress' type='text' value='"+$cafeAddress+"'><br><br>");
 						$insertInfo.append("<label>카페 이미지</label>");
 						$insertInfo.append("<div id='image_container'><img src='${contextPath }/resources/views/images/cafeImage/"+data[0].cafeImg+"' class='thumbnail'></div>");
+						$infoCheck.append("<input type='file' name='uploadFile' id='image' accept='image/*' onchange='setThumbnail(event);'>");
 					},
 					error:function(data){
 						console.log("실패!");
