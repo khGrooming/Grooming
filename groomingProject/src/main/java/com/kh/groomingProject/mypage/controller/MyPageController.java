@@ -655,32 +655,7 @@ public class MyPageController {
 		return "mypage/mpgrooming";
 	}
 	
-	//임시저장 페이지 이동 및 데이터 불러오기
-	@RequestMapping("ginsertTemp.do")
-	public String groomingInsertHistory(HttpSession session) {
-		String mNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		String TempGno = mpService.selectTempGroomingNo(mNo);
-		
-		Grooming groomingTemp = mpService.selectGroomingTemp(mNo);
-		String str = "";
-		
-		if(groomingTemp != null){
-			ArrayList<Tag> tlist = tagService.selectGtagList(TempGno);
-		
-			if(tlist != null) {
-				for (int i = 0; i < tlist.size(); i++) {
-					str += tlist.get(i).getTagName();
-					if ((i + 1) < tlist.size()) {
-						str += ',';
-					}
-				}
-			}
-		
-		}
-		session.setAttribute("grooming",groomingTemp);
-		session.setAttribute("tlist", str);
-		return "mypage/ginsertTemp";
-	}
+
 	
 	@RequestMapping("mypagePoint.do")
 	public ModelAndView myPagePoint(ModelAndView mv,HttpSession session) {
