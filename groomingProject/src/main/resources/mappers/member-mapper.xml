@@ -27,6 +27,7 @@
 		<result property="sanctionsSDate" column="SANCTIONS_S_DATE"/>
 		<result property="sanctionsFDate" column="SANCTIONS_F_DATE"/>
 		<result property="sanctionsContent" column="SANCTIONS_CONTENT"/>
+		<result property="sanctionsDDay" column="SANCTIONS_DDAY"/>
 	</resultMap>
 
 	<insert id="insertMember" parameterType="Member">
@@ -181,7 +182,9 @@
 			,M.MEMBER_NO
 			,SANCTIONS_S_DATE
 			,SANCTIONS_F_DATE
-			,SANCTIONS_CONTENT FROM MEMBER M
+			,SANCTIONS_CONTENT
+			, (SYSDATE - SANCTIONS_F_DATE) SANCTIONS_DDAY
+		FROM MEMBER M
 		JOIN (SELECT SANCTIONS_NO,MEMBER_NO,SANCTIONS_S_DATE
 		    ,SANCTIONS_F_DATE,SANCTIONS_CONTENT
 		    FROM SANCTIONS ORDER BY SANCTIONS_F_DATE DESC) S

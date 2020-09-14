@@ -14,28 +14,21 @@ public class MemberSanctions implements Serializable {
 	private Timestamp sanctionsSDate;	// 제재 일
 	private Timestamp sanctionsFDate;	// 제재 종료일
 	private String sanctionsContent;	// 제재 내용
+	private Double sanctionsDDay;	// 제재 D-Day
 	private String loginSatatus;	// 로그인 상태
 
 	public MemberSanctions() {
 		super();
 	}
 	public MemberSanctions(String sanctionsNo, String memberNo, Timestamp sanctionsSDate, Timestamp sanctionsFDate,
-			String sanctionsContent) {
+			String sanctionsContent, Double sanctionsDDay, String loginSatatus) {
 		super();
 		this.sanctionsNo = sanctionsNo;
 		this.memberNo = memberNo;
 		this.sanctionsSDate = sanctionsSDate;
 		this.sanctionsFDate = sanctionsFDate;
 		this.sanctionsContent = sanctionsContent;
-	}
-	public MemberSanctions(String sanctionsNo, String memberNo, Timestamp sanctionsSDate, Timestamp sanctionsFDate,
-			String sanctionsContent, String loginSatatus) {
-		super();
-		this.sanctionsNo = sanctionsNo;
-		this.memberNo = memberNo;
-		this.sanctionsSDate = sanctionsSDate;
-		this.sanctionsFDate = sanctionsFDate;
-		this.sanctionsContent = sanctionsContent;
+		this.sanctionsDDay = sanctionsDDay;
 		this.loginSatatus = loginSatatus;
 	}
 	public String getSanctionsNo() {
@@ -68,6 +61,12 @@ public class MemberSanctions implements Serializable {
 	public void setSanctionsContent(String sanctionsContent) {
 		this.sanctionsContent = sanctionsContent;
 	}
+	public Double getSanctionsDDay() {
+		return sanctionsDDay;
+	}
+	public void setSanctionsDDay(Double sanctionsDDay) {
+		this.sanctionsDDay = sanctionsDDay;
+	}
 	public String getLoginSatatus() {
 		return loginSatatus;
 	}
@@ -81,7 +80,7 @@ public class MemberSanctions implements Serializable {
 	public String toString() {
 		return "MemberSanctions [sanctionsNo=" + sanctionsNo + ", memberNo=" + memberNo + ", sanctionsSDate="
 				+ sanctionsSDate + ", sanctionsFDate=" + sanctionsFDate + ", sanctionsContent=" + sanctionsContent
-				+ ", loginSatatus=" + loginSatatus + "]";
+				+ ", sanctionsDDay=" + sanctionsDDay + ", loginSatatus=" + loginSatatus + "]";
 	}
 
 }
