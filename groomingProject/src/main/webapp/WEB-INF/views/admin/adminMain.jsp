@@ -102,6 +102,11 @@
             <br clear="both">
             <br><br>
             <div class="graph">
+            	<span class="visitLbl Lbl">포인트 충전</span>
+            	<span class="userLbl Lbl">회원가입</span>
+            	<span class="groupLbl Lbl">그룹 수</span>
+            	<span class="boardLbl Lbl">게시글 수</span>
+            	
                 <canvas id="myLineChart" class="chart" width="800" height="400"></canvas>
             </div>
             <br><br>
