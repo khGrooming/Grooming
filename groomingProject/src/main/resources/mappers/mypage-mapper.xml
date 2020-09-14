@@ -442,9 +442,9 @@
 	
 	<select id="appv2listCount" parameterType="string" resultType="_int">
 	SELECT COUNT(*)
-FROM GROOMING_APPLICANT
-WHERE MEMBER_NO =#{mNo}
-	
+	FROM GROOMING_APPLICANT
+	WHERE MEMBER_NO =#{mNo}
+		
 	</select>
 
 </mapper>

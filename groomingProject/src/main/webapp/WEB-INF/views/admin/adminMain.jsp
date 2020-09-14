@@ -17,6 +17,11 @@
     <style>
         .statistics{width:150px; height:150px; background-color:antiquewhite; border-radius:50%;display:inline-block;margin-top: 50px; padding:35px;}
         .visit, .user, .group, .board{margin-left:50px;}
+        .Lbl{width: 100px; text-align: center; display: inline;}
+        .visitLbl{background-color:rgba(0,255,255,0.2);}
+		.userLbl{background-color:rgba(0,0,255,0.2);}
+		.groupLbl{background-color:rgba(0,255,0,0.2);}
+		.boardLbl{background-color:rgba(255,0,0,0.2);}
         .statisticsMain, .member, .grooming, .declaration{height:100px;background:chartreuse;}
         
         .sideMenu{/* background-color:blue; */ border: thin solid lightgray; border-radius:0.1rem;font-size:large;}

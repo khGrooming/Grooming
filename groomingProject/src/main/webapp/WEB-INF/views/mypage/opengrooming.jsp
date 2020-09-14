@@ -276,6 +276,7 @@
 								<c:set var="card_dDay_text" value="D-${g.groomingDday }"/>
 							</c:otherwise>
  						</c:choose> 
+						
 					</div>
 					<!-- 그룹 본문 -->
 					<div class="card_body">
