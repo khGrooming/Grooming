@@ -354,6 +354,10 @@
 				}
 					j++;
 		    }
+		    
+		    function roomDelete(j){
+		          $(".cPriceNo"+j).html("");
+		       }
 	</script>
 </body>
 </html>
