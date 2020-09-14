@@ -96,11 +96,10 @@ public class MyPageController {
 		if(memberPoint==0) {
 			System.out.println("MyPageView메소드의 memberPoint:"+memberPoint);
 			profileInfo.setNowPoint("0");
-		}else {
-			String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
-			profileInfo.setNowPoint(memberPoint2);
-		}
-		
+		   }else {
+		         String memberPoint2 = Integer.toString( mpService.selectPoint2(mNo));
+		         profileInfo.setNowPoint(memberPoint2);
+		      }
 		
 		specSelect(request, mNo);
 		mentorSelect(request, mNo);

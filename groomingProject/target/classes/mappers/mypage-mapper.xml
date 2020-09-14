@@ -193,12 +193,11 @@
 		FROM POINT
 		WHERE MEMBER_NO=#{mNo}
 	</select>
-	<select id="selectPoint2" parameterType="string" resultType="_int">
-		SELECT SUM(ADD_POINT)AS NOWPOINT
-		FROM POINT 
-		WHERE MEMBER_NO=#{mNo}
-	</select>
-
+<select id="selectPoint2" parameterType="string" resultType="_int">
+      SELECT NVL(SUM(ADD_POINT),0)AS NOWPOINT
+      FROM POINT 
+      WHERE MEMBER_NO=#{mNo}
+   </select>
 	<select id="selectSpecList" parameterType="string" resultMap="SpecSet"> 
 		SELECT S.SPEC_NO, SC.SPEC_C_NAME, S.SPEC_NAME,S.SPEC_FILENAME,S.MEMBER_NO, S.SPEC_CONFIRM
 		FROM SPEC S
