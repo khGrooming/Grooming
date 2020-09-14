@@ -181,6 +181,11 @@
 				}
 			})
 		})
+		$("#communitySearch").keyup(function(e){
+			if(e.keyCode == 13){
+				search();
+			}
+		});
 	</script>
 	
 <!-- Optional JavaScript -->
