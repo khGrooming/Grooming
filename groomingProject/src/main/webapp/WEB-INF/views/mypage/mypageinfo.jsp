@@ -231,7 +231,6 @@ section {
                     <li><a href="opengrooming.do">개설한 스터디</a></li>
                     <li><a href="GHeart.do">찜목록</a></li>
                     <li><a href="gApplicant.do">신청내역</a></li>
-                    <li><a href="ginsertTemp.do">작성내역</a></li>
                 </ul>
             </li>
              <li>
