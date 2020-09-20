@@ -654,7 +654,7 @@ body{ background-color: #f2f2f2; }
 	var page = 1;
 	var pageloading = true;
 	$(function() {
-		console.log("메인 페이지");
+		//console.log("메인 페이지");
 	});
 	
 	// 커뮤니티 디테일 페이지 이동
@@ -696,7 +696,7 @@ body{ background-color: #f2f2f2; }
 			url:"addAllGroomingList.do",
 			data:{page:page},
 			success:function(data){
-				console.log("그루밍 가져오기 결과 : " + data.length);
+				//console.log("그루밍 가져오기 결과 : " + data.length);
 				// 그루밍 내용 추가
 				loadGrooming(data);
 			},
@@ -711,7 +711,7 @@ body{ background-color: #f2f2f2; }
 	function loadGrooming(data) {
 		// 그루밍 내용 추가
 		if(data.length > 0) {
-			console.log("그루밍 리스트 추가");
+			//console.log("그루밍 리스트 추가");
 	
 			for(var i in data){
 				var card_dDay_color = "card_dDay_black";
@@ -792,7 +792,7 @@ body{ background-color: #f2f2f2; }
 
 			}
 		} else {
-			console.log("내용 없음");
+			//console.log("내용 없음");
 		}
 		pageloading = true;
 	}

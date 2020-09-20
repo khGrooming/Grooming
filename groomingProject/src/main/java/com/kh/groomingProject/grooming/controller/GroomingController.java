@@ -92,7 +92,7 @@ public class GroomingController {
 	
 		
 		ArrayList<HomeGrooming> gAList = getAllGroomingList(currentPage);
-		System.out.println("나 gAList야 :" +gAList);
+		//System.out.println("나 gAList야 :" +gAList);
 		mv.addObject("gAList",gAList).setViewName("grooming/groomingMain");
 		return mv;
 	}
@@ -103,7 +103,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	
 	int listCount = homeService.getGListCount();
 
-	System.out.println("전체 그루밍 : " + listCount);
+	//System.out.println("전체 그루밍 : " + listCount);
 	
 	int boardLimit = 8;
 
@@ -137,7 +137,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 
 		ArrayList<Grooming> glist = gService.selectMentorList();
 
-		System.out.println("그루밍 멘토 : " + glist);
+		//System.out.println("그루밍 멘토 : " + glist);
 		
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //		gson.toJson(glist, response.getWriter());
@@ -151,7 +151,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 
 		ArrayList<Grooming> glist = gService.selectMoneyList();
 		
-		System.out.println("그루밍 멘토 : " + glist);
+		//System.out.println("그루밍 멘토 : " + glist);
 		
 //		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 //		gson.toJson(glist, response.getWriter());
@@ -178,7 +178,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		
 		ArrayList<Grooming> glist = gService.groomingSearch(gs);
 
-		System.out.println("검색 내용 " + glist);
+		//System.out.println("검색 내용 " + glist);
 		
 //		System.out.println("gSearchWriter // search : " + search);
 //		System.out.println("gSearchWriter // keyword : " + keyword);
@@ -300,7 +300,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			currentPage = page;
 		}
 		
-		System.out.println(result);
+		//System.out.println(result);
 		if (result > 0) {
 			Grooming grooming = gService.selectGrooming(groomingNo);
 	
@@ -356,7 +356,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	@RequestMapping("gaccept.do")
 	@ResponseBody
 	public String groomingAccept(String applyNo, String groomingNo,String money,String groomingType,String groomingTitle) {
-		System.out.println(applyNo);
+		//System.out.println(applyNo);
 		int result = gService.selectApplyOne(applyNo);
 		int result1 = gService.addGroomingP(groomingNo);
 
@@ -378,7 +378,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		map1.put("memberNo", memberNo);
 		map1.put("money", tmoney);
 
-		System.out.println("나 map1 : " +map1);
+		//System.out.println("나 map1 : " +map1);
 		
 		int result3 = gService.addPointMember(map1);
 		
@@ -390,20 +390,20 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		map2.put("money", tmoney);
 		
 		int result4 = 0;
-		System.out.println("groomingType : " + groomingType);
-		System.out.println("tmoney :" + tmoney);
+		//System.out.println("groomingType : " + groomingType);
+		//System.out.println("tmoney :" + tmoney);
 		
 		// 알림
 		String message = groomingTitle+"에서 신청 수락 되었습니다.축하해 뿡뿡";
         MemberAlert memberAlert = new MemberAlert(message, memberEmail);
-        System.out.println("수락되었습니다 ㅊㅋㅊㅋ : " + memberAlert);
+        //System.out.println("수락되었습니다 ㅊㅋㅊㅋ : " + memberAlert);
         int resultAlertJoin = alertService.insertAlert(memberAlert);
         
         
 		if(groomingType.equals("멘토")) {
 			 result4 = gService.addMentorPoint(map2);
 		}
-		System.out.println("result4 : " + result4);
+		//System.out.println("result4 : " + result4);
 		if (result > 0 && result1 > 0 && result2 > 0 && result3 > 0 && result4 >= 0) {
 			return "success";
 		} else {
@@ -415,7 +415,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	@RequestMapping("greject.do")
 	@ResponseBody
 	public String groomingReject(String applyNo,String groomingTitle) {
-		System.out.println(applyNo);
+		//System.out.println(applyNo);
 		
 		String memberEmail = gService.findAppMemberEmail(applyNo);
 		int result = gService.selectRejectApp(applyNo);
@@ -423,7 +423,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		// 알림
 		String message = groomingTitle+"에서 신청 거절 되었습니다. ㅠㅠㅠ";
 		MemberAlert memberAlert = new MemberAlert(message, memberEmail);
-		System.out.println("거절됐다 이유 찾아라 : " + memberAlert);
+		//System.out.println("거절됐다 이유 찾아라 : " + memberAlert);
 		int resultAlertJoin = alertService.insertAlert(memberAlert);
 		
 		if (result > 0) {
@@ -438,7 +438,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	@RequestMapping("groomingUpdate.do")
 	public ModelAndView groomingUpdateView(ModelAndView mv, String groomingNo,@RequestParam("page") Integer page, String memberNo) {
 		ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
-//		System.out.println("나 tlist야" +tlist);
+//		//System.out.println("나 tlist야" +tlist);
 		Grooming grooming = gService.selectGrooming(groomingNo);
 		String str = "";
 		for (int i = 0; i < tlist.size(); i++) {
@@ -461,14 +461,14 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	@RequestMapping("gUpdate.do")
 	public ModelAndView groomingUpdate(HttpServletRequest request,String money1, String tagName, ModelAndView mv, String groomingNo,String memberNo,
 			Grooming g, @RequestParam(value = "uploadFile", required = false) MultipartFile file,@RequestParam("page") Integer page) {
-		System.out.println("money1 : " + money1);
+		//System.out.println("money1 : " + money1);
 		if(money1.equals("x")) {
 			g.setMoney("0");
 		}
 		String renameFileName = "";
 		// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
 		// 그럼 그걸 가지고 기존의 파일을 삭제하자
-		System.out.println(g.getGroomingImg());
+		//System.out.println(g.getGroomingImg());
 		if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
 			if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
 				deleteFile(g.getGroomingImg(), request);
@@ -486,7 +486,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		}
 
 		g.setGroomingNo(groomingNo);
-		System.out.println("수정controller" + g);
+		//System.out.println("수정controller" + g);
 
 		int result = gService.updateGrooming(g);
 
@@ -517,7 +517,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			}
 		}
 
-		System.out.println("나 수정 됬어요~" + result);
+		//System.out.println("나 수정 됬어요~" + result);
 		Grooming grooming = gService.selectGrooming(groomingNo);
 		
 		
@@ -588,7 +588,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 	// 그루밍 신청서 작성
 	@RequestMapping("applyContent.do")
 	public ModelAndView applyContent(ModelAndView mv, GroomingApplicant ga,String money,String groomingNo, String memberNo) {
-		System.out.println("나 ga" + ga);
+		//System.out.println("나 ga" + ga);
 		int result = gService.applyContent(ga);
 		
 		if (result > 0) {
@@ -730,7 +730,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 //		 Map<Object, String> map = new HashMap<> ();
 //		 map.put(g, "g");
 //		g.setMemberNo(memberNo);
-		System.out.println("나 save.do야");
+		//System.out.println("나 save.do야");
 		if (!file.getOriginalFilename().equals("")) {
 			String renameFileName = saveFile(file, request);
 
@@ -802,7 +802,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		Member gMemberNo = gService.selectMember(groomingNo);
 		for (int i = 0; i < memberList.size(); i++) {
 			memberList.get(i).setgMemberNo(gMemberNo.getMemberNo());
-			System.out.println(gMemberNo.getMemberNo());
+			//System.out.println(gMemberNo.getMemberNo());
 		}
 
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -833,7 +833,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		if (page != null) {
 			currentPage = page;
 		}
-		System.out.println("나 현재 페이지야 : " + currentPage);
+		//System.out.println("나 현재 페이지야 : " + currentPage);
 
 		int listCount = gService.getListCount(groomingNo);
 		GroupPageInfo pi = getPageInfo(currentPage, listCount);
@@ -894,7 +894,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		if (page != null) {
 			currentPage = page;
 		}
-		System.out.println("나 현재 페이지야 : " + currentPage);
+		//System.out.println("나 현재 페이지야 : " + currentPage);
 
 		int listCount = gService.getListCount(groomingNo);
 		GroupPageInfo pi = getPageInfo(currentPage, listCount);
@@ -991,7 +991,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		  String renameFileName = "";
 			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
 			// 그럼 그걸 가지고 기존의 파일을 삭제하자
-			System.out.println(g.getgBoardImg());
+			//System.out.println(g.getgBoardImg());
 			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
 				if (g.getgBoardImg() != null) { // 기존의 파일이 있느냐
 					deleteFile(g.getgBoardImg(), request);
@@ -1024,7 +1024,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 
 			Declaration declaration = declarationService.selectGroupDeclare(map);
 		
-			System.out.println("나 수정 됬어요~" + result);
+			//System.out.println("나 수정 됬어요~" + result);
 			if (result > 0) {
 				GroupBoard gboard = gService.selectGBoard(gBoardNo);
 				if (gboard != null) {
@@ -1061,7 +1061,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			map.put("groomingNo",groomingNo);
 			
 			String gMemberNo = gService.selectGMemberNo(map);
-			System.out.println("나 gMemberNo야" +gMemberNo);
+			//System.out.println("나 gMemberNo야" +gMemberNo);
 			g.setgMemberNo(gMemberNo);
 			int result = gService.addReply(g);
 			
@@ -1081,7 +1081,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			String groomingNo = gService.getGroomingNo(memberNo);
 			
 			ArrayList<Tag> tlist = tagService.selectGtagList(groomingNo);
-//			System.out.println("나 tlist야" +tlist);
+//			//System.out.println("나 tlist야" +tlist);
 			Grooming grooming = gService.selectGrooming(groomingNo);
 			Mentor m = gService.selectMentor(memberNo);
 			// 해쉬태그값을 안적었을 수도 있다.
@@ -1111,7 +1111,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			String renameFileName = "";
 			// 기존의 파일이 input hidden으로 와서 매개변수의 Board 객체에 담김
 			// 그럼 그걸 가지고 기존의 파일을 삭제하자
-			System.out.println(g.getGroomingImg());
+			//System.out.println(g.getGroomingImg());
 			if (!file.getOriginalFilename().equals("")) { // 새로 올린 파일이 있는냐
 				if (g.getGroomingImg() != null) { // 기존의 파일이 있느냐
 					deleteFile(g.getGroomingImg(), request);
@@ -1131,7 +1131,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			}
 
 			g.setGroomingNo(groomingNo);
-			System.out.println("수정controller" + g);
+			//System.out.println("수정controller" + g);
 
 			int result = gService.updateSaveGrooming(g);
 
@@ -1162,7 +1162,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				}
 			}
 			
-			System.out.println("나 등록 됬어요~" + result +result1+ result2);
+			//System.out.println("나 등록 됬어요~" + result +result1+ result2);
 			if (result > 0 && result1 > 0) {
 				mv.setViewName("redirect:groomingMain.do");
 
@@ -1198,7 +1198,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		public ModelAndView calendar(ModelAndView mv, String groomingNo,String memberNo) throws ParseException {
 
 			Grooming grooming = gService.selectGrooming(groomingNo);
-			System.out.println("groomingNo:" + groomingNo);
+			//System.out.println("groomingNo:" + groomingNo);
 		
 			
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
@@ -1208,14 +1208,14 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				  str += member.get(i).getMemberNickName();
 				  if((i+1)<member.size()) { str +=','; }
 			  }
-			  System.out.println("memberNo: " + memberNo);
+			  //System.out.println("memberNo: " + memberNo);
 			  String checkLate = "";
 			  int checkY = 0;
 			  int checkL = 0;
 			  int checkN = 0;
 			  int difDay = 0;
 			  difDay = gService.getDifDate(groomingNo);
-			  System.out.println("difDay : " + difDay);
+			  //System.out.println("difDay : " + difDay);
 			
 			  
 			  String memberNickName = gService.getMemberNickName(memberNo) ;
@@ -1234,7 +1234,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				 checkL = gService.getCheckL(hashmap);
 				 checkN = gService.getCheckN(hashmap);
 				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
-				 System.out.println("checkLate: " + checkLate);
+				 //System.out.println("checkLate: " + checkLate);
 				 checkN = checkN + checkL/2;
 				 checkL = checkL%2;
 //			  for(int i=0; i<member.size(); i++) {
@@ -1301,7 +1301,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		public ModelAndView insertCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus)  {
 
 			Grooming grooming = gService.selectGrooming(groomingNo);
-			System.out.println("groomingNo:" + groomingNo);
+			//System.out.println("groomingNo:" + groomingNo);
 		
 			
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
@@ -1340,9 +1340,9 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			}
 	
 			
-			System.out.println("나 memberNickName : " + memberNickName);
-			System.out.println("나 groomingNo : " + groomingNo);
-			System.out.println("나 gCheckStatus : " + gCheckStatus);
+			//System.out.println("나 memberNickName : " + memberNickName);
+			//System.out.println("나 groomingNo : " + groomingNo);
+			//System.out.println("나 gCheckStatus : " + gCheckStatus);
 			
 			
 			if (result > 0) {
@@ -1372,7 +1372,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		 
 			
 			ArrayList<GCheck> g = gService.confirmCheck(map); 
-			System.out.println("나 check확인하는 g야" + g); 
+			//System.out.println("나 check확인하는 g야" + g); 
 		
 			if(!g.isEmpty()) {
 				return "success"; 
@@ -1387,7 +1387,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 		public ModelAndView updateCheck(ModelAndView mv,GCheck g,String groomingNo, String memberNickName,String gCheckStatus) {
 			
 			Grooming grooming = gService.selectGrooming(groomingNo);
-			System.out.println("groomingNo:" + groomingNo);
+			//System.out.println("groomingNo:" + groomingNo);
 		
 			
 			ArrayList<Member> member = mService.GroupMList(groomingNo);
@@ -1448,7 +1448,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 			  int checkN = 0;
 			  int difDay = 0;
 			  difDay = gService.getDifDate(groomingNo);
-			  System.out.println("difDay : " + difDay);
+			  //System.out.println("difDay : " + difDay);
 			
 			  
 			  String memberNickName = gService.getMemberNickName(memberNo) ;
@@ -1467,7 +1467,7 @@ private ArrayList<HomeGrooming> getAllGroomingList(int currentPage) {
 				 checkL = gService.getCheckL(hashmap);
 				 checkN = gService.getCheckN(hashmap);
 				 checkLate = String.format("%.2f", (double)((checkY+checkL -(checkL/2.0))/difDay) * 100); 
-				 System.out.println("checkLate: " + checkLate);
+				 //System.out.println("checkLate: " + checkLate);
 				 checkN = checkN + checkL/2;
 				 checkL = checkL%2;
 				 GCheck g = new GCheck(memberNickName,checkLate,checkL,checkN,checkY,difDay);

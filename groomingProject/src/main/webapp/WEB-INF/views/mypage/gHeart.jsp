@@ -151,7 +151,7 @@ function deleteAction(){
 	    alert("삭제할 대상을 선택하세요.");
 	    return false;
 	  }
-	  console.log("### checkRow => {}"+checkA);
+	  //console.log("### checkRow => {}"+checkA);
 	 
 	  if(confirm("찜하기를 삭제 하시겠습니까?")){
 	    

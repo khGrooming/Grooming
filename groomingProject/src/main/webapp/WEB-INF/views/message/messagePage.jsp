@@ -595,7 +595,7 @@ section
 		let activeChat = "";
 	
 		$(function() {
-			console.log("채팅 페이지");
+			//console.log("채팅 페이지");
 			loadChatListData();
 			
 			// 테스트 중
@@ -603,7 +603,7 @@ section
 				loadChatListData();
 				
 				if($(".mesgs_header").find("input[type=hidden].header_memberNo").val() != ""){
-					console.log("인터벌 챗 가져오기");
+					//console.log("인터벌 챗 가져오기");
 					// 전송 값 변수 저장
 					var fromMemberNo = $(".mesgs_header").find("input[type=hidden].header_memberNo").val();
 					var toMemberNo = "${loginUser.memberNo }";
@@ -648,7 +648,7 @@ section
 				alert("다른 사용자의 닉네임을 입력해 주세요.");
 				return;
 			}
-			console.log("닉네임 검사 시작 ");
+			//console.log("닉네임 검사 시작 ");
 			memberNickName = $(".search_bar").val();
 			
 			$.ajax({
@@ -656,14 +656,14 @@ section
 				data:{memberNickName:memberNickName},
 				success:function(data){
 					if(data.fromMemberNo != null){
-						console.log(memberNickName + " 닉네임 사용자가 있습니다");
+						//console.log(memberNickName + " 닉네임 사용자가 있습니다");
 
 						// 채팅 리스트에 있으면 채팅리스트 활성화 + 데이터 가져오기
 						$(".memberNo").each(function() {
 							if(this.value == data.fromMemberNo){
 								$(".chat_list").removeClass("active");
-								console.log(this);
-								console.log(this.closest(".chat_list"));
+								//console.log(this);
+								//console.log(this.closest(".chat_list"));
 								$(this).closest(".chat_list").addClass("active");
 							}
 						});
@@ -706,7 +706,7 @@ section
 			var fromToChk = el.find("input[type=hidden].fromTo").val();
 			var fromMemberImg = el.find(".proFile_img").attr("src");
 
-			console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
+			//console.log("대화 회원 번호 : " + fromMemberNo + " / 닉네임 : " + fromMemberNickname + " / 사진경로 : " + fromMemberImg);
 
 			// 채팅창 해더값 입력
 			$(".mesgs_header input.header_memberNo").val(fromMemberNo);
@@ -719,8 +719,8 @@ section
 
 			el.find('.new_icon').css("display","none");
 
-			console.log("활성 챗 : " + activeChat);
-			console.log("fromToChk 챗 : " + fromToChk);
+			//console.log("활성 챗 : " + activeChat);
+			//console.log("fromToChk 챗 : " + fromToChk);
 
 			// 보내기만한 채팅방의 값을 변경해서 데이터 가져오기
 			if(fromToChk == "T"){
@@ -735,19 +735,19 @@ section
 
 		// 로드 채팅 리스트(ajax)
 		function loadChatListData() {
-			console.log("채팅 리스트 가져오기 시작");
+			//console.log("채팅 리스트 가져오기 시작");
 			var memberNo = "${loginUser.memberNo}";
 
 			$.ajax({
 				url:"loadChatList.do",
 				data:{memberNo:memberNo},
 				success:function(data){
-					console.log("채팅 리스트 불러오기 결과 : " + data.length);
+					//console.log("채팅 리스트 불러오기 결과 : " + data.length);
 					if(data.length > 0){
 						// 채팅 리스트 추가
 						loadChatList(data);
 					} else {
-						console.log("채팅 없음");
+						//console.log("채팅 없음");
 					}
 				},
 				error:function(request, status, errorData){
@@ -763,7 +763,7 @@ section
 			
 			// 채팅 리스트 추가
 			if(data.length > 0) {
-				console.log("채팅 리스트 추가");
+				//console.log("채팅 리스트 추가");
 				var memberNo = "${loginUser.memberNo}";
 				var today = new Date();
 				var year = today.getFullYear();
@@ -777,7 +777,7 @@ section
 			        month = "0" + month;
 			    }
 				
-				console.log("활성 채팅 확인 : " + activeChat);
+				//console.log("활성 채팅 확인 : " + activeChat);
 				
 				// 채팅 리스트 추가 반복문
 				for(var i in data){
@@ -878,7 +878,7 @@ section
 
 				}
 			} else {
-				console.log("내용 없음");
+				//console.log("내용 없음");
 			}
 		}
 
@@ -902,7 +902,7 @@ section
 		function sendMsg(){
 			// 채팅 조건 확인
 			if($.trim($(".write_msg").val()) == ""){
-				console.log("내용을 입력해 주세요.");
+				//console.log("내용을 입력해 주세요.");
 				return;
 			} if($(".mesgs_header").find("input[type=hidden].header_memberNo").val() == ""){
 				$(".search_bar").focus();
@@ -915,14 +915,14 @@ section
 			var toMemberNo = $(".mesgs_header").find("input[type=hidden].header_memberNo").val();
 			var messageContent = $(".write_msg").val();
 
-			console.log("[전송] " + fromMemberNo + "이 " + toMemberNo + "에게 "  + messageContent);
+			//console.log("[전송] " + fromMemberNo + "이 " + toMemberNo + "에게 "  + messageContent);
 
 			// 채팅 보내기
 			$.ajax({
 				url:"sendChat.do",
 				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo,messageContent:messageContent},
 				success:function(data){
-					console.log("채팅 보내기 결과 : " + data);
+					//console.log("채팅 보내기 결과 : " + data);
 					if(data == "success"){
 						$(".write_msg").val("");
 						// 채팅 내용 추가
@@ -946,7 +946,7 @@ section
 				url:"loadChat.do",
 				data:{fromMemberNo:fromMemberNo,toMemberNo:toMemberNo},
 				success:function(data){
-					console.log("채팅 대화 가져오기 결과 : " + data.length);
+					//console.log("채팅 대화 가져오기 결과 : " + data.length);
 					// 채팅 내용 추가
 					loadChat(data);
 				},
@@ -964,7 +964,7 @@ section
 
 			// 채팅 내용 추가
 			if(data.length > 0) {
-				console.log("채팅 내용 추가");
+				//console.log("채팅 내용 추가");
 				var memberNo = "${loginUser.memberNo}";
 				var messageDateTemp = "";
 
@@ -1028,7 +1028,7 @@ section
 				}
 
 			} else {
-				console.log("내용 없음");
+				//console.log("내용 없음");
 			}
 			
 			$(".mesgs_header_serviceIcon").css("display", "flex");

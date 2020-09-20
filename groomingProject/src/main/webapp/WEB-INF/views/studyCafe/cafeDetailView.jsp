@@ -7,7 +7,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
@@ -85,7 +87,7 @@
 					<c:forEach var="info" items="${info}" begin="0" end="0">
 						<h1>${info.cafeName}</h1>
 						<hr>
-						<img src="${contextPath}/resources/views/images/study.jpg" style="width:100%;">
+						<img src="${contextPath}/resources/views/images/cafeImage/${info.cafeImg}" style="width:100%;">
 						<hr>
 						<h2>상세 설명</h2>
 						<c:set var="content" value="${fn:split(info.cafeContent,'.')}" />
@@ -351,7 +353,7 @@
 				}
 				
 				for(var j in data){
-					console.log(data);
+					//console.log(data);
 					if(data[j].cReserSTime <= i && data[j].cReserETime > i && data[j].memberNo != '${loginUser.memberNo}'){
 						$timespan.css("background","grey");
 						$timespan.prop("class","none");
@@ -523,7 +525,7 @@
 			
 			$memberNo = '${loginUser.memberNo}';
 			$cReserNo = ${cReserNo eq null? null: cReserNo}
-			console.log($money[0])
+			//console.log($money[0])
 			$.ajax({
 				url:"checkPoint.do",
 				data:{money:$money[0],cReserNo:$cReserNo,memberNo:$memberNo},
@@ -564,7 +566,7 @@
 					
 				},
 				error:function(data){
-					console.log("실패!");
+					//console.log("실패!");
 				}
 			})
 			

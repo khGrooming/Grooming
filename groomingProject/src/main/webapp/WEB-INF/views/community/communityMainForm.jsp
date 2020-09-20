@@ -90,7 +90,7 @@
 						
 						for(var i = 0; i < data.length; i++){
 							var boardNo = "${boardNo}";
-							console.log(data[i].boardNo);
+							//console.log(data[i].boardNo);
 							var $boardTitle = $("<td>");
 							var $aTag = $("<a>").attr("href","communityDetailView.do?boardNo="+data[i].boardNo)
 												.text(data[i].boardTitle)

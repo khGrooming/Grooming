@@ -380,7 +380,7 @@ section .form_container .study .bootstrap-tagsinput .badge {
 							var result= confirm("등록하시겠습니까?");
 							if(result){
 								if(tagName == ""){
-									console.log("모든값을 작성해주세요!");
+									//console.log("모든값을 작성해주세요!");
 								}else{
 									$("form").submit();
 									
@@ -523,12 +523,12 @@ section .form_container .study .bootstrap-tagsinput .badge {
 				$("input:radio[name='money1']").on("click", function() {
 
 					if ($(this).val() == 'x') {
-						console.log("예치금 없앰");
+						//console.log("예치금 없앰");
 						
 						$(".money").attr('style', "display:none;");
 					}
 					if ($(this).val() == 'y') {
-						console.log("예치금 있음");
+						//console.log("예치금 있음");
 						$(".money").attr('style', "display:inline;");
 					}
 

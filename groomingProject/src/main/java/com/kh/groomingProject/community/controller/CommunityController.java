@@ -349,7 +349,7 @@ public class CommunityController {
       response.setContentType("application/json; charset=utf-8");
 
       ArrayList<Board> blist = cService.communitySearch(communitySearch);
-      System.out.println("검색해온 blist " + blist);
+      //System.out.println("검색해온 blist " + blist);
       Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
       gson.toJson(blist, response.getWriter());
    }
@@ -373,11 +373,11 @@ public class CommunityController {
    public ModelAndView communityFBSearch(ModelAndView mav, String communitySearch
          , @RequestParam(value="page", required=false) Integer page)
          throws JsonIOException, IOException {
-      System.out.println(" 검색 " + communitySearch);
+      //System.out.println(" 검색 " + communitySearch);
       
       int listCount4F = cService.getCommunityFBSearchCount(communitySearch);    // 검색 게시글 갯수
       
-      System.out.println(" 검색 페이지 " + listCount4F);
+      //System.out.println(" 검색 페이지 " + listCount4F);
       
       // 페이지 네이션 구간
       int fcp = 1;   // qna 게시판 글 현재 페이지
@@ -393,7 +393,7 @@ public class CommunityController {
       // 게시글 가져오기 
       ArrayList<Board> flist = cService.getCommunityFBSearch(fpi, communitySearch);
       
-      System.out.println("검색해온 blist " + flist);
+      //System.out.println("검색해온 blist " + flist);
       
       mav.addObject("flist", flist);
       mav.addObject("fpi", fpi);

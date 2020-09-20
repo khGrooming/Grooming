@@ -6,7 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
@@ -52,7 +55,7 @@
 					<th style="width: 10%">NO</th>
 					<th style="width: 15%">분류</th>
 					<th >내용</th>
-					<th style="width: 10%">채택</th>
+					<!-- <th style="width: 10%">채택</th> -->
 					<th style="width: 15%">작성일</th>
 				</tr>		
 		<c:if test="${!empty rlist }">
@@ -65,7 +68,7 @@
 					<td>${r.bCategoryNo }</td>
 					<td onclick="location.href='${mypageReply}'">${r.replyContent }</td>
 
-					<td>${r.replySelection }</td>
+					<%-- <td>${r.replySelection }</td> --%>
 					<td>${r.replyCreateDate }</td>
 				</tr>			
 			</c:forEach>

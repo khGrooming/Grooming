@@ -567,7 +567,7 @@
 		function mentoSManage(i){
 			$("#mentoSModal").css("display","block");
 			$memberNo = $(".mentoS"+i).val();
-			console.log($memberNo);
+			//console.log($memberNo);
 			$("#mentoSuccess").append("<input type='hidden' name='memberNo' value='"+$memberNo+"'>");
 		}
 
@@ -577,9 +577,9 @@
 			$file = $(".Mfile"+i).val();
 			$spec = $(".Mspec"+i).val();
 			
-			console.log("Mname : "+$name);
-			console.log("Mpass : "+$pass);
-			console.log("MspecNo : "+$spec);
+			//console.log("Mname : "+$name);
+			//console.log("Mpass : "+$pass);
+			//console.log("MspecNo : "+$spec);
 			
 			$("#careerModal").css("display","block");
 			
@@ -602,9 +602,9 @@
 			$file = $(".Sfile"+i).val();
 			$spec = $(".Sspec"+i).val();
 			
-			console.log("Sname : "+$name);
-			console.log("Spass : "+$pass);
-			console.log("SspecNo : "+$spec);
+			//console.log("Sname : "+$name);
+			//console.log("Spass : "+$pass);
+			//console.log("SspecNo : "+$spec);
 			
 			$("#careerModal").css("display","block");
 			

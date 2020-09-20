@@ -52,7 +52,7 @@ public class HomeDao {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		System.out.println("페이지 오프셋 : " + offset + " / 페이지 리밋 : " + pi.getBoardLimit());
+		//System.out.println("페이지 오프셋 : " + offset + " / 페이지 리밋 : " + pi.getBoardLimit());
 		return (ArrayList)sqlSessionTemplate.selectList("homeMapper.getGroomingList", null, rowBounds);
 	}
 

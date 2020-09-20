@@ -199,7 +199,7 @@
 					$infoCheck.append("&nbsp;<button type='submit' onclick='roomDelete("+j+");' class='pop_bt' style='font-size: 13pt;'>룸 삭제</button>");
 				},
 				error:function(data){
-					console.log("실패!");
+					//console.log("실패!");
 				}
 			})
 		}
@@ -265,9 +265,9 @@
 		 function roomInsert(i){
 			 $("#changeCafe").css("display","none");
 			 $("#insertCafe").css("display","block");
-			 console.log("insert i : "+i);
+			 //console.log("insert i : "+i);
 			 $cafeNo = $(".cafeNo"+i).val();
-			 console.log("insert $cafeNo : "+$cafeNo);
+			 //console.log("insert $cafeNo : "+$cafeNo);
 			 $insertInfo = $("#insertInfo");
 			 $insertInfo.html("");
 			 
@@ -277,7 +277,7 @@
 					type:"post",
 					dataType:"json",
 					success:function(data){
-						console.log(data);
+						//console.log(data);
 						$cafeName = data[0].cafeName;
 						$cafeContent = data[0].cafeContent;
 						$cafePhone = data[0].cafePhone;
@@ -292,7 +292,7 @@
 						$insertInfo.append("<div id='image_container'><img src='${contextPath }/resources/views/images/cafeImage/"+data[0].cafeImg+"' class='thumbnail'></div>");
 					},
 					error:function(data){
-						console.log("실패!");
+						//console.log("실패!");
 					}
 				})
 			}
@@ -302,7 +302,7 @@
 		    /*nextpageload function*/
 		    function next_load(){
 		    	$name = $("#searchName").val();
-
+				page++;
 	            $.ajax({
                     url:"cafeManageAjax.do",
                     data : {page:page, name:$name},
@@ -311,7 +311,7 @@
 						addCafeInfo(data);
 
 					},error:function(data){
-                        console.log("실패!");
+                        //console.log("실패!");
                     }
                 });
 		    }
@@ -336,12 +336,12 @@
 		    
 		    function addCafeInfo(data){
 		    	$searchView = $(".searchView");
-				console.log("data : "+data);
+				//console.log("data : "+data);
 				for(var i in data){
 					var j = 1;
 					$panel = $("<div class='panel panel-default'  onclick='openDetail("+(j+i)+", 0);'>");
 					$cafeNo = $('<input type="hidden" class="cafeNo'+(j+i)+'" value="'+data[i].cafeNo+'">');
-					console.log(data.cafeNo);
+					//console.log(data.cafeNo);
 					$panelH = $("<div class='panel-header'><img src='${contextPath}/resources/views/images/cafeImage/"+data[i].cafeImg+"' class='thumbnail'></div>");
 					$panelB = $('<div class="panel-body">'+data[i].cafeName+'</div>');
 					$panelF = $('<div class="panel-footer">'+data[i].cafeAddress+'</div>');

@@ -236,10 +236,10 @@ footer .modal .modal_footer button {
 		var hCategoryNo = $("#footer_qModal_cate option:selected").val();
 		var helpContent = $("#footer_qModal_content").val();
 		var memberNo = "${loginUser.memberNo }";
-		console.log(helpEmail);
-		console.log(hCategoryNo);
-		console.log(helpContent);
-		console.log(memberNo);
+		//console.log(helpEmail);
+		//console.log(hCategoryNo);
+		//console.log(helpContent);
+		//console.log(memberNo);
 		
 		if ($.trim($("#footer_qModal_content").val()) == "") {
 			alert("내용을 입력해 주세요.");
@@ -256,7 +256,7 @@ footer .modal .modal_footer button {
 				,hCategoryNo:hCategoryNo
 				,helpContent:helpContent},
 			success:function(data){
-				console.log("문의 전송 결과 : " + data)
+				//console.log("문의 전송 결과 : " + data)
 				if(data == "success"){
 					alert("문의가 전수 되었습니다.");
 				} else {

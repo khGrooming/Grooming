@@ -46,7 +46,7 @@ public class StudtyCafeController {
 		Map str = new HashMap();
 		str.put("name", name);
 		str.put("local", local);
-		System.out.println("str : "+str);
+		//System.out.println("str : "+str);
 		int currentPage = 1;
 		
 		if(page != null) {
@@ -59,7 +59,7 @@ public class StudtyCafeController {
 		ArrayList<CafeInfo> cafeList = new ArrayList<>();
 		
 		cafeList = studyCafeService.selectCafeList(pi, str);
-		System.out.println("cafeList : "+cafeList);
+		//System.out.println("cafeList : "+cafeList);
 		mv.addObject("cafeList", cafeList);
 		mv.setViewName("studyCafe/searchName");
 		

@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Grooming</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.servletContext.contextPath }/resources/views/images/grooming_logo(100x100).png">
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
@@ -292,7 +294,7 @@
 	    			                    (카카오페이, 페이코, 다날의 경우는 필요없음. PC와 마찬가지로 callback함수로 결과가 떨어짐) 
 	    			                    */
 	    			            }, function (rsp) {
-	    			                console.log(rsp);
+	    			                //console.log(rsp);
 	    			                if (rsp.success) {
 	    			                    var msg = '결제가 완료되었습니다.';
 	    			                    msg += '결제 금액 : ' + rsp.paid_amount;

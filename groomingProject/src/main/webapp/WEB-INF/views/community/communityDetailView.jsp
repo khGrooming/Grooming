@@ -27,7 +27,9 @@
         width: 70rem;
         margin: 0 auto;
     }
-    
+    .bCont {
+    	min-width: 100px;
+    }
 </style>
 <!-- -------------- style 부분------------- -->
 </head>
@@ -106,7 +108,7 @@
             		<td colspan="3">${board.boardTitle }</td>
         		</tr>  
         		<tr>
-            		<th class="success">글 내용</th>
+            		<th class="success bCont">글 내용</th>
             		<td colspan="3">${board.boardContent }</td>
         		</tr>
 				<c:url var="communityUpdateView" value="communityUpdateView.do">
@@ -218,7 +220,7 @@
 					
 					<script>
 						$(function(){
-							debugger;
+							//debugger;
 							$("#update${r.replyNo }").on("click",function(){
 								// 톱니바퀴 버튼 안의 "수정" 누르면 실행되는 구문
 								// 내가 누른 댓글 수정하기

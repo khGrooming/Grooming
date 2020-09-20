@@ -71,7 +71,7 @@ public class CommunityDao {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("reply", reply);
 		map.put("memberNo", member.getMemberNo());
-		System.out.println("dao " + reply);
+		//System.out.println("dao " + reply);
 		return sqlSessionTemplate.insert("communityMapper.replyInsert", map);
 	}
 

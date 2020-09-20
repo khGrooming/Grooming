@@ -520,7 +520,7 @@
          var loginUser = "";
          loginUser = "${sessionScope.loginUser}";
          if(loginUser != ""){
-            console.log("네비바 인터벌");
+            //console.log("네비바 인터벌");
             getUserAlert();
             getUserMessages();
 
@@ -548,7 +548,7 @@
             url:"getUserMessagesCount.do",
             data:{memberNo:memberNo},
             success:function(data){
-               console.log("메시지 카운트 : " + data);
+               //console.log("메시지 카운트 : " + data);
 
                if(data > 0 || data == '9+') {
                   // 알림 숫자 표시
@@ -573,13 +573,13 @@
                     el.parent().on('click', '.main_messages_body', function(event) {
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
-                        console.log("메시지가 없습니다.");
+                        //console.log("메시지가 없습니다.");
                         return;
                      }
 
                   var messageNo = el.find("input[type=hidden]").val();
 
-                     console.log("읽을 메시지 번호" + messageNo);
+                     //console.log("읽을 메시지 번호" + messageNo);
 
                      var memberNo = "${loginUser.memberNo}";
 
@@ -588,7 +588,7 @@
                         url:"readUserMessage.do",
                         data:{messageNo:messageNo,memberNo:memberNo},
                         success:function(data){
-                           console.log("메시지 읽음 결과 : " + data.length);
+                           //console.log("메시지 읽음 결과 : " + data.length);
                            refreshMessageBody(data);
                         },
                         error:function(request, status, errorData){
@@ -606,7 +606,7 @@
          $("div").remove(".mbody_container");
          // 메시지 내용 추가
          if(data.length > 0) {
-            console.log("메시지 추가");
+            //console.log("메시지 추가");
             for(var i in data){
                var $main_messages_body_container = $(".main_messages_body_container");
                var $mbody_container = $('<div>').addClass("mbody_container");
@@ -628,7 +628,7 @@
                $main_messages_body_container.append($mbody_container);
             }
          } else {
-            console.log("메시지 없음");
+            //console.log("메시지 없음");
             var $main_messages_body_container = $(".main_messages_body_container");
             var $mbody_container = $('<div>').addClass("mbody_container");
             var $messages_body = $('<div>').addClass("main_messages_body");
@@ -656,13 +656,13 @@
 
             var memberNo = "${loginUser.memberNo}";
 
-            console.log("메시지 아이콘 클릭");
+            //console.log("메시지 아이콘 클릭");
             $.ajax({
                url:"getUserMessage.do",
                data:{memberNo:memberNo},
                dateType:"json",
                success:function(data){
-                  console.log("메시지 확인 결과 : " + data.length);
+                  //console.log("메시지 확인 결과 : " + data.length);
                   refreshMessageBody(data);
                },
                error:function(request, status, errorData){
@@ -685,7 +685,7 @@
             url:"getUserAlertCount.do",
             data:{memberNo:memberNo},
             success:function(data){
-               console.log("알림 카운트 : " + data);
+               //console.log("알림 카운트 : " + data);
 
                var $alertIcon = $(".main_alerts_icon");
 
@@ -711,21 +711,21 @@
                     el.parent().on('click', '.main_alerts_body', function(event) {
                         // 빈값이면 동작 멈춤
                         if($(this).find("input[type=hidden]").val() == ""){
-                        console.log("알림이 없습니다.");
+                        //console.log("알림이 없습니다.");
                         return;
                      }
 
                      var alertNo = el.find("input[type=hidden]").val();
                      var memberNo = "${loginUser.memberNo}";
 
-                     console.log("읽을 알람 번호 : " + alertNo);
+                     //console.log("읽을 알람 번호 : " + alertNo);
 
                      // 알림 삭제
                      $.ajax({
                         url:"readUserAlert.do",
                         data:{alertNo:alertNo,memberNo:memberNo},
                         success:function(data){
-                           console.log("알림 읽음 결과 : " + data.length);
+                           //console.log("알림 읽음 결과 : " + data.length);
                            refreshAlertBody(data);
                         },
                         error:function(request, status, errorData){
@@ -743,7 +743,7 @@
          $("div").remove(".abody_container");
          // 알림 내용 추가
          if(data.length > 0) {
-            console.log("알림 추가");
+            //console.log("알림 추가");
             for(var i in data){
                var $main_alerts_body_container = $(".main_alerts_body_container");
                var $abody_container = $('<div>').addClass("abody_container");
@@ -760,7 +760,7 @@
                $main_alerts_body_container.append($abody_container);
             }
          } else {
-            console.log("알림 없음");
+            //console.log("알림 없음");
             var $main_alerts_body_container = $(".main_alerts_body_container");
             var $abody_container = $('<div>').addClass("abody_container");
             var $alerts_body = $('<div>').addClass("main_alerts_body");
@@ -793,7 +793,7 @@
                data:{memberNo:memberNo},
                dateType:"json",
                success:function(data){
-                  console.log("알림 확인 결과 : " + data.length);
+                  //console.log("알림 확인 결과 : " + data.length);
                   refreshAlertBody(data);
                },
                error:function(request, status, errorData){

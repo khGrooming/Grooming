@@ -198,15 +198,15 @@
 				url:"helpAnswer.do",
 				data:{helpEmailModal:helpEmailModal,helpAnswerModal:helpAnswerModal},
 				success:function(data){
-					console.log("이메일 전송 결과 : " + data);
+					//console.log("이메일 전송 결과 : " + data);
 					if(data == "success"){
-						console.log("이메일 전송 결과 : 완료");
+						//console.log("이메일 전송 결과 : 완료");
 					
 					} else if(data == "retry"){
-						console.log("이메일 전송 결과 : 실패");
+						//console.log("이메일 전송 결과 : 실패");
 						alert("정상적으로 처리되지 않았습니다. 잠시 후 다시 해주세요.");
 					} else {
-						console.log("이메일 전송 결과 : 일치하는 정보 없음");
+						//console.log("이메일 전송 결과 : 일치하는 정보 없음");
 						alert("입력하신 이메일과 일치하는 정보가 없습니다.");
 					}
 				},

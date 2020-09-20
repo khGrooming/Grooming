@@ -32,8 +32,8 @@
 	Kakao.init('a2db16454e8a262c90d8aca3da57b23e');
 	Kakao.isInitialized();
 
-	console.log('카카오');
-	console.log('카카오' + Kakao.isInitialized());
+	//console.log('카카오');
+	//console.log('카카오' + Kakao.isInitialized());
 </script>
 
 <%-- <link href="${pageContext.servletContext.contextPath }/resources/views/css/memberLoginRegistration.css" rel="stylesheet"> --%>
@@ -378,7 +378,13 @@ section .form_container .hideItem
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 30%; /* Could be more or less, depending on screen size */                          
+    width: 65%; /* Could be more or less, depending on screen size */                          
+}
+@media (min-width: 576px){
+	.modal-dialog {
+	    max-width: 800px;
+	    margin: 1.75rem auto;
+	}
 }
 .modal-content pre{
   white-space: pre-wrap;
@@ -565,7 +571,7 @@ section .form_container .hideItem
 
 		$(function() {
 			// 이전페이지 출력
-			console.log("이전페이지 : ${url}");
+			//console.log("이전페이지 : ${url}");
 			
 			// 쿠키에서 아이디 가져오기
 			if($.cookie("userCheck") != null) {
@@ -665,19 +671,19 @@ section .form_container .hideItem
 					url:"memberLogin.do",
 					data:{memberEmail:memberEmail, memberPwd:memberPwd, idSaveCheck:idSaveCheck},
 					success:function(data){
-						console.log("로그인 결과 : " + data.loginSatatus);
+						//console.log("로그인 결과 : " + data.loginSatatus);
 						if(data.loginSatatus == "success"){
 							// 아이디 저장이 체크상태이면 쿠키에 아이디 저장
 							if($("#idSaveCheck").is(":checked")){
 								$.cookie("userCheck", memberEmail);
-								console.log($.cookie("userCheck"));
+								//console.log($.cookie("userCheck"));
 							} else {
 								$.removeCookie("userCheck");
 							}
 
 							goBackPage();
 						} else if(data.loginSatatus == "sanctions"){
-							console.log(data);
+							//console.log(data);
 							$(".sanctions").html("[ 회원님은 제재 중 입니다. ]\n 해제일 : " + data.sanctionsFDate + "\n" +
 									"사유 : " + data.sanctionsContent + "\n 자세한 사항은 문의하기로 문의해 주세요.");
 							$('#myModal').show();
@@ -702,12 +708,12 @@ section .form_container .hideItem
 		function kakaoLogin(){
 			Kakao.Auth.loginForm({
 				success : function(response) {
-					console.log("카카오 로그인 : 성공");
+					//console.log("카카오 로그인 : 성공");
 
 					Kakao.API.request({
 						url : '/v2/user/me',
 						success : function(response) {
-							console.log(response);
+							//console.log(response);
 
 							memberEmail = response.id;
 							memberNickName = response.properties.nickname;
@@ -716,7 +722,7 @@ section .form_container .hideItem
 								url:"kakaoLogin.do",
 								data:{memberEmail:memberEmail, memberNickName:memberNickName},
 								success:function(data){
-									console.log("회원가입 결과 : " + data);
+									//console.log("회원가입 결과 : " + data);
 									if(data == "success"){
 										goBackPage();
 									} else {
@@ -724,7 +730,7 @@ section .form_container .hideItem
 											url:"memberInsertkakao.do",
 											data:{memberEmail:memberEmail, memberNickName:memberNickName},
 											success:function(data){
-												console.log("로그인kakao 결과 : " + data);
+												//console.log("로그인kakao 결과 : " + data);
 												if(data == "success"){
 													goBackPage();
 												} else {
@@ -743,12 +749,12 @@ section .form_container .hideItem
 							});
 						},
 						fail : function(error) {
-							console.log("카카오 정보 요청 실패" + error);
+							//console.log("카카오 정보 요청 실패" + error);
 						}
 					});
 				},
 				fail : function(error) {
-					console.log("카카오 로그인 실패" + error);
+					//console.log("카카오 로그인 실패" + error);
 				},
 			});
 		}
@@ -777,10 +783,10 @@ section .form_container .hideItem
 					url:"emailDuplicateChk.do",
 					data:{memberEmail:memberEmail},
 					success:function(data){
-						console.log("회원가입 이메일 결과 : " + data)
+						//console.log("회원가입 이메일 결과 : " + data)
 						if(data == "success"){
 							regiEmailPass = true;
-							console.log("regiEmailPass : "+ regiEmailPass);
+							//console.log("regiEmailPass : "+ regiEmailPass);
 							$("#regiEmailChk").css("display","none");
 							$("#regiEmailDupl").css("display","none");
 							$("#regiEmailComp").css("display","block");
@@ -817,14 +823,14 @@ section .form_container .hideItem
 				$("#regiPwdDuplChk").css("display","block");
 				$("#regiPwdChkComp").css("display","none");
 				regiPwdPass = false;
-					console.log("비밀번호 불일치");
+					//console.log("비밀번호 불일치");
 			} else {
 				$("#regiPwdDuplChk").css("display","none");
 				$("#regiPwdChkComp").css("display","block");
 				if (regexPwd.test($("#regiPwd").val())) {
 					regiPwdPass = true;
-					console.log("regiPwdPass : "+ regiPwdPass);
-					console.log("비밀번호 일치");
+					//console.log("regiPwdPass : "+ regiPwdPass);
+					//console.log("비밀번호 일치");
 				}
 			}
 		}
@@ -839,14 +845,14 @@ section .form_container .hideItem
 				regiPwdPass = false;
 				$("#regiPwdDuplChk").css("display","block");
 				$("#regiPwdChkComp").css("display","none");
-				console.log("비밀번호 불일치");
+				//console.log("비밀번호 불일치");
 			} else {
 				$("#regiPwdDuplChk").css("display","none");
 				$("#regiPwdChkComp").css("display","block");
 				if (regexPwd.test($("#regiPwd").val())) {
 					regiPwdPass = true;
-					console.log("regiPwdPass : "+ regiPwdPass);
-					console.log("비밀번호 일치");
+					//console.log("regiPwdPass : "+ regiPwdPass);
+					//console.log("비밀번호 일치");
 				}
 			}
 		}
@@ -901,9 +907,9 @@ section .form_container .hideItem
 			regiPwdDupl();
 			regiNickName();
 			
-			console.log("회원가입 이메일 결과 : " + regiEmailPass);
-			console.log("회원가입 비밀번호 결과 : " + regiPwdPass);
-			console.log("회원가입 닉네임 결과 : " + regiNickNamePass);
+			//console.log("회원가입 이메일 결과 : " + regiEmailPass);
+			//console.log("회원가입 비밀번호 결과 : " + regiPwdPass);
+			//console.log("회원가입 닉네임 결과 : " + regiNickNamePass);
 			
 			if(!regiEmailPass){
 				$("#regiEmail").focus();
@@ -914,7 +920,7 @@ section .form_container .hideItem
 			} else if(!regiNickNamePass){
 				$("#regiNickName").focus();
 			} else {
-				console.log("회원가입(필수)");
+				//console.log("회원가입(필수)");
 
 				memberEmail = $("#regiEmail").val();
 				memberPwd = $("#regiPwd").val();
@@ -926,7 +932,7 @@ section .form_container .hideItem
 						, memberPwd:memberPwd
 						, memberNickName:memberNickName},
 					success:function(data){
-						console.log("회원가입 결과 : " + data);
+						//console.log("회원가입 결과 : " + data);
 						if(data == "success"){
 							registerOption()
 							// 페이지 접근 경로 변경
@@ -962,16 +968,16 @@ section .form_container .hideItem
 		});
 		// 파일 섬네일, 파일이 이미지가 아니면 삭제
 		function loadImg(value){
-			console.log(!value.files[0].type.match("image.*"));
+			//console.log(!value.files[0].type.match("image.*"));
 
 			if(!value.files[0].type.match("image.*")) {
-				console.log("업로드는 이미지만 가능합니다.");
+				//console.log("업로드는 이미지만 가능합니다.");
 				deleteImg();
 				return;
 			}
 			
 			memberPhoto = value.files[0].name;
-			console.log("업로드 파일명 : " + memberPhoto);
+			//console.log("업로드 파일명 : " + memberPhoto);
 
 			if(value.files && value.files[0]){
 				var reader = new FileReader();
@@ -1018,13 +1024,13 @@ section .form_container .hideItem
 		function registerComp() {
 			$("#optionEmail").val(memberEmail);
 			//TODO 옵션 등록 가야함
-			console.log("이멜 : " + memberEmail);
-			console.log("사진 : " + memberPhoto);
-			console.log("이름 : " + $("#optionName").val());
-			console.log("성별 : " + $("input[name=memberGender]").val());
-			console.log("전화 : " + $("#optionPhone").val());
-			console.log("메모 : " + $("#optionMemo").val());
-			console.log("태그 : " + $("#tagName").val());
+			//console.log("이멜 : " + memberEmail);
+			//console.log("사진 : " + memberPhoto);
+			//console.log("이름 : " + $("#optionName").val());
+			//console.log("성별 : " + $("input[name=memberGender]").val());
+			//console.log("전화 : " + $("#optionPhone").val());
+			//console.log("메모 : " + $("#optionMemo").val());
+			//console.log("태그 : " + $("#tagName").val());
 			
 			// 추가입력 완료
 			$("#optionUpdateForm").submit();

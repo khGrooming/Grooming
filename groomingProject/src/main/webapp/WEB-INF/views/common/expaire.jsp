@@ -48,7 +48,7 @@
 	var page = 1;
 	var pageloading = true;
 	$(function() {
-		console.log("메인 페이지");
+		//console.log("메인 페이지");
 	});
 	
 	// 커뮤니티 디테일 페이지 이동

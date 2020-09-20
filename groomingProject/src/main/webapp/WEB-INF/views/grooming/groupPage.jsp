@@ -227,7 +227,7 @@
                   var $icon;
                   if(data.length > 0) {
                      for(var i in data) {
-                        console.log(data[i].gMemberNo);
+                        //console.log(data[i].gMemberNo);
                      $tr = $("<tr class='appTr'>");
                      $input = $("<input type='hidden' class='memberNo'>");
                      $inputVal = $input.val(data[i].memberNo);            
